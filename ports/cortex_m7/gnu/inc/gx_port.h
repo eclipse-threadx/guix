@@ -45,13 +45,15 @@
 #ifndef GX_PORT_H
 #define GX_PORT_H
 
+/* Determine if the optional GUIX user define file should be used.  */
 
+#ifdef GX_INCLUDE_USER_DEFINE_FILE
 
 /* Include the user defines in gx_user.h. The defines in this file may
    alternately be defined on the command line.  */
 
 #include "gx_user.h"
-
+#endif
 
 typedef INT    GX_BOOL;
 
