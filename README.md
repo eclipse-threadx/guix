@@ -1,4 +1,4 @@
-# Azure RTOS GuiX
+# Azure RTOS GUIX
 
 Azure RTOS GUIX is a professional-quality package, created to meet the needs of embedded systems developers. Unlike alternative GUI solutions Azure RTOS GUIX is small, fast, and easily ported to virtually any hardware configuration that’s capable of supporting graphical output. Azure RTOS GUIX also delivers exceptional visual appeal and an intuitive and powerful API for application-level user interface development.
 
