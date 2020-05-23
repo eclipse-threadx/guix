@@ -4,7 +4,7 @@ Azure RTOS GUIX is a professional-quality package, created to meet the needs of 
 
 Azure RTOS GUIX Studio provides a complete, embedded graphical user interface (GUI) application design environment, facilitating the creation and maintenance of all graphical elements in the application’s GUI. Azure RTOS GUIX Studio automatically generates C code that’s compatible with the Azure RTOS GUIX library, ready to be compiled and run on the target. 
 
-Azure RTOS GUIX Studio is available on the Microsoft Download Center.
+The Azure RTOS GUIX Studio installer is available here: https://aka.ms/azrtos-guix-installer  Scroll down to the Assets heading, and select the link which reads **azure_rtos_guix_studio_setup_[version]_[build_date]**.
 
 ## Documentation
 
