@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,6 +42,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  06-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added line break status,    */
+/*                                            updated product constants,  */
+/*                                            resulting in version 6.0.1  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -62,9 +66,15 @@ extern   "C" {
 /* Define the major/minor version information that can be used by the application
    and the GUIX source as well.  */
 
+#define AZURE_RTOS_GUIX
+#define GUIX_MAJOR_VERSION 6
+#define GUIX_MINOR_VERSION 0
+#define GUIX_PATCH_VERSION 1
+
+/* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
-#define __GUIX_MAJOR_VERSION 6
-#define __GUIX_MINOR_VERSION 0
+#define __GUIX_MAJOR_VERSION GUIX_MAJOR_VERSION
+#define __GUIX_MINOR_VERSION GUIX_MINOR_VERSION
 
 /* Ensure that ThreadX error checking is disabled for GUIX source code.  */
 
@@ -664,6 +674,7 @@ typedef struct GX_STRING_STRUCT
 
 #define GX_STATUS_MODAL                     0x00100000UL
 
+#define GX_STATUS_LINE_BREAK_PROCESSED      0x02000000UL
 #define GX_STATUS_RESIZE_NOTIFY             0x04000000UL
 #define GX_STATUS_STUDIO_CREATED            0x08000000UL
 

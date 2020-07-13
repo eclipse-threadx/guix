@@ -38,124 +38,8 @@
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _gx_multi_line_text_view_paragraph_start_get        PORTABLE C      */
-/*                                                           6.0          */
-/*  AUTHOR                                                                */
-/*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
-/*                                                                        */
-/*  DESCRIPTION                                                           */
-/*                                                                        */
-/*    Internal helper function to get start index of a paragraph by       */
-/*    search backward from specified line.                                */
-/*                                                                        */
-/*  INPUT                                                                 */
-/*                                                                        */
-/*    text_view                             Multi-line_text_view widget   */
-/*                                           control block                */
-/*    text                                  Pointer to string for search  */
-/*    first_visible_line                    The line to search from       */
-/*    available_width                       Width available for display   */
-/*    line_offset                           The returned line offset from */
-/*                                            paragraph start line to the */
-/*                                            search start line           */
-/*    paragraph_start_index                 The returned line start index */
-/*                                            of the paragraph start line */
-/*                                                                        */
-/*  OUTPUT                                                                */
-/*                                                                        */
-/*    None                                                                */
-/*                                                                        */
-/*  CALLS                                                                 */
-/*                                                                        */
-/*    _gx_multi_line_text_view_display_info_get                           */
-/*                                          Get char numbers that a line  */
-/*                                            can display                 */
-/*                                                                        */
-/*  CALLED BY                                                             */
-/*                                                                        */
-/*    _gx_multi_line_text_view_draw                                       */
-/*                                                                        */
-/*  RELEASE HISTORY                                                       */
-/*                                                                        */
-/*    DATE              NAME                      DESCRIPTION             */
-/*                                                                        */
-/*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*                                                                        */
-/**************************************************************************/
-#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-static VOID _gx_multi_line_text_view_paragraph_start_get(GX_MULTI_LINE_TEXT_VIEW *text_view, GX_CONST CHAR *text,
-                                                         UINT first_visible_line, GX_VALUE availlable_width,
-                                                         UINT *line_offset, UINT *paragraph_start_index)
-{
-UINT                    line_start_index;
-GX_MULTI_LINE_TEXT_INFO text_info;
-UINT                    cache_line_index;
-
-    cache_line_index = (UINT)(first_visible_line - text_view -> gx_multi_line_text_view_first_cache_line);
-
-    (*line_offset) = 0;
-
-    /* Start seaching backward based on the start index of cache line. */
-    while (1)
-    {
-        /* Get the start index of the search line.  */
-        line_start_index = text_view -> gx_multi_line_text_view_line_index[cache_line_index];
-
-        if ((line_start_index == 0) ||
-            (text[line_start_index - 1] == GX_KEY_CARRIAGE_RETURN) ||
-            (text[line_start_index - 1] == GX_KEY_LINE_FEED))
-        {
-            /* If the line start index is 0, or the previous character is a new line character,
-               the current line start index is the start index of following paragraph. */
-            *paragraph_start_index = line_start_index;
-            return;
-        }
-
-        if (cache_line_index)
-        {
-            /* Search previous line. */
-            cache_line_index--;
-            (*line_offset)++;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    /* Now, start search backward based on characters. */
-    while (1)
-    {
-        if ((line_start_index == 0) ||
-            (text[line_start_index - 1] == GX_KEY_CARRIAGE_RETURN) ||
-            (text[line_start_index - 1] == GX_KEY_LINE_FEED))
-        {
-            *paragraph_start_index = line_start_index;
-
-            /* Get line offset from paragraph start line to the first cache line. */
-            while (line_start_index < text_view -> gx_multi_line_text_view_line_index[0])
-            {
-                _gx_multi_line_text_view_display_info_get(text_view, line_start_index, text_view -> gx_multi_line_text_view_line_index[0],
-                                                          &text_info, availlable_width);
-                line_start_index = (UINT)(line_start_index + text_info.gx_text_display_number);
-                (*line_offset)++;
-            }
-            return;
-        }
-        line_start_index--;
-    }
-
-    return;
-}
-#endif
-
-/**************************************************************************/
-/*                                                                        */
-/*  FUNCTION                                               RELEASE        */
-/*                                                                        */
 /*    _gx_multi_line_text_view_draw                       PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -212,6 +96,10 @@ UINT                    cache_line_index;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  06-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            support runtime Arabic      */
+/*                                            line breaking,              */
+/*                                            resulting in version 6.0.1  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_multi_line_text_view_text_draw(GX_MULTI_LINE_TEXT_VIEW *text_view, GX_RESOURCE_ID text_color)
@@ -239,8 +127,7 @@ GX_SCROLLBAR *scroll;
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 GX_BIDI_TEXT_INFO          text_info;
 GX_BIDI_RESOLVED_TEXT_INFO resolved_info;
-UINT                       paragraph_start_index;
-UINT                       line_offset;
+UINT                       processed_count;
 GX_CHAR                    pre_char;
 #endif
 
@@ -312,25 +199,10 @@ GX_CHAR                    pre_char;
     _gx_utility_rectangle_overlap_detect(&_gx_system_current_draw_context -> gx_draw_context_dirty, &client, &draw_area);
     _gx_canvas_drawing_initiate(canvas, (GX_WIDGET *)text_view, &draw_area);
 
-    first_visible_line = ((-text_view -> gx_multi_line_text_view_text_scroll_shift)) / line_height;
-
-    if (first_visible_line < 0)
-    {
-        first_visible_line = 0;
-    }
-
-    last_visible_line = first_visible_line + (INT)(text_view -> gx_multi_line_text_view_text_visible_rows);
-
-    if (last_visible_line > (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1))
-    {
-        last_visible_line = (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1);
-    }
-
     /* Compute the start displaying position of pixels in x direction and y direction. */
     y_pos = client.gx_rectangle_top;
     y_pos += text_view -> gx_multi_line_text_view_text_scroll_shift;
     y_pos += (text_view -> gx_multi_line_text_view_line_space >> 1);
-    y_pos += (INT)(first_visible_line * line_height);
 
     if (text_view -> gx_multi_line_text_view_text_id)
     {
@@ -352,25 +224,20 @@ GX_CHAR                    pre_char;
     if ((text_view -> gx_widget_type == GX_TYPE_MULTI_LINE_TEXT_VIEW) && _gx_system_bidi_text_enabled)
     {
         text_info.gx_bidi_text_info_display_width = (GX_VALUE)(client.gx_rectangle_right - client.gx_rectangle_left - 2);
-
-        /* Get the start index of the paragraph. */
-        _gx_multi_line_text_view_paragraph_start_get(text_view, string.gx_string_ptr, (UINT)first_visible_line, text_info.gx_bidi_text_info_display_width,
-                                                     &line_offset, &paragraph_start_index);
-
         text_info.gx_bidi_text_info_font = font;
-        text_info.gx_bidi_text_info_text.gx_string_length = string.gx_string_length - paragraph_start_index;
 
         pre_char = '\0';
+        processed_count = 0;
 
-        while (first_visible_line <= last_visible_line)
+        while (processed_count < string.gx_string_length)
         {
-            text_info.gx_bidi_text_info_text.gx_string_ptr = string.gx_string_ptr + paragraph_start_index;
+            text_info.gx_bidi_text_info_text.gx_string_ptr = string.gx_string_ptr + processed_count;
+            text_info.gx_bidi_text_info_text.gx_string_length = string.gx_string_length - processed_count;
 
             switch (text_info.gx_bidi_text_info_text.gx_string_ptr[0])
             {
             case GX_KEY_CARRIAGE_RETURN:
-                first_visible_line++;
-                paragraph_start_index++;
+                processed_count++;
                 y_pos += line_height;
                 pre_char = GX_KEY_CARRIAGE_RETURN;
                 continue;
@@ -378,20 +245,14 @@ GX_CHAR                    pre_char;
             case GX_KEY_LINE_FEED:
                 if (pre_char != GX_KEY_CARRIAGE_RETURN)
                 {
-                    first_visible_line++;
                     y_pos += line_height;
                 }
-                paragraph_start_index++;
+                processed_count++;
                 pre_char = '\0';
                 continue;
 
             default:
                 pre_char = '\0';
-                break;
-            }
-
-            if (paragraph_start_index >= string.gx_string_length)
-            {
                 break;
             }
 
@@ -401,7 +262,7 @@ GX_CHAR                    pre_char;
                 {
                     line_string = resolved_info.gx_bidi_resolved_text_info_text[index];
 
-                    if (line_offset == 0)
+                    if (y_pos + line_height > client.gx_rectangle_top)
                     {
                         switch (text_view -> gx_widget_style & GX_STYLE_TEXT_ALIGNMENT_MASK)
                         {
@@ -431,24 +292,29 @@ GX_CHAR                    pre_char;
 
                         /* Draw the text. */
                         _gx_canvas_text_draw_ext((GX_VALUE)x_pos, (GX_VALUE)y_pos, &line_string);
-
-                        if (index < (INT)resolved_info.gx_bidi_resolved_text_total_lines - 1)
-                        {
-                            y_pos += line_height;
-                            first_visible_line = first_visible_line + 1;
-                        }
                     }
-                    else
+
+                    if (index < (INT)(resolved_info.gx_bidi_resolved_text_total_lines - 1))
                     {
-                        line_offset--;
+                        y_pos += line_height;
+                    }
+
+                    if (y_pos > client.gx_rectangle_bottom)
+                    {
+                        break;
                     }
                 }
 
-                paragraph_start_index = (UINT)(paragraph_start_index + (UINT)resolved_info.gx_bidi_resolved_text_processed_count);
+                processed_count += (UINT)resolved_info.gx_bidi_resolved_text_processed_count;
 
                 if (resolved_info.gx_bidi_resolved_text_info_text)
                 {
                     _gx_system_memory_free(resolved_info.gx_bidi_resolved_text_info_text);
+                }
+
+                if (y_pos > client.gx_rectangle_bottom)
+                {
+                    break;
                 }
             }
             else
@@ -460,6 +326,22 @@ GX_CHAR                    pre_char;
     else
     {
 #endif
+        first_visible_line = ((-text_view -> gx_multi_line_text_view_text_scroll_shift)) / line_height;
+
+        if (first_visible_line < 0)
+        {
+            first_visible_line = 0;
+        }
+
+        last_visible_line = first_visible_line + (INT)(text_view -> gx_multi_line_text_view_text_visible_rows);
+
+        if (last_visible_line > (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1))
+        {
+            last_visible_line = (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1);
+        }
+
+        y_pos += (INT)(first_visible_line * line_height);
+
         for (index = first_visible_line; index <= last_visible_line; index++)
         {
             line_cache_start = text_view -> gx_multi_line_text_view_first_cache_line;

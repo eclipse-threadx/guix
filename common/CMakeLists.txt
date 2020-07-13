@@ -661,6 +661,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_8bpp_pixelmap_resize.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_8bpp_pixelmap_rotate.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_alphamap_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_bidi_arabic_shaping.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_bidi_bracket_pair_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_bidi_character_type_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_bidi_mirroring_get.c
