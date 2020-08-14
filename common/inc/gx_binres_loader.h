@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_binres_loader.h                                  PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,6 +42,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            defined macros to read      */
+/*                                            integer value,              */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -49,6 +53,13 @@
 #define GX_BINRES_LOADER_H
 
 #define GX_BINRES_VERSION_ADD_STRING_LENGTH 50600
+
+#define GX_BINRES_READ_GX_UBYTE(dest, src) (dest) = (GX_UBYTE)(src)[0]
+#define GX_BINRES_READ_GX_BYTE(dest, src)  (dest) = (GX_BYTE)(src)[0]
+#define GX_BINRES_READ_USHORT(dest, src)   (dest) = (USHORT)(((src)[1] << 8) | (src)[0])
+#define GX_BINRES_READ_SHORT(dest, src)    (dest) = (SHORT)(((src)[1] << 8) | (src)[0])
+#define GX_BINRES_READ_GX_VALUE(dest, src) (dest) = (GX_VALUE)(((src)[1] << 8) | (src)[0])
+#define GX_BINRES_READ_ULONG(dest, src)    (dest) = (ULONG)(((src)[3] << 24) | ((src)[2] << 16) | ((src)[1] << 8) | (src)[0])
 
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 typedef struct GX_BINRES_DATA_INFO_STRUCT

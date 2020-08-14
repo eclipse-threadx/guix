@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_button_event_process            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -58,7 +58,7 @@
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _gx_button_event_process                                            */
+/*    _gx_text_button_event_process                                       */
 /*    _gx_multi_line_text_button_line_pointers_set                        */
 /*                                                                        */
 /*  CALLED BY                                                             */
@@ -70,6 +70,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            updated default call,       */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_multi_line_text_button_event_process(GX_MULTI_LINE_TEXT_BUTTON *button, GX_EVENT *event_ptr)
@@ -84,14 +87,14 @@ UINT status;
     {
     case GX_EVENT_SHOW:
     case GX_EVENT_LANGUAGE_CHANGE:
-        status = _gx_button_event_process((GX_BUTTON *)button, event_ptr);
+        status = _gx_text_button_event_process((GX_TEXT_BUTTON *)button, event_ptr);
         _gx_multi_line_text_button_line_pointers_set(button);
         break;
 
     default:
 
         /* Call the widget default processing.  */
-        status = _gx_button_event_process((GX_BUTTON *)button, event_ptr);
+        status = _gx_text_button_event_process((GX_TEXT_BUTTON *)button, event_ptr);
     }
 
     /* Return completion status.  */

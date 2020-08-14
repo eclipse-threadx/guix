@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_radial_progress_bar_text_draw                   PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,6 +70,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_radial_progress_bar_text_draw(GX_RADIAL_PROGRESS_BAR *progress_bar)
@@ -94,7 +96,7 @@ GX_STRING                    string;
         _gx_utility_string_length_check(text, &string.gx_string_length, GX_MAX_RAIDAL_PROGRESS_BAR_TEXT_LENGTH - 1);
 
         /* Add "%" to the end of text. */
-        memcpy(text + string.gx_string_length, "%", 2);
+        memcpy(text + string.gx_string_length, "%", 2); /* Use case of memcpy is verified. */
         string.gx_string_length++;
     }
     else

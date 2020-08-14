@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -46,6 +46,10 @@
 /*                                            added line break status,    */
 /*                                            updated product constants,  */
 /*                                            resulting in version 6.0.1  */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            modified glyph header,      */
+/*                                            added new APIs,             */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -69,7 +73,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 0
-#define GUIX_PATCH_VERSION 1
+#define GUIX_PATCH_VERSION 2
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -1740,8 +1744,8 @@ typedef struct GX_PEN_CONFIGURATION_STRUCT
 #define GX_PALETTE_HEADER_SIZE       8
 #define GX_FONT_HEADER_SIZE          16
 #define GX_PAGE_HEADER_SIZE          21
-#define GX_GLYPH_HEADER_SIZE         18
-#define GX_KERNING_GLYPH_HEADER_SIZE 20
+#define GX_GLYPH_HEADER_SIZE         22
+#define GX_KERNING_GLYPH_HEADER_SIZE 24
 #define GX_PIXELMAP_HEADER_SIZE      32
 #define GX_STRING_HEADER_SIZE        10
 #define GX_LANGUAGE_HEADER_SIZE      72
@@ -1820,6 +1824,7 @@ typedef struct GX_PAGE_HEADER_STRUCT{
 #define GX_GLYPH_HEADER_MEMBERS_DECLARE                                              \
     USHORT    gx_glyph_header_magic_number;                                          \
     USHORT    gx_glyph_header_map_size;                                              \
+    ULONG     gx_glyph_header_map_offset;                                            \
     USHORT    gx_glyph_header_index;                                                 \
     SHORT     gx_glyph_header_ascent;                                                \
     SHORT     gx_glyph_header_descent;                                               \
@@ -3037,6 +3042,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_progress_bar_value_set                                _gx_progress_bar_value_set
 
 #define gx_prompt_create(a, b, c, d, e, f, g)                    _gx_prompt_create(a, b, (GX_WIDGET *)c, d, e, f, g)
+#define gx_prompt_event_process                                  _gx_prompt_event_process
 #define gx_prompt_draw                                           _gx_prompt_draw
 #define gx_prompt_font_set                                       _gx_prompt_font_set
 
@@ -3158,6 +3164,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_string_scroll_wheel_string_list_set                   _gx_string_scroll_wheel_string_list_set
 #endif
 #define gx_string_scroll_wheel_create_ext(a, b, c, d, e, f, g, h) _gx_string_scroll_wheel_create_ext(a, b, c, d, e, f, g, h)
+#define gx_string_scroll_wheel_event_process                     _gx_string_scroll_wheel_event_process
 #define gx_string_scroll_wheel_string_id_list_set                _gx_string_scroll_wheel_string_id_list_set
 #define gx_string_scroll_wheel_string_list_set_ext               _gx_string_scroll_wheel_string_list_set_ext
 
@@ -3216,6 +3223,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 
 #define gx_text_button_create(a, b, c, d, e, f, g)               _gx_text_button_create(a, b, (GX_WIDGET *)c, d, e, f, g)
 #define gx_text_button_draw                                      _gx_text_button_draw
+#define gx_text_button_event_process                             _gx_text_button_event_process
 #define gx_text_button_font_set                                  _gx_text_button_font_set
 #if defined(GUIX_5_4_0_COMPATIBILITY)
 #define gx_text_button_text_color_set(a, b, c)                   _gx_text_button_text_color_set((GX_TEXT_BUTTON *)a, b, c)
@@ -3765,6 +3773,7 @@ UINT _gx_progress_bar_value_set(GX_PROGRESS_BAR *progress_bar, INT new_value);
 UINT _gx_prompt_create(GX_PROMPT *prompt, GX_CONST GX_CHAR *name,
                        GX_WIDGET *parent, GX_RESOURCE_ID text_id, ULONG style,
                        USHORT prompt_id, GX_CONST GX_RECTANGLE *size);
+UINT _gx_prompt_event_process(GX_PROMPT *prompt, GX_EVENT *event_ptr);
 VOID _gx_prompt_draw(GX_PROMPT *prompt);
 UINT _gx_prompt_font_set(GX_PROMPT *prompt, GX_RESOURCE_ID fontid);
 UINT _gx_prompt_text_color_set(GX_PROMPT *prompt,
@@ -3914,6 +3923,7 @@ UINT _gx_string_scroll_wheel_create(GX_STRING_SCROLL_WHEEL *wheel, GX_CONST GX_C
 UINT _gx_string_scroll_wheel_create_ext(GX_STRING_SCROLL_WHEEL* wheel, GX_CONST GX_CHAR* name, GX_WIDGET* parent, INT total_rows,
                                         GX_CONST GX_STRING* string_list,
                                         ULONG style, USHORT Id, GX_CONST GX_RECTANGLE* size);
+UINT _gx_string_scroll_wheel_event_process(GX_STRING_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
 UINT _gx_string_scroll_wheel_string_id_list_set(GX_STRING_SCROLL_WHEEL *wheel,
                                                 GX_CONST GX_RESOURCE_ID *string_id_list,
                                                 INT id_count);
@@ -3986,6 +3996,7 @@ UINT _gx_text_button_create(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *name,
                             GX_WIDGET *parent, GX_RESOURCE_ID text_id, ULONG style, USHORT Id,
                             GX_CONST GX_RECTANGLE *size);
 VOID _gx_text_button_draw(GX_TEXT_BUTTON *button);
+UINT _gx_text_button_event_process(GX_TEXT_BUTTON *button, GX_EVENT *event_ptr);
 UINT _gx_text_button_font_set(GX_TEXT_BUTTON *button, GX_RESOURCE_ID font_id);
 UINT _gx_text_button_text_color_set(GX_TEXT_BUTTON *text_button,
                                     GX_RESOURCE_ID normal_text_color_id,
@@ -4006,7 +4017,7 @@ UINT _gx_text_input_cursor_width_set(GX_TEXT_INPUT_CURSOR *cursor_input, GX_UBYT
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_text_scroll_wheel_callback_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *(*callback)(GX_TEXT_SCROLL_WHEEL *, INT)); 
 #endif
-UINT _gx_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL* wheel, UINT (*callback)(GX_TEXT_SCROLL_WHEEL*, INT, GX_STRING *));
+UINT _gx_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL *wheel, UINT (*callback)(GX_TEXT_SCROLL_WHEEL*, INT, GX_STRING *));
 UINT _gx_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows, 
                                   ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
 VOID _gx_text_scroll_wheel_draw(GX_TEXT_SCROLL_WHEEL *wheel);
@@ -4453,6 +4464,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_progress_bar_value_set                                _gxe_progress_bar_value_set
 
 #define gx_prompt_create(a, b, c, d, e, f, g)                    _gxe_prompt_create(a, b, (GX_WIDGET *)c, d, e, f, g, sizeof(GX_PROMPT))
+#define gx_prompt_event_process                                  _gxe_prompt_event_process
 #define gx_prompt_draw                                           _gx_prompt_draw
 #define gx_prompt_font_set                                       _gxe_prompt_font_set
 #if defined(GUIX_5_4_0_COMPATIBILITY)
@@ -4573,6 +4585,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_string_scroll_wheel_string_list_set                   _gxe_string_scroll_wheel_string_list_set
 #endif
 #define gx_string_scroll_wheel_create_ext(a, b, c, d, e, f, g, h) _gxe_string_scroll_wheel_create_ext(a, b, c, d, e, f, g, h, sizeof(GX_STRING_SCROLL_WHEEL))
+#define gx_string_scroll_wheel_event_process                     _gxe_string_scroll_wheel_event_process
 #define gx_string_scroll_wheel_string_id_list_set                _gxe_string_scroll_wheel_string_id_list_set
 #define gx_string_scroll_wheel_string_list_set_ext               _gxe_string_scroll_wheel_string_list_set_ext
 
@@ -4630,6 +4643,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 
 #define gx_text_button_create(a, b, c, d, e, f, g)               _gxe_text_button_create(a, b, (GX_WIDGET *)c, d, e, f, g, sizeof(GX_TEXT_BUTTON))
 #define gx_text_button_draw                                      _gx_text_button_draw
+#define gx_text_button_event_process                             _gxe_text_button_event_process
 #define gx_text_button_font_set                                  _gxe_text_button_font_set
 #if defined(GUIX_5_4_0_COMPATIBILITY)
 #define gx_text_button_text_color_set(a, b, c)                   _gxe_text_button_text_color_set((GX_TEXT_BUTTON *)a, b, c, b)
@@ -5170,6 +5184,7 @@ UINT _gxe_progress_bar_value_set(GX_PROGRESS_BAR *progress_bar, INT new_value);
 UINT _gxe_prompt_create(GX_PROMPT *prompt, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
                         GX_RESOURCE_ID text_id, ULONG style, USHORT prompt_id,
                         GX_CONST GX_RECTANGLE *size, UINT prompt_control_block_size);
+UINT _gxe_prompt_event_process(GX_PROMPT *prompt, GX_EVENT *event_ptr);
 VOID _gx_prompt_draw(GX_PROMPT *prompt);
 UINT _gxe_prompt_font_set(GX_PROMPT *prompt, GX_RESOURCE_ID fontid);
 UINT _gxe_prompt_text_color_set(GX_PROMPT *prompt, 
@@ -5322,6 +5337,7 @@ UINT _gxe_string_scroll_wheel_create_ext(GX_STRING_SCROLL_WHEEL *wheel, GX_CONST
                                          GX_CONST GX_STRING *string_list,
                                          ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size,
                                          UINT control_block_size);
+UINT _gxe_string_scroll_wheel_event_process(GX_STRING_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
 UINT _gxe_string_scroll_wheel_string_id_list_set(GX_STRING_SCROLL_WHEEL *wheel,
                                                  GX_CONST GX_RESOURCE_ID *string_id_list,
                                                  INT id_count);
@@ -5386,6 +5402,7 @@ UINT _gxe_text_button_create(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *name, GX_
                              GX_RESOURCE_ID text_id, ULONG style, USHORT Id,
                              GX_CONST GX_RECTANGLE *size, UINT text_button_control_block_size);
 VOID _gx_text_button_draw(GX_TEXT_BUTTON *button);
+UINT _gxe_text_button_event_process(GX_TEXT_BUTTON *button, GX_EVENT *event_ptr);
 UINT _gxe_text_button_font_set(GX_TEXT_BUTTON *button, GX_RESOURCE_ID font_id);
 UINT _gxe_text_button_text_color_set(GX_TEXT_BUTTON *_text_button,
                                      GX_RESOURCE_ID normal_text_color_id,

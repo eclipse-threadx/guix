@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_prompt.h                                         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,6 +42,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added new prototypes,       */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -56,6 +59,7 @@ UINT _gx_prompt_create(GX_PROMPT *prompt, GX_CONST GX_CHAR *name, GX_WIDGET *par
                        ULONG style, USHORT prompt_id,
                        GX_CONST GX_RECTANGLE *size);
 VOID _gx_prompt_draw(GX_PROMPT *prompt);
+UINT _gx_prompt_event_process(GX_PROMPT *prompt, GX_EVENT *event_ptr);
 UINT _gx_prompt_font_set(GX_PROMPT *prompt, GX_RESOURCE_ID fontid);
 VOID _gx_prompt_text_draw(GX_PROMPT *prompt);
 UINT _gx_prompt_text_color_set(GX_PROMPT *prompt,
@@ -77,6 +81,7 @@ UINT _gx_prompt_text_id_set(GX_PROMPT *prompt, GX_RESOURCE_ID string_id);
 
 UINT _gxe_prompt_create(GX_PROMPT *prompt, GX_CONST GX_CHAR *name, GX_WIDGET *parent, GX_RESOURCE_ID text_id,
                         ULONG style, USHORT prompt_id, GX_CONST GX_RECTANGLE *size, UINT prompt_control_block_size);
+UINT _gxe_prompt_event_process(GX_PROMPT *prompt, GX_EVENT *event_ptr);
 UINT _gxe_prompt_font_set(GX_PROMPT *prompt, GX_RESOURCE_ID fontid);
 UINT _gxe_prompt_text_color_set(GX_PROMPT *prompt,
                                 GX_RESOURCE_ID normal_text_color_id,

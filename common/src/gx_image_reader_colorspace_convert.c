@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_one_row_dither                     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
@@ -197,7 +199,7 @@ INT     *cur_err;
         }
     }
 
-    memcpy((void *)cur_err, (void *)next_err, err_width * 3 * sizeof(INT));
+    memcpy((void *)cur_err, (void *)next_err, err_width * 3 * sizeof(INT)); /* Use case of memcpy is verified. */
 }
 #endif
 

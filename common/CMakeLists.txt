@@ -432,6 +432,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_progress_bar_value_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_prompt_create.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_prompt_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_prompt_event_process.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_prompt_font_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_prompt_text_color_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_prompt_text_draw.c
@@ -546,6 +547,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_sprite_stop.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_sprite_update.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_string_scroll_wheel_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_string_scroll_wheel_event_process.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_string_scroll_wheel_string_id_list_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_string_scroll_wheel_string_list_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_string_scroll_wheel_text_get.c
@@ -617,6 +619,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_system_widget_find.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_button_create.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_button_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_button_event_process.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_button_font_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_button_text_color_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_button_text_draw.c
@@ -981,6 +984,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_progress_bar_text_color_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_progress_bar_value_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_prompt_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_prompt_event_process.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_prompt_font_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_prompt_text_color_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_prompt_text_get.c
@@ -1056,6 +1060,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_sprite_start.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_sprite_stop.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_string_scroll_wheel_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_string_scroll_wheel_event_process.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_string_scroll_wheel_string_id_list_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_string_scroll_wheel_string_list_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_system_active_language_set.c
@@ -1088,6 +1093,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_system_version_string_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_system_widget_find.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_text_button_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_text_button_event_process.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_text_button_font_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_text_button_text_color_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_text_button_text_get.c

@@ -39,7 +39,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_initialize                               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -76,6 +76,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_system_initialize(VOID)
@@ -156,7 +158,7 @@ UINT length;
     length = sizeof("Version ") - 1;
 
     /* Copy "Version " to version string. */
-    memcpy(_gx_system_version_string, "Version ", length);
+    memcpy(_gx_system_version_string, "Version ", length); /* Use case of memcpy is verified. */
 
     index = length;
 

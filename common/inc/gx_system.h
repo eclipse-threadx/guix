@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_system.h                                         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,6 +42,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed private string      */
+/*                                            delete declaration,         */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -117,7 +121,6 @@ UINT _gx_system_private_string_list_copy(GX_CONST GX_CHAR ***ptr_address, GX_CON
 VOID _gx_system_private_string_list_get(GX_CONST GX_CHAR **input, GX_CONST GX_CHAR ***output, ULONG style);
 #endif
 UINT _gx_system_private_string_list_copy_ext(GX_STRING **ptr_address, USHORT *buffer_size, GX_CONST GX_STRING *string_list, INT string_count);
-UINT _gx_system_private_string_delete(GX_WIDGET *widget);
 VOID _gx_system_private_string_get(GX_CONST GX_STRING *input, GX_STRING *output, ULONG style);
 
 VOID _gx_system_root_view_add(GX_WINDOW_ROOT *root, GX_RECTANGLE *inrect);

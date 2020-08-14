@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_button_create                              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -72,6 +72,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            set new event process,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_text_button_create(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *name,
@@ -88,6 +91,7 @@ UINT  _gx_text_button_create(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *name,
     button -> gx_text_button_string.gx_string_ptr =  GX_NULL;
     button -> gx_text_button_string.gx_string_length = 0;
     button -> gx_widget_draw_function =            (VOID (*)(GX_WIDGET *))_gx_text_button_draw;
+    button -> gx_widget_event_process_function = (UINT(*)(GX_WIDGET*, GX_EVENT*))_gx_text_button_event_process;
     button -> gx_text_button_normal_text_color =   GX_COLOR_ID_BUTTON_TEXT;
     button -> gx_text_button_selected_text_color = GX_COLOR_ID_BUTTON_TEXT;
     button -> gx_text_button_disabled_text_color = GX_COLOR_ID_DISABLED_TEXT;

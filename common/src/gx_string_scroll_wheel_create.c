@@ -100,7 +100,7 @@ UINT status;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_string_scroll_wheel_create_ext                  PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -141,6 +141,9 @@ UINT status;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            set new event process,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_string_scroll_wheel_create_ext(GX_STRING_SCROLL_WHEEL *wheel,
@@ -160,6 +163,7 @@ UINT _gx_string_scroll_wheel_create_ext(GX_STRING_SCROLL_WHEEL *wheel,
     wheel -> gx_string_scroll_wheel_string_list = string_list;
     wheel -> gx_string_scroll_wheel_string_list_buffer_size = 0;
     wheel -> gx_string_scroll_wheel_string_id_list = GX_NULL;
+    wheel -> gx_widget_event_process_function = (UINT(*)(GX_WIDGET*, GX_EVENT*))_gx_string_scroll_wheel_event_process;
     wheel -> gx_text_scroll_wheel_text_get = (UINT (*)(GX_TEXT_SCROLL_WHEEL *, INT, GX_STRING *))_gx_string_scroll_wheel_text_get;
 
     /* Determine if a parent widget was provided.  */

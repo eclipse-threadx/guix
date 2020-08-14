@@ -38,7 +38,7 @@ extern GX_CONST GX_FONT _gx_system_font_8bpp;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_theme_header_load                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,120 +69,124 @@ extern GX_CONST GX_FONT _gx_system_font_8bpp;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
+
 static UINT _gx_binres_theme_header_load(GX_BINRES_DATA_INFO *info, GX_THEME_HEADER *header)
 {
-    memcpy((GX_BYTE *)&header -> gx_theme_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_theme_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_theme_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_color_count, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_theme_header_color_count, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_palette_count, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_theme_header_palette_count, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_font_count, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_theme_header_font_count, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_pixelmap_count, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_theme_header_pixelmap_count, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_width, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_VALUE));
+    GX_BINRES_READ_GX_VALUE(header -> gx_theme_header_vscroll_appearance.gx_scroll_width, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_VALUE);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_width, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_VALUE));
+    GX_BINRES_READ_GX_VALUE(header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_width, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_VALUE);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_travel_min, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_VALUE));
+    GX_BINRES_READ_GX_VALUE(header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_travel_min, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_VALUE);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_travel_max, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_VALUE));
+    GX_BINRES_READ_GX_VALUE(header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_travel_max, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_VALUE);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_border_style, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_border_style, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_fill_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_vscroll_appearance.gx_scroll_fill_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_up_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_vscroll_appearance.gx_scroll_up_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_down_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_vscroll_appearance.gx_scroll_down_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_color, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_color, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_border_color, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_vscroll_appearance.gx_scroll_thumb_border_color, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_appearance.gx_scroll_button_color, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_vscroll_appearance.gx_scroll_button_color, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_width, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_VALUE));
+    GX_BINRES_READ_GX_VALUE(header -> gx_theme_header_hscroll_appearance.gx_scroll_width, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_VALUE);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_width, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_VALUE));
+    GX_BINRES_READ_GX_VALUE(header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_width, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_VALUE);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_travel_min, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_VALUE));
+    GX_BINRES_READ_GX_VALUE(header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_travel_min, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_VALUE);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_travel_max, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_VALUE));
+    GX_BINRES_READ_GX_VALUE(header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_travel_max, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_VALUE);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_border_style, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_border_style, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_fill_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_hscroll_appearance.gx_scroll_fill_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_up_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_hscroll_appearance.gx_scroll_up_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_down_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_hscroll_appearance.gx_scroll_down_pixelmap, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_color, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_color, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_border_color, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_hscroll_appearance.gx_scroll_thumb_border_color, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_appearance.gx_scroll_button_color, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_RESOURCE_ID));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_hscroll_appearance.gx_scroll_button_color, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_RESOURCE_ID);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_vscroll_style, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_vscroll_style, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_hscroll_style, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_hscroll_style, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_color_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_color_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_palette_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_palette_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_font_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_font_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_pixelmap_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_pixelmap_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_theme_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_theme_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
     return GX_SUCCESS;
@@ -194,7 +198,7 @@ static UINT _gx_binres_theme_header_load(GX_BINRES_DATA_INFO *info, GX_THEME_HEA
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_color_header_load                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -225,18 +229,21 @@ static UINT _gx_binres_theme_header_load(GX_BINRES_DATA_INFO *info, GX_THEME_HEA
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_color_header_load(GX_BINRES_DATA_INFO *info, GX_COLOR_HEADER *header)
 {
-    memcpy((GX_BYTE *)&header -> gx_color_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_color_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_color_header_color_count, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_color_header_color_count, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_color_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_color_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
     return GX_SUCCESS;
@@ -248,7 +255,7 @@ static UINT _gx_binres_color_header_load(GX_BINRES_DATA_INFO *info, GX_COLOR_HEA
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_palette_header_load                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -279,18 +286,21 @@ static UINT _gx_binres_color_header_load(GX_BINRES_DATA_INFO *info, GX_COLOR_HEA
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_palette_header_load(GX_BINRES_DATA_INFO *info, GX_PALETTE_HEADER *header)
 {
-    memcpy((GX_BYTE *)&header -> gx_palette_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_palette_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_palette_header_color_count, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_palette_header_color_count, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_palette_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_palette_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
     return GX_SUCCESS;
@@ -302,7 +312,7 @@ static UINT _gx_binres_palette_header_load(GX_BINRES_DATA_INFO *info, GX_PALETTE
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_font_header_load                         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -333,30 +343,33 @@ static UINT _gx_binres_palette_header_load(GX_BINRES_DATA_INFO *info, GX_PALETTE
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_font_header_load(GX_BINRES_DATA_INFO *info, GX_FONT_HEADER *header)
 {
-    memcpy((GX_BYTE *)&header -> gx_font_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_font_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_font_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_font_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_font_header_page_count, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_font_header_page_count, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_font_header_deault, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_font_header_deault, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_font_header_bits, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_font_header_bits, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_font_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_font_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_font_header_data_offset, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_font_header_data_offset, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
     return GX_SUCCESS;
@@ -368,7 +381,7 @@ static UINT _gx_binres_font_header_load(GX_BINRES_DATA_INFO *info, GX_FONT_HEADE
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_page_header_load                         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -399,6 +412,9 @@ static UINT _gx_binres_font_header_load(GX_BINRES_DATA_INFO *info, GX_FONT_HEADE
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
@@ -406,38 +422,38 @@ static UINT _gx_binres_page_header_load(GX_BINRES_DATA_INFO *info, GX_PAGE_HEADE
 {
 ULONG read_data = 0;
 
-    memcpy((GX_BYTE *)&header -> gx_page_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_page_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_page_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_page_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_page_header_format, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_page_header_format, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_page_header_prespace, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_page_header_prespace, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_page_header_postspace, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_page_header_postspace, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_page_header_line_height, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_page_header_line_height, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_page_header_baseline, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_page_header_baseline, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
     /* In the binary resource file, CHAR_CODE is always stored as 4-byte value. */
-    memcpy((GX_BYTE *)&read_data, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(read_data, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
     header -> gx_page_header_first_glyph = (GX_CHAR_CODE)read_data;
 
     /* In the binary resource file, CHAR_CODE is always stored as 4-byte value. */
-    memcpy((GX_BYTE *)&read_data, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(read_data, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
     header -> gx_page_header_last_glyph = (GX_CHAR_CODE)read_data;
 
-    memcpy((GX_BYTE *)&header -> gx_page_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_page_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
     return GX_SUCCESS;
@@ -449,7 +465,7 @@ ULONG read_data = 0;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_glyph_header_load                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -480,39 +496,47 @@ ULONG read_data = 0;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy, and  */
+/*                                            updated with binary         */
+/*                                            resource layout change,     */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_GLYPH_HEADER *header)
 {
-    memcpy((GX_BYTE *)&header -> gx_glyph_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_glyph_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_glyph_header_map_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_glyph_header_map_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_glyph_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_ULONG(header -> gx_glyph_header_map_offset, info -> gx_binres_root_address + info -> gx_binres_read_offset);
+    info -> gx_binres_read_offset += sizeof(ULONG);
+
+	GX_BINRES_READ_USHORT(header -> gx_glyph_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_glyph_header_ascent, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(SHORT));
+    GX_BINRES_READ_SHORT(header -> gx_glyph_header_ascent, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(SHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_glyph_header_descent, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(SHORT));
+    GX_BINRES_READ_SHORT(header -> gx_glyph_header_descent, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(SHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_glyph_header_advance, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_glyph_header_advance, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_glyph_header_leading, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_BYTE));
+    GX_BINRES_READ_GX_BYTE(header -> gx_glyph_header_leading, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_BYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_glyph_header_width, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_glyph_header_width, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_glyph_header_height, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_glyph_header_height, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_glyph_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_glyph_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
     return GX_SUCCESS;
@@ -525,7 +549,7 @@ static UINT _gx_binres_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_GLYPH_HEA
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_kerning_glyph_header_load                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -556,6 +580,9 @@ static UINT _gx_binres_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_GLYPH_HEA
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_FONT_KERNING_SUPPORT
@@ -564,7 +591,7 @@ static UINT _gx_binres_kerning_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_K
 {
     _gx_binres_glyph_header_load(info, (GX_GLYPH_HEADER *)header);
 
-    memcpy((GX_BYTE *)&header -> gx_glyph_header_kerning_table_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_glyph_header_kerning_table_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
     return GX_SUCCESS;
@@ -577,7 +604,7 @@ static UINT _gx_binres_kerning_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_K
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_pixelmap_header_load                     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -608,48 +635,51 @@ static UINT _gx_binres_kerning_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_K
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_pixelmap_header_load(GX_BINRES_DATA_INFO *info, GX_PIXELMAP_HEADER *header)
 {
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_pixelmap_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_pixelmap_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_version_major, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_pixelmap_header_version_major, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_version_minor, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_pixelmap_header_version_minor, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_flags, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_pixelmap_header_flags, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_format, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_UBYTE));
+    GX_BINRES_READ_GX_UBYTE(header -> gx_pixelmap_header_format, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_UBYTE);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_map_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_pixelmap_header_map_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_aux_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_pixelmap_header_aux_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_transparent_color, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(GX_COLOR));
+    GX_BINRES_READ_ULONG(header -> gx_pixelmap_header_transparent_color, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(GX_COLOR);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_width, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_pixelmap_header_width, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_height, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_pixelmap_header_height, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_pixelmap_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_pixelmap_header_data_offset, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_pixelmap_header_data_offset, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
     return GX_SUCCESS;
@@ -871,7 +901,7 @@ UINT               temp;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_glyphs_address_get                       PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -905,6 +935,10 @@ UINT               temp;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            updated with binary         */
+/*                                            resource layout change,     */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
@@ -936,7 +970,7 @@ USHORT          index = 0;
         /* Read glyph data.  */
         if (header.gx_glyph_header_data_size)
         {
-            glyphs[index].gx_glyph_map = (GX_UBYTE *)(info -> gx_binres_root_address + info -> gx_binres_read_offset);
+            glyphs[index].gx_glyph_map = (GX_UBYTE *)(info -> gx_binres_root_address + header.gx_glyph_header_map_offset);
             info -> gx_binres_read_offset += header.gx_glyph_header_data_size;
         }
         else
@@ -956,7 +990,7 @@ USHORT          index = 0;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_kerning_glyphs_address_get               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -991,6 +1025,10 @@ USHORT          index = 0;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            updated with binary         */
+/*                                            resource layout change,     */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_FONT_KERNING_SUPPORT
@@ -1024,7 +1062,7 @@ USHORT                  index = 0;
         /* Read glyph data.  */
         if (header.gx_glyph_header_data_size)
         {
-            glyphs[index].gx_glyph_map = (GX_UBYTE *)(info -> gx_binres_root_address + info -> gx_binres_read_offset);
+            glyphs[index].gx_glyph_map = (GX_UBYTE *)(info -> gx_binres_root_address + header.gx_glyph_header_map_offset);
             info -> gx_binres_read_offset += header.gx_glyph_header_data_size;
         }
         else
@@ -1052,7 +1090,7 @@ USHORT                  index = 0;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_compressed_glyphs_address_get            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1086,6 +1124,10 @@ USHORT                  index = 0;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            updated with binary         */
+/*                                            resource layout change,     */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
@@ -1119,7 +1161,7 @@ USHORT               index = 0;
         /* Read glyph data.  */
         if (header.gx_glyph_header_data_size)
         {
-            glyphs[index].gx_glyph_map = (GX_UBYTE *)(info -> gx_binres_root_address + info -> gx_binres_read_offset);
+            glyphs[index].gx_glyph_map = (GX_UBYTE *)(info -> gx_binres_root_address + header.gx_glyph_header_map_offset);
             info -> gx_binres_read_offset += header.gx_glyph_header_data_size;
         }
         else

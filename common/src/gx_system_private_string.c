@@ -32,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_private_string_copy                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -67,6 +67,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_system_private_string_copy(GX_STRING *string, GX_CONST GX_STRING *text)
@@ -117,7 +119,8 @@ USHORT    needed_buffer_size;
                     byte = (GX_UBYTE *)string -> gx_string_ptr;
                     *byte++ = (GX_UBYTE)(needed_buffer_size >> 8);
                     *byte++ = (GX_UBYTE)(needed_buffer_size & 0xff);
-                    memcpy(byte, text -> gx_string_ptr, text -> gx_string_length + 1);
+
+                    memcpy(byte, text -> gx_string_ptr, text -> gx_string_length + 1); /* Use case of memcpy is verified. */
                     string -> gx_string_length = text -> gx_string_length;
                 }
                 else
@@ -128,7 +131,7 @@ USHORT    needed_buffer_size;
             else
             {
                 /* the existing buffer is large enough, just copy the string without updating buffer size */
-                memcpy(byte, text -> gx_string_ptr, text -> gx_string_length + 1);
+                memcpy(byte, text -> gx_string_ptr, text -> gx_string_length + 1); /* Use case of memcpy is verified. */
                 string -> gx_string_length = text -> gx_string_length;
             }
         }
@@ -143,7 +146,8 @@ USHORT    needed_buffer_size;
                 byte = (GX_UBYTE *)string -> gx_string_ptr;
                 *byte++ = (GX_UBYTE)(needed_buffer_size >> 8);
                 *byte++ = (GX_UBYTE)(needed_buffer_size & 0xff);
-                memcpy(byte, text -> gx_string_ptr, text -> gx_string_length + 1);
+
+                memcpy(byte, text -> gx_string_ptr, text -> gx_string_length + 1); /* Use case of memcpy is verified. */
                 string -> gx_string_length = text -> gx_string_length;
             }
             else
@@ -176,7 +180,7 @@ USHORT    needed_buffer_size;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_private_string_list_copy                 PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -213,6 +217,8 @@ USHORT    needed_buffer_size;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -314,7 +320,7 @@ UINT      length;
                     /* Get string length. */
                     _gx_utility_string_length_check(string_list[index], &length, GX_MAX_STRING_LENGTH);
 
-                    memcpy((VOID *)string_ptr, string_list[index], length + 1);
+                    memcpy((VOID *)string_ptr, string_list[index], length + 1); /* Use case of memcpy is verified. */
                 }
                 else
                 {
@@ -349,7 +355,7 @@ UINT      length;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_private_string_list_copy_ext             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -386,6 +392,8 @@ UINT      length;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_system_private_string_list_copy_ext(GX_STRING **ptr_address, USHORT *buffer_size, GX_CONST GX_STRING *string_list, INT string_count)
@@ -464,8 +472,7 @@ UINT              length;
 
                 if (string_list[index].gx_string_ptr)
                 {
-
-                    memcpy((VOID *)string_ptr, string_list[index].gx_string_ptr, length);
+                    memcpy((VOID *)string_ptr, string_list[index].gx_string_ptr, length + 1); /* Use case of memcpy is verified. */
                     string_ptr += length + 1;
                 }
             }
@@ -488,120 +495,6 @@ UINT              length;
     }
 
     return GX_SYSTEM_MEMORY_ERROR;
-}
-
-/**************************************************************************/
-/*                                                                        */
-/*  FUNCTION                                               RELEASE        */
-/*                                                                        */
-/*    _gx_system_private_string_delete                    PORTABLE C      */
-/*                                                           6.0          */
-/*  AUTHOR                                                                */
-/*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
-/*                                                                        */
-/*  DESCRIPTION                                                           */
-/*                                                                        */
-/*    This service frees memory associated with dynamically copied string */
-/*                                                                        */
-/*                                                                        */
-/*  INPUT                                                                 */
-/*                                                                        */
-/*    widget                                Address of calling widget     */
-/*                                                                        */
-/*  OUTPUT                                                                */
-/*                                                                        */
-/*    status                                Completion status             */
-/*                                                                        */
-/*  CALLS                                                                 */
-/*                                                                        */
-/*    _gx_system_memory_free                Deallocate dynamic memory     */
-/*                                                                        */
-/*  CALLED BY                                                             */
-/*                                                                        */
-/*    _gx_widget_delete                                                   */
-/*                                                                        */
-/*  RELEASE HISTORY                                                       */
-/*                                                                        */
-/*    DATE              NAME                      DESCRIPTION             */
-/*                                                                        */
-/*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*                                                                        */
-/**************************************************************************/
-UINT _gx_system_private_string_delete(GX_WIDGET *widget)
-{
-    if (widget -> gx_widget_style & GX_STYLE_TEXT_COPY)
-    {
-        if (_gx_system_memory_free == GX_NULL)
-        {
-            return GX_SYSTEM_MEMORY_ERROR;
-        }
-        switch (widget -> gx_widget_type)
-        {
-        case GX_TYPE_PROMPT:
-        case GX_TYPE_PIXELMAP_PROMPT:
-        {
-        GX_PROMPT *prompt = (GX_PROMPT *)widget;
-            if (prompt -> gx_prompt_string.gx_string_ptr)
-            {
-                _gx_system_memory_free((void *)prompt -> gx_prompt_string.gx_string_ptr);
-                prompt -> gx_prompt_string.gx_string_ptr = GX_NULL;
-                prompt -> gx_prompt_string.gx_string_length = 0;
-            }
-        }
-        break;
-
-        case GX_TYPE_TEXT_BUTTON:
-        case GX_TYPE_RADIO_BUTTON:
-        case GX_TYPE_CHECKBOX:
-        case GX_TYPE_MULTI_LINE_TEXT_BUTTON:
-        {
-        GX_TEXT_BUTTON *tb = (GX_TEXT_BUTTON *)widget;
-            if (tb -> gx_text_button_string.gx_string_ptr)
-            {
-                _gx_system_memory_free((void *)tb -> gx_text_button_string.gx_string_ptr);
-                tb -> gx_text_button_string.gx_string_ptr = GX_NULL;
-                tb -> gx_text_button_string.gx_string_length = 0;
-            }
-        }
-        break;
-
-        case GX_TYPE_MULTI_LINE_TEXT_VIEW:
-        {
-        GX_MULTI_LINE_TEXT_VIEW *tv = (GX_MULTI_LINE_TEXT_VIEW *)widget;
-            if (tv -> gx_multi_line_text_view_text.gx_string_ptr && tv -> gx_multi_line_text_view_text_id == 0)
-            {
-                _gx_system_memory_free((void *)tv -> gx_multi_line_text_view_text.gx_string_ptr);
-                tv -> gx_multi_line_text_view_text.gx_string_ptr = GX_NULL;
-                tv -> gx_multi_line_text_view_text.gx_string_length = 0;
-            }
-        }
-        break;
-
-        case GX_TYPE_STRING_SCROLL_WHEEL:
-        {
-        GX_STRING_SCROLL_WHEEL *wheel = (GX_STRING_SCROLL_WHEEL *)widget;
-            if (wheel -> gx_string_scroll_wheel_string_list)
-            {
-                _gx_system_memory_free((void *)wheel -> gx_string_scroll_wheel_string_list);
-                wheel -> gx_string_scroll_wheel_string_list = GX_NULL;
-            }
-#if defined(GX_ENABLE_DEPRECATED_STRING_API)
-            if (wheel -> gx_string_scroll_wheel_string_list_deprecated)
-            {
-                _gx_system_memory_free((void *)wheel -> gx_string_scroll_wheel_string_list_deprecated);
-                wheel -> gx_string_scroll_wheel_string_list_deprecated = GX_NULL;
-            }
-#endif
-            wheel -> gx_string_scroll_wheel_string_list_buffer_size = 0;
-        }
-        break;
-
-        default:
-            return GX_INVALID_STYLE;
-        }
-    }
-    return GX_SUCCESS;
 }
 
 /**************************************************************************/

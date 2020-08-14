@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_clipboard_put                            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -67,6 +67,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_system_clipboard_put(VOID *data, UINT data_size)
@@ -93,7 +95,7 @@ UINT  _gx_system_clipboard_put(VOID *data, UINT data_size)
 
     _gx_system_clipboard_size = data_size;
 
-    memcpy(_gx_system_clipboard, data, data_size);
+    memcpy(_gx_system_clipboard, data, data_size); /* Use case of memcpy is verified. */
 
     return(GX_SUCCESS);
 }

@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_button.h                                         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,6 +42,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added new prototypes,       */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -113,6 +116,7 @@ UINT _gx_text_button_create(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *name, GX_W
                             GX_RESOURCE_ID text_id, ULONG style, USHORT Id,
                             GX_CONST GX_RECTANGLE *size);
 VOID _gx_text_button_draw(GX_TEXT_BUTTON *button);
+UINT _gx_text_button_event_process(GX_TEXT_BUTTON *button, GX_EVENT *event_ptr);
 VOID _gx_text_button_text_draw(GX_TEXT_BUTTON *button);
 UINT _gx_text_button_text_color_set(GX_TEXT_BUTTON *text_button,
                                     GX_RESOURCE_ID normal_text_color_id,
@@ -180,6 +184,7 @@ UINT _gxe_radio_button_pixelmap_set(GX_RADIO_BUTTON *button, GX_RESOURCE_ID off_
 UINT _gxe_text_button_create(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
                              GX_RESOURCE_ID text_id, ULONG style, USHORT Id,
                              GX_CONST GX_RECTANGLE *size, UINT text_button_control_block);
+UINT _gxe_text_button_event_process(GX_TEXT_BUTTON *button, GX_EVENT *event_ptr);
 UINT _gxe_text_button_font_set(GX_TEXT_BUTTON *button, GX_RESOURCE_ID font_id);
 UINT _gxe_text_button_text_color_set(GX_TEXT_BUTTON *text_button,
                                      GX_RESOURCE_ID normal_text_color_id,

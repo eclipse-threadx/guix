@@ -279,7 +279,7 @@ static UINT _gx_touch_driver_generic_resistive_coord_calculate(GX_RESISTIVE_TOUC
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_setup            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -313,12 +313,14 @@ static UINT _gx_touch_driver_generic_resistive_coord_calculate(GX_RESISTIVE_TOUC
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_touch_driver_generic_resistive_setup(GX_RESISTIVE_TOUCH *touch, GX_RESISTIVE_TOUCH_INFO *info)
 {
     memset(touch, 0, sizeof(GX_RESISTIVE_TOUCH));
-    memcpy(&touch->gx_resistive_touch_info, info, sizeof(GX_RESISTIVE_TOUCH_INFO));
+    memcpy(&touch->gx_resistive_touch_info, info, sizeof(GX_RESISTIVE_TOUCH_INFO)); /* Use case of memcpy is verified. */
 }
 
 /**************************************************************************/

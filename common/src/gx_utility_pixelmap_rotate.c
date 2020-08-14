@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_pixelmap_rotation                       PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -78,6 +78,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added 565bgr format support,*/
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_utility_pixelmap_rotate(GX_PIXELMAP *src, INT angle, GX_PIXELMAP *destination, INT *rot_cx, INT *rot_cy)
@@ -136,7 +139,8 @@ UINT status = GX_SUCCESS;
         status = _gx_utility_32argb_pixelmap_rotate(src, angle, destination, rot_cx, rot_cy);
         break;
 
-    case  GX_COLOR_FORMAT_565RGB:
+    case GX_COLOR_FORMAT_565RGB:
+    case GX_COLOR_FORMAT_565BGR:
         /* Call 565rgb pixelmap rotate.  */
         status = _gx_utility_565rgb_pixelmap_rotate(src, angle, destination, rot_cx, rot_cy);
         break;

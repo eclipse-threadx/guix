@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_checkbox_event_process                          PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -56,7 +56,8 @@
 /*  CALLS                                                                 */
 /*                                                                        */
 /*    [_gx_button_select_handler]           Button select callback        */
-/*    _gx_widget_event_process              Default widget event process  */
+/*    _gx_text_button_event_process         Default widget event process  */
+/*    _gx_widget_event_to_parent            Pass event to parent          */
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
@@ -68,6 +69,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            updated default call,       */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_checkbox_event_process(GX_CHECKBOX *checkbox, GX_EVENT *event_ptr)
@@ -91,7 +95,7 @@ UINT status;
     default:
 
         /* Call the widget default processing.  */
-        status =  _gx_widget_event_process((GX_WIDGET *)checkbox, event_ptr);
+        status =  _gx_text_button_event_process((GX_TEXT_BUTTON *)checkbox, event_ptr);
     }
 
     /* Return completion status.  */

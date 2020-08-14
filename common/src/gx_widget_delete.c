@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_widget_delete_helper                            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed private string      */
+/*                                            delete,                     */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_widget_delete_helper(GX_WIDGET *widget)
@@ -80,11 +84,6 @@ GX_EVENT delete_event;
     widget -> gx_widget_event_process_function(widget, &delete_event);
 
     _gx_widget_unlink(widget);
-
-    if (widget -> gx_widget_style & GX_STYLE_TEXT_COPY)
-    {
-        _gx_system_private_string_delete(widget);
-    }
 
     /* now delete top-level widget */
     widget -> gx_widget_type = 0;

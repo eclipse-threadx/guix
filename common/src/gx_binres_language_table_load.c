@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_resource_header_load                     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -65,30 +65,33 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 UINT _gx_binres_resource_header_load(GX_BINRES_DATA_INFO *info, GX_RESOURCE_HEADER *header)
 {
-    memcpy((GX_BYTE *)&header -> gx_resource_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_resource_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_resource_header_version, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_resource_header_version, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_resource_header_theme_count, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_resource_header_theme_count, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_resource_header_language_count, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_resource_header_language_count, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_resource_header_theme_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_resource_header_theme_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_resource_header_string_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_resource_header_string_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-    memcpy((GX_BYTE *)&header -> gx_resource_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_resource_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
     return GX_SUCCESS;
@@ -100,7 +103,7 @@ UINT _gx_binres_resource_header_load(GX_BINRES_DATA_INFO *info, GX_RESOURCE_HEAD
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_string_header_load                       PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -131,21 +134,24 @@ UINT _gx_binres_resource_header_load(GX_BINRES_DATA_INFO *info, GX_RESOURCE_HEAD
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 UINT _gx_binres_string_header_load(GX_BINRES_DATA_INFO *info, GX_STRING_HEADER *header)
 {
-    memcpy((GX_BYTE *)&header -> gx_string_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_string_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_string_header_language_count, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_string_header_language_count, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_string_header_string_count, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_string_header_string_count, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_string_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_string_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
     return GX_SUCCESS;
@@ -157,7 +163,7 @@ UINT _gx_binres_string_header_load(GX_BINRES_DATA_INFO *info, GX_STRING_HEADER *
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_language_header_load                     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -188,21 +194,24 @@ UINT _gx_binres_string_header_load(GX_BINRES_DATA_INFO *info, GX_STRING_HEADER *
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 UINT _gx_binres_language_header_load(GX_BINRES_DATA_INFO *info, GX_LANGUAGE_HEADER *header)
 {
-    memcpy((GX_BYTE *)&header -> gx_language_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_language_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
-    memcpy((GX_BYTE *)&header -> gx_language_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(USHORT));
+    GX_BINRES_READ_USHORT(header -> gx_language_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
-
-    memcpy((GX_BYTE *)header -> gx_language_header_name, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(header -> gx_language_header_name));
+ 
+    memcpy(&header->gx_language_header_name, info->gx_binres_root_address + info->gx_binres_read_offset, sizeof(header->gx_language_header_name)); /* Use case of memcpy is verified. */
     info -> gx_binres_read_offset += sizeof(header -> gx_language_header_name);
 
-    memcpy((GX_BYTE *)&header -> gx_language_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset, sizeof(ULONG));
+    GX_BINRES_READ_ULONG(header -> gx_language_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
     return GX_SUCCESS;
@@ -312,7 +321,7 @@ UINT               string_table_size;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_language_table_load                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -353,6 +362,9 @@ UINT               string_table_size;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
@@ -420,7 +432,7 @@ GX_CHAR             get_char;
                 for (string_index = 1; string_index < string_header.gx_string_header_string_count; string_index++)
                 {
                     /* Read string length. */
-                    memcpy((USHORT *)&string_length, info.gx_binres_root_address + info.gx_binres_read_offset, sizeof(USHORT));
+                    GX_BINRES_READ_USHORT(string_length, info.gx_binres_root_address + info.gx_binres_read_offset);
                     info.gx_binres_read_offset += sizeof(USHORT);
 
                     if (string_length == 0)
@@ -442,7 +454,7 @@ GX_CHAR             get_char;
                 {
                     string_length++;
 
-                    memcpy((GX_BYTE *)&get_char, info.gx_binres_root_address + info.gx_binres_read_offset, 1);
+                    get_char = (GX_CHAR)info.gx_binres_root_address[info.gx_binres_read_offset];
                     info.gx_binres_read_offset++;
 
                     if (get_char == '\0')

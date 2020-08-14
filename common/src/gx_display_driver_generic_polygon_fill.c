@@ -464,7 +464,7 @@ GX_COLOR      fill_color;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_polygon_pixelmap_scan_line_draw  PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.0.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -502,6 +502,9 @@ GX_COLOR      fill_color;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed use of memcpy,      */
+/*                                            resulting in version 6.0.2  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_polygon_pixelmap_scan_line_draw(GX_DRAW_CONTEXT *context, GX_POLYGON_EDGE *aet, INT aet_size,
@@ -515,13 +518,13 @@ GX_FILL_PIXELMAP_INFO old_info;
 GX_BOOL               is_drawn = GX_FALSE;
 
     /* Store the ptr info in case that this line will be drawn several times.*/
-    memcpy(&old_info, info, sizeof(GX_FILL_PIXELMAP_INFO));
+    old_info = (*info);
 
     for (index = 0; index < aet_size - 1; index = (GX_VALUE)(index + (GX_VALUE)2))
     {
         /* if aet_size is bigger than 2, it means there's at least two segment in this line.
            So it must be drawn this line several times and should always be started from the "correct" position. */
-        memcpy(info, &old_info, sizeof(GX_FILL_PIXELMAP_INFO));
+        (*info) = old_info;
 
         /* Pick up x coordinate value of the pair intersections. */
         x1 = aet[index].gx_polygon_edge_xi;
