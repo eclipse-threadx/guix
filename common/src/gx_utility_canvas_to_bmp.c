@@ -58,7 +58,7 @@ typedef struct bmp_info_struct
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_write_bitmap_header                     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -90,6 +90,8 @@ typedef struct bmp_info_struct
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_write_bitmap_header(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT (*write_data)(GX_UBYTE *byte_data, UINT data_count))
@@ -299,7 +301,7 @@ INT                blue;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_write_bitmap_data_32bpp                 PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -331,6 +333,8 @@ INT                blue;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static void _gx_utility_write_bitmap_data_32bpp(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT (*write_data)(GX_UBYTE *byte_data, UINT data_count))
@@ -361,7 +365,7 @@ INT       y;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_write_bitmap_data_16bpp                 PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -393,6 +397,8 @@ INT       y;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static void _gx_utility_write_bitmap_data_16bpp(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT (*write_data)(GX_UBYTE *byte_data, UINT data_count))
@@ -430,7 +436,7 @@ INT     width;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_write_bitmap_data_8bpp                  PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -462,6 +468,8 @@ INT     width;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static void _gx_utility_write_bitmap_data_8bpp(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT (*write_data)(GX_UBYTE *byte_data, UINT data_count))
@@ -506,7 +514,7 @@ INT       fixed_count;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_write_bitmap_data_4bpp                  PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -538,6 +546,8 @@ INT       fixed_count;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static void _gx_utility_write_bitmap_data_4bpp(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT (*write_data)(GX_UBYTE *byte_data, UINT data_count))
@@ -611,7 +621,7 @@ INT       row_count;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_write_bitmap_data_monochrome            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -643,6 +653,8 @@ INT       row_count;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static void _gx_utility_write_bitmap_data_monochrome(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT (*write_data)(GX_UBYTE *byte_data, UINT data_count))
@@ -721,7 +733,7 @@ GX_UBYTE  color = 0;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_canvas_to_bmp                           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -762,6 +774,8 @@ GX_UBYTE  color = 0;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_utility_canvas_to_bmp(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT (*write_data)(GX_UBYTE *byte_data, UINT data_count))

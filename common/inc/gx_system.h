@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_system.h                                         PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,10 +42,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            removed private string      */
 /*                                            delete declaration,         */
-/*                                            resulting in version 6.0.2  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -325,6 +325,12 @@ SYSTEM_DECLARE  GX_WIDGET *_gx_system_input_capture_stack[GX_MAX_INPUT_CAPTURE_N
 SYSTEM_DECLARE  GX_WIDGET *_gx_system_input_owner;
 SYSTEM_DECLARE  INT        _gx_system_capture_count;
 
+/* stack of rich text context. */
+SYSTEM_DECLARE  GX_RICH_TEXT_CONTEXT_STACK  _gx_system_rich_text_context_stack;
+
+/* temporary stack used to save rich text context stack. */
+SYSTEM_DECLARE  GX_RICH_TEXT_CONTEXT_STACK  _gx_system_rich_text_context_stack_save;
+
 #ifdef GX_THREADX_BINDING
 
 /* guix system thread control block */
@@ -408,10 +414,10 @@ SYSTEM_DECLARE  UINT _gx_system_last_error;
 
 /* Define the number of system errors.  */
 
-SYSTEM_DECLARE  ULONG _gx_system_error_count;
+SYSTEM_DECLARE  ULONG                  _gx_system_error_count;
 
-SYSTEM_DECLARE VOID *_gx_system_clipboard;
-SYSTEM_DECLARE UINT  _gx_system_clipboard_size;
+SYSTEM_DECLARE VOID                   *_gx_system_clipboard;
+SYSTEM_DECLARE UINT                    _gx_system_clipboard_size;
 
 SYSTEM_DECLARE GX_SCREEN_STACK_CONTROL _gx_system_screen_stack;
 

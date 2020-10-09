@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_view_display_info_get           PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -81,9 +81,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  06-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            support line break status,  */
-/*                                            resulting in version 6.0.1  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_multi_line_text_view_display_info_get(GX_MULTI_LINE_TEXT_VIEW *text_view, UINT start_index,

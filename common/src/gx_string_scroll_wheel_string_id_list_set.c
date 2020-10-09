@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_string_scroll_wheel_string_id_list_set          PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -67,6 +67,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to delete       */
+/*                                            dynamic bidi text,          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_string_scroll_wheel_string_id_list_set(GX_STRING_SCROLL_WHEEL *wheel,
@@ -80,7 +84,7 @@ UINT status;
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
         if (wheel -> gx_string_scroll_wheel_string_list_deprecated)
         {
-            if(_gx_system_memory_free == GX_NULL)
+            if (_gx_system_memory_free == GX_NULL)
             {
                 return GX_SYSTEM_MEMORY_ERROR;
             }
@@ -91,7 +95,7 @@ UINT status;
 
         if (wheel -> gx_string_scroll_wheel_string_list)
         {
-            if(_gx_system_memory_free == GX_NULL)
+            if (_gx_system_memory_free == GX_NULL)
             {
                 return GX_SYSTEM_MEMORY_ERROR;
             }
@@ -106,6 +110,10 @@ UINT status;
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
     wheel -> gx_string_scroll_wheel_string_list_deprecated = GX_NULL;
 #endif
+
+#ifdef GX_DYNAMIC_BIDI_TEXT_SUPPORT
+    _gx_text_scroll_wheel_dynamic_bidi_text_delete((GX_TEXT_SCROLL_WHEEL *)wheel);
+#endif  // GX_DYNAMIC_BIDI_TEXT_SUPPORT
 
     status = _gx_scroll_wheel_total_rows_set((GX_SCROLL_WHEEL *)wheel, id_count);
 

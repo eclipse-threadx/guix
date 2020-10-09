@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                           Win32/Visual     */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -38,7 +38,7 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 
@@ -64,7 +64,7 @@ typedef SHORT  GX_VALUE;
 
 #define GX_VALUE_MAX                        0x7FFF
 
-/* For the win32 port, the entry point is WinMain, which is defined 
+/* For the win32 port, the entry point is WinMain, which is defined
    in the win32 driver file.  The entry point for GUIX demo is gx_main(). */
 
 #define main(a, b)                          gx_main(a, b)
@@ -96,8 +96,6 @@ typedef SHORT  GX_VALUE;
 
 
 /* Define several macros for the error checking shell in GUIX.  */
-
-#ifndef GX_DISABLE_THREADX_BINDING
 
 #ifndef TX_TIMER_PROCESS_IN_ISR
 
@@ -146,19 +144,12 @@ typedef SHORT  GX_VALUE;
 
 #endif
 
-#else
-#define GX_CALLER_CHECKING_EXTERNS
-#define GX_THREADS_ONLY_CALLER_CHECKING
-#define GX_INIT_AND_THREADS_CALLER_CHECKING
-#define GX_NOT_ISR_CALLER_CHECKING
-#define GX_THREAD_WAIT_CALLER_CHECKING
-#endif
 
 /* Define the version ID of GUIX.  This may be utilized by the application.  */
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Win32/Visual Version 6.0.2 *";
+    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Win32/Visual Version 6.1 *";
 #else
 extern  CHAR _gx_version_id[];
 #endif

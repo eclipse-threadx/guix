@@ -32,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_create                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,6 +70,11 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to init new     */
+/*                                            structure member for        */
+/*                                            dynamic bidi text support,  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel,
@@ -91,6 +96,11 @@ UINT  _gx_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel,
     wheel -> gx_text_scroll_wheel_selected_text_color = GX_COLOR_ID_TEXT;
     wheel -> gx_text_scroll_wheel_disabled_text_color = GX_COLOR_ID_DISABLED_TEXT;
     wheel -> gx_widget_draw_function = (VOID (*)(GX_WIDGET *))_gx_text_scroll_wheel_draw;
+    wheel -> gx_widget_event_process_function = (UINT (*)(GX_WIDGET *, GX_EVENT *))_gx_text_scroll_wheel_event_process;
+
+#ifdef GX_DYNAMIC_BIDI_TEXT_SUPPORT
+    wheel -> gx_text_scroll_wheel_bidi_resolved_text_info = GX_NULL;
+#endif  // GX_DYNAMIC_BIDI_TEXT_SUPPORT
 
     return(GX_SUCCESS);
 }

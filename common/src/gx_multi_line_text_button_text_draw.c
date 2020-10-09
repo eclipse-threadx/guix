@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_button_text_draw                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -71,6 +71,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed dynamic bidi text   */
+/*                                            processing logic,           */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_multi_line_text_button_text_draw(GX_MULTI_LINE_TEXT_BUTTON *button)
@@ -89,11 +93,6 @@ GX_FONT       *font;
 GX_RESOURCE_ID color;
 GX_VALUE       border_width;
 GX_STRING     *line;
-
-#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-GX_BIDI_TEXT_INFO          text_info;
-GX_BIDI_RESOLVED_TEXT_INFO resolved_info;
-#endif
 
     /* Setup the button.  */
     widget = (GX_WIDGET *)button;
@@ -159,29 +158,8 @@ GX_BIDI_RESOLVED_TEXT_INFO resolved_info;
                     break;
                 }
 
-#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-                if (_gx_system_bidi_text_enabled)
-                {
-                    text_info.gx_bidi_text_info_text = *line;
-                    text_info.gx_bidi_text_info_font = GX_NULL;
-                    text_info.gx_bidi_text_info_display_width = -1;
-
-                    if (_gx_utility_bidi_paragraph_reorder(&text_info, &resolved_info) == GX_SUCCESS)
-                    {
-                        line = resolved_info.gx_bidi_resolved_text_info_text;
-                    }
-                }
-#endif
                 /* Draw the text.  */
                 _gx_canvas_text_draw_ext((GX_VALUE)(xtextpos + xtextoffset), (GX_VALUE)(ytextpos + ytextoffset), line);
-
-#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-                if (_gx_system_bidi_text_enabled && resolved_info.gx_bidi_resolved_text_info_text)
-                {
-                    _gx_system_memory_free(resolved_info.gx_bidi_resolved_text_info_text);
-                    resolved_info.gx_bidi_resolved_text_info_text = GX_NULL;
-                }
-#endif
             }
             ytextpos += font -> gx_font_line_height;
         }

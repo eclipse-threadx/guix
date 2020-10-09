@@ -39,7 +39,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_view_draw                       PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -96,10 +96,12 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  06-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            support runtime Arabic      */
 /*                                            line breaking,              */
-/*                                            resulting in version 6.0.1  */
+/*                                            modified logic of dynamic   */
+/*                                            bidi text draw,             */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_multi_line_text_view_text_draw(GX_MULTI_LINE_TEXT_VIEW *text_view, GX_RESOURCE_ID text_color)
@@ -125,10 +127,8 @@ GX_FONT      *font;
 GX_SCROLLBAR *scroll;
 
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-GX_BIDI_TEXT_INFO          text_info;
-GX_BIDI_RESOLVED_TEXT_INFO resolved_info;
-UINT                       processed_count;
-GX_CHAR                    pre_char;
+GX_BIDI_RESOLVED_TEXT_INFO *next = GX_NULL;
+UINT                        bidi_text_line_index = 0;
 #endif
 
     _gx_context_line_color_set(text_color);
@@ -140,6 +140,7 @@ GX_CHAR                    pre_char;
 
     if (text_view -> gx_multi_line_text_view_line_index_old)
     {
+
         /* Get visible rows. */
         _gx_multi_line_text_view_visible_rows_compute(text_view);
 
@@ -204,6 +205,25 @@ GX_CHAR                    pre_char;
     y_pos += text_view -> gx_multi_line_text_view_text_scroll_shift;
     y_pos += (text_view -> gx_multi_line_text_view_line_space >> 1);
 
+    line_string.gx_string_ptr = " ";
+    line_string.gx_string_length = 1;
+
+    _gx_system_string_width_get_ext(font, &line_string, &space_width);
+
+    first_visible_line = ((-text_view -> gx_multi_line_text_view_text_scroll_shift)) / line_height;
+
+    if (first_visible_line < 0)
+    {
+        first_visible_line = 0;
+    }
+
+    last_visible_line = first_visible_line + (INT)(text_view -> gx_multi_line_text_view_text_visible_rows);
+
+    if (last_visible_line > (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1))
+    {
+        last_visible_line = (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1);
+    }
+
     if (text_view -> gx_multi_line_text_view_text_id)
     {
         _gx_widget_string_get_ext((GX_WIDGET *)text_view, text_view -> gx_multi_line_text_view_text_id, &string);
@@ -213,137 +233,40 @@ GX_CHAR                    pre_char;
         _gx_system_private_string_get(&text_view -> gx_multi_line_text_view_text, &string, text_view -> gx_widget_style);
     }
 
-    line_string.gx_string_ptr = " ";
-    line_string.gx_string_length = 1;
+    y_pos += (INT)(first_visible_line * line_height);
 
-    _gx_system_string_width_get_ext(font, &line_string, &space_width);
-
-
-#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-
-    if ((text_view -> gx_widget_type == GX_TYPE_MULTI_LINE_TEXT_VIEW) && _gx_system_bidi_text_enabled)
+    for (index = first_visible_line; index <= last_visible_line; index++)
     {
-        text_info.gx_bidi_text_info_display_width = (GX_VALUE)(client.gx_rectangle_right - client.gx_rectangle_left - 2);
-        text_info.gx_bidi_text_info_font = font;
-
-        pre_char = '\0';
-        processed_count = 0;
-
-        while (processed_count < string.gx_string_length)
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+        if (_gx_system_bidi_text_enabled)
         {
-            text_info.gx_bidi_text_info_text.gx_string_ptr = string.gx_string_ptr + processed_count;
-            text_info.gx_bidi_text_info_text.gx_string_length = string.gx_string_length - processed_count;
+            line_string.gx_string_ptr = GX_NULL;
+            line_string.gx_string_length = 0;
 
-            switch (text_info.gx_bidi_text_info_text.gx_string_ptr[0])
+            if (!next)
             {
-            case GX_KEY_CARRIAGE_RETURN:
-                processed_count++;
-                y_pos += line_height;
-                pre_char = GX_KEY_CARRIAGE_RETURN;
-                continue;
-
-            case GX_KEY_LINE_FEED:
-                if (pre_char != GX_KEY_CARRIAGE_RETURN)
-                {
-                    y_pos += line_height;
-                }
-                processed_count++;
-                pre_char = '\0';
-                continue;
-
-            default:
-                pre_char = '\0';
-                break;
+                next = text_view -> gx_multi_line_text_view_bidi_resolved_text_info;
             }
 
-            if (_gx_utility_bidi_paragraph_reorder(&text_info, &resolved_info) == GX_SUCCESS)
+            while (next)
             {
-                for (index = 0; index < (INT)(resolved_info.gx_bidi_resolved_text_total_lines); index++)
+                if (bidi_text_line_index + next -> gx_bidi_resolved_text_info_total_lines > (UINT)index)
                 {
-                    line_string = resolved_info.gx_bidi_resolved_text_info_text[index];
-
-                    if (y_pos + line_height > client.gx_rectangle_top)
+                    /* Get line string. */
+                    if (next -> gx_bidi_resolved_text_info_text)
                     {
-                        switch (text_view -> gx_widget_style & GX_STYLE_TEXT_ALIGNMENT_MASK)
-                        {
-                        case GX_STYLE_TEXT_RIGHT:
-                            _gx_system_string_width_get_ext(font, &line_string, &text_width);
-                            while (text_width > (client.gx_rectangle_right - client.gx_rectangle_left - 2))
-                            {
-                                text_width = (GX_VALUE)(text_width - space_width);
-                            }
-                            x_pos = client.gx_rectangle_right - 1;
-                            x_pos = (GX_VALUE)(x_pos - text_width);
-                            break;
-                        case GX_STYLE_TEXT_LEFT:
-                            x_pos = client.gx_rectangle_left + 1;
-                            break;
-                        case GX_STYLE_TEXT_CENTER:
-                        default:
-                            _gx_system_string_width_get_ext(font, &line_string, &text_width);
-                            client_width = (GX_VALUE)(client.gx_rectangle_right - client.gx_rectangle_left + 1);
-                            while (text_width > (client_width - 3))
-                            {
-                                text_width = (GX_VALUE)(text_width - space_width);
-                            }
-                            x_pos = (GX_VALUE)(client.gx_rectangle_left + ((client_width - text_width) / 2));
-                            break;
-                        }
-
-                        /* Draw the text. */
-                        _gx_canvas_text_draw_ext((GX_VALUE)x_pos, (GX_VALUE)y_pos, &line_string);
+                        line_string = next -> gx_bidi_resolved_text_info_text[(UINT)index - bidi_text_line_index];
                     }
-
-                    if (index < (INT)(resolved_info.gx_bidi_resolved_text_total_lines - 1))
-                    {
-                        y_pos += line_height;
-                    }
-
-                    if (y_pos > client.gx_rectangle_bottom)
-                    {
-                        break;
-                    }
-                }
-
-                processed_count += (UINT)resolved_info.gx_bidi_resolved_text_processed_count;
-
-                if (resolved_info.gx_bidi_resolved_text_info_text)
-                {
-                    _gx_system_memory_free(resolved_info.gx_bidi_resolved_text_info_text);
-                }
-
-                if (y_pos > client.gx_rectangle_bottom)
-                {
                     break;
                 }
+
+                bidi_text_line_index += next -> gx_bidi_resolved_text_info_total_lines;
+                next = next -> gx_bidi_resolved_text_info_next;
             }
-            else
-            {
-                break;
-            }
         }
-    }
-    else
-    {
-#endif
-        first_visible_line = ((-text_view -> gx_multi_line_text_view_text_scroll_shift)) / line_height;
-
-        if (first_visible_line < 0)
+        else
         {
-            first_visible_line = 0;
-        }
-
-        last_visible_line = first_visible_line + (INT)(text_view -> gx_multi_line_text_view_text_visible_rows);
-
-        if (last_visible_line > (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1))
-        {
-            last_visible_line = (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1);
-        }
-
-        y_pos += (INT)(first_visible_line * line_height);
-
-        for (index = first_visible_line; index <= last_visible_line; index++)
-        {
+#endif /* defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT) */
             line_cache_start = text_view -> gx_multi_line_text_view_first_cache_line;
             line_start_index = text_view -> gx_multi_line_text_view_line_index[index - (INT)line_cache_start];
 
@@ -356,45 +279,44 @@ GX_CHAR                    pre_char;
                 line_end_index = text_view -> gx_multi_line_text_view_line_index[index - (INT)(line_cache_start) + 1];
             }
 
-            switch (text_view -> gx_widget_style & GX_STYLE_TEXT_ALIGNMENT_MASK)
-            {
-            case GX_STYLE_TEXT_RIGHT:
-                line_string.gx_string_ptr = string.gx_string_ptr + line_start_index;
-                line_string.gx_string_length = line_end_index - line_start_index;
-                _gx_system_string_width_get_ext(font, &line_string, &text_width);
-                while (text_width > (client.gx_rectangle_right - client.gx_rectangle_left - 2))
-                {
-                    text_width = (GX_VALUE)(text_width - space_width);
-                }
-                x_pos = client.gx_rectangle_right - 1;
-                x_pos = (GX_VALUE)(x_pos - text_width);
-                break;
-            case GX_STYLE_TEXT_LEFT:
-                x_pos = client.gx_rectangle_left + 1;
-                break;
-            case GX_STYLE_TEXT_CENTER:
-            default:
-                line_string.gx_string_ptr = string.gx_string_ptr + line_start_index;
-                line_string.gx_string_length = line_end_index - line_start_index;
-                _gx_system_string_width_get_ext(font, &line_string, &text_width);
-                client_width = (GX_VALUE)(client.gx_rectangle_right - client.gx_rectangle_left + 1);
-                while (text_width > (client_width - 3))
-                {
-                    text_width = (GX_VALUE)(text_width - space_width);
-                }
-                x_pos = (GX_VALUE)(client.gx_rectangle_left + ((client_width - text_width) / 2));
-                break;
-            }
-
-            /* Draw the text. */
+            /* Get line string. */
             line_string.gx_string_ptr = string.gx_string_ptr + line_start_index;
             line_string.gx_string_length = line_end_index - line_start_index;
-            _gx_canvas_text_draw_ext((GX_VALUE)x_pos, (GX_VALUE)y_pos, &line_string);
-            y_pos += line_height;
-        }
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+        }
+#endif /* defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT) */
+
+
+        switch (text_view -> gx_widget_style & GX_STYLE_TEXT_ALIGNMENT_MASK)
+        {
+        case GX_STYLE_TEXT_RIGHT:
+            _gx_system_string_width_get_ext(font, &line_string, &text_width);
+            while (text_width > (client.gx_rectangle_right - client.gx_rectangle_left - 2))
+            {
+                text_width = (GX_VALUE)(text_width - space_width);
+            }
+            x_pos = client.gx_rectangle_right - 1;
+            x_pos = (GX_VALUE)(x_pos - text_width);
+            break;
+        case GX_STYLE_TEXT_LEFT:
+            x_pos = client.gx_rectangle_left + 1;
+            break;
+        case GX_STYLE_TEXT_CENTER:
+        default:
+            _gx_system_string_width_get_ext(font, &line_string, &text_width);
+            client_width = (GX_VALUE)(client.gx_rectangle_right - client.gx_rectangle_left + 1);
+            while (text_width > (client_width - 3))
+            {
+                text_width = (GX_VALUE)(text_width - space_width);
+            }
+            x_pos = (GX_VALUE)(client.gx_rectangle_left + ((client_width - text_width) / 2));
+            break;
+        }
+
+        /* Draw the text. */
+        _gx_canvas_text_draw_ext((GX_VALUE)x_pos, (GX_VALUE)y_pos, &line_string);
+        y_pos += line_height;
     }
-#endif
 
     _gx_canvas_drawing_complete(canvas, GX_FALSE);
 }

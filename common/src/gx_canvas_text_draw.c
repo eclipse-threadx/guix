@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_text_draw                                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -71,6 +71,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -105,7 +107,7 @@ UINT      status;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_text_draw_ext                            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -147,6 +149,8 @@ UINT      status;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_canvas_text_draw_ext(GX_VALUE x_start, GX_VALUE y_start, GX_CONST GX_STRING *string)
@@ -169,7 +173,7 @@ GX_FONT *font = context -> gx_draw_context_brush.gx_brush_font;
 
     width = 0;
 
-    if ((font ==GX_NULL) || (font -> gx_font_glyphs.gx_font_normal_glyphs == GX_NULL))
+    if ((font == GX_NULL) || (font -> gx_font_glyphs.gx_font_normal_glyphs == GX_NULL))
     {
         return GX_INVALID_FONT;
     }
@@ -280,3 +284,4 @@ GX_FONT *font = context -> gx_draw_context_brush.gx_brush_font;
 
     return(status);
 }
+

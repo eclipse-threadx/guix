@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_565rgb_pixelmap_raw_write        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -67,6 +67,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_pixelmap_raw_write(GX_DRAW_CONTEXT *context,
@@ -111,7 +113,7 @@ GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_565rgb_pixelmap_alpha_write      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -146,6 +148,8 @@ GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_pixelmap_alpha_write(GX_DRAW_CONTEXT *context,
@@ -197,7 +201,7 @@ void               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*                                                                        */
 /*    _gx_display_driver_565rgb_pixelmap_compressed_write                 */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -231,6 +235,8 @@ void               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_pixelmap_compressed_write(GX_DRAW_CONTEXT *context,
@@ -332,7 +338,7 @@ GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_display_driver_565rgb_pixelmap_compressed_alpha_write           */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -367,6 +373,8 @@ GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_pixelmap_compressed_alpha_write(GX_DRAW_CONTEXT *context,
@@ -526,7 +534,7 @@ void               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_565rgb_palette_pixelmap_raw_write  PORTABLE C    */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -560,6 +568,8 @@ void               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_palette_pixelmap_raw_write(GX_DRAW_CONTEXT *context,
@@ -614,7 +624,7 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_display_driver_565rgb_palette_pixelmap_transparent_raw_write    */
 /*                                                           PORTABLE C   */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -648,6 +658,8 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_palette_pixelmap_transparent_raw_write(GX_DRAW_CONTEXT *context,
@@ -708,7 +720,7 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*    _gx_display_driver_565rgb_palette_pixelmap_transparent_compressed   */
 /*      _write                                                            */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -743,6 +755,8 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_palette_pixelmap_transparent_compressed_write(GX_DRAW_CONTEXT *context,
@@ -909,7 +923,7 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_display_driver_565rgb_palette_pixelmap_compressed_write         */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -943,6 +957,8 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_palette_pixelmap_compressed_write(GX_DRAW_CONTEXT *context,
@@ -1091,7 +1107,7 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_display_driver_16bpp_4444argb_pixelmap_raw_write                */
 /*                                                         PORTABLE C     */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1128,6 +1144,8 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_16bpp_4444argb_pixelmap_raw_write(GX_DRAW_CONTEXT *context,
@@ -1182,7 +1200,7 @@ GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_display_driver_16bpp_4444argb_pixelmap_compressed_write         */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1219,6 +1237,8 @@ GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_16bpp_4444argb_pixelmap_compressed_write(GX_DRAW_CONTEXT *context,
@@ -1396,7 +1416,7 @@ GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_565rgb_pixelmap_draw             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1441,6 +1461,8 @@ GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_565rgb_pixelmap_draw(GX_DRAW_CONTEXT *context,
@@ -1580,7 +1602,7 @@ GX_UBYTE brush_alpha = context -> gx_draw_context_brush.gx_brush_alpha;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_1555xrgb_pixelmap_draw           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1618,6 +1640,8 @@ GX_UBYTE brush_alpha = context -> gx_draw_context_brush.gx_brush_alpha;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_1555xrgb_pixelmap_draw(GX_DRAW_CONTEXT *context,

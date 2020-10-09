@@ -37,7 +37,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_view_text_id_set                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -83,12 +83,15 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to delete       */
+/*                                            dynamic bidi text,          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_multi_line_text_view_text_id_set(GX_MULTI_LINE_TEXT_VIEW *text_view,
                                           GX_RESOURCE_ID text_id)
 {
-
     if (text_view -> gx_widget_style & GX_STYLE_TEXT_COPY)
     {
         if (text_view -> gx_multi_line_text_view_text.gx_string_ptr)
@@ -101,8 +104,15 @@ UINT _gx_multi_line_text_view_text_id_set(GX_MULTI_LINE_TEXT_VIEW *text_view,
     text_view -> gx_multi_line_text_view_text_total_rows = 0;
     text_view -> gx_multi_line_text_view_line_index_old = GX_TRUE;
 
-    _gx_widget_string_get_ext((GX_WIDGET*)text_view, text_id, &text_view->gx_multi_line_text_view_text);
+    _gx_widget_string_get_ext((GX_WIDGET *)text_view, text_id, &text_view -> gx_multi_line_text_view_text);
     text_view -> gx_multi_line_text_view_text.gx_string_ptr = GX_NULL;
+
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    if (text_view -> gx_multi_line_text_view_bidi_resolved_text_info)
+    {
+        _gx_utility_bidi_resolved_text_info_delete(&text_view -> gx_multi_line_text_view_bidi_resolved_text_info);
+    }
+#endif
 
     if (text_view -> gx_widget_status & GX_STATUS_VISIBLE)
     {

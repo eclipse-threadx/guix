@@ -53,7 +53,7 @@ static GX_CONST GX_UBYTE asin_angle_value_table[] = {
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_math_asin_5_4_0                         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -86,6 +86,8 @@ static GX_CONST GX_UBYTE asin_angle_value_table[] = {
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GUIX_5_4_0_COMPATIBILITY)
@@ -119,7 +121,7 @@ INT angle = 0;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_math_asin                               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -153,6 +155,8 @@ INT angle = 0;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 INT _gx_utility_math_asin(GX_FIXED_VAL x)

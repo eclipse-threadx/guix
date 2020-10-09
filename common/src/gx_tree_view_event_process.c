@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _tree_view_selected_detect                          PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static GX_BOOL _tree_view_selected_detect(GX_TREE_VIEW *tree, GX_MENU *test_menu)
@@ -111,7 +113,7 @@ GX_BOOL       found = GX_FALSE;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_tree_view_item_find                             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -148,6 +150,8 @@ GX_BOOL       found = GX_FALSE;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_tree_view_item_find(GX_WIDGET *start, GX_VALUE line_y, GX_WIDGET **returned_item)
@@ -238,7 +242,7 @@ GX_BOOL       search_child;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_tree_view_root_icon_rect_get                    PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -274,6 +278,8 @@ GX_BOOL       search_child;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_tree_view_root_icon_rect_get(GX_TREE_VIEW *tree, GX_WIDGET *item, GX_RECTANGLE *root_rect)
@@ -305,7 +311,7 @@ GX_PIXELMAP *map;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_tree_menu_pen_down_event_process                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -352,6 +358,8 @@ GX_PIXELMAP *map;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_tree_menu_pen_down_event_process(GX_TREE_VIEW *tree, GX_EVENT *event_ptr)
@@ -429,7 +437,7 @@ GX_BOOL      check_selection = GX_FALSE;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_tree_view_event_process                         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -466,6 +474,8 @@ GX_BOOL      check_selection = GX_FALSE;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_tree_view_event_process(GX_TREE_VIEW *tree, GX_EVENT *event_ptr)

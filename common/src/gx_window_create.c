@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_window_create                                   PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -75,6 +75,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            fixed compiler warnings,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_window_create(GX_WINDOW *window, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
@@ -104,7 +107,7 @@ GX_VALUE border_width;
     window -> gx_window_move_start.gx_point_y =   0;
     window -> gx_widget_draw_function =           (VOID (*)(GX_WIDGET *))_gx_window_draw;
     window -> gx_widget_event_process_function =  (UINT (*)(GX_WIDGET *, GX_EVENT *))_gx_window_event_process;
-    window -> gx_window_scroll_info_get =         (VOID (*)(GX_WINDOW *, ULONG, GX_SCROLL_INFO *))_gx_window_scroll_info_get;
+    window -> gx_window_scroll_info_get =         (VOID (*)(GX_WINDOW *, ULONG, GX_SCROLL_INFO *))(void (*)(void))_gx_window_scroll_info_get;
 
     /* Determine if a parent widget was provided.  */
     if (parent)

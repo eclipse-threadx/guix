@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_button_text_set                            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -67,6 +67,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -96,7 +98,7 @@ GX_STRING string;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_button_text_set_ext                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -128,6 +130,10 @@ GX_STRING string;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to delete       */
+/*                                            dynamic bidi text,          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_text_button_text_set_ext(GX_TEXT_BUTTON *button, GX_CONST GX_STRING *string)
@@ -152,6 +158,13 @@ UINT status = GX_SUCCESS;
             button -> gx_text_button_string.gx_string_length = 0;
         }
     }
+
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    if (button -> gx_text_button_bidi_resolved_text_info)
+    {
+        _gx_utility_bidi_resolved_text_info_delete(&button -> gx_text_button_bidi_resolved_text_info);
+    }
+#endif
 
     if (button -> gx_widget_status & GX_STATUS_VISIBLE)
     {

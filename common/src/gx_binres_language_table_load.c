@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_resource_header_load                     PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -65,9 +65,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            removed use of memcpy,      */
-/*                                            resulting in version 6.0.2  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
@@ -103,7 +103,7 @@ UINT _gx_binres_resource_header_load(GX_BINRES_DATA_INFO *info, GX_RESOURCE_HEAD
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_string_header_load                       PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -134,9 +134,9 @@ UINT _gx_binres_resource_header_load(GX_BINRES_DATA_INFO *info, GX_RESOURCE_HEAD
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            removed use of memcpy,      */
-/*                                            resulting in version 6.0.2  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
@@ -163,7 +163,7 @@ UINT _gx_binres_string_header_load(GX_BINRES_DATA_INFO *info, GX_STRING_HEADER *
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_language_header_load                     PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -194,9 +194,9 @@ UINT _gx_binres_string_header_load(GX_BINRES_DATA_INFO *info, GX_STRING_HEADER *
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            removed use of memcpy,      */
-/*                                            resulting in version 6.0.2  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
@@ -223,7 +223,7 @@ UINT _gx_binres_language_header_load(GX_BINRES_DATA_INFO *info, GX_LANGUAGE_HEAD
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_language_table_buffer_allocate           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -259,6 +259,8 @@ UINT _gx_binres_language_header_load(GX_BINRES_DATA_INFO *info, GX_LANGUAGE_HEAD
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
@@ -321,7 +323,7 @@ UINT               string_table_size;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_language_table_load                      PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -362,9 +364,9 @@ UINT               string_table_size;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            removed use of memcpy,      */
-/*                                            resulting in version 6.0.2  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
@@ -502,7 +504,7 @@ GX_CHAR             get_char;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_language_table_load_ext                  PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -543,6 +545,8 @@ GX_CHAR             get_char;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT

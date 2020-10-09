@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_checkbox_create                                 PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -72,6 +72,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            fixed compiler warnings,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_checkbox_create(GX_CHECKBOX *checkbox, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
@@ -87,7 +90,7 @@ UINT  _gx_checkbox_create(GX_CHECKBOX *checkbox, GX_CONST GX_CHAR *name, GX_WIDG
     /* Populate the rest of button control block - overriding as necessary.  */
     checkbox -> gx_widget_type = GX_TYPE_CHECKBOX;
     checkbox -> gx_widget_draw_function = (VOID (*)(GX_WIDGET *))_gx_checkbox_draw;
-    checkbox -> gx_button_select_handler = (VOID (*)(GX_WIDGET *))_gx_checkbox_select;
+    checkbox -> gx_button_select_handler = (VOID (*)(GX_WIDGET *))(void (*)(void))_gx_checkbox_select;
     checkbox -> gx_widget_event_process_function = (UINT (*)(GX_WIDGET *, GX_EVENT *))_gx_checkbox_event_process;
     checkbox -> gx_checkbox_checked_pixelmap_id = GX_PIXELMAP_CHECKBOX_ON_ID;
     checkbox -> gx_checkbox_unchecked_pixelmap_id = GX_PIXELMAP_CHECKBOX_OFF_ID;

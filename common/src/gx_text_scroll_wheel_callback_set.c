@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_callback_set                  PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -66,6 +66,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to delete       */
+/*                                            dynamic bidi text,          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -75,6 +79,11 @@ UINT _gx_text_scroll_wheel_callback_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX
     /* Update event processing function pointer */
     wheel -> gx_text_scroll_wheel_text_get_deprecated = callback;
     wheel -> gx_text_scroll_wheel_text_get = GX_NULL;
+    
+#ifdef GX_DYNAMIC_BIDI_TEXT_SUPPORT
+    _gx_text_scroll_wheel_dynamic_bidi_text_delete(wheel);
+#endif  // GX_DYNAMIC_BIDI_TEXT_SUPPORT
+
     return(GX_SUCCESS);
 }
 #endif
@@ -84,7 +93,7 @@ UINT _gx_text_scroll_wheel_callback_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_callback_set_ext              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -117,6 +126,10 @@ UINT _gx_text_scroll_wheel_callback_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to delete       */
+/*                                            dynamic bidi text,          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL *wheel, UINT (*callback)(GX_TEXT_SCROLL_WHEEL *, INT, GX_STRING *))
@@ -127,6 +140,11 @@ UINT _gx_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL *wheel, UINT (*
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
     wheel -> gx_text_scroll_wheel_text_get_deprecated = GX_NULL;
 #endif
+
+#ifdef GX_DYNAMIC_BIDI_TEXT_SUPPORT
+    _gx_text_scroll_wheel_dynamic_bidi_text_delete(wheel);
+#endif  // GX_DYNAMIC_BIDI_TEXT_SUPPORT
+
     return(GX_SUCCESS);
 }
 

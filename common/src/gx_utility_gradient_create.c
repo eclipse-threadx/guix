@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_gradient_find                           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -64,6 +64,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static GX_BOOL _gx_utility_gradient_find(GX_GRADIENT *gradient)
@@ -97,7 +99,7 @@ GX_GRADIENT *search = _gx_system_gradient_list;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_horizontal_alpha_gradient_create        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -127,6 +129,8 @@ GX_GRADIENT *search = _gx_system_gradient_list;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_horizontal_alpha_gradient_create(GX_GRADIENT *gradient)
@@ -195,7 +199,7 @@ GX_UBYTE *data_start = (GX_UBYTE *)gradient -> gx_gradient_pixelmap.gx_pixelmap_
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_vertical_alpha_gradient_create          PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -225,6 +229,8 @@ GX_UBYTE *data_start = (GX_UBYTE *)gradient -> gx_gradient_pixelmap.gx_pixelmap_
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_vertical_alpha_gradient_create(GX_GRADIENT *gradient)
@@ -273,7 +279,7 @@ GX_UBYTE *data = (GX_UBYTE *)gradient -> gx_gradient_pixelmap.gx_pixelmap_data;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_gradient_create                         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -309,6 +315,8 @@ GX_UBYTE *data = (GX_UBYTE *)gradient -> gx_gradient_pixelmap.gx_pixelmap_data;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_utility_gradient_create(GX_GRADIENT *gradient, GX_VALUE width, GX_VALUE height,

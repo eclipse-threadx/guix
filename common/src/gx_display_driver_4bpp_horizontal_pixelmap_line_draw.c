@@ -34,7 +34,7 @@
 /*                                                                        */
 /*    _gx_display_driver_4bpp_horizontal_pixelmap_line_raw_write          */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,6 +70,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_4bpp_horizontal_pixelmap_line_raw_write(GX_DRAW_CONTEXT *context,
@@ -152,7 +154,7 @@ GX_PIXELMAP    *pixelmap;
 /*                                                                        */
 /*    _gx_display_driver_4bpp_horizontal_pixelmap_line_t_write            */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -188,6 +190,8 @@ GX_PIXELMAP    *pixelmap;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_4bpp_horizontal_pixelmap_line_transparent_write(GX_DRAW_CONTEXT *context,
@@ -278,7 +282,7 @@ GX_PIXELMAP    *pixelmap = info -> pixelmap;
 /*                                                                        */
 /*    _gx_display_driver_4bpp_horizontal_pixelmap_line_compressed_write   */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -314,6 +318,8 @@ GX_PIXELMAP    *pixelmap = info -> pixelmap;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_4bpp_horizontal_pixelmap_line_compressed_write(GX_DRAW_CONTEXT *context,
@@ -490,7 +496,7 @@ GX_UBYTE           getmask = 0;
 /*  _gx_display_driver_4bpp_horizontal_pixelmap_line_compressed_          */
 /*  transparent_write                                                     */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -526,6 +532,8 @@ GX_UBYTE           getmask = 0;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_4bpp_horizontal_pixelmap_line_compressed_transparent_write(GX_DRAW_CONTEXT *context,
@@ -674,7 +682,7 @@ GX_UBYTE           putmask;
 /*                                                                        */
 /*    _gx_display_driver_4bpp_horizontal_pixelmap_line_draw               */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -720,6 +728,8 @@ GX_UBYTE           putmask;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_4bpp_horizontal_pixelmap_line_draw(GX_DRAW_CONTEXT *context,

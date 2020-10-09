@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_button_create                                   PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -83,6 +83,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            fixed compiler warnings,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_button_create(GX_BUTTON *button, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
@@ -99,8 +102,8 @@ UINT  _gx_button_create(GX_BUTTON *button, GX_CONST GX_CHAR *name, GX_WIDGET *pa
 
     _gx_widget_status_add((GX_WIDGET *)button, GX_STATUS_BUTTON_DERIVED);
 
-    button -> gx_button_select_handler = (VOID (*)(GX_WIDGET *))_gx_button_select;
-    button -> gx_button_deselect_handler = (VOID (*)(GX_WIDGET *, GX_BOOL))_gx_button_deselect;
+    button -> gx_button_select_handler = (VOID (*)(GX_WIDGET *))(void (*)(void))_gx_button_select;
+    button -> gx_button_deselect_handler = (VOID (*)(GX_WIDGET *, GX_BOOL))(void (*)(void))_gx_button_deselect;
     button -> gx_widget_draw_function = (VOID (*)(GX_WIDGET *))_gx_button_draw;
     button -> gx_widget_event_process_function =  (UINT (*)(GX_WIDGET *, GX_EVENT *))_gx_button_event_process;
     button -> gx_widget_normal_fill_color =       GX_COLOR_ID_BUTTON_LOWER;

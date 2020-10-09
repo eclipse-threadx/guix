@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_button_event_process                       PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -55,7 +55,8 @@
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _gx_system_memory_free                Release memory                */
+/*    _gx_utility_bidi_resolved_text_info_delete                          */
+/*                                          Delete dynamic bidi text      */
 /*    _gx_button_event_process              Default widget event process  */
 /*                                                                        */
 /*  CALLED BY                                                             */
@@ -67,7 +68,7 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  08-14-2020     Kenneth Maxwell          Initial Version 6.0.2         */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_text_button_event_process(GX_TEXT_BUTTON *button, GX_EVENT *event_ptr)
@@ -87,7 +88,13 @@ UINT  _gx_text_button_event_process(GX_TEXT_BUTTON *button, GX_EVENT *event_ptr)
             button -> gx_text_button_string.gx_string_ptr = GX_NULL;
             button -> gx_text_button_string.gx_string_length = 0;
         }
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+        if (button -> gx_text_button_bidi_resolved_text_info)
+        {
+            _gx_utility_bidi_resolved_text_info_delete(&button -> gx_text_button_bidi_resolved_text_info);
+        }
         break;
+#endif
 
     default:
 

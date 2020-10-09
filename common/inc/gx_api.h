@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,14 +42,12 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  06-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added line break status,    */
 /*                                            updated product constants,  */
-/*                                            resulting in version 6.0.1  */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
-/*                                            modified glyph header,      */
+/*                                            modified controls blocks,   */
 /*                                            added new APIs,             */
-/*                                            resulting in version 6.0.2  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -72,8 +70,8 @@ extern   "C" {
 
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
-#define GUIX_MINOR_VERSION 0
-#define GUIX_PATCH_VERSION 2
+#define GUIX_MINOR_VERSION 1
+#define GUIX_PATCH_VERSION 0
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -237,6 +235,11 @@ typedef struct GX_STRING_STRUCT
 #define GX_MULTI_LINE_TEXT_BUTTON_MAX_LINES 4
 #endif
 
+/* Define rich text context stack size. */
+#ifndef GX_MAX_RICH_TEXT_CONTEXT_NESTING
+#define GX_MAX_RICH_TEXT_CONTEXT_NESTING    10
+#endif
+
 /* maximum number of polygon edges */
 #ifndef GX_POLYGON_MAX_EDGE_NUM
 #define GX_POLYGON_MAX_EDGE_NUM             10
@@ -327,6 +330,7 @@ typedef struct GX_STRING_STRUCT
 #define GX_INVALID_RESOURCE_ID              0x33
 #define GX_INVALID_STRING_LENGTH            0x34
 #define GX_MATH_OVERFLOW                    0x35
+#define GX_RICH_STYLE_NESTING_EXEEDED       0x36
 #define GX_SYSTEM_ERROR                     0xFE
 
 
@@ -543,6 +547,8 @@ typedef struct GX_STRING_STRUCT
 #define GX_EVENT_MARK_DOWN                  59
 #define GX_EVENT_MARK_END                   60
 #define GX_EVENT_MARK_HOME                  61
+#define GX_EVENT_DYNAMIC_BIDI_TEXT_ENABLE   62
+#define GX_EVENT_DYNAMIC_BIDI_TEXT_DISABLE  63
 
 /* Define the pre-defined Widgets ID.        */
 #define ID_DROP_LIST_BUTTON                 65535
@@ -638,6 +644,7 @@ typedef struct GX_STRING_STRUCT
 #define GX_TYPE_STRING_SCROLL_WHEEL         141
 #define GX_TYPE_NUMERIC_SCROLL_WHEEL        142
 #define GX_TYPE_TREE_VIEW                   143
+#define GX_TYPE_RICH_TEXT_VIEW              144
 
 /* A pseudo-type, used by Studio code generator */ 
 #define GX_TYPE_TEMPLATE                    200
@@ -999,6 +1006,33 @@ typedef GX_UBYTE GX_CHAR_CODE;
 #define GX_MOUSE_MAX_RESOLUTION 32
 #endif
 #endif 
+
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+typedef struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT
+{
+    GX_STRING                                *gx_bidi_resolved_text_info_text;
+    UINT                                      gx_bidi_resolved_text_info_total_lines;
+    struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT *gx_bidi_resolved_text_info_next;
+} GX_BIDI_RESOLVED_TEXT_INFO;
+
+#define GX_PROMPT_BIDI_RESOLVED_TEXT_INFO               GX_BIDI_RESOLVED_TEXT_INFO *gx_prompt_bidi_resolved_text_info;
+#define GX_TEXT_BUTTON_BIDI_RESOLVED_TEXT_INFO          GX_BIDI_RESOLVED_TEXT_INFO *gx_text_button_bidi_resolved_text_info;
+#define GX_MULTI_LINE_TEXT_VIEW_BIDI_RESOLVED_TEXT_INFO GX_BIDI_RESOLVED_TEXT_INFO *gx_multi_line_text_view_bidi_resolved_text_info;
+#define GX_TEXT_SCROLL_WHEEL_BIDI_RESOLVED_TEXT_INFO    GX_BIDI_RESOLVED_TEXT_INFO **gx_text_scroll_wheel_bidi_resolved_text_info;
+#else
+#define GX_PROMPT_BIDI_RESOLVED_TEXT_INFO
+#define GX_TEXT_BUTTON_BIDI_RESOLVED_TEXT_INFO
+#define GX_MULTI_LINE_TEXT_VIEW_BIDI_RESOLVED_TEXT_INFO
+#define GX_TEXT_SCROLL_WHEEL_BIDI_RESOLVED_TEXT_INFO
+#endif
+
+#if defined(GX_ENABLE_DEPRECATED_STRING_API)
+#define GX_STRING_SCROLL_WHEEL_STRING_LIST_DEPRECATED GX_CONST GX_CHAR **gx_string_scroll_wheel_string_list_deprecated;
+#define GX_TEXT_SCROLL_WHEEL_TEXT_GET_DEPRECATED      GX_CONST GX_CHAR* (*gx_text_scroll_wheel_text_get_deprecated)(struct GX_TEXT_SCROLL_WHEEL_STRUCT*, INT);
+#else
+#define GX_STRING_SCROLL_WHEEL_STRING_LIST_DEPRECATED
+#define GX_TEXT_SCROLL_WHEEL_TEXT_GET_DEPRECATED
+#endif
 
 /* Define the Point type.  */
 
@@ -1880,6 +1914,46 @@ typedef struct GX_LANGUAGE_HEADER_STRUCT{
     ULONG  gx_language_header_data_size;
 }GX_LANGUAGE_HEADER;
 
+/* Define rich tet view fonts structure. */
+typedef struct GX_RICH_TEXT_FONTS_STRUCT{
+    GX_RESOURCE_ID gx_rich_text_fonts_normal_id;
+    GX_RESOURCE_ID gx_rich_text_fonts_bold_id;
+    GX_RESOURCE_ID gx_rich_text_fonts_italic_id;
+    GX_RESOURCE_ID gx_rich_text_fonts_bold_italic_id;
+}GX_RICH_TEXT_FONTS;
+
+/* Define rich text flags. */
+#define GX_RICH_TEXT_BOLD         0x01
+#define GX_RICH_TEXT_ITALIC       0x02
+#define GX_RICH_TEXT_UNDERLINE    0x04
+#define GX_RICH_TEXT_LEFT         0x00
+#define GX_RICH_TEXT_CENTER       0x10
+#define GX_RICH_TEXT_RIGHT        0x20
+#define GX_RICH_TEXT_ALIGN_MASK   0x30
+
+/* Define rich text view draw style structure. */
+typedef struct GX_RICH_TEXT_FORMAT_STRUCT
+{
+    GX_RESOURCE_ID gx_rich_text_color;
+    GX_RESOURCE_ID gx_rich_text_highlight_color;
+    GX_RESOURCE_ID gx_rich_text_font_id;
+    GX_UBYTE       gx_rich_text_flags;
+}GX_RICH_TEXT_FORMAT;
+
+/* Define rich text context structure. */
+typedef struct GX_RICH_TEXT_CONTEXT_STRUCT
+{
+    GX_RICH_TEXT_FORMAT gx_rich_text_context_format;
+    GX_CONST GX_STRING *gx_rich_text_context_tag;
+}GX_RICH_TEXT_CONTEXT;
+
+/* Define rich text context stack structure. */
+typedef struct GX_RICH_TEXT_CONTEXT_STACK_STRUCT
+{
+    GX_RICH_TEXT_CONTEXT gx_rich_text_context_stack[GX_MAX_RICH_TEXT_CONTEXT_NESTING];
+    GX_UBYTE             gx_rich_text_context_stack_top;
+} GX_RICH_TEXT_CONTEXT_STACK;
+
 /* Define macro for GX_WIDGET members.  */
 
 #if defined(GX_WIDGET_USER_DATA)
@@ -1931,7 +2005,8 @@ typedef struct GX_LANGUAGE_HEADER_STRUCT{
     GX_RESOURCE_ID    gx_prompt_font_id;                                                    \
     GX_RESOURCE_ID    gx_prompt_normal_text_color;                                          \
     GX_RESOURCE_ID    gx_prompt_selected_text_color;                                        \
-    GX_RESOURCE_ID    gx_prompt_disabled_text_color;
+    GX_RESOURCE_ID    gx_prompt_disabled_text_color;                                        \
+    GX_PROMPT_BIDI_RESOLVED_TEXT_INFO
 
 #define GX_NUMERIC_PROMPT_MEMBERS_DECLARE                                              \
     GX_PROMPT_MEMBERS_DECLARE                                                          \
@@ -2007,7 +2082,8 @@ typedef struct GX_LANGUAGE_HEADER_STRUCT{
     GX_STRING          gx_text_button_string;              \
     GX_RESOURCE_ID     gx_text_button_normal_text_color;   \
     GX_RESOURCE_ID     gx_text_button_selected_text_color; \
-    GX_RESOURCE_ID     gx_text_button_disabled_text_color;
+    GX_RESOURCE_ID     gx_text_button_disabled_text_color; \
+    GX_TEXT_BUTTON_BIDI_RESOLVED_TEXT_INFO
 
 /* Define macro for GX_MULTI_LINE_TEXT_BUTTON, based on GX_TEXT_BUTTON.  */
 
@@ -2162,7 +2238,15 @@ typedef struct GX_LANGUAGE_HEADER_STRUCT{
     GX_BOOL        gx_multi_line_text_view_line_index_old;       \
     GX_UBYTE       gx_multi_line_text_view_cache_size;           \
     UINT           gx_multi_line_text_view_first_cache_line;     \
-    UINT           gx_multi_line_text_view_line_index[GX_MULTI_LINE_INDEX_CACHE_SIZE];
+    UINT           gx_multi_line_text_view_line_index[GX_MULTI_LINE_INDEX_CACHE_SIZE]; \
+    GX_MULTI_LINE_TEXT_VIEW_BIDI_RESOLVED_TEXT_INFO
+
+/* Define macro for GX_RICH_TEXT_VIEW, based on GX_MULTI_LINE_TEXT_VIEW.  */
+
+#define GX_RICH_TEXT_VIEW_MEMBERS_DECLARE                        \
+    GX_MULTI_LINE_TEXT_VIEW_MEMBERS_DECLARE                      \
+    GX_RICH_TEXT_FONTS      gx_rich_text_view_fonts;             \
+    ULONG                   gx_rich_text_view_text_total_height;
 
 /* GX_MULTI_LINE_TEXT_INPUT, based on GX_MULTI_LINE_TEXT_VIEW */
 #define GX_MULTI_LINE_TEXT_INPUT_MEMBERS_DECLARE                          \
@@ -2242,7 +2326,6 @@ typedef struct GX_LANGUAGE_HEADER_STRUCT{
     GX_VALUE          gx_scroll_wheel_shift_error;
 
 /* Define macro for GX_TEXT_SCROLL_WHEEL_BASE members. */
-#if defined(GX_ENABLE_DEPRECATED_STRING_API)
 #define GX_TEXT_SCROLL_WHEEL_MEMBERS_DECLARE                                                                   \
     GX_SCROLL_WHEEL_MEMBERS_DECLARE                                                                            \
     GX_RESOURCE_ID      gx_text_scroll_wheel_normal_font;                                                      \
@@ -2250,34 +2333,17 @@ typedef struct GX_LANGUAGE_HEADER_STRUCT{
     GX_RESOURCE_ID      gx_text_scroll_wheel_normal_text_color;                                                \
     GX_RESOURCE_ID      gx_text_scroll_wheel_selected_text_color;                                              \
     GX_RESOURCE_ID      gx_text_scroll_wheel_disabled_text_color;                                              \
-    GX_CONST GX_CHAR* (*gx_text_scroll_wheel_text_get_deprecated)(struct GX_TEXT_SCROLL_WHEEL_STRUCT*, INT);   \
-    UINT              (*gx_text_scroll_wheel_text_get)(struct GX_TEXT_SCROLL_WHEEL_STRUCT *, INT, GX_STRING *); 
-#else
-#define GX_TEXT_SCROLL_WHEEL_MEMBERS_DECLARE                                                                   \
-    GX_SCROLL_WHEEL_MEMBERS_DECLARE                                                                            \
-    GX_RESOURCE_ID      gx_text_scroll_wheel_normal_font;                                                      \
-    GX_RESOURCE_ID      gx_text_scroll_wheel_selected_font;                                                    \
-    GX_RESOURCE_ID      gx_text_scroll_wheel_normal_text_color;                                                \
-    GX_RESOURCE_ID      gx_text_scroll_wheel_selected_text_color;                                              \
-    GX_RESOURCE_ID      gx_text_scroll_wheel_disabled_text_color;                                              \
-    UINT              (*gx_text_scroll_wheel_text_get)(struct GX_TEXT_SCROLL_WHEEL_STRUCT *, INT, GX_STRING *); 
-#endif
+    UINT              (*gx_text_scroll_wheel_text_get)(struct GX_TEXT_SCROLL_WHEEL_STRUCT *, INT, GX_STRING *);\
+    GX_TEXT_SCROLL_WHEEL_TEXT_GET_DEPRECATED                                                                   \
+    GX_TEXT_SCROLL_WHEEL_BIDI_RESOLVED_TEXT_INFO
 
 /* Define macro for GX_STRING_SCROLL_WHEEL members. */
-#if defined(GX_ENABLE_DEPRECATED_STRING_API)
-#define GX_STRING_SCROLL_WHEEL_MEMBERS_DECLARE                               \
-    GX_TEXT_SCROLL_WHEEL_MEMBERS_DECLARE                                     \
-    GX_CONST GX_CHAR        **gx_string_scroll_wheel_string_list_deprecated; \
-    GX_CONST GX_STRING       *gx_string_scroll_wheel_string_list;            \
-    USHORT                    gx_string_scroll_wheel_string_list_buffer_size;\
-    GX_CONST GX_RESOURCE_ID  *gx_string_scroll_wheel_string_id_list;
-#else
 #define GX_STRING_SCROLL_WHEEL_MEMBERS_DECLARE                               \
     GX_TEXT_SCROLL_WHEEL_MEMBERS_DECLARE                                     \
     GX_CONST GX_STRING       *gx_string_scroll_wheel_string_list;            \
     USHORT                    gx_string_scroll_wheel_string_list_buffer_size;\
-    GX_CONST GX_RESOURCE_ID  *gx_string_scroll_wheel_string_id_list;
-#endif
+    GX_CONST GX_RESOURCE_ID  *gx_string_scroll_wheel_string_id_list;         \
+    GX_STRING_SCROLL_WHEEL_STRING_LIST_DEPRECATED
 
 /* Define macro for GX_RANGE_SCROLL_WHEEL members. */
 #define GX_NUMERIC_SCROLL_WHEEL_MEMBERS_DECLARE               \
@@ -2482,12 +2548,28 @@ typedef struct GX_MULTI_LINE_TEXT_VIEW_STRUCT
     GX_MULTI_LINE_TEXT_VIEW_MEMBERS_DECLARE
 } GX_MULTI_LINE_TEXT_VIEW;
 
+/* Define Rich Text View type.  */
+
+typedef struct GX_RICH_TEXT_VIEW_STRUCT
+{
+    GX_RICH_TEXT_VIEW_MEMBERS_DECLARE
+} GX_RICH_TEXT_VIEW;
+
 /*Define GX_MULTI_LINE_TEXT_INFO type. */
 typedef struct GX_MULTI_LINE_TEXT_INFO_STRUCT
 {
     USHORT   gx_text_display_width;
     USHORT   gx_text_display_number;
 } GX_MULTI_LINE_TEXT_INFO;
+
+typedef struct GX_RICH_TEXT_INOT_STRUCT
+{
+    GX_COLOR gx_rich_text_info_foreground_color;
+    GX_COLOR gx_rich_text_info_background_color;
+    USHORT   gx_rich_text_info_style;
+    ULONG    gx_rich_text_info_start_index;
+    ULONG    gx_rich_text_info_end_index;
+}GX_RICH_TEXT_INFO;
 
 /*Define GX_MULTI_TEXT_INPUT type. */
 
@@ -3000,6 +3082,11 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_multi_line_text_view_text_set_ext                     _gx_multi_line_text_view_text_set_ext
 #define gx_multi_line_text_view_whitespace_set                   _gx_multi_line_text_view_whitespace_set
 
+#define gx_rich_text_view_create(a, b, c, d, e, f, g, h)         _gx_rich_text_view_create(a, b, (GX_WIDGET *)c, d, e, f, g, h)
+#define gx_rich_text_view_draw                                   _gx_rich_text_view_draw
+#define gx_rich_text_view_text_draw                              _gx_rich_text_view_text_draw
+#define gx_rich_text_view_fonts_set                              _gx_rich_text_view_fonts_set
+
 #define gx_numeric_pixelmap_prompt_create                        _gx_numeric_pixelmap_prompt_create
 #define gx_numeric_pixelmap_prompt_format_function_set           _gx_numeric_pixelmap_prompt_format_function_set
 #define gx_numeric_pixelmap_prompt_value_set                     _gx_numeric_pixelmap_prompt_value_set
@@ -3257,6 +3344,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #endif
 #define gx_text_scroll_wheel_create                              _gx_text_scroll_wheel_create
 #define gx_text_scroll_wheel_draw                                _gx_text_scroll_wheel_draw
+#define gx_text_scroll_wheel_event_process                       _gx_text_scroll_wheel_event_process
 
 #define gx_transition_window_create(a, b, c, d, e, f)            _gx_transition_window_create(a, b, (GX_WIDGET *)c, d, e, f)
 
@@ -3706,6 +3794,18 @@ UINT _gx_multi_line_text_view_text_set(GX_MULTI_LINE_TEXT_VIEW *view, GX_CONST G
 UINT _gx_multi_line_text_view_text_set_ext(GX_MULTI_LINE_TEXT_VIEW *view, GX_CONST GX_STRING *text);
 UINT _gx_multi_line_text_view_whitespace_set(GX_MULTI_LINE_TEXT_VIEW *view, GX_UBYTE whitespace);
 
+UINT _gx_rich_text_view_create(GX_RICH_TEXT_VIEW *rich_view,
+                               GX_CONST GX_CHAR *name,
+                               GX_WIDGET *parent,
+                               GX_RESOURCE_ID text_id,
+                               GX_RICH_TEXT_FONTS *fonts,
+                               ULONG style,
+                               USHORT id,
+                               GX_CONST GX_RECTANGLE *size);
+VOID _gx_rich_text_view_draw(GX_RICH_TEXT_VIEW *text_view);
+VOID _gx_rich_text_view_text_draw(GX_RICH_TEXT_VIEW *text_view);
+UINT _gx_rich_text_view_fonts_set(GX_RICH_TEXT_VIEW *rich_view, GX_RICH_TEXT_FONTS *fonts);
+
 UINT _gx_numeric_pixelmap_prompt_create(GX_NUMERIC_PIXELMAP_PROMPT *prompt,
                                         GX_CONST GX_CHAR *name, GX_WIDGET *parent,
                                         GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
@@ -4021,6 +4121,7 @@ UINT _gx_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL *wheel, UINT (*
 UINT _gx_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows, 
                                   ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
 VOID _gx_text_scroll_wheel_draw(GX_TEXT_SCROLL_WHEEL *wheel);
+UINT _gx_text_scroll_wheel_event_process(GX_TEXT_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
 UINT _gx_text_scroll_wheel_font_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID normal_font, GX_RESOURCE_ID selected_font);
 UINT _gx_text_scroll_wheel_text_color_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID normal_text_color,
                                           GX_RESOURCE_ID selected_text_color, GX_RESOURCE_ID disabled_text_color);
@@ -4422,6 +4523,11 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_multi_line_text_view_text_set_ext                     _gxe_multi_line_text_view_text_set_ext
 #define gx_multi_line_text_view_whitespace_set                   _gxe_multi_line_text_view_whitespace_set
 
+#define gx_rich_text_view_create(a, b, c, d, e, f, g, h)         _gxe_rich_text_view_create(a, b, (GX_WIDGET *)c, d, e, f, g, h, sizeof(GX_RICH_TEXT_VIEW))
+#define gx_rich_text_view_draw                                   _gx_rich_text_view_draw
+#define gx_rich_text_view_text_draw                              _gx_rich_text_view_text_draw
+#define gx_rich_text_view_fonts_set                              _gxe_rich_text_view_fonts_set
+
 #define gx_numeric_pixelmap_prompt_create(a, b, c, d, e, f, g, h) _gxe_numeric_pixelmap_prompt_create(a, b, (GX_WIDGET *)c, d, e, f, g, h, sizeof(GX_NUMERIC_PIXELMAP_PROMPT))
 #define gx_numeric_pixelmap_prompt_format_function_set           _gxe_numeric_pixelmap_prompt_format_function_set
 #define gx_numeric_pixelmap_prompt_value_set                     _gxe_numeric_pixelmap_prompt_value_set
@@ -4677,6 +4783,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #endif
 #define gx_text_scroll_wheel_create(a, b, c, d, e, f, g)         _gxe_text_scroll_wheel_create(a, b, c, d, e, f, g, sizeof(GX_TEXT_SCROLL_WHEEL))
 #define gx_text_scroll_wheel_draw                                _gx_text_scroll_wheel_draw
+#define gx_text_scroll_wheel_event_process                       _gxe_text_scroll_wheel_event_process
 
 #define gx_utility_gradient_create                               _gxe_utility_gradient_create
 #define gx_utility_gradient_delete                               _gxe_utility_gradient_delete
@@ -5113,6 +5220,19 @@ UINT _gxe_multi_line_text_view_text_set(GX_MULTI_LINE_TEXT_VIEW *view, GX_CONST 
 UINT _gxe_multi_line_text_view_text_set_ext(GX_MULTI_LINE_TEXT_VIEW *view, GX_CONST GX_STRING *text);
 UINT _gxe_multi_line_text_view_whitespace_set(GX_MULTI_LINE_TEXT_VIEW *view, GX_UBYTE whitespace);
 
+UINT _gxe_rich_text_view_create(GX_RICH_TEXT_VIEW *rich_view,
+                                GX_CONST GX_CHAR *name,
+                                GX_WIDGET *parent,
+                                GX_RESOURCE_ID text_id,
+                                GX_RICH_TEXT_FONTS *fonts,
+                                ULONG style,
+                                USHORT id,
+                                GX_CONST GX_RECTANGLE *size,
+                                UINT control_block_size);
+VOID _gx_rich_text_view_draw(GX_RICH_TEXT_VIEW *text_view);
+VOID _gx_rich_text_view_text_draw(GX_RICH_TEXT_VIEW *text_view);
+UINT _gxe_rich_text_view_fonts_set(GX_RICH_TEXT_VIEW *rich_view, GX_RICH_TEXT_FONTS *fonts);
+
 UINT _gxe_numeric_pixelmap_prompt_create(GX_NUMERIC_PIXELMAP_PROMPT *prompt,
                                          GX_CONST GX_CHAR *name, GX_WIDGET *parent,
                                          GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
@@ -5433,6 +5553,7 @@ UINT _gxe_text_scroll_wheel_text_color_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOU
 UINT _gxe_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT value_count, 
                                    ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size,
                                    UINT control_block_size);
+UINT _gxe_text_scroll_wheel_event_process(GX_TEXT_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
 VOID _gx_text_scroll_wheel_draw(GX_TEXT_SCROLL_WHEEL *wheel);
 
 UINT _gxe_tree_view_create(GX_TREE_VIEW *tree, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
@@ -5622,10 +5743,16 @@ UINT _gxe_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, G
 #endif
 
 #ifndef GX_THREADX_BINDING
+#ifdef  GX_STANDALONE_BINDING
+#include <string.h>
+#include <stdlib.h>
+#include "gx_system_standalone_bind.h"
+#else
 /* pull in custom rtos porting header */
 #include <string.h>
 #include <stdlib.h>
 #include "gx_system_rtos_bind.h"
+#endif
 #endif
 
 #endif

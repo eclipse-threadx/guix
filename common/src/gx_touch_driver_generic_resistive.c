@@ -45,7 +45,7 @@ VOID _gx_touch_driver_generic_resistive_calibrate(GX_RESISTIVE_TOUCH *touch);
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_pen_down_event_send              */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -77,6 +77,8 @@ VOID _gx_touch_driver_generic_resistive_calibrate(GX_RESISTIVE_TOUCH *touch);
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_touch_driver_generic_resistive_pen_down_event_send(GX_RESISTIVE_TOUCH *touch)
@@ -98,7 +100,7 @@ static VOID _gx_touch_driver_generic_resistive_pen_down_event_send(GX_RESISTIVE_
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_pen_drag_event_send              */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -130,6 +132,8 @@ static VOID _gx_touch_driver_generic_resistive_pen_down_event_send(GX_RESISTIVE_
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -158,7 +162,7 @@ static VOID _gx_touch_driver_generic_resistive_pen_drag_event_send(GX_RESISTIVE_
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_pen_up_event_send                */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -190,6 +194,8 @@ static VOID _gx_touch_driver_generic_resistive_pen_drag_event_send(GX_RESISTIVE_
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_touch_driver_generic_resistive_pen_up_event_send(GX_RESISTIVE_TOUCH *touch)
@@ -212,7 +218,7 @@ static VOID _gx_touch_driver_generic_resistive_pen_up_event_send(GX_RESISTIVE_TO
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_coord_calculate                  */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -245,6 +251,8 @@ static VOID _gx_touch_driver_generic_resistive_pen_up_event_send(GX_RESISTIVE_TO
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_touch_driver_generic_resistive_coord_calculate(GX_RESISTIVE_TOUCH *touch,
@@ -279,7 +287,7 @@ static UINT _gx_touch_driver_generic_resistive_coord_calculate(GX_RESISTIVE_TOUC
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_setup            PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -313,8 +321,8 @@ static UINT _gx_touch_driver_generic_resistive_coord_calculate(GX_RESISTIVE_TOUC
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
-/*                                            resulting in version 6.0.2  */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_touch_driver_generic_resistive_setup(GX_RESISTIVE_TOUCH *touch, GX_RESISTIVE_TOUCH_INFO *info)
@@ -329,7 +337,7 @@ VOID _gx_touch_driver_generic_resistive_setup(GX_RESISTIVE_TOUCH *touch, GX_RESI
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_calibration_matrix_set           */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -362,6 +370,8 @@ VOID _gx_touch_driver_generic_resistive_setup(GX_RESISTIVE_TOUCH *touch, GX_RESI
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_touch_driver_generic_resistive_calibration_matrix_set(GX_RESISTIVE_TOUCH *touch,
@@ -410,7 +420,7 @@ static UINT _gx_touch_driver_generic_resistive_calibration_matrix_set(GX_RESISTI
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_raw_read                         */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -442,6 +452,8 @@ static UINT _gx_touch_driver_generic_resistive_calibration_matrix_set(GX_RESISTI
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static GX_BOOL _gx_touch_driver_generic_resistive_raw_read(GX_RESISTIVE_TOUCH *touch, GX_POINT *ret_val)
@@ -526,7 +538,7 @@ static GX_BOOL _gx_touch_driver_generic_resistive_raw_read(GX_RESISTIVE_TOUCH *t
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_sample_read                      */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -558,6 +570,8 @@ static GX_BOOL _gx_touch_driver_generic_resistive_raw_read(GX_RESISTIVE_TOUCH *t
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static GX_BOOL _gx_touch_driver_generic_resistive_sample_read(GX_RESISTIVE_TOUCH *touch, GX_POINT *ret_val)
@@ -578,7 +592,7 @@ static GX_BOOL _gx_touch_driver_generic_resistive_sample_read(GX_RESISTIVE_TOUCH
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_coordinate_update                */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -609,6 +623,8 @@ static GX_BOOL _gx_touch_driver_generic_resistive_sample_read(GX_RESISTIVE_TOUCH
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static GX_BOOL _gx_touch_driver_generic_resistive_coordinate_update(GX_RESISTIVE_TOUCH *touch)
@@ -638,7 +654,7 @@ static GX_BOOL _gx_touch_driver_generic_resistive_coordinate_update(GX_RESISTIVE
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_update                           */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -672,6 +688,8 @@ static GX_BOOL _gx_touch_driver_generic_resistive_coordinate_update(GX_RESISTIVE
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_touch_driver_generic_resistive_update(GX_RESISTIVE_TOUCH *touch)
@@ -706,7 +724,7 @@ VOID _gx_touch_driver_generic_resistive_update(GX_RESISTIVE_TOUCH *touch)
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_wait_for_touch                   */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -737,6 +755,8 @@ VOID _gx_touch_driver_generic_resistive_update(GX_RESISTIVE_TOUCH *touch)
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_touch_driver_generic_resistive_wait_for_touch(GX_RESISTIVE_TOUCH *touch)
@@ -754,7 +774,7 @@ static VOID _gx_touch_driver_generic_resistive_wait_for_touch(GX_RESISTIVE_TOUCH
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_wait_for_no_touch                */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -785,6 +805,8 @@ static VOID _gx_touch_driver_generic_resistive_wait_for_touch(GX_RESISTIVE_TOUCH
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_touch_driver_generic_resistive_wait_for_no_touch(GX_RESISTIVE_TOUCH *touch)
@@ -801,7 +823,7 @@ static VOID _gx_touch_driver_generic_resistive_wait_for_no_touch(GX_RESISTIVE_TO
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_calibrate                        */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -840,6 +862,9 @@ static VOID _gx_touch_driver_generic_resistive_wait_for_no_touch(GX_RESISTIVE_TO
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            fixed compiler warnings,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_touch_driver_generic_resistive_calibrate(GX_RESISTIVE_TOUCH *touch)
@@ -890,7 +915,7 @@ VOID _gx_touch_driver_generic_resistive_calibrate(GX_RESISTIVE_TOUCH *touch)
         GX_TOUCH_TASK_SLEEP(20);
     }
     _gx_widget_hide(icon);
-    _gx_multi_line_text_view_text_set(text, GX_NULL);
+    _gx_multi_line_text_view_text_set_ext(text, GX_NULL);
     _gx_system_canvas_refresh();
     _gx_touch_driver_generic_resistive_wait_for_no_touch(touch);
     GX_TOUCH_TASK_SLEEP(20);
@@ -916,7 +941,7 @@ VOID _gx_touch_driver_generic_resistive_calibrate(GX_RESISTIVE_TOUCH *touch)
         GX_TOUCH_TASK_SLEEP(20);
     }
     _gx_widget_hide(icon);
-    _gx_multi_line_text_view_text_set(text, GX_NULL);
+    _gx_multi_line_text_view_text_set_ext(text, GX_NULL);
     _gx_system_canvas_refresh();
     _gx_touch_driver_generic_resistive_wait_for_no_touch(touch);
     GX_TOUCH_TASK_SLEEP(20);
@@ -942,7 +967,7 @@ VOID _gx_touch_driver_generic_resistive_calibrate(GX_RESISTIVE_TOUCH *touch)
         GX_TOUCH_TASK_SLEEP(20);
     }
     _gx_widget_hide(icon);
-    _gx_multi_line_text_view_text_set(text, GX_NULL);
+    _gx_multi_line_text_view_text_set_ext(text, GX_NULL);
     _gx_system_canvas_refresh();
     _gx_touch_driver_generic_resistive_wait_for_no_touch(touch);
 

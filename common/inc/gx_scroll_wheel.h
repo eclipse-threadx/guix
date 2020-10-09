@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_scroll_wheel.h                                   PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,9 +42,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added new prototypes,       */
-/*                                            resulting in version 6.0.2  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -105,6 +105,10 @@ UINT _gx_string_scroll_wheel_text_get(GX_STRING_SCROLL_WHEEL *wheel, INT row, GX
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_text_scroll_wheel_callback_set(GX_TEXT_SCROLL_WHEEL * wheel, GX_CONST GX_CHAR * (*callback)(GX_TEXT_SCROLL_WHEEL *, INT));
 #endif
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT _gx_text_scroll_wheel_dynamic_bidi_text_delete(GX_TEXT_SCROLL_WHEEL *wheel);
+#endif
+UINT _gx_text_scroll_wheel_event_process(GX_TEXT_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
 UINT _gx_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL *wheel, UINT (*callback)(GX_TEXT_SCROLL_WHEEL *, INT, GX_STRING *));
 UINT _gx_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows,
                                   ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
@@ -165,6 +169,7 @@ UINT _gxe_text_scroll_wheel_callback_set(GX_TEXT_SCROLL_WHEEL * wheel, GX_CONST 
 UINT _gxe_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL *wheel, UINT (*callback)(GX_TEXT_SCROLL_WHEEL *, INT, GX_STRING *));
 UINT _gxe_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows,
                                    ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size, UINT control_block_size);
+UINT _gxe_text_scroll_wheel_event_process(GX_TEXT_SCROLL_WHEEL* wheel, GX_EVENT* event_ptr);
 UINT _gxe_text_scroll_wheel_font_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID normal_font, GX_RESOURCE_ID selected_font);
 UINT _gxe_text_scroll_wheel_text_color_set(GX_TEXT_SCROLL_WHEEL *wheel,
                                            GX_RESOURCE_ID normal_text_color,

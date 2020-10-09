@@ -29,14 +29,14 @@
 #include "gx_display.h"
 #include "gx_widget.h"
 #include "gx_prompt.h"
-
+#include "gx_utility.h"
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_prompt_text_get                                 PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,13 +70,16 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_prompt_text_get(GX_PROMPT *prompt, GX_CONST GX_CHAR **return_text)
 {
-UINT status;
+UINT      status;
 GX_STRING string;
+
     string.gx_string_ptr = GX_NULL;
     string.gx_string_length = 0;
 
@@ -96,7 +99,7 @@ GX_STRING string;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_prompt_text_get_ext                             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -130,11 +133,20 @@ GX_STRING string;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to retrieve     */
+/*                                            dynamic bidi text,          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_prompt_text_get_ext(GX_PROMPT *prompt, GX_STRING *return_string)
 {
 UINT status = GX_SUCCESS;
+
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+GX_BIDI_TEXT_INFO           text_info;
+GX_BIDI_RESOLVED_TEXT_INFO *resolved_info;
+#endif
 
     if (prompt -> gx_prompt_text_id)
     {
@@ -145,5 +157,28 @@ UINT status = GX_SUCCESS;
         _gx_system_private_string_get(&prompt -> gx_prompt_string, return_string, prompt -> gx_widget_style);
     }
 
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    if (_gx_system_bidi_text_enabled)
+    {
+        if (prompt -> gx_prompt_bidi_resolved_text_info)
+        {
+            *return_string = *prompt -> gx_prompt_bidi_resolved_text_info -> gx_bidi_resolved_text_info_text;
+        }
+        else
+        {
+            text_info.gx_bidi_text_info_text = *return_string;
+            text_info.gx_bidi_text_info_font = GX_NULL;
+            text_info.gx_bidi_text_info_display_width = -1;
+
+            if (_gx_utility_bidi_paragraph_reorder(&text_info, &resolved_info) == GX_SUCCESS)
+            {
+                prompt -> gx_prompt_bidi_resolved_text_info = resolved_info;
+                *return_string = *resolved_info -> gx_bidi_resolved_text_info_text;
+            }
+        }
+    }
+#endif
+
     return(status);
 }
+

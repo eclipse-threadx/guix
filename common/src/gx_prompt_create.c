@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_prompt_create                                   PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -74,9 +74,13 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            set new event process,      */
-/*                                            resulting in version 6.0.2  */
+/*                                            added logic to init new     */
+/*                                            structure member for        */
+/*                                            dynamic bidi text support,  */
+/*                                            fixed compiler warnings,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_prompt_create(GX_PROMPT *prompt, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
@@ -98,7 +102,11 @@ UINT  _gx_prompt_create(GX_PROMPT *prompt, GX_CONST GX_CHAR *name, GX_WIDGET *pa
     prompt -> gx_prompt_font_id =               GX_FONT_ID_PROMPT;
     prompt -> gx_widget_draw_function =         (VOID (*)(GX_WIDGET *))_gx_prompt_draw;
     prompt -> gx_widget_event_process_function = (UINT(*)(GX_WIDGET*, GX_EVENT*))_gx_prompt_event_process;
-    prompt -> gx_prompt_text_get_function =     (VOID (*)(GX_PROMPT *, GX_STRING *))_gx_prompt_text_get_ext;
+    prompt -> gx_prompt_text_get_function =     (VOID (*)(GX_PROMPT *, GX_STRING *))(void (*)(void))_gx_prompt_text_get_ext;
+
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    prompt -> gx_prompt_bidi_resolved_text_info = GX_NULL;
+#endif
 
     /* Determine if a parent widget was provided.  */
     if (parent)

@@ -36,7 +36,7 @@
 /*                                                                        */
 /*    _gx_display_driver_8bpp_horizontal_pixelmap_line_raw_blend          */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -73,6 +73,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_raw_blend(GX_DRAW_CONTEXT *context,
@@ -124,7 +126,7 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *, INT, INT, GX_COLOR, GX_UBYTE
 /*                                                                        */
 /*    _gx_display_driver_8bpp_horizontal_pixelmap_line_compressed_blend   */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -161,6 +163,8 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *, INT, INT, GX_COLOR, GX_UBYTE
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_compressed_blend(GX_DRAW_CONTEXT *context,
@@ -259,7 +263,7 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *, INT, INT, GX_COLOR, GX_UBYTE
 /*                                                                        */
 /*    _gx_display_driver_8bpp_horizontal_pixelmap_line_alpha_blend        */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -296,6 +300,8 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *, INT, INT, GX_COLOR, GX_UBYTE
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_alpha_blend(GX_DRAW_CONTEXT *context,
@@ -360,7 +366,7 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*    _gx_display_driver_8bpp_horizontal_pixelmap_line_compressed_alpha   */
 /*        _blend                                                          */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -397,6 +403,8 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_compressed_alpha_blend(GX_DRAW_CONTEXT *context,
@@ -512,7 +520,7 @@ VOID             (*blend_func)(GX_DRAW_CONTEXT *, INT, INT, GX_COLOR, GX_UBYTE);
 /*                                                                        */
 /*    _gx_display_driver_8bpp_horizontal_pixelmap_line_raw_write          */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -543,6 +551,8 @@ VOID             (*blend_func)(GX_DRAW_CONTEXT *, INT, INT, GX_COLOR, GX_UBYTE);
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_raw_write(GX_DRAW_CONTEXT *context,
@@ -590,7 +600,7 @@ GX_PIXELMAP       *pixelmap;
 /*                                                                        */
 /*    _gx_display_driver_8bpp_horizontal_pixelmap_line_compressed_write   */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -625,6 +635,8 @@ GX_PIXELMAP       *pixelmap;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_compressed_write(GX_DRAW_CONTEXT *context,
@@ -722,7 +734,7 @@ GX_PIXELMAP       *pixelmap;
 /*                                                                        */
 /*    _gx_display_driver_8bpp_horizontal_line_pixelmap_transparent_write  */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -757,6 +769,8 @@ GX_PIXELMAP       *pixelmap;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_transparent_write(GX_DRAW_CONTEXT *context,
@@ -811,7 +825,7 @@ GX_UBYTE           pixel;
 /*    _gx_display_driver_8bpp_horizontal_pixelmap_line_compressed_        */
 /*    transparent_write                                                   */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -846,6 +860,8 @@ GX_UBYTE           pixel;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_compressed_transparent_write(GX_DRAW_CONTEXT *context,
@@ -956,7 +972,7 @@ GX_PIXELMAP       *pixelmap;
 /*                                                                        */
 /*    _gx_display_driver_8bpp_horizontal_pixelmap_line_alpha_write        */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -995,6 +1011,8 @@ GX_PIXELMAP       *pixelmap;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_alpha_write(GX_DRAW_CONTEXT *context,
@@ -1054,7 +1072,7 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*    _gx_display_driver_8bpp_horizontal_pixelmap_line_compressed_alpha   */
 /*        _write                                                          */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1090,6 +1108,8 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_compressed_alpha_write(GX_DRAW_CONTEXT *context,
@@ -1204,7 +1224,7 @@ VOID             (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR 
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_8bpp_pixelmap_draw               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1250,6 +1270,8 @@ VOID             (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR 
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_draw(GX_DRAW_CONTEXT *context,
@@ -1304,7 +1326,7 @@ VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_draw(GX_DRAW_CONTEXT *cont
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_8bpp_pixelmap_draw               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1360,6 +1382,8 @@ VOID _gx_display_driver_8bpp_horizontal_pixelmap_line_draw(GX_DRAW_CONTEXT *cont
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_332rgb_horizontal_pixelmap_line_draw(GX_DRAW_CONTEXT *context,

@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_bidi_text_disable                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -63,12 +63,34 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to send dynamic */
+/*                                            bidi text disable event,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 UINT  _gx_system_bidi_text_disable(VOID)
 {
+GX_WINDOW_ROOT *root;
+GX_EVENT        bidi_text_event;
+
     _gx_system_bidi_text_enabled = GX_FALSE;
+
+    memset(&bidi_text_event, 0, sizeof(GX_EVENT));
+    bidi_text_event.gx_event_type = GX_EVENT_DYNAMIC_BIDI_TEXT_DISABLE;
+
+    root = (GX_WINDOW_ROOT *)_gx_system_root_window_created_list;
+    while (root)
+    {
+        if (root -> gx_window_root_canvas)
+        {
+            root -> gx_widget_event_process_function((GX_WIDGET *)root, &bidi_text_event);
+        }
+        root = (GX_WINDOW_ROOT *)root -> gx_widget_next;
+    }
+
+    _gx_system_all_canvas_dirty();
 
     return GX_SUCCESS;
 }

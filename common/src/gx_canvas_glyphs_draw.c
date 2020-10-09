@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_kerning_glyphs_draw                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -73,6 +73,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_canvas_kerning_glyphs_draw(GX_DRAW_CONTEXT *context, GX_FONT *font, GX_POINT *draw_position, GX_CONST GX_STRING *string, GX_RECTANGLE *view,
@@ -218,7 +220,7 @@ UINT ret;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_compressed_glyphs_draw                   PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -256,6 +258,8 @@ UINT ret;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_canvas_compressed_glyphs_draw(GX_DRAW_CONTEXT *context, GX_FONT *font, GX_POINT *draw_position, GX_CONST GX_STRING *string, GX_RECTANGLE *view,
@@ -397,7 +401,7 @@ UINT          index = 0;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_generic_glyphs_draw                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -435,6 +439,8 @@ UINT          index = 0;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_canvas_generic_glyphs_draw(GX_DRAW_CONTEXT *context, GX_FONT *font, GX_POINT *draw_position, GX_CONST GX_STRING *string, GX_RECTANGLE *view,
@@ -582,7 +588,7 @@ UINT          index = 0;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_glyphs_draw                              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -621,6 +627,8 @@ UINT          index = 0;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_canvas_glyphs_draw(GX_DRAW_CONTEXT *context, GX_POINT *draw_position, GX_CONST GX_STRING *string,

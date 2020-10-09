@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_numeric_scroll_wheel_range_set                  PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -65,11 +65,19 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to delete       */
+/*                                            dynamic bidi text,          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_numeric_scroll_wheel_range_set(GX_NUMERIC_SCROLL_WHEEL *wheel, INT start_val, INT end_val)
 {
 UINT status;
+
+#ifdef GX_DYNAMIC_BIDI_TEXT_SUPPORT
+    _gx_text_scroll_wheel_dynamic_bidi_text_delete((GX_TEXT_SCROLL_WHEEL *)wheel);
+#endif  // GX_DYNAMIC_BIDI_TEXT_SUPPORT
 
     wheel -> gx_numeric_scroll_wheel_start_val = start_val;
     wheel -> gx_numeric_scroll_wheel_end_val = end_val;

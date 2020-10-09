@@ -226,7 +226,7 @@ static ARABIC_LIGATURE arabic_ligature_table[] =
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_arabic_joining_type_get            PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -255,7 +255,7 @@ static ARABIC_LIGATURE arabic_ligature_table[] =
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  06-30-2020     Kenneth Maxwell          Initial Version 6.0.1         */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_arabic_joining_type_get(ULONG code_point)
@@ -284,7 +284,7 @@ ARABIC_SHAPING *shaping = arabic_shaping_table;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_arabic_form_get                    PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -314,7 +314,7 @@ ARABIC_SHAPING *shaping = arabic_shaping_table;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  06-30-2020     Kenneth Maxwell          Initial Version 6.0.1         */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 static ULONG _gx_utility_bidi_arabic_form_get(ULONG code_point, UINT form_type)
@@ -363,7 +363,7 @@ ARABIC_FORM *entry = GX_NULL;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_arabic_ligature_get                PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -393,7 +393,7 @@ ARABIC_FORM *entry = GX_NULL;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  06-30-2020     Kenneth Maxwell          Initial Version 6.0.1         */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 static ULONG _gx_utility_bidi_arabic_ligature_get(ULONG alef, ULONG lam)
@@ -417,14 +417,14 @@ ARABIC_LIGATURE *entry = arabic_ligature_table;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_right_joining_causing_test         PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
 /*                                                                        */
-/*    This function tests if a joing type is right joining causing.       */
+/*    This function tests if a join type is right joining causing.        */
 /*                                                                        */
 /*  INPUT                                                                 */
 /*                                                                        */
@@ -446,7 +446,7 @@ ARABIC_LIGATURE *entry = arabic_ligature_table;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  06-30-2020     Kenneth Maxwell          Initial Version 6.0.1         */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 static GX_BOOL _gx_utility_bidi_right_joining_causing_test(UINT joining_type)
@@ -467,7 +467,7 @@ static GX_BOOL _gx_utility_bidi_right_joining_causing_test(UINT joining_type)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_left_joining_causing_test          PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -496,7 +496,7 @@ static GX_BOOL _gx_utility_bidi_right_joining_causing_test(UINT joining_type)
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  06-30-2020     Kenneth Maxwell          Initial Version 6.0.1         */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 static GX_BOOL _gx_utility_bidi_left_joining_causing_test(UINT joining_type)
@@ -517,7 +517,7 @@ static GX_BOOL _gx_utility_bidi_left_joining_causing_test(UINT joining_type)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_arabic_test                        PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -546,7 +546,7 @@ static GX_BOOL _gx_utility_bidi_left_joining_causing_test(UINT joining_type)
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  06-30-2020     Kenneth Maxwell          Initial Version 6.0.1         */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 static GX_BOOL _gx_utility_bidi_arabic_test(GX_BIDI_CONTEXT *context)
@@ -572,7 +572,7 @@ INT           index;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_arabic_shaping                     PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -601,7 +601,7 @@ INT           index;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  06-30-2020     Kenneth Maxwell          Initial Version 6.0.1         */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_utility_bidi_arabic_shaping(GX_BIDI_CONTEXT *context)

@@ -28,13 +28,14 @@
 #include "gx_widget.h"
 #include "gx_button.h"
 #include "gx_system.h"
+#include "gx_utility.h"
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_button_line_pointers_set        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,6 +71,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added line pointers set     */
+/*                                            loigc for dynamic bidi text,*/
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_multi_line_text_button_line_pointers_set(GX_MULTI_LINE_TEXT_BUTTON *button)
@@ -77,6 +82,12 @@ VOID _gx_multi_line_text_button_line_pointers_set(GX_MULTI_LINE_TEXT_BUTTON *but
 INT               line_index;
 GX_STRING         string;
 GX_CONST GX_CHAR *text;
+
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+GX_BIDI_TEXT_INFO           text_info;
+GX_BIDI_RESOLVED_TEXT_INFO *next;
+#endif
+
 
     button -> gx_multi_line_text_button_line_count = 1;
 
@@ -103,38 +114,74 @@ GX_CONST GX_CHAR *text;
         return;
     }
 
-    while (*text)
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    if (_gx_system_bidi_text_enabled)
     {
-        if ((*text == GX_KEY_CARRIAGE_RETURN) || (*text == GX_KEY_LINE_FEED))
+        if (!button -> gx_text_button_bidi_resolved_text_info)
         {
-            if ((*text == GX_KEY_CARRIAGE_RETURN) && (*(text + 1) == GX_KEY_LINE_FEED))
-            {
-                text += 2;
-            }
-            else
-            {
-                text++;
-            }
-            line_index++;
+            text_info.gx_bidi_text_info_display_width = -1;
+            text_info.gx_bidi_text_info_font = GX_NULL;
+            text_info.gx_bidi_text_info_text = string;
 
-            if (line_index >=  GX_MULTI_LINE_TEXT_BUTTON_MAX_LINES)
+            _gx_utility_bidi_paragraph_reorder(&text_info, &button -> gx_text_button_bidi_resolved_text_info);
+        }
+
+        next = button -> gx_text_button_bidi_resolved_text_info;
+
+        while (next)
+        {
+            button -> gx_multi_line_text_button_lines[line_index++] = *next -> gx_bidi_resolved_text_info_text;
+            next = next -> gx_bidi_resolved_text_info_next;
+
+            if (line_index >= GX_MULTI_LINE_TEXT_BUTTON_MAX_LINES)
             {
                 break;
             }
-            else
-            {
-                button -> gx_multi_line_text_button_line_count++;
-            }
         }
-        else
+
+        if (line_index)
         {
-            if (button -> gx_multi_line_text_button_lines[line_index].gx_string_ptr == GX_NULL)
-            {
-                button -> gx_multi_line_text_button_lines[line_index].gx_string_ptr = text;
-            }
-            button -> gx_multi_line_text_button_lines[line_index].gx_string_length++;
-            text++;
+            button -> gx_multi_line_text_button_line_count = line_index;
         }
     }
+    else
+    {
+#endif
+        while (*text)
+        {
+            if ((*text == GX_KEY_CARRIAGE_RETURN) || (*text == GX_KEY_LINE_FEED))
+            {
+                if ((*text == GX_KEY_CARRIAGE_RETURN) && (*(text + 1) == GX_KEY_LINE_FEED))
+                {
+                    text += 2;
+                }
+                else
+                {
+                    text++;
+                }
+                line_index++;
+
+                if (line_index >= GX_MULTI_LINE_TEXT_BUTTON_MAX_LINES)
+                {
+                    break;
+                }
+                else
+                {
+                    button -> gx_multi_line_text_button_line_count++;
+                }
+            }
+            else
+            {
+                if (button -> gx_multi_line_text_button_lines[line_index].gx_string_ptr == GX_NULL)
+                {
+                    button -> gx_multi_line_text_button_lines[line_index].gx_string_ptr = text;
+                }
+                button -> gx_multi_line_text_button_lines[line_index].gx_string_length++;
+                text++;
+            }
+        }
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    }
+#endif
 }
 

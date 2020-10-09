@@ -38,7 +38,7 @@ static GX_FIXED_POINT LinePoints[5];
 /*                                                                        */
 /*    _gx_display_driver_generic_wide_line_points_calculate               */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*                                                                        */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -85,6 +85,8 @@ static GX_FIXED_POINT LinePoints[5];
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 GX_FIXED_POINT *_gx_display_driver_generic_wide_line_points_calculate(GX_DRAW_CONTEXT *context, INT xStart, INT yStart,

@@ -29,13 +29,14 @@
 #include "gx_system.h"
 #include "gx_window.h"
 #include "gx_multi_line_text_view.h"
+#include "gx_utility.h"
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_view_string_total_rows_compute  PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -76,18 +77,28 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to calculate    */
+/*                                            total lines for dynamic     */
+/*                                            bidi text,                  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_multi_line_text_view_string_total_rows_compute(GX_MULTI_LINE_TEXT_VIEW *text_view)
 {
+UINT                    total_rows = 0;
 GX_VALUE                client_width;
 GX_MULTI_LINE_TEXT_INFO text_info;
-UINT                    total_rows = 0;
 UINT                    index = 0;
 INT                     cache_index = -1;
 GX_STRING               string;
 UINT                    first_cache_line = text_view -> gx_multi_line_text_view_first_cache_line;
 GX_FONT                *font;
+
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+GX_BIDI_TEXT_INFO           bidi_text_info;
+GX_BIDI_RESOLVED_TEXT_INFO *next;
+#endif
 
     _gx_widget_font_get((GX_WIDGET *)text_view, text_view -> gx_multi_line_text_view_font_id, &font);
 
@@ -110,47 +121,73 @@ GX_FONT                *font;
 
     client_width = (GX_VALUE)(client_width - (text_view -> gx_multi_line_text_view_whitespace << 1));
 
-    /* Calculate the total rows of text view string. */
-    while (index < text_view -> gx_multi_line_text_view_text.gx_string_length)
-    {
-        /* Save line index. */
-        if ((total_rows >= first_cache_line) &&
-            (total_rows <  first_cache_line + GX_MULTI_LINE_INDEX_CACHE_SIZE))
-        {
-            cache_index = (GX_UBYTE)(total_rows - first_cache_line);
-            text_view -> gx_multi_line_text_view_line_index[cache_index] = index;
-        }
-
-        /* Calculate some information used to draw the text. */
-        _gx_multi_line_text_view_display_info_get(text_view, index, text_view -> gx_multi_line_text_view_text.gx_string_length, &text_info, (GX_VALUE)(client_width - 2));
-
-        total_rows++;
-        index += text_info.gx_text_display_number;
-    }
-
     if (text_view -> gx_multi_line_text_view_text_id)
     {
         _gx_widget_string_get_ext((GX_WIDGET *)text_view, text_view -> gx_multi_line_text_view_text_id, &string);
     }
     else
     {
-        string = text_view -> gx_multi_line_text_view_text;
+        _gx_system_private_string_get(&text_view -> gx_multi_line_text_view_text, &string, text_view -> gx_widget_style);
     }
 
-    if ((string.gx_string_ptr[index - 1] == GX_KEY_CARRIAGE_RETURN) ||
-        (string.gx_string_ptr[index - 1] == GX_KEY_LINE_FEED))
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    if (_gx_system_bidi_text_enabled && (text_view -> gx_widget_type == GX_TYPE_MULTI_LINE_TEXT_VIEW))
     {
-        /* Save line index. */
-        if (total_rows < first_cache_line + GX_MULTI_LINE_INDEX_CACHE_SIZE)
+        if (!text_view -> gx_multi_line_text_view_bidi_resolved_text_info)
         {
-            cache_index = (GX_UBYTE)(total_rows - first_cache_line);
-            text_view -> gx_multi_line_text_view_line_index[cache_index] = index;
+            bidi_text_info.gx_bidi_text_info_display_width = (GX_VALUE)(client_width - 3);
+            bidi_text_info.gx_bidi_text_info_font = font;
+            bidi_text_info.gx_bidi_text_info_text = string;
+            _gx_utility_bidi_paragraph_reorder(&bidi_text_info, &text_view -> gx_multi_line_text_view_bidi_resolved_text_info);
         }
 
-        total_rows++;
-    }
+        next = text_view -> gx_multi_line_text_view_bidi_resolved_text_info;
 
-    text_view -> gx_multi_line_text_view_cache_size = (GX_UBYTE)(cache_index + 1);
+        while (next)
+        {
+            total_rows += next -> gx_bidi_resolved_text_info_total_lines;
+            next = next -> gx_bidi_resolved_text_info_next;
+        }
+    }
+    else
+    {
+#endif
+        /* Calculate the total rows of text view string. */
+        while (index < text_view -> gx_multi_line_text_view_text.gx_string_length)
+        {
+            /* Save line index. */
+            if ((total_rows >= first_cache_line) &&
+                (total_rows < first_cache_line + GX_MULTI_LINE_INDEX_CACHE_SIZE))
+            {
+                cache_index = (GX_UBYTE)(total_rows - first_cache_line);
+                text_view -> gx_multi_line_text_view_line_index[cache_index] = index;
+            }
+
+            /* Calculate some information used to draw the text. */
+            _gx_multi_line_text_view_display_info_get(text_view, index, text_view -> gx_multi_line_text_view_text.gx_string_length, &text_info, (GX_VALUE)(client_width - 2));
+
+            total_rows++;
+            index += text_info.gx_text_display_number;
+        }
+
+        if ((string.gx_string_ptr[index - 1] == GX_KEY_CARRIAGE_RETURN) ||
+            (string.gx_string_ptr[index - 1] == GX_KEY_LINE_FEED))
+        {
+            /* Save line index. */
+            if (total_rows < first_cache_line + GX_MULTI_LINE_INDEX_CACHE_SIZE)
+            {
+                cache_index = (GX_UBYTE)(total_rows - first_cache_line);
+                text_view -> gx_multi_line_text_view_line_index[cache_index] = index;
+            }
+
+            total_rows++;
+        }
+
+        text_view -> gx_multi_line_text_view_cache_size = (GX_UBYTE)(cache_index + 1);
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    }
+#endif
+
     text_view -> gx_multi_line_text_view_text_total_rows = total_rows;
     text_view -> gx_multi_line_text_view_line_index_old = GX_FALSE;
 

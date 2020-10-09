@@ -35,7 +35,7 @@ GX_CALLER_CHECKING_EXTERNS
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gxe_prompt_event_process                           PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -68,7 +68,7 @@ GX_CALLER_CHECKING_EXTERNS
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  08-14-2020     Kenneth Maxwell          Initial Version 6.0.2         */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gxe_prompt_event_process(GX_PROMPT *prompt, GX_EVENT *event_ptr)

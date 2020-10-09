@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_tree_view_create                                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -72,6 +72,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            fixed compiler warnings,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_tree_view_create(GX_TREE_VIEW *tree, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
@@ -85,7 +88,7 @@ UINT  _gx_tree_view_create(GX_TREE_VIEW *tree, GX_CONST GX_CHAR *name, GX_WIDGET
     tree -> gx_widget_type = GX_TYPE_TREE_VIEW;
     tree -> gx_widget_event_process_function = (UINT (*)(GX_WIDGET *, GX_EVENT *))_gx_tree_view_event_process;
     tree -> gx_widget_draw_function = (VOID (*)(GX_WIDGET *))_gx_tree_view_draw;
-    tree -> gx_window_scroll_info_get = (VOID (*)(struct GX_WINDOW_STRUCT *, ULONG, GX_SCROLL_INFO *))_gx_tree_view_scroll_info_get;
+    tree -> gx_window_scroll_info_get = (VOID (*)(struct GX_WINDOW_STRUCT *, ULONG, GX_SCROLL_INFO *))(void (*)(void))_gx_tree_view_scroll_info_get;
     tree -> gx_tree_view_collapse_pixelmap_id = 0;
     tree -> gx_tree_view_expand_pixelmap_id = 0;
     tree -> gx_tree_view_root_line_color = GX_COLOR_ID_SHADOW;

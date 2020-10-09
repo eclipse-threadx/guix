@@ -34,8 +34,8 @@ GX_CALLER_CHECKING_EXTERNS
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _gxe_system_screen_stack_get                         ORTABLE C      */
-/*                                                           6.0          */
+/*    _gxe_system_screen_stack_get                        PORTABLE C      */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -66,6 +66,8 @@ GX_CALLER_CHECKING_EXTERNS
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gxe_system_screen_stack_get(GX_WIDGET **popped_parent, GX_WIDGET **popped_screen)

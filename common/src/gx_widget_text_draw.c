@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_widget_text_draw                                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -73,6 +73,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -99,7 +101,7 @@ GX_STRING string;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_widget_text_draw_ext                            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -142,6 +144,10 @@ GX_STRING string;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed dynamic bidi text   */
+/*                                            processing logic,           */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -159,11 +165,6 @@ GX_VALUE  y_pos;
 GX_VALUE  border_width;
 
 GX_BRUSH *brush;
-
-#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-GX_BIDI_TEXT_INFO          text_info;
-GX_BIDI_RESOLVED_TEXT_INFO resolved_info;
-#endif
 
     /* Is there a string?  */
     if (string)
@@ -207,29 +208,8 @@ GX_BIDI_RESOLVED_TEXT_INFO resolved_info;
             break;
         }
 
-#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-        if (_gx_system_bidi_text_enabled)
-        {
-            text_info.gx_bidi_text_info_text = *string;
-            text_info.gx_bidi_text_info_font = GX_NULL;
-            text_info.gx_bidi_text_info_display_width = -1;
-
-            if (_gx_utility_bidi_paragraph_reorder(&text_info, &resolved_info) == GX_SUCCESS)
-            {
-                string = resolved_info.gx_bidi_resolved_text_info_text;
-            }
-        }
-#endif
-
         /* Draw the text.  */
         _gx_canvas_text_draw_ext((GX_VALUE)(x_pos + x_offset), (GX_VALUE)(y_pos + y_offset), string);
-
-#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-        if (_gx_system_bidi_text_enabled && resolved_info.gx_bidi_resolved_text_info_text)
-        {
-            _gx_system_memory_free(resolved_info.gx_bidi_resolved_text_info_text);
-        }
-#endif
     }
 }
 

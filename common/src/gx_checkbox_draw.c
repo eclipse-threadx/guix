@@ -37,7 +37,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_checkbox_draw                                   PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -74,18 +74,21 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_checkbox_draw(GX_CHECKBOX *checkbox)
 {
-GX_WIDGET        *widget = (GX_WIDGET *)checkbox;
-GX_VALUE          xoffset = 0;
-GX_VALUE          yoffset = 0;
-GX_RESOURCE_ID    fill_color;
-GX_RESOURCE_ID    text_color;
-GX_RESOURCE_ID    pixelmap_id;
-GX_PIXELMAP      *pixelmap = GX_NULL;
-GX_STRING         string;
+GX_WIDGET     *widget = (GX_WIDGET *)checkbox;
+GX_VALUE       xoffset = 0;
+GX_VALUE       yoffset = 0;
+GX_RESOURCE_ID fill_color;
+GX_RESOURCE_ID text_color;
+GX_RESOURCE_ID pixelmap_id;
+GX_PIXELMAP   *pixelmap = GX_NULL;
+GX_STRING      string;
 
     if (widget -> gx_widget_style & GX_STYLE_ENABLED)
     {
@@ -172,21 +175,13 @@ GX_STRING         string;
         }
     }
 
-    if (checkbox -> gx_text_button_text_id > 0)
-    {
-        _gx_widget_text_id_draw(widget, text_color, checkbox -> gx_text_button_font_id,
-                                checkbox -> gx_text_button_text_id, xoffset, 0);
-    }
-    else
-    {
-        _gx_system_private_string_get(&checkbox -> gx_text_button_string, &string, checkbox -> gx_widget_style);
+    _gx_text_button_text_get_ext((GX_TEXT_BUTTON *)checkbox, &string);
 
-        if (string.gx_string_ptr)
-        {
-            _gx_widget_text_draw_ext(widget, text_color,
+    if (string.gx_string_ptr)
+    {
+        _gx_widget_text_draw_ext(widget, text_color,
                                  checkbox -> gx_text_button_font_id,
                                  &string, xoffset, 0);
-        }
     }
 
     /* Draw checkbox's children.  */

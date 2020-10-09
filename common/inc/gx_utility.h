@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_utility.h                                        PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,9 +42,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  06-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added new prototype,        */
-/*                                            resulting in version 6.0.1  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -160,13 +160,6 @@ typedef struct GX_BIDI_CONTEXT_STRUCT
     GX_UBYTE             gx_bidi_context_base_level;
     ULONG                gx_bidi_context_reordered_utf8_size;
 } GX_BIDI_CONTEXT;
-
-typedef struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT
-{
-    GX_STRING *gx_bidi_resolved_text_info_text;
-    UINT       gx_bidi_resolved_text_total_lines;
-    UINT       gx_bidi_resolved_text_processed_count;
-} GX_BIDI_RESOLVED_TEXT_INFO;
 
 /* Define bidirectional character infomation structure. */
 typedef struct GX_BIDI_CHARACTER_INFO_STRUCT
@@ -306,7 +299,8 @@ UINT _gx_utility_bidi_arabic_shaping(GX_BIDI_CONTEXT *context);
 UINT _gx_utility_bidi_bracket_pair_get(ULONG code, GX_BIDI_BRACKET_PAIR *bracket_pair);
 UINT _gx_utility_bidi_character_type_get(ULONG code, GX_UBYTE *type);
 UINT _gx_utility_bidi_mirroring_get(USHORT code, USHORT *mirror);
-UINT _gx_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO *resolved_info);
+UINT _gx_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+UINT _gx_utility_bidi_resolved_text_info_delete(GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
 #endif
 
 #ifdef GX_THAI_GLYPH_SHAPING_SUPPORT
@@ -314,6 +308,7 @@ UINT    _gx_utility_thai_glyph_shaping(GX_CONST GX_STRING *string, GX_CHAR_CODE 
 #endif
 
 UINT    _gx_utility_string_length_check(GX_CONST GX_CHAR *string, UINT *length, UINT max_string_length);
+GX_BOOL _gx_utility_string_compare(GX_CONST GX_STRING *string_1, GX_CONST GX_STRING *string_2, UINT count);
 
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT    _gx_utility_string_to_alphamap(GX_CONST GX_CHAR *text, GX_CONST GX_FONT *font, GX_PIXELMAP *textmap);

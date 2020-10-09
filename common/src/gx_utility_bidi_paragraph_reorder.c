@@ -28,12 +28,24 @@
 #include "gx_system.h"
 
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+
+#define GX_LINK_RESOLVED_BIDI_TEXT_INFO                         \
+    if (pre)                                                    \
+    {                                                           \
+        pre -> gx_bidi_resolved_text_info_next = resolved_info; \
+    }                                                           \
+    pre = resolved_info;                                        \
+    if (!head)                                                  \
+    {                                                           \
+        head = pre;                                             \
+    }
+
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_buffer_allocate                    PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -64,10 +76,12 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  06-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            update with bidi context    */
 /*                                            structure change,           */
-/*                                            resulting in version 6.0.1  */
+/*                                            moved a pointer check to    */
+/*                                            its caller function,        */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_buffer_allocate(GX_BIDI_CONTEXT *context)
@@ -84,11 +98,6 @@ INT                  run_stack_size;
 INT                  explicite_stack_size;
 GX_BIDI_BRACKET_PAIR bracket_pair;
 GX_BIDI_TEXT_INFO   *input_info = context -> gx_bidi_context_input_info;
-
-    if (!_gx_system_memory_allocator)
-    {
-        return GX_SYSTEM_MEMORY_ERROR;
-    }
 
     text = input_info -> gx_bidi_text_info_text;
 
@@ -204,7 +213,7 @@ GX_BIDI_TEXT_INFO   *input_info = context -> gx_bidi_context_input_info;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_initiate                           PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -242,9 +251,9 @@ GX_BIDI_TEXT_INFO   *input_info = context -> gx_bidi_context_input_info;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  06-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            removed line breaking logic,*/
-/*                                            resulting in version 6.0.1  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_initiate(GX_BIDI_CONTEXT *context)
@@ -282,7 +291,7 @@ GX_BIDI_UNIT      *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_block_level_determine              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -319,6 +328,8 @@ GX_BIDI_UNIT      *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_block_level_determine(GX_BIDI_CONTEXT *context, UINT start_index, UINT end_index, GX_UBYTE *level)
@@ -378,7 +389,7 @@ GX_BIDI_UNIT *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_explicit_levels_determine          PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -410,6 +421,8 @@ GX_BIDI_UNIT *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_explicit_levels_determine(GX_BIDI_CONTEXT *context)
@@ -658,7 +671,7 @@ GX_BIDI_UNIT           *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_level_runs_compute                 PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -693,6 +706,8 @@ GX_BIDI_UNIT           *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_level_runs_compute(GX_BIDI_CONTEXT *context, INT start_index, INT end_index)
@@ -773,7 +788,7 @@ GX_BIDI_UNIT      *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utiltiy_isolate_run_sequence_append             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -810,6 +825,8 @@ GX_BIDI_UNIT      *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utiltiy_isolate_run_sequence_append(GX_BIDI_CONTEXT *context, INT start_index, INT end_index,
@@ -846,7 +863,7 @@ GX_BIDI_UNIT *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_one_isolate_run_sequence_get       PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -882,6 +899,8 @@ GX_BIDI_UNIT *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_one_isolate_run_sequence_get(GX_BIDI_CONTEXT *context, GX_UBYTE  pre_level,
@@ -988,7 +1007,7 @@ ULONG         last_character;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_isolate_run_sequences_get          PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1018,6 +1037,8 @@ ULONG         last_character;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_isolate_run_sequences_get(GX_BIDI_CONTEXT *context)
@@ -1103,7 +1124,7 @@ GX_BIDI_UNIT        *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_weak_type_resolve_1                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1136,6 +1157,8 @@ GX_BIDI_UNIT        *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_weak_type_resolve_1(GX_BIDI_CONTEXT *context, GX_BIDI_ISOLATE_RUN *entry)
@@ -1186,7 +1209,7 @@ GX_BIDI_UNIT *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_weak_type_resolve_2_3              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1219,6 +1242,8 @@ GX_BIDI_UNIT *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_weak_type_resolve_2_3(GX_BIDI_CONTEXT *context, GX_BIDI_ISOLATE_RUN *entry)
@@ -1267,7 +1292,7 @@ GX_BIDI_UNIT *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_weak_type_resolve_4                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1300,6 +1325,8 @@ GX_BIDI_UNIT *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_weak_type_resolve_4(GX_BIDI_CONTEXT *context, GX_BIDI_ISOLATE_RUN *entry)
@@ -1353,7 +1380,7 @@ GX_BIDI_UNIT *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_weak_type_resolve_5                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1386,6 +1413,8 @@ GX_BIDI_UNIT *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_weak_type_resolve_5(GX_BIDI_CONTEXT *context, GX_BIDI_ISOLATE_RUN *entry)
@@ -1441,7 +1470,7 @@ GX_BIDI_UNIT *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_weak_type_resolve_6                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1474,6 +1503,8 @@ GX_BIDI_UNIT *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_weak_type_resolve_6(GX_BIDI_CONTEXT *context, GX_BIDI_ISOLATE_RUN *entry)
@@ -1505,7 +1536,7 @@ GX_BIDI_UNIT *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_weak_type_resolve_7                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1538,6 +1569,8 @@ GX_BIDI_UNIT *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_weak_type_resolve_7(GX_BIDI_CONTEXT *context, GX_BIDI_ISOLATE_RUN *entry)
@@ -1589,7 +1622,7 @@ GX_BIDI_UNIT *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_bracket_pair_search                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1626,6 +1659,8 @@ GX_BIDI_UNIT *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_bracket_pair_search(GX_BIDI_CONTEXT *context, GX_BIDI_ISOLATE_RUN *entry, INT **return_bracket_pair, INT *return_pair_count)
@@ -1736,7 +1771,7 @@ GX_BIDI_UNIT        *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_neutral_type_resolve_0             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1769,6 +1804,8 @@ GX_BIDI_UNIT        *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_neutral_type_resolve_0(GX_BIDI_CONTEXT *context, GX_BIDI_ISOLATE_RUN *entry)
@@ -1968,7 +2005,7 @@ GX_BIDI_UNIT *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_neutral_type_resolve_1             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2001,6 +2038,8 @@ GX_BIDI_UNIT *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_neutral_type_resolve_1(GX_BIDI_CONTEXT *context, GX_BIDI_ISOLATE_RUN *entry)
@@ -2071,7 +2110,7 @@ GX_UBYTE type;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_neutral_type_resolve_2             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2104,6 +2143,8 @@ GX_UBYTE type;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_neutral_type_resolve_2(GX_BIDI_CONTEXT *context, GX_BIDI_ISOLATE_RUN *entry)
@@ -2148,7 +2189,7 @@ GX_BIDI_UNIT *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_implicit_level_resolve             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2181,6 +2222,8 @@ GX_BIDI_UNIT *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_implicit_level_resolve(GX_BIDI_CONTEXT *context, GX_BIDI_ISOLATE_RUN *entry)
@@ -2235,7 +2278,7 @@ GX_BIDI_UNIT *unit;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_isolate_run_sequences_resolve      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2266,6 +2309,8 @@ GX_BIDI_UNIT *unit;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_isolate_run_sequences_resolve(GX_BIDI_CONTEXT *context)
@@ -2355,7 +2400,7 @@ GX_BIDI_ISOLATE_RUN *entry = context -> gx_bidi_context_isolate_runs;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_reordering_resolve_1               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2388,6 +2433,8 @@ GX_BIDI_ISOLATE_RUN *entry = context -> gx_bidi_context_isolate_runs;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_reordering_resolve_1(GX_BIDI_CONTEXT *context, INT start_index, INT end_index)
@@ -2477,7 +2524,7 @@ USHORT        mirror;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_reordering_resolve_2               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2510,6 +2557,8 @@ USHORT        mirror;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_reordering_resolve_2(GX_BIDI_CONTEXT *context, INT start_index, INT end_index)
@@ -2611,7 +2660,7 @@ INT                count;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_line_break                         PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2640,7 +2689,7 @@ INT                count;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  06-30-2020     Kenneth Maxwell          Initial Version 6.0.1         */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_line_break(GX_BIDI_CONTEXT *context)
@@ -2702,7 +2751,7 @@ INT                line_index = -1;
         }
 
         display_width += glyph_width;
-        display_number ++;
+        display_number++;
 
         if ((ch.gx_string_ptr[0] == ' ') ||
             (ch.gx_string_ptr[0] == ',') ||
@@ -2728,7 +2777,7 @@ INT                line_index = -1;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_reordering_resolve                 PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2764,38 +2813,46 @@ INT                line_index = -1;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  06-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            update with bidi context    */
 /*                                            structure change,           */
-/*                                            resulting in version 6.0.1  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
-static UINT _gx_utility_bidi_reordering_resolve(GX_BIDI_CONTEXT *context, GX_BIDI_RESOLVED_TEXT_INFO *resolved_info)
+static UINT _gx_utility_bidi_reordering_resolve(GX_BIDI_CONTEXT *context, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info)
 {
-UINT          status = GX_SUCCESS;
-INT           start_index = 0;
-INT           end_index;
-UINT          line_index;
-GX_STRING    *out_text_list = GX_NULL;
-GX_CHAR      *line_text;
-ULONG         byte_size;
-INT           index;
-UINT          glyph_count;
-GX_BIDI_UNIT *unit;
+UINT                        status = GX_SUCCESS;
+INT                         start_index = 0;
+INT                         end_index;
+UINT                        line_index;
+GX_STRING                  *out_text_list = GX_NULL;
+GX_CHAR                    *line_text;
+ULONG                       byte_size;
+INT                         index;
+UINT                        glyph_count;
+GX_BIDI_UNIT               *unit;
+GX_BIDI_RESOLVED_TEXT_INFO *bidi_text;
 
-    byte_size = context -> gx_bidi_context_total_lines * sizeof(GX_STRING);
+    byte_size = context -> gx_bidi_context_total_lines * (sizeof(GX_BIDI_RESOLVED_TEXT_INFO) + sizeof(GX_STRING));
     byte_size += context -> gx_bidi_context_reordered_utf8_size + context -> gx_bidi_context_total_lines;
 
-    resolved_info -> gx_bidi_resolved_text_info_text = (GX_STRING *)_gx_system_memory_allocator(byte_size);
-    out_text_list = resolved_info -> gx_bidi_resolved_text_info_text;
+    bidi_text = (GX_BIDI_RESOLVED_TEXT_INFO *)_gx_system_memory_allocator(byte_size);
 
-    if (!out_text_list)
+    if (!bidi_text)
     {
         return GX_SYSTEM_MEMORY_ERROR;
     }
 
-    line_text = (((GX_CHAR *)out_text_list) + context -> gx_bidi_context_total_lines * sizeof(GX_STRING));
-    memset(out_text_list, 0, (size_t)byte_size);
+    memset(bidi_text, 0, (size_t)byte_size);
+
+    bidi_text -> gx_bidi_resolved_text_info_text = (GX_STRING *)(bidi_text + 1);
+    bidi_text -> gx_bidi_resolved_text_info_total_lines = context -> gx_bidi_context_total_lines;
+
+    *resolved_info = bidi_text;
+
+    out_text_list = bidi_text -> gx_bidi_resolved_text_info_text;
+    line_text = (GX_CHAR *)(out_text_list + context -> gx_bidi_context_total_lines);
+
 
     for (line_index = 0; line_index < context -> gx_bidi_context_total_lines; line_index++)
     {
@@ -2866,8 +2923,8 @@ GX_BIDI_UNIT *unit;
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _gx_utility_bidi_paragraph_reorder                  PORTABLE C      */
-/*                                                           6.0.1        */
+/*    _gx_utility_bidi_one_paragraph_reorder              PORTABLE C      */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2878,15 +2935,12 @@ GX_BIDI_UNIT *unit;
 /*                                                                        */
 /*  INPUT                                                                 */
 /*                                                                        */
-/*    text                                  A stream of text to be handled*/
 /*    text_info                             Pointer to bidi text          */
 /*    reordered_text                        Reordered text, each line is  */
 /*                                            ended a with string         */
 /*                                            terminator '\0', multi line */
 /*                                            strings are linked one after*/
 /*                                            another                     */
-/*    line_count                            Total lines of the returned   */
-/*                                            text                        */
 /*    processed_count                       The processed text size in    */
 /*                                            byte                        */
 /*                                                                        */
@@ -2900,28 +2954,28 @@ GX_BIDI_UNIT *unit;
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
-/*    Application Code                                                    */
+/*    _gx_utility_bidi_paragraph_reorder                                  */
 /*                                                                        */
 /*  RELEASE HISTORY                                                       */
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  06-30-2020     Kenneth Maxwell          Modified comment(s), modified */
-/*                                            line breaking logic, and    */
-/*                                            supported Arabic shaping    */
-/*                                            resulting in version 6.0.1  */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s), modified */
+/*                                            line breaking logic,        */
+/*                                            supported Arabic shaping,   */
+/*                                            updated with resolved text  */
+/*                                            info structure change,      */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
-UINT _gx_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO *resolved_info)
+static UINT _gx_utility_bidi_one_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info, UINT *processed_size)
 {
 UINT            status;
 GX_BIDI_CONTEXT context;
 
     memset(&context, 0, sizeof(GX_BIDI_CONTEXT));
     context.gx_bidi_context_input_info = input_info;
-
-    memset(resolved_info, 0, sizeof(GX_BIDI_RESOLVED_TEXT_INFO));
 
     /* Allocate buffer needed for bidi text reordering. */
     status = _gx_utility_bidi_buffer_allocate(&context);
@@ -2978,13 +3032,218 @@ GX_BIDI_CONTEXT context;
 
     if (status == GX_SUCCESS)
     {
-        resolved_info -> gx_bidi_resolved_text_total_lines = context.gx_bidi_context_total_lines;
-        resolved_info -> gx_bidi_resolved_text_processed_count = context.gx_bidi_context_processced_size;
+        if (processed_size)
+        {
+            *processed_size = context.gx_bidi_context_processced_size;
+        }
 
         _gx_system_memory_free(context.gx_bidi_context_buffer);
     }
 
     return status;
+}
+
+
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_utility_bidi_paragraph_reorder                  PORTABLE C      */
+/*                                                           6.1          */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function reorders a bidi text for displaying.                  */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    text_info                             Pointer to bidi text          */
+/*    reordered_text                        Reordered text information    */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
+/*                                                                        */
+/**************************************************************************/
+UINT _gx_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head)
+{
+UINT                        status = GX_SUCCESS;
+GX_BIDI_TEXT_INFO           text_info;
+GX_BIDI_RESOLVED_TEXT_INFO *resolved_info;
+GX_BIDI_RESOLVED_TEXT_INFO *head = GX_NULL;
+GX_BIDI_RESOLVED_TEXT_INFO *pre = GX_NULL;
+UINT                        line_size;
+UINT                        line_break_counts = 0;
+GX_STRING                   string = input_info -> gx_bidi_text_info_text;
+
+    if (!_gx_system_memory_allocator)
+    {
+        return GX_SYSTEM_MEMORY_ERROR;
+    }
+
+    text_info = *input_info;
+
+    while (string.gx_string_length > 0)
+    {
+        if (string.gx_string_ptr[0] == GX_KEY_CARRIAGE_RETURN)
+        {
+            if ((string.gx_string_length > 1) && (string.gx_string_ptr[1] == GX_KEY_LINE_FEED))
+            {
+                line_size = 2;
+            }
+            else
+            {
+                line_size = 1;
+            }
+            line_break_counts++;
+        }
+        else if (string.gx_string_ptr[0] == GX_KEY_LINE_FEED)
+        {
+            line_size = 1;
+            line_break_counts++;
+        }
+        else
+        {
+            line_size = 0;
+        }
+
+        if (((line_break_counts > 1) && (!line_size)) ||
+            ((line_break_counts > 0) && (line_size == string.gx_string_length)))
+        {
+            /* Collect blank lines as one bidi resolved text info instance. */
+            resolved_info = (GX_BIDI_RESOLVED_TEXT_INFO *)_gx_system_memory_allocator(sizeof(GX_BIDI_RESOLVED_TEXT_INFO));
+            if (!resolved_info)
+            {
+                status = GX_SYSTEM_MEMORY_ERROR;
+                break;
+            }
+
+            memset(resolved_info, 0, sizeof(GX_BIDI_RESOLVED_TEXT_INFO));
+
+            if (!line_size)
+            {
+                resolved_info -> gx_bidi_resolved_text_info_total_lines = (UINT)(line_break_counts - 1);
+            }
+            else
+            {
+                resolved_info -> gx_bidi_resolved_text_info_total_lines = line_break_counts;
+            }
+
+            GX_LINK_RESOLVED_BIDI_TEXT_INFO
+        }
+
+        if (!line_size)
+        {
+            /* Start bidi text reorderding for one paragraph. */
+            text_info.gx_bidi_text_info_text = string;
+            status = _gx_utility_bidi_one_paragraph_reorder(&text_info, &resolved_info, &line_size);
+
+            if (status != GX_SUCCESS)
+            {
+                break;
+            }
+
+            GX_LINK_RESOLVED_BIDI_TEXT_INFO
+
+            line_break_counts = 0;
+        }
+
+        /* Increment string pointer and decrement string length. */
+        string.gx_string_ptr += line_size;
+        string.gx_string_length -= line_size;
+    }
+
+    if (status == GX_SUCCESS)
+    {
+        *resolved_info_head = head;
+    }
+    else if (head)
+    {
+        /* Clean generated resolved bidi text link. */
+        _gx_utility_bidi_resolved_text_info_delete(&head);
+    }
+
+    return status;
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_utility_bidi_resolved_text_info_delete          PORTABLE C      */
+/*                                                           6.1          */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function deletes a reordered bidi text information link.       */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    reordered_text                        The head pointer of reordered */
+/*                                            bidi text information link  */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
+/*                                                                        */
+/**************************************************************************/
+UINT _gx_utility_bidi_resolved_text_info_delete(GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head)
+{
+GX_BIDI_RESOLVED_TEXT_INFO *info;
+GX_BIDI_RESOLVED_TEXT_INFO *next;
+
+    if (!_gx_system_memory_free)
+    {
+        return GX_SYSTEM_MEMORY_ERROR;
+    }
+
+    info = *resolved_info_head;
+
+    while (info)
+    {
+        next = info-> gx_bidi_resolved_text_info_next;
+        _gx_system_memory_free(info);
+        info = next;
+    }
+
+    *resolved_info_head = GX_NULL;
+
+    return GX_SUCCESS;
 }
 #endif
 

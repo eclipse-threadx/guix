@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_accordion_menu_shift_helper                     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,6 +70,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_accordion_menu_shift_helper(GX_ACCORDION_MENU *accordion, GX_WIDGET *animation_target, INT shift)
@@ -129,7 +131,7 @@ GX_RECTANGLE size;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_accordion_menu_shift                            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -165,6 +167,8 @@ GX_RECTANGLE size;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_accordion_menu_shift(GX_ACCORDION_MENU *accordion, GX_WIDGET *animation_target, INT shift)
@@ -234,7 +238,7 @@ GX_WIDGET   *child;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_accordion_menu_close_animation_update           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -270,6 +274,8 @@ GX_WIDGET   *child;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_accordion_menu_close_animation_update(GX_ACCORDION_MENU *accordion)
@@ -328,7 +334,7 @@ GX_WIDGET   *child;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_accordion_menu_open_animation_update            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -362,6 +368,8 @@ GX_WIDGET   *child;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_accordion_menu_open_animation_update(GX_ACCORDION_MENU *accordion)
@@ -418,7 +426,7 @@ GX_WIDGET   *child;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_accordion_menu_pen_down_event_process           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -455,6 +463,8 @@ GX_WIDGET   *child;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_accordion_menu_pen_down_event_process(GX_ACCORDION_MENU *accordion, GX_EVENT *event_ptr)
@@ -504,7 +514,7 @@ GX_WIDGET *child = GX_NULL;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_accordion_menu_pen_up_event_process             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -541,6 +551,8 @@ GX_WIDGET *child = GX_NULL;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_accordion_menu_pen_up_event_process(GX_ACCORDION_MENU *accordion, GX_EVENT *event_ptr)
@@ -598,7 +610,7 @@ GX_VALUE      y_shift;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_accordion_menu_event_process                    PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -641,6 +653,8 @@ GX_VALUE      y_shift;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_accordion_menu_event_process(GX_ACCORDION_MENU *accordion, GX_EVENT *event_ptr)

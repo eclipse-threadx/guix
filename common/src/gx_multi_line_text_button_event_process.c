@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_button_event_process            PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,9 +70,11 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            updated default call,       */
-/*                                            resulting in version 6.0.2  */
+/*                                            added logic to handle new   */
+/*                                            events,                     */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_multi_line_text_button_event_process(GX_MULTI_LINE_TEXT_BUTTON *button, GX_EVENT *event_ptr)
@@ -90,6 +92,13 @@ UINT status;
         status = _gx_text_button_event_process((GX_TEXT_BUTTON *)button, event_ptr);
         _gx_multi_line_text_button_line_pointers_set(button);
         break;
+
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    case GX_EVENT_DYNAMIC_BIDI_TEXT_ENABLE:
+    case GX_EVENT_DYNAMIC_BIDI_TEXT_DISABLE:
+        _gx_multi_line_text_button_line_pointers_set(button);
+        break;
+#endif
 
     default:
 

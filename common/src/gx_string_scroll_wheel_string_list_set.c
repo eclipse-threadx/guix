@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_string_scroll_wheel_string_list_set             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -72,6 +72,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -85,7 +87,7 @@ UINT status = GX_SUCCESS;
     {
         if (wheel -> gx_string_scroll_wheel_string_list)
         {
-            if(_gx_system_memory_free == GX_NULL)
+            if (_gx_system_memory_free == GX_NULL)
             {
                 return GX_SYSTEM_MEMORY_ERROR;
             }
@@ -96,7 +98,7 @@ UINT status = GX_SUCCESS;
 
     wheel -> gx_string_scroll_wheel_string_list = GX_NULL;
     wheel -> gx_string_scroll_wheel_string_list_buffer_size = 0;
-    
+
     if (wheel -> gx_widget_style & GX_STYLE_TEXT_COPY)
     {
         status = _gx_system_private_string_list_copy(&wheel -> gx_string_scroll_wheel_string_list_deprecated, string_list, string_count);
@@ -121,7 +123,7 @@ UINT status = GX_SUCCESS;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_string_scroll_wheel_string_list_set_ext         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -155,6 +157,10 @@ UINT status = GX_SUCCESS;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to delete       */
+/*                                            dynamic bidi text,          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_string_scroll_wheel_string_list_set_ext(GX_STRING_SCROLL_WHEEL *wheel,
@@ -168,7 +174,7 @@ UINT status = GX_SUCCESS;
     {
         if (wheel -> gx_string_scroll_wheel_string_list_deprecated)
         {
-            if(_gx_system_memory_free == GX_NULL)
+            if (_gx_system_memory_free == GX_NULL)
             {
                 return GX_SYSTEM_MEMORY_ERROR;
             }
@@ -188,6 +194,10 @@ UINT status = GX_SUCCESS;
     {
         wheel -> gx_string_scroll_wheel_string_list = string_list;
     }
+
+#ifdef GX_DYNAMIC_BIDI_TEXT_SUPPORT
+     _gx_text_scroll_wheel_dynamic_bidi_text_delete((GX_TEXT_SCROLL_WHEEL *)wheel);
+#endif  // GX_DYNAMIC_BIDI_TEXT_SUPPORT
 
     if (status == GX_SUCCESS)
     {

@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_widget_delete_helper                            PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,10 +69,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            removed private string      */
 /*                                            delete,                     */
-/*                                            resulting in version 6.0.2  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_widget_delete_helper(GX_WIDGET *widget)
@@ -120,7 +120,7 @@ GX_EVENT delete_event;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_widget_delete                                   PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -153,6 +153,8 @@ GX_EVENT delete_event;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_widget_delete(GX_WIDGET *widget)
@@ -163,7 +165,7 @@ GX_WIDGET *child;
     GX_ENTER_CRITICAL
 
     /* first delete widget children */
-    while(widget -> gx_widget_first_child)
+    while (widget -> gx_widget_first_child)
     {
         child = widget -> gx_widget_first_child;
         while (child -> gx_widget_first_child)

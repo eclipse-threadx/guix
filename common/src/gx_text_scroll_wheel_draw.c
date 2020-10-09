@@ -38,7 +38,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_round_text_draw               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -85,6 +85,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT  _gx_text_scroll_wheel_round_text_draw(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID tColor, GX_RESOURCE_ID font_id,
@@ -175,7 +177,7 @@ GX_COLOR    old_fill_color;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_flat_text_draw                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -217,6 +219,8 @@ GX_COLOR    old_fill_color;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT  _gx_text_scroll_wheel_flat_text_draw(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID tColor, GX_RESOURCE_ID font_id,
@@ -269,7 +273,7 @@ GX_BRUSH *brush;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_row_draw                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -306,6 +310,8 @@ GX_BRUSH *brush;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_text_scroll_wheel_row_draw(GX_TEXT_SCROLL_WHEEL *wheel, GX_RECTANGLE *selected_area, GX_RECTANGLE *draw_area, GX_CONST GX_STRING *string)
@@ -375,8 +381,124 @@ UINT           (*text_draw)(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID tColor, 
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _gx_string_scroll_wheel_round_draw                  PORTABLE C      */
-/*                                                           6.0          */
+/*    _gx_text_scroll_wheel_text_get                      PORTABLE C      */
+/*                                                           6.1          */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    Internal helper function to retrieve text of sepecified row.        */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    wheel                                 Scroll wheel control block    */
+/*    row                                   Row index                     */
+/*    string                                String pointer to be return   */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    [gx_text_scroll_wheel_text_get]      Retrieve row text              */
+/*    [_gx_system_memory_allocator]        Memory allocator               */
+/*    _gx_utility_bidi_paragraph_reorder   Reorder bidi text              */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    _gx_text_scroll_wheel_flat_draw                                     */
+/*    _gx_text_scroll_wheel_round_draw                                    */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
+/*                                                                        */
+/**************************************************************************/
+static UINT _gx_text_scroll_wheel_text_get(GX_TEXT_SCROLL_WHEEL *wheel, INT row, GX_STRING *string)
+{
+#ifdef GX_DYNAMIC_BIDI_TEXT_SUPPORT
+GX_BIDI_TEXT_INFO           text_info;
+GX_BIDI_RESOLVED_TEXT_INFO *resolved_info;
+#endif
+
+#if defined(GX_ENABLE_DEPRECATED_STRING_API)
+UINT status;
+
+    if (wheel -> gx_text_scroll_wheel_text_get_deprecated)
+    {
+        string -> gx_string_ptr = wheel -> gx_text_scroll_wheel_text_get_deprecated(wheel, row);
+
+        if (string -> gx_string_ptr)
+        {
+            status = _gx_utility_string_length_check(string -> gx_string_ptr, &string -> gx_string_length, GX_MAX_STRING_LENGTH);
+
+            if (status != GX_SUCCESS)
+            {
+                return status;
+            }
+        }
+    }
+    else
+    {
+#endif
+        wheel -> gx_text_scroll_wheel_text_get(wheel, row, string);
+#if defined(GX_ENABLE_DEPRECATED_STRING_API)
+    }
+#endif
+
+#ifdef GX_DYNAMIC_BIDI_TEXT_SUPPORT
+    if (_gx_system_bidi_text_enabled)
+    {
+        if (!_gx_system_memory_allocator)
+        {
+            return GX_SYSTEM_MEMORY_ERROR;
+        }
+
+        if (!wheel -> gx_text_scroll_wheel_bidi_resolved_text_info)
+        {
+            wheel -> gx_text_scroll_wheel_bidi_resolved_text_info = (GX_BIDI_RESOLVED_TEXT_INFO **)_gx_system_memory_allocator(sizeof(GX_BIDI_RESOLVED_TEXT_INFO *) * (UINT)wheel -> gx_scroll_wheel_total_rows);
+
+            if (!wheel -> gx_text_scroll_wheel_bidi_resolved_text_info)
+            {
+                return GX_SYSTEM_MEMORY_ERROR;
+            }
+
+            memset(wheel -> gx_text_scroll_wheel_bidi_resolved_text_info, 0, sizeof(GX_BIDI_RESOLVED_TEXT_INFO *) * (UINT)wheel -> gx_scroll_wheel_total_rows);
+        }
+
+        if (!wheel -> gx_text_scroll_wheel_bidi_resolved_text_info[row])
+        {
+            text_info.gx_bidi_text_info_text = *string;
+            text_info.gx_bidi_text_info_font = GX_NULL;
+            text_info.gx_bidi_text_info_display_width = 0;
+
+            if (_gx_utility_bidi_paragraph_reorder(&text_info, &resolved_info) == GX_SUCCESS)
+            {
+                wheel -> gx_text_scroll_wheel_bidi_resolved_text_info[row] = resolved_info;
+            }
+        }
+
+        if (wheel -> gx_text_scroll_wheel_bidi_resolved_text_info[row])
+        {
+            *string = *wheel -> gx_text_scroll_wheel_bidi_resolved_text_info[row] -> gx_bidi_resolved_text_info_text;
+        }
+    }
+#endif
+
+    return GX_SUCCESS;
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_text_scroll_wheel_round_draw                    PORTABLE C      */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -413,6 +535,9 @@ UINT           (*text_draw)(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID tColor, 
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_text_scroll_wheel_round_draw(GX_TEXT_SCROLL_WHEEL *wheel)
@@ -481,28 +606,13 @@ INT          row;
             }
         }
 
-#if defined(GX_ENABLE_DEPRECATED_STRING_API)
-        if (wheel -> gx_text_scroll_wheel_text_get_deprecated)
-        {
-            string.gx_string_ptr = wheel -> gx_text_scroll_wheel_text_get_deprecated(wheel, row);
+        status = _gx_text_scroll_wheel_text_get(wheel, row, &string);
 
-            if (string.gx_string_ptr)
-            {
-                status = _gx_utility_string_length_check(string.gx_string_ptr, &string.gx_string_length, GX_MAX_STRING_LENGTH);
-
-                if (status != GX_SUCCESS)
-                {
-                    return status;
-                }
-            }
-        }
-        else
+        if (status != GX_SUCCESS)
         {
-#endif
-            wheel -> gx_text_scroll_wheel_text_get(wheel, row, &string);
-#if defined(GX_ENABLE_DEPRECATED_STRING_API)
+            return status;
         }
-#endif
+
         trans_height = GX_ABS(ypos + row_height / 2 - ycenter);
 
         if (trans_height == 0)
@@ -546,28 +656,13 @@ INT          row;
             }
         }
 
-#if defined(GX_ENABLE_DEPRECATED_STRING_API)
-        if (wheel -> gx_text_scroll_wheel_text_get_deprecated)
-        {
-            string.gx_string_ptr = wheel -> gx_text_scroll_wheel_text_get_deprecated(wheel, row);
+        status = _gx_text_scroll_wheel_text_get(wheel, row, &string);
 
-            if (string.gx_string_ptr)
-            {
-                status = _gx_utility_string_length_check(string.gx_string_ptr, &string.gx_string_length, GX_MAX_STRING_LENGTH);
-
-                if (status != GX_SUCCESS)
-                {
-                    return status;
-                }
-            }
-        }
-        else
+        if (status != GX_SUCCESS)
         {
-#endif
-            wheel -> gx_text_scroll_wheel_text_get(wheel, row, &string);
-#if defined(GX_ENABLE_DEPRECATED_STRING_API)
+            return status;
         }
-#endif
+
         trans_height = ycenter + (row_height / 2) - ypos;
 
         trans_height = GX_FIXED_VAL_MAKE(GX_ABS(height * 3 / 4 - trans_height));
@@ -601,7 +696,7 @@ INT          row;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_flat_draw                     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -637,6 +732,9 @@ INT          row;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_text_scroll_wheel_flat_draw(GX_TEXT_SCROLL_WHEEL *wheel)
@@ -653,9 +751,7 @@ GX_RECTANGLE draw_area;
 GX_STRING    string;
 INT          row;
 INT          top_rows;
-#if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT         status;
-#endif
 
     /* Pickup selected background. */
     _gx_context_pixelmap_get(wheel -> gx_scroll_wheel_selected_background, &map);
@@ -719,28 +815,12 @@ UINT         status;
             }
         }
 
-#if defined(GX_ENABLE_DEPRECATED_STRING_API)
-        if (wheel -> gx_text_scroll_wheel_text_get_deprecated)
+        status = _gx_text_scroll_wheel_text_get(wheel, row, &string);
+        if (status != GX_SUCCESS)
         {
-            string.gx_string_ptr = wheel -> gx_text_scroll_wheel_text_get_deprecated(wheel, row);
-
-            if (string.gx_string_ptr)
-            {
-                status = _gx_utility_string_length_check(string.gx_string_ptr, &string.gx_string_length, GX_MAX_STRING_LENGTH);
-
-                if (status != GX_SUCCESS)
-                {
-                    return status;
-                }
-            }
+            return status;
         }
-        else
-        {
-#endif
-            wheel -> gx_text_scroll_wheel_text_get(wheel, row, &string);
-#if defined(GX_ENABLE_DEPRECATED_STRING_API)
-        }
-#endif
+
         _gx_utility_rectangle_define(&draw_area, xpos, ypos, (GX_VALUE)(xpos + width - 1), (GX_VALUE)(ypos + row_height - 1));
         _gx_text_scroll_wheel_row_draw((GX_TEXT_SCROLL_WHEEL *)wheel, &selected_area, &draw_area, &string);
         ypos = (GX_VALUE)(ypos + row_height);
@@ -762,7 +842,7 @@ UINT         status;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_draw                          PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -796,6 +876,8 @@ UINT         status;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_text_scroll_wheel_draw(GX_TEXT_SCROLL_WHEEL *wheel)

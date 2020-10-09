@@ -29,14 +29,14 @@
 #include "gx_display.h"
 #include "gx_widget.h"
 #include "gx_prompt.h"
-
+#include "gx_utility.h"
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_prompt_text_id_set                              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to delete       */
+/*                                            dynamic bidi text,          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_prompt_text_id_set(GX_PROMPT *prompt, GX_RESOURCE_ID string_id)
@@ -86,6 +90,13 @@ UINT  _gx_prompt_text_id_set(GX_PROMPT *prompt, GX_RESOURCE_ID string_id)
 
     prompt -> gx_prompt_string.gx_string_ptr = GX_NULL;
     prompt -> gx_prompt_string.gx_string_length = 0;
+
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    if (prompt -> gx_prompt_bidi_resolved_text_info)
+    {
+        _gx_utility_bidi_resolved_text_info_delete(&prompt -> gx_prompt_bidi_resolved_text_info);
+    }
+#endif
 
     if (prompt -> gx_widget_status & GX_STATUS_VISIBLE)
     {

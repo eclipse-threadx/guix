@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_view_create                     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -73,6 +73,12 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added logic to init new     */
+/*                                            structure member for        */
+/*                                            dynamic bidi text support,  */
+/*                                            fixed compiler warnings,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT    _gx_multi_line_text_view_create(GX_MULTI_LINE_TEXT_VIEW *text_view,
@@ -94,7 +100,7 @@ UINT    _gx_multi_line_text_view_create(GX_MULTI_LINE_TEXT_VIEW *text_view,
     text_view -> gx_multi_line_text_view_disabled_text_color = GX_COLOR_ID_DISABLED_TEXT;
     text_view -> gx_widget_draw_function = (VOID (*)(GX_WIDGET *))_gx_multi_line_text_view_draw;
     text_view -> gx_widget_event_process_function = (UINT (*)(GX_WIDGET *, GX_EVENT *))_gx_multi_line_text_view_event_process;
-    text_view -> gx_window_scroll_info_get = (VOID (*)(struct GX_WINDOW_STRUCT *, ULONG, GX_SCROLL_INFO *))_gx_multi_line_text_view_scroll_info_get;
+    text_view -> gx_window_scroll_info_get = (VOID (*)(struct GX_WINDOW_STRUCT *, ULONG, GX_SCROLL_INFO *))(void (*)(void))_gx_multi_line_text_view_scroll_info_get;
     text_view -> gx_multi_line_text_view_text_id = text_id;
     text_view -> gx_multi_line_text_view_font_id = GX_FONT_ID_TEXT_INPUT;
     text_view -> gx_multi_line_text_view_text.gx_string_ptr = GX_NULL;
@@ -108,9 +114,13 @@ UINT    _gx_multi_line_text_view_create(GX_MULTI_LINE_TEXT_VIEW *text_view,
     text_view -> gx_multi_line_text_view_first_cache_line = 0;
     text_view -> gx_multi_line_text_view_cache_size = 0;
 
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    text_view -> gx_multi_line_text_view_bidi_resolved_text_info = GX_NULL;
+#endif
+
     text_view -> gx_widget_status |= GX_STATUS_RESIZE_NOTIFY;
 
-    memset(text_view->gx_multi_line_text_view_line_index, 0, GX_MULTI_LINE_INDEX_CACHE_SIZE * sizeof(UINT));
+    memset(text_view -> gx_multi_line_text_view_line_index, 0, GX_MULTI_LINE_INDEX_CACHE_SIZE * sizeof(UINT));
 
     /* Determine if a parent widget was provided.  */
     if (parent)

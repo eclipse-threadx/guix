@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_widget_children_show_event_process              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -66,6 +66,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID  _gx_widget_children_show_event_process(GX_WIDGET *widget, GX_EVENT *event_ptr)
@@ -125,7 +127,7 @@ GX_WIDGET *end = GX_NULL;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_widget_event_process                            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -162,6 +164,9 @@ GX_WIDGET *end = GX_NULL;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added new event entries,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_widget_event_process(GX_WIDGET *widget, GX_EVENT *event_ptr)
@@ -269,6 +274,10 @@ UINT       status = GX_SUCCESS;
 
     case GX_EVENT_LANGUAGE_CHANGE:
     case GX_EVENT_RESOURCE_CHANGE:
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    case GX_EVENT_DYNAMIC_BIDI_TEXT_DISABLE:
+    case GX_EVENT_DYNAMIC_BIDI_TEXT_ENABLE:
+#endif
         /* pass this event down to all my children */
         child = widget -> gx_widget_first_child;
         while (child)

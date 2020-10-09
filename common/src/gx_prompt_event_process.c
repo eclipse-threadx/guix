@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_prompt_event_process                            PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -57,6 +57,8 @@
 /*  CALLS                                                                 */
 /*                                                                        */
 /*    _gx_system_memory_free                Release memory                */
+/*    _gx_utility_bidi_resolved_text_info_delete                          */
+/*                                          Delete dynamic bidi text      */
 /*    _gx_widget_event_process              Default widget event process  */
 /*                                                                        */
 /*  CALLED BY                                                             */
@@ -68,7 +70,7 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  08-14-2020     Kenneth Maxwell          Initial Version 6.0.2         */
+/*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_prompt_event_process(GX_PROMPT *prompt, GX_EVENT *event_ptr)
@@ -79,15 +81,22 @@ UINT  _gx_prompt_event_process(GX_PROMPT *prompt, GX_EVENT *event_ptr)
     {
     case GX_EVENT_DELETE:
         if ((prompt -> gx_widget_style & GX_STYLE_TEXT_COPY) && prompt -> gx_prompt_string.gx_string_ptr)
+	    {
+	        if (!_gx_system_memory_free)
+	        {
+	            return GX_SYSTEM_MEMORY_ERROR;
+	        }
+	        _gx_system_memory_free((void *)prompt -> gx_prompt_string.gx_string_ptr);
+	        prompt -> gx_prompt_string.gx_string_ptr = GX_NULL;
+	        prompt -> gx_prompt_string.gx_string_length = 0;
+	    }
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+
+        if (prompt -> gx_prompt_bidi_resolved_text_info)
         {
-            if (!_gx_system_memory_free)
-            {
-                return GX_SYSTEM_MEMORY_ERROR;
-            }
-            _gx_system_memory_free((void *)prompt -> gx_prompt_string.gx_string_ptr);
-            prompt -> gx_prompt_string.gx_string_ptr = GX_NULL;
-            prompt -> gx_prompt_string.gx_string_length = 0;
+            _gx_utility_bidi_resolved_text_info_delete(&prompt -> gx_prompt_bidi_resolved_text_info);
         }
+#endif
         break;
 
     default:

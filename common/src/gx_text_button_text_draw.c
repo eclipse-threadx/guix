@@ -31,13 +31,12 @@
 #include "gx_widget.h"
 #include "gx_button.h"
 
-
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_button_text_draw                           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,15 +68,19 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1    */
+
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_text_button_text_draw(GX_TEXT_BUTTON *button)
 {
-GX_WIDGET        *widget;
-INT               xtextoffset = 0;
-INT               ytextoffset = 0;
-GX_RESOURCE_ID    color;
-GX_STRING         string;
+GX_WIDGET     *widget;
+INT            xtextoffset = 0;
+INT            ytextoffset = 0;
+GX_RESOURCE_ID color;
+GX_STRING      string;
 
     /* Setup the button.  */
     widget = (GX_WIDGET *)button;
@@ -101,23 +104,13 @@ GX_STRING         string;
         color = button -> gx_text_button_disabled_text_color;
     }
 
-    if (button -> gx_text_button_text_id > 0)
-    {
-        _gx_widget_text_id_draw(widget, color,
-                                button -> gx_text_button_font_id,
-                                button -> gx_text_button_text_id,
-                                xtextoffset, ytextoffset);
-    }
-    else
-    {
-        _gx_system_private_string_get(&button -> gx_text_button_string, &string, button -> gx_widget_style);
+    _gx_text_button_text_get_ext(button, &string);
 
-        if (string.gx_string_ptr)
-        {
-            _gx_widget_text_draw_ext(widget, color,
+    if (string.gx_string_ptr)
+    {
+        _gx_widget_text_draw_ext(widget, color,
                                  button -> gx_text_button_font_id,
                                  &string, xtextoffset, ytextoffset);
-        }
     }
 }
 

@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_multi_line_text_view.h                           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,6 +42,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -97,4 +99,15 @@ UINT _gxe_multi_line_text_view_text_set(GX_MULTI_LINE_TEXT_VIEW *view, GX_CONST 
 UINT _gxe_multi_line_text_view_text_set_ext(GX_MULTI_LINE_TEXT_VIEW *view, GX_CONST GX_STRING *text);
 
 UINT _gxe_multi_line_text_view_whitespace_set(GX_MULTI_LINE_TEXT_VIEW *view, GX_UBYTE whitespace);
+
+UINT _gxe_rich_text_view_create(GX_RICH_TEXT_VIEW *rich_view,
+                                GX_CONST GX_CHAR *name,
+                                GX_WIDGET *parent,
+                                GX_RESOURCE_ID text_id,
+                                GX_RICH_TEXT_FONTS *fonts,
+                                ULONG style,
+                                USHORT id,
+                                GX_CONST GX_RECTANGLE *size,
+                                UINT control_block_size);
+UINT _gxe_rich_text_view_fonts_set(GX_RICH_TEXT_VIEW *rich_view, GX_RICH_TEXT_FONTS *fonts);
 

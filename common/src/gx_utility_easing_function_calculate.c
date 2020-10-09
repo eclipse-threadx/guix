@@ -64,7 +64,7 @@ static UINT _gx_utility_pow_0_10_table[501] = {
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_pow_0_10                                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -96,6 +96,8 @@ static UINT _gx_utility_pow_0_10_table[501] = {
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_EXPO_ELASTIC_EASING_SUPPORT)
@@ -111,7 +113,7 @@ static INT _gx_utility_pow_0_10(INT b)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bounce_ease_out                         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -146,6 +148,8 @@ static INT _gx_utility_pow_0_10(INT b)
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_utility_bounce_ease_out(INT t, INT d, INT *return_tt, INT *return_dd)
@@ -190,7 +194,7 @@ INT dd;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_easing_function_calculate               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -227,6 +231,8 @@ INT dd;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_utility_easing_function_calculate(USHORT easing_function_type, INT start_val, INT end_val, INT t, INT d, INT *current_val)

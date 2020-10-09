@@ -31,13 +31,12 @@
 #include "gx_widget.h"
 #include "gx_button.h"
 
-
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_radio_button_draw                               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -73,18 +72,21 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_radio_button_draw(GX_RADIO_BUTTON *button)
 {
 
-GX_VALUE          xoffset = 0;
-GX_VALUE          yoffset = 0;
-GX_RESOURCE_ID    text_color;
-GX_RESOURCE_ID    fill_color;
-GX_RESOURCE_ID    pixelmap_id;
-GX_PIXELMAP      *pixelmap = GX_NULL;
-GX_STRING         string;
+GX_VALUE       xoffset = 0;
+GX_VALUE       yoffset = 0;
+GX_RESOURCE_ID text_color;
+GX_RESOURCE_ID fill_color;
+GX_RESOURCE_ID pixelmap_id;
+GX_PIXELMAP   *pixelmap = GX_NULL;
+GX_STRING      string;
 
     if (button -> gx_widget_style & GX_STYLE_ENABLED)
     {
@@ -169,19 +171,14 @@ GX_STRING         string;
         }
     }
 
-    if (button -> gx_text_button_text_id > 0)
+
+    _gx_text_button_text_get_ext((GX_TEXT_BUTTON *)button, &string);
+
+    if (string.gx_string_ptr)
     {
-        _gx_widget_text_id_draw((GX_WIDGET *)button, text_color,
-                                button -> gx_text_button_font_id,
-                                button -> gx_text_button_text_id,
-                                xoffset, 0);
-    }
-    else
-    {
-        _gx_system_private_string_get(&button -> gx_text_button_string, &string, button -> gx_widget_style);
         _gx_widget_text_draw_ext((GX_WIDGET *)button, text_color,
-                             button -> gx_text_button_font_id,
-                             &string, xoffset, 0);
+                                 button -> gx_text_button_font_id,
+                                 &string, xoffset, 0);
     }
 
     /* Draw button's children.  */

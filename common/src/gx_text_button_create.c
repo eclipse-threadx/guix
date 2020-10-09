@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_button_create                              PORTABLE C      */
-/*                                                           6.0.2        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -72,9 +72,12 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  08-14-2020     Kenneth Maxwell          Modified comment(s),          */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            set new event process,      */
-/*                                            resulting in version 6.0.2  */
+/*                                            added logic to init new     */
+/*                                            structure member for        */
+/*                                            dynamic bidi text support,  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_text_button_create(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *name,
@@ -97,6 +100,10 @@ UINT  _gx_text_button_create(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *name,
     button -> gx_text_button_disabled_text_color = GX_COLOR_ID_DISABLED_TEXT;
     button -> gx_widget_disabled_fill_color = GX_COLOR_ID_DISABLED_FILL;
     button -> gx_text_button_font_id =             GX_FONT_ID_BUTTON;
+
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    button -> gx_text_button_bidi_resolved_text_info = GX_NULL;
+#endif
 
     /* Determine if a parent widget was provided.  */
     if (parent)
