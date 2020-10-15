@@ -1,6 +1,6 @@
 LICENSED HARDWARE LIST
 
-Last Updated: 2020-09-22
+Last Updated: 2020-10-15
 
 Microsoft has entered into OEM Agreements with manufacturers of the following
 microprocessors and microcontrollers (the “hardware”) to enable those
@@ -16,6 +16,9 @@ Microchip:
     PIC 32-bit MCUs
     SAM 32-bit MCUs
     SAM 32-bit MPUs
+
+NXP:
+    i.MX RT105x/6x cross over MCUs
 
 Renesas:
 
