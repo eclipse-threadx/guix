@@ -171,7 +171,7 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
     xval = clip -> gx_rectangle_left;
     yval = clip -> gx_rectangle_top;
 
-    get = (ULONG *)((UINT)(pixelmap -> gx_pixelmap_data) + (INT)sizeof(GX_COLOR) * (UINT)(pixelmap -> gx_pixelmap_width) * (UINT)((INT)(clip -> gx_rectangle_top) - ypos));
+    get = (ULONG *)((UCHAR *)(pixelmap -> gx_pixelmap_data) + (INT)sizeof(GX_COLOR) * (UINT)(pixelmap -> gx_pixelmap_width) * (UINT)((INT)(clip -> gx_rectangle_top) - ypos));
     get += (clip -> gx_rectangle_left - xpos);
 
     width = clip -> gx_rectangle_right - clip -> gx_rectangle_left + 1;

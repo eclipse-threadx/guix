@@ -89,7 +89,7 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
     put = context -> gx_draw_context_memory + clip -> gx_rectangle_top * context -> gx_draw_context_pitch;
     put += clip -> gx_rectangle_left;
 
-    getrow = (GX_COLOR *)((UINT)(pixelmap -> gx_pixelmap_data) + sizeof(GX_COLOR) * (UINT)(pixelmap -> gx_pixelmap_width) * (UINT)((INT)(clip -> gx_rectangle_top) - ypos));
+    getrow = (GX_COLOR *)((UCHAR *)(pixelmap -> gx_pixelmap_data) + sizeof(GX_COLOR) * (UINT)(pixelmap -> gx_pixelmap_width) * (UINT)((INT)(clip -> gx_rectangle_top) - ypos));
     getrow += (clip -> gx_rectangle_left - xpos);
 
     for (yval = clip -> gx_rectangle_top; yval <= clip -> gx_rectangle_bottom; yval++)
