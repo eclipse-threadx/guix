@@ -29,7 +29,7 @@ Microchip:
 
 NXP:
 
-    i.MX RT105x/6x cross over MCUs
+    NXP i.MX RT10xx series crossover MCUs
 
 Renesas:
 
