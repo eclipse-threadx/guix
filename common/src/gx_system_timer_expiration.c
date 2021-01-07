@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_timer_expiration                         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added GX_DISABLE_THREADX_   */
+/*                                            TIMER_SOURCE configuration, */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_system_timer_expiration(ULONG val)
@@ -82,7 +86,9 @@ GX_EVENT timer_event;
         _gx_system_animation_list == GX_NULL)
     {
 #ifdef GX_THREADX_BINDING
+#ifndef GX_DISABLE_THREADX_TIMER_SOURCE
         tx_timer_deactivate(&_gx_system_timer);
+#endif
 #else
         GX_TIMER_STOP;
 #endif

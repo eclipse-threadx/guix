@@ -34,7 +34,7 @@ static USHORT mouse_capture_memory[GX_MOUSE_MAX_RESOLUTION * GX_MOUSE_MAX_RESOLU
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_565rgb_setup                     PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,10 @@ static USHORT mouse_capture_memory[GX_MOUSE_MAX_RESOLUTION * GX_MOUSE_MAX_RESOLU
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added rotation angle        */
+/*                                            initialization,             */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_565rgb_setup(GX_DISPLAY *display, VOID *aux_data,
@@ -105,6 +109,7 @@ VOID _gx_display_driver_565rgb_setup(GX_DISPLAY *display, VOID *aux_data,
     display -> gx_display_mouse_define                         = _gx_display_driver_generic_mouse_define;
 #endif
 
+    display -> gx_display_rotation_angle                       = 0;
     display -> gx_display_driver_data                          = (VOID *)aux_data;
     display -> gx_display_accelerator                          = GX_NULL;
     display -> gx_display_layer_services                       = GX_NULL;

@@ -264,6 +264,67 @@ GX_PIXEL pixel;
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
+/*    _gx_image_reader_one_row_rotated_convert            PORTABLE C      */
+/*                                                           6.1.3        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This helper function converts pixel data to specified color format  */
+/*    for one row of the pixelmap with rotation.                          */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    image_reader                          Image reader control block    */
+/*    width                                 Pointer to pixelmap width     */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    [gx_image_reader_pixel_read]          Read a pixel from input buffer*/
+/*    [gx_image_reader_pixel_write]         Write a pixel out with        */
+/*                                            specified color format      */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    _gx_image_reader_colorspace_convert                                 */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*                                                                        */
+/**************************************************************************/
+#if defined(GX_SOFTWARE_DECODER_SUPPORT)
+static VOID _gx_image_reader_one_row_rotated_convert(GX_IMAGE_READER *image_reader, INT *width)
+{
+INT      xval;
+GX_PIXEL pixel;
+
+    image_reader -> gx_image_reader_putdata = image_reader -> gx_image_reader_putdatarow;
+    image_reader -> gx_image_reader_putauxdata = image_reader -> gx_image_reader_putauxdatarow;
+
+    for (xval = 0; xval < (*width); xval++)
+    {
+        image_reader -> gx_image_reader_pixel_read(image_reader, xval, &pixel);
+        image_reader -> gx_image_reader_pixel_write(image_reader, &pixel);
+    }
+
+    image_reader -> gx_image_reader_putdatarow += image_reader -> gx_image_reader_putdatarow_stride;
+    image_reader -> gx_image_reader_putauxdatarow += image_reader -> gx_image_reader_putauxdatarow_stride;
+}
+#endif
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
 /*    _gx_image_reader_colorspace_convert                 PORTABLE C      */
 /*                                                           6.1          */
 /*  AUTHOR                                                                */
@@ -332,7 +393,15 @@ VOID (*row_convert)(GX_IMAGE_READER *, INT *);
     else
     {
         param = &width;
-        row_convert = _gx_image_reader_one_row_convert;
+
+        if (image_reader -> gx_image_reader_mode & (GX_IMAGE_READER_MODE_ROTATE_CW | GX_IMAGE_READER_MODE_ROTATE_CCW))
+        {
+            row_convert = _gx_image_reader_one_row_rotated_convert;
+        }
+        else
+        {
+            row_convert = _gx_image_reader_one_row_convert;
+        }
     }
 
     image_reader -> gx_image_reader_size_testing = GX_FALSE;
@@ -340,7 +409,6 @@ VOID (*row_convert)(GX_IMAGE_READER *, INT *);
     /* Run color space convert.  */
     for (yval = 0; yval < height; yval++)
     {
-
         row_convert(image_reader, param);
 
         image_reader -> gx_image_reader_getdata += image_reader -> gx_image_reader_input_stride;

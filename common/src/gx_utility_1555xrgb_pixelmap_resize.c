@@ -504,6 +504,3 @@ UINT status;
 
     return status;
 }
-
-/*  11-15-2018     Kenneth Maxwell          Modified comment(s),          */
-/*                                            resulting in version 5.5    */

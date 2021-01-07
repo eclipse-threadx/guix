@@ -49,7 +49,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_string_to_alphamap                      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -84,6 +84,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -109,7 +112,7 @@ GX_STRING string;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_string_to_alphamap_ext                  PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -151,6 +154,9 @@ GX_STRING string;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_utility_string_to_alphamap_ext(GX_CONST GX_STRING *string, GX_CONST GX_FONT *font, GX_PIXELMAP *textmap)
@@ -252,7 +258,7 @@ UINT glyph_len;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_glyph_8bpp_to_alphamap_draw             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -291,6 +297,9 @@ UINT glyph_len;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_utility_glyph_8bpp_to_alphamap_draw(GX_PIXELMAP *map, INT xpos, INT ypos, GX_CONST GX_GLYPH *glyph)
@@ -303,14 +312,35 @@ UINT      row;
 UINT      col;
 UINT      pixel_width = 0;
 UINT      y_height;
+USHORT    write_stride;
 
-    pixel_width = glyph -> gx_glyph_width;
+    if (map -> gx_pixelmap_flags & (GX_PIXELMAP_ROTATED_90 | GX_PIXELMAP_ROTATED_270))
+    {
+        write_stride = (USHORT)map -> gx_pixelmap_height;
+        pixel_width = glyph -> gx_glyph_height;
+        y_height = glyph -> gx_glyph_width;
+        GX_SWAP_VALS(xpos, ypos)
+
+        if (map -> gx_pixelmap_flags & GX_PIXELMAP_ROTATED_90)
+        {
+            ypos = (map -> gx_pixelmap_width - ypos - glyph -> gx_glyph_width);
+        }
+        else
+        {
+            xpos = (map -> gx_pixelmap_height - xpos - glyph -> gx_glyph_height);
+        }
+    }
+    else
+    {
+        write_stride = (USHORT)map -> gx_pixelmap_width;
+        pixel_width = glyph -> gx_glyph_width;
+        y_height = glyph -> gx_glyph_height;
+    }
 
     read_row = (GX_UBYTE *)glyph -> gx_glyph_map;
-    y_height = glyph -> gx_glyph_height;
 
     write_row = (GX_UBYTE *)map -> gx_pixelmap_data;
-    write_row += ypos * map -> gx_pixelmap_width;
+    write_row += ypos * write_stride;
     write_row += xpos;
 
     for (row = 0; row < y_height; row++)
@@ -322,8 +352,8 @@ UINT      y_height;
         {
             *write_data++ = *read_data++;
         }
-        read_row +=  glyph -> gx_glyph_width;
-        write_row += map -> gx_pixelmap_width;
+        read_row +=  pixel_width;
+        write_row += write_stride;
     }
 }
 
@@ -332,7 +362,7 @@ UINT      y_height;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_glyph_4bpp_to_alphamap_draw             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -371,6 +401,9 @@ UINT      y_height;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_utility_glyph_4bpp_to_alphamap_draw(GX_PIXELMAP *map, INT xpos, INT ypos, GX_CONST GX_GLYPH *glyph)
@@ -382,19 +415,41 @@ GX_UBYTE *write_row;
 UINT      row;
 UINT      col;
 UINT      pixel_width = 0;
-UINT      byte_width;
+UINT      read_stride;
+USHORT    write_stride;
 UINT      y_height;
 GX_UBYTE  data;
 
-    pixel_width = glyph -> gx_glyph_width;
-    byte_width = (pixel_width + 1) / 2;
+    if (map -> gx_pixelmap_flags & (GX_PIXELMAP_ROTATED_90 | GX_PIXELMAP_ROTATED_270))
+    {
+        write_stride = (USHORT)map -> gx_pixelmap_height;
+        pixel_width = glyph -> gx_glyph_height;
+        y_height = glyph -> gx_glyph_width;
+
+        GX_SWAP_VALS(xpos, ypos)
+
+        if (map -> gx_pixelmap_flags & GX_PIXELMAP_ROTATED_90)
+        {
+            ypos = (INT)map -> gx_pixelmap_width - (INT)ypos - (INT)y_height;
+        }
+        else
+        {
+            xpos = (INT)map -> gx_pixelmap_height - (INT)xpos - (INT)pixel_width;
+        }
+    }
+    else
+    {
+        pixel_width = (USHORT)glyph -> gx_glyph_width;
+        y_height = glyph -> gx_glyph_height;
+        write_stride = (USHORT)map -> gx_pixelmap_width;
+    }
 
     read_row = (GX_UBYTE *)glyph -> gx_glyph_map;
-    y_height = glyph -> gx_glyph_height;
-
     write_row = (GX_UBYTE *)map -> gx_pixelmap_data;
-    write_row += ypos * map -> gx_pixelmap_width;
+    write_row += ypos * write_stride;
     write_row += xpos;
+
+    read_stride = (pixel_width + 1) / 2;
 
     for (row = 0; row < y_height; row++)
     {
@@ -413,8 +468,8 @@ GX_UBYTE  data;
                 *write_data++ = (GX_UBYTE)((data << 4) | (data & 0x0f));
             }
         }
-        read_row += byte_width;
-        write_row += map -> gx_pixelmap_width;
+        read_row += read_stride;
+        write_row += write_stride;
     }
 }
 
@@ -423,7 +478,7 @@ GX_UBYTE  data;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_glyph_reversed_4bpp_to_alphamap_draw    PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -462,6 +517,9 @@ GX_UBYTE  data;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_SYNERGY_FONT_FORMAT_SUPPORT)
@@ -476,17 +534,41 @@ UINT      col;
 UINT      pixel_width = 0;
 UINT      byte_width;
 UINT      y_height;
+USHORT    write_stride;
 GX_UBYTE  data;
 
-    pixel_width = glyph -> gx_glyph_width;
-    byte_width = (pixel_width + 1) / 2;
+
+    if (map -> gx_pixelmap_flags & (GX_PIXELMAP_ROTATED_90 | GX_PIXELMAP_ROTATED_270))
+    {
+        write_stride = (USHORT)map -> gx_pixelmap_height;
+        pixel_width = glyph -> gx_glyph_height;
+        y_height = glyph -> gx_glyph_width;
+
+        GX_SWAP_VALS(xpos, ypos)
+
+        if (map -> gx_pixelmap_flags & GX_PIXELMAP_ROTATED_90)
+        {
+            ypos = (INT)map -> gx_pixelmap_width - (INT)ypos - (INT)y_height;
+        }
+        else
+        {
+            xpos = (INT)map -> gx_pixelmap_height - (INT)xpos - (INT)pixel_width;
+        }
+    }
+    else
+    {
+        pixel_width = glyph -> gx_glyph_width;
+        y_height = glyph -> gx_glyph_height;
+        write_stride = (USHORT)map -> gx_pixelmap_width;
+    }
 
     read_row = (GX_UBYTE *)glyph -> gx_glyph_map;
-    y_height = glyph -> gx_glyph_height;
-
     write_row = (GX_UBYTE *)map -> gx_pixelmap_data;
-    write_row += ypos * map -> gx_pixelmap_width;
+    write_row += ypos * write_stride;
     write_row += xpos;
+
+    byte_width = (pixel_width + 1) / 2;
+
 
     for (row = 0; row < y_height; row++)
     {
@@ -506,7 +588,7 @@ GX_UBYTE  data;
             }
         }
         read_row += byte_width;
-        write_row += map -> gx_pixelmap_width;
+        write_row += write_stride;
     }
 }
 #endif
@@ -516,7 +598,7 @@ GX_UBYTE  data;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_glyph_1bpp_to_alphamap_draw             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -555,6 +637,9 @@ GX_UBYTE  data;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_utility_glyph_1bpp_to_alphamap_draw(GX_PIXELMAP *map, INT xpos, INT ypos, GX_CONST GX_GLYPH *glyph)
@@ -566,31 +651,55 @@ GX_UBYTE *write_row;
 UINT      row;
 UINT      col;
 UINT      y_height;
+GX_UBYTE  glyph_width;
 GX_UBYTE  data;
 UINT      pixel_in_first_byte = 8;
 UINT      pixel_in_last_byte;
 UINT      num_bits;
 UINT      num_bytes;
+USHORT    write_stride;
 GX_UBYTE  mask;
 
-    read_row = (GX_UBYTE *)glyph -> gx_glyph_map;
-    y_height = glyph -> gx_glyph_height;
+    if (map -> gx_pixelmap_flags & (GX_PIXELMAP_ROTATED_90 | GX_PIXELMAP_ROTATED_270))
+    {
+        write_stride = (USHORT)map -> gx_pixelmap_height;
+        y_height = glyph -> gx_glyph_width;
+        glyph_width = (USHORT)glyph -> gx_glyph_height;
+        GX_SWAP_VALS(xpos, ypos)
 
-    pixel_in_last_byte = ((UINT)glyph -> gx_glyph_width) & 0x7;
+        if (map -> gx_pixelmap_flags & GX_PIXELMAP_ROTATED_90)
+        {
+            ypos = (map -> gx_pixelmap_width - ypos - glyph -> gx_glyph_width);
+        }
+        else
+        {
+            xpos = (map -> gx_pixelmap_height - xpos - glyph -> gx_glyph_height);
+        }
+    }
+    else
+    {
+        write_stride = (USHORT)map -> gx_pixelmap_width;
+        y_height = glyph -> gx_glyph_height;
+        glyph_width = glyph -> gx_glyph_width;
+    }
+
+    pixel_in_last_byte = ((UINT)glyph_width) & 0x7;
     if (pixel_in_last_byte == 0)
     {
         pixel_in_last_byte = 8;
     }
 
-    num_bytes = (((UINT)glyph -> gx_glyph_width) + 7) >> 3;
+    num_bytes = (((UINT)glyph_width) + 7) >> 3;
 
     if (num_bytes == 1)
     {
         pixel_in_first_byte = pixel_in_last_byte;
     }
 
+    read_row = (GX_UBYTE *)glyph -> gx_glyph_map;
+
     write_row = (GX_UBYTE *)map -> gx_pixelmap_data;
-    write_row += ypos * map -> gx_pixelmap_width;
+    write_row += ypos * write_stride;
     write_row += xpos;
 
     for (row = 0; row < y_height; row++)
@@ -613,25 +722,25 @@ GX_UBYTE  mask;
             {
             case 8:
                 DRAW_PIXEL;
-            /* fallthrough */
+                /* fallthrough */
             case 7:
                 DRAW_PIXEL;
-            /* fallthrough */
+                /* fallthrough */
             case 6:
                 DRAW_PIXEL;
-            /* fallthrough */
+                /* fallthrough */
             case 5:
                 DRAW_PIXEL;
-            /* fallthrough */
+                /* fallthrough */
             case 4:
                 DRAW_PIXEL;
-            /* fallthrough */
+                /* fallthrough */
             case 3:
                 DRAW_PIXEL;
-            /* fallthrough */
+                /* fallthrough */
             case 2:
                 DRAW_PIXEL;
-            /* fallthrough */
+                /* fallthrough */
             default:
                 if (data & mask)
                 {
@@ -642,8 +751,8 @@ GX_UBYTE  mask;
             }
         }
 
-        read_row +=  num_bytes;
-        write_row += map -> gx_pixelmap_width;
+        read_row += num_bytes;
+        write_row += write_stride;
     }
 }
 
@@ -652,7 +761,7 @@ GX_UBYTE  mask;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_glyph_reversed_1bpp_to_alphamap_draw    PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -691,6 +800,9 @@ GX_UBYTE  mask;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_SYNERGY_FONT_FORMAT_SUPPORT)
@@ -703,31 +815,55 @@ GX_UBYTE *write_row;
 UINT      row;
 UINT      col;
 UINT      y_height;
+GX_UBYTE  glyph_width;
 GX_UBYTE  data;
 UINT      pixel_in_first_byte = 8;
 UINT      pixel_in_last_byte;
 UINT      num_bits;
 UINT      num_bytes;
+USHORT    write_stride;
 GX_UBYTE  mask;
 
-    read_row = (GX_UBYTE *)glyph -> gx_glyph_map;
-    y_height = glyph -> gx_glyph_height;
+    if (map -> gx_pixelmap_flags & (GX_PIXELMAP_ROTATED_90 | GX_PIXELMAP_ROTATED_270))
+    {
+        write_stride = (USHORT)map -> gx_pixelmap_height;
+        y_height = glyph -> gx_glyph_width;
+        glyph_width = glyph -> gx_glyph_height;
+        GX_SWAP_VALS(xpos, ypos)
 
-    pixel_in_last_byte = ((UINT)glyph -> gx_glyph_width) & 0x7;
+        if (map -> gx_pixelmap_flags & GX_PIXELMAP_ROTATED_90)
+        {
+            ypos = (map -> gx_pixelmap_width - ypos - glyph -> gx_glyph_width);
+        }
+        else
+        {
+            xpos = (map -> gx_pixelmap_height - xpos - glyph -> gx_glyph_height);
+        }
+    }
+    else
+    {
+        write_stride = (USHORT)map -> gx_pixelmap_width;
+        y_height = glyph -> gx_glyph_height;
+        glyph_width = glyph -> gx_glyph_width;
+    }
+
+    pixel_in_last_byte = ((UINT)glyph_width) & 0x7;
     if (pixel_in_last_byte == 0)
     {
         pixel_in_last_byte = 8;
     }
 
-    num_bytes = (((UINT)glyph -> gx_glyph_width) + 7) >> 3;
+    num_bytes = (((UINT)glyph_width) + 7) >> 3;
 
     if (num_bytes == 1)
     {
         pixel_in_first_byte = pixel_in_last_byte;
     }
 
+    read_row = (GX_UBYTE *)glyph -> gx_glyph_map;
+
     write_row = (GX_UBYTE *)map -> gx_pixelmap_data;
-    write_row += ypos * map -> gx_pixelmap_width;
+    write_row += ypos * write_stride;
     write_row += xpos;
 
     for (row = 0; row < y_height; row++)
@@ -780,7 +916,7 @@ GX_UBYTE  mask;
         }
 
         read_row += num_bytes;
-        write_row += map -> gx_pixelmap_width;
+        write_row += write_stride;
     }
 }
 #endif
@@ -790,7 +926,7 @@ GX_UBYTE  mask;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_string_to_alphamap_draw                 PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -833,6 +969,9 @@ GX_UBYTE  mask;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_utility_string_to_alphamap_draw(GX_CONST GX_STRING *string, GX_CONST GX_FONT *font, GX_PIXELMAP *map)
@@ -862,6 +1001,15 @@ UINT glyph_len;
 
     xpos = 0;
     string_copy = *string;
+
+    if (font -> gx_font_format & GX_FONT_FORMAT_ROTATED_90)
+    {
+        map -> gx_pixelmap_flags |= GX_PIXELMAP_ROTATED_90;
+    }
+    else if (font -> gx_font_format & GX_FONT_FORMAT_ROTATED_270)
+    {
+        map -> gx_pixelmap_flags |= GX_PIXELMAP_ROTATED_270;
+    }
 
     switch (font -> gx_font_format & GX_FONT_FORMAT_BPP_MASK)
     {

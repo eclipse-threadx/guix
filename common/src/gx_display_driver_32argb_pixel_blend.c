@@ -41,7 +41,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_32argb_pixel_blend               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -77,6 +77,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            fix pixel blend logic,      */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_32argb_pixel_blend(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fcolor, GX_UBYTE alpha)
@@ -84,18 +87,17 @@ VOID _gx_display_driver_32argb_pixel_blend(GX_DRAW_CONTEXT *context, INT x, INT 
 
 GX_UBYTE falpha, fred, fgreen, fblue;
 GX_UBYTE balpha, bred, bgreen, bblue;
-GX_UBYTE inv_alpha;
+GX_UBYTE oalpha;
 ULONG    bcolor;
 ULONG   *put;
 INT      combined_alpha;
 
 
     falpha = ALPHAVAL(fcolor);
-    combined_alpha = falpha * alpha;
-    combined_alpha /= 255;
+    falpha = (GX_UBYTE)((falpha * alpha) / 255);
 
     /* Is the pixel non-transparent? */
-    if (combined_alpha > 0)
+    if (falpha > 0)
     {
         /* calculate address of pixel */
         put = (ULONG *)context -> gx_draw_context_memory;
@@ -103,7 +105,7 @@ INT      combined_alpha;
         put += x;
 
         /* No need to blend if alpha value is 255. */
-        if (combined_alpha == 255)
+        if (falpha == 255)
         {
             *put = (ULONG)fcolor;
             return;
@@ -125,16 +127,16 @@ INT      combined_alpha;
         bblue = BLUEVAL(bcolor);
 
         /* background alpha is inverse of foreground alpha */
-        inv_alpha = (GX_UBYTE)(256 - combined_alpha);
+        combined_alpha = (falpha * balpha) / 0xff;
 
         /* blend foreground and background, each color channel */
-        falpha = (GX_UBYTE)(((balpha * inv_alpha) + (falpha * combined_alpha)) >> 8);
-        fred = (GX_UBYTE)(((bred * inv_alpha) + (fred * combined_alpha)) >> 8);
-        fgreen = (GX_UBYTE)(((bgreen * inv_alpha) + (fgreen * combined_alpha)) >> 8);
-        fblue = (GX_UBYTE)(((bblue * inv_alpha) + (fblue * combined_alpha)) >> 8);
-
+        oalpha = (GX_UBYTE)(falpha + balpha - combined_alpha);
+        fred = (GX_UBYTE)((fred * falpha + bred * balpha - bred * combined_alpha) / oalpha);
+        fgreen = (GX_UBYTE)((fgreen * falpha + bgreen * balpha - bgreen * combined_alpha) / oalpha);
+        fblue = (GX_UBYTE)((fblue * falpha + bblue * balpha - bblue * combined_alpha) / oalpha);
+        
         /* re-assemble into 16-bit color and write it out */
-        *put = (ULONG)ASSEMBLECOLOR(falpha, fred, fgreen, fblue);
+        *put = (ULONG)ASSEMBLECOLOR(oalpha, fred, fgreen, fblue);
     }
 }
 

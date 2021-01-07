@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -48,6 +48,11 @@
 /*                                            modified controls blocks,   */
 /*                                            added new APIs,             */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            declare new APIs,           */
+/*                                            defined new status,         */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -71,7 +76,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 1
-#define GUIX_PATCH_VERSION 0
+#define GUIX_PATCH_VERSION 3
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -277,6 +282,10 @@ typedef struct GX_STRING_STRUCT
 #endif /* GX_PARAMETER_NOT_USED */
 
 #define GX_MAX_PIXELMAP_RESOLUTION 0x3FFF
+
+/* Define screen rotation types. */
+#define GX_SCREEN_ROTATION_CW  90
+#define GX_SCREEN_ROTATION_CCW 270
 
 /* API input parameters and general constants.  */
 
@@ -685,6 +694,7 @@ typedef struct GX_STRING_STRUCT
 
 #define GX_STATUS_MODAL                     0x00100000UL
 
+#define GX_STATUS_DYNAMIC_BUFFER            0x01000000UL
 #define GX_STATUS_LINE_BREAK_PROCESSED      0x02000000UL
 #define GX_STATUS_RESIZE_NOTIFY             0x04000000UL
 #define GX_STATUS_STUDIO_CREATED            0x08000000UL
@@ -1008,13 +1018,6 @@ typedef GX_UBYTE GX_CHAR_CODE;
 #endif 
 
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-typedef struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT
-{
-    GX_STRING                                *gx_bidi_resolved_text_info_text;
-    UINT                                      gx_bidi_resolved_text_info_total_lines;
-    struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT *gx_bidi_resolved_text_info_next;
-} GX_BIDI_RESOLVED_TEXT_INFO;
-
 #define GX_PROMPT_BIDI_RESOLVED_TEXT_INFO               GX_BIDI_RESOLVED_TEXT_INFO *gx_prompt_bidi_resolved_text_info;
 #define GX_TEXT_BUTTON_BIDI_RESOLVED_TEXT_INFO          GX_BIDI_RESOLVED_TEXT_INFO *gx_text_button_bidi_resolved_text_info;
 #define GX_MULTI_LINE_TEXT_VIEW_BIDI_RESOLVED_TEXT_INFO GX_BIDI_RESOLVED_TEXT_INFO *gx_multi_line_text_view_bidi_resolved_text_info;
@@ -1128,16 +1131,18 @@ typedef struct GX_FONT_STRUCT
     GX_CONST struct GX_FONT_STRUCT *gx_font_next_page;         /* For multiple page fonts (Unicode)        */
 } GX_FONT;
 
-#define GX_FONT_FORMAT_BPP_MASK   0x0F
-#define GX_FONT_FORMAT_1BPP       0x01
-#define GX_FONT_FORMAT_2BPP       0x02
-#define GX_FONT_FORMAT_4BPP       0x04
-#define GX_FONT_FORMAT_8BPP       0x08
+#define GX_FONT_FORMAT_BPP_MASK   0x03
+#define GX_FONT_FORMAT_1BPP       0x00
+#define GX_FONT_FORMAT_2BPP       0x01
+#define GX_FONT_FORMAT_4BPP       0x02
+#define GX_FONT_FORMAT_8BPP       0x03
 
 #define GX_FONT_FORMAT_COMPRESSED     0x10
 #define GX_FONT_FORMAT_FREETYPE       0x20
 #define GX_FONT_FORMAT_KERNING        0x40
 #define GX_FONT_FORMAT_REVERSED_ORDER 0x80  /* For 4bpp font, half bytes order reversed. For 1bpp font, bits order reversed with least signigicant bit in left. */
+#define GX_FONT_FORMAT_ROTATED_90     0x04
+#define GX_FONT_FORMAT_ROTATED_270    0x08
 
 /* Define Pixelmap type.  */
 
@@ -1167,9 +1172,27 @@ typedef struct GX_PIXELMAP_STRUCT
 #if defined(GX_USE_SYNERGY_DRW)
 #define GX_PIXELMAP_DYNAMICALLY_ALLOCATED  0x20                 /* Pixelmap is dynamically allocated        */
 #endif
+#define GX_PIXELMAP_ROTATED_90     0x40
+#define GX_PIXELMAP_ROTATED_270    0x80
 
 #define PIXELMAP_IS_TRANSPARENT(a) (a -> gx_pixelmap_flags & (GX_PIXELMAP_TRANSPARENT | GX_PIXELMAP_ALPHA))
 
+
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+typedef struct GX_BIDI_TEXT_INFO_STRUCT
+{
+    GX_STRING gx_bidi_text_info_text;
+    GX_FONT  *gx_bidi_text_info_font;
+    GX_VALUE  gx_bidi_text_info_display_width;
+} GX_BIDI_TEXT_INFO;
+
+typedef struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT
+{
+    GX_STRING                                *gx_bidi_resolved_text_info_text;
+    UINT                                      gx_bidi_resolved_text_info_total_lines;
+    struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT *gx_bidi_resolved_text_info_next;
+} GX_BIDI_RESOLVED_TEXT_INFO;
+#endif
 
 /* Define Brush type.  */
 
@@ -1498,6 +1521,7 @@ typedef struct GX_DISPLAY_STRUCT
     GX_UBYTE                  gx_display_active_language;       /* Define the active language.              */
     GX_UBYTE                  gx_display_language_table_size;
     GX_UBYTE                  gx_display_driver_ready;
+    USHORT                    gx_display_rotation_angle;
 
     GX_VALUE                  gx_display_width;
     GX_VALUE                  gx_display_height;
@@ -2734,6 +2758,8 @@ typedef struct GX_IMAGE_READER_STRUCT
     GX_UBYTE           *gx_image_reader_getauxdata;
     GX_UBYTE           *gx_image_reader_putdata;
     GX_UBYTE           *gx_image_reader_putauxdata;
+    GX_UBYTE           *gx_image_reader_putdatarow;
+    GX_UBYTE           *gx_image_reader_putauxdatarow;
     GX_UBYTE            gx_image_reader_color_format;
     GX_UBYTE            gx_image_reader_mode;
     GX_UBYTE            gx_image_reader_image_type;
@@ -2743,6 +2769,8 @@ typedef struct GX_IMAGE_READER_STRUCT
     GX_COLOR           *gx_image_reader_palette;
     UINT                gx_image_reader_palette_size;
     UINT                gx_image_reader_input_stride;
+    GX_BYTE             gx_image_reader_putdatarow_stride;
+    GX_BYTE             gx_image_reader_putauxdatarow_stride;
     GX_BOOL             gx_image_reader_size_testing;
     GX_COLOR           *gx_image_reader_png_trans;
     GX_COLOR           *gx_image_reader_png_palette;
@@ -2755,6 +2783,8 @@ typedef struct GX_IMAGE_READER_STRUCT
 #define GX_IMAGE_READER_MODE_COMPRESS   0x01
 #define GX_IMAGE_READER_MODE_ALPHA      0x02
 #define GX_IMAGE_READER_MODE_DITHER     0x04
+#define GX_IMAGE_READER_MODE_ROTATE_CW  0x10
+#define GX_IMAGE_READER_MODE_ROTATE_CCW 0x20
 
 /* Define Screen stack control block */
 typedef struct GX_SCREEN_STACK_CONTROL_STRUCT
@@ -3020,6 +3050,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 
 #define gx_menu_create(a, b, c, d, e, f, g, h)                   _gx_menu_create((GX_MENU *)a, b, (GX_WIDGET *)c, d, e, f, g, h)
 #define gx_menu_draw                                             _gx_menu_draw
+#define gx_menu_event_process                                    _gx_menu_event_process
 #define gx_menu_insert                                           _gx_menu_insert
 #define gx_menu_remove                                           _gx_menu_remove
 #define gx_menu_remove                                           _gx_menu_remove
@@ -3358,6 +3389,10 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_tree_view_selected_get                                _gx_tree_view_selected_get
 #define gx_tree_view_selected_set                                _gx_tree_view_selected_set
 
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+#define gx_utility_bidi_paragraph_reorder                        _gx_utility_bidi_paragraph_reorder
+#define gx_utility_bidi_resolved_text_info_delete                _gx_utility_bidi_resolved_text_info_delete
+#endif
 #define gx_utility_canvas_to_bmp                                 _gx_utility_canvas_to_bmp
 #define gx_utility_gradient_create                               _gx_utility_gradient_create
 #define gx_utility_gradient_delete                               _gx_utility_gradient_delete
@@ -3716,9 +3751,10 @@ UINT _gx_line_chart_update(GX_LINE_CHART *chart, INT *data, INT data_count);
 UINT _gx_line_chart_y_scale_calculate(GX_LINE_CHART *chart, INT *return_val);
 
 UINT _gx_menu_create(GX_MENU *menu, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
-    GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
-    ULONG style, USHORT menu_id, GX_CONST GX_RECTANGLE *size);
+                     GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
+                     ULONG style, USHORT menu_id, GX_CONST GX_RECTANGLE *size);
 VOID _gx_menu_draw(GX_MENU *menu);
+UINT _gx_menu_event_process(GX_MENU* menu, GX_EVENT* event_ptr);
 UINT _gx_menu_insert(GX_MENU *menu, GX_WIDGET *widget);
 UINT _gx_menu_remove(GX_MENU *menu, GX_WIDGET *widget);
 UINT _gx_menu_remove(GX_MENU *menu, GX_WIDGET *widget);
@@ -4137,6 +4173,10 @@ UINT _gx_tree_view_root_pixelmap_set(GX_TREE_VIEW *tree, GX_RESOURCE_ID expand_m
 UINT _gx_tree_view_selected_get(GX_TREE_VIEW *tree, GX_WIDGET **selected);
 UINT _gx_tree_view_selected_set(GX_TREE_VIEW *tree, GX_WIDGET *selected);
 
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT    _gx_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+UINT    _gx_utility_bidi_resolved_text_info_delete(GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+#endif
 UINT    _gx_utility_canvas_to_bmp(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT(*write_data)(GX_UBYTE *byte_data, UINT data_count));
 UINT    _gx_utility_gradient_create(GX_GRADIENT *gradient, GX_VALUE width, GX_VALUE height, UCHAR type, GX_UBYTE start_alpha, GX_UBYTE end_alpha);
 UINT    _gx_utility_gradient_delete(GX_GRADIENT *gradient);
@@ -4462,6 +4502,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 
 #define gx_menu_create(a, b, c, d, e, f, g, h)                   _gxe_menu_create((GX_MENU *)a, b, (GX_WIDGET *)c, d, e, f, g, h, sizeof(GX_MENU))
 #define gx_menu_draw                                             _gx_menu_draw
+#define gx_menu_event_process                                    _gxe_menu_event_process
 #define gx_menu_insert                                           _gxe_menu_insert
 #define gx_menu_remove                                           _gxe_menu_remove
 #define gx_menu_text_draw                                        _gx_menu_text_draw
@@ -4797,6 +4838,10 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_tree_view_selected_get                                _gxe_tree_view_selected_get
 #define gx_tree_view_selected_set                                _gxe_tree_view_selected_set
 
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+#define gx_utility_bidi_paragraph_reorder                        _gxe_utility_bidi_paragraph_reorder
+#define gx_utility_bidi_resolved_text_info_delete                _gxe_utility_bidi_resolved_text_info_delete
+#endif
 #define gx_utility_canvas_to_bmp                                 _gxe_utility_canvas_to_bmp
 #define gx_utility_circle_point_get                              _gxe_utility_circle_point_get
 #define gx_utility_ltoa                                          _gxe_utility_ltoa
@@ -5140,9 +5185,10 @@ UINT _gxe_line_chart_update(GX_LINE_CHART *chart, INT *data, INT data_count);
 UINT _gxe_line_chart_y_scale_calculate(GX_LINE_CHART *chart, INT *return_val);
 
 UINT _gxe_menu_create(GX_MENU *menu, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
-    GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
-    ULONG style, USHORT menu_id, GX_CONST GX_RECTANGLE *size, UINT control_block_size);
+                      GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
+                      ULONG style, USHORT menu_id, GX_CONST GX_RECTANGLE *size, UINT control_block_size);
 VOID _gx_menu_draw(GX_MENU *menu);
+UINT _gxe_menu_event_process(GX_MENU* menu, GX_EVENT* event_ptr);
 UINT _gxe_menu_insert(GX_MENU *menu, GX_WIDGET *widget);
 UINT _gxe_menu_remove(GX_MENU *menu, GX_WIDGET *widget);
 VOID _gx_menu_text_draw(GX_MENU *menu);
@@ -5569,6 +5615,10 @@ UINT _gxe_tree_view_selected_set(GX_TREE_VIEW *tree, GX_WIDGET *selected);
 
 UINT    _gxe_utility_gradient_create(GX_GRADIENT *gradient, GX_VALUE width, GX_VALUE height, UCHAR type, UCHAR alpha_start, UCHAR alpha_end);
 UINT    _gxe_utility_gradient_delete(GX_GRADIENT *gradient);
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT    _gxe_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+UINT    _gxe_utility_bidi_resolved_text_info_delete(GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+#endif
 UINT    _gxe_utility_canvas_to_bmp(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT(*write_data)(GX_UBYTE *byte_data, UINT data_count));
 UINT    _gxe_utility_circle_point_get(INT xcenter, INT ycenter, UINT r, INT angle, GX_POINT *point);
 UINT    _gxe_utility_ltoa(LONG value, GX_CHAR *return_buffer, UINT return_buffer_size);

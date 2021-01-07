@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_generic_simple_wide_line_draw    PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -77,6 +77,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            supported display rotation, */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_generic_simple_wide_line_draw(GX_DRAW_CONTEXT *context, INT xstart, INT ystart,
@@ -186,8 +189,14 @@ GX_UBYTE old_alpha;
          */
         line_points = _gx_display_driver_generic_wide_line_points_calculate(context, xstart, ystart,
                                                                             xend, yend, brush_width, GX_FALSE);
-
-        _gx_display_driver_generic_wide_line_fill(context, line_points);
+        if (display -> gx_display_rotation_angle)
+        {
+            _gx_display_driver_generic_rotated_wide_line_fill(context, line_points);
+        }
+        else
+        {
+            _gx_display_driver_generic_wide_line_fill(context, line_points);
+        }
     }
 #if defined(GX_BRUSH_ALPHA_SUPPORT)
     context -> gx_draw_context_brush.gx_brush_alpha = old_alpha;

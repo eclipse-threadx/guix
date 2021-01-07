@@ -25,7 +25,8 @@
 #define BLUEVAL(_c)  (GX_UBYTE)(_c)
 
 #define ASSEMBLECOLOR(_r, _g, _b) \
-    (((_r) << 16) |               \
+    ((0xff << 24) |               \
+     ((_r) << 16) |               \
      ((_g) << 8) |                \
      (_b))
 #define GX_SOURCE_CODE
@@ -41,7 +42,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_24xrgb_pixel_blend               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -80,6 +81,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            set alpha value as 0xff,    */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_24xrgb_pixel_blend(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fcolor, GX_UBYTE alpha)
@@ -103,7 +107,7 @@ ULONG   *put;
         /* No need to blend if alpha value is 255. */
         if (alpha == 255)
         {
-            *put = (ULONG)fcolor;
+            *put = (ULONG)(fcolor | 0xff000000);
 
             return;
         }
@@ -129,7 +133,7 @@ ULONG   *put;
         fgreen = (GX_UBYTE)(((bgreen * balpha) + (fgreen * alpha)) >> 8);
         fblue = (GX_UBYTE)(((bblue * balpha) + (fblue * alpha)) >> 8);
 
-        /* re-assemble into 16-bit color and write it out */
+        /* re-assemble into 32-bit color and write it out */
         *put = (ULONG)(ASSEMBLECOLOR(fred, fgreen, fblue));
     }
 }

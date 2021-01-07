@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_utility.h                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -45,6 +45,9 @@
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added new prototype,        */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            bidi test reordering APIs,  */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -134,13 +137,6 @@ typedef struct GX_BIDI_UNIT_STRUCT
     GX_UBYTE gx_bidi_unit_type;
     GX_UBYTE gx_bidi_unit_org_type;
 } GX_BIDI_UNIT;
-
-typedef struct GX_BIDI_TEXT_INFO_STRUCT
-{
-    GX_STRING gx_bidi_text_info_text;
-    GX_FONT  *gx_bidi_text_info_font;
-    GX_VALUE  gx_bidi_text_info_display_width;
-} GX_BIDI_TEXT_INFO;
 
 /* Define a truture to keep parameters for a bunch of functions. */
 typedef struct GX_BIDI_CONTEXT_STRUCT
@@ -345,6 +341,9 @@ UINT    _gxe_utility_rectangle_shift(GX_RECTANGLE *rectangle, GX_VALUE x_shift, 
 UINT    _gxe_utility_string_to_alphamap(GX_CONST GX_CHAR *text, GX_CONST GX_FONT *font, GX_PIXELMAP *textmap);
 #endif
 UINT    _gxe_utility_string_to_alphamap_ext(GX_CONST GX_STRING *text, GX_CONST GX_FONT *font, GX_PIXELMAP *textmap);
-
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT    _gxe_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+UINT    _gxe_utility_bidi_resolved_text_info_delete(GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+#endif
 #endif
 

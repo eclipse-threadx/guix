@@ -102,7 +102,7 @@ GX_EVENT complete_event;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_animation_complete                              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -142,6 +142,9 @@ GX_EVENT complete_event;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -191,8 +194,8 @@ GX_VALUE   yshift;
             /* attach the widget to it's parent */
             _gx_widget_attach(animation -> gx_animation_info.gx_animation_parent, target);
         }
-        _gx_system_canvas_refresh();
         _gx_canvas_hide(animation -> gx_animation_canvas);
+        _gx_system_canvas_refresh();
     }
     else
     {
@@ -202,6 +205,7 @@ GX_VALUE   yshift;
             animation -> gx_animation_info.gx_animation_end_alpha)
         {
             animation -> gx_animation_info.gx_animation_target -> gx_widget_style &= ~GX_STYLE_USE_LOCAL_ALPHA;
+            _gx_system_dirty_mark(animation -> gx_animation_info.gx_animation_target);
         }
 #endif
 

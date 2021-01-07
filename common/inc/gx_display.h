@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_display.h                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -44,6 +44,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added rotated display       */
+/*                                            driver declarations,        */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -228,10 +232,36 @@ VOID     _gx_display_driver_16bpp_pixelmap_simple_rotate(GX_DRAW_CONTEXT *contex
 VOID     _gx_display_driver_16bpp_pixelmap_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
                                                   INT angle, INT rot_cx, INT rot_cy);
 
-VOID _gx_display_driver_24xrgb_canvas_blend(GX_CANVAS *source, GX_CANVAS *dest);
-VOID _gx_display_driver_24xrgb_pixel_blend(GX_DRAW_CONTEXT *context, INT xcoord, INT ycoord, GX_COLOR fcolor, GX_UBYTE alpha);
-VOID _gx_display_driver_24xrgb_pixelmap_blend(GX_DRAW_CONTEXT *context, INT xstart, INT ystart, GX_PIXELMAP *pmp, GX_UBYTE alpha);
-VOID _gx_display_driver_24xrgb_pixelmap_draw(GX_DRAW_CONTEXT *context, INT xstart, INT ystart, GX_PIXELMAP *pmp);
+VOID     _gx_display_driver_16bpp_rotated_block_move(GX_DRAW_CONTEXT *context, GX_RECTANGLE *block, INT xshift, INT yshift);
+VOID     _gx_display_driver_16bpp_rotated_canvas_copy(GX_CANVAS *canvas, GX_CANVAS *composite);
+VOID     _gx_display_driver_16bpp_rotated_horizontal_pattern_line_draw(GX_DRAW_CONTEXT *context, INT xstart, INT xend, INT ypos);
+VOID     _gx_display_driver_16bpp_rotated_horizontal_line_draw(GX_DRAW_CONTEXT *context, INT xstart, INT xend, INT ypos, INT width, GX_COLOR color);
+VOID     _gx_display_driver_16bpp_rotated_pixel_write(GX_DRAW_CONTEXT *context, INT xcoord, INT ycoord, GX_COLOR color);
+VOID     _gx_display_driver_16bpp_rotated_simple_line_draw(GX_DRAW_CONTEXT *context, INT xstart, INT ystart, INT xend, INT yend);
+VOID     _gx_display_driver_16bpp_rotated_vertical_line_draw(GX_DRAW_CONTEXT *context, INT ystart, INT yend, INT xpos, INT width, GX_COLOR color);
+VOID     _gx_display_driver_16bpp_rotated_vertical_pattern_line_draw(GX_DRAW_CONTEXT *context, INT ystart, INT yend, INT xpos);
+VOID     _gx_display_driver_565rgb_rotated_canvas_blend(GX_CANVAS *canvas, GX_CANVAS *composite);
+VOID     _gx_display_driver_565rgb_rotated_glyph_1bit_draw(GX_DRAW_CONTEXT *context, GX_RECTANGLE *draw_area, GX_POINT *map_offset, GX_CONST GX_GLYPH *glyph);
+VOID     _gx_display_driver_565rgb_rotated_horizontal_pixelmap_line_draw(GX_DRAW_CONTEXT *context,
+                                                                         INT xstart, INT xend, INT y, GX_FILL_PIXELMAP_INFO *info);
+VOID     _gx_display_driver_565rgb_rotated_pixel_blend(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fcolor, GX_UBYTE alpha);
+VOID     _gx_display_driver_565rgb_rotated_pixelmap_draw(GX_DRAW_CONTEXT *context, INT xstart, INT ystart, GX_PIXELMAP *pmp);
+VOID     _gx_display_driver_565rgb_rotated_pixelmap_blend(GX_DRAW_CONTEXT *context, INT xstart, INT ystart, GX_PIXELMAP *pmp, GX_UBYTE alpha);
+VOID     _gx_display_driver_565rgb_rotated_pixelmap_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
+                                                           INT angle, INT rot_cx, INT rot_cy);
+#if defined(GX_SOFTWARE_DECODER_SUPPORT)
+USHORT   _gx_display_driver_565rgb_YCbCr2RGB(INT y, INT cb, INT cr);
+VOID     _gx_display_driver_565rgb_rotated_jpeg_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
+VOID     _gx_display_driver_565rgb_rotated_png_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
+#endif
+VOID     _gx_display_driver_565rgb_rotated_setup(GX_DISPLAY *display, VOID *aux_data,
+                                                 VOID (*toggle_function)(struct GX_CANVAS_STRUCT *canvas,
+                                                                         GX_RECTANGLE *dirty_area));
+
+VOID     _gx_display_driver_24xrgb_canvas_blend(GX_CANVAS *source, GX_CANVAS *dest);
+VOID     _gx_display_driver_24xrgb_pixel_blend(GX_DRAW_CONTEXT *context, INT xcoord, INT ycoord, GX_COLOR fcolor, GX_UBYTE alpha);
+VOID     _gx_display_driver_24xrgb_pixelmap_blend(GX_DRAW_CONTEXT *context, INT xstart, INT ystart, GX_PIXELMAP *pmp, GX_UBYTE alpha);
+VOID     _gx_display_driver_24xrgb_pixelmap_draw(GX_DRAW_CONTEXT *context, INT xstart, INT ystart, GX_PIXELMAP *pmp);
 
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
 VOID     _gx_display_driver_24xrgb_jpeg_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
@@ -280,42 +310,52 @@ VOID     _gx_display_driver_1555xrgb_pixelmap_rotate(GX_DRAW_CONTEXT *context, I
 VOID     _gx_display_driver_1555xrgb_png_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
 
 #if defined(GX_BRUSH_ALPHA_SUPPORT)
-VOID _gx_display_driver_horizontal_line_alpha_draw(GX_DRAW_CONTEXT *context, INT xstart, INT xend, INT ypos, INT width, GX_COLOR color, GX_UBYTE alpha);
-VOID _gx_display_driver_vertical_line_alpha_draw(GX_DRAW_CONTEXT *context, INT ystart, INT yend, INT xpos, INT width, GX_COLOR color, GX_UBYTE alpha);
-VOID _gx_display_driver_simple_line_alpha_draw(GX_DRAW_CONTEXT *context, INT xstart, INT ystart, INT xend, INT yend, GX_UBYTE alpha);
+VOID     _gx_display_driver_horizontal_line_alpha_draw(GX_DRAW_CONTEXT *context, INT xstart, INT xend, INT ypos, INT width, GX_COLOR color, GX_UBYTE alpha);
+VOID     _gx_display_driver_vertical_line_alpha_draw(GX_DRAW_CONTEXT *context, INT ystart, INT yend, INT xpos, INT width, GX_COLOR color, GX_UBYTE alpha);
+VOID     _gx_display_driver_simple_line_alpha_draw(GX_DRAW_CONTEXT *context, INT xstart, INT ystart, INT xend, INT yend, GX_UBYTE alpha);
 #endif
 
-VOID      _gx_display_driver_generic_alphamap_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pmp);
+VOID     _gx_display_driver_generic_alphamap_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pmp);
 
 GX_FIXED_POINT *_gx_display_driver_generic_wide_line_points_calculate(GX_DRAW_CONTEXT *context, INT xStart, INT yStart,
                                                                 INT xEnd, INT yEnd, INT brush_width, GX_BOOL outline);
-VOID      _gx_display_driver_generic_wide_line_fill(GX_DRAW_CONTEXT *context, GX_FIXED_POINT *pPoints);
+VOID     _gx_display_driver_generic_wide_line_fill(GX_DRAW_CONTEXT *context, GX_FIXED_POINT *pPoints);
 
-VOID      _gx_display_driver_generic_polygon_draw(GX_DRAW_CONTEXT *context, GX_POINT *vertex, INT num);
-VOID      _gx_display_driver_generic_polygon_fill(GX_DRAW_CONTEXT *context, GX_POINT *vertex, INT num);
+VOID     _gx_display_driver_generic_polygon_draw(GX_DRAW_CONTEXT *context, GX_POINT *vertex, INT num);
+VOID     _gx_display_driver_generic_polygon_fill(GX_DRAW_CONTEXT *context, GX_POINT *vertex, INT num);
+VOID     _gx_display_driver_generic_rotated_wide_line_fill(GX_DRAW_CONTEXT *context, GX_FIXED_POINT *pPoints);
+VOID     _gx_display_driver_generic_rotated_polygon_fill(GX_DRAW_CONTEXT *context, GX_POINT *vertex, INT num);
 #if defined(GX_ARC_DRAWING_SUPPORT)
-VOID      _gx_display_driver_generic_circle_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r);
-VOID      _gx_display_driver_generic_wide_circle_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r);
-VOID      _gx_display_driver_generic_aliased_circle_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r);
-VOID      _gx_display_driver_generic_aliased_wide_circle_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r);
-VOID      _gx_display_driver_generic_circle_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r);
-VOID      _gx_display_driver_generic_pie_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
-VOID      _gx_display_driver_generic_simple_pie_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle, GX_BOOL skip_end);
+VOID     _gx_display_driver_generic_circle_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r);
+VOID     _gx_display_driver_generic_wide_circle_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r);
+VOID     _gx_display_driver_generic_aliased_circle_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r);
+VOID     _gx_display_driver_generic_aliased_wide_circle_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r);
+VOID     _gx_display_driver_generic_circle_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r);
+VOID     _gx_display_driver_generic_pie_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
+VOID     _gx_display_driver_generic_simple_pie_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle, GX_BOOL skip_end);
 
-VOID      _gx_display_driver_generic_arc_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
-VOID      _gx_display_driver_generic_wide_arc_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
-VOID      _gx_display_driver_generic_aliased_arc_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
-VOID      _gx_display_driver_generic_aliased_wide_arc_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
-VOID      _gx_display_driver_generic_arc_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
-VOID      _gx_display_driver_arc_clipping_get(INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle,
-                                              GX_RECTANGLE *clip_1, GX_RECTANGLE *clip_2, GX_RECTANGLE *clip_3, GX_RECTANGLE *clip_4);
+VOID     _gx_display_driver_generic_arc_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
+VOID     _gx_display_driver_generic_wide_arc_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
+VOID     _gx_display_driver_generic_aliased_arc_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
+VOID     _gx_display_driver_generic_aliased_wide_arc_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
+VOID     _gx_display_driver_generic_arc_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
+VOID     _gx_display_driver_arc_clipping_get(INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle,
+                                             GX_RECTANGLE *clip_1, GX_RECTANGLE *clip_2, GX_RECTANGLE *clip_3, GX_RECTANGLE *clip_4);
+
+VOID     _gx_display_driver_generic_rotated_arc_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
+VOID     _gx_display_driver_generic_rotated_circle_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r);
+VOID     _gx_display_driver_generic_rotated_ellipse_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b);
+VOID     _gx_display_driver_generic_rotated_pie_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, UINT r, INT start_angle, INT end_angle);
 #endif
 
-VOID _gx_display_driver_generic_aliased_ellipse_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b);
-VOID _gx_display_driver_generic_aliased_wide_ellipse_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b);
-VOID _gx_display_driver_generic_ellipse_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b);
-VOID _gx_display_driver_generic_wide_ellipse_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b);
-VOID _gx_display_driver_generic_ellipse_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b);
+VOID     _gx_display_driver_generic_aliased_ellipse_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b);
+VOID     _gx_display_driver_generic_aliased_wide_ellipse_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b);
+VOID     _gx_display_driver_generic_ellipse_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b);
+VOID     _gx_display_driver_generic_ellipse_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b);
+VOID     _gx_display_driver_generic_rotated_alphamap_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pmp);
+VOID     _gx_display_driver_generic_rotated_glyph_4bit_draw(GX_DRAW_CONTEXT *context, GX_RECTANGLE *draw_area, GX_POINT *map_offset, GX_CONST GX_GLYPH *glyph);
+VOID     _gx_display_driver_generic_rotated_glyph_8bit_draw(GX_DRAW_CONTEXT *context, GX_RECTANGLE *draw_area, GX_POINT *map_offset, GX_CONST GX_GLYPH *glyph);
+VOID     _gx_display_driver_generic_wide_ellipse_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b);
 
 VOID _gx_display_driver_32argb_setup(GX_DISPLAY *display, VOID *aux_data,
                                      VOID (*toggle_function)(struct GX_CANVAS_STRUCT *canvas,
@@ -394,4 +434,15 @@ VOID *_win32_canvas_memory_prepare(GX_CANVAS *canvas, GX_RECTANGLE *dirty);
      ((_g) << 8) |                      \
      (_b))
 #endif
+
+#define GX_SET_BLEND_FUNCTION(blend_func, color_format)                \
+switch (color_format)                                                  \
+{                                                                      \
+case GX_COLOR_FORMAT_565RGB:                                           \
+    blend_func = _gx_display_driver_565rgb_pixel_blend;                \
+    break;                                                             \
+default:                                                               \
+    /* Not supported. */                                               \
+    return;                                                            \
+}
 

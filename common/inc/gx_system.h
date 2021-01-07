@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_system.h                                         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -46,6 +46,10 @@
 /*                                            removed private string      */
 /*                                            delete declaration,         */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added GX_DISABLE_THREADX_   */
+/*                                            TIMER_SOURCE configuration, */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -360,7 +364,9 @@ SYSTEM_DECLARE  TX_MUTEX _gx_system_protect;
 SYSTEM_DECLARE TX_MUTEX _gx_system_input_protect;
 /* Define the system timer.  */
 
+#ifndef GX_DISABLE_THREADX_TIMER_SOURCE
 SYSTEM_DECLARE  TX_TIMER _gx_system_timer;
+#endif
 
 /* Define the memory area for the system event queue.  */
 

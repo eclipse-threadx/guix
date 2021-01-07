@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_animation_update                                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -74,6 +74,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), improve  */
+/*                                            linear animation accuracy,  */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_animation_update(VOID)
@@ -81,7 +84,6 @@ VOID _gx_animation_update(VOID)
 GX_ANIMATION      *animation;
 GX_ANIMATION      *next;
 GX_WIDGET         *target;
-INT                test_step;
 INT                test_alpha;
 INT                x_current;
 INT                y_current;
@@ -134,21 +136,19 @@ GX_ANIMATION_INFO *info;
         if (info -> gx_animation_end_alpha !=
             info -> gx_animation_start_alpha)
         {
+            _gx_utility_easing_function_calculate(info -> gx_animation_style,
+                                                  info -> gx_animation_start_alpha,
+                                                  info -> gx_animation_end_alpha,
+                                                  animation -> gx_animation_total_steps - info -> gx_animation_steps,
+                                                  animation -> gx_animation_total_steps, &test_alpha);
+
             if (animation -> gx_animation_canvas)
             {
-                test_alpha = animation -> gx_animation_canvas -> gx_canvas_alpha;
-                test_step = info -> gx_animation_end_alpha - test_alpha;
-                test_step /= info -> gx_animation_steps;
-                test_alpha += test_step;
                 _gx_canvas_alpha_set(animation -> gx_animation_canvas, (GX_UBYTE)test_alpha);
             }
 #if defined(GX_BRUSH_ALPHA_SUPPORT)
             else
             {
-                test_alpha = target -> gx_widget_alpha;
-                test_step = info -> gx_animation_end_alpha - test_alpha;
-                test_step /= info -> gx_animation_steps;
-                test_alpha += test_step;
                 target -> gx_widget_alpha = (GX_UBYTE)test_alpha;
                 if (test_alpha == 0xff)
                 {
@@ -179,45 +179,34 @@ GX_ANIMATION_INFO *info;
                 y_current = target -> gx_widget_size.gx_rectangle_top;
             }
 
-            if (info -> gx_animation_style & GX_ANIMATION_EASING_FUNC_MASK)
+            if (info -> gx_animation_start_position.gx_point_x != info -> gx_animation_end_position.gx_point_x)
             {
-                if (info -> gx_animation_start_position.gx_point_x != info -> gx_animation_end_position.gx_point_x)
-                {
-                    _gx_utility_easing_function_calculate(info -> gx_animation_style,
-                                                          info -> gx_animation_start_position.gx_point_x,
-                                                          info -> gx_animation_end_position.gx_point_x,
-                                                          animation -> gx_animation_total_steps - info -> gx_animation_steps,
-                                                          animation -> gx_animation_total_steps, &x_trans);
+                _gx_utility_easing_function_calculate(info -> gx_animation_style,
+                                                      info -> gx_animation_start_position.gx_point_x,
+                                                      info -> gx_animation_end_position.gx_point_x,
+                                                      animation -> gx_animation_total_steps - info -> gx_animation_steps,
+                                                      animation -> gx_animation_total_steps, &x_trans);
 
-                    x_trans -= x_current;
-                }
-                else
-                {
-                    x_trans = 0;
-                }
-
-                if (info -> gx_animation_start_position.gx_point_y != info -> gx_animation_end_position.gx_point_y)
-                {
-                    _gx_utility_easing_function_calculate(info -> gx_animation_style,
-                                                          info -> gx_animation_start_position.gx_point_y,
-                                                          info -> gx_animation_end_position.gx_point_y,
-                                                          animation -> gx_animation_total_steps - info -> gx_animation_steps,
-                                                          animation -> gx_animation_total_steps, &y_trans);
-
-                    y_trans -= y_current;
-                }
-                else
-                {
-                    y_trans = 0;
-                }
+                x_trans -= x_current;
             }
             else
             {
-                x_trans = info -> gx_animation_end_position.gx_point_x - x_current;
-                x_trans /= info -> gx_animation_steps;
+                x_trans = 0;
+            }
 
-                y_trans = info -> gx_animation_end_position.gx_point_y - y_current;
-                y_trans /= info -> gx_animation_steps;
+            if (info -> gx_animation_start_position.gx_point_y != info -> gx_animation_end_position.gx_point_y)
+            {
+                _gx_utility_easing_function_calculate(info -> gx_animation_style,
+                                                      info -> gx_animation_start_position.gx_point_y,
+                                                      info -> gx_animation_end_position.gx_point_y,
+                                                      animation -> gx_animation_total_steps - info -> gx_animation_steps,
+                                                      animation -> gx_animation_total_steps, &y_trans);
+
+                y_trans -= y_current;
+            }
+            else
+            {
+                y_trans = 0;
             }
 
             /* still moving */

@@ -127,7 +127,7 @@ GX_WIDGET *end = GX_NULL;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_widget_event_process                            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -167,6 +167,10 @@ GX_WIDGET *end = GX_NULL;
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added new event entries,    */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            avoid pass widget delete    */
+/*                                            event to parent,            */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_widget_event_process(GX_WIDGET *widget, GX_EVENT *event_ptr)
@@ -355,6 +359,7 @@ UINT       status = GX_SUCCESS;
     case GX_EVENT_CLIENT_UPDATED:
     case GX_EVENT_PARENT_SIZED:
     case GX_EVENT_RESIZED:
+    case GX_EVENT_DELETE:
         break;
 
     case GX_EVENT_PEN_UP:

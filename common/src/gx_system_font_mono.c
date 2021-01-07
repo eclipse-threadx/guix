@@ -1613,7 +1613,7 @@ static GX_CONST GX_GLYPH SYSTEM_FONT_GLYPHS_MONO[95] =
 
 GX_CONST GX_FONT _gx_system_font_mono =
 {
-    0x01,                                    /* format                         */
+    GX_FONT_FORMAT_1BPP,                     /* format                         */
     0,                                       /* line pre-space                 */
     0,                                       /* line post-space                */
     18,                                      /* font data height               */

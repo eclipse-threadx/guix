@@ -36,7 +36,7 @@ GX_CALLER_CHECKING_EXTERNS
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gxe_multi_line_text_input_create                   PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -79,6 +79,9 @@ GX_CALLER_CHECKING_EXTERNS
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed input buffer check, */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gxe_multi_line_text_input_create(GX_MULTI_LINE_TEXT_INPUT *text_input_ptr,
@@ -97,7 +100,7 @@ UINT status;
     GX_INIT_AND_THREADS_CALLER_CHECKING
 
     /* Check for invalid pointer.  */
-    if ((text_input_ptr == GX_NULL) || (input_buffer == GX_NULL) || (size == GX_NULL))
+    if ((text_input_ptr == GX_NULL) || (size == GX_NULL))
     {
         return(GX_PTR_ERROR);
     }

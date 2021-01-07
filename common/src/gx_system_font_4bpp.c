@@ -1612,7 +1612,7 @@ static GX_CONST GX_GLYPH SYSTEM_FONT_GLYPHS_4BPP[95] =
 };
 GX_CONST GX_FONT _gx_system_font_4bpp =
 {
-    0x04,                                    /* format                         */
+    GX_FONT_FORMAT_4BPP,                     /* format                         */
     0,                                       /* line pre-space                 */
     0,                                       /* line post-space                */
     18,                                      /* font data height               */

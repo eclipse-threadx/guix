@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_create                                   PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -79,6 +79,8 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_canvas_create(GX_CANVAS *canvas, GX_CONST GX_CHAR *name, GX_DISPLAY *display,
@@ -121,9 +123,9 @@ UINT  _gx_canvas_create(GX_CANVAS *canvas, GX_CONST GX_CHAR *name, GX_DISPLAY *d
     canvas -> gx_canvas_name =  name;
 
     /* If running on Win32, create padded memory, only if needed */
-    #ifdef GX_TARGET_WIN32
+#ifdef GX_TARGET_WIN32
     _win32_compatible_canvas_memory_allocate(canvas);
-    #endif
+#endif
 
     /* initialize previous and next pointers */
     canvas -> gx_canvas_created_previous =  GX_NULL;
@@ -157,31 +159,43 @@ UINT  _gx_canvas_create(GX_CANVAS *canvas, GX_CONST GX_CHAR *name, GX_DISPLAY *d
 #ifdef GX_TARGET_WIN32
 VOID _win32_compatible_canvas_memory_allocate(GX_CANVAS *canvas)
 {
-    INT padded_width;
-    USHORT row_byte_width;
-    INT color_format = GX_COLOR_FORMAT_565RGB;
-    GX_DISPLAY *display = canvas -> gx_canvas_display;
+USHORT      rotation;
+INT         padded_width;
+USHORT      row_byte_width;
+INT         color_format = GX_COLOR_FORMAT_565RGB;
+GX_DISPLAY *display = canvas -> gx_canvas_display;
 
-    padded_width = canvas->gx_canvas_x_resolution;
+    /* Windows bitmaps must be padded to an even multiple of 4 bytes in width.
+       When the GUIX canvas does not meet this requirement, we create a padded canvas memory
+       so that we can pass the padded canvas memory off to Windows for display as a bitmap.
+       This happens often when running at sub-byte color depth, but can occur at any color depth
+       if the display resolution is very odd. */
+
+    padded_width = canvas -> gx_canvas_x_resolution;
 
     if (display == GX_NULL)
     {
         return;
     }
 
-    row_byte_width = display ->gx_display_driver_row_pitch_get(padded_width);
+    rotation = display -> gx_display_rotation_angle;
 
-    while(row_byte_width % 4)
+    padded_width = canvas -> gx_canvas_x_resolution;
+
+    row_byte_width = display -> gx_display_driver_row_pitch_get(padded_width);
+
+    while (row_byte_width % 4)
     {
         padded_width++;
-        row_byte_width = display ->gx_display_driver_row_pitch_get(padded_width);
+        row_byte_width = display -> gx_display_driver_row_pitch_get(padded_width);
     }
-    
-    if (padded_width != canvas -> gx_canvas_x_resolution)
+
+    if ((padded_width != canvas -> gx_canvas_x_resolution) || rotation)
     {
-        /* We are forced to create a padded buffer to hold Win32 compatible canvas memory */
-        canvas -> gx_canvas_padded_memory = (GX_COLOR *) malloc(row_byte_width * canvas ->gx_canvas_y_resolution);
+        /* We are forced to create a padded buffer to hold Win32 compatible canvas memory. */
+        canvas -> gx_canvas_padded_memory = (GX_COLOR *)malloc(row_byte_width * canvas -> gx_canvas_y_resolution);
     }
 }
 
 #endif
+

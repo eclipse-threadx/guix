@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_animation_get                            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -68,6 +68,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), init     */
+/*                                            animation canvas to null,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 #if (GX_ANIMATION_POOL_SIZE > 0)
@@ -87,7 +90,8 @@ GX_ANIMATION *free_block;
         _gx_system_animation_free_list = free_block -> gx_animation_next;
         free_block -> gx_animation_next = GX_NULL;
         free_block -> gx_animation_system_allocated = GX_TRUE;
-        free_block ->gx_animation_status = GX_ANIMATION_IDLE;
+        free_block -> gx_animation_status = GX_ANIMATION_IDLE;
+        free_block -> gx_animation_canvas = GX_NULL;
         *animation = free_block;
     }
     else

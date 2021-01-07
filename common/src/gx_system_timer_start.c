@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_timer_start                              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -72,6 +72,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added GX_DISABLE_THREADX_   */
+/*                                            TIMER_SOURCE configuration, */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_system_timer_start(GX_WIDGET *owner, UINT timer_id, UINT initial_ticks, UINT reschedule_ticks)
@@ -132,6 +136,7 @@ UINT tx_timer_active;
     _gx_system_active_timer_list = found;
 
 #ifdef GX_THREADX_BINDING
+#ifndef GX_DISABLE_THREADX_TIMER_SOURCE
     /* if the low-level timer is not active, start it */
     tx_timer_info_get(&_gx_system_timer, (CHAR **)TX_NULL, &tx_timer_active,
                       (ULONG *)TX_NULL, (ULONG *)TX_NULL, (TX_TIMER **)TX_NULL);
@@ -140,6 +145,7 @@ UINT tx_timer_active;
     {
         tx_timer_activate(&_gx_system_timer);
     }
+#endif
 #else
     GX_TIMER_START;
 #endif

@@ -279,7 +279,7 @@ GX_UBYTE *data = (GX_UBYTE *)gradient -> gx_gradient_pixelmap.gx_pixelmap_data;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_gradient_create                         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -317,6 +317,9 @@ GX_UBYTE *data = (GX_UBYTE *)gradient -> gx_gradient_pixelmap.gx_pixelmap_data;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), removed  */
+/*                                            errant comment,             */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_utility_gradient_create(GX_GRADIENT *gradient, GX_VALUE width, GX_VALUE height,
@@ -338,9 +341,7 @@ UINT status = GX_FAILURE;
     }
 
     memset(&gradient -> gx_gradient_pixelmap, 0, sizeof(GX_PIXELMAP));
-    gradient -> gx_gradient_pixelmap.gx_pixelmap_width = width;/*  11-15-2018     Kenneth Maxwell          Modified comment(s),          */
-/*                                            resulting in version 5.5    */
-
+    gradient -> gx_gradient_pixelmap.gx_pixelmap_width = width;
     gradient -> gx_gradient_pixelmap.gx_pixelmap_height = height;
     gradient -> gx_gradient_type = type;
     gradient -> gx_gradient_alpha_start = alpha_start;

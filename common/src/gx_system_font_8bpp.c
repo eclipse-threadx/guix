@@ -1130,5 +1130,5 @@ static GX_CONST GX_GLYPH font_SansPro_Regular_ttf_18_aa[95] =
     {char_7e, 8, -5, 9, 0, 9, 3}     /* '~' */
 };
 
-GX_FONT _gx_system_font_8bpp = { 0x08, 0, 0, 18,  13, 0x20, 0x7e, {font_SansPro_Regular_ttf_18_aa}, NULL };
+GX_FONT _gx_system_font_8bpp = { GX_FONT_FORMAT_8BPP, 0, 0, 18,  13, 0x20, 0x7e, {font_SansPro_Regular_ttf_18_aa}, NULL };
 

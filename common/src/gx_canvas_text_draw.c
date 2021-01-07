@@ -107,7 +107,7 @@ UINT      status;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_text_draw_ext                            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -151,6 +151,10 @@ UINT      status;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            replaced font format value  */
+/*                                            with macro defines,         */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_canvas_text_draw_ext(GX_VALUE x_start, GX_VALUE y_start, GX_CONST GX_STRING *string)
@@ -206,7 +210,7 @@ GX_FONT *font = context -> gx_draw_context_brush.gx_brush_font;
 
     switch (font -> gx_font_format & GX_FONT_FORMAT_BPP_MASK)
     {
-    case 1:
+    case GX_FONT_FORMAT_1BPP:
         if (font -> gx_font_format & GX_FONT_FORMAT_COMPRESSED)
         {
             glyph_draw = display -> gx_display_driver_1bit_compressed_glyph_draw;
@@ -217,7 +221,7 @@ GX_FONT *font = context -> gx_draw_context_brush.gx_brush_font;
         }
         break;
 
-    case 4:
+    case GX_FONT_FORMAT_4BPP:
         if (font -> gx_font_format & GX_FONT_FORMAT_COMPRESSED)
         {
             glyph_draw = display -> gx_display_driver_4bit_compressed_glyph_draw;
@@ -228,7 +232,7 @@ GX_FONT *font = context -> gx_draw_context_brush.gx_brush_font;
         }
         break;
 
-    case 8:
+    case GX_FONT_FORMAT_8BPP:
         if (font -> gx_font_format & GX_FONT_FORMAT_COMPRESSED)
         {
             glyph_draw = display -> gx_display_driver_8bit_compressed_glyph_draw;

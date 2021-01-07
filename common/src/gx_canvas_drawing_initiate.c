@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_drawing_initiate                         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -80,6 +80,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_canvas_drawing_initiate(GX_CANVAS *canvas, GX_WIDGET *who, GX_RECTANGLE *dirty_area)
@@ -136,7 +139,15 @@ GX_DISPLAY      *display = canvas -> gx_canvas_display;
 
         new_context -> gx_draw_context_display = canvas -> gx_canvas_display;
         new_context -> gx_draw_context_memory  = canvas -> gx_canvas_memory;
-        new_context -> gx_draw_context_pitch   = canvas -> gx_canvas_x_resolution;
+
+        if (new_context -> gx_draw_context_display -> gx_display_rotation_angle == 0)
+        {
+            new_context -> gx_draw_context_pitch = canvas -> gx_canvas_x_resolution;
+        }
+        else
+        {
+            new_context -> gx_draw_context_pitch = canvas -> gx_canvas_y_resolution;
+        }
     }
 
     /* Update canvas draw count and draw nesting.  */

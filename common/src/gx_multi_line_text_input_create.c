@@ -29,13 +29,14 @@
 #include "gx_multi_line_text_input.h"
 #include "gx_multi_line_text_view.h"
 #include "gx_utility.h"
+#include "gx_system.h"
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_input_create                    PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -81,6 +82,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            supported dynamic buffer,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_multi_line_text_input_create(GX_MULTI_LINE_TEXT_INPUT *text_input,
@@ -101,6 +105,23 @@ GX_STRING                string;
 
     /* Call the multi-line text view create function. */
     _gx_multi_line_text_view_create(view, name, GX_NULL, 0, style, text_input_id, size);
+
+    if ((!input_buffer) && buffer_size)
+    {
+        if (!_gx_system_memory_allocator)
+        {
+            return GX_SYSTEM_MEMORY_ERROR;
+        }
+
+        input_buffer = _gx_system_memory_allocator(buffer_size);
+
+        if (!input_buffer)
+        {
+            return GX_SYSTEM_MEMORY_ERROR;
+        }
+
+        text_input -> gx_widget_status |= GX_STATUS_DYNAMIC_BUFFER;
+    }
 
     if (_gx_utility_string_length_check(input_buffer, &string.gx_string_length, buffer_size - 1) == GX_SUCCESS)
     {

@@ -32,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_pixelmap_resize                         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -77,11 +77,15 @@
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added 565bgr format support,*/
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_utility_pixelmap_resize(GX_PIXELMAP *src, GX_PIXELMAP *destination, INT width, INT height)
 {
-UINT status = GX_SUCCESS;
+UINT        status = GX_SUCCESS;
+GX_PIXELMAP rotated_src;
 
     memset(destination, 0, sizeof(GX_PIXELMAP));
 
@@ -95,6 +99,16 @@ UINT status = GX_SUCCESS;
     if (src -> gx_pixelmap_height > GX_MAX_PIXELMAP_RESOLUTION)
     {
         return GX_INVALID_HEIGHT;
+    }
+
+    if ((src -> gx_pixelmap_flags & GX_PIXELMAP_ROTATED_90) ||
+        (src -> gx_pixelmap_flags & GX_PIXELMAP_ROTATED_270))
+    {
+        rotated_src = (*src);
+        GX_SWAP_VALS(rotated_src.gx_pixelmap_width, rotated_src.gx_pixelmap_height);
+        GX_SWAP_VALS(width, height);
+
+        src = &rotated_src;
     }
 
     switch (src -> gx_pixelmap_format)
@@ -140,6 +154,12 @@ UINT status = GX_SUCCESS;
     default:
         status = GX_NOT_SUPPORTED;
         break;
+    }
+
+    if ((src -> gx_pixelmap_flags & GX_PIXELMAP_ROTATED_90) ||
+        (src -> gx_pixelmap_flags & GX_PIXELMAP_ROTATED_270))
+    {
+        GX_SWAP_VALS(destination -> gx_pixelmap_width, destination -> gx_pixelmap_height);
     }
 
     return status;

@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_menu_create                                     PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -78,6 +78,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            set menu event process,     */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_menu_create(GX_MENU *menu, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
@@ -91,6 +94,7 @@ UINT  _gx_menu_create(GX_MENU *menu, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
     /* Populate the rest of menu control block - overriding as necessary.  */
     menu -> gx_widget_type = GX_TYPE_MENU;
     menu -> gx_widget_draw_function = (VOID (*)(GX_WIDGET *))_gx_menu_draw;
+    menu -> gx_widget_event_process_function = (UINT(*)(GX_WIDGET*, GX_EVENT*))_gx_menu_event_process;
     menu -> gx_widget_style |= GX_STYLE_TEXT_LEFT | GX_STYLE_ENABLED;
     menu -> gx_menu_text_x_offset = 10;
     menu -> gx_menu_text_y_offset = 0;

@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_menu.h                                           PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -44,6 +44,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            declare menu event process, */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -68,6 +71,7 @@ UINT _gx_menu_create(GX_MENU *menu, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
                      GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
                      ULONG style, USHORT menu_id, GX_CONST GX_RECTANGLE *size);
 VOID _gx_menu_draw(GX_MENU *menu);
+UINT _gx_menu_event_process(GX_MENU *menu, GX_EVENT *event_ptr);
 UINT _gx_menu_insert(GX_MENU *menu, GX_WIDGET *widget);
 UINT _gx_menu_one_level_position(GX_MENU *menu, GX_VALUE indentation);
 UINT _gx_menu_position(GX_MENU *menu, GX_VALUE indentation);
@@ -84,6 +88,7 @@ UINT _gxe_accordion_menu_position(GX_ACCORDION_MENU *accordion);
 UINT _gxe_menu_create(GX_MENU *menu, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
                       GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
                       ULONG style, USHORT menu_id, GX_CONST GX_RECTANGLE *size, UINT control_block_size);
+UINT _gxe_menu_event_process(GX_MENU *menu, GX_EVENT *event_ptr);
 UINT _gxe_menu_insert(GX_MENU *menu, GX_WIDGET *widget);
 UINT _gxe_menu_remove(GX_MENU *menu, GX_WIDGET *widget);
 UINT _gxe_menu_text_offset_set(GX_MENU *menu, GX_VALUE x_offset, GX_VALUE y_offset);
