@@ -122,7 +122,7 @@ GX_STRING string;
 
     gx_utility_ltoa(i_temperature, str_value, 10);
     string.gx_string_ptr = str_value;
-    string.gx_string_length = sizeof(str_value) - 1;
+    string.gx_string_length = GX_STRLEN(str_value);
     gx_prompt_text_set_ext(prompt, &string);
 }
 
