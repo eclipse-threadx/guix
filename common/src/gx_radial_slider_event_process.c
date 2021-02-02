@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_radial_slider_pen_down_event_process            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -75,6 +75,11 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            renamed                     */
+/*                                            GX_STATUS_TRACKING_START to */
+/*                                            GX_STATUS_TRACKING_PEN,     */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 static UINT  _gx_radial_slider_pen_down_event_process(GX_RADIAL_SLIDER *slider, GX_EVENT *event_ptr)
@@ -100,7 +105,7 @@ GX_RECTANGLE           rectangle;
         /* Check if click point is inside needle area. */
         if (_gx_utility_rectangle_point_detect(&rectangle, *point))
         {
-            slider -> gx_widget_status |= GX_STATUS_TRACKING_START;
+            slider -> gx_widget_status |= GX_STATUS_TRACKING_PEN;
 
             _gx_system_input_capture((GX_WIDGET *)slider);
         }
@@ -136,7 +141,7 @@ GX_RECTANGLE           rectangle;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_radial_slider_pen_drag_event_process            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -171,6 +176,11 @@ GX_RECTANGLE           rectangle;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            renamed                     */
+/*                                            GX_STATUS_TRACKING_START to */
+/*                                            GX_STATUS_TRACKING_PEN,     */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 static UINT  _gx_radial_slider_pen_drag_event_process(GX_RADIAL_SLIDER *slider, GX_EVENT *event_ptr)
@@ -181,7 +191,7 @@ GX_RADIAL_SLIDER_INFO *info = &slider -> gx_radial_slider_info;
 GX_BOOL                update = GX_FALSE;
 
     /* move my needle */
-    if (slider -> gx_widget_status & GX_STATUS_TRACKING_START)
+    if (slider -> gx_widget_status & GX_STATUS_TRACKING_PEN)
     {
         /* Calcualte new slider value. */
         _gx_radial_slider_angle_calculate(slider, event_ptr -> gx_event_payload.gx_event_pointdata, &new_value);
@@ -231,7 +241,7 @@ GX_BOOL                update = GX_FALSE;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_radial_slider_pen_up_event_process              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -271,6 +281,11 @@ GX_BOOL                update = GX_FALSE;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            renamed                     */
+/*                                            GX_STATUS_TRACKING_START to */
+/*                                            GX_STATUS_TRACKING_PEN,     */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 static UINT  _gx_radial_slider_pen_up_event_process(GX_RADIAL_SLIDER *slider, GX_EVENT *event_ptr)
@@ -285,11 +300,11 @@ GX_POINT              *point;
 
         point = &event_ptr -> gx_event_payload.gx_event_pointdata;
 
-        if (slider -> gx_widget_status & GX_STATUS_TRACKING_START ||
+        if (slider -> gx_widget_status & GX_STATUS_TRACKING_PEN ||
             ((GX_ABS(point -> gx_point_x - slider -> gx_radial_slider_pendown_point.gx_point_x) < 5) &&
              (GX_ABS(point -> gx_point_y - slider -> gx_radial_slider_pendown_point.gx_point_y) < 5)))
         {
-            if (slider -> gx_widget_status & GX_STATUS_TRACKING_START)
+            if (slider -> gx_widget_status & GX_STATUS_TRACKING_PEN)
             {
                 new_value = info -> gx_radial_slider_info_current_angle;
             }
@@ -304,7 +319,7 @@ GX_POINT              *point;
         }
 
         slider -> gx_widget_status |= GX_STATUS_ANIMATION_NONE;
-        slider -> gx_widget_status &= ~GX_STATUS_TRACKING_START;
+        slider -> gx_widget_status &= ~GX_STATUS_TRACKING_PEN;
     }
     else
     {

@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_win32_driver.h                                   PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -40,6 +40,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added 8bpp/24bpp rotated    */
+/*                                            display driver declarations,*/
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -85,20 +89,22 @@ typedef struct GX_WIN32_DISPLAY_DRIVER_STRUCT
 UINT                          win32_graphics_driver_setup_monochrome(GX_DISPLAY *display);
 UINT                          win32_graphics_driver_setup_4bpp_grayscale(GX_DISPLAY *display);
 UINT                          win32_graphics_driver_setup_8bit_palette(GX_DISPLAY *display);
+UINT                          win32_graphics_driver_setup_8bit_palette_rotated(GX_DISPLAY* display);
 UINT                          win32_graphics_driver_setup_565rgb(GX_DISPLAY *display);
 UINT                          win32_graphics_driver_setup_565rgb_rotated(GX_DISPLAY *display);
 UINT                          win32_graphics_driver_setup_565bgr(GX_DISPLAY *display);
 UINT                          win32_graphics_driver_setup_1555xrgb(GX_DISPLAY *display);
 UINT                          win32_graphics_driver_setup_4444argb(GX_DISPLAY *display);
 UINT                          win32_graphics_driver_setup_24xrgb(GX_DISPLAY *display);
+UINT                          win32_graphics_driver_setup_24xrgb_rotated(GX_DISPLAY *display);
 UINT                          win32_graphics_driver_setup_32argb(GX_DISPLAY *display);
+UINT                          win32_graphics_driver_setup_32argb_rotated(GX_DISPLAY *display);
 
 UINT                          win32_chromeart_graphics_driver_setup_565rgb(GX_DISPLAY *display);
-UINT                          win32_synergy_graphics_driver_setup_8bit_palette(GX_DISPLAY *display);
-UINT                          win32_synergy_graphics_driver_setup_24xrgb(GX_DISPLAY *display);
-UINT                          win32_synergy_graphics_driver_setup_565rgb(GX_DISPLAY *display);
-UINT                          win32_synergy_graphics_driver_setup_565rgb_rotated(GX_DISPLAY *display);
 
+VOID                          win32_32bpp_bitmap_header_create(GX_DISPLAY *display);
+VOID                          win32_display_driver_8bit_palette_set(GX_DISPLAY *display, GX_COLOR *palette, INT count);
+VOID                          win32_8bit_palette_bitmap_header_create(GX_DISPLAY *display);
 void                          gx_win32_display_buffer_toggle(GX_CANVAS *canvas, GX_RECTANGLE *dirty);
 void                          gx_win32_driver_thread_entry(ULONG thread_input);
 HWND                          gx_win32_window_create(GX_WIN32_DISPLAY_DRIVER_DATA *gx_driver_ptr, WNDPROC gx_win32_event_process, INT xpos, INT ypos);

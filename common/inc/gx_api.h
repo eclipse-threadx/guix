@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -53,6 +53,13 @@
 /*                                            declare new APIs,           */
 /*                                            defined new status,         */
 /*                                            resulting in version 6.1.3  */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            change scroll_wheel style   */
+/*                                            flag to status flag,        */
+/*                                            renamed                     */
+/*                                            GX_STATUS_TRACKING_START to */
+/*                                            GX_STATUS_TRACKING_PEN,     */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -76,7 +83,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 1
-#define GUIX_PATCH_VERSION 3
+#define GUIX_PATCH_VERSION 4
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -690,7 +697,7 @@ typedef struct GX_STRING_STRUCT
 
 /* Define radial slider status flags */
 #define GX_STATUS_ANIMATION_NONE            0x00010000UL
-#define GX_STATUS_TRACKING_START            0x00020000UL
+#define GX_STATUS_TRACKING_PEN              0x00020000UL
 
 #define GX_STATUS_MODAL                     0x00100000UL
 
@@ -813,10 +820,6 @@ typedef struct GX_STRING_STRUCT
 #define GX_SCROLLBAR_VERTICAL               0x01000000UL
 #define GX_SCROLLBAR_HORIZONTAL             0x02000000UL
 
-/* Define Animation Styles.  */
-
-/* Define generic scroll wheel styles*/
-#define GX_STYLE_SCROLL_WHEEL_DRAG          0x00000200UL
 
 /* Define text scroll wheel styles*/
 #define GX_STYLE_TEXT_SCROLL_WHEEL_ROUND    0x00000100UL

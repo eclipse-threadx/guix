@@ -619,6 +619,95 @@ int index;
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
+/*    gx_win32_rotate_canvas_to_bmp_32bpp                PORTABLE C       */
+/*                                                           6.1.4        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function prepare canvas memory at which do draw operation.     */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    winHandle                               Win32 handle                */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    win32_canvas_memory_prepare                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  02-02-2021     Kenneth Maxwell          Initial Version 6.1.4         */
+/*                                                                        */
+/**************************************************************************/
+static void gx_win32_rotate_canvas_to_bmp_32bpp(GX_CANVAS *canvas)
+{
+/* First pass, just copy the entire canvas, ignoring the dirty
+   rectangle. Come back and apply dirty rectangle to improve
+   efficiency.  */
+
+ULONG *pReadStart;
+ULONG *pWriteStart;
+ULONG *pRead;
+ULONG *pWrite;
+INT    copy_width;
+INT    copy_height;
+INT    row;
+INT    column;
+INT    write_sign;
+
+    /* Copy left-to-right from source canvas
+       and top-to-bottom in destination bitmap (90 degree rotation)
+       and bottom-to-top in destination bitmap (270 degree rotation).  */
+
+    pReadStart = (ULONG *)canvas -> gx_canvas_memory;
+    pWriteStart = (ULONG *)canvas -> gx_canvas_padded_memory;
+    copy_width = canvas -> gx_canvas_y_resolution;
+    copy_height = canvas -> gx_canvas_x_resolution;
+
+    if (canvas -> gx_canvas_display -> gx_display_rotation_angle == GX_SCREEN_ROTATION_CW)
+    {
+        pWriteStart += copy_height - 1;
+        write_sign = -1;
+    }
+    else
+    {
+        /* Here for 270 degree rotation.  */
+        pWriteStart += (copy_width - 1) * copy_height;
+        write_sign = 1;
+    }
+
+    for (row = 0; row < copy_height; row++)
+    {
+        pRead = pReadStart;
+        pWrite = pWriteStart;
+
+        for (column = 0; column < copy_width; column++)
+        {
+            *pWrite = *pRead++;
+            pWrite -= copy_height * write_sign;
+        }
+        pReadStart += copy_width;
+        pWriteStart += write_sign;
+    }
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
 /*    gx_win32_rotate_canvas_to_bmp_16bpp                PORTABLE C       */
 /*                                                           6.1.3        */
 /*  AUTHOR                                                                */
@@ -649,7 +738,8 @@ int index;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  12-31-2020     Kenneth Maxwell          Initial version x.x           */
+/*  12-31-2020     Kenneth Maxwell          Initial version 6.1.3         */
+/*                                                                        */
 /**************************************************************************/
 static void gx_win32_rotate_canvas_to_bmp_16bpp(GX_CANVAS *canvas)
 {
@@ -708,12 +798,107 @@ INT     write_stride;
     }
 }
 
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    gx_win32_rotate_canvas_to_bmp_8bpp                 PORTABLE C       */
+/*                                                           6.1.4        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function prepare canvas memory at which do draw operation.     */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    winHandle                               Win32 handle                */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    win32_canvas_memory_prepare                                         */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  02-02-2021     Kenneth Maxwell          Initial Version 6.1.4         */
+/*                                                                        */
+/**************************************************************************/
+static void gx_win32_rotate_canvas_to_bmp_8bpp(GX_CANVAS *canvas)
+{
+/* first pass, just copy the entire canvas, ignoring the dirty
+   rectangle. Come back and apply dirty rectangle to improve
+   efficiency.
+ */
+
+GX_UBYTE *pReadStart;
+GX_UBYTE *pWriteStart;
+GX_UBYTE *pRead;
+GX_UBYTE *pWrite;
+INT       copy_width;
+INT       copy_height;
+INT       row;
+INT       column;
+INT       write_sign;
+INT       write_stride;
+
+    /* copy left-to-right from source canvas
+       and top-to-bottom in destination bitmap (90 degree rotation)
+       and bottom-to-top in destination bitmap (270 degree rotation)
+     */
+
+    pReadStart = (GX_UBYTE *)canvas -> gx_canvas_memory;
+    pWriteStart = (GX_UBYTE *)canvas -> gx_canvas_padded_memory;
+    copy_width = canvas -> gx_canvas_y_resolution;
+    copy_height = canvas -> gx_canvas_x_resolution;
+
+    write_stride = (copy_height + 1) & 0xfffc;
+
+    if (canvas -> gx_canvas_display -> gx_display_rotation_angle == GX_SCREEN_ROTATION_CW)
+    {
+        pWriteStart += copy_height - 1;
+        write_sign = -1;
+    }
+    else
+    {
+        /* Here for 270 degree rotation. */
+        pWriteStart += (copy_width - 1) * write_stride;
+        write_sign = 1;
+    }
+
+    for (row = 0; row < copy_height; row++)
+    {
+        pRead = pReadStart;
+        pWrite = pWriteStart;
+
+        for (column = 0; column < copy_width; column++)
+        {
+            *pWrite = *pRead++;
+            pWrite -= write_stride * write_sign;
+        }
+        pReadStart += copy_width;
+        pWriteStart += write_sign;
+    }
+}
+
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _win32_canvas_memory_prepare                       PORTABLE C       */
-/*                                                           6.1.3        */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -743,6 +928,10 @@ INT     write_stride;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added 8bpp and 32bpp canvas */
+/*                                            rotate logic,               */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 VOID *_win32_canvas_memory_prepare(GX_CANVAS *canvas, GX_RECTANGLE *dirty)
@@ -797,8 +986,19 @@ INT         row;
         {
             switch (display -> gx_display_color_format)
             {
+            case GX_COLOR_FORMAT_24XRGB:
+            case GX_COLOR_FORMAT_32ARGB:
+                gx_win32_rotate_canvas_to_bmp_32bpp(canvas);
+                memptr = canvas -> gx_canvas_padded_memory;
+                break;
+
             case GX_COLOR_FORMAT_565RGB:
                 gx_win32_rotate_canvas_to_bmp_16bpp(canvas);
+                memptr = canvas -> gx_canvas_padded_memory;
+                break;
+
+            case GX_COLOR_FORMAT_8BIT_PALETTE:
+                gx_win32_rotate_canvas_to_bmp_8bpp(canvas);
                 memptr = canvas -> gx_canvas_padded_memory;
                 break;
 
@@ -815,7 +1015,7 @@ INT         row;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    gx_win32_display_buffer_toggle                     PORTABLE C       */
-/*                                                           6.1.3        */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -851,6 +1051,9 @@ INT         row;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            fixed logic,                */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 VOID gx_win32_display_buffer_toggle(GX_CANVAS *canvas, GX_RECTANGLE *dirty)
@@ -894,6 +1097,9 @@ VOID                         *memptr;
     {
         memptr = _win32_canvas_memory_prepare(canvas, &Copy);
 
+        INT xsrc = Copy.gx_rectangle_left;
+        INT ysrc = Copy.gx_rectangle_top;
+
         gx_utility_rectangle_shift(&Copy, canvas -> gx_canvas_display_offset_x, canvas -> gx_canvas_display_offset_y);
 
         win_device = GetDC(driver_instance -> win32_driver_winhandle);
@@ -908,8 +1114,8 @@ VOID                         *memptr;
         Height = Copy.gx_rectangle_bottom - Copy.gx_rectangle_top + 1;
 
         StretchDIBits(win_device, Left, Top, Width, Height,
-                      Copy.gx_rectangle_left,
-                      Copy.gx_rectangle_top + Height + 1,
+                      xsrc,
+                      ysrc + Height + 1,
                       Width, -Height, memptr,
                       (BITMAPINFO *)&(driver_instance -> win32_driver_bmpinfo),
                       DIB_RGB_COLORS,

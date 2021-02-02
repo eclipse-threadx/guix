@@ -335,7 +335,7 @@ INT speed;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_scroll_wheel_pen_up_event_handler               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -372,13 +372,18 @@ INT speed;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            renamed                     */
+/*                                            GX_STYLE_SCROLL_WHEEL_DRAG  */
+/*                                            to GX_STATUS_TRACKING_PEN,  */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_scroll_wheel_pen_up_event_handler(GX_SCROLL_WHEEL *wheel)
 {
 GX_RECTANGLE dirty;
 
-    wheel -> gx_widget_style &= (ULONG)(~GX_STYLE_SCROLL_WHEEL_DRAG);
+    wheel -> gx_widget_status &= (ULONG)(~GX_STATUS_TRACKING_PEN);
 
     if (wheel -> gx_scroll_wheel_selected_yshift)
     {
@@ -409,7 +414,7 @@ GX_RECTANGLE dirty;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_scroll_wheel_event_process                      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -454,6 +459,11 @@ GX_RECTANGLE dirty;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            renamed                     */
+/*                                            GX_STYLE_SCROLL_WHEEL_DRAG  */
+/*                                            to GX_STATUS_TRACKING_PEN,  */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_scroll_wheel_event_process(GX_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr)
@@ -474,7 +484,7 @@ GX_VALUE shift;
     case GX_EVENT_PEN_DRAG:
         if (wheel -> gx_widget_status & GX_STATUS_OWNS_INPUT)
         {
-            wheel -> gx_widget_style |= GX_STYLE_SCROLL_WHEEL_DRAG;
+            wheel -> gx_widget_status |= GX_STATUS_TRACKING_PEN;
             shift = (GX_VALUE)(event_ptr -> gx_event_payload.gx_event_pointdata.gx_point_y - wheel -> gx_window_move_start.gx_point_y);
             if (shift)
             {

@@ -30,70 +30,8 @@
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    win32_32argb_bitmap_header_create                   PORTABLE C      */
-/*                                                           6.1.3        */
-/*  AUTHOR                                                                */
-/*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
-/*                                                                        */
-/*  DESCRIPTION                                                           */
-/*                                                                        */
-/*    This function creates bitmap header for 32argb driver.              */
-/*                                                                        */
-/*  INPUT                                                                 */
-/*                                                                        */
-/*    display                               Pointer to GX_DISPLAY         */
-/*                                                                        */
-/*  OUTPUT                                                                */
-/*                                                                        */
-/*    None                                                                */
-/*                                                                        */
-/*  CALLS                                                                 */
-/*                                                                        */
-/*    None                                                                */
-/*                                                                        */
-/*  CALLED BY                                                             */
-/*                                                                        */
-/*    win32_graphics_driver_setup_32argb                                  */
-/*                                                                        */
-/*  RELEASE HISTORY                                                       */
-/*                                                                        */
-/*    DATE              NAME                      DESCRIPTION             */
-/*                                                                        */
-/*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
-/*                                                                        */
-/**************************************************************************/
-static void win32_32argb_bitmap_header_create(GX_DISPLAY *display)
-{
-GX_WIN32_DISPLAY_DRIVER_DATA *instance;
-DWORD                        *putmask;
-
-    instance = (GX_WIN32_DISPLAY_DRIVER_DATA *)display -> gx_display_driver_data;
-
-    instance -> win32_driver_bmpinfo.gx_bmp_header.biSize = sizeof(BITMAPINFOHEADER);
-    instance -> win32_driver_bmpinfo.gx_bmp_header.biWidth = display -> gx_display_width;
-    instance -> win32_driver_bmpinfo.gx_bmp_header.biHeight = display -> gx_display_height;
-
-    instance -> win32_driver_bmpinfo.gx_bmp_header.biPlanes = 1;
-    instance -> win32_driver_bmpinfo.gx_bmp_header.biBitCount = 32;
-    instance -> win32_driver_bmpinfo.gx_bmp_header.biSizeImage = display -> gx_display_width * display -> gx_display_height * 4;
-    instance -> win32_driver_bmpinfo.gx_bmp_header.biClrUsed = 16777215;
-    instance -> win32_driver_bmpinfo.gx_bmp_header.biClrImportant = 16777215;
-    instance -> win32_driver_bmpinfo.gx_bmp_header.biCompression = BI_BITFIELDS;
-
-    putmask = (DWORD *)&(instance -> win32_driver_bmpinfo.gx_bmp_colors[0]);
-
-    *putmask++ = 0x00ff0000;
-    *putmask++ = 0x0000ff00;
-    *putmask = 0x000000ff;
-}
-
-/**************************************************************************/
-/*                                                                        */
-/*  FUNCTION                                               RELEASE        */
-/*                                                                        */
 /*    win32_graphics_driver_setup_32argb                  PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -113,7 +51,7 @@ DWORD                        *putmask;
 /*  CALLS                                                                 */
 /*                                                                        */
 /*    _gx_display_driver_32argb_setup       guix display setup funciton.  */
-/*    win32_32argb_bitmap_header_create     Create bitmap header info     */
+/*    win32_32bpp_bitmap_header_create      Create bitmap header info     */
 /*    gx_win32_get_free_data_instance       Get display data instance     */
 /*    GX_WIN32_EVENT_THREAD_CREATE          Create event thread           */
 /*                                                                        */
@@ -126,6 +64,10 @@ DWORD                        *putmask;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            Updated bitmap header       */
+/*                                            create function call,       */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 UINT win32_graphics_driver_setup_32argb(GX_DISPLAY *display)
@@ -156,57 +98,8 @@ GX_WIN32_DISPLAY_DRIVER_DATA *data;
     GX_WIN32_EVENT_THREAD_CREATE(data, "GUI-WIN32-32argb");
 
     /* Create bitmap header for 32argb display driver. */
-    win32_32argb_bitmap_header_create(display);
+    win32_32bpp_bitmap_header_create(display);
     return(GX_SUCCESS);
 }
-
-/**************************************************************************/
-/*                                                                        */
-/*  FUNCTION                                               RELEASE        */
-/*                                                                        */
-/*    win32_graphics_driver_cleanup_32argb                PORTABLE C      */
-/*                                                           6.1.3        */
-/*  AUTHOR                                                                */
-/*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
-/*                                                                        */
-/*  DESCRIPTION                                                           */
-/*                                                                        */
-/*    This function do cleanup operation for specific 32argb display      */
-/*      driver.                                                           */
-/*                                                                        */
-/*  INPUT                                                                 */
-/*                                                                        */
-/*    display                               Pointer to GX_DISPLAY         */
-/*                                                                        */
-/*  OUTPUT                                                                */
-/*                                                                        */
-/*    None                                                                */
-/*                                                                        */
-/*  CALLS                                                                 */
-/*                                                                        */
-/*    None                                                                */
-/*                                                                        */
-/*  CALLED BY                                                             */
-/*                                                                        */
-/*    guix_studio_delete_display                                          */
-/*                                                                        */
-/*  RELEASE HISTORY                                                       */
-/*                                                                        */
-/*    DATE              NAME                      DESCRIPTION             */
-/*                                                                        */
-/*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
-/*                                                                        */
-/**************************************************************************/
-VOID win32_graphics_driver_cleanup_32argb(GX_DISPLAY *display)
-{
-GX_WIN32_DISPLAY_DRIVER_DATA *instance;
-
-    instance = (GX_WIN32_DISPLAY_DRIVER_DATA *)display -> gx_display_driver_data;
-
-    /* mark this instance as not used: */
-    instance -> win32_driver_type = 0;
-}
-
 #endif /* WIN32 */
 

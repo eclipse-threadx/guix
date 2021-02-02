@@ -33,8 +33,6 @@ extern GX_SCROLLBAR_APPEARANCE  Window_Screen_Vertical_Scroll_properties;
 void ToggleScreen(GX_WINDOW *new_win, GX_WINDOW *old_win);
 UINT string_length_get(GX_CONST GX_CHAR* input_string, UINT max_string_length);
 
-TX_THREAD          demo_thread;
-UCHAR              demo_thread_stack[4096];
 TX_BYTE_POOL       rotate_pool;
 GX_WINDOW_ROOT    *root;
 GX_SCROLLBAR       list_scroll;

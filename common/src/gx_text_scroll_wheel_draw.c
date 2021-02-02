@@ -273,7 +273,7 @@ GX_BRUSH *brush;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_row_draw                      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -312,6 +312,11 @@ GX_BRUSH *brush;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            renamed                     */
+/*                                            GX_STYLE_SCROLL_WHEEL_DRAG  */
+/*                                            to GX_STATUS_TRACKING_PEN,  */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_text_scroll_wheel_row_draw(GX_TEXT_SCROLL_WHEEL *wheel, GX_RECTANGLE *selected_area, GX_RECTANGLE *draw_area, GX_CONST GX_STRING *string)
@@ -342,7 +347,7 @@ UINT           (*text_draw)(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID tColor, 
         text_draw = _gx_text_scroll_wheel_flat_text_draw;
     }
 
-    if ((wheel -> gx_widget_style & GX_STYLE_SCROLL_WHEEL_DRAG) ||
+    if ((wheel -> gx_widget_status & GX_STATUS_TRACKING_PEN) ||
         (wheel -> gx_scroll_wheel_animation_steps != 0) ||
         (!_gx_utility_rectangle_compare(selected_area, draw_area)))
     {

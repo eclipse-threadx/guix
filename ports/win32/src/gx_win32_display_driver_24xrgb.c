@@ -31,7 +31,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    win32_24xrgb_bitmap_header_create                   PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -61,9 +61,12 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            Renamed function,           */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
-static void win32_24xrgb_bitmap_header_create(GX_DISPLAY *display)
+VOID win32_32bpp_bitmap_header_create(GX_DISPLAY *display)
 {
 GX_WIN32_DISPLAY_DRIVER_DATA *instance;
 DWORD                        *putmask;
@@ -93,7 +96,7 @@ DWORD                        *putmask;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    win32_graphics_driver_setup_24xrgb                  PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -126,6 +129,9 @@ DWORD                        *putmask;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            Updated function name,      */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 UINT win32_graphics_driver_setup_24xrgb(GX_DISPLAY *display)
@@ -156,7 +162,7 @@ GX_WIN32_DISPLAY_DRIVER_DATA *data;
     GX_WIN32_EVENT_THREAD_CREATE(data, "GUI-WIN32-24xrgb");
 
     /* Create bitmap header for 24xrgb display driver. */
-    win32_24xrgb_bitmap_header_create(display);
+    win32_32bpp_bitmap_header_create(display);
 
     return(GX_SUCCESS);
 }

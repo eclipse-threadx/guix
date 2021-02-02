@@ -31,7 +31,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    win32_display_driver_8bit_palette_set               PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -63,9 +63,12 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            made the function public,   */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
-static VOID win32_display_driver_8bit_palette_set(GX_DISPLAY *display, GX_COLOR *palette, INT count)
+VOID win32_display_driver_8bit_palette_set(GX_DISPLAY *display, GX_COLOR *palette, INT count)
 {
 GX_COLOR                      color;
 int                           loop;

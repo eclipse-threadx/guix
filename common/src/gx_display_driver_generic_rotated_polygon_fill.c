@@ -778,7 +778,7 @@ GX_POLYGON_EDGE temp;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_generic_rotated_polygon_fill     PORTABLE C      */
-/*                                                            x.x         */
+/*                                                            6.1.3       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */

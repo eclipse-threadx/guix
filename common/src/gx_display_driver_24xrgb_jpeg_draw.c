@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_24xrgb_YCbCr2RGB                 PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,10 +69,13 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            made function public,       */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
-static UINT _gx_display_driver_24xrgb_YCbCr2RGB(INT y, INT cb, INT cr)
+UINT _gx_display_driver_24xrgb_YCbCr2RGB(INT y, INT cb, INT cr)
 {
 INT red;
 INT green;

@@ -219,6 +219,71 @@ GX_COLOR *pLine;
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
+/*    _gx_image_reader_24xrgb_rotated_pixel_write         PORTABLE C      */
+/*                                                           6.1.4        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function writes a pixel to output rotated pixelmap data        */
+/*    structure.                                                          */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    image_reader                          Image reader control block.   */
+/*    pixel                                 Pixel to write.               */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Completion Status                                                   */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    _gx_image_reader_pixel_write_callback_set                           */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  02-02-2021     Kenneth Maxwell          Initial Version 6.1.4         */
+/*                                                                        */
+/**************************************************************************/
+static UINT _gx_image_reader_24xrgb_rotated_pixel_write(GX_IMAGE_READER *image_reader, GX_PIXEL *pixel)
+{
+GX_COLOR *pLine;
+
+    if (!image_reader -> gx_image_reader_size_testing)
+    {
+        pLine = (GX_COLOR *)image_reader -> gx_image_reader_putdata;
+
+        (*pLine) = (GX_COLOR)((pixel -> gx_pixel_red << 16));
+        (*pLine) = (GX_COLOR)((*pLine) | ((ULONG)(pixel -> gx_pixel_green) << 8));
+        (*pLine) = (GX_COLOR)((*pLine) | pixel -> gx_pixel_blue);
+        (*pLine) = (GX_COLOR)((*pLine) | ((ULONG)(pixel -> gx_pixel_alpha) << 24));
+    }
+
+    if (image_reader -> gx_image_reader_mode & GX_IMAGE_READER_MODE_ROTATE_CW)
+    {
+        image_reader -> gx_image_reader_putdata -= (image_reader -> gx_image_reader_image_height << 2);
+    }
+    else
+    {
+        image_reader -> gx_image_reader_putdata += (image_reader -> gx_image_reader_image_height << 2);
+    }
+
+    return GX_SUCCESS;
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
 /*    _gx_image_reader_32argb_pixel_write                 PORTABLE C      */
 /*                                                           6.1          */
 /*  AUTHOR                                                                */
@@ -1207,7 +1272,7 @@ GX_UBYTE  color;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_pixel_rotated_write_callback_set   PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1229,8 +1294,11 @@ GX_UBYTE  color;
 /*  CALLS                                                                 */
 /*                                                                        */
 /*    _gx_image_reader_565rgb_rotated_pixel_write                         */
-/*                                          Write 565 rgb format pixel    */
-/*                                            in rotation mode            */
+/*                                          Write 565rgb format pixel in  */
+/*                                            rotation mode               */
+/*    _gx_image_reader_24xrgb_rotated_pixel_write                         */
+/*                                          Write 24xrgn format pixel in  */
+/*                                            rotation mode               */
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
@@ -1241,6 +1309,9 @@ GX_UBYTE  color;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added 24xrgb format support,*/
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_pixel_rotated_write_callback_set(GX_IMAGE_READER *image_reader, GX_PIXELMAP *outmap)
@@ -1281,6 +1352,29 @@ static UINT _gx_image_reader_pixel_rotated_write_callback_set(GX_IMAGE_READER *i
 
             image_reader -> gx_image_reader_putdatarow_stride = -2;
             image_reader -> gx_image_reader_putauxdatarow_stride = -1;
+        }
+        break;
+
+    case GX_COLOR_FORMAT_24XRGB:
+        image_reader -> gx_image_reader_pixel_write = _gx_image_reader_24xrgb_rotated_pixel_write;
+
+        if (image_reader -> gx_image_reader_mode & GX_IMAGE_READER_MODE_ROTATE_CW)
+        {
+            outmap -> gx_pixelmap_flags |= GX_PIXELMAP_ROTATED_90;
+
+            image_reader -> gx_image_reader_putdatarow = (GX_UBYTE *)outmap -> gx_pixelmap_data;
+            image_reader -> gx_image_reader_putdatarow += (outmap -> gx_pixelmap_width - 1) * (outmap -> gx_pixelmap_height << 2);
+
+            image_reader -> gx_image_reader_putdatarow_stride = 4;
+        }
+        else
+        {
+            outmap -> gx_pixelmap_flags |= GX_PIXELMAP_ROTATED_270;
+
+            image_reader -> gx_image_reader_putdatarow = (GX_UBYTE *)outmap -> gx_pixelmap_data;
+            image_reader -> gx_image_reader_putdatarow += ((outmap -> gx_pixelmap_height - 1) << 2);
+
+            image_reader -> gx_image_reader_putdatarow_stride = -4;
         }
         break;
 
