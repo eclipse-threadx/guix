@@ -82,7 +82,7 @@ enum gx_rich_text_tag_index
 /*    start_index                           Start index of the resource   */
 /*                                            text                        */
 /*    length                                Length of the input string    */
-/*    resource_id                           Retrieved resource id          */
+/*    resource_id                           Retrieved resource id         */
 /*                                                                        */
 /*  OUTPUT                                                                */
 /*                                                                        */

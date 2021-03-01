@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_generic_rotated_simple_pie_fill  PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -80,6 +80,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  03-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ARC_DRAWING_SUPPORT)
@@ -515,18 +518,18 @@ GX_FILL_PIXELMAP_INFO info;
         Index = 0;
         for (curx = xmin; curx <= xmax; curx++)
         {
+            if (pLineEnds[Index] < clip -> gx_rectangle_top)
+            {
+                pLineEnds[Index] = clip -> gx_rectangle_top;
+            }
+
+            if (pLineEnds[Index + 1] > clip -> gx_rectangle_bottom)
+            {
+                pLineEnds[Index + 1] = clip -> gx_rectangle_bottom;
+            }
+
             if (pLineEnds[Index] <= pLineEnds[Index + 1])
             {
-                if (pLineEnds[Index] < clip -> gx_rectangle_top)
-                {
-                    pLineEnds[Index] = clip -> gx_rectangle_top;
-                }
-
-                if (pLineEnds[Index + 1] > clip -> gx_rectangle_bottom)
-                {
-                    pLineEnds[Index + 1] = clip -> gx_rectangle_bottom;
-                }
-
                 line_draw(context, pLineEnds[Index], pLineEnds[Index + 1], curx, 1,
                           brush -> gx_brush_fill_color);
             }

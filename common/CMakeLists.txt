@@ -715,7 +715,6 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_scroll_wheel_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_scroll_wheel_font_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_scroll_wheel_text_color_set.c
-	${CMAKE_CURRENT_LIST_DIR}/src/gx_touch_driver_generic_resistive.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_tree_view_create.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_tree_view_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_tree_view_event_process.c

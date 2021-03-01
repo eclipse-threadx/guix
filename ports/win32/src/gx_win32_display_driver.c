@@ -898,7 +898,7 @@ INT       write_stride;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _win32_canvas_memory_prepare                       PORTABLE C       */
-/*                                                           6.1.4        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -932,6 +932,9 @@ INT       write_stride;
 /*                                            added 8bpp and 32bpp canvas */
 /*                                            rotate logic,               */
 /*                                            resulting in version 6.1.4  */
+/*  03-02-2021     Ting Zhu                 Modified comment(s), added    */
+/*                                            flip rotation support,      */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 VOID *_win32_canvas_memory_prepare(GX_CANVAS *canvas, GX_RECTANGLE *dirty)
@@ -954,7 +957,8 @@ INT         row;
 
     if (canvas -> gx_canvas_padded_memory)
     {
-        if (display -> gx_display_rotation_angle == 0)
+        if ((display -> gx_display_rotation_angle == GX_SCREEN_ROTATION_NONE) ||
+            (display -> gx_display_rotation_angle == GX_SCREEN_ROTATION_FLIP))
         {
             /* we had to create padded canvas memory, so copy dirty portion from GUIX canvas memory
                to properly aligned buffer created just for Win32 compatibility */

@@ -50,7 +50,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_32bpp_rotated_glyph_1bit_draw    PORTABLE C      */
-/*                                                           6.1.4        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -86,6 +86,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  02-02-2021     Kenneth Maxwell          Initial Version 6.1.4         */
+/*  03-02-2021     Ting Zhu                 Modified comment(s), changed  */
+/*                                            blend function set macro,   */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_32bpp_rotated_glyph_1bit_draw(GX_DRAW_CONTEXT *context, GX_RECTANGLE *draw_area, GX_POINT *map_offset, GX_CONST GX_GLYPH *glyph)
@@ -122,7 +125,7 @@ VOID   (*blend_func)(GX_DRAW_CONTEXT * context, INT x, INT y, GX_COLOR fcolor, G
         return;
     }
 
-    GX_SET_BLEND_FUNCTION(blend_func, context->gx_draw_context_display->gx_display_color_format);
+    GX_SET_32BPP_BLEND_FUNCTION(blend_func, context->gx_draw_context_display->gx_display_color_format);
 #endif
 
     text_color = context -> gx_draw_context_brush.gx_brush_line_color;

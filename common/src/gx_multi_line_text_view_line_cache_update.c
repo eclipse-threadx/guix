@@ -433,7 +433,7 @@ UINT last_cache_line;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_view_line_cache_update          PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -474,6 +474,9 @@ UINT last_cache_line;
 /*                                            cache process while dynamic */
 /*                                            bidi text is enabled,       */
 /*                                            resulting in version 6.1    */
+/*  03-02-2021     Ting Zhu                 Modified comment(s), fixed    */
+/*                                            line height calculation,    */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_multi_line_text_view_line_cache_update(GX_MULTI_LINE_TEXT_VIEW *view)
@@ -482,7 +485,7 @@ UINT     first_visible_line;
 UINT     last_visible_line;
 UINT     first_cache_line;
 INT      new_first_cache_line;
-UINT     line_height;
+INT      line_height;
 GX_FONT *font;
 
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
@@ -498,9 +501,9 @@ GX_FONT *font;
     if (font)
     {
         /* Pickup line height. */
-        line_height = font -> gx_font_line_height + (UINT)view -> gx_multi_line_text_view_line_space;
+        line_height = font -> gx_font_line_height + view -> gx_multi_line_text_view_line_space;
 
-        if (!line_height)
+        if (line_height <= 0)
         {
             return GX_FAILURE;
         }
@@ -508,7 +511,7 @@ GX_FONT *font;
         /* Calcualte first visible line. */
         if (view -> gx_multi_line_text_view_text_scroll_shift < 0)
         {
-            first_visible_line = ((UINT)-view -> gx_multi_line_text_view_text_scroll_shift) / line_height;
+            first_visible_line = ((UINT)-view -> gx_multi_line_text_view_text_scroll_shift) / (UINT)line_height;
         }
         else
         {

@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.1.4        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -53,13 +53,17 @@
 /*                                            declare new APIs,           */
 /*                                            defined new status,         */
 /*                                            resulting in version 6.1.3  */
-/*  02-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*  03-02-2021     Kenneth Maxwell          Modified comment(s),          */
 /*                                            change scroll_wheel style   */
 /*                                            flag to status flag,        */
 /*                                            renamed                     */
 /*                                            GX_STATUS_TRACKING_START to */
 /*                                            GX_STATUS_TRACKING_PEN,     */
-/*                                            resulting in version 6.1.4  */
+/*                                            added rotation angle        */
+/*                                            definitions, changed        */
+/*                                            pixelmap rotation flag      */
+/*                                            definitions,                */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -83,7 +87,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 1
-#define GUIX_PATCH_VERSION 4
+#define GUIX_PATCH_VERSION 5
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -291,8 +295,10 @@ typedef struct GX_STRING_STRUCT
 #define GX_MAX_PIXELMAP_RESOLUTION 0x3FFF
 
 /* Define screen rotation types. */
-#define GX_SCREEN_ROTATION_CW  90
-#define GX_SCREEN_ROTATION_CCW 270
+#define GX_SCREEN_ROTATION_NONE   0
+#define GX_SCREEN_ROTATION_CW    90
+#define GX_SCREEN_ROTATION_CCW  270
+#define GX_SCREEN_ROTATION_FLIP 180
 
 /* API input parameters and general constants.  */
 
@@ -1172,14 +1178,19 @@ typedef struct GX_PIXELMAP_STRUCT
 #define GX_PIXELMAP_ALPHA          0x04                         /* Pixelmap has alpha channel               */
 #define GX_PIXELMAP_TARGA          0x08                         /* Pixelmap uses Targa format compresssion  */
 #define GX_PIXELMAP_RAW_FORMAT     0x10                         /* RAW JPG/PNG format                       */
+
 #if defined(GX_USE_SYNERGY_DRW)
 #define GX_PIXELMAP_DYNAMICALLY_ALLOCATED  0x20                 /* Pixelmap is dynamically allocated        */
 #endif
-#define GX_PIXELMAP_ROTATED_90     0x40
-#define GX_PIXELMAP_ROTATED_270    0x80
+
+#define GX_PIXELMAP_ROTATED_CW     0x40
+#define GX_PIXELMAP_ROTATED_CCW    0x80
+
+/* Deprecated definitions, provided only for backward compatibility */
+#define GX_PIXELMAP_ROTATED_90  GX_PIXELMAP_ROTATED_CW
+#define GX_PIXELMAP_ROTATED_270 GX_PIXELMAP_ROTATED_CCW
 
 #define PIXELMAP_IS_TRANSPARENT(a) (a -> gx_pixelmap_flags & (GX_PIXELMAP_TRANSPARENT | GX_PIXELMAP_ALPHA))
-
 
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 typedef struct GX_BIDI_TEXT_INFO_STRUCT

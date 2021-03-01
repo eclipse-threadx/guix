@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_drawing_initiate                         PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -83,6 +83,9 @@
 /*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
 /*                                            display rotation support,   */
 /*                                            resulting in version 6.1.3  */
+/*  03-02-2021     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            flip rotation support,      */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_canvas_drawing_initiate(GX_CANVAS *canvas, GX_WIDGET *who, GX_RECTANGLE *dirty_area)
@@ -140,7 +143,8 @@ GX_DISPLAY      *display = canvas -> gx_canvas_display;
         new_context -> gx_draw_context_display = canvas -> gx_canvas_display;
         new_context -> gx_draw_context_memory  = canvas -> gx_canvas_memory;
 
-        if (new_context -> gx_draw_context_display -> gx_display_rotation_angle == 0)
+        if (new_context -> gx_draw_context_display -> gx_display_rotation_angle == GX_SCREEN_ROTATION_NONE ||
+            new_context -> gx_draw_context_display -> gx_display_rotation_angle == GX_SCREEN_ROTATION_FLIP)
         {
             new_context -> gx_draw_context_pitch = canvas -> gx_canvas_x_resolution;
         }

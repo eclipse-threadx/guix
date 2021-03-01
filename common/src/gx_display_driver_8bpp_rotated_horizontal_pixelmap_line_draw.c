@@ -482,7 +482,7 @@ GX_PIXELMAP       *pixelmap;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_8bpp_rotated_pixelmap_draw       PORTABLE C      */
-/*                                                           6.1.4        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -523,6 +523,9 @@ GX_PIXELMAP       *pixelmap;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  02-02-2021     Kenneth Maxwell          Initial Version 6.1.4         */
+/*  03-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            removed redundant code,     */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_8bpp_rotated_horizontal_pixelmap_line_draw(GX_DRAW_CONTEXT *context,
@@ -555,11 +558,6 @@ INT y;
         {
             info -> x_offset = info -> pixelmap -> gx_pixelmap_height - info -> x_offset;
         }
-    }
-
-    if (info -> pixelmap == GX_NULL)
-    {
-        return;
     }
 
     if (info -> pixelmap -> gx_pixelmap_flags & GX_PIXELMAP_TRANSPARENT)

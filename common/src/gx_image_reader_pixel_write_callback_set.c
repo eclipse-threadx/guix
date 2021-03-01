@@ -493,7 +493,7 @@ GX_UBYTE *pAlpha;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_565rgb_rotated_pixel_write         PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -524,6 +524,9 @@ GX_UBYTE *pAlpha;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  03-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_565rgb_rotated_pixel_write(GX_IMAGE_READER *image_reader, GX_PIXEL *pixel)
@@ -531,21 +534,24 @@ static UINT _gx_image_reader_565rgb_rotated_pixel_write(GX_IMAGE_READER *image_r
 USHORT   *pLine;
 GX_UBYTE *pAlpha;
 
-    pLine = (USHORT *)image_reader -> gx_image_reader_putdata;
-
-    pixel -> gx_pixel_red &= 0xf8;
-    pixel -> gx_pixel_green &= 0xfc;
-    pixel -> gx_pixel_blue &= 0xf8;
-
-    (*pLine) = (USHORT)(pixel -> gx_pixel_red << 8);
-    (*pLine) = (USHORT)((*pLine) | (pixel -> gx_pixel_green << 3));
-    (*pLine) = (USHORT)((*pLine) | (pixel -> gx_pixel_blue >> 3));
-
-    if (image_reader -> gx_image_reader_mode & GX_IMAGE_READER_MODE_ALPHA)
+    if(!image_reader -> gx_image_reader_size_testing)
     {
-        pAlpha = image_reader -> gx_image_reader_putauxdata;
+        pLine = (USHORT *)image_reader -> gx_image_reader_putdata;
 
-        (*pAlpha) = pixel -> gx_pixel_alpha;
+        pixel -> gx_pixel_red &= 0xf8;
+        pixel -> gx_pixel_green &= 0xfc;
+        pixel -> gx_pixel_blue &= 0xf8;
+
+        (*pLine) = (USHORT)(pixel -> gx_pixel_red << 8);
+        (*pLine) = (USHORT)((*pLine) | (pixel -> gx_pixel_green << 3));
+        (*pLine) = (USHORT)((*pLine) | (pixel -> gx_pixel_blue >> 3));
+
+        if (image_reader -> gx_image_reader_mode & GX_IMAGE_READER_MODE_ALPHA)
+        {
+            pAlpha = image_reader -> gx_image_reader_putauxdata;
+
+            (*pAlpha) = pixel -> gx_pixel_alpha;
+        }
     }
 
     if (image_reader -> gx_image_reader_mode & GX_IMAGE_READER_MODE_ROTATE_CW)

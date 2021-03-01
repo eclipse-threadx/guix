@@ -39,7 +39,7 @@
 /*    _gx_display_driver_32bpp_rotated_pixelmap_raw_rotate                */
 /*                                                                        */
 /*                                                        PORTABLE C      */
-/*                                                           6.1.4        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -79,6 +79,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  02-02-2021     Kenneth Maxwell          Initial Version 6.1.4         */
+/*  03-02-2021     Ting Zhu                 Modified comment(s), changed  */
+/*                                            blend function set macro,   */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_32bpp_rotated_pixelmap_raw_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -116,14 +119,9 @@ GX_RECTANGLE *clip;
 GX_RECTANGLE  rotated_clip;
 VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fcolor, GX_UBYTE alpha);
 
-    GX_SET_BLEND_FUNCTION(blend_func, context -> gx_draw_context_display -> gx_display_color_format);
+    GX_SET_32BPP_BLEND_FUNCTION(blend_func, context -> gx_draw_context_display -> gx_display_color_format);
 
     clip = context -> gx_draw_context_clip;
-
-    if (!blend_func)
-    {
-        return;
-    }
 
     mx = _gx_system_scratchpad;
     my = mx + 4;
@@ -332,7 +330,7 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fco
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_32bppted_pixelmap_alpha_rotate          PORTABLE C      */
-/*                                                           6.1.4        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -372,6 +370,9 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fco
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  02-02-2021     Kenneth Maxwell          Initial Version 6.1.4         */
+/*  03-02-2021     Ting Zhu                 Modified comment(s), changed  */
+/*                                            blend function set macro,   */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_32bpp_rotated_pixelmap_alpha_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -409,14 +410,9 @@ GX_RECTANGLE *clip;
 GX_RECTANGLE  rotated_clip;
 VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fcolor, GX_UBYTE alpha);
 
-    GX_SET_BLEND_FUNCTION(blend_func, context -> gx_draw_context_display -> gx_display_color_format);
+    GX_SET_32BPP_BLEND_FUNCTION(blend_func, context -> gx_draw_context_display -> gx_display_color_format);
 
     clip = context -> gx_draw_context_clip;
-
-    if (!blend_func)
-    {
-        return;
-    }
 
     mx = _gx_system_scratchpad;
     my = mx + 4;
@@ -605,7 +601,7 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fco
 /*    _gx_display_driver_32bpp_rotated_pixelmap_simple_rotate             */
 /*                                                                        */
 /*                                                        PORTABLE C      */
-/*                                                           6.1.4        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -643,6 +639,9 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fco
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  02-02-2021     Kenneth Maxwell          Initial Version 6.1.4         */
+/*  03-02-2021     Ting Zhu                 Modified comment(s), changed  */
+/*                                            blend function set macro,   */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_32bpp_rotated_pixelmap_simple_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -661,7 +660,7 @@ INT           newxpos;
 INT           newypos;
 VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fcolor, GX_UBYTE alpha);
 
-    GX_SET_BLEND_FUNCTION(blend_func, context -> gx_draw_context_display -> gx_display_color_format);
+    GX_SET_32BPP_BLEND_FUNCTION(blend_func, context -> gx_draw_context_display -> gx_display_color_format);
 
     clip = context -> gx_draw_context_clip;
 

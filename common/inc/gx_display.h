@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_display.h                                        PORTABLE C      */
-/*                                                           6.1.4        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -52,6 +52,10 @@
 /*                                            added 8bpp/32bpp rotated    */
 /*                                            display driver declarations,*/
 /*                                            resulting in version 6.1.4  */
+/*  03-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            added macro                 */
+/*                                            GX_SET_32BPP_BLEND_FUNCTION,*/
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -513,5 +517,18 @@ VOID *_win32_canvas_memory_prepare(GX_CANVAS *canvas, GX_RECTANGLE *dirty);
         return;                                             \
     }
 
+#define GX_SET_32BPP_BLEND_FUNCTION(blend_func, color_format) \
+    switch(color_format)                                      \
+    {                                                         \
+    case GX_COLOR_FORMAT_24XRGB:                              \
+        blend_func = _gx_display_driver_24xrgb_pixel_blend;   \
+        break;                                                \
+    case GX_COLOR_FORMAT_32ARGB:                              \
+        blend_func = _gx_display_driver_32argb_pixel_blend;   \
+        break;                                                \
+    default:                                                  \
+        /* Not supported. */                                  \
+        return;                                               \
+    }
 #endif
 

@@ -39,7 +39,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_rich_text_view_single_line_draw                 PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -77,6 +77,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
+/*  03-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            removed unreachable code,   */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_rich_text_view_single_line_draw(GX_RICH_TEXT_VIEW *text_view, GX_VALUE ypos, GX_RICH_TEXT_LINE_INFO *line_info)
@@ -195,11 +198,6 @@ GX_BOOL             escape = GX_FALSE;
         {
             /* Pick up text font. */
             _gx_context_font_get(start_format.gx_rich_text_font_id, &font);
-
-            if (!font)
-            {
-                return;
-            }
 
             /* Pict up text width. */
             _gx_system_string_width_get_ext(font, &draw_text, &text_width);

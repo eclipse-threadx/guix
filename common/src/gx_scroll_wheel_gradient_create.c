@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_scroll_wheel_gradient_create                    PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -72,6 +72,9 @@
 /*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
 /*                                            display rotation support,   */
 /*                                            resulting in version 6.1.3  */
+/*  03-02-2021     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            flip rotation support,      */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_scroll_wheel_gradient_create(GX_SCROLL_WHEEL *wheel)
@@ -96,7 +99,8 @@ GX_DISPLAY *display;
                 gradient_mode = GX_GRADIENT_TYPE_MIRROR | GX_GRADIENT_TYPE_ALPHA;
                 height = wheel -> gx_widget_size.gx_rectangle_bottom - wheel -> gx_widget_size.gx_rectangle_top + 1;
 
-                if (display -> gx_display_rotation_angle == 0)
+                if (display -> gx_display_rotation_angle == GX_SCREEN_ROTATION_NONE ||
+                    display -> gx_display_rotation_angle == GX_SCREEN_ROTATION_FLIP)
                 {
                     _gx_utility_gradient_create(&wheel -> gx_scroll_wheel_gradient, 3, (GX_VALUE)height,
                                                 gradient_mode | GX_GRADIENT_TYPE_VERTICAL,

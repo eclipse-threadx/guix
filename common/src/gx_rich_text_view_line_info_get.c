@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_rich_text_view_line_info_get                    PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -75,6 +75,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
+/*  03-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            removed unreachable code,   */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_rich_text_view_line_info_get(GX_RICH_TEXT_VIEW *text_view, GX_STRING text, GX_RICH_TEXT_LINE_INFO *line_info, GX_VALUE availlable_width)
@@ -199,11 +202,6 @@ INT                    tail_space_width = 0;
         {
             if (break_info.gx_rich_text_line_info_text_width == 0)
             {
-                if (tail_space_width)
-                {
-                    /* Minus line end space width. */
-                    line_info -> gx_rich_text_line_info_text_width -= (UINT)tail_space_width;
-                }
                 break;
             }
 
