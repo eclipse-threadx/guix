@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_generic_rotated_ellipse_fill     PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.6        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -76,6 +76,11 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  04-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            modified algorithm to make  */
+/*                                            it fit one-width antialiaed */
+/*                                            ellipse outline,            */
+/*                                            resulting in version 6.1.6  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_generic_rotated_ellipse_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b)
@@ -91,7 +96,6 @@ INT                   x;
 INT                   y;
 INT                   y0;
 INT                   y1;
-INT                   d;
 INT                   sign[2] = {1, -1};
 INT                  *pLineEnds;
 INT                   index;
@@ -107,7 +111,9 @@ GX_PIXELMAP          *pixelmap = GX_NULL;
 GX_COLOR              fill_color;
 GX_FILL_PIXELMAP_INFO info;
 GX_BYTE               xsign;
-
+INT                   error;
+INT                   realval;
+GX_BOOL               record;
 
     display = context -> gx_draw_context_display;
     clip = context -> gx_draw_context_clip;
@@ -170,13 +176,26 @@ GX_BYTE               xsign;
     bb = b * b;
     x = 0;
     y = b;
-    d = (bb << 2) + aa * (1 - (b << 1));
+    error = 0;
 
     /* Region I of the first quarter of the ellipse.  */
     while (2 * bb * (x + 1) < aa * (2 * y - 1))
     {
-        y0 = ycenter - y;
-        y1 = ycenter + y;
+        /* calculate error of next pixel. */
+        realval = bb - bb * (x + 1) * (x + 1) / aa;
+        error = (y << 8) - (INT)(_gx_utility_math_sqrt((UINT)(realval << 10)) << 3);
+
+        if (error >= 510)
+        {
+            /* The slope in point(x + 1, y) is greater than -1,
+               make point(x, y) the delimit pixel, break here. */
+            realval = bb - bb * x * x / aa;
+            error = (y << 8) - (INT)(_gx_utility_math_sqrt((UINT)(realval << 10)) << 3);
+            break;
+        }
+
+        y0 = ycenter - (y - 1);
+        y1 = ycenter + (y - 1);
 
         if (y0 < clip -> gx_rectangle_top)
         {
@@ -200,57 +219,86 @@ GX_BYTE               xsign;
             }
         }
 
-        if (d < 0)
+        if (error >= 255)
         {
-            d += (bb << 1) * ((x << 1) + 3);
-        }
-        else
-        {
-            d += (bb << 1) * ((x << 1) + 3) + (aa << 2) * (1 - y);
+            error -= 255;
             y--;
         }
+
         x++;
     }
 
-    d = bb * x * (x + 1) + aa * y * (y - 1) - aa * bb;
+    record = GX_TRUE;
+
+    y0 = ycenter - y;
+    y1 = ycenter + y;
+
+    if (y0 < clip -> gx_rectangle_top)
+    {
+        y0 = clip -> gx_rectangle_top;
+    }
+
+    if (y1 > clip -> gx_rectangle_bottom)
+    {
+        y1 = clip -> gx_rectangle_bottom;
+    }
+
+    for (index = 0; index < 2; index++)
+    {
+        x1 = x * sign[index] + xcenter;
+
+        if ((x1 >= xmin) && (x1 <= xmax))
+        {
+            Index = (x1 - xmin) << 1;
+            pLineEnds[Index] = y0;
+            pLineEnds[Index + 1] = y1;
+        }
+    }
 
     /* Region II of the first quarter of the ellipse.  */
-    while (y >= 0)
+    while (y > 0)
     {
-        y0 = ycenter - y;
-        y1 = ycenter + y;
-
-        if (y0 < clip -> gx_rectangle_top)
-        {
-            y0 = clip -> gx_rectangle_top;
-        }
-
-        if (y1 > clip -> gx_rectangle_bottom)
-        {
-            y1 = clip -> gx_rectangle_bottom;
-        }
-
-        for (index = 0; index < 2; index++)
-        {
-            x1 = x * sign[index] + xcenter;
-
-            if ((x1 >= xmin) && (x1 <= xmax))
-            {
-                Index = (x1 - xmin) << 1;
-                pLineEnds[Index] = y0;
-                pLineEnds[Index + 1] = y1;
-            }
-        }
         y--;
 
-        if (d < 0)
+        realval = aa - aa * y * y / bb;
+        error = (INT)(_gx_utility_math_sqrt((UINT)(realval << 10)) << 3) - (x << 8);
+
+        while (error >= 255)
         {
+            error -= 255;
             x++;
-            d += (bb << 1) * (x + 1) - aa * (1 + (y << 1));
+
+            record = GX_TRUE;
         }
-        else
+
+        if (record)
         {
-            d += aa * (-1 - (y << 1));
+            record = GX_FALSE;
+
+            y0 = ycenter - y;
+            y1 = ycenter + y;
+
+            if (y0 < clip -> gx_rectangle_top)
+            {
+                y0 = clip -> gx_rectangle_top;
+            }
+
+            if (y1 > clip -> gx_rectangle_bottom)
+            {
+                y1 = clip -> gx_rectangle_bottom;
+            }
+
+            for (index = 0; index < 2; index++)
+            {
+                x1 = x * sign[index] + xcenter;
+
+                if ((x1 >= xmin) && (x1 <= xmax))
+                {
+                    Index = (x1 - xmin) << 1;
+                    pLineEnds[Index] = y0;
+                    pLineEnds[Index + 1] = y1;
+                }
+            }
         }
     }
 

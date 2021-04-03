@@ -23,8 +23,8 @@
 /*                                                                        */
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
-/*    gx_api.h                                          Cortex-M7/IAR     */
-/*                                                           6.1          */
+/*    gx_port.h                                         Cortex-M7/IAR     */
+/*                                                          6.1.6         */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -39,6 +39,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
+/*  04-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1.6  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -140,7 +142,7 @@ typedef SHORT  GX_VALUE;
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Cortex-M7/IAR Version 6.1 *";
+    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Cortex-M7/IAR Version 6.1.6 *";
 #else
 extern  CHAR _gx_version_id[];
 #endif

@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_numeric_scroll_wheel_create                     PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.6        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -74,6 +74,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            replace usage of abs(),     */
+/*                                            resulting in version 6.1.6  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_numeric_scroll_wheel_create(GX_NUMERIC_SCROLL_WHEEL *wheel,
@@ -83,7 +86,7 @@ UINT  _gx_numeric_scroll_wheel_create(GX_NUMERIC_SCROLL_WHEEL *wheel,
 {
 
     /* Call text scroll wheel create. */
-    _gx_text_scroll_wheel_create((GX_TEXT_SCROLL_WHEEL *)wheel, name, GX_NULL, abs(start_val - end_val) + 1, style, Id, size);
+    _gx_text_scroll_wheel_create((GX_TEXT_SCROLL_WHEEL *)wheel, name, GX_NULL, GX_ABS(start_val - end_val) + 1, style, Id, size);
 
     wheel -> gx_widget_type = GX_TYPE_NUMERIC_SCROLL_WHEEL;
     wheel -> gx_numeric_scroll_wheel_start_val = start_val;

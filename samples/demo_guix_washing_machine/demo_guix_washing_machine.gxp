@@ -4,7 +4,7 @@
 <header>
 <project_version>55</project_version>
 <guix_version>60103</guix_version>
-<studio_version>6010100</studio_version>
+<studio_version>6010500</studio_version>
 <project_name>demo_guix_washing_machine</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
@@ -2167,8 +2167,7 @@
 <type>PIXELMAP</type>
 <name>RADIO_ON</name>
 <pathinfo>
-<pathname>graphics\system_png\radiobutton_on.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -2184,8 +2183,7 @@
 <type>PIXELMAP</type>
 <name>RADIO_OFF</name>
 <pathinfo>
-<pathname>graphics\system_png\radiobutton_off.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -2201,8 +2199,7 @@
 <type>PIXELMAP</type>
 <name>CHECKBOX_ON</name>
 <pathinfo>
-<pathname>graphics\system_png\checkbox_on.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -2218,8 +2215,7 @@
 <type>PIXELMAP</type>
 <name>CHECKBOX_OFF</name>
 <pathinfo>
-<pathname>graphics\system_png\checkbox_off.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -2685,7 +2681,7 @@
 </pathinfo>
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
-<compress>TRUE</compress>
+<compress>FALSE</compress>
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
@@ -6209,8 +6205,7 @@
 <type>PIXELMAP</type>
 <name>RADIO_ON</name>
 <pathinfo>
-<pathname>graphics\system_png\radiobutton_on.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -6226,8 +6221,7 @@
 <type>PIXELMAP</type>
 <name>RADIO_OFF</name>
 <pathinfo>
-<pathname>graphics\system_png\radiobutton_off.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -6243,8 +6237,7 @@
 <type>PIXELMAP</type>
 <name>CHECKBOX_ON</name>
 <pathinfo>
-<pathname>graphics\system_png\checkbox_on.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -6260,8 +6253,7 @@
 <type>PIXELMAP</type>
 <name>CHECKBOX_OFF</name>
 <pathinfo>
-<pathname>graphics\system_png\checkbox_off.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -7428,8 +7420,7 @@
 <type>PIXELMAP</type>
 <name>RADIO_ON</name>
 <pathinfo>
-<pathname>graphics\system_png\radiobutton_on.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -7445,8 +7436,7 @@
 <type>PIXELMAP</type>
 <name>RADIO_OFF</name>
 <pathinfo>
-<pathname>graphics\system_png\radiobutton_off.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -7462,8 +7452,7 @@
 <type>PIXELMAP</type>
 <name>CHECKBOX_ON</name>
 <pathinfo>
-<pathname>graphics\system_png\checkbox_on.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -7479,8 +7468,7 @@
 <type>PIXELMAP</type>
 <name>CHECKBOX_OFF</name>
 <pathinfo>
-<pathname>graphics\system_png\checkbox_off.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -8647,8 +8635,7 @@
 <type>PIXELMAP</type>
 <name>RADIO_ON</name>
 <pathinfo>
-<pathname>graphics\system_png\radiobutton_on.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -8664,8 +8651,7 @@
 <type>PIXELMAP</type>
 <name>RADIO_OFF</name>
 <pathinfo>
-<pathname>graphics\system_png\radiobutton_off.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -8681,8 +8667,7 @@
 <type>PIXELMAP</type>
 <name>CHECKBOX_ON</name>
 <pathinfo>
-<pathname>graphics\system_png\checkbox_on.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>
@@ -8698,8 +8683,7 @@
 <type>PIXELMAP</type>
 <name>CHECKBOX_OFF</name>
 <pathinfo>
-<pathname>graphics\system_png\checkbox_off.png</pathname>
-<pathtype>studio_relative</pathtype>
+<pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
 <enabled>TRUE</enabled>

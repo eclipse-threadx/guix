@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guix", "..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj", "{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_guix_circular_gauge", "demo_guix_circular_gauge.vcxproj", "{2BD49A2A-4E61-49DD-B6A8-330AC6B5B25A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Debug|Win32.Build.0 = Debug|Win32
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Release|Win32.ActiveCfg = Debug|Win32
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Release|Win32.Build.0 = Debug|Win32
+		{2BD49A2A-4E61-49DD-B6A8-330AC6B5B25A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2BD49A2A-4E61-49DD-B6A8-330AC6B5B25A}.Debug|Win32.Build.0 = Debug|Win32
+		{2BD49A2A-4E61-49DD-B6A8-330AC6B5B25A}.Release|Win32.ActiveCfg = Debug|Win32
+		{2BD49A2A-4E61-49DD-B6A8-330AC6B5B25A}.Release|Win32.Build.0 = Debug|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59BE5E94-22C6-4D79-955A-240AEE9CCF66}
+	EndGlobalSection
+EndGlobal

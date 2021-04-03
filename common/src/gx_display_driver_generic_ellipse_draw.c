@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_generic_ellipse_draw             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.6        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -74,6 +74,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            improved precision,         */
+/*                                            resulting in version 6.1.6  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_generic_ellipse_draw(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b)
@@ -110,15 +113,33 @@ GX_UBYTE brush_alpha = brush -> gx_brush_alpha;
     }
 #endif
 
+    /* The ellipse is split into 2 regions, region I with dx > dy and resion II with dx <= dy.
+       In region I, the midpoint between (x + 1, y) and (x + 1, y - 1) is used to select next point that is closer to the ellipse,
+       d(x + 1, y - 0.5) is the distance from the midpoint to the ellipse center,
+       if the decision < 0, the midpoint is inside the ellipse, point (x + 1, y - 1) is closer to the ellipse, and be selected for drawing.
+       otherwise, (x + 1, y) is selected.
+       In region II, the midpoint between (x, y - 1) and (x + 1, y - 1) is used to select next point that is closer to the ellipse,
+       d(x + 0.5, y - 1) is the distance from the midpoint to ellipse center,
+       if the decision < 0, the midpoint is inside the ellipse, point(x + 1, y - 1) is closer to the ellipse, and be selected for drawing,
+       otherwise, (x, y - 1) is selected.
+
+       Ellipse equation is f(x, y) = sqr(b * x) + sqr(a * y) - sqr(a * b).
+       First, we assume ellipse is centered at the origin(0, 0), and the first point is (0, b).
+       Set initial decision value for region I as d = f(1, b - 0.5) = sqr(b) + sqr(a) * (-b + 0.25).
+    */
+
     aa = a * a;
     bb = b * b;
     x = 0;
     y = b;
-    d = (bb << 2) + aa * (1 - (b << 1));
+
+    /* Decision is enlarged by 4 to avoid floating point. */
+    d = (bb << 2) + aa * (1 - (b << 2));
 
 #if defined(GX_BRUSH_ALPHA_SUPPORT)
     if (brush_alpha != 0xff)
     {
+
         /* Region I of the first quarter of the ellipse.  */
         while ((bb << 1) * (x + 1) < aa * (2 * y - 1))
         {
@@ -135,17 +156,17 @@ GX_UBYTE brush_alpha = brush -> gx_brush_alpha;
 
             if (d < 0)
             {
-                d += (bb << 1) * ((x << 1) + 3);
+                d += (bb << 2) * ((x << 1) + 3);
             }
             else
             {
-                d += (bb << 1) * ((x << 1) + 3) + (aa << 2) * (1 - y);
+                d += (bb << 2) * ((x << 1) + 3) + (aa << 3) * (1 - y);
                 y--;
             }
             x++;
         }
 
-        d = bb * x * (x + 1) + aa * y * (y - 1) - aa * bb;
+        d = bb * ((x << 1) + 1) * ((x << 1) + 1) + (aa << 2) * (y - 1) * (y - 1) - (aa << 2) * bb;
 
         /* Region II of the first quarter of the ellipse.  */
         while (y >= 0)
@@ -161,16 +182,17 @@ GX_UBYTE brush_alpha = brush -> gx_brush_alpha;
                 }
             }
 
-            y--;
             if (d < 0)
             {
+                d += (bb << 3) * (x + 1) + (aa << 2) * (3 - (y << 1));
                 x++;
-                d += (bb << 1) * (x + 1) - aa * (1 + (y << 1));
             }
             else
             {
-                d += aa * (-1 - (y << 1));
+                d += (aa << 2) * (3 - (y << 1));
             }
+
+            y--;
         }
     }
     else
@@ -192,17 +214,20 @@ GX_UBYTE brush_alpha = brush -> gx_brush_alpha;
 
             if (d < 0)
             {
-                d += (bb << 1) * ((x << 1) + 3);
+                d += (bb << 2) * ((x << 1) + 3);
             }
             else
             {
-                d += (bb << 1) * ((x << 1) + 3) + (aa << 2) * (1 - y);
+                d += (bb << 2) * ((x << 1) + 3) + (aa << 3) * (1 - y);
                 y--;
             }
             x++;
         }
 
-        d = bb * x * (x + 1) + aa * y * (y - 1) - aa * bb;
+        /* Set initial decision value for region II as d = f(x + 0.5, y - 1) = sqr(b * (x + 0.5) + sqr(a * (y - 1)) - sqr(a * b).
+           Enlarge the decision by 4 to avoid float calculation. */
+
+        d = bb * ((x << 1) + 1) * ((x << 1) + 1) + (aa << 2) * (y - 1) * (y - 1) - (aa << 2) * bb;
 
         /* Region II of the first quarter of the ellipse.  */
         while (y >= 0)
@@ -218,17 +243,17 @@ GX_UBYTE brush_alpha = brush -> gx_brush_alpha;
                 }
             }
 
-            y--;
-
             if (d < 0)
             {
+                d += (bb << 3) * (x + 1) + (aa << 2) * (3 - (y << 1));
                 x++;
-                d += (bb << 1) * (x + 1) - aa * (1 + (y << 1));
             }
             else
             {
-                d += aa * (-1 - (y << 1));
+                d += (aa << 2) * (3 - (y << 1));
             }
+
+            y--;
         }
 #if defined(GX_BRUSH_ALPHA_SUPPORT)
     }

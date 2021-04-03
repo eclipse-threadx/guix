@@ -4,7 +4,7 @@
 <header>
 <project_version>55</project_version>
 <guix_version>60103</guix_version>
-<studio_version>6010100</studio_version>
+<studio_version>6010500</studio_version>
 <project_name>guix_widget_types</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
@@ -2458,7 +2458,7 @@
 </pathinfo>
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
-<compress>TRUE</compress>
+<compress>FALSE</compress>
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
@@ -2492,7 +2492,7 @@
 </pathinfo>
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
-<compress>TRUE</compress>
+<compress>FALSE</compress>
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
@@ -2543,7 +2543,7 @@
 </pathinfo>
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
-<compress>TRUE</compress>
+<compress>FALSE</compress>
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
@@ -2560,7 +2560,7 @@
 </pathinfo>
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
-<compress>TRUE</compress>
+<compress>FALSE</compress>
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>

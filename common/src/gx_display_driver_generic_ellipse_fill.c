@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_generic_ellipse_fill             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.6        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -78,11 +78,16 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            modified algorithm to make  */
+/*                                            it fit one-width antialiaed */
+/*                                            ellipse outline,            */
+/*                                            resulting in version 6.1.6  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_generic_ellipse_fill(GX_DRAW_CONTEXT *context, INT xcenter, INT ycenter, INT a, INT b)
 {
-/* The ellipse fill function follows Bresenham ellipse algorithm while
+/* The ellipse fill function follows midpoint ellipse algorithm while
    connecting the two point that symmetric with respect to y-axis. */
 
 GX_DISPLAY           *display;
@@ -93,7 +98,6 @@ INT                   x1;
 INT                   x;
 INT                   y;
 INT                   y1;
-INT                   d;
 INT                   sign[2] = {1, -1};
 INT                  *pLineEnds;
 INT                   index;
@@ -109,6 +113,8 @@ GX_PIXELMAP          *pixelmap = GX_NULL;
 GX_VALUE              format;
 GX_COLOR              fill_color;
 GX_FILL_PIXELMAP_INFO info;
+INT                   error;
+INT                   realval;
 
 
     display = context -> gx_draw_context_display;
@@ -202,11 +208,24 @@ GX_FILL_PIXELMAP_INFO info;
     bb = b * b;
     x = 0;
     y = b;
-    d = (bb << 2) + aa * (1 - (b << 1));
+    error = 0;
 
     /* Region I of the first quarter of the ellipse.  */
     while (2 * bb * (x + 1) < aa * (2 * y - 1))
     {
+        /* calculate error of next pixel. */
+        realval = bb - bb * (x + 1) * (x + 1) / aa;
+        error = (y << 8) - (INT)(_gx_utility_math_sqrt((UINT)(realval << 10)) << 3);
+
+        if (error >= 510)
+        {
+            /* The slope in point(x + 1, y) is greater than -1,
+               make point(x, y) the delimit pixel, break here. */
+            realval = bb - bb * x * x / aa;
+            error = (y << 8) - (INT)(_gx_utility_math_sqrt((UINT)(realval << 10)) << 3);
+            break;
+        }
+
         x0 = xcenter - x;
         x1 = xcenter + x;
 
@@ -222,7 +241,7 @@ GX_FILL_PIXELMAP_INFO info;
 
         for (index = 0; index < 2; index++)
         {
-            y1 = y * sign[index] + ycenter;
+            y1 = (y - 1) * sign[index] + ycenter;
 
             if ((y1 >= ymin) && (y1 <= ymax))
             {
@@ -232,23 +251,29 @@ GX_FILL_PIXELMAP_INFO info;
             }
         }
 
-        if (d < 0)
+        if (error >= 255)
         {
-            d += (bb << 1) * ((x << 1) + 3);
-        }
-        else
-        {
-            d += (bb << 1) * ((x << 1) + 3) + (aa << 2) * (1 - y);
+            error -= 255;
             y--;
         }
+
         x++;
     }
 
-    d = bb * x * (x + 1) + aa * y * (y - 1) - aa * bb;
-
     /* Region II of the first quarter of the ellipse.  */
-    while (y >= 0)
+    while (y > 0)
     {
+        y--;
+
+        realval = aa - aa * y * y / bb;
+        error = (INT)(_gx_utility_math_sqrt((UINT)(realval << 10)) << 3) - (x << 8);
+
+        while (error >= 255)
+        {
+            error -= 255;
+            x++;
+        }
+
         x0 = xcenter - x;
         x1 = xcenter + x;
 
@@ -272,17 +297,6 @@ GX_FILL_PIXELMAP_INFO info;
                 pLineEnds[Index] = x0;
                 pLineEnds[Index + 1] = x1;
             }
-        }
-        y--;
-
-        if (d < 0)
-        {
-            x++;
-            d += (bb << 1) * (x + 1) - aa * (1 + (y << 1));
-        }
-        else
-        {
-            d += aa * (-1 - (y << 1));
         }
     }
 

@@ -4,7 +4,7 @@
 <header>
 <project_version>55</project_version>
 <guix_version>60103</guix_version>
-<studio_version>6010100</studio_version>
+<studio_version>6010500</studio_version>
 <project_name>guix_thermostat</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>

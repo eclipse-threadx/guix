@@ -23,8 +23,8 @@
 /*                                                                        */
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
-/*    gx_api.h                                          Cortex-A5/AC5     */
-/*                                                           6.1          */
+/*    gx_port.h                                         Cortex-A5/AC5     */
+/*                                                           6.1.6        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -39,6 +39,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
+/*  04-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1.6  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -140,7 +142,7 @@ typedef SHORT  GX_VALUE;
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Cortex-A5/AC5 Version 6.1 *";
+    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Cortex-A5/AC5 Version 6.1.6 *";
 #else
 extern  CHAR _gx_version_id[];
 #endif

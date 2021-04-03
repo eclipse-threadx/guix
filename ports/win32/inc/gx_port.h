@@ -23,8 +23,8 @@
 /*                                                                        */
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
-/*    gx_api.h                                           Win32/Visual     */
-/*                                                           6.1.3        */
+/*    gx_port.h                                          Win32/Visual     */
+/*                                                           6.1.6        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,6 +42,9 @@
 /*  12-31-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added new defines,          */
 /*                                            resulting in version 6.1.3  */
+/*  04-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added new defines,          */
+/*                                            resulting in version 6.1.6  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -164,7 +167,7 @@ typedef SHORT  GX_VALUE;
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Win32/Visual Version 6.1.3 *";
+    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Win32/Visual Version 6.1.6 *";
 #else
 extern  CHAR _gx_version_id[];
 #endif

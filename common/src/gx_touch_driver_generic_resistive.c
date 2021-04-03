@@ -100,7 +100,7 @@ static VOID _gx_touch_driver_generic_resistive_pen_down_event_send(GX_RESISTIVE_
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_pen_drag_event_send              */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.6        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -134,14 +134,17 @@ static VOID _gx_touch_driver_generic_resistive_pen_down_event_send(GX_RESISTIVE_
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            replace usage of abs(),     */
+/*                                            resulting in version 6.1.6  */
 /*                                                                        */
 /**************************************************************************/
 
 static VOID _gx_touch_driver_generic_resistive_pen_drag_event_send(GX_RESISTIVE_TOUCH *touch)
 {
     GX_EVENT event;
-    INT x_delta = abs(touch -> gx_resistive_touch_current_touch_coord.gx_point_x - touch -> gx_resistive_touch_last_touch_coord.gx_point_x);
-    INT y_delta = abs(touch -> gx_resistive_touch_current_touch_coord.gx_point_y - touch -> gx_resistive_touch_last_touch_coord.gx_point_y);
+    INT x_delta = GX_ABS(touch -> gx_resistive_touch_current_touch_coord.gx_point_x - touch -> gx_resistive_touch_last_touch_coord.gx_point_x);
+    INT y_delta = GX_ABS(touch -> gx_resistive_touch_current_touch_coord.gx_point_y - touch -> gx_resistive_touch_last_touch_coord.gx_point_y);
 
     if (x_delta > touch -> gx_resistive_touch_min_drag_delta ||
         y_delta > touch -> gx_resistive_touch_min_drag_delta)
@@ -420,7 +423,7 @@ static UINT _gx_touch_driver_generic_resistive_calibration_matrix_set(GX_RESISTI
 /*                                                                        */
 /*    _gx_touch_driver_generic_resistive_raw_read                         */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.6        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -454,6 +457,9 @@ static UINT _gx_touch_driver_generic_resistive_calibration_matrix_set(GX_RESISTI
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            replace usage of abs(),     */
+/*                                            resulting in version 6.1.6  */
 /*                                                                        */
 /**************************************************************************/
 static GX_BOOL _gx_touch_driver_generic_resistive_raw_read(GX_RESISTIVE_TOUCH *touch, GX_POINT *ret_val)
@@ -492,13 +498,13 @@ static GX_BOOL _gx_touch_driver_generic_resistive_raw_read(GX_RESISTIVE_TOUCH *t
 
                 if (loop > 0)
                 {
-                    delta_x = abs(samples[loop].gx_point_x - samples[loop - 1].gx_point_x);
+                    delta_x = GX_ABS(samples[loop].gx_point_x - samples[loop - 1].gx_point_x);
                     if (delta_x > stability_limit)
                     {
                         stable_sample = GX_FALSE;
                         break;
                     }
-                    delta_y = abs(samples[loop].gx_point_y - samples[loop - 1].gx_point_y);
+                    delta_y = GX_ABS(samples[loop].gx_point_y - samples[loop - 1].gx_point_y);
                     if (delta_y > stability_limit)
                     {   
                         stable_sample = GX_FALSE;
