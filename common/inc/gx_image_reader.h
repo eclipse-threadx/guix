@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_image_reader.h                                   PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -44,25 +44,40 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s), and      */
+/*                                            improved png decoding       */
+/*                                            performance,                */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
 #ifndef GX_IMAGE_READER_H
 #define GX_IMAGE_READER_H
 
-#define GX_IMAGE_FORMAT_1BPP             0xf0
-#define GX_IMAGE_FORMAT_2BPP             0xf1
-#define GX_IMAGE_FORMAT_4BPP             0xf2
-#define GX_IMAGE_FORMAT_8BPP             0xf3
-#define GX_IMAGE_FORMAT_16BPP_GRAY       0xf4   /* Internal format: 16bits for each gray value. */
-#define GX_IMAGE_FORMAT_16BPP_GRAY_ALPHA 0xf5   /* Internal format: gray: alpha stream, 8 bits. */
-#define GX_IMAGE_FORMAT_32BPP_GRAY_ALPHA 0xf6   /* Internal format: gray: alpha steam, 16bits. */
-#define GX_IMAGE_FORMAT_24BPP            0xf7   /* Internal format: r:g:b stream, 8bits for each channel. */
-#define GX_IMAGE_FORMAT_32BPP            0xf8   /* Internal format: r:g:b:a strem, 8bits for each channel. */
-#define GX_IMAGE_FORMAT_48BPP            0xf9   /* Internal format: r:g:b stream, 16bits for each channel. */
-#define GX_IMAGE_FORMAT_64BPP            0xfa   /* Internal format: r:g:b:a stream, 16bits for each channel */
+#define GX_IMAGE_FORMAT_1BPP                    0xf0
+#define GX_IMAGE_FORMAT_2BPP                    0xf1
+#define GX_IMAGE_FORMAT_4BPP                    0xf2
+#define GX_IMAGE_FORMAT_8BPP                    0xf3
+#define GX_IMAGE_FORMAT_16BPP_GRAY              0xf4 /* Internal format: 16bits for each gray value. */
+#define GX_IMAGE_FORMAT_16BPP_GRAY_ALPHA        0xf5 /* Internal format: gray: alpha stream, 8 bits. */
+#define GX_IMAGE_FORMAT_32BPP_GRAY_ALPHA        0xf6 /* Internal format: gray: alpha steam, 16bits. */
+#define GX_IMAGE_FORMAT_24BPP                   0xf7 /* Internal format: r:g:b stream, 8bits for each channel. */
+#define GX_IMAGE_FORMAT_32BPP                   0xf8 /* Internal format: r:g:b:a strem, 8bits for each channel. */
+#define GX_IMAGE_FORMAT_48BPP                   0xf9 /* Internal format: r:g:b stream, 16bits for each channel. */
+#define GX_IMAGE_FORMAT_64BPP                   0xfa /* Internal format: r:g:b:a stream, 16bits for each channel */
 
-#define GX_TRANSPARENT_COLOR             0xff
+#define GX_TRANSPARENT_COLOR                    0xff
+
+#define GX_PNG_CRC_TABLE_SIZE                   256
+#define GX_PNG_HUFFMAN_LIT_TABLE_SIZE           286
+#define GX_PNG_HUFFMAN_LIT_CODE_LEN_TABLE_SIZE  288
+#define GX_PNG_HUFFMAN_DIST_CODE_LEN_TABLE_SIZE 32
+#define GX_PNG_PALETTE_TABLE_SIZE               256
+#define GX_PNG_SCRATCH_BUFFER_SIZE              (GX_PNG_CRC_TABLE_SIZE +                   \
+                                                 GX_PNG_HUFFMAN_LIT_TABLE_SIZE +           \
+                                                 GX_PNG_HUFFMAN_LIT_CODE_LEN_TABLE_SIZE +  \
+                                                 GX_PNG_HUFFMAN_DIST_CODE_LEN_TABLE_SIZE + \
+                                                 GX_PNG_PALETTE_TABLE_SIZE)
 
 /* Control block used internally for jpeg reader.  */
 
@@ -112,17 +127,17 @@ typedef struct GX_PNG_STRUCT
     INT       gx_png_compression_method;
     INT       gx_png_filter_method;
     INT       gx_png_interlace_method;
-    UINT      gx_png_crc_table[256];
+    UINT     *gx_png_crc_table;   /* 256 */
     INT       gx_png_gamma;
     INT       gx_png_huffman_clen_table[20];
     INT       gx_png_huffman_clen_bits_count[17];
-    INT       gx_png_huffman_lit_table[286];
-    INT       gx_png_huffman_lit_code_len[286];
+    INT      *gx_png_huffman_lit_table;    /* 286 */
+    INT      *gx_png_huffman_lit_code_len; /* 286 */
     INT       gx_png_huffman_lit_bits_count[17];
     INT       gx_png_huffman_dist_table[30];
-    INT       gx_png_huffman_dist_code_len[30];
+    INT      *gx_png_huffman_dist_code_len; /* 32 */
     INT       gx_png_huffman_dist_bits_count[17];
-    GX_COLOR  gx_png_palette_table[256];
+    GX_COLOR *gx_png_palette_table;         /* 256 */
     INT       gx_png_palette_table_size;
     GX_COLOR *gx_png_trans;
     INT       gx_png_trans_num;

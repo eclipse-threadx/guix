@@ -4,7 +4,7 @@
 <header>
 <project_version>55</project_version>
 <guix_version>60103</guix_version>
-<studio_version>6010500</studio_version>
+<studio_version>6010603</studio_version>
 <project_name>demo_guix_ml_text_input</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
@@ -13,9 +13,9 @@
 <target_cpu>0</target_cpu>
 <target_tools>0</target_tools>
 <big_endian>FALSE</big_endian>
-<synergy_graph_accelerator>FALSE</synergy_graph_accelerator>
-<synergy_jpeg_decoder>0</synergy_jpeg_decoder>
-<synergy_png_decoder>0</synergy_png_decoder>
+<dave2d_graph_accelerator>FALSE</dave2d_graph_accelerator>
+<renesas_jpeg_decoder>0</renesas_jpeg_decoder>
+<renesas_png_decoder>0</renesas_png_decoder>
 <grid_enabled>FALSE</grid_enabled>
 <snap_enabled>FALSE</snap_enabled>
 <grid_spacing>10</grid_spacing>
@@ -491,6 +491,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -646,6 +647,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -801,6 +803,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -956,6 +959,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>TRUE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -1132,6 +1136,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -2705,6 +2710,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -2860,6 +2866,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -3015,6 +3022,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -3170,6 +3178,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -3924,6 +3933,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -4079,6 +4089,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -4234,6 +4245,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -4389,6 +4401,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -5143,6 +5156,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -5298,6 +5312,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -5453,6 +5468,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -5608,6 +5624,7 @@
 <font_kerning>FALSE</font_kerning>
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
+<output_file_enabled>FALSE</output_file_enabled>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>

@@ -222,7 +222,6 @@ INT                   realval;
             /* The slope in point(x + 1, y) is greater than -1,
                make point(x, y) the delimit pixel, break here. */
             realval = bb - bb * x * x / aa;
-            error = (y << 8) - (INT)(_gx_utility_math_sqrt((UINT)(realval << 10)) << 3);
             break;
         }
 

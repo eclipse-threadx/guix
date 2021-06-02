@@ -32,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_24xrgb_pixelmap_raw_blend        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_24xrgb_pixelmap_raw_blend(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap, GX_UBYTE alpha)
@@ -77,13 +81,9 @@ INT           yval;
 INT           xval;
 INT           draw_width;
 GX_COLOR      color;
-ULONG        *put;
 ULONG        *get;
 
 GX_RECTANGLE *clip = context -> gx_draw_context_clip;
-
-    put = context -> gx_draw_context_memory + clip -> gx_rectangle_top * context -> gx_draw_context_pitch;
-    put += clip -> gx_rectangle_left;
 
     get = (GX_COLOR *)pixelmap -> gx_pixelmap_data;
     get +=  pixelmap -> gx_pixelmap_width * (clip -> gx_rectangle_top - ypos);
@@ -108,7 +108,7 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_24xrgb_pixelmap_alpha_blend      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -145,6 +145,10 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_24xrgb_pixelmap_alpha_blend(GX_DRAW_CONTEXT *context,
@@ -159,9 +163,6 @@ UCHAR         alpha_value;
 ULONG         combined_alpha;
 
 GX_RECTANGLE *clip = context -> gx_draw_context_clip;
-
-    xval = clip -> gx_rectangle_left;
-    yval = clip -> gx_rectangle_top;
 
     get = (GX_COLOR *)(pixelmap -> gx_pixelmap_data + (INT)sizeof(GX_COLOR) * pixelmap -> gx_pixelmap_width * (clip -> gx_rectangle_top - ypos));
     get += (clip -> gx_rectangle_left - xpos);
@@ -198,7 +199,7 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_24xrgb_palette_pixelmap_blend      PORTABLE C    */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -235,6 +236,10 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_24xrgb_palette_pixelmap_blend(GX_DRAW_CONTEXT *context,
@@ -251,9 +256,6 @@ GX_UBYTE      g;
 GX_UBYTE      b;
 
 GX_RECTANGLE *clip = context -> gx_draw_context_clip;
-
-    xval = clip -> gx_rectangle_left;
-    yval = clip -> gx_rectangle_top;
 
     get = (GX_UBYTE *)(pixelmap -> gx_pixelmap_data + pixelmap -> gx_pixelmap_width * (clip -> gx_rectangle_top - ypos));
     get += (clip -> gx_rectangle_left - xpos);
@@ -286,7 +288,7 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_display_driver_24xrgb_palette_pixelmap_transparent_blend        */
 /*                                                         PORTABLE C     */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -323,6 +325,10 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_24xrgb_palette_pixelmap_transparent_blend(GX_DRAW_CONTEXT *context,
@@ -339,9 +345,6 @@ GX_UBYTE      g;
 GX_UBYTE      b;
 
 GX_RECTANGLE *clip = context -> gx_draw_context_clip;
-
-     xval = clip -> gx_rectangle_left;
-     yval = clip -> gx_rectangle_top;
 
      get = (GX_UBYTE *)(pixelmap -> gx_pixelmap_data + pixelmap -> gx_pixelmap_width * (clip -> gx_rectangle_top - ypos));
      get += (clip -> gx_rectangle_left - xpos);

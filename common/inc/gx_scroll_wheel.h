@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_scroll_wheel.h                                   PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -45,6 +45,10 @@
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added new prototypes,       */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            added prototypes for        */
+/*                                            generic scroll wheel,       */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -56,26 +60,27 @@
 
 /* Define scroll wheel management function prototypes.  */
 
-UINT _gx_numeric_scroll_wheel_create(GX_NUMERIC_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
-                                     INT start_val, INT end_val,
-                                     ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
-UINT _gx_numeric_scroll_wheel_range_set(GX_NUMERIC_SCROLL_WHEEL *wheel, INT start_val, INT end_val);
-UINT _gx_numeric_scroll_wheel_text_get(GX_NUMERIC_SCROLL_WHEEL *wheel, INT row, GX_STRING *);
+UINT    _gx_numeric_scroll_wheel_create(GX_NUMERIC_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
+                                        INT start_val, INT end_val,
+                                        ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
+UINT    _gx_numeric_scroll_wheel_range_set(GX_NUMERIC_SCROLL_WHEEL *wheel, INT start_val, INT end_val);
+UINT    _gx_numeric_scroll_wheel_text_get(GX_NUMERIC_SCROLL_WHEEL *wheel, INT row, GX_STRING *);
 
-UINT _gx_scroll_wheel_create(GX_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows,
-                             ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
-UINT _gx_scroll_wheel_event_process(GX_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
-VOID _gx_scroll_wheel_gradient_create(GX_SCROLL_WHEEL *wheel);
-UINT _gx_scroll_wheel_gradient_alpha_set(GX_SCROLL_WHEEL *wheel, GX_UBYTE start_alpha, GX_UBYTE end_alpha);
-UINT _gx_scroll_wheel_row_height_set(GX_SCROLL_WHEEL *wheel, GX_VALUE row_height);
-UINT _gx_scroll_wheel_selected_row_calculate(GX_SCROLL_WHEEL *wheel);
-UINT _gx_scroll_wheel_scroll(GX_SCROLL_WHEEL *wheel, GX_VALUE shift);
-UINT _gx_scroll_wheel_selected_background_set(GX_SCROLL_WHEEL *wheel, GX_RESOURCE_ID selected_bg);
-UINT _gx_scroll_wheel_selected_get(GX_SCROLL_WHEEL *wheel, INT *row);
-UINT _gx_scroll_wheel_selected_set(GX_SCROLL_WHEEL *wheel, INT row);
-UINT _gx_scroll_wheel_speed_set(GX_SCROLL_WHEEL *wheel, GX_FIXED_VAL start_speed_rate, GX_FIXED_VAL end_speed_rate,
-                                GX_VALUE max_steps, GX_VALUE delay);
-UINT _gx_scroll_wheel_total_rows_set(GX_SCROLL_WHEEL *wheel, INT total_rows);
+UINT    _gx_scroll_wheel_create(GX_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows,
+                                ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
+UINT    _gx_scroll_wheel_event_process(GX_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
+VOID    _gx_scroll_wheel_gradient_create(GX_SCROLL_WHEEL *wheel);
+UINT    _gx_scroll_wheel_gradient_alpha_set(GX_SCROLL_WHEEL *wheel, GX_UBYTE start_alpha, GX_UBYTE end_alpha);
+UINT    _gx_scroll_wheel_row_height_set(GX_SCROLL_WHEEL *wheel, GX_VALUE row_height);
+UINT    _gx_scroll_wheel_selected_row_calculate(GX_SCROLL_WHEEL *wheel);
+UINT    _gx_scroll_wheel_scroll(GX_SCROLL_WHEEL *wheel, GX_VALUE shift);
+UINT    _gx_scroll_wheel_selected_background_set(GX_SCROLL_WHEEL *wheel, GX_RESOURCE_ID selected_bg);
+UINT    _gx_scroll_wheel_selected_get(GX_SCROLL_WHEEL *wheel, INT *row);
+UINT    _gx_scroll_wheel_selected_set(GX_SCROLL_WHEEL *wheel, INT row);
+UINT    _gx_scroll_wheel_speed_set(GX_SCROLL_WHEEL *wheel, GX_FIXED_VAL start_speed_rate, GX_FIXED_VAL end_speed_rate,
+                                   GX_VALUE max_steps, GX_VALUE delay);
+UINT    _gx_scroll_wheel_total_rows_set(GX_SCROLL_WHEEL *wheel, INT total_rows);
+GX_BOOL _gx_scroll_wheel_wrap_style_check(GX_SCROLL_WHEEL *wheel);
 
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_string_scroll_wheel_create(GX_STRING_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows,
@@ -119,6 +124,25 @@ UINT _gx_text_scroll_wheel_text_color_set(GX_TEXT_SCROLL_WHEEL *wheel,
                                           GX_RESOURCE_ID selected_text_color,
                                           GX_RESOURCE_ID disabled_text_color);
 
+
+/* Define generic scroll wheel management function prototypes.  */
+UINT    _gx_generic_scroll_wheel_create(GX_GENERIC_SCROLL_WHEEL *wheel,
+                                       GX_CONST GX_CHAR *name,
+                                       GX_WIDGET *parent,
+                                       INT total_rows,
+                                       VOID (*callback)(GX_GENERIC_SCROLL_WHEEL *, GX_WIDGET *, INT),
+                                       ULONG style,
+                                       USHORT id,
+                                       GX_CONST GX_RECTANGLE *size);
+UINT    _gx_generic_scroll_wheel_children_position(GX_GENERIC_SCROLL_WHEEL *wheel);
+VOID    _gx_generic_scroll_wheel_down_wrap(GX_GENERIC_SCROLL_WHEEL *wheel);
+VOID    _gx_generic_scroll_wheel_draw(GX_GENERIC_SCROLL_WHEEL *wheel);
+UINT    _gx_generic_scroll_wheel_event_process(GX_GENERIC_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
+UINT    _gx_generic_scroll_wheel_row_height_set(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE row_height);
+VOID    _gx_generic_scroll_wheel_scroll(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE shift);
+UINT    _gx_generic_scroll_wheel_total_rows_set(GX_GENERIC_SCROLL_WHEEL *wheel, INT count);
+VOID    _gx_generic_scroll_wheel_up_wrap(GX_GENERIC_SCROLL_WHEEL *wheel);
+GX_BOOL _gx_generic_scroll_wheel_wrap_style_check(GX_GENERIC_SCROLL_WHEEL *wheel);
 
 /* Define error checking shells for API services.  These are only referenced by the
    application.  */
@@ -169,13 +193,26 @@ UINT _gxe_text_scroll_wheel_callback_set(GX_TEXT_SCROLL_WHEEL * wheel, GX_CONST 
 UINT _gxe_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL *wheel, UINT (*callback)(GX_TEXT_SCROLL_WHEEL *, INT, GX_STRING *));
 UINT _gxe_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows,
                                    ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size, UINT control_block_size);
-UINT _gxe_text_scroll_wheel_event_process(GX_TEXT_SCROLL_WHEEL* wheel, GX_EVENT* event_ptr);
+UINT _gxe_text_scroll_wheel_event_process(GX_TEXT_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
 UINT _gxe_text_scroll_wheel_font_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID normal_font, GX_RESOURCE_ID selected_font);
 UINT _gxe_text_scroll_wheel_text_color_set(GX_TEXT_SCROLL_WHEEL *wheel,
                                            GX_RESOURCE_ID normal_text_color,
                                            GX_RESOURCE_ID selected_text_color,
                                            GX_RESOURCE_ID disabled_text_color);
 
+UINT _gxe_generic_scroll_wheel_create(GX_GENERIC_SCROLL_WHEEL *wheel,
+                                      GX_CONST GX_CHAR *name,
+                                      GX_WIDGET *parent,
+                                      INT total_rows,
+                                      VOID (*callback)(GX_GENERIC_SCROLL_WHEEL *, GX_WIDGET *, INT),
+                                      ULONG style,
+                                      USHORT id,
+                                      GX_CONST GX_RECTANGLE *size,
+                                      UINT control_block_size);
+UINT _gxe_generic_scroll_wheel_children_position(GX_GENERIC_SCROLL_WHEEL *wheel);
+UINT _gxe_generic_scroll_wheel_event_process(GX_GENERIC_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
+UINT _gxe_generic_scroll_wheel_row_height_set(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE row_height);
+UINT _gxe_generic_scroll_wheel_total_rows_set(GX_GENERIC_SCROLL_WHEEL *wheel, INT count);
 
 #endif
 

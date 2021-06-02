@@ -559,7 +559,7 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_24xrgb_pixelmap_simple_rotate    PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -599,6 +599,9 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused assignments, */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_24xrgb_pixelmap_simple_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -695,8 +698,6 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
     }
     else
     {
-
-        width = pixelmap -> gx_pixelmap_height;
         height = pixelmap -> gx_pixelmap_width;
 
         newxpos = xpos + cx - cy;

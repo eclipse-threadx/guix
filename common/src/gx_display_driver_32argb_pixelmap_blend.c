@@ -32,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_32argb_pixelmap_raw_blend        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,6 +70,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_32argb_pixelmap_raw_blend(GX_DRAW_CONTEXT *context,
@@ -80,14 +84,10 @@ static VOID _gx_display_driver_32argb_pixelmap_raw_blend(GX_DRAW_CONTEXT *contex
 INT           yval;
 INT           xval;
 GX_COLOR      color;
-GX_COLOR     *put;
 GX_COLOR     *get;
 GX_COLOR     *getrow;
 
 GX_RECTANGLE *clip = context -> gx_draw_context_clip;
-
-    put = context -> gx_draw_context_memory + clip -> gx_rectangle_top * context -> gx_draw_context_pitch;
-    put += clip -> gx_rectangle_left;
 
     getrow = (GX_COLOR *)((UINT)(pixelmap -> gx_pixelmap_data) + sizeof(GX_COLOR) * (UINT)(pixelmap -> gx_pixelmap_width) * (UINT)((INT)(clip -> gx_rectangle_top) - ypos));
     getrow += (clip -> gx_rectangle_left - xpos);
@@ -112,7 +112,7 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_32argb_pixelmap_alpha_blend      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -150,6 +150,10 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_32argb_pixelmap_alpha_blend(GX_DRAW_CONTEXT *context,
@@ -163,15 +167,9 @@ ULONG        *get;
 
 GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 
-    xval = clip -> gx_rectangle_left;
-    yval = clip -> gx_rectangle_top;
-
     get = (ULONG *)((pixelmap -> gx_pixelmap_data) + sizeof(GX_COLOR) * (UINT)pixelmap -> gx_pixelmap_width * (UINT)((INT)clip -> gx_rectangle_top - ypos));
-
     get += (clip -> gx_rectangle_left - xpos);
-
     width = clip -> gx_rectangle_right - clip -> gx_rectangle_left + 1;
-
 
     for (yval = clip -> gx_rectangle_top; yval <= clip -> gx_rectangle_bottom; yval++)
     {

@@ -168,7 +168,7 @@ INT y;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_pixelmap_rotate                          PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -216,6 +216,10 @@ INT y;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed duplicate variable  */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_canvas_pixelmap_rotate(GX_VALUE x_position, GX_VALUE y_position, GX_PIXELMAP *pixelmap,
@@ -268,8 +272,6 @@ INT              cy;
         /* nothing to draw, return */
         return GX_SUCCESS;
     }
-
-    display = context->gx_draw_context_display;
 
     /* Range angle to [0, 360). */
     angle = angle % 360;

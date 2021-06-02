@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_scroll_wheel_selected_set                       PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -68,13 +68,16 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_scroll_wheel_selected_set(GX_SCROLL_WHEEL *wheel, INT row)
 {
 INT dist;
 
-    if (row < 0)
+    if ((row < 0) || (wheel -> gx_scroll_wheel_total_rows == 0))
     {
         row = 0;
     }
@@ -90,7 +93,7 @@ INT dist;
 
     if (wheel -> gx_widget_status & GX_STATUS_VISIBLE)
     {
-        if (wheel -> gx_widget_style & GX_STYLE_WRAP)
+        if (wheel -> gx_scroll_wheel_wrap_style_check(wheel))
         {
             if (GX_ABS(wheel -> gx_scroll_wheel_selected_row - row) <
                 GX_ABS(wheel -> gx_scroll_wheel_selected_row + wheel -> gx_scroll_wheel_total_rows - row))

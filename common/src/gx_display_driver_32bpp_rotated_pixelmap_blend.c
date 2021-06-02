@@ -202,9 +202,6 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fco
         xpos = (context -> gx_draw_context_canvas -> gx_canvas_y_resolution - xpos - pixelmap -> gx_pixelmap_height);
     }
 
-    xval = clip -> gx_rectangle_left;
-    yval = clip -> gx_rectangle_top;
-
     getrow = (GX_COLOR *)(pixelmap -> gx_pixelmap_data);
     getrow += (pixelmap -> gx_pixelmap_height * (rotated_clip.gx_rectangle_top - ypos));
     getrow += (rotated_clip.gx_rectangle_left - xpos);
@@ -664,9 +661,9 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 
                 /* Convert 565rgb color to 24xrgb color.  */
                 pixel = (GX_COLOR)ASSEMBLECOLOR_32ARGB(0xff,
-                                                       REDVAL_16BPP(*get) << 3,
-                                                       GREENVAL_16BPP(*get) << 2,
-                                                       BLUEVAL_16BPP(*get) << 3);
+                                                       REDVAL_16BPP(pixel) << 3,
+                                                       GREENVAL_16BPP(pixel) << 2,
+                                                       BLUEVAL_16BPP(pixel) << 3);
 
                 /* Blend 24xrgb color to background.  */
                 blend_func(context, xval, yval, pixel, combined_alpha);

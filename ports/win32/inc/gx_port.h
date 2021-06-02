@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_port.h                                          Win32/Visual     */
-/*                                                           6.1.6        */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -45,6 +45,10 @@
 /*  04-02-2021     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added new defines,          */
 /*                                            resulting in version 6.1.6  */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            defined GX_DISABLE_THREADX_ */
+/*                                            TIMER_SOURCE,               */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -67,6 +71,9 @@
 typedef INT    GX_BOOL;
 
 typedef SHORT  GX_VALUE;
+
+/* Disable ThreadX timer.  */
+#define GX_DISABLE_THREADX_TIMER_SOURCE
 
 #define GX_VALUE_MAX                        0x7FFF
 
@@ -167,7 +174,7 @@ typedef SHORT  GX_VALUE;
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Win32/Visual Version 6.1.6 *";
+    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Win32/Visual Version 6.1.7 *";
 #else
 extern  CHAR _gx_version_id[];
 #endif

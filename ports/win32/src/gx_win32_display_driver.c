@@ -110,6 +110,8 @@
 #define GX_KEY_Y                0x0079
 #define GX_KEY_Z                0x007a
 
+#define GX_WIN32_TIMER_ID 1
+
 typedef struct
 {
     USHORT win32_key;
@@ -1497,7 +1499,7 @@ MSG msg;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    gx_win32_driver_thread_entry                       PORTABLE C       */
-/*                                                           6.1.3        */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1518,10 +1520,8 @@ MSG msg;
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    ShowWindow                            Active the specified window   */
-/*    UpdateWindow                          Update the client area of the */
-/*                                            specified window            */
-/*    gx_win32_message_to_guix              Send message to guix          */
+/*    gx_win32_window_create                Create Win32 window           */
+/*    gx_win32_driver_thread_initialize     Initialize thread             */
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
@@ -1532,6 +1532,9 @@ MSG msg;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            reorganized code,           */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 void gx_win32_driver_thread_entry(ULONG thread_input)
@@ -1547,15 +1550,66 @@ GX_WIN32_DISPLAY_DRIVER_DATA *instance = (GX_WIN32_DISPLAY_DRIVER_DATA *)thread_
     /* Create a win32 window for display. */
     instance -> win32_driver_winhandle = gx_win32_window_create(instance, gx_win32_event_process, 20, 20);
 
+    gx_win32_driver_thread_initialize(instance);
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    gx_win32_driver_thread_initialize                  PORTABLE C       */
+/*                                                           6.1.7        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function initializes thread.                                   */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    instance                              Pointer to win32 display      */
+/*                                            driver data                 */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    DWORD                                                               */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    ShowWindow                            Active the specified window   */
+/*    UpdateWindow                          Update the client area of the */
+/*                                            specified window            */
+/*    gx_win32_message_to_guix              Send message to guix          */
+/*    SetTimer                              Set a timer                   */
+/*    gx_win32_input_driver                 Handle Win32 messages         */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    win32 thread entry                                                  */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  06-02-2021     Ting Zhu                 Initial Version 6.1.7         */
+/*                                                                        */
+/**************************************************************************/
+void gx_win32_driver_thread_initialize(GX_WIN32_DISPLAY_DRIVER_DATA *instance)
+{
     /* Show window. */
-    ShowWindow(instance -> win32_driver_winhandle, SW_SHOW);
-    UpdateWindow(instance -> win32_driver_winhandle);
+    ShowWindow(instance->win32_driver_winhandle, SW_SHOW);
+    UpdateWindow(instance->win32_driver_winhandle);
 
     /* Mark the driver as ready. */
-    instance -> win32_driver_ready = 1;
+    instance->win32_driver_ready = 1;
 
     /* Driver is ready, force a redraw. */
     gx_win32_message_to_guix(GX_EVENT_REDRAW);
+
+    /* Start a timer. */
+    SetTimer(instance->win32_driver_winhandle, GX_WIN32_TIMER_ID, GX_SYSTEM_TIMER_MS, NULL);
 
     /* Handle win32 messages. */
     gx_win32_input_driver();

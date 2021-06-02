@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_animation.h                                      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -44,6 +44,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            added animation delete API, */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -63,6 +66,7 @@
 UINT _gx_animation_create(GX_ANIMATION *animation);
 UINT _gx_animation_canvas_define(GX_ANIMATION *animation, GX_CANVAS *canvas);
 VOID _gx_animation_complete_event_send(GX_ANIMATION *animation);
+UINT _gx_animation_delete(GX_ANIMATION *target, GX_WIDGET *parent);
 UINT _gx_animation_start(GX_ANIMATION *animation, GX_ANIMATION_INFO *info);
 UINT _gx_animation_stop(GX_ANIMATION *animation);
 VOID _gx_animation_update(VOID);
@@ -80,6 +84,7 @@ UINT _gx_animation_slide_landing_start(GX_ANIMATION *animation);
 /* error checking versions of the animation API functions */
 UINT _gxe_animation_create(GX_ANIMATION *animation);
 UINT _gxe_animation_canvas_define(GX_ANIMATION *animation, GX_CANVAS *canvas);
+UINT _gxe_animation_delete(GX_ANIMATION *target, GX_WIDGET *parent);
 UINT _gxe_animation_drag_disable(GX_ANIMATION *animation, GX_WIDGET *widget);
 UINT _gxe_animation_drag_enable(GX_ANIMATION *animation, GX_WIDGET *widget, GX_ANIMATION_INFO *info);
 UINT _gxe_animation_start(GX_ANIMATION *animation, GX_ANIMATION_INFO *info);

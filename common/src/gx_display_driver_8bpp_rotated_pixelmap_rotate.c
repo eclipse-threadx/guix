@@ -495,8 +495,6 @@ else
     }
     else
     {
-
-        width = pixelmap -> gx_pixelmap_width;
         height = pixelmap -> gx_pixelmap_height;
 
         newxpos = xpos + cx - cy;
@@ -675,8 +673,6 @@ INT           newypos;
     }
     else
     {
-
-        width = pixelmap -> gx_pixelmap_width;
         height = pixelmap -> gx_pixelmap_height;
 
         newxpos = xpos + cx - cy;

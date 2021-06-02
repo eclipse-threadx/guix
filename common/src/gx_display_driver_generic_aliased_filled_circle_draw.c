@@ -34,7 +34,7 @@
 /*                                                                        */
 /*    _gx_display_driver_generic_aliased_filled_circle_draw               */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -72,6 +72,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_generic_aliased_filled_circle_draw(GX_DRAW_CONTEXT *context, GX_FIXED_VAL xcenter, GX_FIXED_VAL ycenter, GX_FIXED_VAL r)
@@ -91,7 +95,6 @@ INT           yi;
 GX_VALUE      xstart;
 GX_VALUE      xend;
 GX_UBYTE      alpha1;
-GX_UBYTE      alpha2;
 GX_FIXED_VAL  xfraction;
 GX_FIXED_VAL  yfraction;
 INT           rr;
@@ -162,10 +165,8 @@ GX_UBYTE brush_alpha;
         }
 
         alpha1 = (GX_UBYTE)(255 - error);
-        alpha2 = (GX_UBYTE)error;
 #if defined(GX_BRUSH_ALPHA_SUPPORT)
         alpha1 = (GX_UBYTE)(alpha1 * brush_alpha / 255);
-        alpha2 = (GX_UBYTE)(alpha2 * brush_alpha / 255);
 #endif
 
         for (index = 0; index < 2; index++)
@@ -250,10 +251,8 @@ GX_UBYTE brush_alpha;
         }
 
         alpha1 = (GX_UBYTE)(255 - error);
-        alpha2 = (GX_UBYTE)error;
 #if defined(GX_BRUSH_ALPHA_SUPPORT)
         alpha1 = (GX_UBYTE)(alpha1 * brush_alpha / 255);
-        alpha2 = (GX_UBYTE)(alpha2 * brush_alpha / 255);
 #endif
 
         for (index = 0; index < 2; index++)

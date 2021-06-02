@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_win32_driver.h                                   PORTABLE C      */
-/*                                                           6.1.4        */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -44,6 +44,10 @@
 /*                                            added 8bpp/24bpp rotated    */
 /*                                            display driver declarations,*/
 /*                                            resulting in version 6.1.4  */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            declared gx_win32_driver_   */
+/*                                            thread_initialize,          */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -101,12 +105,22 @@ UINT                          win32_graphics_driver_setup_32argb(GX_DISPLAY *dis
 UINT                          win32_graphics_driver_setup_32argb_rotated(GX_DISPLAY *display);
 
 UINT                          win32_chromeart_graphics_driver_setup_565rgb(GX_DISPLAY *display);
+UINT                          win32_dave2d_graphics_driver_setup_8bit_palette(GX_DISPLAY *display);
+UINT                          win32_dave2d_graphics_driver_setup_8bit_palette_rotated(GX_DISPLAY* display);
+UINT                          win32_dave2d_graphics_driver_setup_24xrgb(GX_DISPLAY *display);
+UINT                          win32_dave2d_graphics_driver_setup_24xrgb_rotated(GX_DISPLAY *display);
+UINT                          win32_dave2d_graphics_driver_setup_565rgb(GX_DISPLAY *display);
+UINT                          win32_dave2d_graphics_driver_setup_565rgb_rotated(GX_DISPLAY *display);
 
 VOID                          win32_32bpp_bitmap_header_create(GX_DISPLAY *display);
 VOID                          win32_display_driver_8bit_palette_set(GX_DISPLAY *display, GX_COLOR *palette, INT count);
 VOID                          win32_8bit_palette_bitmap_header_create(GX_DISPLAY *display);
+VOID                          win32_dave2d_simulation_24xrgb_bitmap_header_create(GX_DISPLAY *display);
+VOID                          win32_dave2d_simulation_display_driver_8bit_palette_set(GX_DISPLAY *display, GX_COLOR *palette, INT count);
+VOID                          win32_dave2d_simulation_8bit_palette_bitmap_header_create(GX_DISPLAY *display);
 void                          gx_win32_display_buffer_toggle(GX_CANVAS *canvas, GX_RECTANGLE *dirty);
 void                          gx_win32_driver_thread_entry(ULONG thread_input);
+void                          gx_win32_driver_thread_initialize(GX_WIN32_DISPLAY_DRIVER_DATA *instance);
 HWND                          gx_win32_window_create(GX_WIN32_DISPLAY_DRIVER_DATA *gx_driver_ptr, WNDPROC gx_win32_event_process, INT xpos, INT ypos);
 LRESULT CALLBACK              gx_win32_event_process(HWND, UINT, WPARAM, LPARAM);
 void                          gx_win32_message_to_guix(USHORT event_type);

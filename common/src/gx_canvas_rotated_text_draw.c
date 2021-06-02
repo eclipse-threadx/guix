@@ -101,7 +101,7 @@ UINT      status;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_rotated_text_draw_ext                    PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -144,6 +144,10 @@ UINT      status;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            rename RENESAS_DAVE2D       */
+/*                                            support conditional,        */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_canvas_rotated_text_draw_ext(GX_CONST GX_STRING *text,
@@ -204,7 +208,7 @@ GX_DRAW_CONTEXT *context = _gx_system_current_draw_context;
             y_pos = ycenter - (rotated_map.gx_pixelmap_height / 2);
 
             /* draw the alpha-map to render the text */
-#if defined(GX_USE_SYNERGY_DRW)
+#if defined(GX_RENESAS_DAVE2D_DRAW)
             rotated_map.gx_pixelmap_flags |= GX_PIXELMAP_DYNAMICALLY_ALLOCATED;
 #endif
             _gx_canvas_pixelmap_draw((GX_VALUE)x_pos, (GX_VALUE)y_pos, &rotated_map);

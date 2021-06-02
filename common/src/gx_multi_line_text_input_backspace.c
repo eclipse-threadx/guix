@@ -38,7 +38,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_input_backspace                 PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -93,6 +93,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_multi_line_text_input_backspace(GX_MULTI_LINE_TEXT_INPUT *text_input)
@@ -195,7 +199,6 @@ UINT                     end_mark = text_input -> gx_multi_line_text_input_end_m
 
         /* Update text insert position.  */
         text_input -> gx_multi_line_text_input_text_insert_position -= glyph_len;
-        insert_pos -= glyph_len;
 
         client = text_input -> gx_window_client;
 

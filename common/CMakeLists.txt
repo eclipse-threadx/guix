@@ -13,6 +13,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_drag_event_process.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_drag_tracking.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_drag_tracking_start.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_delete.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_landing_speed_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_slide_landing.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_slide_landing_start.c
@@ -345,6 +346,16 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_drop_list_open.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_drop_list_pixelmap_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_drop_list_popup_get.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_children_position.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_down_wrap.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_event_process.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_row_height_set.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_scroll.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_total_rows_set.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_up_wrap.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_wrap_style_check.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_horizontal_list_children_position.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_horizontal_list_create.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_horizontal_list_event_process.c
@@ -564,6 +575,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_selected_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_selected_row_calculate.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_selected_set.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_wrap_style_check.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_speed_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_total_rows_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scrollbar_draw.c
@@ -891,6 +903,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_accordion_menu_position.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_canvas_define.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_delete.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_drag_disable.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_drag_enable.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_landing_speed_set.c
@@ -981,6 +994,11 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_drop_list_open.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_drop_list_pixelmap_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_drop_list_popup_get.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_generic_scroll_wheel_children_position.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_generic_scroll_wheel_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_generic_scroll_wheel_event_process.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_generic_scroll_wheel_row_height_set.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_generic_scroll_wheel_total_rows_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_horizontal_list_children_position.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_horizontal_list_create.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_horizontal_list_event_process.c

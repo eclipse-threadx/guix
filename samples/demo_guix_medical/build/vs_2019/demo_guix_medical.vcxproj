@@ -14,8 +14,8 @@
     <ClCompile Include="..\..\demo_guix_medical.c" />
     <ClCompile Include="..\..\guix_medical_resources.c" />
     <ClCompile Include="..\..\guix_medical_specifications.c" />
-    <ClCompile Include="..\..\medications.c" />
     <ClCompile Include="..\..\patients.c" />
+    <ClCompile Include="..\..\schedule.c" />
     <ClCompile Include="..\..\vitals.c" />
   </ItemGroup>
   <ItemGroup>

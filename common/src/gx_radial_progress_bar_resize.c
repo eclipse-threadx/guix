@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_radial_prpgress_bar_resize                      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,6 +70,11 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            fixed compile error when    */
+/*                                            GX_BRUSH_ALPHA_SUPPORT is   */
+/*                                            not defined,                */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -80,7 +85,9 @@ GX_VALUE                     new_xcenter;
 GX_VALUE                     new_ycenter;
 GX_VALUE                     new_radius;
 INT                          width;
+#if defined(GX_BRUSH_ALPHA_SUPPORT)
 INT                          height;
+#endif
 GX_RECTANGLE                *size;
 
     info = &radial_progress -> gx_radial_progress_bar_info;
@@ -108,6 +115,7 @@ GX_RECTANGLE                *size;
         info -> gx_radial_progress_bar_info_radius = new_radius;
     }
 
+#if defined(GX_BRUSH_ALPHA_SUPPORT)
     width = size -> gx_rectangle_right - size -> gx_rectangle_left + 1;
     height = size -> gx_rectangle_bottom - size -> gx_rectangle_top + 1;
 
@@ -119,6 +127,7 @@ GX_RECTANGLE                *size;
         _gx_system_memory_free((VOID *)radial_progress -> gx_radial_progress_bar_canvas.gx_canvas_memory);
         _gx_canvas_delete(&radial_progress -> gx_radial_progress_bar_canvas);
     }
+#endif
 
     if (radial_progress -> gx_widget_status & GX_STATUS_VISIBLE)
     {

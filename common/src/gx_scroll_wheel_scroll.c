@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_scroll_wheel_scroll                             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -68,6 +68,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            modified wrap style test    */
+/*                                            logic,                      */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_scroll_wheel_scroll(GX_SCROLL_WHEEL *wheel, GX_VALUE shift)
@@ -76,8 +80,10 @@ INT y_shift;
 INT min_shift;
 INT max_shift;
 
-    if (!(wheel -> gx_widget_style & GX_STYLE_WRAP))
+    if (!wheel -> gx_scroll_wheel_wrap_style_check(wheel))
     {
+        y_shift = wheel -> gx_scroll_wheel_selected_yshift + shift;
+
         if ((shift > 0 && wheel -> gx_scroll_wheel_selected_row == 0) ||
             (shift < 0 && wheel -> gx_scroll_wheel_selected_row == wheel -> gx_scroll_wheel_total_rows - 1))
         {
@@ -87,7 +93,7 @@ INT max_shift;
                 wheel -> gx_scroll_wheel_row_height;
             max_shift = (wheel -> gx_scroll_wheel_selected_row * wheel -> gx_scroll_wheel_row_height);
 
-            if ((y_shift <= min_shift) || (y_shift >= max_shift))
+            if ((y_shift < min_shift) || (y_shift > max_shift))
             {
                 shift = (GX_VALUE)(shift + wheel -> gx_scroll_wheel_shift_error);
                 wheel -> gx_scroll_wheel_shift_error = (GX_BYTE)(shift % 4);

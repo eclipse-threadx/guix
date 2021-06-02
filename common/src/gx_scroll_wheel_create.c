@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_scroll_wheel_create                             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -73,6 +73,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            updated with scroll wheel   */
+/*                                            control block change,       */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -103,6 +107,8 @@ UINT _gx_scroll_wheel_create(GX_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name,
     wheel -> gx_scroll_wheel_animation_end_speed_rate = 200;
     wheel -> gx_scroll_wheel_selected_background = GX_NULL;
     wheel -> gx_widget_event_process_function = (UINT (*)(GX_WIDGET *, GX_EVENT *))_gx_scroll_wheel_event_process;
+    wheel -> gx_scroll_wheel_scroll = _gx_scroll_wheel_scroll;
+    wheel -> gx_scroll_wheel_wrap_style_check = _gx_scroll_wheel_wrap_style_check;
 
     return(GX_SUCCESS);
 }

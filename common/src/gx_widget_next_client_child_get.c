@@ -92,3 +92,58 @@ GX_WIDGET *child = start -> gx_widget_next;
     return child;
 }
 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_widget_next_visible_client_child_get            PORTABLE C      */
+/*                                                           6.1.7        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function get the next client child that is visible.            */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    start                                Pointer to starting widget     */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    child                                Next visible client child      */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    GUIX Internal Code                                                  */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  06-02-2021     Ting Zhu                 Initial Version 6.1.7         */
+/*                                                                        */
+/**************************************************************************/
+GX_WIDGET *_gx_widget_next_visible_client_child_get(GX_WIDGET *start)
+{
+GX_WIDGET *child = start -> gx_widget_next;
+
+    while (child)
+    {
+        if (!(child -> gx_widget_status & GX_STATUS_NONCLIENT) &&
+            (child -> gx_widget_status & GX_STATUS_VISIBLE))
+        {
+        	
+        	/* Find the next child that is client and visible. */
+            return child;
+        }
+        child = child -> gx_widget_next;
+    }
+    return GX_NULL;
+}
+

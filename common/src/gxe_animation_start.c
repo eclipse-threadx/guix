@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gxe_animation_start                                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -71,6 +71,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            removed unnecessary check,  */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gxe_animation_start(GX_ANIMATION *animation, GX_ANIMATION_INFO *info)
@@ -108,17 +111,6 @@ UINT _gxe_animation_start(GX_ANIMATION *animation, GX_ANIMATION_INFO *info)
     {
         return(GX_INVALID_STATUS);
     }
-
-#ifndef GX_BRUSH_ALPHA_SUPPORT
-    if (info -> gx_animation_end_alpha != info -> gx_animation_start_alpha)
-    {
-        /* fade animations must have a canvas */
-        if (animation -> gx_animation_canvas.gx_canvas_memory == GX_NULL)
-        {
-            return GX_INVALID_CANVAS;
-        }
-    }
-#endif
 
     return(_gx_animation_start(animation, info));
 }

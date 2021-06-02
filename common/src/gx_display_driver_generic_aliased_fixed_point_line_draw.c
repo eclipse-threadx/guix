@@ -35,7 +35,7 @@
 /*                                                                        */
 /*    _gx_display_driver_generic_aliased_fixed_point_line_draw            */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -76,6 +76,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            fixed compile warnings,     */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_generic_aliased_fixed_point_line_draw(GX_DRAW_CONTEXT *context,
@@ -95,8 +98,8 @@ GX_FIXED_VAL x_fraction;
 GX_FIXED_VAL y_fraction;
 GX_POINT     point;
 GX_POINT     point2;
-INT          curx;
-INT          cury;
+INT          curx = 0;
+INT          cury = 0;
 INT          decision;
 INT          back_alpha;
 INT          fore_alpha;

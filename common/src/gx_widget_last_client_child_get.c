@@ -15,7 +15,7 @@
 /**                                                                       */
 /** GUIX Component                                                        */
 /**                                                                       */
-/**   Window Management (Window)                                          */
+/**   Widget Management (Widget)                                          */
 /**                                                                       */
 /**************************************************************************/
 
@@ -81,5 +81,61 @@ GX_WIDGET *test = parent -> gx_widget_last_child;
         test = test -> gx_widget_previous;
     }
     return test;
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_widget_last_visible_client_child_get            PORTABLE C      */
+/*                                                           6.1.7        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function get the last client child that is visible.            */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    parent                                Pointer to parent widget      */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    GX_WIDGET                             Last visible client child     */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*   GUIX Internal Code                                                   */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  06-02-2021     Ting Zhu                 Initial Version 6.1.7         */
+/*                                                                        */
+/**************************************************************************/
+GX_WIDGET *_gx_widget_last_visible_client_child_get(GX_WIDGET *parent)
+{
+GX_WIDGET *test = parent -> gx_widget_last_child;
+
+    while (test)
+    {
+        if (!(test -> gx_widget_status & GX_STATUS_NONCLIENT) &&
+            (test -> gx_widget_status & GX_STATUS_VISIBLE))
+        {
+        	
+        	/* Find the last child that is client and visible. */
+            return test;
+        }
+
+        test = test -> gx_widget_previous;
+    }
+    return GX_NULL;
 }
 

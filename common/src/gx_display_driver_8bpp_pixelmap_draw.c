@@ -111,7 +111,7 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_8bpp_pixelmap_compressed_write   PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -147,6 +147,10 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_pixelmap_compressed_write(GX_DRAW_CONTEXT *context,
@@ -251,7 +255,6 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
                 {
                     length = pixelmap -> gx_pixelmap_width;
                 }
-                count = (GX_UBYTE)(count - length);
                 width -= length;
                 while (length--)
                 {
@@ -366,7 +369,7 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_display_driver_8bpp_pixelmap_compressed_transparent_write       */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -402,6 +405,10 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_8bpp_pixelmap_compressed_transparent_write(GX_DRAW_CONTEXT *context,
@@ -483,7 +490,6 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
                 {
                     length = width;
                 }
-                count = (GX_UBYTE)(count - length);
                 width -= length;
 
                 if (pixel == pixelmap -> gx_pixelmap_transparent_color)

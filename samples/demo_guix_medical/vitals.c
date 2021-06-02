@@ -7,418 +7,456 @@
 #include "guix_medical_specifications.h"
 #include "demo_guix_medical.h"
 
-#define CHART_TIMER                2
-#define RATE_TIMER                 3
-#define HR_WIN_ANIMATION_TIMER     4
+/* Define timer ids.  */
+#define EKG_WAVEFORM_TIMER    2
+#define PULSE_WAVEFORM_TIMER  3
+#define HEART_RATE_TIMER      4
+#define SPO2_TIMER            5
+#define VALUE_ANIMATION_TIMER 6
 
-#define CHART_Y_CENTER   60
-#define CHART_TYPE_SCROLLING 0  /* chart continuously scrolls */
-#define CHART_TYPE_RETRACE   1  /* chart traces left to right */
+/* Define constants.  */
+#define CHART_SCROLL                 4
+#define VALUE_ANIOMATION_TOTAL_STEPS 10
 
-#define HR_PROMPT_VERTICAL_SHIFT 18
-#define CHART_SCROLL     4
-#define CHART_LINE_WIDTH 1
-#define CHART_AMPLITUDE  1
+#define CARDIO_DOT_WIDTH  9
+#define CARDIO_DOT_HEIGHT 10
 
-int ekg_values[] = {
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 5, 4, 2, 0, 0, 0, 0, -3, 38, -7, 0, 0, 0, 0, 5, 8, 10, 8, 5
+/* Define a macro to calculate the current value according to the animation step.  */
+#define GET_NEW_VALUE(info) (info.start_value + (info.end_value - info.current_value) * value_animation_step / VALUE_ANIOMATION_TOTAL_STEPS)
+
+/* Define a waveform information structure for waveform drawing.  */
+typedef struct WAVE_INFO_STRUCT
+{
+    GX_COLOR *capture_memory;
+    INT capture_memory_size;
+    INT capture_xpos;
+    INT capture_ypos;
+    INT *value_array;
+    INT  total_values;
+    INT  index;
+    INT  retrace_xpos;
+    GX_RESOURCE_ID color_id;
+}WAVE_INFO;
+
+/* Define a value information structure for value animation.  */
+typedef struct VALUE_INFO_STRUCT
+{
+    INT start_value;
+    INT end_value;
+    INT current_value;
+}VALUE_INFO;
+
+/* Define ekg waveform values.  */
+INT ekg_values[] = {
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 5, 4, 2, 0, 0, 0, 0, -3, 30, -7, 0, 0, 0, 0, 5, 8, 10, 8, 5
 };
 
-#define MIN_HEART_RATE  60
-#define MAX_HEART_RATE  150
+/* Define pulse waveform values.  */
+INT pulse_values[] = {
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 5, 4, 2, 0, 0, 0, 0, -3, 30, -7, 0, 0, 0, 0, 5, 8, 10, 8, 5
+};
 
-GX_RECTANGLE chart_area;
-int line_y_coords[3];
-int ekg_index = 0;
+/* Define heart rate values.  */
+INT heart_rate_values[] = {
+    88, 87, 86, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 94, 93, 92, 90, 89
+};
 
-int current_heart_rate = MIN_HEART_RATE;        // simulation current HR value
-int heart_rate_step = 1;                        // simulation, HR value delta
-int chart_type = CHART_TYPE_RETRACE;            // toggle two chart types
-GX_BOOL warn_heart = GX_FALSE;                  // simulation, high heart rate warning?
+/* Define spo2 values.  */
+INT spo2_values[] = {
+    94, 95, 96, 97, 96, 95, 94, 93
+};
 
-int retrace_xpos;
+/* Define waveform capture memory.  */
+GX_COLOR ekg_capture_memory[CARDIO_DOT_WIDTH * CARDIO_DOT_HEIGHT];
+GX_COLOR pulse_capture_memory[CARDIO_DOT_WIDTH * CARDIO_DOT_HEIGHT];
 
-/*****************************************************************************/
-void draw_scrolling_chart_lines(GX_CANVAS *canvas, GX_WINDOW *win)
+/* Define and initialize ekg waveform information instance.  */
+WAVE_INFO ekg_wave_info = {
+    ekg_capture_memory,
+    CARDIO_DOT_WIDTH* CARDIO_DOT_HEIGHT * sizeof(GX_COLOR),
+    0,
+    0,
+    ekg_values,
+    (INT)(sizeof(ekg_values) / sizeof(INT)),
+    0,
+    0,
+    GX_COLOR_ID_GREEN
+};
+
+/* Define and initialize pulse waveform information instance.  */
+WAVE_INFO pulse_wave_info = {
+    pulse_capture_memory,
+    CARDIO_DOT_WIDTH* CARDIO_DOT_HEIGHT * sizeof(GX_COLOR),
+    0,
+    0,
+    pulse_values,
+    (INT)(sizeof(pulse_values) / sizeof(INT)),
+    0,
+    0,
+    GX_COLOR_ID_BLUE
+};
+
+INT heart_rate_index = 0;
+INT spo2_index = 0;
+INT value_animation_step = 0;
+VALUE_INFO insulin = { 48, 71, 48 };
+VALUE_INFO heart_rate = { 0, 88, 0 };
+VALUE_INFO spo2 = { 0, 94, 0 };
+VALUE_INFO medtype1 = { 0, 55, 0 };
+VALUE_INFO medtype2 = { 0, 25, 0 };
+VALUE_INFO medtype3 = { 0, 45, 0 };
+
+/* Define prototypes.  */
+extern VOID GetPatientName(GX_STRING* string);
+extern VOID GetPatientDOB(GX_STRING* string);
+extern VOID GetPatientAge(INT* age);
+
+/******************************************************************************************/
+/* Capture canvas under cardio dot.                                                       */
+/******************************************************************************************/
+static VOID capture_memory(GX_CANVAS *canvas, WAVE_INFO *info)
 {
-GX_RECTANGLE chart_update_rectangle;
-GX_DRAW_CONTEXT *context;
-GX_PIXELMAP *map;
+GX_COLOR *get;
+GX_COLOR *put;
+INT       copy_width;
+INT       y;
 
-    chart_update_rectangle = chart_area;
-    chart_update_rectangle.gx_rectangle_right = chart_update_rectangle.gx_rectangle_left + (CHART_SCROLL * 2) - 1;
+    get = canvas->gx_canvas_memory;
+    get += info->capture_ypos * canvas->gx_canvas_x_resolution;
+    get += info->capture_xpos;
 
-    /* Initiate drawing on this canvas, clipped to just the leftmost two shift slots.  */
-    gx_canvas_drawing_initiate(canvas, (GX_WIDGET *) win, &chart_update_rectangle);      
-    gx_system_draw_context_get(&context);
+    put = info->capture_memory;
+    copy_width = CARDIO_DOT_WIDTH * sizeof(GX_COLOR);
 
-    /* paint a slice of the background bitmap to erase the previous line */
-    gx_context_brush_define(GX_COLOR_ID_CHART_LINE, GX_COLOR_ID_WINDOW_FILL, GX_BRUSH_SOLID_FILL|GX_BRUSH_ROUND|GX_BRUSH_ALIAS);
-    gx_context_brush_width_set(0);
+    for (y = 0; y < CARDIO_DOT_HEIGHT; y++)
+    {
+        memcpy(put, get, copy_width);
 
-    /* draw a rectangle to erase the old lines: */
-    gx_context_pixelmap_get(GX_PIXELMAP_ID_CHART_ERASE, &map);
-    gx_canvas_pixelmap_draw(chart_area.gx_rectangle_left, chart_area.gx_rectangle_top, map);
-
-    /* draw the most recent two lines
-       one line is the newly drawn value, and the second
-       line is re-drawn so that it is not clipped
-    */
-    context ->gx_draw_context_brush.gx_brush_width = CHART_LINE_WIDTH;
-    context ->gx_draw_context_brush.gx_brush_style = GX_BRUSH_ROUND|GX_BRUSH_ALIAS;
-
-    gx_canvas_line_draw(chart_update_rectangle.gx_rectangle_left + 1,
-        chart_update_rectangle.gx_rectangle_top + line_y_coords[0],
-        chart_update_rectangle.gx_rectangle_left + CHART_SCROLL,
-        chart_update_rectangle.gx_rectangle_top + line_y_coords[1]);
-
-    gx_canvas_line_draw(chart_update_rectangle.gx_rectangle_left + CHART_SCROLL,
-        chart_update_rectangle.gx_rectangle_top + line_y_coords[1],
-        chart_update_rectangle.gx_rectangle_left + (CHART_SCROLL * 2),
-        chart_update_rectangle.gx_rectangle_top + line_y_coords[2]);
-
-    /* Indicate that drawing on this canvas is complete.  */
-    gx_canvas_drawing_complete(canvas, GX_FALSE);
+        put += CARDIO_DOT_WIDTH;
+        get += canvas->gx_canvas_x_resolution;
+    }
 }
 
-/*****************************************************************************/
-VOID update_scrolling_chart(GX_WINDOW *win)
+/******************************************************************************************/
+/* Restore canvas under cardio dot.                                                       */
+/******************************************************************************************/
+static VOID restore_memory(GX_CANVAS *canvas, WAVE_INFO *info)
 {
-GX_CANVAS *canvas;
-GX_RECTANGLE block_rect; 
-INT ekg_count;
-INT ekg_value;
-INT slider_value;
-GX_ICON *heart_icon;
-    
-    /* pick up the canvas pointer */
+GX_PIXELMAP pixelmap;
+
+    memset(&pixelmap, 0, sizeof(GX_PIXELMAP));
+    pixelmap.gx_pixelmap_data = (GX_UBYTE *)info->capture_memory;
+    pixelmap.gx_pixelmap_data_size = info->capture_memory_size;
+    pixelmap.gx_pixelmap_width = CARDIO_DOT_WIDTH;
+    pixelmap.gx_pixelmap_height = CARDIO_DOT_HEIGHT;
+    pixelmap.gx_pixelmap_format = GX_COLOR_FORMAT_24XRGB;
+
+    gx_canvas_pixelmap_draw(info->capture_xpos, info->capture_ypos, &pixelmap);
+}
+
+/******************************************************************************************/
+/* Update waveform.                                                                       */
+/******************************************************************************************/
+static VOID update_waveform(GX_WINDOW *win, WAVE_INFO *info)
+{
+GX_CANVAS    *canvas;
+GX_PIXELMAP  *map;
+GX_RECTANGLE *chart_area;
+INT           xpos;
+INT           ycenter;
+INT           line_start_offset;
+INT           line_end_offset;
+
+    chart_area = &win->gx_window_client;
+
+    /* pick up the canvas pointer.  */
     gx_widget_canvas_get(win, &canvas);
 
     /* Initiate drawing on this canvas.  */
-    gx_canvas_drawing_initiate(canvas, win, &chart_area);        
+    gx_canvas_drawing_initiate(canvas, win, chart_area);        
 
-    /* shift down are previous values */
-    line_y_coords[2] = line_y_coords[1];
-    line_y_coords[1] = line_y_coords[0];
+    /* Erase the rectangle ahead of the line.  */
+    xpos = chart_area->gx_rectangle_left + info->retrace_xpos + 10;
+    gx_context_pixelmap_get(GX_PIXELMAP_ID_CHART_ERASE, &map);
+    gx_context_fill_color_set(GX_COLOR_ID_CANVAS);
+    gx_canvas_pixelmap_draw(xpos, chart_area->gx_rectangle_top, map);
 
-    ekg_index++;
-    ekg_count = sizeof(ekg_values) / sizeof(int);
-    if (ekg_index >= ekg_count)
+    if (xpos + map->gx_pixelmap_width > chart_area->gx_rectangle_right)
     {
-        ekg_index = 0;
+        gx_canvas_pixelmap_draw(chart_area->gx_rectangle_left + xpos - chart_area->gx_rectangle_right,
+                                chart_area->gx_rectangle_top, map);
     }
 
-    ekg_value = ekg_values[ekg_index];
-    line_y_coords[0] = CHART_Y_CENTER - ekg_value;  
+    xpos = chart_area->gx_rectangle_left +info->retrace_xpos;
 
-    // the slider scale is 0 to 100, so convert ekg value to 
-    // approximate slider value:
+    /* Define brush for line draw.  */
+    gx_context_brush_define(info->color_id, info->color_id, GX_BRUSH_SOLID_FILL | GX_BRUSH_ROUND | GX_BRUSH_ALIAS);
+    gx_context_brush_width_set(2);
 
-    slider_value = ekg_value + 45;          
-    gx_slider_value_set((GX_SLIDER *) &vitals_screen.vitals_screen_cardio_slider,
-        &vitals_screen.vitals_screen_cardio_slider.gx_slider_info, slider_value);
+    ycenter = (chart_area->gx_rectangle_top + chart_area->gx_rectangle_bottom) >> 1;
+    line_start_offset = info->value_array[info->index++];
+    if (info->index >= info->total_values)
+    {
+        info->index = 0;
+    }
+    line_end_offset = info->value_array[info->index];;
 
-    /* shift the existing data to the right
-       skip the first segment on the left, because it has
-       been clipped at the chart left edge. So start one
-       segment in, and shift all remaining segments to the right
-    */
-    block_rect = chart_area;
-    block_rect.gx_rectangle_left += CHART_SCROLL;
+    /* Restore canvas under previous cardio dot.  */
+    restore_memory(canvas, info);
 
-    gx_canvas_block_move(&block_rect, CHART_SCROLL, 0, GX_NULL);
+    gx_canvas_line_draw(xpos, ycenter - line_start_offset, xpos + CHART_SCROLL, ycenter - line_end_offset);
 
-    /* draw the two previous lines
-       the second value will not be unclipped,
-       and the first value is our newest line
-    */
-    draw_scrolling_chart_lines(canvas, win);
+    /* Draw cardio dot.  */
+    gx_context_fill_color_set(info->color_id);
+    info->capture_xpos = xpos + CHART_SCROLL - (CARDIO_DOT_WIDTH / 2);
+    info->capture_ypos = ycenter - line_end_offset - (CARDIO_DOT_HEIGHT / 2);
+
+    /* Capture canvas under new cardio dot. */
+    capture_memory(canvas, info);
+
+    /* Draw cardio dot.  */
+    gx_context_pixelmap_get(GX_PIXELMAP_ID_CARDIO_DOT, &map);
+    gx_canvas_pixelmap_draw(info->capture_xpos, info->capture_ypos, map);
 
     /* Indicate that drawing on this canvas is complete.  */
     gx_canvas_drawing_complete(canvas, GX_TRUE);
 
-    heart_icon = &vitals_screen.vitals_screen_heart_icon;
-    
-    if (ekg_value == 0)
+    info->retrace_xpos += CHART_SCROLL;
+
+    if (chart_area->gx_rectangle_left + info->retrace_xpos + CHART_SCROLL > chart_area->gx_rectangle_right)
     {
-        if (warn_heart)
-        {
-            if (heart_icon->gx_icon_normal_pixelmap != GX_PIXELMAP_ID_ICON_HEART_RED_SMALL)
-            {
-                gx_icon_pixelmap_set(heart_icon, GX_PIXELMAP_ID_ICON_HEART_RED_SMALL, GX_PIXELMAP_ID_ICON_HEART_RED_SMALL);
-            }
-        }
-        else
-        {
-            if (heart_icon->gx_icon_normal_pixelmap != GX_PIXELMAP_ID_ICON_HEART_GRN_SMALL)
-            {
-                gx_icon_pixelmap_set(heart_icon, GX_PIXELMAP_ID_ICON_HEART_GRN_SMALL, GX_PIXELMAP_ID_ICON_HEART_GRN_SMALL);
-            }
-        }
-    }
-    else
-    {
-        if (ekg_index >= 19 && ekg_index <= 22)
-        {
-            if (warn_heart)
-            {
-                if (heart_icon->gx_icon_normal_pixelmap != GX_PIXELMAP_ID_ICON_HEART_RED_LARGE)
-                {
-                    gx_icon_pixelmap_set(heart_icon, GX_PIXELMAP_ID_ICON_HEART_RED_LARGE, GX_PIXELMAP_ID_ICON_HEART_RED_LARGE);
-                }
-            }
-            else
-            {
-                if (heart_icon->gx_icon_normal_pixelmap != GX_PIXELMAP_ID_ICON_HEART_GRN_LARGE)
-                {
-                    gx_icon_pixelmap_set(heart_icon, GX_PIXELMAP_ID_ICON_HEART_GRN_LARGE, GX_PIXELMAP_ID_ICON_HEART_GRN_LARGE);
-                }
-            }
-        }
-        else
-        {
-            if (warn_heart)
-            {
-                if (heart_icon->gx_icon_normal_pixelmap != GX_PIXELMAP_ID_ICON_HEART_RED_MED)
-                {
-                    gx_icon_pixelmap_set(heart_icon, GX_PIXELMAP_ID_ICON_HEART_RED_MED, GX_PIXELMAP_ID_ICON_HEART_RED_MED);
-                }
-            }
-            else
-            {
-                if (heart_icon->gx_icon_normal_pixelmap != GX_PIXELMAP_ID_ICON_HEART_GRN_MED)
-                {
-                    gx_icon_pixelmap_set(heart_icon, GX_PIXELMAP_ID_ICON_HEART_GRN_MED, GX_PIXELMAP_ID_ICON_HEART_GRN_MED);
-                }
-            }
-        }
-     }
- }
-
-/*****************************************************************************/
-void update_retrace_chart(GX_WINDOW *win)
-{
-GX_CANVAS *canvas;
-GX_PIXELMAP *map;
-GX_PIXELMAP *cardio_dot;
-GX_RECTANGLE block_rect; 
-
-    ekg_index++;
-
-    if (ekg_index >= (int)(sizeof(ekg_values) / sizeof(int)))
-    {
-        ekg_index = 0;
-    }
-
-    retrace_xpos += CHART_SCROLL;
-
-    if (retrace_xpos + CHART_SCROLL > chart_area.gx_rectangle_right)
-    {
-        retrace_xpos = 0;
-    }
-
-    block_rect.gx_rectangle_top = chart_area.gx_rectangle_top;
-    block_rect.gx_rectangle_bottom = chart_area.gx_rectangle_bottom;
-    block_rect.gx_rectangle_left = chart_area.gx_rectangle_left + retrace_xpos;
-    block_rect.gx_rectangle_right = chart_area.gx_rectangle_left + retrace_xpos + (CHART_SCROLL * 8);
-
-    /* pick up the canvas pointer */
-    gx_widget_canvas_get(win, &canvas);
-
-    /* Initiate drawing on this canvas.  */
-    gx_canvas_drawing_initiate(canvas, win, &chart_area);        
-    gx_context_pixelmap_get(GX_PIXELMAP_ID_CARDIO_DOT, &cardio_dot);
-
-    /* erase the rectangle ahead of the line */
-    gx_context_pixelmap_get(GX_PIXELMAP_ID_CHART_ERASE, &map);
-    gx_context_brush_define(GX_COLOR_ID_NEON, GX_COLOR_ID_NEON, GX_BRUSH_SOLID_FILL|GX_BRUSH_ROUND|GX_BRUSH_ALIAS);
-    gx_context_brush_width_set(0);
-    gx_canvas_pixelmap_tile(&block_rect, map);
-
-    gx_context_brush_width_set(1);
-
-    line_y_coords[1] = line_y_coords[0];
-    line_y_coords[0] = CHART_Y_CENTER - ekg_values[ekg_index];
-
-    gx_canvas_line_draw(chart_area.gx_rectangle_left + retrace_xpos,
-        chart_area.gx_rectangle_top + line_y_coords[1],
-        chart_area.gx_rectangle_left + retrace_xpos + CHART_SCROLL,
-        chart_area.gx_rectangle_top + line_y_coords[0]);
-
-    gx_canvas_pixelmap_draw(chart_area.gx_rectangle_left + retrace_xpos + CHART_SCROLL,
-        chart_area.gx_rectangle_top + line_y_coords[0] - cardio_dot->gx_pixelmap_height / 2, cardio_dot);
-
-    /* Indicate that drawing on this canvas is complete.  */
-    gx_canvas_drawing_complete(canvas, GX_TRUE);
-}
-
-/*****************************************************************************/
-VOID ToggleChartType(VOID)
-{
-    if (chart_type == CHART_TYPE_SCROLLING)
-    {
-        chart_type = CHART_TYPE_RETRACE;
-        gx_widget_shift(&vitals_screen.vitals_screen_current_hr_prompt, 0, -HR_PROMPT_VERTICAL_SHIFT, GX_TRUE);
-        chart_area.gx_rectangle_left = vitals_screen.vitals_screen_waveform_window.gx_window_client.gx_rectangle_left;
-        gx_widget_hide(&vitals_screen.vitals_screen_cardio_slider);
-        gx_widget_hide(&vitals_screen.vitals_screen_heart_icon);
-    }
-    else
-    {
-        chart_type = CHART_TYPE_SCROLLING;
-        chart_area.gx_rectangle_left = vitals_screen.vitals_screen_cardio_slider.gx_widget_size.gx_rectangle_right + 1;
-        gx_widget_shift(&vitals_screen.vitals_screen_current_hr_prompt, 0, HR_PROMPT_VERTICAL_SHIFT, GX_TRUE);
-        gx_widget_show(&vitals_screen.vitals_screen_cardio_slider);
-        gx_widget_show(&vitals_screen.vitals_screen_heart_icon);
-    }
-    gx_system_dirty_mark(&vitals_screen.vitals_screen_waveform_window);
-}
-
-/*****************************************************************************/
-VOID update_heart_rate()
-{
-
-    current_heart_rate += heart_rate_step;
-
-    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_current_hr_prompt, current_heart_rate);
-
-    if (current_heart_rate >= 130)
-    {
-        warn_heart = GX_TRUE;
-        gx_prompt_text_color_set((GX_PROMPT *)&vitals_screen.vitals_screen_current_hr_prompt, GX_COLOR_ID_WARN_YELLOW, GX_COLOR_ID_WARN_YELLOW, GX_COLOR_ID_WARN_YELLOW);
-    }
-    else
-    {
-        warn_heart = GX_FALSE;
-        gx_prompt_text_color_set((GX_PROMPT *)&vitals_screen.vitals_screen_current_hr_prompt, GX_COLOR_ID_NEON, GX_COLOR_ID_NEON, GX_COLOR_ID_NEON);
-    }
-
-    if (heart_rate_step > 0)
-    {
-        if (current_heart_rate >= MAX_HEART_RATE)
-        {
-            heart_rate_step = -1;
-        }
-    }
-    else
-    {
-        if (current_heart_rate <= MIN_HEART_RATE)
-        {
-            heart_rate_step = 1;
-        }
+        info->retrace_xpos = 0;
     }
 }
 
-/*****************************************************************************/
-VOID AnimateHRWin(VOID)
+/******************************************************************************************/
+/* Update heart rate.                                                                     */
+/******************************************************************************************/
+static VOID update_heart_rate()
 {
-    INT stop;
-    INT left;
-    INT distance;
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_hr_value, heart_rate_values[heart_rate_index++]);
 
-    left = vitals_screen.vitals_screen_hr_win.gx_widget_size.gx_rectangle_left;
-    stop = vitals_screen.vitals_screen_waveform_window.gx_widget_size.gx_rectangle_right + 5;
-
-    distance = (left - stop) / 3;
-    gx_widget_shift(&vitals_screen.vitals_screen_hr_win, -distance, 0, GX_TRUE);
-
-    if (distance <= 1)
+    if (heart_rate_index > (sizeof(heart_rate_values) / sizeof(INT)))
     {
-        gx_system_timer_stop(&vitals_screen, HR_WIN_ANIMATION_TIMER);
+        heart_rate_index = 0;
     }
 }
 
+/******************************************************************************************/
+/* Update spo2 value.                                                                     */
+/******************************************************************************************/
+static VOID update_spo2()
+{
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_spo2_value, spo2_values[spo2_index++]);
 
-/*****************************************************************************/
+    if (spo2_index > (sizeof(spo2_values) / sizeof(INT)))
+    {
+        spo2_index = 0;
+    }
+}
+
+/******************************************************************************************/
+/* Start value animation.                                                                 */
+/******************************************************************************************/
+static VOID start_value_animation()
+{
+    gx_system_timer_start((GX_WIDGET*)&vitals_screen, VALUE_ANIMATION_TIMER, 200 / GX_SYSTEM_TIMER_MS, 40 / GX_SYSTEM_TIMER_MS);
+
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_insulin_value, insulin.start_value);
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_hr_value, heart_rate.start_value);
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_spo2_value, spo2.start_value);
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_medtype1_value, medtype1.start_value);
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_medtype2_value, medtype2.start_value);
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_medtype3_value, medtype3.start_value);
+    gx_slider_value_set((GX_SLIDER *)&vitals_screen.vitals_screen_medtype1_slider, &vitals_screen.vitals_screen_medtype1_slider.gx_slider_info, medtype1.start_value);
+    gx_slider_value_set((GX_SLIDER*)&vitals_screen.vitals_screen_medtype2_slider, &vitals_screen.vitals_screen_medtype2_slider.gx_slider_info, medtype2.start_value);
+    gx_slider_value_set((GX_SLIDER*)&vitals_screen.vitals_screen_medtype3_slider, &vitals_screen.vitals_screen_medtype3_slider.gx_slider_info, medtype3.start_value);
+
+    value_animation_step = 0;
+}
+
+/******************************************************************************************/
+/* Update value animation.                                                                */
+/******************************************************************************************/
+static VOID update_value_animation()
+{
+INT new_value;
+
+    value_animation_step++;
+
+    new_value = GET_NEW_VALUE(insulin);
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_insulin_value, new_value);
+
+    new_value = GET_NEW_VALUE(heart_rate);
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_hr_value, new_value);
+
+    new_value = GET_NEW_VALUE(spo2);
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_spo2_value, new_value);
+
+    new_value = GET_NEW_VALUE(medtype1);
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_medtype1_value, new_value);
+    gx_slider_value_set((GX_SLIDER*)&vitals_screen.vitals_screen_medtype1_slider, &vitals_screen.vitals_screen_medtype1_slider.gx_slider_info, new_value);
+
+    new_value = GET_NEW_VALUE(medtype2);
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_medtype2_value, medtype2.start_value);
+    gx_slider_value_set((GX_SLIDER*)&vitals_screen.vitals_screen_medtype2_slider, &vitals_screen.vitals_screen_medtype2_slider.gx_slider_info, new_value);
+
+    new_value = GET_NEW_VALUE(medtype3);
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_medtype3_value, medtype3.start_value);
+    gx_slider_value_set((GX_SLIDER*)&vitals_screen.vitals_screen_medtype3_slider, &vitals_screen.vitals_screen_medtype3_slider.gx_slider_info, new_value);
+
+    if (value_animation_step == VALUE_ANIOMATION_TOTAL_STEPS)
+    {
+        gx_system_timer_stop((GX_WIDGET*)&vitals_screen, VALUE_ANIMATION_TIMER);
+    }
+}
+
+/******************************************************************************************/
+/* Start ekg waveform drawing.                                                            */
+/******************************************************************************************/
+static VOID start_ekg_waveform()
+{
+    ekg_wave_info.index = 0;
+    ekg_wave_info.retrace_xpos = 0;
+    memset(ekg_wave_info.capture_memory, 0, ekg_wave_info.capture_memory_size);
+
+    gx_system_timer_start((GX_WIDGET*)&vitals_screen, EKG_WAVEFORM_TIMER, 80 / GX_SYSTEM_TIMER_MS, 80 / GX_SYSTEM_TIMER_MS);
+    gx_system_timer_start((GX_WIDGET*)&vitals_screen, HEART_RATE_TIMER, GX_TICKS_SECOND * 2, GX_TICKS_SECOND * 2);
+}
+
+/******************************************************************************************/
+/* Start pulse waveform drawing.                                                          */
+/******************************************************************************************/
+static VOID start_pulse_waveform()
+{
+    pulse_wave_info.index = 0;
+    pulse_wave_info.retrace_xpos = 0;
+    memset(pulse_wave_info.capture_memory, 0, pulse_wave_info.capture_memory_size);
+
+    gx_system_timer_start((GX_WIDGET *)&vitals_screen, PULSE_WAVEFORM_TIMER, 80 / GX_SYSTEM_TIMER_MS, 80 / GX_SYSTEM_TIMER_MS);
+    gx_system_timer_start((GX_WIDGET*)&vitals_screen, SPO2_TIMER, GX_TICKS_SECOND, GX_TICKS_SECOND);
+}
+
+/******************************************************************************************/
+/* Update patient information.                                                            */
+/******************************************************************************************/
+static VOID update_patient_information()
+{
+GX_STRING string;
+INT       age;
+
+    /* Get patient's name.  */
+    GetPatientName(&string);
+
+    /* Set patient's name.  */
+    gx_prompt_text_set_ext(&vitals_screen.vitals_screen_patient_name, &string);
+
+    /* Get patient's date of birth.  */
+    GetPatientDOB(&string);
+
+    /* Set patient's date of birth.  */
+    gx_prompt_text_set_ext(&vitals_screen.vitals_screen_patient_dob, &string);
+
+    /* Get patient's age.  */
+    GetPatientAge(&age);
+
+    /* Set patient's age.  */
+    gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_patient_age, age);
+}
+
+/******************************************************************************************/
+/* Override the default event processing of "vitals_screen" to handle signals from my     */
+/* child widgets.                                                                         */
+/******************************************************************************************/
 UINT vitals_screen_event_process(GX_WINDOW *window, GX_EVENT *myevent)
 {
 UINT status = GX_SUCCESS;
-GX_WIDGET *widget = (GX_WIDGET *) window;
-GX_STRING string;
 
     switch(myevent->gx_event_type)
     {
     case GX_EVENT_SHOW:
-        heart_rate_step = 1;
-        line_y_coords[0] = line_y_coords[1] = line_y_coords[2] = 50;
-        ekg_index = 0;
-        chart_area = vitals_screen.vitals_screen_waveform_window.gx_window_client;
-        med_screen_base_event_handler(window, myevent);
 
-        GetPatientName(&string);
-        gx_prompt_text_set_ext(&vitals_screen.vitals_screen_patient_name, &string);
+        /* Call the event process of the template on which the vitals screen is based.  */
+        template_event_handler(window, myevent);
 
-        GetPatientAdmitDate(&string);
-        gx_prompt_text_set_ext(&vitals_screen.vitals_screen_admit_date, &string);
+        /* Update patient's information.  */
+        update_patient_information();
 
-        // Shift the HR window off the right edge of screen
-        gx_widget_shift(&vitals_screen.vitals_screen_hr_win,
-            vitals_screen.base.gx_widget_size.gx_rectangle_right - vitals_screen.vitals_screen_hr_win.gx_widget_size.gx_rectangle_left, 0, GX_TRUE);
-
-        retrace_xpos = chart_area.gx_rectangle_left;
-
-        if (chart_type == CHART_TYPE_RETRACE)
-        {
-            gx_widget_hide(&vitals_screen.vitals_screen_heart_icon);
-            gx_widget_hide(&vitals_screen.vitals_screen_cardio_slider);
-        }
-        else
-        {
-            chart_area.gx_rectangle_left = vitals_screen.vitals_screen_cardio_slider.gx_widget_size.gx_rectangle_right + 1;
-        }
-        gx_system_timer_start(widget, CHART_TIMER, 2, 2);
-        gx_system_timer_start(widget, RATE_TIMER, GX_TICKS_SECOND * 2, GX_TICKS_SECOND * 2);
-        gx_system_timer_start(widget, HR_WIN_ANIMATION_TIMER, 1, 1);
+        /* Start value animation.  */
+        start_value_animation();
         break;
 
     case GX_EVENT_HIDE:
-        gx_system_timer_stop(widget, 0);
-        gx_window_event_process(window, myevent);
+
+        /* Call the event process of the template on which the vitals screen is based.  */
+        template_event_handler(window, myevent);
+
+        /* Stop all timers that belongs to the window. */
+        gx_system_timer_stop((GX_WIDGET*)window, 0);
         break;
 
-    case GX_EVENT_PEN_DOWN:
-        if (gx_utility_rectangle_point_detect(&vitals_screen.vitals_screen_hr_win.gx_widget_size, myevent->gx_event_payload.gx_event_pointdata) ||
-            gx_utility_rectangle_point_detect(&vitals_screen.vitals_screen_waveform_window.gx_widget_size, myevent->gx_event_payload.gx_event_pointdata))
-        {
-            ToggleChartType();
-        }
+    case GX_SIGNAL(ID_MEDTYPE1_SLIDER, GX_EVENT_SLIDER_VALUE):
+        gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_medtype1_value, myevent->gx_event_payload.gx_event_longdata);
+        break;
+        
+    case GX_SIGNAL(ID_MEDTYPE2_SLIDER, GX_EVENT_SLIDER_VALUE):
+        gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_medtype2_value, myevent->gx_event_payload.gx_event_longdata);
+        break;
+
+    case GX_SIGNAL(ID_MEDTYPE3_SLIDER, GX_EVENT_SLIDER_VALUE):
+        gx_numeric_prompt_value_set(&vitals_screen.vitals_screen_medtype3_value, myevent->gx_event_payload.gx_event_longdata);
         break;
 
     case GX_EVENT_TIMER:
         switch(myevent ->gx_event_payload.gx_event_timer_id)
         {
-        case CHART_TIMER:
-            if (chart_type == CHART_TYPE_SCROLLING)
-            {
-                update_scrolling_chart(window);
-            }
-            else
-            {
-                update_retrace_chart(window);
-            }
+        case EKG_WAVEFORM_TIMER:
+            update_waveform(&vitals_screen.vitals_screen_ekg_waveform_win, &ekg_wave_info);
             break;
 
-        case RATE_TIMER:
+        case PULSE_WAVEFORM_TIMER:
+            update_waveform(&vitals_screen.vitals_screen_pulse_waveform_win, &pulse_wave_info);
+            break;
+
+        case HEART_RATE_TIMER:
             update_heart_rate();
             break;
 
-        case HR_WIN_ANIMATION_TIMER:
-            AnimateHRWin();
+        case SPO2_TIMER:
+            update_spo2();
+            break;
+
+        case VALUE_ANIMATION_TIMER:
+            update_value_animation();
             break;
         }
         break;
 
+    case GX_EVENT_ANIMATION_COMPLETE:
+        if (myevent->gx_event_sender == ID_EKG_WIN_SLIDE_IN)
+        {
+            start_ekg_waveform();
+        }
+        else if (myevent->gx_event_sender = ID_PULSE_WIN_SLIDE_IN)
+        {
+            start_pulse_waveform();
+        }
+        break;
+
     default:
-        status = med_screen_base_event_handler(window, myevent);
+        status = template_event_handler(window, myevent);
     }
     return status;
 }
 
-
-/*****************************************************************************/
-void waveform_draw(GX_WINDOW *window)
+/******************************************************************************************/
+/* Callback function to format insulin value.                                             */
+/******************************************************************************************/
+VOID insulin_value_format(GX_NUMERIC_PROMPT *prompt, INT value)
 {
-    gx_window_draw(window);
+    prompt->gx_numeric_prompt_buffer[0] = '0';
+    prompt->gx_numeric_prompt_buffer[1] = '.';
+    gx_utility_ltoa(value, prompt->gx_numeric_prompt_buffer + 2, GX_NUMERIC_PROMPT_BUFFER_SIZE - 1);
 }
 
 

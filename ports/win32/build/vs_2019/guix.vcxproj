@@ -5,6 +5,10 @@
       <Configuration>Debug_GUIX_5_4_0_COMPATIBILITY</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_GX_DISABLE_BRUSH_ALPHA_SUPPORT|Win32">
+      <Configuration>Debug_GX_DISABLE_BRUSH_ALPHA_SUPPORT</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug_GX_DYNAMIC_BIDI_TEXT_SUPPORT|Win32">
       <Configuration>Debug_GX_DYNAMIC_BIDI_TEXT_SUPPORT</Configuration>
       <Platform>Win32</Platform>
@@ -35,6 +39,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\common\src\gxe_animation_delete.c" />
     <ClCompile Include="..\..\..\..\common\src\gxe_menu_event_process.c" />
     <ClCompile Include="..\..\..\..\common\src\gxe_prompt_event_process.c" />
     <ClCompile Include="..\..\..\..\common\src\gxe_string_scroll_wheel_event_process.c" />
@@ -42,6 +47,12 @@
     <ClCompile Include="..\..\..\..\common\src\gxe_text_scroll_wheel_event_process.c" />
     <ClCompile Include="..\..\..\..\common\src\gxe_utility_bidi_paragraph_reorder.c" />
     <ClCompile Include="..\..\..\..\common\src\gxe_utility_bidi_resolved_text_info_delete.c" />
+    <ClCompile Include="..\..\..\..\common\src\gxe_generic_scroll_wheel_children_position.c" />
+    <ClCompile Include="..\..\..\..\common\src\gxe_generic_scroll_wheel_create.c" />
+    <ClCompile Include="..\..\..\..\common\src\gxe_generic_scroll_wheel_event_process.c" />
+    <ClCompile Include="..\..\..\..\common\src\gxe_generic_scroll_wheel_row_height_set.c" />
+    <ClCompile Include="..\..\..\..\common\src\gxe_generic_scroll_wheel_total_rows_set.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_animation_delete.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_display_driver_16bpp_rotated_block_move.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_display_driver_16bpp_rotated_canvas_copy.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_display_driver_16bpp_rotated_horizontal_line_draw.c" />
@@ -106,6 +117,7 @@
     <ClCompile Include="..\..\..\..\common\src\gx_display_driver_generic_rotated_wide_line_fill.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_menu_event_process.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_prompt_event_process.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_scroll_wheel_wrap_style_check.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_string_scroll_wheel_event_process.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_text_button_event_process.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_text_scroll_wheel_dynamic_bidi_text_delete.c" />
@@ -1288,6 +1300,16 @@
     <ClCompile Include="..\..\..\..\common\src\gx_widget_previous_sibling_get.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_widget_resize.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_widget_scroll_shift.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_generic_scroll_wheel_children_position.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_generic_scroll_wheel_create.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_generic_scroll_wheel_down_wrap.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_generic_scroll_wheel_draw.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_generic_scroll_wheel_event_process.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_generic_scroll_wheel_row_height_set.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_generic_scroll_wheel_scroll.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_generic_scroll_wheel_total_rows_set.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_generic_scroll_wheel_up_wrap.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_generic_scroll_wheel_wrap_style_check.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_widget_shift.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_widget_show.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_widget_status_add.c" />
@@ -1401,6 +1423,12 @@
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_GX_DISABLE_BRUSH_ALPHA_SUPPORT|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_GX_SYNERGY_FONT_FORMAT_SUPPORT|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -1450,6 +1478,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_GX_DISABLE_BRUSH_ALPHA_SUPPORT|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_GX_SYNERGY_FONT_FORMAT_SUPPORT|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -1473,6 +1504,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <TargetName>gx</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_GX_DISABLE_BRUSH_ALPHA_SUPPORT|Win32'">
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
     <TargetName>gx</TargetName>
   </PropertyGroup>
@@ -1510,6 +1545,28 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>$(DefineConstants);WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;GX_ANIMATION_POOL_SIZE=16;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\tx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BrowseInformation>false</BrowseInformation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalIncludeDirectories>..\..\lib\vs_2019;..\..\inc;..\..\inc\synergy;..\..\..\..\common\inc</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Bscmake>
+      <OutputFile>$(OutDir)$(TargetName).bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_GX_DISABLE_BRUSH_ALPHA_SUPPORT|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;GX_ANIMATION_POOL_SIZE=16;GX_DISABLE_BRUSH_ALPHA_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\..\tx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>

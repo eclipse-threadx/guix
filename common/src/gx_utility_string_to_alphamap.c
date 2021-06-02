@@ -35,7 +35,7 @@
     write_data++;                            \
     mask = mask >> 1;
 
-#if defined(GX_SYNERGY_FONT_FORMAT_SUPPORT)
+#if defined(GX_RENESAS_DAVE2D_FONT_SUPPORT)
 #define DRAW_REVERSED_PIXEL if (data & mask) \
     {                                        \
         *write_data = 0xff;                  \
@@ -520,9 +520,13 @@ GX_UBYTE  data;
 /*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
 /*                                            display rotation support,   */
 /*                                            resulting in version 6.1.3  */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            rename RENESAS_DAVE2D       */
+/*                                            support conditional,        */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
-#if defined(GX_SYNERGY_FONT_FORMAT_SUPPORT)
+#if defined(GX_RENESAS_DAVE2D_FONT_SUPPORT)
 VOID _gx_utility_glyph_reversed_4bpp_to_alphamap_draw(GX_PIXELMAP *map, INT xpos, INT ypos, GX_CONST GX_GLYPH *glyph)
 {
 GX_UBYTE *read_data;
@@ -803,9 +807,13 @@ GX_UBYTE  mask;
 /*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
 /*                                            display rotation support,   */
 /*                                            resulting in version 6.1.3  */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            rename RENESAS_DAVE2D       */
+/*                                            support conditional,        */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
-#if defined(GX_SYNERGY_FONT_FORMAT_SUPPORT)
+#if defined(GX_RENESAS_DAVE2D_FONT_SUPPORT)
 VOID _gx_utility_glyph_reversed_1bpp_to_alphamap_draw(GX_PIXELMAP *map, INT xpos, INT ypos, GX_CONST GX_GLYPH *glyph)
 {
 GX_UBYTE *read_data;
@@ -972,6 +980,10 @@ GX_UBYTE  mask;
 /*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
 /*                                            display rotation support,   */
 /*                                            resulting in version 6.1.3  */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            rename RENESAS_DAVE2D       */
+/*                                            support conditional,        */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_utility_string_to_alphamap_draw(GX_CONST GX_STRING *string, GX_CONST GX_FONT *font, GX_PIXELMAP *map)
@@ -991,7 +1003,7 @@ VOID               (*glyph_draw)(GX_PIXELMAP *map, INT xpos, INT ypos, GX_CONST 
 UINT glyph_len;
 #endif /* GX_UTF8_SUPPORT */
 
-#if defined(GX_SYNERGY_FONT_FORMAT_SUPPORT)
+#if defined(GX_RENESAS_DAVE2D_FONT_SUPPORT)
     if (font -> gx_font_format & GX_FONT_FORMAT_COMPRESSED)
     {
         /* Not supported. */
@@ -1018,7 +1030,7 @@ UINT glyph_len;
         break;
 
     case GX_FONT_FORMAT_4BPP:
-#if defined(GX_SYNERGY_FONT_FORMAT_SUPPORT)
+#if defined(GX_RENESAS_DAVE2D_FONT_SUPPORT)
         if (font -> gx_font_format & GX_FONT_FORMAT_REVERSED_ORDER)
         {
             glyph_draw = _gx_utility_glyph_reversed_4bpp_to_alphamap_draw;
@@ -1027,13 +1039,13 @@ UINT glyph_len;
         {
 #endif
             glyph_draw = _gx_utility_glyph_4bpp_to_alphamap_draw;
-#if defined(GX_SYNERGY_FONT_FORMAT_SUPPORT)
+#if defined(GX_RENESAS_DAVE2D_FONT_SUPPORT)
         }
 #endif
         break;
 
     case GX_FONT_FORMAT_1BPP:
-#if defined(GX_SYNERGY_FONT_FORMAT_SUPPORT)
+#if defined(GX_RENESAS_DAVE2D_FONT_SUPPORT)
         if (font -> gx_font_format & GX_FONT_FORMAT_REVERSED_ORDER)
         {
             glyph_draw = _gx_utility_glyph_reversed_1bpp_to_alphamap_draw;
@@ -1042,7 +1054,7 @@ UINT glyph_len;
         {
 #endif
             glyph_draw = _gx_utility_glyph_1bpp_to_alphamap_draw;
-#if defined(GX_SYNERGY_FONT_FORMAT_SUPPORT)
+#if defined(GX_RENESAS_DAVE2D_FONT_SUPPORT)
         }
 #endif
         break;

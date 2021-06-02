@@ -44,7 +44,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_32argb_pixelmap_raw_resize              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -81,6 +81,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_32argb_pixelmap_raw_resize(GX_PIXELMAP *src, GX_PIXELMAP *destination, INT width, INT height)
@@ -128,7 +132,6 @@ INT       blue;
     }
 
     put = (GX_COLOR *)destination -> gx_pixelmap_data;
-    get = (GX_COLOR *)src -> gx_pixelmap_data;
 
     /* Loop throught destination's pixels and fill each pixel with the interpolation of
        4 neighboring pixels. */
@@ -216,7 +219,7 @@ INT       blue;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_32argb_pixelmap_alpha_resize            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -253,6 +256,10 @@ INT       blue;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_32argb_pixelmap_alpha_resize(GX_PIXELMAP *src, GX_PIXELMAP *destination, INT width, INT height)
@@ -300,7 +307,6 @@ INT       alpha;
     }
 
     put = (GX_COLOR *)destination -> gx_pixelmap_data;
-    get = (GX_COLOR *)src -> gx_pixelmap_data;
 
     /* Loop through destination's pixel and fill each pixel with
        the interpolation of 4 nearest neighboring pixels.*/

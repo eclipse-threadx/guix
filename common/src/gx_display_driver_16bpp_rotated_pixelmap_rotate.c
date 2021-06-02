@@ -764,8 +764,6 @@ INT           newypos;
     }
     else
     {
-
-        width = pixelmap -> gx_pixelmap_width;
         height = pixelmap -> gx_pixelmap_height;
 
         newxpos = xpos + cx - cy;
@@ -857,9 +855,6 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
     clip = context -> gx_draw_context_clip;
     blend_func = _gx_display_driver_565rgb_pixel_blend;
 
-    get = (USHORT *)pixelmap -> gx_pixelmap_data;
-    getalpha = (GX_UBYTE *)pixelmap -> gx_pixelmap_aux_data;
-
     GX_SWAP_VALS(xpos, ypos);
     GX_SWAP_VALS(cx, cy);
 
@@ -933,8 +928,6 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
     }
     else
     {
-
-        width = pixelmap -> gx_pixelmap_width;
         height = pixelmap -> gx_pixelmap_height;
 
         newxpos = xpos + cx - cy;

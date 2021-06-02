@@ -39,7 +39,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_input_mark_previous             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -82,6 +82,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_multi_line_text_input_mark_previous(GX_MULTI_LINE_TEXT_INPUT *text_input)
@@ -132,8 +136,6 @@ UINT                  end_mark = text_input -> gx_multi_line_text_input_end_mark
         text_input -> gx_multi_line_text_input_text_insert_position = text_input -> gx_multi_line_text_input_end_mark;
 
         _gx_multi_line_text_input_cursor_pos_update(text_input, GX_TRUE);
-
-        end_pos = cursor_ptr -> gx_text_input_cursor_pos;
 
         /* Dirty mark. */
         if (old_shift == text_input -> gx_multi_line_text_view_text_scroll_shift)

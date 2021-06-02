@@ -69,6 +69,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            eliminate fall-through,     */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_text_button_event_process(GX_TEXT_BUTTON *button, GX_EVENT *event_ptr)
@@ -93,8 +96,8 @@ UINT  _gx_text_button_event_process(GX_TEXT_BUTTON *button, GX_EVENT *event_ptr)
         {
             _gx_utility_bidi_resolved_text_info_delete(&button -> gx_text_button_bidi_resolved_text_info);
         }
-        break;
 #endif
+        break;
 
     default:
 

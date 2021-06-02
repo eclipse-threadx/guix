@@ -31,7 +31,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_4bpp_vertical_pattern_line_draw  PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -66,6 +66,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_4bpp_vertical_pattern_line_draw(GX_DRAW_CONTEXT *context, INT ystart, INT yend, INT xpos)
@@ -112,6 +116,7 @@ INT       stride;
 
         /* Set bits to 0 first */
         *put &= (GX_UBYTE)(~draw_mask);
+
         /* Set bits color */
         if (pattern & pattern_mask)
         {
@@ -120,13 +125,6 @@ INT       stride;
         else
         {
             *put |= (off_color & draw_mask);
-        }
-
-        draw_mask >>= 4;
-        if (draw_mask == 0)
-        {
-            put++;
-            draw_mask = 0xf0;
         }
 
         pattern_mask >>= 1;

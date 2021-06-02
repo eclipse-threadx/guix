@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_port.h                                         Cortex-M0/GNU     */
-/*                                                          6.1.6         */
+/*                                                          6.1.7         */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -43,6 +43,8 @@
 /*                                            resulting in version 6.1    */
 /*  04-02-2021     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1.6  */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -144,7 +146,7 @@ typedef SHORT  GX_VALUE;
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Cortex-M0/GNU Version G6.x *";
+    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Cortex-M0/GNU Version 6.1.7 *";
 #else
 extern  CHAR _gx_version_id[];
 #endif

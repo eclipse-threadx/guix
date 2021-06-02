@@ -48,6 +48,10 @@
 /*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
 /*                                            bidi test reordering APIs,  */
 /*                                            resulting in version 6.1.3  */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            rename RENESAS_DAVE2D       */
+/*                                            support conditional,        */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -251,7 +255,7 @@ VOID _gx_utility_glyph_1bpp_to_alphamap_draw(GX_PIXELMAP *map, INT xpos, INT ypo
 VOID _gx_utility_glyph_4bpp_to_alphamap_draw(GX_PIXELMAP *map, INT xpos, INT ypos, GX_CONST GX_GLYPH *glyph);
 VOID _gx_utility_glyph_8bpp_to_alphamap_draw(GX_PIXELMAP *map, INT xpos, INT ypos, GX_CONST GX_GLYPH *glyph);
 
-#if defined(GX_SYNERGY_FONT_FORMAT_SUPPORT)
+#if defined(GX_RENESAS_DAVE2D_FONT_SUPPORT)
 VOID _gx_utility_glyph_reversed_4bpp_to_alphamap_draw(GX_PIXELMAP *map, INT xpos, INT ypos, GX_CONST GX_GLYPH *glyph);
 VOID _gx_utility_glyph_reversed_1bpp_to_alphamap_draw(GX_PIXELMAP *map, INT xpos, INT ypos, GX_CONST GX_GLYPH *glyph);
 #endif

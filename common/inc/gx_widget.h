@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_widget.h                                         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -44,6 +44,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            added new child widget      */
+/*                                            search prototypes,          */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -137,8 +141,11 @@ UINT       _gx_widget_type_find(GX_WIDGET *parent, USHORT widget_id, GX_WIDGET *
 
 GX_WIDGET *_gx_widget_unlink(GX_WIDGET *widget);
 GX_WIDGET *_gx_widget_first_client_child_get(GX_WIDGET *parent);
+GX_WIDGET *_gx_widget_first_visible_client_child_get(GX_WIDGET *parent);
 GX_WIDGET *_gx_widget_last_client_child_get(GX_WIDGET *parent);
+GX_WIDGET *_gx_widget_last_visible_client_child_get(GX_WIDGET *parent);
 GX_WIDGET *_gx_widget_next_client_child_get(GX_WIDGET *current);
+GX_WIDGET *_gx_widget_next_visible_client_child_get(GX_WIDGET *current);
 INT        _gx_widget_client_index_get(GX_WIDGET *parent, GX_WIDGET *child);
 
 UINT       _gx_widget_width_get(GX_WIDGET *widget, GX_VALUE *return_width);
@@ -159,7 +166,7 @@ UINT _gxe_widget_child_detect(GX_WIDGET *parent, GX_WIDGET *child, GX_BOOL *retu
 UINT _gxe_widget_client_get(GX_WIDGET *widget, GX_VALUE border_width, GX_RECTANGLE *return_size);
 UINT _gxe_widget_color_get(GX_WIDGET *widget, GX_RESOURCE_ID color_id, GX_COLOR *return_color);
 UINT _gxe_widget_create(GX_WIDGET *widget, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
-                           ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size, UINT widget_block_size);
+                        ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size, UINT widget_block_size);
 UINT _gxe_widget_created_test(GX_WIDGET *widget, GX_BOOL *return_test);
 UINT _gxe_widget_delete(GX_WIDGET *widget);
 UINT _gxe_widget_detach(GX_WIDGET *widget);
@@ -177,10 +184,10 @@ UINT _gxe_widget_free(GX_WIDGET *widget);
 UINT _gxe_widget_front_move(GX_WIDGET *widget, GX_BOOL *return_moved);
 UINT _gxe_widget_height_get(GX_WIDGET *widget, GX_VALUE *return_height);
 UINT _gxe_widget_hide(GX_WIDGET *widget);
-UINT _gxe_widget_last_child_get(GX_WIDGET *parent, GX_WIDGET ** child_return);
+UINT _gxe_widget_last_child_get(GX_WIDGET *parent, GX_WIDGET **child_return);
 UINT _gxe_widget_next_sibling_get(GX_WIDGET *current, GX_WIDGET **sibling_return);
 UINT _gxe_widget_parent_get(GX_WIDGET *current, GX_WIDGET **parent_return);
-UINT _gxe_widget_previous_sibling_get(GX_WIDGET* current, GX_WIDGET** sibling_return);
+UINT _gxe_widget_previous_sibling_get(GX_WIDGET *current, GX_WIDGET **sibling_return);
 UINT _gxe_widget_pixelmap_get(GX_WIDGET *widget, GX_RESOURCE_ID resource_id, GX_PIXELMAP **return_pixelmap);
 UINT _gxe_widget_resize(GX_WIDGET *widget, GX_RECTANGLE *new_size);
 UINT _gxe_widget_shift(GX_WIDGET *widget, GX_VALUE x_shift, GX_VALUE y_shift, GX_BOOL mark_dirty);

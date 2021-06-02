@@ -246,8 +246,6 @@ INT             y_fraction;
                     cury += ysign;
                 }
 
-                test = cury + shift;
-
                 if ((curx >= xmin) && (curx <= xmax))
                 {
                     Index = (curx - xmin) << 1;

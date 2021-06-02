@@ -193,7 +193,6 @@ GX_FILL_PIXELMAP_INFO info;
     {
         xmin = clip -> gx_rectangle_left;
     }
-    skip_line = xmin - (xcenter - (INT)r);
 
     if (clip -> gx_rectangle_right < xmax)
     {

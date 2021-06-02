@@ -223,7 +223,7 @@ UINT _gx_binres_language_header_load(GX_BINRES_DATA_INFO *info, GX_LANGUAGE_HEAD
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_language_table_buffer_allocate           PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -261,6 +261,9 @@ UINT _gx_binres_language_header_load(GX_BINRES_DATA_INFO *info, GX_LANGUAGE_HEAD
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            test for langauge_count == 0*/
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
@@ -292,6 +295,11 @@ UINT               string_table_size;
     }
 
     language_count = string_header.gx_string_header_language_count;
+
+    if (language_count == 0)
+    {
+        return GX_INVALID_FORMAT;
+    }
     string_count = string_header.gx_string_header_string_count;
 
     /* Calcualte memory size needed for string tables. */

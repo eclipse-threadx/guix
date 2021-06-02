@@ -890,7 +890,7 @@ INT  pos[16];
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_ll_huffman_read                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -929,6 +929,9 @@ INT  pos[16];
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            added invalid value check,  */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_ll_huffman_read(GX_PNG *png, UINT hlit, UINT hdist)
@@ -942,8 +945,8 @@ UINT count = 0;
 INT  pos[16];
 INT  index;
 
-    memset(png -> gx_png_huffman_lit_code_len, 0, sizeof(INT) * 286);
-    memset(png -> gx_png_huffman_dist_code_len, 0, sizeof(INT) * 31);
+    memset(png -> gx_png_huffman_lit_code_len, 0, sizeof(INT) * GX_PNG_HUFFMAN_LIT_CODE_LEN_TABLE_SIZE);
+    memset(png -> gx_png_huffman_dist_code_len, 0, sizeof(INT) * GX_PNG_HUFFMAN_DIST_CODE_LEN_TABLE_SIZE);
 
     for (i = 0; i < hlit + hdist;)
     {
@@ -989,7 +992,11 @@ INT  index;
                     repeat &= 0x3;
                     repeat += 3;
 
-                    if ((i - 1) < hlit)
+                    if (i < 1)
+                    {
+                        return GX_FALSE;
+                    }
+                    else if ((i - 1) < hlit)
                     {
                         code_value = (UINT)png -> gx_png_huffman_lit_code_len[i - 1];
                     }
@@ -1619,7 +1626,7 @@ INT  nlen;
             memset(png -> gx_png_huffman_clen_bits_count, 0, 17 * sizeof(INT));
             memset(png -> gx_png_huffman_clen_table, 0, 20 * sizeof(INT));
             memset(png -> gx_png_huffman_lit_bits_count, 0, 17 * sizeof(INT));
-            memset(png -> gx_png_huffman_lit_table, 0, 286 * sizeof(int));
+            memset(png -> gx_png_huffman_lit_table, 0, GX_PNG_HUFFMAN_LIT_TABLE_SIZE * sizeof(int));
             memset(png -> gx_png_huffman_dist_bits_count, 0, 17 * sizeof(INT));
             memset(png -> gx_png_huffman_dist_table, 0, 30 * sizeof(INT));
 
@@ -1991,7 +1998,7 @@ INT y;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_decode                         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2042,16 +2049,23 @@ INT y;
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added data boundary check,  */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s), and      */
+/*                                            improved png decoding       */
+/*                                            performance,                */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_image_reader_png_decode(GX_CONST GX_UBYTE *read_data, ULONG data_size, GX_PIXELMAP *outmap)
 {
 UINT    status = GX_SUCCESS;
-GX_PNG *png;
+GX_PNG  png;
 INT     data_len;
 CHAR    chunk_type[4];
 INT     checksum;
 GX_BOOL idat_done = GX_FALSE;
+INT    *scratch_buffer;
+INT     scratch_index = 0;
+GX_BOOL decoded_done = GX_FALSE;
 
     if (data_size < 8)
     {
@@ -2072,75 +2086,87 @@ GX_BOOL idat_done = GX_FALSE;
             return GX_SYSTEM_MEMORY_ERROR;
         }
 
-        png = (GX_PNG *)_gx_system_memory_allocator(sizeof(GX_PNG));
+        memset(&png, 0, sizeof(GX_PNG));
+        scratch_buffer = (INT *)_gx_system_memory_allocator(GX_PNG_SCRATCH_BUFFER_SIZE * sizeof(ULONG));
 
-        if (png == GX_NULL)
+        if (scratch_buffer == GX_NULL)
         {
             return GX_SYSTEM_MEMORY_ERROR;
         }
 
-        memset(png, 0, sizeof(GX_PNG));
-        png -> gx_png_data = (GX_UBYTE *)read_data;
-        png -> gx_png_data_size = (INT)data_size;
-        png -> gx_png_data_index = 8;
+        png.gx_png_crc_table = (UINT *)scratch_buffer;
+        scratch_index += GX_PNG_CRC_TABLE_SIZE;
+        png.gx_png_huffman_lit_table = scratch_buffer + scratch_index;
+        scratch_index += GX_PNG_HUFFMAN_LIT_TABLE_SIZE;
+        png.gx_png_huffman_lit_code_len = scratch_buffer + scratch_index;
+        scratch_index += GX_PNG_HUFFMAN_LIT_CODE_LEN_TABLE_SIZE;
+        png.gx_png_huffman_dist_code_len = scratch_buffer + scratch_index;
+        scratch_index += GX_PNG_HUFFMAN_DIST_CODE_LEN_TABLE_SIZE;
+        png.gx_png_palette_table = (GX_COLOR *)scratch_buffer + scratch_index;
 
-        _gx_image_reader_png_crc_table_make(png);
+        png.gx_png_data = (GX_UBYTE *)read_data;
+        png.gx_png_data_size = (INT)data_size;
+        png.gx_png_data_index = 8;
+
+        _gx_image_reader_png_crc_table_make(&png);
 
         _bit_buffer = 0;
         _bit_count = 0;
 
-        while ((png -> gx_png_data_index + 4) < png -> gx_png_data_size)
+        while (png.gx_png_data_index + 4 < png.gx_png_data_size)
         {
             /* data_len*/
-            _gx_image_reader_png_4bytes_read(png, &data_len);
+            _gx_image_reader_png_4bytes_read(&png, &data_len);
 
-            png -> gx_png_trunk_crc = 0xffffffff;
+            png.gx_png_trunk_crc = 0xffffffff;
 
-            if (png -> gx_png_data_index + data_len + 4 > png -> gx_png_data_size)
+            if (png.gx_png_data_index + data_len + 4 > png.gx_png_data_size)
             {
                 status = GX_INVALID_SIZE;
                 break;
             }
 
             /* Calculate checksum of the chunk data.  */
-            _gx_image_reader_png_crc_get(png, &png -> gx_png_trunk_crc, (UINT)(4 + data_len));
+            _gx_image_reader_png_crc_get(&png, &png.gx_png_trunk_crc, (UINT)(4 + data_len));
 
             /* Read chunk type.  */
-            _gx_image_reader_png_chunk_type_read(png, chunk_type);
+            _gx_image_reader_png_chunk_type_read(&png, chunk_type);
 
-            png -> gx_png_trunk_end_index = png -> gx_png_data_index + data_len;
+            png.gx_png_trunk_end_index = png.gx_png_data_index + data_len;
 
             if ((strncmp(chunk_type, "IDAT", 4) == 0) && (!idat_done))
             {
                 idat_done = GX_TRUE;
 
-                status = _gx_image_reader_png_IDAT_chunk_read(png);
+                status = _gx_image_reader_png_IDAT_chunk_read(&png);
             }
             else if (strncmp(chunk_type, "IHDR", 4) == 0)
             {
-                status = _gx_image_reader_png_IHDR_chunk_read(png);
+                status = _gx_image_reader_png_IHDR_chunk_read(&png);
             }
             else if (strncmp(chunk_type, "gAMA", 4) == 0)
             {
-                status = _gx_image_reader_png_gAMA_chunk_read(png);
+                status = _gx_image_reader_png_gAMA_chunk_read(&png);
             }
             else if (strncmp(chunk_type, "PLTE", 4) == 0)
             {
-                status = _gx_image_reader_png_PLTE_chunk_read(png);
+                status = _gx_image_reader_png_PLTE_chunk_read(&png);
             }
             else if (strncmp(chunk_type, "tRNS", 4) == 0)
             {
                 /* Read transparent information. */
-                status = _gx_image_reader_png_tRNS_chunk_read(png);
+                status = _gx_image_reader_png_tRNS_chunk_read(&png);
             }
             else if (strncmp(chunk_type, "IEND", 4) == GX_SUCCESS)
             {
                 /* End */
+                decoded_done = GX_TRUE;
+                break;
             }
             else
             {
                 /* Ignore chunk */
-                png -> gx_png_data_index += data_len;
+                png.gx_png_data_index += data_len;
             }
 
             if (status != GX_SUCCESS)
@@ -2148,40 +2174,45 @@ GX_BOOL idat_done = GX_FALSE;
                 break;
             }
 
-            _gx_image_reader_png_4bytes_read(png, &checksum);
+            _gx_image_reader_png_4bytes_read(&png, &checksum);
 
-            if (checksum != (INT)png -> gx_png_trunk_crc)
+            if (checksum != (INT)png.gx_png_trunk_crc)
             {
                 status = GX_FAILURE;
                 break;
             }
         }
 
-        if (status == GX_SUCCESS)
+        if(status == GX_SUCCESS && (!decoded_done))
         {
-            /* revert filter */
-            status = _gx_image_reader_png_unfilter(png);
+            status = GX_FAILURE;
         }
 
         if (status == GX_SUCCESS)
         {
-            outmap -> gx_pixelmap_data = png -> gx_png_decoded_data;
-            outmap -> gx_pixelmap_data_size = (ULONG)png -> gx_png_decoded_data_len;
-            outmap -> gx_pixelmap_width = (GX_VALUE)png -> gx_png_width;
-            outmap -> gx_pixelmap_height = (GX_VALUE)png -> gx_png_height;
+            /* revert filter */
+            status = _gx_image_reader_png_unfilter(&png);
+        }
+
+        if (status == GX_SUCCESS)
+        {
+            outmap -> gx_pixelmap_data = png.gx_png_decoded_data;
+            outmap -> gx_pixelmap_data_size = (ULONG)png.gx_png_decoded_data_len;
+            outmap -> gx_pixelmap_width = (GX_VALUE)png.gx_png_width;
+            outmap -> gx_pixelmap_height = (GX_VALUE)png.gx_png_height;
             outmap -> gx_pixelmap_flags = GX_PIXELMAP_RAW_FORMAT;
 
-            if (png -> gx_png_trans_num)
+            if (png.gx_png_trans_num)
             {
                 outmap -> gx_pixelmap_flags |= GX_PIXELMAP_ALPHA;
-                outmap -> gx_pixelmap_transparent_color = (ULONG)png -> gx_png_trans;
+                outmap -> gx_pixelmap_transparent_color = (ULONG)png.gx_png_trans;
             }
 
-            switch (png -> gx_png_color_type)
+            switch (png.gx_png_color_type)
             {
             case 6:
                 /* Each pixel is an RGB triple, followed by an alpha sample. */
-                if (png -> gx_png_bit_depth == 8)
+                if (png.gx_png_bit_depth == 8)
                 {
                     outmap -> gx_pixelmap_format = GX_IMAGE_FORMAT_32BPP;
                 }
@@ -2194,7 +2225,7 @@ GX_BOOL idat_done = GX_FALSE;
                 break;
             case 4:
                 /* Each pixel is a grayscale sample followed by an alpha sample. */
-                if (png -> gx_png_bit_depth == 8)
+                if (png.gx_png_bit_depth == 8)
                 {
                     outmap -> gx_pixelmap_format = GX_IMAGE_FORMAT_16BPP_GRAY_ALPHA;
                 }
@@ -2207,7 +2238,7 @@ GX_BOOL idat_done = GX_FALSE;
                 break;
             case 3:
                 /* Each pixel is a palette index */
-                switch (png -> gx_png_bit_depth)
+                switch (png.gx_png_bit_depth)
                 {
                 case 1:
                     outmap -> gx_pixelmap_format = GX_IMAGE_FORMAT_1BPP;
@@ -2225,7 +2256,7 @@ GX_BOOL idat_done = GX_FALSE;
                 }
 
                 /* Palette table size is no bigger than 256, aux data size will not overflow. */
-                outmap -> gx_pixelmap_aux_data_size = (ULONG)(png -> gx_png_palette_table_size) * sizeof(GX_COLOR);
+                outmap -> gx_pixelmap_aux_data_size = (ULONG)(png.gx_png_palette_table_size) * sizeof(GX_COLOR);
                 outmap -> gx_pixelmap_aux_data = (GX_UBYTE *)_gx_system_memory_allocator(outmap -> gx_pixelmap_aux_data_size);
 
                 if (!outmap -> gx_pixelmap_aux_data)
@@ -2233,11 +2264,11 @@ GX_BOOL idat_done = GX_FALSE;
                     return GX_SYSTEM_MEMORY_ERROR;
                 }
 
-                memcpy((GX_UBYTE *)outmap -> gx_pixelmap_aux_data, png -> gx_png_palette_table, outmap -> gx_pixelmap_aux_data_size); /* Use case of memcpy is verified. */
+                memcpy((GX_UBYTE *)outmap -> gx_pixelmap_aux_data, png.gx_png_palette_table, outmap -> gx_pixelmap_aux_data_size); /* Use case of memcpy is verified. */
                 break;
             case 2:
                 /* Each pixel is an RGB triple. */
-                if (png -> gx_png_bit_depth == 8)
+                if (png.gx_png_bit_depth == 8)
                 {
                     outmap -> gx_pixelmap_format = GX_IMAGE_FORMAT_24BPP;
                 }
@@ -2249,7 +2280,7 @@ GX_BOOL idat_done = GX_FALSE;
                 break;
             default:
                 /* Each pixel is a grayscale sample. */
-                switch (png -> gx_png_bit_depth)
+                switch (png.gx_png_bit_depth)
                 {
                 case 16:
                     outmap -> gx_pixelmap_format = GX_IMAGE_FORMAT_16BPP_GRAY;
@@ -2274,19 +2305,19 @@ GX_BOOL idat_done = GX_FALSE;
 
         if (status != GX_SUCCESS)
         {
-            if (png -> gx_png_decoded_data)
+            if (png.gx_png_decoded_data)
             {
-                _gx_system_memory_free(png -> gx_png_decoded_data);
+                _gx_system_memory_free(png.gx_png_decoded_data);
             }
 
-            if (png -> gx_png_trans)
+            if (png.gx_png_trans)
             {
-                _gx_system_memory_free(png -> gx_png_trans);
+                _gx_system_memory_free(png.gx_png_trans);
             }
         }
 
-        /* Free png structure instance. */
-        _gx_system_memory_free(png);
+        /* Free scratch buffer. */
+        _gx_system_memory_free(scratch_buffer);
     }
     else
     {

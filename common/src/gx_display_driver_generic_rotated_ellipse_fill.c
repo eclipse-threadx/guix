@@ -221,7 +221,6 @@ GX_BOOL               record;
 
         if (error >= 255)
         {
-            error -= 255;
             y--;
         }
 

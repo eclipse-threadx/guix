@@ -344,7 +344,7 @@ INT           newypos;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_1bpp_pixelmap_simple_rotate      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -383,6 +383,10 @@ INT           newypos;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_1bpp_pixelmap_simple_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -491,8 +495,6 @@ INT           newypos;
     }
     else
     {
-
-        width = pixelmap -> gx_pixelmap_height;
         height = pixelmap -> gx_pixelmap_width;
 
         newxpos = xpos + cx - cy;
@@ -538,7 +540,7 @@ INT           newypos;
 /*                                                                        */
 /*    _gx_display_driver_1bpp_pixelmap_simple_transparent_rotate          */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -577,6 +579,10 @@ INT           newypos;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_1bpp_pixelmap_simple_transparent_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -611,7 +617,6 @@ GX_UBYTE      getmask;
     if (angle == 90)
     {
         width = pixelmap -> gx_pixelmap_height;
-        height = pixelmap -> gx_pixelmap_width;
 
         newxpos = xpos + cx - (width - 1 - cy);
         newypos = ypos + cy - cx;
@@ -629,8 +634,6 @@ GX_UBYTE      getmask;
                 get = (GX_UBYTE *)pixelmap -> gx_pixelmap_data;
                 get += (width - 1 - x) * getstride;
                 get += y >> 2;
-
-
 
                 /* if not transparent, draw pixel. else skip. */
                 if (transmask & *(get))
@@ -702,8 +705,6 @@ GX_UBYTE      getmask;
     }
     else
     {
-
-        width = pixelmap -> gx_pixelmap_height;
         height = pixelmap -> gx_pixelmap_width;
 
         newxpos = xpos + cx - cy;

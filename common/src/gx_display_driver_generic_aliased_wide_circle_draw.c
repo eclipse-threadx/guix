@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_generic_aliased_wide_circle_draw PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -76,6 +76,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            fixed compile warnings,     */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ARC_DRAWING_SUPPORT)
@@ -87,14 +90,14 @@ GX_DISPLAY   *display;
 GX_RECTANGLE *clip;
 GX_BRUSH     *brush;
 INT           brush_width;
-INT           x;
+INT           x = 0;
 INT           x2;
 INT           y;
 INT           y2;
 GX_POINT      point;
 INT           sign[4][2] = {{1, 1}, {-1, 1}, {1, -1}, {-1, -1}};
 INT           index;
-INT           error;
+INT           error = 0;
 INT           loop;
 INT          *pLineEnds;
 INT           ymin;

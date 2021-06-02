@@ -42,7 +42,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_8bpp_pixelmap_raw_resize                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -80,6 +80,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_8bpp_pixelmap_raw_resize(GX_PIXELMAP *src, GX_PIXELMAP *destination, INT width, INT height)
@@ -123,7 +127,6 @@ INT       yy;
     }
 
     put = (GX_UBYTE *)destination -> gx_pixelmap_data;
-    get = (GX_UBYTE *)src -> gx_pixelmap_data;
 
     /* Loop through destination's pixel and fill each pixel with the nearest neighbor.  */
     for (y = 0; y < height; y++)
@@ -149,7 +152,7 @@ INT       yy;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_8bpp_pixelmap_alpha_resize              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -187,6 +190,10 @@ INT       yy;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_8bpp_pixelmap_alpha_resize(GX_PIXELMAP *src, GX_PIXELMAP *destination, INT width, INT height)
@@ -248,9 +255,6 @@ GX_COLOR  blue;
 
     put = (GX_UBYTE *)destination -> gx_pixelmap_data;
     putalpha = (GX_UBYTE *)destination -> gx_pixelmap_aux_data;
-
-    get = (GX_UBYTE *)src -> gx_pixelmap_data;
-    getalpha = (GX_UBYTE *)src -> gx_pixelmap_aux_data;
 
     /* Loop through destination's pixel and fill each pixel with
        the interpolation of 4 nearest neighboring pixels.*/
@@ -437,7 +441,7 @@ UINT status;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_8bit_alphamap_resize                    PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -474,6 +478,10 @@ UINT status;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused variable     */
+/*                                            assignment,                 */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_utility_8bit_alphamap_resize(GX_PIXELMAP *src, GX_PIXELMAP *destination, INT width, INT height)
@@ -518,7 +526,6 @@ INT       alpha;
     }
 
     put = (GX_UBYTE *)destination -> gx_pixelmap_data;
-    get = (GX_UBYTE *)src -> gx_pixelmap_data;
 
     /* Loop through destination's pixel and fill each pixel with
        the interpolation of 4 nearest neighboring pixels.*/

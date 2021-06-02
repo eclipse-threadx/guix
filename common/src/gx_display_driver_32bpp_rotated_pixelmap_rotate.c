@@ -760,8 +760,6 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fco
     }
     else
     {
-
-        width = pixelmap -> gx_pixelmap_width;
         height = pixelmap -> gx_pixelmap_height;
 
         newxpos = xpos + cx - cy;

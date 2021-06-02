@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_timer_start                              PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -76,6 +76,10 @@
 /*                                            added GX_DISABLE_THREADX_   */
 /*                                            TIMER_SOURCE configuration, */
 /*                                            resulting in version 6.1.3  */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            fixed compile warning when  */
+/*                                            ThreadX timer is disabled,  */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_system_timer_start(GX_WIDGET *owner, UINT timer_id, UINT initial_ticks, UINT reschedule_ticks)
@@ -83,7 +87,9 @@ UINT  _gx_system_timer_start(GX_WIDGET *owner, UINT timer_id, UINT initial_ticks
 GX_TIMER *found;
 
 #ifdef GX_THREADX_BINDING
+#ifndef GX_DISABLE_THREADX_TIMER_SOURCE
 UINT tx_timer_active;
+#endif
 #endif
 
     /* check for bad widget pointer */

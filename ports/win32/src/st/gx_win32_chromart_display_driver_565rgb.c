@@ -59,7 +59,7 @@ extern VOID _gx_chromart_simulation_display_driver_565rgb_setup(GX_DISPLAY *disp
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
-/*    win32_synergy_graphics_driver_setup_565rgb                          */
+/*    win32_chromart_graphics_driver_setup_565rgb                         */
 /*                                                                        */
 /*  RELEASE HISTORY                                                       */
 /*                                                                        */
@@ -116,7 +116,7 @@ GX_WIN32_DISPLAY_DRIVER_DATA *instance = (GX_WIN32_DISPLAY_DRIVER_DATA *)display
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _gx_synergy_simulation_display_driver_565rgb_setup                  */
+/*    _gx_chromart_simulation_display_driver_565rgb_setup                 */
 /*                                          guix display setup funciton.  */
 /*    win32_chromart_simulation_565rgb_bitmap_header_create               */
 /*                                          Create bitmap header info     */

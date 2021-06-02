@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_scroll_wheel_timer_event_handler                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -75,6 +75,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            updated with scroll wheel   */
+/*                                            control block members,      */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_scroll_wheel_timer_event_handler(GX_SCROLL_WHEEL *wheel, UINT timer_id)
@@ -105,8 +109,8 @@ GX_BOOL    generate_event = GX_FALSE;
                 shift = (GX_VALUE)(-wheel -> gx_scroll_wheel_row_height / 3);
             }
         }
-        wheel -> gx_scroll_wheel_selected_yshift = (GX_VALUE)(wheel -> gx_scroll_wheel_selected_yshift - shift);
-        _gx_system_dirty_mark(widget);
+
+        wheel -> gx_scroll_wheel_scroll(wheel, (GX_VALUE)(-shift));
         break;
 
     case GX_FLICK_TIMER:
@@ -121,7 +125,7 @@ GX_BOOL    generate_event = GX_FALSE;
             wheel -> gx_scroll_wheel_shift_error = 0;
         }
 
-        _gx_scroll_wheel_scroll((GX_SCROLL_WHEEL *)wheel, (GX_VALUE)shift);
+        wheel -> gx_scroll_wheel_scroll(wheel, (GX_VALUE)shift);
 
         if (wheel -> gx_scroll_wheel_animation_steps > 0)
         {
@@ -131,7 +135,7 @@ GX_BOOL    generate_event = GX_FALSE;
             wheel -> gx_scroll_wheel_animation_speed = (GX_VALUE)(wheel -> gx_scroll_wheel_animation_speed + increment);
         }
 
-        if (!(wheel -> gx_widget_style & GX_STYLE_WRAP))
+        if (!wheel -> gx_scroll_wheel_wrap_style_check(wheel))
         {
             if ((wheel -> gx_scroll_wheel_selected_row == 0 && wheel -> gx_scroll_wheel_selected_yshift > 0) ||
                 (wheel -> gx_scroll_wheel_selected_row == wheel -> gx_scroll_wheel_total_rows - 1 &&
@@ -162,11 +166,11 @@ GX_BOOL    generate_event = GX_FALSE;
 
         if (wheel -> gx_scroll_wheel_shift_error)
         {
-            _gx_scroll_wheel_scroll((GX_SCROLL_WHEEL *)wheel, wheel -> gx_scroll_wheel_shift_error);
+            wheel -> gx_scroll_wheel_scroll(wheel, wheel -> gx_scroll_wheel_shift_error);
             wheel -> gx_scroll_wheel_shift_error = 0;
         }
 
-        _gx_scroll_wheel_scroll((GX_SCROLL_WHEEL *)wheel, wheel -> gx_scroll_wheel_animation_speed);
+        wheel -> gx_scroll_wheel_scroll(wheel, wheel -> gx_scroll_wheel_animation_speed);
 
         if (wheel -> gx_scroll_wheel_animation_steps == 0)
         {
@@ -414,7 +418,7 @@ GX_RECTANGLE dirty;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_scroll_wheel_event_process                      PORTABLE C      */
-/*                                                           6.1.4        */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -464,6 +468,10 @@ GX_RECTANGLE dirty;
 /*                                            GX_STYLE_SCROLL_WHEEL_DRAG  */
 /*                                            to GX_STATUS_TRACKING_PEN,  */
 /*                                            resulting in version 6.1.4  */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            updated with scroll wheel   */
+/*                                            control block change,       */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_scroll_wheel_event_process(GX_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr)
@@ -488,7 +496,7 @@ GX_VALUE shift;
             shift = (GX_VALUE)(event_ptr -> gx_event_payload.gx_event_pointdata.gx_point_y - wheel -> gx_window_move_start.gx_point_y);
             if (shift)
             {
-                _gx_scroll_wheel_scroll((GX_SCROLL_WHEEL *)wheel, shift);
+                wheel -> gx_scroll_wheel_scroll(wheel, shift);
 
                 wheel -> gx_window_move_start = event_ptr -> gx_event_payload.gx_event_pointdata;
             }
