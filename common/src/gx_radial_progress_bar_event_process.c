@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_radial_progress_bar_event_process               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.8        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -75,6 +75,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  08-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            removed size update logic   */
+/*                                            from GX_EVENT_SHOW entry,   */
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_radial_progress_bar_event_process(GX_RADIAL_PROGRESS_BAR *progress_bar, GX_EVENT *event_ptr)
@@ -94,7 +98,6 @@ GX_RADIAL_PROGRESS_BAR_INFO *info;
     switch (event_ptr -> gx_event_type)
     {
     case GX_EVENT_SHOW:
-        _gx_radial_progress_bar_size_update(progress_bar);
         _gx_widget_event_process((GX_WIDGET *)progress_bar, event_ptr);
         break;
 

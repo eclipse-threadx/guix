@@ -1402,7 +1402,6 @@
     <ClInclude Include="..\..\..\..\common\inc\gx_system_rtos_bind.h" />
     <ClInclude Include="..\..\..\..\common\inc\gx_text_input_cursor.h" />
     <ClInclude Include="..\..\..\..\common\inc\gx_tree_view.h" />
-    <ClInclude Include="..\..\..\..\common\inc\gx_user.h" />
     <ClInclude Include="..\..\..\..\common\inc\gx_utility.h" />
     <ClInclude Include="..\..\..\..\common\inc\gx_widget.h" />
     <ClInclude Include="..\..\..\..\common\inc\gx_window.h" />

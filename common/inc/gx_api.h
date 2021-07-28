@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.1.7        */
+/*                                                           6.1.8        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -72,6 +72,9 @@
 /*                                            graphics accelerator        */
 /*                                            support,                    */
 /*                                            resulting in version 6.1.7  */
+/*  08-02-2021     Ting Zhu                   Modified comment(s), added  */
+/*                                            GX_TICKS_SECOND definition  */
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -95,7 +98,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 1
-#define GUIX_PATCH_VERSION 7
+#define GUIX_PATCH_VERSION 8
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -178,6 +181,10 @@ typedef struct GX_STRING_STRUCT
 /* Derive GX_SYSTEM_TIMER_TICKS based on GX_SYSTEM_TIMER_MS value. */
 #ifndef GX_SYSTEM_TIMER_TICKS
 #define GX_SYSTEM_TIMER_TICKS     ((GX_SYSTEM_TIMER_MS * TX_TIMER_TICKS_PER_SECOND) / 1000)
+#endif
+
+#ifndef GX_TICKS_SECOND
+#define GX_TICKS_SECOND           (1000 / GX_SYSTEM_TIMER_MS)
 #endif
 
 #endif /* GX_THREADX_BINDING */
@@ -301,7 +308,7 @@ typedef struct GX_STRING_STRUCT
 
 /* defines for backwards compatiblity */
 #ifndef GX_RENESAS_DAVE2D_DRAW
-#ifdef  GX_USE_SYNERGY_DRAW
+#ifdef  GX_USE_SYNERGY_DRW
 #define GX_RENESAS_DAVE2D_DRAW
 #endif
 #endif
@@ -811,6 +818,7 @@ typedef struct GX_STRING_STRUCT
 /* Define Radial Progress Bar style flags.  */
 #define GX_STYLE_RADIAL_PROGRESS_ALIAS      0x00000200UL
 #define GX_STYLE_RADIAL_PROGRESS_ROUND      0x00000400UL
+#define GX_STYLE_RADIAL_PROGRESS_NO_BACKTRACK 0x00000800UL
 
 /* Define Text alignment styles.  */
 
@@ -1200,10 +1208,7 @@ typedef struct GX_PIXELMAP_STRUCT
 #define GX_PIXELMAP_ALPHA          0x04                         /* Pixelmap has alpha channel               */
 #define GX_PIXELMAP_TARGA          0x08                         /* Pixelmap uses Targa format compresssion  */
 #define GX_PIXELMAP_RAW_FORMAT     0x10                         /* RAW JPG/PNG format                       */
-
-#if defined(GX_RENESAS_DAVE2D_DRAW)
 #define GX_PIXELMAP_DYNAMICALLY_ALLOCATED  0x20                 /* Pixelmap is dynamically allocated        */
-#endif
 
 #define GX_PIXELMAP_ROTATED_CW     0x40
 #define GX_PIXELMAP_ROTATED_CCW    0x80

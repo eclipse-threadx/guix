@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.0.0                                               */
-/*  Date (dd.mm.yyyy):  9.11.2020   Time (hh:mm): 18:07                        */
+/*  GUIX Studio Revision 6.1.8.0                                               */
+/*  Date (dd.mm.yyyy): 26. 7.2021   Time (hh:mm): 15:32                        */
 /*******************************************************************************/
 
 
@@ -22,46 +22,24 @@ extern   "C" {
 
 /* Define widget ids                                                           */
 
-#define ID_TEMPERATURE_RADIAL_SLIDER 1
-#define ID_TEMPERATURE_COLD 2
-#define ID_TEMPERATURE_HOT 3
-#define ID_WATER_LEVEL_SLIDER 4
-#define ID_WATER_LEVEL_EXTRA_HIGH 5
-#define ID_WATER_LEVEL_HIGH 6
-#define ID_WATER_LEVEL_MEDIUM 7
-#define ID_WATER_LEVEL_LOW 8
-#define ID_WATER_LEVEL_VERY_LOW 9
-#define ID_GARMENTS_ON_RADIAL_SLIDER 10
-#define ID_GARMENTS_MODE_DENIM 11
-#define ID_GARMENTS_MODE_BABY_CARE 12
-#define ID_GARMENTS_MODE_WORKOUT_CLOTHES 13
-#define ID_GARMENTS_MODE_LIGHT_COLORS 14
-#define ID_GARMENTS_MODE_HAND_WASH 15
-#define ID_GARMENTS_MODE_WOOL 16
-#define ID_GARMENTS_MODE_SILK 17
-#define ID_GARMENTS_MODE_BEDDING 18
-#define ID_GARMENTS_MODE_DARK_COLORS 19
-#define ID_GARMENTS_MODE_LINEN 20
-#define ID_GARMENTS_MODE_SYNTHETICS 21
-#define ID_GARMENTS_MODE_COTTON 22
-#define ID_WASHER_ON_RADIAL_SLIDER 23
-#define ID_WASHER_MODE_NORMAL 24
-#define ID_WASHER_MODE_PERM_PRESS 25
-#define ID_WASHER_MODE_RINSE_SPIN 26
-#define ID_WASHER_MODE_VERY_LIGHT 27
-#define ID_WASHER_MODE_NO_SPIN 28
-#define ID_WASHER_MODE_SPIN 29
-#define ID_WASHER_MODE_SOAK 30
-#define ID_WASHER_MODE_QUICK_WASH 31
-#define ID_WASHER_MODE_LIGHT 32
-#define ID_WASHER_MODE_MEDIUM 33
-#define ID_WASHER_MODE_FAST 34
-#define ID_WASHER_MODE_VERY_FAST 35
-#define ID_BTN_WASHER_ON 36
-#define ID_BTN_GARMENTS 37
-#define ID_BTN_WATER_LEVEL 38
-#define ID_BTN_TEMPERATURE 39
-#define ID_BTN_POWER_ON_OFF 40
+#define ID_BTN_QUICK 1
+#define ID_BTN_DEEP 2
+#define ID_BTN_QUICK_SMALL 3
+#define ID_BTN_DEEP_SMALL 4
+#define ID_BTN_ECO 5
+#define ID_BTN_ECO_SMALL 6
+#define ID_WATER_LEVEL_SLIDER 7
+#define ID_BTN_MAX 8
+#define ID_BTN_HIGH 9
+#define ID_BTN_MEDIUM 10
+#define ID_BTN_LOW 11
+#define ID_BTN_MIN 12
+#define ID_TEMPERATURE_SLIDER 13
+#define ID_WASH_CYCLE_SLIDER 14
+#define ID_BTN_WASH_CYCLE 15
+#define ID_BTN_TEMPERATURE 16
+#define ID_BTN_WATER_LEVEL 17
+#define ID_BTN_PLAY 18
 
 
 /* Define animation ids                                                        */
@@ -108,6 +86,15 @@ typedef struct
 
 typedef struct
 {
+    GX_RESOURCE_ID string_id; 
+    GX_RESOURCE_ID font_id;
+    GX_RESOURCE_ID normal_text_color_id;
+    GX_RESOURCE_ID selected_text_color_id;
+    GX_RESOURCE_ID disabled_text_color_id;
+} GX_TEXT_BUTTON_PROPERTIES;
+
+typedef struct
+{
     GX_RESOURCE_ID normal_pixelmap_id;
     GX_RESOURCE_ID selected_pixelmap_id;
     GX_RESOURCE_ID disabled_pixelmap_id;
@@ -118,23 +105,6 @@ typedef struct
     GX_RESOURCE_ID normal_pixelmap_id;
     GX_RESOURCE_ID selected_pixelmap_id;
 } GX_ICON_PROPERTIES;
-
-typedef struct
-{
-    int min_val;
-    int max_val;
-    int current_val;
-    int increment;
-    GX_VALUE min_travel;
-    GX_VALUE max_travel;
-    GX_VALUE needle_width;
-    GX_VALUE needle_height;
-    GX_VALUE needle_inset;
-    GX_VALUE needle_hotspot;
-    GX_RESOURCE_ID lower_pixelmap;
-    GX_RESOURCE_ID upper_pixelmap;
-    GX_RESOURCE_ID needle_pixelmap;
-} GX_PIXELMAP_SLIDER_PROPERTIES;
 
 typedef struct
 {
@@ -178,135 +148,134 @@ typedef struct
     GX_RESOURCE_ID wallpaper_id;
 } GX_WINDOW_PROPERTIES;
 
+typedef struct
+{
+   GX_CONST GX_STUDIO_WIDGET *base_info;
+   UINT (*base_create_function) (GX_CONST struct GX_STUDIO_WIDGET_STRUCT *, GX_WIDGET *, GX_WIDGET *);
+   GX_RECTANGLE size;
+} GX_TEMPLATE_PROPERTIES;
+
 
 /* Declare top-level control blocks                                            */
 
-typedef struct TEMPERATURE_WINDOW_CONTROL_BLOCK_STRUCT
+typedef struct TEMPLATE_MODE_BTN_SMALL_CONTROL_BLOCK_STRUCT
+{
+    GX_PIXELMAP_BUTTON_MEMBERS_DECLARE
+    GX_PROMPT template_mode_btn_small_mode_label;
+    GX_PROMPT template_mode_btn_small_mode_label_4;
+    GX_NUMERIC_PROMPT template_mode_btn_small_total_time;
+    GX_PROMPT template_mode_btn_small_mode_label_5;
+} TEMPLATE_MODE_BTN_SMALL_CONTROL_BLOCK;
+
+typedef struct TEMPLATE_MODE_BTN_CONTROL_BLOCK_STRUCT
+{
+    GX_PIXELMAP_BUTTON_MEMBERS_DECLARE
+    GX_PROMPT template_mode_btn_mode_label;
+    GX_PROMPT template_mode_btn_wash_label;
+    GX_PROMPT template_mode_btn_min_label;
+    GX_NUMERIC_PROMPT template_mode_btn_total_time;
+    GX_RADIAL_PROGRESS_BAR template_mode_btn_mode_progress_bar;
+    GX_NUMERIC_PROMPT template_mode_btn_minute;
+    GX_NUMERIC_PROMPT template_mode_btn_second;
+    GX_PROMPT template_mode_btn_prompt_3;
+    GX_PROMPT template_mode_btn_prompt_2;
+} TEMPLATE_MODE_BTN_CONTROL_BLOCK;
+
+typedef struct MODE_SELECT_WINDOW_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
-    GX_RADIAL_SLIDER temperature_window_radial_slider;
-    GX_PROMPT temperature_window_temperature_label;
-    GX_PROMPT temperature_window_water_label;
-    GX_PROMPT temperature_window_temperature_value;
-    GX_PROMPT temperature_window_water_label_3;
-    GX_PROMPT temperature_window_water_t_cold;
-    GX_PROMPT temperature_window_water_t_hot;
-} TEMPERATURE_WINDOW_CONTROL_BLOCK;
+    TEMPLATE_MODE_BTN_CONTROL_BLOCK mode_select_window_btn_quick;
+    TEMPLATE_MODE_BTN_CONTROL_BLOCK mode_select_window_btn_deep;
+    TEMPLATE_MODE_BTN_SMALL_CONTROL_BLOCK mode_select_window_btn_quick_small;
+    TEMPLATE_MODE_BTN_SMALL_CONTROL_BLOCK mode_select_window_btn_deep_small;
+    TEMPLATE_MODE_BTN_CONTROL_BLOCK mode_select_window_btn_eco;
+    TEMPLATE_MODE_BTN_SMALL_CONTROL_BLOCK mode_select_window_btn_eco_small;
+} MODE_SELECT_WINDOW_CONTROL_BLOCK;
 
 typedef struct WATER_LEVEL_WINDOW_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
-    GX_ICON water_level_window_water_level_slider_background;
-    GX_PIXELMAP_SLIDER water_level_window_water_level_slider;
-    GX_PROMPT water_level_window_water_level_label;
-    GX_PROMPT water_level_window_water_level_value;
-    GX_PROMPT water_level_window_percent_label;
-    GX_PROMPT water_level_window_water_level_extra_high;
-    GX_PROMPT water_level_window_water_level_high;
-    GX_PROMPT water_level_window_water_level_medium;
-    GX_PROMPT water_level_window_water_level_low;
-    GX_PROMPT water_level_window_water_level_very_low;
+    GX_RADIAL_SLIDER water_level_window_water_level_slider;
+    GX_NUMERIC_PROMPT water_level_window_water_level_value;
+    GX_PROMPT water_level_window_percentage_flag;
+    GX_TEXT_BUTTON water_level_window_btn_max;
+    GX_TEXT_BUTTON water_level_window_btn_high;
+    GX_TEXT_BUTTON water_level_window_btn_medium;
+    GX_TEXT_BUTTON water_level_window_btn_low;
+    GX_TEXT_BUTTON water_level_window_btn_min;
 } WATER_LEVEL_WINDOW_CONTROL_BLOCK;
 
-typedef struct GARMENTS_WINDOW_CONTROL_BLOCK_STRUCT
+typedef struct TEMPERATURE_WINDOW_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
-    GX_RADIAL_SLIDER garments_window_radial_slider;
-    GX_WINDOW garments_window_icon_window;
-    GX_PROMPT garments_window_mode_denim;
-    GX_PROMPT garments_window_mode_baby_care;
-    GX_PROMPT garments_window_mode_workout_clothes;
-    GX_PROMPT garments_window_mode_light_colors;
-    GX_PROMPT garments_window_mode_hand_wash;
-    GX_PROMPT garments_window_mode_wool;
-    GX_PROMPT garments_window_mode_silk;
-    GX_PROMPT garments_window_mode_bedding;
-    GX_PROMPT garments_window_mode_dark_colors;
-    GX_PROMPT garments_window_mode_linen;
-    GX_PROMPT garments_window_mode_synthetics;
-    GX_PROMPT garments_window_mode_cotton;
-} GARMENTS_WINDOW_CONTROL_BLOCK;
+    GX_RADIAL_SLIDER temperature_window_temperature_slider;
+    GX_NUMERIC_PROMPT temperature_window_temperature_value;
+    GX_PROMPT temperature_window_temperature_flag;
+} TEMPERATURE_WINDOW_CONTROL_BLOCK;
+
+typedef struct WASH_CYCLE_WINDOW_CONTROL_BLOCK_STRUCT
+{
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_RADIAL_SLIDER wash_cycle_window_wash_cycle_slider;
+    GX_NUMERIC_PROMPT wash_cycle_window_minute;
+    GX_NUMERIC_PROMPT wash_cycle_window_second;
+    GX_ICON wash_cycle_window_icon_1;
+    GX_ICON wash_cycle_window_icon_2;
+} WASH_CYCLE_WINDOW_CONTROL_BLOCK;
 
 typedef struct MAIN_SCREEN_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
-    GX_ICON main_screen_expresslogic;
-    GX_PIXELMAP_BUTTON main_screen_home;
-    GX_PROMPT main_screen_time;
-    GX_PROMPT main_screen_am_pm;
-    GX_PROMPT main_screen_day_of_week;
-    GX_PROMPT main_screen_date;
-    GX_WINDOW main_screen_washer_on_window;
-    GX_RADIAL_SLIDER main_screen_radial_slider;
-    GX_PROMPT main_screen_remainning_time;
-    GX_PROMPT main_screen_remain_hour_label;
-    GX_PROMPT main_screen_washer_mode;
-    GX_PROMPT main_screen_remain_minute_label;
-    GX_NUMERIC_PROMPT main_screen_remain_hour;
-    GX_NUMERIC_PROMPT main_screen_remain_minute;
-    GX_PROMPT main_screen_mode_normal;
-    GX_PROMPT main_screen_mode_perm_press;
-    GX_PROMPT main_screen_mode_rinse_spin;
-    GX_PROMPT main_screen_mode_very_light;
-    GX_PROMPT main_screen_mode_no_spin;
-    GX_PROMPT main_screen_mode_spin;
-    GX_PROMPT main_screen_mode_soak;
-    GX_PROMPT main_screen_mode_quick_wash;
-    GX_PROMPT main_screen_mode_light;
-    GX_PROMPT main_screen_mode_medium;
-    GX_PROMPT main_screen_mode_fast;
-    GX_PROMPT main_screen_mode_very_fast;
-    GX_PIXELMAP_BUTTON main_screen_button_washer_on;
-    GX_ICON main_screen_washer_on_icon;
-    GX_PROMPT main_screen_washer_on_label;
-    GX_PROMPT main_screen_page_name;
-    GX_PIXELMAP_BUTTON main_screen_button_garments;
-    GX_ICON main_screen_garments_icon;
-    GX_PROMPT main_screen_garments_label;
-    GX_PIXELMAP_BUTTON main_screen_button_water_level;
-    GX_ICON main_screen_water_level_icon;
+    GX_ICON main_screen_logo;
+    GX_BUTTON main_screen_btn_wash_cycle;
+    GX_PROMPT main_screen_wash_cycle_mode;
+    GX_PROMPT main_screen_wash_cycle_lable;
+    GX_BUTTON main_screen_btn_temperature;
+    GX_PROMPT main_screen_prompt_2;
+    GX_PROMPT main_screen_temperature_lable;
+    GX_NUMERIC_PROMPT main_screen_temperature_value;
+    GX_BUTTON main_screen_btn_water_level;
+    GX_PROMPT main_screen_prompt_4;
     GX_PROMPT main_screen_water_level_label;
-    GX_PROMPT main_screen_water_level_value;
-    GX_PROMPT main_screen_prompt_9;
-    GX_PIXELMAP_BUTTON main_screen_button_temperature;
-    GX_ICON main_screen_temperature_icon;
-    GX_PROMPT main_screen_temperature_label;
-    GX_PROMPT main_screen_temperature_value;
-    GX_PROMPT main_screen_prompt_8;
-    GX_PIXELMAP_BUTTON main_screen_button_power_on_off;
-    GX_ICON main_screen_power_off_icon;
-    GX_PROMPT main_screen_power_off_label;
-    GX_ICON main_screen_icon_1;
-    GX_PIXELMAP_SLIDER main_screen_pixelmap_slider;
+    GX_NUMERIC_PROMPT main_screen_water_level_value;
+    GX_PIXELMAP_BUTTON main_screen_btn_play;
+    GX_PROGRESS_BAR main_screen_wash_cycle_progress_bar;
+    GX_PROMPT main_screen_label_1_soak;
+    GX_PROMPT main_screen_label_2_spin;
+    GX_PROMPT main_screen_label_3_wash;
+    GX_PROMPT main_screen_label_4_spin;
+    GX_PROMPT main_screen_label_5_rinse;
+    GX_PROMPT main_screen_label_6_spin;
 } MAIN_SCREEN_CONTROL_BLOCK;
 
 
 /* extern statically defined control blocks                                    */
 
 #ifndef GUIX_STUDIO_GENERATED_FILE
-extern TEMPERATURE_WINDOW_CONTROL_BLOCK temperature_window;
+extern TEMPLATE_MODE_BTN_SMALL_CONTROL_BLOCK template_mode_btn_small;
+extern TEMPLATE_MODE_BTN_CONTROL_BLOCK template_mode_btn;
+extern MODE_SELECT_WINDOW_CONTROL_BLOCK mode_select_window;
 extern WATER_LEVEL_WINDOW_CONTROL_BLOCK water_level_window;
-extern GARMENTS_WINDOW_CONTROL_BLOCK garments_window;
+extern TEMPERATURE_WINDOW_CONTROL_BLOCK temperature_window;
+extern WASH_CYCLE_WINDOW_CONTROL_BLOCK wash_cycle_window;
 extern MAIN_SCREEN_CONTROL_BLOCK main_screen;
 #endif
 
 /* Declare event process functions, draw functions, and callback functions     */
 
+VOID time_format(GX_NUMERIC_PROMPT *, INT);
+UINT mode_select_window_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT water_level_window_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
 UINT temperature_window_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
 VOID temperature_window_draw(GX_WINDOW *widget);
-UINT water_level_window_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID water_level_window_draw(GX_WINDOW *widget);
-UINT garments_window_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID window_alpha_draw(GX_WINDOW *widget);
-VOID garments_mode_animation_update(GX_RADIAL_SLIDER *slider);
-VOID icon_window_draw(GX_WINDOW *widget);
+VOID temperature_slider_animation_callback(GX_RADIAL_SLIDER *slider);
+UINT wash_cycle_window_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+VOID wash_cycle_window_draw(GX_WINDOW *widget);
+VOID wash_cycle_slider_draw(GX_RADIAL_SLIDER *widget);
 UINT main_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
-UINT washer_on_window_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID washer_mode_animation_update(GX_RADIAL_SLIDER *slider);
-VOID minute_prompt_format(GX_NUMERIC_PROMPT *, INT);
-VOID pixelmap_button_alpha_draw(GX_PIXELMAP_BUTTON *widget);
-VOID prompt_alpha_draw(GX_PROMPT *widget);
-VOID pixelmap_slider_alpha_draw(GX_PIXELMAP_SLIDER *widget);
+VOID btn_text_draw(GX_PROMPT *widget);
+VOID btn_numeric_text_draw(GX_NUMERIC_PROMPT *widget);
+VOID wash_cycle_progress_bar_draw(GX_PROGRESS_BAR *widget);
 
 /* Declare the GX_STUDIO_DISPLAY_INFO structure                                */
 
@@ -333,13 +302,17 @@ typedef struct GX_STUDIO_DISPLAY_INFO_STRUCT
 
 /* Declare Studio-generated functions for creating top-level widgets           */
 
+UINT gx_studio_button_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
+UINT gx_studio_text_button_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_pixelmap_button_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_icon_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
-UINT gx_studio_pixelmap_slider_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
+UINT gx_studio_progress_bar_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
+UINT gx_studio_radial_progress_bar_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_radial_slider_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_prompt_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_numeric_prompt_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_window_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
+UINT gx_studio_template_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 GX_WIDGET *gx_studio_widget_create(GX_BYTE *storage, GX_CONST GX_STUDIO_WIDGET *definition, GX_WIDGET *parent);
 UINT gx_studio_named_widget_create(char *name, GX_WIDGET *parent, GX_WIDGET **new_widget);
 UINT gx_studio_display_configure(USHORT display, UINT (*driver)(GX_DISPLAY *), GX_UBYTE language, USHORT theme, GX_WINDOW_ROOT **return_root);

@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                           Win32/Visual     */
-/*                                                           6.1          */
+/*                                                           6.1.8        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -39,6 +39,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
+/*  08-02-2021     Kenneth Maxwell          Modified comment(s), removed  */
+/*                                            GX_SYSTEM_TIMER_TICKS and   */
+/*                                            GX_TICKS_SECOND definitions,*/
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -73,17 +77,12 @@ typedef SHORT  GX_VALUE;
 
 /* Define the basic system parameters.  */
 
-#ifndef GX_TICKS_SECOND
-#define GX_TICKS_SECOND                     50
-#endif
 
 #define GX_CONST                            const
 
 #define GX_INCLUDE_DEFAULT_COLORS
 
 #define GX_MAX_ACTIVE_TIMERS                32
-
-#define GX_SYSTEM_TIMER_TICKS               2           /*  20 ms */
 
 #define GX_MAX_VIEWS                        32
 
@@ -101,7 +100,7 @@ typedef SHORT  GX_VALUE;
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Win32/Standalone/Visual Version 6.1 *";
+    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Win32/Standalone/Visual Version 6.1.8 *";
 #else
 extern  CHAR _gx_version_id[];
 #endif

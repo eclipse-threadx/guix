@@ -1792,7 +1792,7 @@ GX_UBYTE blue;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_paeth_predictor                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.8        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1826,6 +1826,9 @@ GX_UBYTE blue;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  08-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            replaced abs with GX_ABS,   */
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 static GX_UBYTE _gx_image_reader_png_paeth_predictor(GX_UBYTE a, GX_UBYTE b, GX_UBYTE c)
@@ -1834,9 +1837,9 @@ INT p;
 INT pa, pb, pc;
 
     p = a + b - c;
-    pa = abs(p - a);
-    pb = abs(p - b);
-    pc = abs(p - c);
+    pa = GX_ABS(p - a);
+    pb = GX_ABS(p - b);
+    pc = GX_ABS(p - c);
 
     /*return nearest of a, b, c */
 

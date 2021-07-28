@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
 
 # Set up the project
 project(guix
-    VERSION 6.0.0 
     LANGUAGES C ASM
 )
 
@@ -26,7 +25,11 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 set(CUSTOM_INC_DIR ${CMAKE_CURRENT_BINARY_DIR}/custom_inc)
 
 # Pick up the port specific stuff first
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/ports/${THREADX_ARCH}/${THREADX_TOOLCHAIN})
+if(DEFINED GUIX_CUSTOM_PORT)
+    add_subdirectory(${GUIX_CUSTOM_PORT} guix_port)
+else()
+    add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/ports/${THREADX_ARCH}/${THREADX_TOOLCHAIN})
+endif()
 
 # Then the common files
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/common)

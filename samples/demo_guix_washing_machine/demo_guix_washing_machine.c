@@ -2,81 +2,26 @@
 
 #include "demo_guix_washing_machine.h"
 
-/* Define the ThreadX demo thread control block and stack.  */
-TX_BYTE_POOL       memory_pool;
+#define MEMORY_BUFFER_SIZE (MAIN_DISPLAY_X_RESOLUTION * MAIN_DISPLAY_Y_RESOLUTION * 4)
+#define ID_TIMER_WAVE_ANIMATION         1
+#define ID_TIMER_PROGRESS_BAR_ANIMATION 2
+#define ID_TIMER_TIME                   3
 
-#define POWER_ON_OFF_TIMER  10
-#define CLOCK_TIMER         20
+#define PROGRESS_DOT_SPACE   9
+#define PROGRESS_ALPHA_SHIFT 10
 
-#define SCRATCHPAD_PIXELS (MAIN_DISPLAY_X_RESOLUTION * MAIN_DISPLAY_Y_RESOLUTION)
+/* Define variables.  */
+TX_BYTE_POOL    memory_pool;
+GX_CHAR         memory_buffer[MEMORY_BUFFER_SIZE];
+GX_WINDOW_ROOT *root;
 
-/* Define memory for memory pool. */
-GX_COLOR           scratchpad[SCRATCHPAD_PIXELS];
-
-GX_WINDOW_ROOT    *root;
-
-/* Define canvas blend alpha. */
-INT                blend_alpha = 255;
-
-/* Define canvas blend alpha increment. */
-INT                blend_alpha_increment = 0;
-
-/* Define power on/off callback. */
-VOID             (*power_on_callback)() = GX_NULL;
-VOID             (*power_off_callback)() = GX_NULL;
-
-/* Define power status. */
-GX_BOOL            power_on = GX_TRUE;
+INT             wave_rotation_angle = 0; /* Used for wave animation in water cycle and temperature window.  */
+INT             wash_cycle_remain_seconds = 3600; /* Wash cyle remain time.  */
+INT             progress_alpha_start = 0; /* Used for progress bar animation.  */
 
 /* Define prototypes.   */
 VOID  guix_setup(void);
-extern UINT win32_graphics_driver_setup_24xrgb(GX_DISPLAY *display);
-VOID clock_update();
-VOID main_screen_widgets_enable_disable(INT status);
-
-static GX_CONST GX_CHAR day_name_sun[] = "Sunday";
-static GX_CONST GX_CHAR day_name_mon[] = "Monday";
-static GX_CONST GX_CHAR day_name_tue[] = "Tuesday";
-static GX_CONST GX_CHAR day_name_wed[] = "Wednesday";
-static GX_CONST GX_CHAR day_name_thu[] = "Thursday";
-static GX_CONST GX_CHAR day_name_fri[] = "Friday";
-static GX_CONST GX_CHAR day_name_sat[] = "Saturday";
-
-const GX_STRING day_names[7] = {
-    {day_name_sun, sizeof(day_name_sun) - 1},
-    {day_name_mon, sizeof(day_name_mon) - 1},
-    {day_name_tue, sizeof(day_name_tue) - 1},
-    {day_name_wed, sizeof(day_name_wed) - 1},
-    {day_name_thu, sizeof(day_name_thu) - 1},
-    {day_name_fri, sizeof(day_name_fri) - 1},
-    {day_name_sat, sizeof(day_name_sat) - 1}
-};
-
-
-const GX_CHAR *month_names[12] = {
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-};
-
-GX_WIDGET *main_screen_enable_disable_widgets[] = {
-    (GX_WIDGET *)&main_screen.main_screen_pixelmap_slider,
-    (GX_WIDGET *)&main_screen.main_screen_page_name,
-    (GX_WIDGET *)&main_screen.main_screen_button_washer_on,
-    (GX_WIDGET *)&main_screen.main_screen_button_garments,
-    (GX_WIDGET *)&main_screen.main_screen_button_water_level,
-    (GX_WIDGET *)&main_screen.main_screen_button_temperature,
-    GX_NULL
-};
+extern UINT win32_graphics_driver_setup_24xrgb(GX_DISPLAY* display);
 
 /******************************************************************************************/
 /* Application entry.                                                                     */
@@ -115,11 +60,22 @@ void memory_free(VOID *mem)
 VOID tx_application_define(void *first_unused_memory)
 {
 
-    /* create byte pool. */
-    tx_byte_pool_create(&memory_pool, "scratchpad", scratchpad,
-        SCRATCHPAD_PIXELS * sizeof(GX_COLOR));
+    /* Create byte pool. */
+    tx_byte_pool_create(&memory_pool, "memory_buffer", memory_buffer, MEMORY_BUFFER_SIZE);
 
     guix_setup();
+}
+
+/******************************************************************************************/
+/* Define custom button selection function to remove GX_STYLE_BUTTON_PUSHED style before  */
+/* call the default button select route, so that button selected event can be send no     */
+/* mater the selected button is pushed already or not.                                    */
+/******************************************************************************************/
+VOID repeat_selection_style_button_select(GX_WIDGET *button)
+{
+    button->gx_widget_style &= ~GX_STYLE_BUTTON_PUSHED;
+
+    gx_button_select((GX_BUTTON *)button);
 }
 
 /******************************************************************************************/
@@ -131,178 +87,189 @@ VOID  guix_setup()
     /* Initialize GUIX. */
     gx_system_initialize();
 
-    /* install our memory allocator and de-allocator */
+    /* Install memory allocator and de-allocator.  */
     gx_system_memory_allocator_set(memory_allocate, memory_free);
 
     /* Configure display. */
     gx_studio_display_configure(MAIN_DISPLAY, win32_graphics_driver_setup_24xrgb,
-        LANGUAGE_ENGLISH, MAIN_DISPLAY_THEME_1, &root);
+                                LANGUAGE_ENGLISH, MAIN_DISPLAY_THEME_1, &root);
 
     /* Create the main screen and attach it to root window. */
     gx_studio_named_widget_create("main_screen", (GX_WIDGET *)root, GX_NULL);
 
-    /* Create garments window. */
-    gx_studio_named_widget_create("garments_window", GX_NULL, GX_NULL);
+    /* Change button select handler of wash cycle button.  */
+    main_screen.main_screen_btn_wash_cycle.gx_button_select_handler = repeat_selection_style_button_select;
 
-    /* Create water level window. */
-    gx_studio_named_widget_create("water_level_window", GX_NULL, GX_NULL);
+    /* Create wash cycle window. */
+    gx_studio_named_widget_create("wash_cycle_window", (GX_WIDGET *)&main_screen, GX_NULL);
+
+    /* Initialize wash cycle window.  */
+    wash_cycle_window_init(wash_cycle_remain_seconds);
+
+    /* Create mode select window. */
+    gx_studio_named_widget_create("mode_select_window", GX_NULL, GX_NULL);
+
+    /* Initialize mode select window.  */
+    mode_select_window_init();
 
     /* Create temperature window. */
     gx_studio_named_widget_create("temperature_window", GX_NULL, GX_NULL);
 
-    /* Show the root window to make it and main screen visible.  */
+    /* Create water level window. */
+    gx_studio_named_widget_create("water_level_window", GX_NULL, GX_NULL);
+
+    /* Initialize water level window.  */
+    water_level_window_init();
+
+    /* Show the root window to make it and wash cycle screen visible.  */
     gx_widget_show(root);
 
-    /* Let GUIX run */
+    /* Let GUIX run.  */
     gx_system_start();
+}
+
+/******************************************************************************************/
+/* Mark wave animation parent dirty.                                                      */
+/******************************************************************************************/
+VOID mark_wave_animation_parent_dirty()
+{
+    if (wash_cycle_window.gx_widget_status & GX_STATUS_VISIBLE)
+    {
+        /* Mark wash cycle window dirty.  */
+        gx_system_dirty_mark((GX_WIDGET*)&wash_cycle_window);
+    }
+    else if (temperature_window.gx_widget_status & GX_STATUS_VISIBLE)
+    {
+        /* Mark temperature window dirty.  */
+        gx_system_dirty_mark((GX_WIDGET*)&temperature_window);
+    }
+}
+
+/******************************************************************************************/
+/* Update wash cycle remain time that displayed in various windows.                       */
+/******************************************************************************************/
+VOID wash_cycle_remain_time_update(INT remain_reconds)
+{
+    /* Update remain time in wash cycle window.  */
+    wash_cycle_window_remain_time_update(remain_reconds);
+
+    /* Update remain time in mode select window.  */
+    mode_select_window_remain_time_update(remain_reconds);
+}
+
+/******************************************************************************************/
+/* Set wash cycle remain time.                                                            */
+/******************************************************************************************/
+VOID remain_time_set(INT seconds)
+{
+    /* Set current wash cycle remain time.  */
+    wash_cycle_remain_seconds = seconds;
+
+    /* Update wash cycle remain time that displayed in various windows.  */
+    wash_cycle_remain_time_update(wash_cycle_remain_seconds);
 }
 
 /******************************************************************************************/
 /* Override the default event processing of "main_screen" to handle signals from my child */
 /* widgets.                                                                               */
 /******************************************************************************************/
-UINT main_screen_event_process(GX_WINDOW *window, GX_EVENT *event_ptr)
+UINT main_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
 {
     switch (event_ptr->gx_event_type)
     {
-    case GX_EVENT_SHOW:
-        clock_update();
+    case GX_SIGNAL(ID_BTN_WASH_CYCLE, GX_EVENT_RADIO_SELECT):
 
-        /* Init washer on page. */
-        washer_on_page_init();
-        power_on_callback = washer_on_page_init;
-        power_off_callback = washer_on_page_power_off;
-
-        /* Start a timer to update current time. */
-        gx_system_timer_start((GX_WIDGET *)window, CLOCK_TIMER, GX_TICKS_SECOND, GX_TICKS_SECOND);
-
-        /* Call default event process. */
-        gx_window_event_process(window, event_ptr);
-        break;
-
-    case GX_SIGNAL(ID_BTN_WASHER_ON, GX_EVENT_RADIO_SELECT):
-        /* Attach washer on page. */
-        gx_widget_attach((GX_WIDGET *)window, &main_screen.main_screen_washer_on_window);
-
-        /* Init washer on page. */
-        washer_on_page_init();
-        power_on_callback = washer_on_page_init;
-        power_off_callback = washer_on_page_power_off;
-
-        /* Set washer on label text id to "STRING_ID_PAUSE". */
-        gx_prompt_text_id_set(&main_screen.main_screen_washer_on_label, GX_STRING_ID_PAUSE);
-        break;
-
-    case GX_SIGNAL(ID_BTN_WASHER_ON, GX_EVENT_RADIO_DESELECT):
-        /* Dettach washer on page. */
-        gx_widget_detach(&main_screen.main_screen_washer_on_window);
-
-        /* Set washer on button label text id to "STRING_ID_START". */
-        gx_prompt_text_id_set(&main_screen.main_screen_washer_on_label, GX_STRING_ID_START);
-
-        /* Set washer on button icon id to "ICON_START". */
-        gx_icon_pixelmap_set(&main_screen.main_screen_washer_on_icon, GX_PIXELMAP_ID_BUTTON_ICON_START, GX_NULL);
-        break;
-
-    case GX_SIGNAL(ID_BTN_GARMENTS, GX_EVENT_RADIO_SELECT):
-        /* Attach garments page. */
-        gx_widget_attach((GX_WIDGET *)window, &garments_window);
-
-        /* Init garments page. */
-        garments_page_init();
-        power_on_callback = garments_page_init;
-        power_off_callback = garments_page_power_off;
-        break;
-
-    case GX_SIGNAL(ID_BTN_GARMENTS, GX_EVENT_RADIO_DESELECT):
-        /* Detach garments page. */
-        gx_widget_detach(&garments_window);
-        break;
-
-    case GX_SIGNAL(ID_BTN_WATER_LEVEL, GX_EVENT_RADIO_SELECT):
-        /* Attach water level page. */
-        gx_widget_attach((GX_WIDGET *)window, &water_level_window);
-
-        /* Init water level page. */
-        water_level_page_init();
-        power_on_callback = water_level_page_init;
-        power_off_callback = water_level_page_power_off;
-        break;
-
-    case GX_SIGNAL(ID_BTN_WATER_LEVEL, GX_EVENT_RADIO_DESELECT):
-        /* Detach water level page. */
-        gx_widget_detach(&water_level_window);
-        break;
-
-    case GX_SIGNAL(ID_BTN_TEMPERATURE, GX_EVENT_RADIO_SELECT):
-        /* Attach temperature page. */
-        gx_widget_attach((GX_WIDGET *)window, &temperature_window);
-
-        /* Init temperature page. */
-        temperature_page_init();
-        power_on_callback = temperature_page_init;
-        power_off_callback = temperature_page_power_off;
-        break;
-
-    case GX_SIGNAL(ID_BTN_TEMPERATURE, GX_EVENT_RADIO_DESELECT):
-        /* Dettach temperature page. */
-        gx_widget_detach(&temperature_window);
-        break;
-
-    case GX_SIGNAL(ID_BTN_POWER_ON_OFF, GX_EVENT_CLICKED):
-        if (is_power_on())
+        if (wash_cycle_window.gx_widget_status & GX_STATUS_VISIBLE)
         {
-            /* The main screen is going to power off. */
-            blend_alpha_increment = -4;
-            gx_system_timer_start((GX_WIDGET *)window, POWER_ON_OFF_TIMER, 1, 1);
-            gx_prompt_text_id_set(&main_screen.main_screen_power_off_label, GX_STRING_ID_POWER_ON);
+            /* Dettach wash cycle window. */
+            gx_widget_detach(&wash_cycle_window);
 
-            if (power_off_callback)
-            {
-                power_off_callback();
-                main_screen_widgets_enable_disable(POWER_OFF);
-            }
+            /* Attach mode select window.  */
+            gx_widget_attach((GX_WIDGET*)window, &mode_select_window);
         }
         else
         {
-            /* The main screen is going to power on. */
-            blend_alpha_increment = 4;
-            gx_system_timer_start((GX_WIDGET *)window, POWER_ON_OFF_TIMER, 1, 1);
-            gx_prompt_text_id_set(&main_screen.main_screen_power_off_label, GX_STRING_ID_POWER_OFF);
-
-            if (power_on_callback)
+            if (mode_select_window.gx_widget_status & GX_STATUS_VISIBLE)
             {
-                power_on_callback();
-                main_screen_widgets_enable_disable(POWER_ON);
+                /* Dettach mode select window. */
+                gx_widget_detach(&mode_select_window);
             }
+
+            /* Attach wash cycle window. */
+            gx_widget_attach((GX_WIDGET*)window, &wash_cycle_window);
         }
         break;
 
-    case GX_EVENT_TIMER:
-        if (event_ptr->gx_event_payload.gx_event_timer_id == POWER_ON_OFF_TIMER)
+    case GX_SIGNAL(ID_BTN_WASH_CYCLE, GX_EVENT_RADIO_DESELECT):
+
+        if (mode_select_window.gx_widget_status & GX_STATUS_VISIBLE)
         {
-            blend_alpha += blend_alpha_increment;
-
-            if (blend_alpha >= 255 || blend_alpha <= 160)
-            {
-                gx_system_timer_stop((GX_WIDGET *)&main_screen, POWER_ON_OFF_TIMER);
-
-                if (blend_alpha >= 255)
-                {
-                    blend_alpha = 255;
-                }
-                else
-                {
-                    blend_alpha = 160;
-                }
-            }
-
-            gx_system_dirty_mark((GX_WIDGET *)&main_screen);
+            /* Dettach wash cycle window. */
+            gx_widget_detach(&mode_select_window);
         }
-        else if (event_ptr->gx_event_payload.gx_event_timer_id == CLOCK_TIMER)
+        else
         {
-            /* Update current time. */
-            clock_update();
+            /* Dettach mode select window. */
+            gx_widget_detach(&wash_cycle_window);
+        }
+        break;
+
+    case GX_SIGNAL(ID_BTN_TEMPERATURE, GX_EVENT_RADIO_SELECT):
+
+        /* Attach temperature window. */
+        gx_widget_attach((GX_WIDGET*)window, &temperature_window);
+        break;
+
+    case GX_SIGNAL(ID_BTN_TEMPERATURE, GX_EVENT_RADIO_DESELECT):
+
+        /* Dettach temperature window. */
+        gx_widget_detach(&temperature_window);
+        break;
+
+    case GX_SIGNAL(ID_BTN_WATER_LEVEL, GX_EVENT_RADIO_SELECT):
+
+        /* Attach water level window. */
+        gx_widget_attach((GX_WIDGET*)window, &water_level_window);
+        break;
+
+    case GX_SIGNAL(ID_BTN_WATER_LEVEL, GX_EVENT_RADIO_DESELECT):
+
+        /* Dettach water level page. */
+        gx_widget_detach(&water_level_window);
+        break;
+
+    case GX_SIGNAL(ID_BTN_PLAY, GX_EVENT_TOGGLE_ON):
+        gx_system_timer_start(window, ID_TIMER_TIME, GX_TICKS_SECOND, GX_TICKS_SECOND);
+        gx_system_timer_start(window, ID_TIMER_PROGRESS_BAR_ANIMATION, 40 / GX_SYSTEM_TIMER_MS, 40 / GX_SYSTEM_TIMER_MS);
+        gx_system_timer_start(window, ID_TIMER_WAVE_ANIMATION, 1, 1);
+        break;
+
+    case GX_SIGNAL(ID_BTN_PLAY, GX_EVENT_TOGGLE_OFF):
+        gx_system_timer_stop(window, 0);
+
+        mark_wave_animation_parent_dirty();
+        gx_system_dirty_mark(&main_screen.main_screen_wash_cycle_progress_bar);
+        break;
+
+    case GX_EVENT_TIMER:
+        if (event_ptr->gx_event_payload.gx_event_timer_id == ID_TIMER_WAVE_ANIMATION)
+        {
+            wave_rotation_angle = (358 + wave_rotation_angle) % 360;
+
+            mark_wave_animation_parent_dirty();
+        }
+        if(event_ptr->gx_event_payload.gx_event_timer_id == ID_TIMER_PROGRESS_BAR_ANIMATION)
+        {
+            gx_system_dirty_mark(&main_screen.main_screen_wash_cycle_progress_bar);
+        }
+        if(event_ptr->gx_event_payload.gx_event_timer_id == ID_TIMER_TIME)
+        {
+            wash_cycle_remain_seconds--;
+
+            if (wash_cycle_remain_seconds >= 0)
+            {
+                wash_cycle_remain_time_update(wash_cycle_remain_seconds);
+            }
         }
         break;
 
@@ -314,202 +281,187 @@ UINT main_screen_event_process(GX_WINDOW *window, GX_EVENT *event_ptr)
 }
 
 /******************************************************************************************/
-/* A custom prompt draw function that draws the widget with specified blend alpha.        */
+/* Define custom prompt draw function for child prompts of a button.                      */
 /******************************************************************************************/
-VOID prompt_alpha_draw(GX_PROMPT *prompt)
+VOID btn_text_draw(GX_PROMPT *prompt)
 {
-    GX_BRUSH *brush;
-
-    /* Get context brush. */
-    gx_context_brush_get(&brush);
-
-    /* Set brush alpha. */
-    brush->gx_brush_alpha = blend_alpha;
+    if (prompt->gx_widget_parent->gx_widget_style & GX_STYLE_BUTTON_PUSHED)
+    {
+        prompt->gx_widget_style |= GX_STYLE_DRAW_SELECTED;
+    }
+    else
+    {
+        prompt->gx_widget_style &= (~GX_STYLE_DRAW_SELECTED);
+    }
 
     gx_prompt_draw(prompt);
 }
 
 /******************************************************************************************/
-/* A custom pixelmap button draw function that draws the widget with specified blend      */
-/* alpha.                                                                                 */
+/* Define custom numeric prompt draw function for child numeric prompts of a button.      */
 /******************************************************************************************/
-VOID pixelmap_button_alpha_draw(GX_PIXELMAP_BUTTON *button)
+VOID btn_numeric_text_draw(GX_NUMERIC_PROMPT* prompt)
 {
-    GX_BRUSH *brush;
-
-    /* Get context brush. */
-    gx_context_brush_get(&brush);
-
-    brush->gx_brush_alpha = blend_alpha;
-
-    gx_pixelmap_button_draw(button);
-}
-
-/******************************************************************************************/
-/* A custom pixlemap slider draw function that draws the widget with specified blend      */
-/* alpha.                                                                                 */
-/******************************************************************************************/
-VOID pixelmap_slider_alpha_draw(GX_PIXELMAP_SLIDER *slider)
-{
-    GX_BRUSH *brush;
-
-    /* Get context brush. */
-    gx_context_brush_get(&brush);
-
-    brush->gx_brush_alpha = blend_alpha;
-
-    gx_pixelmap_slider_draw(slider);
-}
-
-/******************************************************************************************/
-/* A custom wubdiw draw function that draws the widget with specified blend alpha.        */
-/******************************************************************************************/
-VOID window_alpha_draw(GX_WINDOW *window)
-{
-    GX_BRUSH *brush;
-
-    /* Get context brush. */
-    gx_context_brush_get(&brush);
-
-    brush->gx_brush_alpha = blend_alpha;
-
-    gx_window_draw(window);
-}
-
-/******************************************************************************************/
-/* Update clock of main screen.                                                           */
-/******************************************************************************************/
-VOID clock_update()
-{
-#ifdef WIN32
-    GX_CHAR time_string_buffer[6];
-    GX_CHAR am_pm_buffer[3];
-    GX_CHAR date_string_buffer[20];
-    GX_STRING string;
-
-    SYSTEMTIME local_time;
-    GetLocalTime(&local_time);
-    if (local_time.wHour < 12)
+    if (prompt->gx_widget_parent->gx_widget_style & GX_STYLE_BUTTON_PUSHED)
     {
-        sprintf(time_string_buffer, "%d:%02d", local_time.wHour, local_time.wMinute);
-        GX_STRCPY(am_pm_buffer, "AM");
+        prompt->gx_widget_style |= GX_STYLE_DRAW_SELECTED;
     }
     else
     {
-        sprintf(time_string_buffer, "%d:%02d", local_time.wHour - 12, local_time.wMinute);
-        GX_STRCPY(am_pm_buffer, "PM");
+        prompt->gx_widget_style &= (~GX_STYLE_DRAW_SELECTED);
     }
 
-    sprintf(date_string_buffer, "%s %02d, %d", month_names[local_time.wMonth - 1], local_time.wDay, local_time.wYear);
-
-    string.gx_string_ptr = time_string_buffer;
-    string.gx_string_length = string_length_get(time_string_buffer, sizeof(time_string_buffer) - 1);
-    gx_prompt_text_set_ext(&main_screen.main_screen_time, &string);
-
-    string.gx_string_ptr = am_pm_buffer;
-    string.gx_string_length = string_length_get(am_pm_buffer, sizeof(am_pm_buffer) - 1);
-    gx_prompt_text_set_ext(&main_screen.main_screen_am_pm, &string);
-    gx_prompt_text_set_ext(&main_screen.main_screen_day_of_week, &day_names[local_time.wDayOfWeek]);
-
-    string.gx_string_ptr = date_string_buffer;
-    string.gx_string_length = string_length_get(date_string_buffer, sizeof(date_string_buffer) - 1);
-    gx_prompt_text_set_ext(&main_screen.main_screen_date, &string);
-
-#else
-#endif
+    gx_prompt_draw((GX_PROMPT *)prompt);
 }
 
 /******************************************************************************************/
-/* Enable/Disable main screen.                                                            */
+/* Define format function for numeric prompt to show time.                                */
 /******************************************************************************************/
-VOID main_screen_widgets_enable_disable(INT status)
+VOID time_format(GX_NUMERIC_PROMPT* prompt, INT value)
 {
-    GX_WIDGET *widget;
-    INT        index = 0;
-    if (status == POWER_ON)
+    if (value < 10)
     {
-        widget = main_screen_enable_disable_widgets[index];
+        prompt->gx_numeric_prompt_buffer[0] = '0';
+        prompt->gx_numeric_prompt_buffer[1] = '0' + value;
+    }
+    else if (value < 100)
+    {
+        prompt->gx_numeric_prompt_buffer[0] = '0' + (value / 10);
+        prompt->gx_numeric_prompt_buffer[1] = '0' + (value % 10);
+    }
+}
 
-        while (widget)
-        {
-            gx_widget_style_add(widget, GX_STYLE_ENABLED);
-            widget = main_screen_enable_disable_widgets[index];
-            index++;
-        }
+/******************************************************************************************/
+/* Draw map with specified rotation angle.                                                */
+/******************************************************************************************/
+VOID animation_wave_one_circle_draw(INT xpos, INT ypos, GX_PIXELMAP *map, INT xcor, INT ycor, INT angle)
+{
+    GX_PIXELMAP outmap;
+
+    if ((angle % 360) == 0)
+    {
+        gx_canvas_pixelmap_draw(xpos, ypos, map);
     }
     else
     {
-        widget = main_screen_enable_disable_widgets[index];
+        xpos += xcor;
+        ypos += ycor;
 
-        while (widget)
+        if (gx_utility_pixelmap_rotate(map, angle, &outmap, &xcor, &ycor) == GX_SUCCESS)
         {
-            gx_widget_style_remove(widget, GX_STYLE_ENABLED);
-            widget = main_screen_enable_disable_widgets[index];
-            index++;
+            gx_canvas_pixelmap_draw(xpos - xcor, ypos - ycor, &outmap);
+
+            memory_free((void*)outmap.gx_pixelmap_data);
         }
     }
 }
 
 /******************************************************************************************/
-/* Enable/Disable a widget.                                                               */
+/* Draw animation wave in the center of specified window.                                 */
 /******************************************************************************************/
-VOID widget_enable_disable(GX_WIDGET *widget, INT status)
+VOID animation_wave_draw(GX_WINDOW* window)
 {
-    GX_WIDGET *child = widget->gx_widget_first_child;
+    GX_RECTANGLE *size = &window->gx_widget_size;
+    GX_PIXELMAP *map;
+    INT xpos;
+    INT ypos;
+    INT xcor;
+    INT ycor;
 
-    while (child)
-    {
-        widget_enable_disable(child, status);
-        child = child->gx_widget_next;
-    }
+    gx_context_pixelmap_get(GX_PIXELMAP_ID_WAVE_CLEAR_WHITE, &map);
 
-    if (status == POWER_ON)
-    {
-        gx_widget_style_add(widget, GX_STYLE_ENABLED);
-    }
-    else
-    {
-        gx_widget_style_remove(widget, GX_STYLE_ENABLED);
-    }
+    xcor = map->gx_pixelmap_width * 3 / 5;
+    ycor = map->gx_pixelmap_height / 2;
+
+    xpos = (size->gx_rectangle_left + size->gx_rectangle_right - map->gx_pixelmap_width) / 2 - 20;
+    ypos = (size->gx_rectangle_top + size->gx_rectangle_bottom - map->gx_pixelmap_height) / 2;
+
+    gx_context_fill_color_set(GX_COLOR_ID_WHITE);
+
+    animation_wave_one_circle_draw(xpos, ypos, map, xcor, ycor, wave_rotation_angle);
+
+    xpos += 10;
+
+    animation_wave_one_circle_draw(xpos, ypos, map, xcor, ycor, wave_rotation_angle + 60);
+
+    ypos += 10;
+
+    animation_wave_one_circle_draw(xpos, ypos, map, xcor, ycor, wave_rotation_angle + 120);
 }
 
 /******************************************************************************************/
-/* Calculate string length.                                                               */
+/* Define custom progress bar draw function.                                              */
 /******************************************************************************************/
-UINT string_length_get(GX_CONST GX_CHAR* input_string, UINT max_string_length)
+VOID wash_cycle_progress_bar_draw(GX_PROGRESS_BAR* progress_bar)
 {
-    UINT length = 0;
+    GX_PIXELMAP *map;
+    INT xpos;
+    INT ypos;
+    INT selected_dist;
+    GX_RECTANGLE *size = &progress_bar->gx_widget_size;
+    GX_BRUSH *brush;
+    INT alpha_shift;
 
-    if (input_string)
+    gx_context_pixelmap_get(GX_PIXELMAP_ID_CYCLE_PROGRESS_DOT, &map);
+
+    ypos = size->gx_rectangle_top;
+
+    /* Draw background dots. */
+    gx_context_brush_get(&brush);
+    gx_context_fill_color_set(GX_COLOR_ID_WHITE);
+
+    brush->gx_brush_alpha = 100;
+    for (xpos = size->gx_rectangle_left; xpos < size->gx_rectangle_right; xpos += PROGRESS_DOT_SPACE)
     {
-        /* Traverse the string.  */
-        for (length = 0; input_string[length]; length++)
+        gx_canvas_pixelmap_draw(xpos, ypos, map);
+    }
+
+    brush->gx_brush_alpha = 255;
+
+    selected_dist = (size->gx_rectangle_right - size->gx_rectangle_left) * progress_bar->gx_progress_bar_info.gx_progress_bar_info_current_val / 100;
+
+    /* Draw selected dots.  */
+    if (main_screen.main_screen_btn_play.gx_widget_style & GX_STYLE_BUTTON_PUSHED)
+    {
+        if (selected_dist / PROGRESS_DOT_SPACE)
         {
-            /* Check if the string length is bigger than the max string length.  */
-            if (length >= max_string_length)
+            alpha_shift = 255 / (selected_dist / PROGRESS_DOT_SPACE);
+        }
+        else
+        {
+            alpha_shift = 255;
+        }
+
+        brush->gx_brush_alpha = progress_alpha_start;
+        for (xpos = size->gx_rectangle_left; xpos < size->gx_rectangle_left + selected_dist; xpos += PROGRESS_DOT_SPACE)
+        {
+            gx_canvas_pixelmap_draw(xpos, ypos, map);
+            if (brush->gx_brush_alpha + alpha_shift < 255)
             {
-                break;
+                brush->gx_brush_alpha += alpha_shift;
+            }
+            else
+            {
+                brush->gx_brush_alpha = 0;
             }
         }
+
+        brush->gx_brush_alpha = 255;
+
+        if (progress_alpha_start > PROGRESS_ALPHA_SHIFT)
+        {
+            progress_alpha_start -= PROGRESS_ALPHA_SHIFT;
+        }
+        else
+        {
+            progress_alpha_start = 255;
+        }
     }
-
-    return length;
-}
-
-/******************************************************************************************/
-/* Retrieve power status.                                                                 */
-/******************************************************************************************/
-GX_BOOL is_power_on()
-{
-    GX_STRING text;
-
-    /* Get power on/off button label text. */
-    gx_prompt_text_get_ext(&main_screen.main_screen_power_off_label, &text);
-
-    if (strncmp(text.gx_string_ptr, "Power Off", text.gx_string_length) == 0)
+    else
     {
-        return GX_TRUE;
+        for (xpos = size->gx_rectangle_left; xpos < size->gx_rectangle_left + selected_dist; xpos += PROGRESS_DOT_SPACE)
+        {
+            gx_canvas_pixelmap_draw(xpos, ypos, map);
+        }
     }
-
-    return GX_FALSE;
 }

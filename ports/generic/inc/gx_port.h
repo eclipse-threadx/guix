@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_port.h                                            Generic        */
-/*                                                          6.1.6         */
+/*                                                          6.1.8         */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -41,6 +41,10 @@
 /*  02-02-2021     Kenneth Maxwell          Initial Version 6.1.4         */
 /*  04-02-2021     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1.6  */
+/*  08-02-2021     Kenneth Maxwell          Modified comment(s), removed  */
+/*                                            GX_SYSTEM_TIMER_TICKS and   */
+/*                                            GX_TICKS_SECOND definitions,*/
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -68,18 +72,11 @@ typedef SHORT  GX_VALUE;
 #ifndef GX_THREAD_STACK_SIZE
 #define GX_THREAD_STACK_SIZE                4096
 #endif
-
-#ifndef GX_TICKS_SECOND
-#define GX_TICKS_SECOND                     20
-#endif
-
 #define GX_CONST                            const
 
 #define GX_INCLUDE_DEFAULT_COLORS
 
 #define GX_MAX_ACTIVE_TIMERS                32
-
-#define GX_SYSTEM_TIMER_TICKS               2           /*  20 ms */
 
 #define GX_MAX_VIEWS                        32
 
@@ -147,7 +144,7 @@ typedef SHORT  GX_VALUE;
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Version 6.1.6 *";
+    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Version 6.1.8 *";
 #else
 extern  CHAR _gx_version_id[];
 #endif

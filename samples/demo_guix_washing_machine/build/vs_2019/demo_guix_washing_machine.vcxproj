@@ -21,9 +21,9 @@
     <ClCompile Include="..\..\demo_guix_washing_machine.c" />
     <ClCompile Include="..\..\demo_guix_washing_machine_resources.c" />
     <ClCompile Include="..\..\demo_guix_washing_machine_specifications.c" />
-    <ClCompile Include="..\..\garments.c" />
     <ClCompile Include="..\..\temperature.c" />
-    <ClCompile Include="..\..\washer_on.c" />
+    <ClCompile Include="..\..\wash_cycle.c" />
+    <ClCompile Include="..\..\mode_select.c" />
     <ClCompile Include="..\..\water_level.c" />
   </ItemGroup>
   <ItemGroup>

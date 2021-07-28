@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.0.1.14                                              */
-/*  Date (dd.mm.yyyy): 18.12.2020   Time (hh:mm): 16:59                        */
+/*  GUIX Studio Revision 6.1.8.0                                               */
+/*  Date (dd.mm.yyyy): 26. 7.2021   Time (hh:mm): 15:32                        */
 /*******************************************************************************/
 
 
@@ -45,7 +45,7 @@ GX_STUDIO_DISPLAY_INFO demo_guix_industrial_display_table[1] =
     &main_display_root_window,
     main_display_canvas_memory,              /* canvas memory area             */
     1228800,                                 /* canvas memory size in bytes    */
-    0                                        /* rotation angle                 */
+    GX_SCREEN_ROTATION_NONE                  /* rotation angle                 */
     }
 };
 

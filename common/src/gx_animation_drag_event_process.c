@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_animation_drag_event_check                      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.8        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -81,6 +81,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  08-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            replaced abs with GX_ABS,   */
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 static UINT  _gx_animation_drag_event_check(GX_ANIMATION *animation, GX_EVENT *event_ptr)
@@ -173,7 +176,7 @@ INT                shift;
                 shift = (size -> gx_rectangle_right - size -> gx_rectangle_left + 1) >> 1;
             }
 
-            if ((abs(delta) < shift) || (animation -> gx_animation_slide_target_index_2 == -1))
+            if ((GX_ABS(delta) < shift) || (animation -> gx_animation_slide_target_index_2 == -1))
             {
                 /* slide back to original when slide distance is less than half screen width/height. */
                 if (animation -> gx_animation_slide_target_index_2 >= 0)

@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_radial_progress_bar_background_draw             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.8        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -75,6 +75,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  08-02-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            supported no background     */
+/*                                            radial track mode,          */
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_radial_progress_bar_background_draw(GX_RADIAL_PROGRESS_BAR *progress_bar)
@@ -181,8 +185,6 @@ GX_VALUE     old_ypos = 0;
     ycenter = (GX_VALUE)(size -> gx_rectangle_bottom + size -> gx_rectangle_top);
     ycenter >>= 1;
 
-    _gx_context_line_color_set(info -> gx_radial_progress_bar_info_normal_brush_color);
-    _gx_context_brush_width_set((UINT)(info -> gx_radial_progress_bar_info_normal_brush_width));
     brush -> gx_brush_style &= (ULONG)(~GX_BRUSH_SOLID_FILL);
 
     if (progress_bar -> gx_widget_style & GX_STYLE_RADIAL_PROGRESS_ALIAS)
@@ -195,7 +197,13 @@ GX_VALUE     old_ypos = 0;
         brush -> gx_brush_style |= GX_BRUSH_ROUND;
     }
 
-    _gx_canvas_circle_draw(xcenter, ycenter, (UINT)(info -> gx_radial_progress_bar_info_radius));
+    if (!(progress_bar -> gx_widget_style & GX_STYLE_RADIAL_PROGRESS_NO_BACKTRACK))
+    {
+        _gx_context_line_color_set(info -> gx_radial_progress_bar_info_normal_brush_color);
+        _gx_context_brush_width_set((UINT)(info -> gx_radial_progress_bar_info_normal_brush_width));
+
+        _gx_canvas_circle_draw(xcenter, ycenter, (UINT)(info -> gx_radial_progress_bar_info_radius));
+    }
 
     if (info -> gx_radial_progress_bar_info_current_val != 0)
     {

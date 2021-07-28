@@ -3,8 +3,8 @@
 <project>
 <header>
 <project_version>55</project_version>
-<guix_version>60103</guix_version>
-<studio_version>6010603</studio_version>
+<guix_version>60108</guix_version>
+<studio_version>6010800</studio_version>
 <project_name>demo_guix_runtime_bidi_text</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>

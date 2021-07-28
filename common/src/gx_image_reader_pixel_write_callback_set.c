@@ -1386,7 +1386,6 @@ static UINT _gx_image_reader_pixel_rotated_write_callback_set(GX_IMAGE_READER *i
 
     default:
         return GX_NOT_SUPPORTED;
-        break;
     }
 
     return GX_SUCCESS;
