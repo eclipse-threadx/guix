@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.1.8        */
+/*                                                           6.1.9        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -64,7 +64,7 @@
 /*                                            pixelmap rotation flag      */
 /*                                            definitions,                */
 /*                                            resulting in version 6.1.5  */
-/*  06-02-2021     Ting Zhu                   Modified comment(s),        */
+/*  06-02-2021     Ting Zhu                 Modified comment(s),          */
 /*                                            added new widget type       */
 /*                                            GX_GENERIC_SCROLL_WHEEL,    */
 /*                                            added animation delete API, */
@@ -72,9 +72,12 @@
 /*                                            graphics accelerator        */
 /*                                            support,                    */
 /*                                            resulting in version 6.1.7  */
-/*  08-02-2021     Ting Zhu                   Modified comment(s), added  */
+/*  08-02-2021     Ting Zhu                 Modified comment(s), added    */
 /*                                            GX_TICKS_SECOND definition  */
 /*                                            resulting in version 6.1.8  */
+/*  10-15-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            updated patch number,       */
+/*                                            resulting in version 6.1.9  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -98,7 +101,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 1
-#define GUIX_PATCH_VERSION 8
+#define GUIX_PATCH_VERSION 9
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__

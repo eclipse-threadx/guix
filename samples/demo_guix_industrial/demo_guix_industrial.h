@@ -20,18 +20,14 @@ VOID  memory_free(VOID *mem);
 
 VOID button_indicator_attach(GX_PIXELMAP_BUTTON *button);
 VOID screen_toggle_animation_start(GX_WINDOW *show, GX_WINDOW *hide);
-VOID screen_toggle_animation_stop(USHORT animation_id);
-VOID start_window_fade_animation_start(USHORT style);
-VOID sequence_window_fade_animation_start(USHORT style);
-VOID complete_window_fade_animation_start(USHORT style);
-VOID start_to_sequence_animation_start();
-VOID sequence_to_start_animation_start();
-VOID sequence_to_complete_animation_start();
-VOID complete_to_sequence_animation_start();
-VOID complete_to_start_animation_start();
-VOID green_corner_animation_start();
 
+VOID sequence_window_init();
 VOID sequence_animation_start();
 VOID sequence_animation_update();
 VOID sequence_animation_stop();
+
+VOID complete_window_timer_start();
+VOID complete_window_timer_stop();
+VOID complete_window_init();
+
 UINT string_length_get(GX_CONST GX_CHAR* input_string, UINT max_string_length);

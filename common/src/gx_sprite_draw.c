@@ -38,7 +38,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_sprite_draw                                     PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.9        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -77,6 +77,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-15-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            supported alphamap draw,    */
+/*                                            resulting in version 6.1.9  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_sprite_draw(GX_SPRITE *sprite)
@@ -96,6 +99,8 @@ GX_VALUE         ypos;
             frame = &sprite -> gx_sprite_frame_list[sprite -> gx_sprite_current_frame];
             if (frame -> gx_sprite_frame_pixelmap)
             {
+                _gx_widget_context_fill_set((GX_WIDGET *)sprite);
+
                 _gx_context_pixelmap_get(frame -> gx_sprite_frame_pixelmap, &map);
                 if (map)
                 {

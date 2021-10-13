@@ -37,7 +37,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_icon_button_draw                                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.9        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -75,6 +75,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-15-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            fixed pixelmap draw offset, */
+/*                                            resulting in version 6.1.9  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_icon_button_draw(GX_ICON_BUTTON *button)
@@ -116,11 +119,11 @@ INT          shift = 0;
             break;
 
         case GX_STYLE_HALIGN_RIGHT:
-            xpos = (GX_VALUE)(widget -> gx_widget_size.gx_rectangle_right - map -> gx_pixelmap_width - border + shift);
+            xpos = (GX_VALUE)(widget -> gx_widget_size.gx_rectangle_right - map -> gx_pixelmap_width - border + shift + 1);
             break;
 
         default:
-            xpos = (GX_VALUE)(widget -> gx_widget_size.gx_rectangle_left + border + shift + 1);
+            xpos = (GX_VALUE)(widget -> gx_widget_size.gx_rectangle_left + border + shift);
             break;
         }
 
@@ -136,11 +139,11 @@ INT          shift = 0;
             break;
 
         case GX_STYLE_VALIGN_BOTTOM:
-            ypos = (GX_VALUE)(widget -> gx_widget_size.gx_rectangle_bottom - map -> gx_pixelmap_height - border + shift);
+            ypos = (GX_VALUE)(widget -> gx_widget_size.gx_rectangle_bottom - map -> gx_pixelmap_height - border + shift + 1);
             break;
 
         default:
-            ypos = (GX_VALUE)(widget -> gx_widget_size.gx_rectangle_top + border + shift + 1);
+            ypos = (GX_VALUE)(widget -> gx_widget_size.gx_rectangle_top + border + shift);
             break;
         }
         _gx_widget_context_fill_set(widget);

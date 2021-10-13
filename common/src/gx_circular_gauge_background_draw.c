@@ -37,7 +37,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_circular_gauge_background_draw                  PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.9        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -80,6 +80,11 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-15-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            fixed the order of setting  */
+/*                                            the display driver callback */
+/*                                            and drawing the background, */ 
+/*                                            resulting in version 6.1.9  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_circular_gauge_background_draw(GX_CIRCULAR_GAUGE *gauge)
@@ -94,8 +99,6 @@ GX_DRAW_CONTEXT *context = _gx_system_current_draw_context;
 
     display = context -> gx_draw_context_display;
 
-    /* Call icon draw function to draw the background.  */
-    _gx_icon_background_draw((GX_ICON *)gauge);
 
     /* Pick up gauge information.  */
     info = &gauge -> gx_circular_gauge_info;
@@ -133,6 +136,9 @@ GX_DRAW_CONTEXT *context = _gx_system_current_draw_context;
             info -> gx_circular_gauge_info_needle_ypos -
             info -> gx_circular_gauge_info_needle_ycor;
     }
+    
+    /* Call icon draw function to draw the background.  */
+    _gx_icon_background_draw((GX_ICON *)gauge);
 
     if ((map != GX_NULL) && (map -> gx_pixelmap_data != GX_NULL))
     {

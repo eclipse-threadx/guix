@@ -2400,7 +2400,7 @@ GX_BIDI_ISOLATE_RUN *entry = context -> gx_bidi_context_isolate_runs;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_reordering_resolve_1               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.9        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2435,6 +2435,9 @@ GX_BIDI_ISOLATE_RUN *entry = context -> gx_bidi_context_isolate_runs;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-15-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            corrected logic,            */
+/*                                            resulting in version 6.1.9  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_reordering_resolve_1(GX_BIDI_CONTEXT *context, INT start_index, INT end_index)
@@ -2446,7 +2449,7 @@ GX_BIDI_UNIT *unit;
 GX_BIDI_UNIT *pre_unit;
 USHORT        mirror;
 
-    for (index = start_index; index < end_index; index++)
+    for (index = start_index; index <= end_index; index++)
     {
         check_before = GX_FALSE;
         unit = &context -> gx_bidi_context_unit_list[index];
@@ -2501,7 +2504,6 @@ USHORT        mirror;
                 pre_index--;
                 pre_unit--;
             }
-            break;
         }
 
         if (unit -> gx_bidi_unit_type == GX_BIDI_CHARACTER_TYPE_R &&

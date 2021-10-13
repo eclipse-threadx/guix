@@ -2,62 +2,36 @@
 
 #include "demo_guix_industrial.h"
 
-/* Define the ThreadX demo thread control block and stack.  */
-TX_THREAD          demo_thread;
-UCHAR              demo_thread_stack[4096];
-TX_BYTE_POOL       memory_pool;
+/* Define this to improve animation performance when running on target board with two layers enabled. */
+/* #define USE_CANVAS_FOR_ANIMATION */
 
-#define CLOCK_TIMER                   20
-
-#define SCRATCHPAD_PIXELS (MAIN_DISPLAY_X_RESOLUTION * MAIN_DISPLAY_Y_RESOLUTION)
+#define MEMORY_POOL_BUFFER_SIZE (MAIN_DISPLAY_X_RESOLUTION * MAIN_DISPLAY_Y_RESOLUTION * 8)
 
 /* Define memory for memory pool. */
-GX_COLOR           scratchpad[SCRATCHPAD_PIXELS];
-GX_WINDOW_ROOT    *root;
+GX_UBYTE        memory_pool_buffer[MEMORY_POOL_BUFFER_SIZE];
+TX_BYTE_POOL    memory_pool;
+GX_WINDOW_ROOT *root;
 
 USHORT toggle_animation_flag = ANIMATION_NONE;
 GX_WINDOW *current_screen = (GX_WINDOW *)&main_screen;
 
+#ifdef USE_CANVAS_FOR_ANIMATION
+#define ANIMATION_WINDOW_WIDTH  640
+#define ANIMATION_WINDOW_HEIGHT 327
+#define ANIMATION_CANVAS_MEMORY_SIZE (ANIMATION_WINDOW_WIDTH * ANIMATION_WINDOW_HEIGHT * 4)
+
+GX_UBYTE animation_canvas_memory[ANIMATION_CANVAS_MEMORY_SIZE];
+GX_CANVAS animation_canvas;
+GX_WINDOW_ROOT animation_root;
+#endif
+
 /* Define prototypes.   */
 VOID  guix_setup(void);
 extern UINT win32_graphics_driver_setup_24xrgb(GX_DISPLAY *display);
-VOID clock_update();
 UINT root_win_event_process(GX_WINDOW *root, GX_EVENT *event_ptr);
 
-static GX_CONST GX_CHAR day_name_sun[] = "Sunday";
-static GX_CONST GX_CHAR day_name_mon[] = "Monday";
-static GX_CONST GX_CHAR day_name_tue[] = "Tuesday";
-static GX_CONST GX_CHAR day_name_wed[] = "Wednesday";
-static GX_CONST GX_CHAR day_name_thu[] = "Thursday";
-static GX_CONST GX_CHAR day_name_fri[] = "Friday";
-static GX_CONST GX_CHAR day_name_sat[] = "Saturday";
-static GX_CONST GX_CHAR string_turn_on[] = "Turn On";
-static GX_CONST GX_CHAR string_shut_off[] = "Shut Off";
-
-const GX_STRING day_names[7] = {
-    {day_name_sun, sizeof(day_name_sun) - 1},
-    {day_name_mon, sizeof(day_name_mon) - 1},
-    {day_name_tue, sizeof(day_name_tue) - 1},
-    {day_name_wed, sizeof(day_name_wed) - 1},
-    {day_name_thu, sizeof(day_name_thu) - 1},
-    {day_name_fri, sizeof(day_name_fri) - 1},
-    {day_name_sat, sizeof(day_name_sat) - 1}
-};
-
-const GX_CHAR *month_names[12] = {
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-};
+/* Define GX_PIXELMAP type variable to receive pixelmap data decoded from background jpeg. */
+GX_PIXELMAP main_screen_bg;
 
 /******************************************************************************************/
 /* Application entry.                                                                     */
@@ -95,11 +69,6 @@ VOID memory_free(VOID *mem)
 /******************************************************************************************/
 VOID tx_application_define(void *first_unused_memory)
 {
-
-    /* create byte pool. */
-    tx_byte_pool_create(&memory_pool, "scratchpad", scratchpad,
-        SCRATCHPAD_PIXELS * sizeof(GX_COLOR));
-
     guix_setup();
 }
 
@@ -108,6 +77,13 @@ VOID tx_application_define(void *first_unused_memory)
 /******************************************************************************************/
 VOID  guix_setup()
 {
+#ifdef USE_CANVAS_FOR_ANIMATION
+    GX_RECTANGLE size;
+#endif
+
+    /* Create byte pool. */
+    tx_byte_pool_create(&memory_pool, "memory_pool_buffer", memory_pool_buffer, MEMORY_POOL_BUFFER_SIZE);
+
     /* Initialize GUIX.  */
     gx_system_initialize();
 
@@ -131,11 +107,74 @@ VOID  guix_setup()
     /* Create complete window. */
     gx_studio_named_widget_create("complete_window", GX_NULL, GX_NULL);
 
+#ifdef USE_CANVAS_FOR_ANIMATION
+    /* Define animation root window size.  */
+    gx_utility_rectangle_define(&size, 0, 0, ANIMATION_WINDOW_WIDTH - 1, ANIMATION_WINDOW_HEIGHT - 1);
+
+    /* create the root window used for window blend animation */
+    gx_window_root_create(&animation_root, "animation root", &animation_canvas, GX_STYLE_ENABLED, GX_NULL, &size);
+
+    /* Create new canvas for sequence screen fade in/out animation. */
+    gx_canvas_create(&animation_canvas, GX_NULL,
+                     root->gx_window_root_canvas->gx_canvas_display,
+                     GX_CANVAS_SIMPLE,
+                     ANIMATION_WINDOW_WIDTH, ANIMATION_WINDOW_HEIGHT,
+                     (GX_COLOR *)animation_canvas_memory, ANIMATION_CANVAS_MEMORY_SIZE);
+    gx_canvas_hardware_layer_bind(&animation_canvas, 2);
+#endif
+    
+    /* Initialize "main_screen_by" varaible. */
+    memset(&main_screen_bg, 0, sizeof(GX_PIXELMAP));
+
     /* Show the root window to make it and patients screen visible.  */
     gx_widget_show(root);
 
     /* Let GUIX run */
     gx_system_start();
+}
+
+/******************************************************************************************/
+/* Decode "main_screen" background image.                                                 */
+/******************************************************************************************/
+static VOID decode_main_screen_jpeg()
+{
+    GX_IMAGE_READER reader;
+    GX_PIXELMAP *map;
+
+    /* get a pointer to the raw jpeg data */
+    gx_context_pixelmap_get(GX_PIXELMAP_ID_BG_METAL_DARK, &map);
+
+    /* create an image reader object */
+    gx_image_reader_create(&reader, map->gx_pixelmap_data, map->gx_pixelmap_data_size, GX_COLOR_FORMAT_24XRGB, 0);
+
+    /* decode and color space convert the jpeg to produce a GUIX compatible pixelmap image */
+    gx_image_reader_start(&reader, &main_screen_bg);
+}
+
+/******************************************************************************************/
+/* Override the default draw function of "main_screen".                                   */
+/******************************************************************************************/
+VOID main_screen_draw(GX_WINDOW *window)
+{
+    gx_window_background_draw(window);
+
+    /* If this is the first time drawing, then we need to decompress the raw jpeg
+       image we use to paint the screen background.  */
+    if (!main_screen_bg.gx_pixelmap_data)
+    {
+        decode_main_screen_jpeg();
+    }
+
+    /* Unless something went wrong, the pixelmap data should now be populated in 
+       GUIX pixelmap format.  */
+    if (main_screen_bg.gx_pixelmap_data)
+    {
+        /* Draw background map. */
+        gx_canvas_pixelmap_draw(window->gx_widget_size.gx_rectangle_left,
+            window->gx_widget_size.gx_rectangle_top, &main_screen_bg);
+    }
+
+    gx_widget_children_draw(window);
 }
 
 /******************************************************************************************/
@@ -163,6 +202,7 @@ UINT root_win_event_process(GX_WINDOW *root, GX_EVENT *event_ptr)
         case ANI_ID_COMPLETE_WIN_FADE_IN:
             current_screen = (GX_WINDOW *)&complete_window;
             toggle_animation_flag = ANIMATION_NONE;
+            complete_window_timer_start();
             break;
         }
         break;
@@ -180,94 +220,44 @@ UINT root_win_event_process(GX_WINDOW *root, GX_EVENT *event_ptr)
 /******************************************************************************************/
 UINT main_screen_event_process(GX_WINDOW *window, GX_EVENT *event_ptr)
 {
-    GX_STRING text;
-
     switch (event_ptr->gx_event_type)
     {
-    case GX_EVENT_SHOW:
-        gx_window_event_process(window, event_ptr);
-        clock_update();
-        gx_system_timer_start((GX_WIDGET *)&main_screen, CLOCK_TIMER, 20, 20);
-        break;
-
     case GX_SIGNAL(ID_START, GX_EVENT_CLICKED):
+
+        /* Toggle to sequence screen.  */
         screen_toggle_animation_start((GX_WINDOW *)&sequence_window, current_screen);
         break;
 
     case GX_SIGNAL(ID_ON_OFF, GX_EVENT_CLICKED):
-        gx_prompt_text_get_ext(&main_screen.main_screen_prompt_on_off, &text);
-        if (strncmp(text.gx_string_ptr, "Turn On", text.gx_string_length) == 0)
+        if (main_screen.main_screen_prompt_on_off.gx_prompt_text_id == GX_STRING_ID_TURN_ON)
         {
+            /* Toggle to sequence screen.  */
             screen_toggle_animation_start((GX_WINDOW *)&sequence_window, current_screen);
         }
         else
         {
-            screen_toggle_animation_start((GX_WINDOW *)&main_screen, current_screen);
-        }
-        break;
-
-    case GX_SIGNAL(ID_HOME, GX_EVENT_CLICKED):
-        if (current_screen != (GX_WINDOW *)&main_screen)
-        {
+            /* Toggle to main screen.  */
             screen_toggle_animation_start((GX_WINDOW *)&main_screen, current_screen);
         }
         break;
 
     case GX_SIGNAL(ID_INSPECTING, GX_EVENT_CLICKED):
-        if (current_screen == (GX_WINDOW *)&sequence_window)
-        {
-            sequence_window.gx_widget_event_process_function((GX_WIDGET *)window, event_ptr);
-        }
-        else
-        {
-            button_indicator_attach(&main_screen.main_screen_button_inspecting);
-        }
-        break;
-
     case GX_SIGNAL(ID_ASSEMBLING, GX_EVENT_CLICKED):
-        if (current_screen == (GX_WINDOW *)&sequence_window)
-        {
-            sequence_window.gx_widget_event_process_function((GX_WIDGET *)window, event_ptr);
-        }
-        else
-        {
-            button_indicator_attach(&main_screen.main_screen_button_assembling);
-        }
-        break;
-
     case GX_SIGNAL(ID_WELDING, GX_EVENT_CLICKED):
-        if (current_screen == (GX_WINDOW *)&sequence_window)
-        {
-            sequence_window.gx_widget_event_process_function((GX_WIDGET *)window, event_ptr);
-        }
-        else
-        {
-            button_indicator_attach(&main_screen.main_screen_button_welding);
-        }
-        break;
-
     case GX_SIGNAL(ID_PALLETIZING, GX_EVENT_CLICKED):
-        if (current_screen == (GX_WINDOW *)&sequence_window)
+        if (current_screen->gx_widget_id == ID_SEQUENCE_WINDOW)
         {
+            /* Pass event to sequence window.  */
             sequence_window.gx_widget_event_process_function((GX_WIDGET *)window, event_ptr);
         }
         else
         {
-            button_indicator_attach(&main_screen.main_screen_button_palletizing);
-        }
-        break;
-
-    case GX_SIGNAL(ID_REFRESH, GX_EVENT_CLICKED):
-        if (sequence_window.gx_widget_status & GX_STATUS_VISIBLE)
-        {
-            sequence_window.gx_widget_event_process_function((GX_WIDGET *)window, event_ptr);
-        }
-        break;
-
-    case GX_EVENT_TIMER:
-        if (event_ptr->gx_event_payload.gx_event_timer_id == CLOCK_TIMER)
-        {
-            clock_update();
+            GX_WIDGET *find;
+            gx_widget_find(&main_screen, event_ptr->gx_event_sender, GX_SEARCH_DEPTH_INFINITE, &find);
+            if (find)
+            {
+                button_indicator_attach((GX_PIXELMAP_BUTTON*)find);
+            }
         }
         break;
 
@@ -292,8 +282,8 @@ VOID button_indicator_attach(GX_PIXELMAP_BUTTON *button)
         gx_widget_attach((GX_WIDGET *)button, indicator);
     }
 
-    x_shift = button->gx_widget_size.gx_rectangle_right - 12 - indicator->gx_widget_size.gx_rectangle_left;
-    y_shift = button->gx_widget_size.gx_rectangle_top + 4 - indicator->gx_widget_size.gx_rectangle_top;
+    x_shift = button->gx_widget_size.gx_rectangle_right - 18 - indicator->gx_widget_size.gx_rectangle_right;
+    y_shift = button->gx_widget_size.gx_rectangle_top + 16 - indicator->gx_widget_size.gx_rectangle_top;
     gx_widget_shift(indicator, x_shift, y_shift, GX_TRUE);
 }
 
@@ -303,9 +293,10 @@ VOID button_indicator_attach(GX_PIXELMAP_BUTTON *button)
 VOID screen_toggle_animation_start(GX_WINDOW *show, GX_WINDOW *hide)
 {
     GX_EVENT  my_event;
-    GX_STRING string;
-
-    memset(&my_event, 0, sizeof(GX_EVENT));
+#ifdef USE_CANVAS_FOR_ANIMATION
+    GX_ANIMATION *animation;
+    GX_ANIMATION_INFO info;
+#endif
 
     if (toggle_animation_flag != ANIMATION_NONE)
     {
@@ -314,212 +305,151 @@ VOID screen_toggle_animation_start(GX_WINDOW *show, GX_WINDOW *hide)
 
     toggle_animation_flag = ANIMATION_ACTIVE;
 
-    if (show == (GX_WINDOW *)&main_screen)
+    memset(&my_event, 0, sizeof(GX_EVENT));
+    my_event.gx_event_target = (GX_WIDGET *)show;
+
+    switch (show->gx_widget_id)
     {
-        /* Fade in start window. */
-        my_event.gx_event_type = USER_EVENT_START_WIN_FADE_IN;
-        my_event.gx_event_target = (GX_WIDGET *)&main_screen;
-        gx_system_event_send(&my_event);
+    case ID_MAIN_SCREEN:
 
         /* Set button status to "Turn On". */
-        gx_pixelmap_button_pixelmap_set(&main_screen.main_screen_button_on_off, GX_PIXELMAP_ID_MENU_BUTTON_LONG,
-            GX_PIXELMAP_ID_MENU_BUTTON_LONG, GX_NULL);
-
-        string.gx_string_ptr = string_turn_on;
-        string.gx_string_length = sizeof(string_turn_on) - 1;
-        gx_prompt_text_set_ext(&main_screen.main_screen_prompt_on_off, &string);
+        gx_prompt_text_id_set(&main_screen.main_screen_prompt_on_off, GX_STRING_ID_TURN_ON);
 
         /* Detach sequence number prompt. */
         gx_widget_detach(&sequence_number);
 
-        /* Attach time prompt. */
-        gx_widget_attach((GX_WIDGET *)&main_screen, (GX_WIDGET *)&main_screen.main_screen_window_time);
-    }
-    else if (show == (GX_WINDOW *)&sequence_window)
-    {
+        /* Fade in start window. */
+        my_event.gx_event_type = USER_EVENT_START_WIN_FADE_IN;
+        gx_system_event_send(&my_event);
+        break;
+
+    case ID_SEQUENCE_WINDOW:
+
+        /* Attach sequence number prompt.  */
+        gx_widget_attach((GX_WIDGET*)&main_screen, &sequence_number);
+
+        /* Initialize sequence window.  */
+        sequence_window_init();
+
         /* Fade in sequence window. */
+#ifdef USE_CANVAS_FOR_ANIMATION
+        gx_system_animation_get(&animation);
+        gx_animation_canvas_define(animation, &animation_canvas);
+        memset(&info, 0, sizeof(GX_ANIMATION_INFO));
+        info.gx_animation_end_alpha = 255;
+        info.gx_animation_start_alpha = 0;
+        info.gx_animation_frame_interval = 1;
+        info.gx_animation_steps = 20;
+        info.gx_animation_parent = (GX_WIDGET*)&main_screen;
+        info.gx_animation_target = (GX_WIDGET*)&sequence_window;
+        info.gx_animation_start_position.gx_point_x = 0;
+        info.gx_animation_start_position.gx_point_y = 70;
+        info.gx_animation_end_position.gx_point_x = info.gx_animation_start_position.gx_point_x;
+        info.gx_animation_end_position.gx_point_y = info.gx_animation_start_position.gx_point_y;
+        info.gx_animation_id = ANI_ID_SEQ_WIN_FADE_IN;
+
+        gx_animation_start(animation, &info);
+#else
         my_event.gx_event_type = USER_EVENT_SEQ_WIN_FADE_IN;
-        my_event.gx_event_target = (GX_WIDGET *)&sequence_window;
         gx_system_event_send(&my_event);
+#endif
+        break;
 
-        if (main_screen.main_screen_button_on_off.gx_pixelmap_button_normal_id !=
-            GX_PIXELMAP_ID_MENU_BUTTON_LONG_PUSHED)
-        {
-            /* Set button status to "Shut Off". */
-            gx_pixelmap_button_pixelmap_set(&main_screen.main_screen_button_on_off, GX_PIXELMAP_ID_MENU_BUTTON_LONG_PUSHED,
-                GX_PIXELMAP_ID_MENU_BUTTON_LONG_PUSHED, GX_NULL);
-
-            string.gx_string_ptr = string_shut_off;
-            string.gx_string_length = sizeof(string_shut_off) - 1;
-            gx_prompt_text_set_ext(&main_screen.main_screen_prompt_on_off, &string);
-            gx_widget_detach((GX_WIDGET *)&main_screen.main_screen_window_time);
-            gx_widget_attach((GX_WIDGET *)&main_screen, &sequence_number);
-        }
-    }
-    else if (show == (GX_WINDOW *)&complete_window)
-    {
-        /* Fade in complete window. */
-        my_event.gx_event_type = USER_EVENT_COMPLETE_WIN_FADE_IN;
-        my_event.gx_event_target = (GX_WIDGET *)&complete_window;
-        gx_system_event_send(&my_event);
+    case ID_COMPLETE_WINDOW:
 
         /* Detach button window. */
-        gx_widget_detach((GX_WIDGET *)&main_screen.main_screen_button_window);
+        gx_widget_detach((GX_WIDGET*)&main_screen.main_screen_button_window);
+
+        /* Initialize complete window.  */
+        complete_window_init();
+
+        /* Fade in complete window. */
+        my_event.gx_event_type = USER_EVENT_COMPLETE_WIN_FADE_IN;
+        gx_system_event_send(&my_event);
+        break;
+
+    default:
+        toggle_animation_flag = ANIMATION_NONE;
+        return;
     }
 
-    if (hide == (GX_WINDOW *)&main_screen)
+    my_event.gx_event_target = (GX_WIDGET*)hide;
+
+    switch(hide->gx_widget_id)
     {
+    case ID_MAIN_SCREEN:
+
+        /* Set button status to "Shut Off". */
+        gx_prompt_text_id_set(&main_screen.main_screen_prompt_on_off, GX_STRING_ID_TURN_OFF);
+
         /* Fade out main screen. */
         my_event.gx_event_type = USER_EVENT_START_WIN_FADE_OUT;
-        my_event.gx_event_target = (GX_WIDGET *)&main_screen;
         gx_system_event_send(&my_event);
-    }
-    else if (hide == (GX_WINDOW *)&sequence_window)
-    {
-        /* Fade out sequence screen. */
-        my_event.gx_event_type = USER_EVENT_SEQ_WIN_FADE_OUT;
-        my_event.gx_event_target = (GX_WIDGET *)&sequence_window;
-        gx_system_event_send(&my_event);
+        break;
+
+    case ID_SEQUENCE_WINDOW:
 
         /* Stop animations in sequence window. */
         sequence_animation_stop();
-    }
-    else if (hide == (GX_WINDOW *)&complete_window)
-    {
-        /* Fade out complete screen. */
-        my_event.gx_event_type = USER_EVENT_COMPLETE_WIN_FADE_OUT;
-        my_event.gx_event_target = (GX_WIDGET *)&complete_window;
+
+        /* Fade out sequence screen. */
+#ifdef USE_CANVAS_FOR_ANIMATION
+        gx_system_animation_get(&animation);
+        gx_animation_canvas_define(animation, &animation_canvas);
+        memset(&info, 0, sizeof(GX_ANIMATION_INFO));
+        info.gx_animation_end_alpha = 0;
+        info.gx_animation_start_alpha = 255;
+        info.gx_animation_frame_interval = 1;
+        info.gx_animation_steps = 20;
+        info.gx_animation_parent = (GX_WIDGET *)&main_screen;
+        info.gx_animation_target = (GX_WIDGET*)&sequence_window;
+        info.gx_animation_start_position.gx_point_x = 0;
+        info.gx_animation_start_position.gx_point_y = 70;
+        info.gx_animation_end_position.gx_point_x = info.gx_animation_start_position.gx_point_x;
+        info.gx_animation_end_position.gx_point_y = info.gx_animation_start_position.gx_point_y;
+        info.gx_animation_id = ANI_ID_SEQ_WIN_FADE_OUT;
+        info.gx_animation_style = GX_ANIMATION_DETACH;
+
+        gx_animation_start(animation, &info);
+#else
+        my_event.gx_event_type = USER_EVENT_SEQ_WIN_FADE_OUT;
         gx_system_event_send(&my_event);
+#endif
+        break;
+
+    case ID_COMPLETE_WINDOW:
 
         /* Attach button window. */
         gx_widget_attach((GX_WIDGET *)&main_screen, (GX_WIDGET *)&main_screen.main_screen_button_window);
+
+        /* Stop complete window timer.  */
+        complete_window_timer_stop();
+
+        /* Fade out complete screen. */
+        my_event.gx_event_type = USER_EVENT_COMPLETE_WIN_FADE_OUT;
+        gx_system_event_send(&my_event);
+        break;
+
+    default:
+        return;
     }
 }
 
 /******************************************************************************************/
-/* Draw a widget with specifie off set in y coordinate.                                   */
+/* Define custom mode button draw function.                                               */
 /******************************************************************************************/
-VOID custom_widget_children_draw(GX_WIDGET *child, INT yoff)
+VOID mode_button_draw(GX_PIXELMAP_BUTTON *button)
 {
-    GX_PIXELMAP *map;
-    GX_STRING    text;
-    GX_BRUSH    *brush;
-
-    gx_context_brush_get(&brush);
-
-    while (child)
-    {
-        if (child->gx_widget_type == GX_TYPE_ICON)
-        {
-            /* Get icon pixelmap/ */
-            gx_context_pixelmap_get(((GX_ICON *)child)->gx_icon_normal_pixelmap, &map);
-
-            if (map)
-            {
-                /* Offset icon draw in button pixelmap. */
-                gx_canvas_pixelmap_blend(child->gx_widget_size.gx_rectangle_left, child->gx_widget_size.gx_rectangle_top + yoff, map, brush->gx_brush_alpha);
-            }
-        }
-        else if (child->gx_widget_type == GX_TYPE_PROMPT)
-        {
-            /* Get prompt text. */
-            gx_prompt_text_get_ext((GX_PROMPT *)child, &text);
-
-            if (text.gx_string_ptr)
-            {
-                gx_widget_text_draw_ext(child,
-                    ((GX_PROMPT *)child)->gx_prompt_normal_text_color,
-                    ((GX_PROMPT *)child)->gx_prompt_font_id,
-                    &text, 0, yoff);
-            }
-        }
-        if (child->gx_widget_first_child)
-        {
-            custom_widget_children_draw(child->gx_widget_first_child, yoff);
-        }
-
-        child = child->gx_widget_next;
-    }
-}
-
-/******************************************************************************************/
-/* Defines a custom pixlemap button draw function to do some custom drawing.              */
-/******************************************************************************************/
-VOID custom_pixlemap_button_draw(GX_PIXELMAP_BUTTON *button)
-{
-    INT          yoff = 4;
-    GX_PIXELMAP *map;
-    GX_BRUSH    *brush;
-
-    gx_context_brush_get(&brush);
-
     if (button->gx_widget_style & GX_STYLE_BUTTON_PUSHED)
     {
-        yoff = 4;
-        gx_context_pixelmap_get(button->gx_pixelmap_button_selected_id, &map);
+        gx_widget_style_add(button->gx_widget_first_child, GX_STYLE_DRAW_SELECTED);
     }
     else
     {
-        yoff = 0;
-        gx_context_pixelmap_get(button->gx_pixelmap_button_normal_id, &map);
+        gx_widget_style_remove(button->gx_widget_first_child, GX_STYLE_DRAW_SELECTED);
     }
 
-    if (map)
-    {
-        /* Offset button pixelmap draw. */
-        gx_canvas_pixelmap_blend(button->gx_widget_size.gx_rectangle_left, button->gx_widget_size.gx_rectangle_top + yoff, map, brush->gx_brush_alpha);
-    }
-
-    custom_widget_children_draw(button->gx_widget_first_child, yoff);
-}
-
-
-/******************************************************************************************/
-/* Update clock of main screen.                                                           */
-/******************************************************************************************/
-VOID clock_update()
-{
-#ifdef WIN32
-    GX_CHAR time_string_buffer[6];
-    GX_CHAR date_string_buffer[20];
-    GX_STRING time_string;
-    GX_STRING date_string;
-    GX_STRING string;
-
-    SYSTEMTIME local_time;
-    GetLocalTime(&local_time);
-
-    if (local_time.wHour < 12)
-    {
-        sprintf(time_string_buffer, "%02d:%02d", local_time.wHour, local_time.wMinute);
-
-        string.gx_string_ptr = "AM";
-        string.gx_string_length = 2;
-        gx_prompt_text_set_ext(&main_screen.main_screen_am_pm, &string);
-    }
-    else
-    {
-        sprintf(time_string_buffer, "%02d:%02d", local_time.wHour - 12, local_time.wMinute);
-
-        string.gx_string_ptr = "PM";
-        string.gx_string_length = 2;
-        gx_prompt_text_set_ext(&main_screen.main_screen_am_pm, &string);
-    }
-
-    sprintf_s(date_string_buffer, 20, "%s %02d, %d", month_names[local_time.wMonth - 1], local_time.wDay, local_time.wYear);
-
-    time_string.gx_string_ptr = time_string_buffer;
-    time_string.gx_string_length = string_length_get(time_string_buffer, sizeof(time_string_buffer) - 1);
-
-    date_string.gx_string_ptr = date_string_buffer;
-    date_string.gx_string_length = string_length_get(date_string_buffer, sizeof(date_string_buffer) - 1);
-
-    gx_prompt_text_set_ext(&main_screen.main_screen_time, &time_string);
-    gx_prompt_text_set_ext(&main_screen.main_screen_day_of_week, &day_names[local_time.wDayOfWeek]);
-    gx_prompt_text_set_ext(&main_screen.main_screen_date, &date_string);
-
-#else
-#endif
+    gx_pixelmap_button_draw(button);
 }
 
 /******************************************************************************************/

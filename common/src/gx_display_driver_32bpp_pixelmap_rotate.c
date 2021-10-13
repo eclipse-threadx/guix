@@ -737,7 +737,7 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_32bpp_pixelmap_rotate            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.9        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -783,6 +783,9 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-15-2021     Ting Zhu                 Modified comment(s),          */
+/*                                            corrected format type,      */
+/*                                            resulting in version 6.1.9  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_32bpp_pixelmap_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -791,7 +794,7 @@ VOID _gx_display_driver_32bpp_pixelmap_rotate(GX_DRAW_CONTEXT *context, INT xpos
     switch (pixelmap -> gx_pixelmap_format)
     {
     case GX_COLOR_FORMAT_24XRGB:
-    case GX_COLOR_FORMAT_32ABGR:
+    case GX_COLOR_FORMAT_32ARGB:
         if (angle % 90 == 0)
         {
             /* Simple angle rotate: 90 degree, 180 degree and 270 degree.  */

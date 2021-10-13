@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.0                                               */
-/*  Date (dd.mm.yyyy): 26. 7.2021   Time (hh:mm): 15:32                        */
+/*  GUIX Studio Revision 6.1.8.1                                               */
+/*  Date (dd.mm.yyyy): 16. 8.2021   Time (hh:mm): 15:18                        */
 /*******************************************************************************/
 
 
@@ -27,45 +27,37 @@ extern   "C" {
 #define ID_AUXILIARY 3
 #define ID_PALLET_FRICTION 4
 #define ID_UNIT_SET 5
-#define ID_HOME 6
-#define ID_GEARS 7
-#define ID_REFRESH 8
-#define ID_SHIELD 9
-#define ID_ON_OFF 10
-#define ID_INSPECTING 11
-#define ID_PALLETIZING 12
-#define ID_WELDING 13
-#define ID_ASSEMBLING 14
-#define ID_START_WINDOW 15
-#define ID_START 16
+#define ID_MAIN_SCREEN 6
+#define ID_ON_OFF 7
+#define ID_INSPECTING 8
+#define ID_PALLETIZING 9
+#define ID_WELDING 10
+#define ID_ASSEMBLING 11
+#define ID_START_WINDOW 12
+#define ID_START 13
 
 
 /* Define animation ids                                                        */
 
 #define ANI_ID_COMPLETE_WIN_FADE_IN 1
 #define ANI_ID_COMPLETE_WIN_FADE_OUT 2
-#define ANI_ID_GREEN_CORNER_SLIDE_IN 3
-#define ANI_ID_MODE_WIN_SLIDE_IN 4
-#define ANI_ID_MODE_WIN_SLIDE_OUT 5
-#define ANI_ID_SEQ_WIN_FADE_IN 6
-#define ANI_ID_SEQ_WIN_FADE_OUT 7
-#define ANI_ID_SPEC_PROMPT_SLIDE_IN 8
-#define ANI_ID_SPEC_PROMPT_SLIDE_OUT 9
-#define ANI_ID_SPEED_WIN_FADE_IN 10
-#define ANI_ID_START_BTN_SLIDE_IN 11
-#define ANI_ID_START_BTN_SLIDE_OUT 12
-#define ANI_ID_TIMER_WIN_SLIDE_IN 13
-#define ANI_ID_TIMER_WIN_SLIDE_OUT 14
-#define GX_NEXT_ANIMATION_ID 15
+#define ANI_ID_MODE_WIN_SLIDE_IN 3
+#define ANI_ID_SEQ_WIN_FADE_IN 4
+#define ANI_ID_SEQ_WIN_FADE_OUT 5
+#define ANI_ID_SPEED_WIN_FADE_IN 6
+#define ANI_ID_START_BTN_SLIDE_IN 7
+#define ANI_ID_START_BTN_SLIDE_OUT 8
+#define ANI_ID_TIMER_WIN_SLIDE_IN 9
+#define GX_NEXT_ANIMATION_ID 10
 
 
 /* Define user event ids                                                       */
 
 enum user_defined_events{
-    USER_EVENT_COMPLETE_WIN_FADE_IN = GX_FIRST_USER_EVENT,
-    USER_EVENT_COMPLETE_WIN_FADE_OUT,
-    USER_EVENT_SEQ_WIN_FADE_IN,
+    USER_EVENT_SEQ_WIN_FADE_IN = GX_FIRST_USER_EVENT,
     USER_EVENT_SEQ_WIN_FADE_OUT,
+    USER_EVENT_COMPLETE_WIN_FADE_IN,
+    USER_EVENT_COMPLETE_WIN_FADE_OUT,
     USER_EVENT_START_WIN_FADE_OUT,
     USER_EVENT_START_WIN_FADE_IN,
     GX_NEXT_USER_EVENT_ID
@@ -180,7 +172,6 @@ typedef struct
 typedef struct SEQUENCE_NUMBER_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
-    GX_ICON sequence_number_icon_12_3;
     GX_PROMPT sequence_number_prompt_18_2;
     GX_PROMPT sequence_number_prompt_18_3;
 } SEQUENCE_NUMBER_CONTROL_BLOCK;
@@ -203,7 +194,7 @@ typedef struct SEQUENCE_WINDOW_CONTROL_BLOCK_STRUCT
     GX_WINDOW_MEMBERS_DECLARE
     GX_WINDOW sequence_window_window_progress;
     GX_PROGRESS_BAR sequence_window_bottom_progress;
-    GX_PROMPT sequence_window_prompt_15_1;
+    GX_PROMPT sequence_window_prompt_7;
     GX_PROMPT sequence_window_progress_1_title;
     GX_PROMPT sequence_window_progress_2_title;
     GX_PROMPT sequence_window_progress_3_title;
@@ -216,18 +207,17 @@ typedef struct SEQUENCE_WINDOW_CONTROL_BLOCK_STRUCT
     GX_ICON sequence_window_complete_icon_2;
     GX_ICON sequence_window_complete_icon_3;
     GX_ICON sequence_window_complete_icon_4;
-    GX_WINDOW sequence_window_window_4;
+    GX_WINDOW sequence_window_window_mode;
     GX_PROMPT sequence_window_prompt_15_5;
     GX_PROMPT sequence_window_prompt_15_6;
     GX_PROMPT sequence_window_prompt_15_7;
     GX_PROMPT sequence_window_prompt_15_8;
     GX_PROMPT sequence_window_prompt_15_10_1;
     GX_PROMPT sequence_window_prompt_15_11_5;
-    GX_PROMPT sequence_window_prompt_15_12_1;
     GX_RADIAL_PROGRESS_BAR sequence_window_radial_progress_speed;
     GX_NUMERIC_PROMPT sequence_window_prompt_SX;
     GX_NUMERIC_PROMPT sequence_window_prompt_SY;
-    GX_WINDOW sequence_window_window_5;
+    GX_WINDOW sequence_window_window_rotation_angle;
     GX_PROMPT sequence_window_prompt_15_13_2;
     GX_PROMPT sequence_window_prompt_15_14_2;
     GX_PROMPT sequence_window_prompt_15_15_2;
@@ -236,7 +226,7 @@ typedef struct SEQUENCE_WINDOW_CONTROL_BLOCK_STRUCT
     GX_NUMERIC_PROMPT sequence_window_prompt_RX;
     GX_PROMPT sequence_window_prompt_15_11_2;
     GX_PROMPT sequence_window_prompt_15_11;
-    GX_WINDOW sequence_window_window_6;
+    GX_WINDOW sequence_window_window_force_sensor;
     GX_PROMPT sequence_window_prompt_15_13;
     GX_PROMPT sequence_window_prompt_15_14;
     GX_PROMPT sequence_window_prompt_15_15;
@@ -245,50 +235,45 @@ typedef struct SEQUENCE_WINDOW_CONTROL_BLOCK_STRUCT
     GX_PROMPT sequence_window_prompt_15_11_1;
     GX_PROMPT sequence_window_prompt_15_11_3;
     GX_RADIAL_PROGRESS_BAR sequence_window_radial_progress_force;
-    GX_ICON sequence_window_icon_12_1;
-    GX_PROMPT sequence_window_prompt_15_16_4;
-    GX_PROMPT sequence_window_prompt_15_16_3;
-    GX_NUMERIC_PROMPT sequence_window_prompt_X;
-    GX_NUMERIC_PROMPT sequence_window_prompt_Y;
-    GX_NUMERIC_PROMPT sequence_window_prompt_Z;
     GX_NUMERIC_PROMPT sequence_window_progress_1_value;
     GX_NUMERIC_PROMPT sequence_window_progress_2_value;
     GX_NUMERIC_PROMPT sequence_window_progress_3_value;
     GX_NUMERIC_PROMPT sequence_window_progress_4_value;
-    GX_ICON sequence_window_icon_13_1;
-    GX_PROMPT sequence_window_prompt_15_16_5;
-    GX_PROMPT sequence_window_prompt_15_16_6;
+    GX_ICON sequence_window_timer_icon;
+    GX_PROMPT sequence_window_overall_label;
     GX_NUMERIC_PROMPT sequence_window_timer_tick;
     GX_NUMERIC_PROMPT sequence_window_timer_minute;
     GX_NUMERIC_PROMPT sequence_window_timer_second;
-    GX_PROMPT sequence_window_prompt_15_16_7;
-    GX_PROMPT sequence_window_prompt_15_16_8;
-    GX_PROMPT sequence_window_prompt_15_16_9;
-    GX_PROMPT sequence_window_prompt_15_16_2;
-    GX_PROMPT sequence_window_prompt_15_16_1;
-    GX_PROMPT sequence_window_prompt_15_16_10;
-    GX_ICON sequence_window_mode_icon;
-    GX_PROMPT sequence_window_mode_title;
+    GX_PROMPT sequence_window_timer_colon;
+    GX_PROMPT sequence_window_timer_dot;
+    GX_ICON sequence_window_task_icon;
+    GX_PROMPT sequence_window_task_title;
     GX_NUMERIC_PROMPT sequence_window_bottom_progress_value;
+    GX_WINDOW sequence_window_sprite_window;
+    GX_PROMPT sequence_window_prompt_X_label;
+    GX_NUMERIC_PROMPT sequence_window_prompt_X;
+    GX_PROMPT sequence_window_prompt_15_16_11;
+    GX_PROMPT sequence_window_prompt_Y_label;
+    GX_NUMERIC_PROMPT sequence_window_prompt_Y;
+    GX_PROMPT sequence_window_prompt_15_16_10_1;
+    GX_PROMPT sequence_window_prompt_Z_label;
+    GX_NUMERIC_PROMPT sequence_window_prompt_Z;
+    GX_PROMPT sequence_window_prompt_15_16_14;
     GX_SPRITE sequence_window_sprite;
+    GX_PROMPT sequence_window_progress_1_percent_flag;
+    GX_PROMPT sequence_window_progress_2_percent_flag;
+    GX_PROMPT sequence_window_progress_3_percent_flag;
+    GX_PROMPT sequence_window_progress_4_percent_flag;
 } SEQUENCE_WINDOW_CONTROL_BLOCK;
 
 typedef struct MAIN_SCREEN_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
     GX_PIXELMAP_BUTTON main_screen_button_home;
-    GX_PIXELMAP_BUTTON main_screen_button_gears;
-    GX_PIXELMAP_BUTTON main_screen_button_refresh;
-    GX_PIXELMAP_BUTTON main_screen_button_shield;
     GX_ICON main_screen_expresslogic_label;
-    GX_PROMPT main_screen_time;
-    GX_PROMPT main_screen_am_pm;
     GX_PIXELMAP_BUTTON main_screen_button_on_off;
     GX_PROMPT main_screen_prompt_on_off;
     GX_ICON main_screen_icon_9;
-    GX_WINDOW main_screen_window_time;
-    GX_PROMPT main_screen_day_of_week;
-    GX_PROMPT main_screen_date;
     GX_WINDOW main_screen_button_window;
     GX_PIXELMAP_BUTTON main_screen_button_inspecting;
     GX_PROMPT main_screen_prompt_14_4;
@@ -308,23 +293,6 @@ typedef struct MAIN_SCREEN_CONTROL_BLOCK_STRUCT
     GX_ICON main_screen_icon_robot;
     GX_PROMPT main_screen_prompt_initiate;
     GX_PROMPT main_screen_prompt_Start;
-    GX_ICON main_screen_icon_green_corner;
-    GX_PROMPT main_screen_prompt_Systems;
-    GX_PROMPT main_screen_prompt_OK;
-    GX_WINDOW main_screen_window_timer;
-    GX_PROMPT main_screen_prompt_11;
-    GX_PIXELMAP_BUTTON main_screen_pixelmap_button_11;
-    GX_PROMPT main_screen_prompt_12;
-    GX_PIXELMAP_BUTTON main_screen_pixelmap_button_12;
-    GX_PROMPT main_screen_prompt_13;
-    GX_WINDOW main_screen_window_speed;
-    GX_PROMPT main_screen_prompt;
-    GX_PIXELMAP_BUTTON main_screen_pixelmap_button;
-    GX_PROMPT main_screen_prompt_1;
-    GX_PIXELMAP_BUTTON main_screen_pixelmap_button_1;
-    GX_PROMPT main_screen_prompt_2;
-    GX_PIXELMAP_BUTTON main_screen_pixelmap_button_10;
-    GX_PROMPT main_screen_prompt_10;
     GX_WINDOW main_screen_window_mode;
     GX_PROMPT main_screen_prompt_3;
     GX_PIXELMAP_BUTTON main_screen_pixelmap_button_2;
@@ -333,8 +301,21 @@ typedef struct MAIN_SCREEN_CONTROL_BLOCK_STRUCT
     GX_PROMPT main_screen_prompt_5;
     GX_PIXELMAP_BUTTON main_screen_pixelmap_button_4;
     GX_PROMPT main_screen_prompt_6;
-    GX_PROMPT main_screen_prompt_spec;
-    GX_ICON main_screen_icon_shield;
+    GX_WINDOW main_screen_window_speed;
+    GX_PROMPT main_screen_prompt;
+    GX_PIXELMAP_BUTTON main_screen_pixelmap_button;
+    GX_PROMPT main_screen_prompt_1;
+    GX_PIXELMAP_BUTTON main_screen_pixelmap_button_1;
+    GX_PROMPT main_screen_prompt_2;
+    GX_PIXELMAP_BUTTON main_screen_pixelmap_button_10;
+    GX_PROMPT main_screen_prompt_10;
+    GX_WINDOW main_screen_window_timer;
+    GX_PROMPT main_screen_prompt_11;
+    GX_PIXELMAP_BUTTON main_screen_pixelmap_button_11;
+    GX_PROMPT main_screen_prompt_12;
+    GX_PIXELMAP_BUTTON main_screen_pixelmap_button_12;
+    GX_PROMPT main_screen_prompt_13;
+    GX_PROMPT main_screen_prompt_initiate_1;
 } MAIN_SCREEN_CONTROL_BLOCK;
 
 
@@ -352,13 +333,13 @@ extern MAIN_SCREEN_CONTROL_BLOCK main_screen;
 UINT complete_window_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
 UINT sequence_window_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
 VOID mode_value_format(GX_NUMERIC_PROMPT *, INT);
-VOID position_value_format(GX_NUMERIC_PROMPT *, INT);
-VOID progress_value_format(GX_NUMERIC_PROMPT *, INT);
 VOID timer_value_format(GX_NUMERIC_PROMPT *, INT);
-VOID mode_icon_draw(GX_ICON *widget);
-VOID mode_title_draw(GX_PROMPT *widget);
+VOID task_icon_draw(GX_ICON *widget);
+VOID task_title_draw(GX_PROMPT *widget);
+VOID position_value_format(GX_NUMERIC_PROMPT *, INT);
 UINT main_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID custom_pixlemap_button_draw(GX_PIXELMAP_BUTTON *widget);
+VOID main_screen_draw(GX_WINDOW *widget);
+VOID mode_button_draw(GX_PIXELMAP_BUTTON *widget);
 
 /* Declare the GX_STUDIO_DISPLAY_INFO structure                                */
 
