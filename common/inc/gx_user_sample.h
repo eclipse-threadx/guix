@@ -53,7 +53,7 @@
    GUI API services, comment out the definition below to reduce system
    overhead.
  */
-/* #define GUIX_DISABLE_MULTITHREAD_SUPPORT */
+/* #define GX_DISABLE_MULTITHREAD_SUPPORT */
 
 /* Defined, GUIX disables UTF8 support.  */
 /* #define GX_DISABLE_UTF8_SUPPORT */
