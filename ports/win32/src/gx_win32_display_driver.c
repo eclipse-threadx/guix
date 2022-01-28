@@ -19,6 +19,7 @@
 /**                                                                       */
 /**************************************************************************/
 #ifdef WIN32
+#pragma comment(lib, "winmm.lib")
 #include "tx_api.h"
 #include "gx_api.h"
 #include "gx_system.h"
@@ -235,7 +236,163 @@ static char                  icon_path[MAX_PATH];
 
 BOOL                         win32_graphics_data_initialized = FALSE;
 GX_WIN32_DISPLAY_DRIVER_DATA win32_instance_data[GX_MAX_WIN32_DISPLAYS];
+UINT                         win32_timer_id = 0;
 extern int                   gx_main(int, char **);
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    gx_win32_timer_expiration                          PORTABLE C       */
+/*                                                           6.1.10       */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This is the callback function for the win32 multi-media timer that  */
+/*    is called once upon the expiration of a timer event.                */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    wTimerID                              Identifier of the timer event */
+/*    msg                                   Reserved                      */
+/*    dwUser                                User instance data            */
+/*    dw1                                   Reserved                      */
+/*    dw2                                   Reserved                      */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  01-31-2022     Ting Zhu                 Initial Version 6.1.10        */
+/*                                                                        */
+/**************************************************************************/
+static void CALLBACK gx_win32_timer_expiration(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD dw2)
+{
+    GX_WIN32_DISPLAY_DRIVER_DATA *instance = (GX_WIN32_DISPLAY_DRIVER_DATA *)dwUser;
+
+    SendMessage(instance->win32_driver_winhandle, WM_TIMER, 0, 0);
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    gx_win32_start_multimedia_timer                    PORTABLE C       */
+/*                                                           6.1.10       */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function starts a periodic multi-media timer event.            */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    instance                              Pointer to win32 display      */
+/*                                            driver data                 */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    timeGetDevCaps                                                      */
+/*    timeBeginPeriod                                                     */
+/*    timeSetEvent                                                        */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    gx_win32_driver_thread_initialize                                   */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  01-31-2022     Ting Zhu                 Initial Version 6.1.10        */
+/*                                                                        */
+/**************************************************************************/
+static void gx_win32_start_multimedia_timer(GX_WIN32_DISPLAY_DRIVER_DATA *instance)
+{
+    TIMECAPS tc;
+    UINT     wTimerRes;
+
+    /* Queries the timer device to determine its resolution.  */
+    if (timeGetDevCaps(&tc, sizeof(TIMECAPS)) != TIMERR_NOERROR)
+    {
+        /* Error; application can't continue. */
+    }
+
+    wTimerRes = min(max(tc.wPeriodMin, GX_SYSTEM_TIMER_MS), tc.wPeriodMax);
+
+    /* Start a specified timer event. The timer runs in its own thread.
+       It calls the specified callback function when the event is activated.  */
+    win32_timer_id = timeSetEvent(GX_SYSTEM_TIMER_MS, wTimerRes, gx_win32_timer_expiration, (DWORD)instance, TIME_PERIODIC);
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    gx_win32_stop_multimedia_timer                     PORTABLE C       */
+/*                                                           6.1.10       */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function stops a multi-media timer event.                      */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    gx_win32_input_driver                                               */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  01-31-2022     Ting Zhu                 Initial Version 6.1.10        */
+/*                                                                        */
+/**************************************************************************/
+static void gx_win32_stop_multimedia_timer()
+{
+    if (win32_timer_id)
+    {
+        /* Cancel a specified timer event.  */
+        timeKillEvent(win32_timer_id);
+
+        win32_timer_id = 0;
+    }
+}
 
 /**************************************************************************/
 /*                                                                        */
@@ -440,13 +597,65 @@ LONG  status;
     strcat_s(icon_path, MAX_PATH, "graphics\\system_png\\guix_1616icon.ico");
 }
 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    gx_win32_event_to_guix                             PORTABLE C       */
+/*                                                           6.1.10       */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function sends event to GUIX system.                           */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    type                                  GUIX event type               */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _tx_thread_context_save                                             */
+/*    _tx_thread_context_restore                                          */
+/*    gx_system_event_send                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    gx_win32_message_to_guix                                            */
+/*    gx_win32_event_process                                              */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  01-31-2022     Ting Zhu                 Initial Version 6.1.10        */
+/*                                                                        */
+/**************************************************************************/
+void gx_win32_event_to_guix(GX_EVENT *event_ptr)
+{
+#ifdef GX_THREADX_BINDING
+    _tx_thread_context_save();
+#endif
+
+    gx_system_event_send(event_ptr);
+
+#ifdef GX_THREADX_BINDING
+    _tx_thread_context_restore();
+#endif
+}
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    gx_win32_message_to_guix                           PORTABLE C       */
-/*                                                           6.1.3        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -478,6 +687,9 @@ LONG  status;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  01-31-2022     Ting Zhu                 Modified comment(s), modified */
+/*                                            GUIX event send logic,      */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 void gx_win32_message_to_guix(USHORT event_type)
@@ -490,7 +702,7 @@ GX_EVENT myevent;
     myevent.gx_event_sender = 0;
     myevent.gx_event_type = event_type;
 
-    gx_system_event_send(&myevent);
+    gx_win32_event_to_guix(&myevent);
 }
 
 /**************************************************************************/
@@ -1136,7 +1348,7 @@ VOID                         *memptr;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    gx_win32_window_create                             PORTABLE C       */
-/*                                                           6.1.3        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1170,6 +1382,9 @@ VOID                         *memptr;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            corrected window size,      */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 HWND gx_win32_window_create(GX_WIN32_DISPLAY_DRIVER_DATA *gx_driver_ptr, WNDPROC event_process, INT xpos, INT ypos)
@@ -1199,8 +1414,8 @@ WNDCLASS  wndclass;
 
     TargetSize.left = 0;
     TargetSize.top = 0;
-    TargetSize.right = gx_driver_ptr -> win32_driver_bmpinfo.gx_bmp_header.biWidth;
-    TargetSize.bottom = gx_driver_ptr -> win32_driver_bmpinfo.gx_bmp_header.biHeight;
+    TargetSize.right = gx_driver_ptr -> win32_driver_bmpinfo.gx_bmp_header.biWidth - 1;
+    TargetSize.bottom = gx_driver_ptr -> win32_driver_bmpinfo.gx_bmp_header.biHeight - 1;
 
     WinStyle = WS_CAPTION | WS_SIZEBOX | WS_VISIBLE | WS_MINIMIZEBOX |
         WS_MAXIMIZEBOX | WS_SYSMENU;
@@ -1227,7 +1442,7 @@ WNDCLASS  wndclass;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    WndProc                                            PORTABLE C       */
-/*                                                           6.1.3        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1260,6 +1475,9 @@ WNDCLASS  wndclass;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  01-31-2022     Ting Zhu                 Modified comment(s), modified */
+/*                                            GUIX event send logic,      */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 LRESULT CALLBACK gx_win32_event_process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1283,7 +1501,7 @@ GX_BOOL                       check_key_event;
     case WM_TIMER:
         NewEvent.gx_event_type = GX_EVENT_TIMER;
         NewEvent.gx_event_payload.gx_event_ulongdata = 1;
-        gx_system_event_send(&NewEvent);
+        gx_win32_event_to_guix(&NewEvent);
         return 0;
 
     case WM_PAINT:
@@ -1304,7 +1522,7 @@ GX_BOOL                       check_key_event;
         NewEvent.gx_event_payload.gx_event_pointdata.gx_point_x = WinX;
         NewEvent.gx_event_payload.gx_event_pointdata.gx_point_y = WinY;
         NewEvent.gx_event_display_handle = (ULONG)driver_data;
-        gx_system_event_send(&NewEvent);
+        gx_win32_event_to_guix(&NewEvent);
         return 0;
 
     case WM_LBUTTONUP:
@@ -1316,7 +1534,7 @@ GX_BOOL                       check_key_event;
         NewEvent.gx_event_payload.gx_event_pointdata.gx_point_x = WinX;
         NewEvent.gx_event_payload.gx_event_pointdata.gx_point_y = WinY;
         NewEvent.gx_event_display_handle = (ULONG)driver_data;
-        gx_system_event_send(&NewEvent);
+        gx_win32_event_to_guix(&NewEvent);
         return 0;
 
     case WM_KEYDOWN:
@@ -1359,7 +1577,7 @@ GX_BOOL                       check_key_event;
                 NewEvent.gx_event_type = GX_EVENT_KEY_DOWN;
                 NewEvent.gx_event_payload.gx_event_ushortdata[0] = gx_win32_map_key_to_guix_key(wParam);
             }
-            gx_system_event_send(&NewEvent);
+            gx_win32_event_to_guix(&NewEvent);
         }
         break;
 
@@ -1380,7 +1598,7 @@ GX_BOOL                       check_key_event;
 
         NewEvent.gx_event_type = GX_EVENT_KEY_UP;
         NewEvent.gx_event_payload.gx_event_ushortdata[0] = gx_win32_map_key_to_guix_key(wParam);
-        gx_system_event_send(&NewEvent);
+        gx_win32_event_to_guix(&NewEvent);
         break;
 
     case WM_IME_CHAR:
@@ -1393,7 +1611,7 @@ GX_BOOL                       check_key_event;
         MultiByteToWideChar(CP_ACP, 0, (LPCSTR)&wide_char, 8, (LPWSTR)s_ch, 3);
 
         NewEvent.gx_event_payload.gx_event_ushortdata[0]  = s_ch[0];
-        gx_system_event_send(&NewEvent);
+        gx_win32_event_to_guix(&NewEvent);
         break;
 
     case WM_MOUSEMOVE:
@@ -1406,7 +1624,7 @@ GX_BOOL                       check_key_event;
             NewEvent.gx_event_payload.gx_event_pointdata.gx_point_x = WinX;
             NewEvent.gx_event_payload.gx_event_pointdata.gx_point_y = WinY;
             NewEvent.gx_event_display_handle = (ULONG)driver_data;
-            gx_system_event_send(&NewEvent);
+            gx_win32_event_to_guix(&NewEvent);
         }
         return 0;
 
@@ -1425,7 +1643,7 @@ GX_BOOL                       check_key_event;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    gx_win32_input_driver                              PORTABLE C       */
-/*                                                           6.1.3        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1457,41 +1675,45 @@ GX_BOOL                       check_key_event;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  01-31-2022     Ting Zhu                 Modified comment(s), added    */
+/*                                            timer stop and thread       */
+/*                                            handle close logic,         */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
-void gx_win32_input_driver()
+void gx_win32_input_driver(GX_WIN32_DISPLAY_DRIVER_DATA *instance)
 {
 int status;
 MSG msg;
+int exit_code = 0;
 
-    while (1)
+    while ((status = GetMessage(&msg, NULL, 0, 0)) != 0)
     {
-        while ((status = GetMessage(&msg, NULL, 0, 0)) != 0)
+        if ((msg.hwnd == NULL && msg.message == WM_USER) ||
+            (status == -1))
         {
-            if (msg.hwnd == NULL && msg.message == WM_USER)
-            {
-                /* Exit thread. */
-                GX_WIN32_EVENT_THREAD_EXIT(-1);
-            }
-
-            if (status == -1)
-            {
-                /* Exit thread. */
-                GX_WIN32_EVENT_THREAD_EXIT(-1);
-            }
-            else
-            {
-                TranslateMessage(&msg);
-                DispatchMessage(&msg);
-            }
+            /* Exit thread. */
+            exit_code = -1;
+            break;
         }
 
-        /* Send an event to wake up the GUIX thread.  */
-        gx_win32_message_to_guix(GX_EVENT_TERMINATE);
-
-        /* Exit thread. */
-        GX_WIN32_EVENT_THREAD_EXIT(0);
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
     }
+
+    /* Stop multi-media timer.  */
+    gx_win32_stop_multimedia_timer();
+
+    /* Send an event to wake up the GUIX thread.  */
+    gx_win32_message_to_guix(GX_EVENT_TERMINATE);
+
+    if ((instance->win32_driver_thread_handle != INVALID_HANDLE_VALUE) &&
+        instance->win32_driver_thread_handle)
+    {
+        CloseHandle(instance->win32_driver_thread_handle);
+    }
+
+    GX_WIN32_EVENT_THREAD_EXIT(exit_code);
 }
 
 /**************************************************************************/
@@ -1558,7 +1780,7 @@ GX_WIN32_DISPLAY_DRIVER_DATA *instance = (GX_WIN32_DISPLAY_DRIVER_DATA *)thread_
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    gx_win32_driver_thread_initialize                  PORTABLE C       */
-/*                                                           6.1.7        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1594,6 +1816,9 @@ GX_WIN32_DISPLAY_DRIVER_DATA *instance = (GX_WIN32_DISPLAY_DRIVER_DATA *)thread_
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  06-02-2021     Ting Zhu                 Initial Version 6.1.7         */
+/*  01-31-2022     Ting Zhu                 Modified comment(s), modified */
+/*                                            to use multi-media timer,   */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 void gx_win32_driver_thread_initialize(GX_WIN32_DISPLAY_DRIVER_DATA *instance)
@@ -1608,11 +1833,11 @@ void gx_win32_driver_thread_initialize(GX_WIN32_DISPLAY_DRIVER_DATA *instance)
     /* Driver is ready, force a redraw. */
     gx_win32_message_to_guix(GX_EVENT_REDRAW);
 
-    /* Start a timer. */
-    SetTimer(instance->win32_driver_winhandle, GX_WIN32_TIMER_ID, GX_SYSTEM_TIMER_MS, NULL);
+    /* Create a multi-media timer. */
+    gx_win32_start_multimedia_timer(instance);
 
     /* Handle win32 messages. */
-    gx_win32_input_driver();
+    gx_win32_input_driver(instance);
 }
 
 /**************************************************************************/

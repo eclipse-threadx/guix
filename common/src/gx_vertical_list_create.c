@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_vetical_list_create                             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -78,6 +78,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            initialized new vertical    */
+/*                                            list control block member,  */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_vertical_list_create(GX_VERTICAL_LIST *vertical_list,
@@ -104,6 +108,7 @@ UINT  _gx_vertical_list_create(GX_VERTICAL_LIST *vertical_list,
     vertical_list -> gx_vertical_list_visible_rows = 0;
     vertical_list -> gx_vertical_list_child_count = 0;
     vertical_list -> gx_window_scroll_info_get = (VOID (*)(struct GX_WINDOW_STRUCT *, ULONG, GX_SCROLL_INFO *))_gx_vertical_list_scroll_info_get;
+    vertical_list -> gx_vertical_list_idle_child_list = GX_NULL;
 
     /* Determine if a parent widget was provided.  */
     if (parent)

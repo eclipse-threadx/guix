@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.1.9        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -78,6 +78,14 @@
 /*  10-15-2021     Ting Zhu                 Modified comment(s),          */
 /*                                            updated patch number,       */
 /*                                            resulting in version 6.1.9  */
+/*  01-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed errant semicolons,  */
+/*                                            added new member to struct  */
+/*                                            GX_RADIAL_SLIDER_INFO,      */
+/*                                            added new member to         */
+/*                                            vertical and horizontal     */
+/*                                            list control blocks,        */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 
@@ -101,7 +109,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 1
-#define GUIX_PATCH_VERSION 9
+#define GUIX_PATCH_VERSION 10
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -1007,6 +1015,12 @@ typedef struct GX_STRING_STRUCT
 #define GX_TEXT_RENDER_THAI_GLYPH_SHAPING   0x01
 #endif
 
+/* Language direction flags. */
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+#define GX_LANGUAGE_DIRECTION_LTR           0x01
+#define GX_LANGUAGE_DIRECTION_RTL           0x02
+#endif
+
 /* Define macros used in GUIX.  */
 #ifndef GX_MIN
 #define GX_MIN(_a, _b)                      (((_a) < (_b)) ? (_a) : (_b))
@@ -1228,6 +1242,7 @@ typedef struct GX_BIDI_TEXT_INFO_STRUCT
     GX_STRING gx_bidi_text_info_text;
     GX_FONT  *gx_bidi_text_info_font;
     GX_VALUE  gx_bidi_text_info_display_width;
+    GX_BYTE   gx_bidi_text_info_direction;
 } GX_BIDI_TEXT_INFO;
 
 typedef struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT
@@ -1396,6 +1411,7 @@ typedef struct GX_RADIAL_SLIDER_INFO_STRUCT
     GX_VALUE       gx_radial_slider_info_ycenter;
     USHORT         gx_radial_slider_info_radius;
     USHORT         gx_radial_slider_info_track_width;
+    GX_VALUE       gx_radial_slider_info_needle_offset;
     GX_VALUE       gx_radial_slider_info_current_angle;
     GX_VALUE       gx_radial_slider_info_min_angle;
     GX_VALUE       gx_radial_slider_info_max_angle;
@@ -1550,11 +1566,13 @@ typedef struct GX_DISPLAY_STRUCT
     GX_FONT                 **gx_display_font_table;            /* font ID to GX_FONT mapping table         */
     GX_COLOR                 *gx_display_palette;               /* only used for 8-bpp palette mode driver  */
 
-    #if defined(GX_ENABLE_DEPRECATED_STRING_API)
+#if defined(GX_ENABLE_DEPRECATED_STRING_API)
     GX_CONST GX_CHAR       ***gx_display_language_table_deprecated;
-    #endif
+#endif
     GX_CONST GX_STRING      **gx_display_language_table;        /* Define the language table.               */
-
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+    GX_CONST GX_UBYTE        *gx_display_language_direction_table; /* Define the langauge direction table.  */
+#endif
     UINT                      gx_display_color_table_size;
     UINT                      gx_display_pixelmap_table_size;
     UINT                      gx_display_font_table_size;
@@ -2259,7 +2277,8 @@ typedef struct GX_RICH_TEXT_CONTEXT_STACK_STRUCT
     GX_VALUE gx_vertical_list_visible_rows;                                                                                   \
     GX_VALUE gx_vertical_list_child_count;                                                                                    \
     GX_VALUE gx_vertical_list_child_height;                                                                                   \
-    GX_VALUE gx_vertical_list_snap_back_distance;
+    GX_VALUE gx_vertical_list_snap_back_distance;                                                                             \
+    GX_WIDGET *gx_vertical_list_idle_child_list;
 
 /* Define macro for GX_VERTICAL_LIST, based on GX_WINDOW.  */
 #define GX_HORIZONTAL_LIST_MEMBERS_DECLARE                                                                                        \
@@ -2273,7 +2292,8 @@ typedef struct GX_RICH_TEXT_CONTEXT_STACK_STRUCT
     GX_VALUE gx_horizontal_list_visible_columns;                                                                                  \
     GX_VALUE gx_horizontal_list_child_count;                                                                                      \
     GX_VALUE gx_horizontal_list_child_width;                                                                                      \
-    GX_VALUE gx_horizontal_list_snap_back_distance;
+    GX_VALUE gx_horizontal_list_snap_back_distance;                                                                               \
+    GX_WIDGET *gx_horizontal_list_idle_child_list;
 
 #define GX_POPUP_LIST_MEMBERS_DECLARE           \
     GX_VERTICAL_LIST gx_popup_list_list;        \
@@ -3061,6 +3081,9 @@ typedef struct GX_FIXED_POINT_STRUCT
 #endif
 #define gx_display_language_table_get_ext                        _gx_display_language_table_get_ext
 #define gx_display_language_table_set_ext                        _gx_display_language_table_set_ext
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+#define gx_display_language_direction_table_set                  _gx_display_language_direction_table_set
+#endif
 #define gx_display_pixelmap_table_set                            _gx_display_pixelmap_table_set
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 #define gx_display_string_get                                    _gx_display_string_get
@@ -3303,8 +3326,8 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_scroll_wheel_total_rows_set(a, b)                     _gx_scroll_wheel_total_rows_set((GX_SCROLL_WHEEL *) a, b)
 
 #define gx_single_line_text_input_backspace(a)                   _gx_single_line_text_input_backspace((GX_SINGLE_LINE_TEXT_INPUT *)a)
-#define gx_single_line_text_input_buffer_clear(a)                _gx_single_line_text_input_buffer_clear((GX_SINGLE_LINE_TEXT_INPUT *)a);
-#define gx_single_line_text_input_buffer_get(a, b, c, d)         _gx_single_line_text_input_buffer_get((GX_SINGLE_LINE_TEXT_INPUT *)a, b, c, d);
+#define gx_single_line_text_input_buffer_clear(a)                _gx_single_line_text_input_buffer_clear((GX_SINGLE_LINE_TEXT_INPUT *)a)
+#define gx_single_line_text_input_buffer_get(a, b, c, d)         _gx_single_line_text_input_buffer_get((GX_SINGLE_LINE_TEXT_INPUT *)a, b, c, d)
 #define gx_single_line_text_input_character_delete(a)            _gx_single_line_text_input_character_delete(a)
 #define gx_single_line_text_input_character_insert(a, b, c)      _gx_single_line_text_input_character_insert(a, b, c)
 #define gx_single_line_text_input_create(a, b, c, d, e, f, g, h) _gx_single_line_text_input_create(a, b, (GX_WIDGET *)c, d, e, f, g, h)
@@ -3458,6 +3481,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 #define gx_utility_bidi_paragraph_reorder                        _gx_utility_bidi_paragraph_reorder
+#define gx_utility_bidi_paragraph_reorder_ext                    _gx_utility_bidi_paragraph_reorder_ext
 #define gx_utility_bidi_resolved_text_info_delete                _gx_utility_bidi_resolved_text_info_delete
 #endif
 #define gx_utility_canvas_to_bmp                                 _gx_utility_canvas_to_bmp
@@ -3736,7 +3760,9 @@ UINT _gx_display_language_table_set(GX_DISPLAY *display, GX_CHAR ***table, GX_UB
 #endif
 UINT _gx_display_language_table_get_ext(GX_DISPLAY *display, GX_STRING ***table, GX_UBYTE *language_count, UINT *string_count);
 UINT _gx_display_language_table_set_ext(GX_DISPLAY *display, GX_CONST GX_STRING **table, GX_UBYTE num_languages, UINT number_of_strings);
-
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT _gx_display_language_direction_table_set(GX_DISPLAY *display, GX_CONST GX_UBYTE *language_direction_table, GX_UBYTE num_languages);
+#endif
 UINT _gx_display_pixelmap_table_set(GX_DISPLAY *display, GX_PIXELMAP **pixelmap_table, UINT number_of_pixelmaps);
 
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -4256,6 +4282,7 @@ UINT _gx_tree_view_selected_set(GX_TREE_VIEW *tree, GX_WIDGET *selected);
 
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 UINT    _gx_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+UINT    _gx_utility_bidi_paragraph_reorder_ext(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
 UINT    _gx_utility_bidi_resolved_text_info_delete(GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
 #endif
 UINT    _gx_utility_canvas_to_bmp(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT(*write_data)(GX_UBYTE *byte_data, UINT data_count));
@@ -4535,6 +4562,9 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #endif
 #define gx_display_language_table_get_ext                        _gxe_display_language_table_get_ext
 #define gx_display_language_table_set_ext                        _gxe_display_language_table_set_ext
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+#define gx_display_language_direction_table_set                  _gxe_display_language_direction_table_set
+#endif
 #define gx_display_pixelmap_table_set                            _gxe_display_pixelmap_table_set
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 #define gx_display_string_get                                    _gxe_display_string_get
@@ -4775,8 +4805,8 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_scroll_wheel_total_rows_set(a, b)                     _gxe_scroll_wheel_total_rows_set((GX_SCROLL_WHEEL *) a, b)
 
 #define gx_single_line_text_input_backspace(a)                   _gxe_single_line_text_input_backspace((GX_SINGLE_LINE_TEXT_INPUT *)a)
-#define gx_single_line_text_input_buffer_clear(a)                _gxe_single_line_text_input_buffer_clear((GX_SINGLE_LINE_TEXT_INPUT *)a);
-#define gx_single_line_text_input_buffer_get(a, b, c, d)         _gxe_single_line_text_input_buffer_get((GX_SINGLE_LINE_TEXT_INPUT *)a, b, c, d);
+#define gx_single_line_text_input_buffer_clear(a)                _gxe_single_line_text_input_buffer_clear((GX_SINGLE_LINE_TEXT_INPUT *)a)
+#define gx_single_line_text_input_buffer_get(a, b, c, d)         _gxe_single_line_text_input_buffer_get((GX_SINGLE_LINE_TEXT_INPUT *)a, b, c, d)
 #define gx_single_line_text_input_character_delete(a)            _gxe_single_line_text_input_character_delete(a)
 #define gx_single_line_text_input_character_insert(a, b, c)      _gxe_single_line_text_input_character_insert(a, b, c)
 #define gx_single_line_text_input_create(a, b, c, d, e, f, g, h) _gxe_single_line_text_input_create(a, b, (GX_WIDGET *)c, d, e, f, g, h, sizeof(GX_SINGLE_LINE_TEXT_INPUT))
@@ -4929,6 +4959,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 #define gx_utility_bidi_paragraph_reorder                        _gxe_utility_bidi_paragraph_reorder
+#define gx_utility_bidi_paragraph_reorder_ext                    _gxe_utility_bidi_paragraph_reorder_ext
 #define gx_utility_bidi_resolved_text_info_delete                _gxe_utility_bidi_resolved_text_info_delete
 #endif
 #define gx_utility_canvas_to_bmp                                 _gxe_utility_canvas_to_bmp
@@ -5205,6 +5236,9 @@ UINT _gxe_display_language_table_set(GX_DISPLAY *display, GX_CHAR ***table,  GX_
 #endif
 UINT _gxe_display_language_table_get_ext(GX_DISPLAY *display, GX_STRING ***table, GX_UBYTE *language_count, UINT *string_count);
 UINT _gxe_display_language_table_set_ext(GX_DISPLAY *display, GX_CONST GX_STRING **table,  GX_UBYTE num_languages, UINT number_of_strings);
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT _gxe_display_language_direction_table_set(GX_DISPLAY *display, GX_CONST GX_UBYTE *language_direction_table, GX_UBYTE num_languages);
+#endif
 UINT _gxe_display_pixelmap_table_set(GX_DISPLAY *display, GX_PIXELMAP **pixelmap_table, UINT number_of_pixelmaps);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_display_string_get(GX_DISPLAY *display, GX_RESOURCE_ID string_id, GX_CONST GX_CHAR **return_string);
@@ -5721,6 +5755,7 @@ UINT    _gxe_utility_gradient_create(GX_GRADIENT *gradient, GX_VALUE width, GX_V
 UINT    _gxe_utility_gradient_delete(GX_GRADIENT *gradient);
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 UINT    _gxe_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+UINT    _gxe_utility_bidi_paragraph_reorder_ext(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
 UINT    _gxe_utility_bidi_resolved_text_info_delete(GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
 #endif
 UINT    _gxe_utility_canvas_to_bmp(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT(*write_data)(GX_UBYTE *byte_data, UINT data_count));

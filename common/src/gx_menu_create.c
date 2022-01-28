@@ -95,10 +95,15 @@ UINT  _gx_menu_create(GX_MENU *menu, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
     menu -> gx_widget_type = GX_TYPE_MENU;
     menu -> gx_widget_draw_function = (VOID (*)(GX_WIDGET *))_gx_menu_draw;
     menu -> gx_widget_event_process_function = (UINT(*)(GX_WIDGET*, GX_EVENT*))_gx_menu_event_process;
-    menu -> gx_widget_style |= GX_STYLE_TEXT_LEFT | GX_STYLE_ENABLED;
+    menu -> gx_widget_style |= GX_STYLE_ENABLED;
     menu -> gx_menu_text_x_offset = 10;
     menu -> gx_menu_text_y_offset = 0;
     menu -> gx_menu_list_total_count = 0;
+
+    if (!(menu -> gx_widget_style & GX_STYLE_TEXT_ALIGNMENT_MASK))
+    {
+        menu -> gx_widget_style |= GX_STYLE_TEXT_LEFT;
+    }
 
     /* create the menu list */
     _gx_widget_create((GX_WIDGET *)&menu -> gx_menu_list, "menu_list", GX_NULL, GX_STYLE_TRANSPARENT, menu_id, size);

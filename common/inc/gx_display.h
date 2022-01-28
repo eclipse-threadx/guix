@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_display.h                                        PORTABLE C      */
-/*                                                           6.1.5        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -56,6 +56,10 @@
 /*                                            added macro                 */
 /*                                            GX_SET_32BPP_BLEND_FUNCTION,*/
 /*                                            resulting in version 6.1.5  */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added language direction    */
+/*                                            table set declarations,     */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 
@@ -83,6 +87,9 @@ UINT _gx_display_language_table_set(GX_DISPLAY *display, GX_CHAR ***table, GX_UB
 #endif
 UINT _gx_display_language_table_get_ext(GX_DISPLAY *display, GX_STRING ***table, GX_UBYTE *language_count, UINT *string_count);
 UINT _gx_display_language_table_set_ext(GX_DISPLAY *display, GX_CONST GX_STRING **table, GX_UBYTE num_languages, UINT number_of_strings);
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT _gx_display_language_direction_table_set(GX_DISPLAY *display, GX_CONST GX_UBYTE *language_direction_table, GX_UBYTE num_languages);
+#endif
 UINT _gx_display_pixelmap_table_set(GX_DISPLAY *display, GX_PIXELMAP **pixelmap_table, UINT number_of_pixelmaps);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_display_string_get(GX_DISPLAY *display, GX_RESOURCE_ID string_id, GX_CONST GX_CHAR **return_string);
@@ -104,6 +111,9 @@ UINT _gxe_display_language_table_set(GX_DISPLAY *display, GX_CHAR ***table, GX_U
 #endif
 UINT _gxe_display_language_table_get_ext(GX_DISPLAY *display, GX_STRING ***table, GX_UBYTE *language_count, UINT *string_count);
 UINT _gxe_display_language_table_set_ext(GX_DISPLAY *display, GX_CONST GX_STRING **table, GX_UBYTE num_languages, UINT number_of_strings);
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT _gxe_display_language_direction_table_set(GX_DISPLAY *display, GX_CONST GX_UBYTE *language_direction_table, GX_UBYTE num_languages);
+#endif
 UINT _gxe_display_pixelmap_table_set(GX_DISPLAY *display, GX_PIXELMAP **pixelmap_table, UINT number_of_pixelmaps);
 
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)

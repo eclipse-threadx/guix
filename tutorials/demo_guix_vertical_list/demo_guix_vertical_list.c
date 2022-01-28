@@ -130,6 +130,27 @@ static void set_selected_index()
 }
 
 /******************************************************************************************/
+/* Set total rows for vertical lists.                                                     */
+/******************************************************************************************/
+static void set_total_rows()
+{
+    GX_SINGLE_LINE_TEXT_INPUT* input;
+    GX_CHAR* input_string;
+    int string_size;
+    int index;
+
+    input = &main_screen.main_screen_text_input_total_rows_set;
+    gx_single_line_text_input_buffer_get(input, &input_string, (UINT*)&string_size, GX_NULL);
+    string_to_int(input_string, string_size, &index);
+
+    if (index >= 0)
+    {
+        gx_vertical_list_total_rows_set(&main_screen.main_screen_vertical_list_scroll, index);
+        gx_vertical_list_total_rows_set(&main_screen.main_screen_vertical_list_wrap, index);
+    }
+}
+
+/******************************************************************************************/
 /* Override the default event processing of "main_screen" to handle signals from my child */
 /* widgets.                                                                               */
 /******************************************************************************************/
@@ -143,6 +164,10 @@ UINT main_screen_event_handler(GX_WINDOW *window, GX_EVENT *event_ptr)
 
     case GX_SIGNAL(ID_BUTTON_SELECTED_SET, GX_EVENT_CLICKED):
         set_selected_index();
+        break;
+
+    case GX_SIGNAL(ID_BUTTON_TOTAL_ROWS_SET, GX_EVENT_CLICKED):
+        set_total_rows();
         break;
     }
 

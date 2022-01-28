@@ -31,7 +31,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    win32_graphics_driver_setup_32argb_rotated          PORTABLE C      */
-/*                                                           6.1.4        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -65,6 +65,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  02-02-2021     Kenneth Maxwell          Initial Version 6.1.4         */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT win32_graphics_driver_setup_32argb_rotated(GX_DISPLAY *display)
@@ -89,14 +92,15 @@ GX_WIN32_DISPLAY_DRIVER_DATA *data;
 
     _gx_display_driver_32argb_rotated_setup(display, data, gx_win32_display_buffer_toggle);
 
+    /* Create bitmap header for 32argb display driver.  */
+    win32_32bpp_bitmap_header_create(display);
+
     /* Create the GUIX / Windows event thread
        This thread is a substitute for a touch screen
        or keyboard driver thread that would be running
        on embedded hardware.  */
     GX_WIN32_EVENT_THREAD_CREATE(data, "GUI-WIN32-32argb");
 
-    /* Create bitmap header for 32argb display driver.  */
-    win32_32bpp_bitmap_header_create(display);
     return(GX_SUCCESS);
 }
 #endif /* WIN32 */

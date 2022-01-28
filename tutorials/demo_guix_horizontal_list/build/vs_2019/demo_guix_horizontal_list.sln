@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guix", "..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj", "{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_guix_horizontal_list", "demo_guix_horizontal_list.vcxproj", "{DB9162A9-A08C-48C4-9056-92115D486CBB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED} = {A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

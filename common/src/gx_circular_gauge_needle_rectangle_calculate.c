@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_circular_gauge_needle_rectangle_calculate       PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,6 +70,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            corrected logic,            */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_circular_gauge_needle_rectangle_calculate(GX_CIRCULAR_GAUGE *gauge, INT angle, GX_RECTANGLE *rect)
@@ -120,12 +123,12 @@ INT                    y;
     cosv = _gx_utility_math_cos(GX_FIXED_VAL_MAKE(angle));
     sinv = _gx_utility_math_sin(GX_FIXED_VAL_MAKE(angle));
 
-    xres = GX_FIXED_VAL_TO_INT(mx[idxmaxx] * srcxres * cosv - my[idxmaxx] * srcyres * sinv);
-    yres = GX_FIXED_VAL_TO_INT(my[idxmaxy] * srcyres * cosv + mx[idxmaxy] * srcxres * sinv);
+    xres = GX_FIXED_VAL_TO_INT(mx[idxmaxx] * (srcxres + 2) * cosv - my[idxmaxx] * (srcyres + 2) * sinv);
+    yres = GX_FIXED_VAL_TO_INT(my[idxmaxy] * (srcyres + 2) * cosv + mx[idxmaxy] * (srcxres + 2) * sinv);
 
     /* Calculate destination width and height. */
-    width = (xres << 1) + 1;
-    height = (yres << 1) + 1;
+    width = (xres << 1);
+    height = (yres << 1);
 
     rot_cx = info -> gx_circular_gauge_info_needle_xcor;
     rot_cy = info -> gx_circular_gauge_info_needle_ycor;

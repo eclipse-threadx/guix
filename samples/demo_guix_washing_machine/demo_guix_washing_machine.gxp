@@ -3,8 +3,8 @@
 <project>
 <header>
 <project_version>55</project_version>
-<guix_version>60108</guix_version>
-<studio_version>6010800</studio_version>
+<guix_version>60110</guix_version>
+<studio_version>6010900</studio_version>
 <project_name>demo_guix_washing_machine</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
@@ -18,6 +18,7 @@
 <renesas_png_decoder>0</renesas_png_decoder>
 <grid_enabled>FALSE</grid_enabled>
 <snap_enabled>FALSE</snap_enabled>
+<snap_to_widget_enabled>FALSE</snap_to_widget_enabled>
 <grid_spacing>10</grid_spacing>
 <snap_spacing>10</snap_spacing>
 <gen_binary>FALSE</gen_binary>
@@ -2367,6 +2368,15 @@
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
 </resource>
+<resource>
+<name>Add New String</name>
+<pathinfo>
+<pathtype>project_relative</pathtype>
+</pathinfo>
+<is_default>FALSE</is_default>
+<enabled>TRUE</enabled>
+<compress>FALSE</compress>
+</resource>
 </resource>
 <vscroll_appearance>
 <scroll_width>20</scroll_width>
@@ -3045,6 +3055,7 @@
 <ycenter>159</ycenter>
 <radius>140</radius>
 <track_width>20</track_width>
+<needle_offset>0</needle_offset>
 <current_angle>-20</current_angle>
 <min_angle>-40</min_angle>
 <max_angle>40</max_angle>
@@ -3260,8 +3271,9 @@
 <visible_at_startup>FALSE</visible_at_startup>
 <xcenter>159</xcenter>
 <ycenter>159</ycenter>
-<radius>140</radius>
-<track_width>20</track_width>
+<radius>120</radius>
+<track_width>40</track_width>
+<needle_offset>20</needle_offset>
 <current_angle>30</current_angle>
 <min_angle>-30</min_angle>
 <max_angle>210</max_angle>
@@ -3361,6 +3373,7 @@
 <ycenter>159</ycenter>
 <radius>139</radius>
 <track_width>20</track_width>
+<needle_offset>0</needle_offset>
 <current_angle>100</current_angle>
 <min_angle>-17</min_angle>
 <max_angle>196</max_angle>

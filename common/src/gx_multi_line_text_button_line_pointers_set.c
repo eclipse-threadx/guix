@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_button_line_pointers_set        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -75,6 +75,10 @@
 /*                                            added line pointers set     */
 /*                                            loigc for dynamic bidi text,*/
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            updated with new bidi text  */
+/*                                            reorder function call,      */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_multi_line_text_button_line_pointers_set(GX_MULTI_LINE_TEXT_BUTTON *button)
@@ -86,6 +90,8 @@ GX_CONST GX_CHAR *text;
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 GX_BIDI_TEXT_INFO           text_info;
 GX_BIDI_RESOLVED_TEXT_INFO *next;
+GX_CANVAS                  *canvas;
+GX_DISPLAY                 *display;
 #endif
 
 
@@ -122,8 +128,8 @@ GX_BIDI_RESOLVED_TEXT_INFO *next;
             text_info.gx_bidi_text_info_display_width = -1;
             text_info.gx_bidi_text_info_font = GX_NULL;
             text_info.gx_bidi_text_info_text = string;
-
-            _gx_utility_bidi_paragraph_reorder(&text_info, &button -> gx_text_button_bidi_resolved_text_info);
+            GX_UTILITY_TEXT_DIRECTION_GET(text_info.gx_bidi_text_info_direction, button, canvas, display);
+            _gx_utility_bidi_paragraph_reorder_ext(&text_info, &button -> gx_text_button_bidi_resolved_text_info);
         }
 
         next = button -> gx_text_button_bidi_resolved_text_info;

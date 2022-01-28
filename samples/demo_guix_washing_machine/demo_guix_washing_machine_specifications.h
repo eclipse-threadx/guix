@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.0                                               */
-/*  Date (dd.mm.yyyy): 26. 7.2021   Time (hh:mm): 15:32                        */
+/*  GUIX Studio Revision 6.1.9.0                                               */
+/*  Date (dd.mm.yyyy): 17.11.2021   Time (hh:mm): 15:09                        */
 /*******************************************************************************/
 
 
@@ -112,6 +112,7 @@ typedef struct
     GX_VALUE       ycenter;
     USHORT         radius;
     USHORT         track_width;
+    GX_VALUE       needle_offset;
     GX_VALUE       current_angle;
     GX_VALUE       min_angle;
     GX_VALUE       max_angle;

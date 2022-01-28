@@ -214,3 +214,68 @@ UINT                string_length;
     return(status);
 }
 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gxe_display_language_direction_table_set           PORTABLE C      */
+/*                                                           6.1.10       */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks for errors in display language direction table */
+/*    set call.                                                           */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    display                               Pointer to display instance.  */
+/*    language_direction_table              The language direction table  */
+/*                                            to be set                   */
+/*    num_languages                         Number of languages in the    */
+/*                                            table                       */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_display_language_direciton_table_set                            */
+/*                                          Actual display language table */
+/*                                            set ext call                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  01-31-2022     Ting Zhu                 Initial Version 6.1.10        */
+/*                                                                        */
+/**************************************************************************/
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT _gxe_display_language_direction_table_set(GX_DISPLAY *display, GX_CONST GX_UBYTE *language_direction_table, GX_UBYTE num_languages)
+{
+UINT status;
+
+    /* Check for invalid caller.  */
+    GX_INIT_AND_THREADS_CALLER_CHECKING
+
+    if (display == GX_NULL)
+    {
+        /* Check for null pointer*/
+        return(GX_PTR_ERROR);
+    }
+
+    /* Call actual system string table set.  */
+    status = _gx_display_language_direction_table_set(display, language_direction_table, num_languages);
+
+    /* Return status.  */
+    return(status);
+}
+#endif

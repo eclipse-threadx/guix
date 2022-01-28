@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_view_string_total_rows_compute  PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -82,6 +82,10 @@
 /*                                            total lines for dynamic     */
 /*                                            bidi text,                  */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            updated with new bidi text  */
+/*                                            reorder function call,      */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_multi_line_text_view_string_total_rows_compute(GX_MULTI_LINE_TEXT_VIEW *text_view)
@@ -98,6 +102,8 @@ GX_FONT                *font;
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 GX_BIDI_TEXT_INFO           bidi_text_info;
 GX_BIDI_RESOLVED_TEXT_INFO *next;
+GX_CANVAS                  *canvas;
+GX_DISPLAY                 *display;
 #endif
 
     _gx_widget_font_get((GX_WIDGET *)text_view, text_view -> gx_multi_line_text_view_font_id, &font);
@@ -138,7 +144,9 @@ GX_BIDI_RESOLVED_TEXT_INFO *next;
             bidi_text_info.gx_bidi_text_info_display_width = (GX_VALUE)(client_width - 3);
             bidi_text_info.gx_bidi_text_info_font = font;
             bidi_text_info.gx_bidi_text_info_text = string;
-            _gx_utility_bidi_paragraph_reorder(&bidi_text_info, &text_view -> gx_multi_line_text_view_bidi_resolved_text_info);
+            GX_UTILITY_TEXT_DIRECTION_GET(bidi_text_info.gx_bidi_text_info_direction, text_view, canvas, display);
+
+            _gx_utility_bidi_paragraph_reorder_ext(&bidi_text_info, &text_view -> gx_multi_line_text_view_bidi_resolved_text_info);
         }
 
         next = text_view -> gx_multi_line_text_view_bidi_resolved_text_info;

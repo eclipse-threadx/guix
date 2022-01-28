@@ -187,7 +187,7 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_332rgb_pixelmap_alpha_rotate     PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -229,6 +229,9 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            corrected logic,            */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_332rgb_pixelmap_alpha_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -299,14 +302,11 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
     yres = GX_FIXED_VAL_TO_INT(my[idxmaxy] * (srcyres + 2) * cosv + mx[idxmaxy] * (srcxres + 2) * sinv);
 
     /* Calculate the new rotation axis. */
-    x = GX_FIXED_VAL_TO_INT((cx - srcxres) * cosv - (cy - srcyres) * sinv);
-    y = GX_FIXED_VAL_TO_INT((cy - srcyres) * cosv + (cx - srcxres) * sinv);
+    xres = GX_FIXED_VAL_TO_INT((cx - srcxres) * cosv - (cy - srcyres) * sinv) + xres;
+    yres = GX_FIXED_VAL_TO_INT((cy - srcyres) * cosv + (cx - srcxres) * sinv) + yres;
 
-    x += xres;
-    y += yres;
-
-    newxpos = xpos + cx - x;
-    newypos = ypos + cy - y;
+    newxpos = xpos + cx - xres;
+    newypos = ypos + cy - yres;
 
     /* Loop through the source's pixels.  */
     for (y = clip -> gx_rectangle_top - newypos; y <= clip -> gx_rectangle_bottom - newypos; y++)
@@ -319,11 +319,8 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
             xdiff = GX_FIXED_VAL_TO_INT(xx << 8) & 0xff;
             ydiff = GX_FIXED_VAL_TO_INT(yy << 8) & 0xff;
 
-            xx = GX_FIXED_VAL_TO_INT(xx);
-            yy = GX_FIXED_VAL_TO_INT(yy);
-
-            xx += srcxres;
-            yy += srcyres;
+            xx = GX_FIXED_VAL_TO_INT(xx) + cx;
+            yy = GX_FIXED_VAL_TO_INT(yy) + cy;
 
             if ((xx >= -1) && (xx < pixelmap -> gx_pixelmap_width) &&
                 (yy >= -1) && (yy < pixelmap -> gx_pixelmap_height))
@@ -474,7 +471,7 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_332rgb_pixelmap_raw_rotate      PORTABLE C       */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -516,6 +513,9 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            corrected logic,            */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_332rgb_pixelmap_raw_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -585,14 +585,11 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
     yres = GX_FIXED_VAL_TO_INT(my[idxmaxy] * (srcyres + 2) * cosv + mx[idxmaxy] * (srcxres + 2) * sinv);
 
     /* Calculate the new rotation axis. */
-    x = GX_FIXED_VAL_TO_INT((cx - srcxres) * cosv - (cy - srcyres) * sinv);
-    y = GX_FIXED_VAL_TO_INT((cy - srcyres) * cosv + (cx - srcxres) * sinv);
+    xres = GX_FIXED_VAL_TO_INT((cx - srcxres) * cosv - (cy - srcyres) * sinv) + xres;
+    yres = GX_FIXED_VAL_TO_INT((cy - srcyres) * cosv + (cx - srcxres) * sinv) + yres;
 
-    x += xres;
-    y += yres;
-
-    newxpos = xpos + cx - x;
-    newypos = ypos + cy - y;
+    newxpos = xpos + cx - xres;
+    newypos = ypos + cy - yres;
 
     /* Loop through the source's pixels.  */
     for (y = clip -> gx_rectangle_top - newypos; y <= clip -> gx_rectangle_bottom - newypos; y++)
@@ -605,11 +602,8 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
             xdiff = GX_FIXED_VAL_TO_INT(xx << 8) & 0xff;
             ydiff = GX_FIXED_VAL_TO_INT(yy << 8) & 0xff;
 
-            xx = GX_FIXED_VAL_TO_INT(xx);
-            yy = GX_FIXED_VAL_TO_INT(yy);
-
-            xx += srcxres;
-            yy += srcyres;
+            xx = GX_FIXED_VAL_TO_INT(xx) + cx;
+            yy = GX_FIXED_VAL_TO_INT(yy) + cy;
 
             if ((xx >= -1) && (xx < pixelmap -> gx_pixelmap_width) &&
                 (yy >= -1) && (yy < pixelmap -> gx_pixelmap_height))

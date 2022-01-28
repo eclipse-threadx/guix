@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.1                                               */
-/*  Date (dd.mm.yyyy): 27. 9.2021   Time (hh:mm): 11:20                        */
+/*  GUIX Studio Revision 6.1.9.1                                               */
+/*  Date (dd.mm.yyyy):  1.12.2021   Time (hh:mm): 15:14                        */
 /*******************************************************************************/
 
 
@@ -281,6 +281,27 @@ GX_ICON_PROPERTIES main_screen_logo_properties =
     GX_PIXELMAP_ID_MS_AZURE_LOGO_SMALL,      /* normal pixelmap id             */
     0                                        /* selected pixelmap id           */
 };
+GX_TEXT_BUTTON_PROPERTIES main_screen_button_set_total_cols_properties =
+{
+    GX_STRING_ID_STRING_16,                  /* string id                      */
+    GX_FONT_ID_BUTTON,                       /* font id                        */
+    GX_COLOR_ID_BTN_TEXT,                    /* normal text color              */
+    GX_COLOR_ID_BTN_TEXT,                    /* selected text color            */
+    GX_COLOR_ID_BTN_TEXT                     /* disabled text color            */
+};
+GX_CHAR main_screen_text_input_set_total_cols_buffer[100];
+GX_SINGLE_LINE_TEXT_INPUT_PROPERTIES main_screen_text_input_set_total_cols_properties =
+{
+    GX_STRING_ID_STRING_15,                  /* string id                      */
+    GX_FONT_ID_TEXT_INPUT,                   /* font id                        */
+    GX_COLOR_ID_TEXT,                        /* normal text color              */
+    GX_COLOR_ID_SELECTED_TEXT,               /* selected text color            */
+    GX_COLOR_ID_CANVAS,                      /* disabled text color            */
+    GX_COLOR_ID_READONLY_FILL,               /* readonly fill color            */
+    GX_COLOR_ID_READONLY_TEXT,               /* readonly text color            */
+    main_screen_text_input_set_total_cols_buffer, /* buffer                    */
+    100,                                     /* buffer size                    */
+};
 
 GX_CONST GX_STUDIO_WIDGET main_screen_hscroll_1_define =
 {
@@ -378,6 +399,54 @@ GX_CONST GX_STUDIO_WIDGET main_screen_button_1_define =
     (void *) &main_screen_button_1_properties /* extended properties           */
 };
 
+GX_CONST GX_STUDIO_WIDGET main_screen_text_input_set_total_cols_define =
+{
+    "text_input_set_total_cols",
+    GX_TYPE_SINGLE_LINE_TEXT_INPUT,          /* widget type                    */
+    ID_TEXT_INPUT_SET_TOTAL_COLS,            /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_RECESSED|GX_STYLE_ENABLED|GX_STYLE_TEXT_CENTER,   /* style flags */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(GX_SINGLE_LINE_TEXT_INPUT),       /* control block size             */
+    GX_COLOR_ID_TEXT_INPUT_FILL,             /* normal color id                */
+    GX_COLOR_ID_SELECTED_FILL,               /* selected color id              */
+    GX_COLOR_ID_TEXT_INPUT_FILL,             /* disabled color id              */
+    gx_studio_text_input_create,             /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {509, 274, 550, 310},                    /* widget size                    */
+    GX_NULL,                                 /* no next widget                 */
+    GX_NULL,                                 /* no child widgets               */ 
+    offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_text_input_set_total_cols), /* control block */
+    (void *) &main_screen_text_input_set_total_cols_properties /* extended properties */
+};
+
+GX_CONST GX_STUDIO_WIDGET main_screen_button_set_total_cols_define =
+{
+    "button_set_total_cols",
+    GX_TYPE_TEXT_BUTTON,                     /* widget type                    */
+    ID_BUTTON_SET_TOTAL_COLS,                /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_RAISED|GX_STYLE_ENABLED|GX_STYLE_TEXT_CENTER,   /* style flags */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(GX_TEXT_BUTTON),                  /* control block size             */
+    GX_COLOR_ID_BTN_LOWER,                   /* normal color id                */
+    GX_COLOR_ID_BTN_UPPER,                   /* selected color id              */
+    GX_COLOR_ID_BTN_LOWER,                   /* disabled color id              */
+    gx_studio_text_button_create,            /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {331, 273, 491, 310},                    /* widget size                    */
+    &main_screen_text_input_set_total_cols_define, /* next widget definition   */
+    GX_NULL,                                 /* no child widgets               */ 
+    offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_button_set_total_cols), /* control block */
+    (void *) &main_screen_button_set_total_cols_properties /* extended properties */
+};
+
 GX_CONST GX_STUDIO_WIDGET main_screen_logo_define =
 {
     "logo",
@@ -396,7 +465,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_logo_define =
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
     {10, 10, 198, 39},                       /* widget size                    */
-    GX_NULL,                                 /* no next widget                 */
+    &main_screen_button_set_total_cols_define, /* next widget definition       */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_logo), /* control block    */
     (void *) &main_screen_logo_properties    /* extended properties            */

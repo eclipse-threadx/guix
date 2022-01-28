@@ -5,8 +5,8 @@
 /*  resource file(s). For more information please refer to the Azure RTOS GUIX */
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.0                                               */
-/*  Date (dd.mm.yyyy): 26. 7.2021   Time (hh:mm): 15:33                        */
+/*  GUIX Studio Revision 6.1.9.1                                               */
+/*  Date (dd.mm.yyyy): 30.11.2021   Time (hh:mm): 10:37                        */
 /*******************************************************************************/
 
 
@@ -58,6 +58,8 @@
 #define GX_STRING_ID_STRING_14 6
 #define GX_STRING_ID_STRING_1 7
 #define GX_STRING_ID_STRING_2 8
-#define DISPLAY_1_STRING_TABLE_SIZE 9
+#define GX_STRING_ID_STRING_4 9
+#define GX_STRING_ID_STRING_5 10
+#define DISPLAY_1_STRING_TABLE_SIZE 11
 
 #endif                                       /* sentry                         */

@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.0                                               */
-/*  Date (dd.mm.yyyy): 26. 7.2021   Time (hh:mm): 15:32                        */
+/*  GUIX Studio Revision 6.1.9.2                                               */
+/*  Date (dd.mm.yyyy): 28.12.2021   Time (hh:mm): 11:00                        */
 /*******************************************************************************/
 
 
@@ -22,78 +22,28 @@ extern   "C" {
 
 /* Define widget ids                                                           */
 
-#define ID_ENGLISH 1
-#define ID_SPANISH 2
-#define ID_CHINESE 3
-#define ID_JAPANESE 4
-#define ID_ZOOM_IN 5
-#define ID_ZOOM_OUT 6
-#define ID_TIME 7
-#define ID_ALARM 8
-#define ID_STOPWATCH 9
-#define ID_CLOSE 10
-#define ID_SEARCH 11
-#define ID_HOUR_DOWN 12
-#define ID_MINUTE_UP 13
-#define ID_AM 14
-#define ID_PM 15
-#define ID_HOUR 16
-#define ID_MINUTE 17
-#define ID_HOUR_UP 18
-#define ID_MINUTE_DOWN 19
-#define ID_ADD 20
-#define ID_STOPWATCH_START_STOP 21
-#define ID_STOPWATCH_RESET 22
-#define ID_DASHBOARD 23
-#define ID_BRUSH 24
-#define ID_LANGUAGE 25
-#define ID_SOUND 26
-#define ID_SEND 27
-#define ID_BACK 28
-#define ID_REPLAY 29
-#define ID_NEW_MSG 30
-#define ID_MSG_LIST 31
-#define ID_LEFT 32
-#define ID_RIGHT 33
-#define ID_SAVE 34
-#define ID_TEXT_MOBILE 35
-#define ID_TEXT_OFFICE 36
-#define ID_EDIT 37
-#define ID_CONTACT_LIST 38
-#define ID_BTN_MENU_0 39
-#define ID_BTN_MENU_1 40
-#define ID_BTN_MENU_2 41
-#define ID_MESSAGE 42
-#define ID_WEATHER 43
-#define ID_CALCULATOR 44
-#define ID_HEALTHY 45
-#define ID_HOME 46
-#define ID_TEXT_INPUT 47
-#define ID_CALCULATOR_RESULT 48
-#define ID_CALCULATOR_C 49
-#define ID_CALCULATOR_SIGN 50
-#define ID_CALCULATOR_PERCENT 51
-#define ID_CALCULATOR_DIVIDE 52
-#define ID_CALCULATOR_MULTI 53
-#define ID_CALCULATOR_MINUS 54
-#define ID_CALCULATOR_PLUS 55
-#define ID_CALCULATOR_7 56
-#define ID_CALCULATOR_8 57
-#define ID_CALCULATOR_9 58
-#define ID_CALCULATOR_4 59
-#define ID_CALCULATOR_5 60
-#define ID_CALCULATOR_6 61
-#define ID_CALCULATOR_1 62
-#define ID_CALCULATOR_2 63
-#define ID_CALCULATOR_3 64
-#define ID_CALCULATOR_DOT 65
-#define ID_CALCULATOR_0 66
-#define ID_MAP 67
-#define ID_SETTINGS 68
-#define ID_GAMES 69
-#define ID_CLOCK 70
-#define ID_CONTACTS 71
-#define ID_ABOUT 72
+#define ID_HOME_BUTTON 1
+#define ID_PAGE_3_CONTAINER_SCREEN 2
+#define ID_PAGE_2_CONTAINER_SCREEN 3
+#define ID_PAGE_1_CONTAINER_SCREEN 4
+#define ID_CALORIE_BUTTON 5
+#define ID_RUNNING_BUTTON 6
+#define ID_EKG_BUTTON 7
+#define ID_BELL_BUTTON 8
+#define ID_PLAY_BUTTON 9
+#define ID_REVERSE_BUTTON 10
+#define ID_FORWARD_BUTTON 11
+#define ID_SAN_FRANCISCO_SCREEN 12
+#define ID_LOS_ANGELES_SCREEN 13
+#define ID_SAN_DIEGO_SCREEN 14
+#define ID_TEMPLATE 15
+#define ID_SCREEN_TEMPLATE 16
+#define ID_STAND_SCREEN 17
+#define ID_RUN_SCREEN 18
+#define ID_CALORIES_SCREEN 19
+#define ID_STANDING_BUTTON 20
+#define ID_CLOCK_2_SCREEN 21
+#define ID_CLOCK_1_SCREEN 22
 
 
 /* Define animation ids                                                        */
@@ -140,19 +90,6 @@ typedef struct
 
 typedef struct
 {
-    GX_RESOURCE_ID string_id; 
-    GX_RESOURCE_ID font_id;
-    GX_RESOURCE_ID normal_text_color_id;
-    GX_RESOURCE_ID selected_text_color_id;
-    GX_RESOURCE_ID disabled_text_color_id;
-    GX_RESOURCE_ID off_pixelmap_id;
-    GX_RESOURCE_ID on_pixelmap_id;
-    GX_RESOURCE_ID off_disabled_pixelmap_id;
-    GX_RESOURCE_ID on_disabled_pixelmap_id;
-} GX_RADIO_BUTTON_PROPERTIES;
-
-typedef struct
-{
     GX_RESOURCE_ID normal_pixelmap_id;
     GX_RESOURCE_ID selected_pixelmap_id;
     GX_RESOURCE_ID disabled_pixelmap_id;
@@ -186,38 +123,14 @@ typedef struct
     GX_RESOURCE_ID normal_text_color_id;
     GX_RESOURCE_ID selected_text_color_id;
     GX_RESOURCE_ID disabled_text_color_id;
-    GX_RESOURCE_ID left_map_id;
-    GX_RESOURCE_ID fill_map_id;
-    GX_RESOURCE_ID right_map_id;
-    GX_RESOURCE_ID selected_left_map_id;
-    GX_RESOURCE_ID selected_fill_map_id;
-    GX_RESOURCE_ID selected_right_map_id;
-} GX_PIXELMAP_PROMPT_PROPERTIES;
+    VOID (*format_func)(GX_NUMERIC_PROMPT *, INT);
+    INT            numeric_prompt_value;
+} GX_NUMERIC_PROMPT_PROPERTIES;
 
 typedef struct
 {
     GX_RESOURCE_ID wallpaper_id;
 } GX_WINDOW_PROPERTIES;
-
-typedef struct
-{
-    GX_RESOURCE_ID wallpaper_id;
-    VOID (*callback)(GX_VERTICAL_LIST *, GX_WIDGET *, INT);
-    int total_rows;
-} GX_VERTICAL_LIST_PROPERTIES;
-
-typedef struct
-{
-    GX_RESOURCE_ID string_id;
-    GX_RESOURCE_ID font_id;
-    GX_RESOURCE_ID normal_text_color_id;
-    GX_RESOURCE_ID selected_text_color_id;
-    GX_RESOURCE_ID disabled_text_color_id;
-    GX_RESOURCE_ID readonly_fill_color_id;
-    GX_RESOURCE_ID readonly_text_color_id;
-    GX_CHAR *buffer;
-    UINT buffer_size;
-} GX_SINGLE_LINE_TEXT_INPUT_PROPERTIES;
 
 typedef struct
 {
@@ -232,6 +145,20 @@ typedef struct
 
 typedef struct
 {
+    GX_VALUE start_angle;
+    GX_VALUE animation_steps;
+    GX_VALUE animation_delay;
+    GX_VALUE needle_xpos;
+    GX_VALUE needle_ypos;
+    GX_VALUE needle_xcor;
+    GX_VALUE needle_ycor;
+    GX_RESOURCE_ID normal_pixelmap_id;
+    GX_RESOURCE_ID selected_pixelmap_id;
+    GX_RESOURCE_ID needle_pixelmap_id;
+} GX_CIRCULAR_GAUGE_PROPERTIES;
+
+typedef struct
+{
    GX_CONST GX_STUDIO_WIDGET *base_info;
    UINT (*base_create_function) (GX_CONST struct GX_STUDIO_WIDGET_STRUCT *, GX_WIDGET *, GX_WIDGET *);
    GX_RECTANGLE size;
@@ -240,467 +167,381 @@ typedef struct
 
 /* Declare top-level control blocks                                            */
 
-typedef struct SETTINGS_LANGUAGE_CONTROL_BLOCK_STRUCT
-{
-    GX_WINDOW_MEMBERS_DECLARE
-    GX_RADIO_BUTTON settings_language_English;
-    GX_RADIO_BUTTON settings_language_Spanish;
-    GX_RADIO_BUTTON settings_language_Chinese;
-    GX_RADIO_BUTTON settings_language_Japanese;
-} SETTINGS_LANGUAGE_CONTROL_BLOCK;
-
-typedef struct MAP_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    GX_WINDOW_MEMBERS_DECLARE
-    GX_WINDOW map_screen_text_input_bg;
-    GX_SINGLE_LINE_TEXT_INPUT map_screen_text_input;
-    GX_PIXELMAP_BUTTON map_screen_search;
-    GX_WINDOW map_screen_window_2;
-    GX_PIXELMAP_BUTTON map_screen_pixelmap_button;
-    GX_PIXELMAP_BUTTON map_screen_pixelmap_button_1;
-    GX_ICON map_screen_icon;
-    GX_PIXELMAP_BUTTON map_screen_pixelmap_button_2;
-    GX_PIXELMAP_BUTTON map_screen_pixelmap_button_3;
-} MAP_SCREEN_CONTROL_BLOCK;
-
-typedef struct KEYBOARD_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    GX_WINDOW_MEMBERS_DECLARE
-    GX_WINDOW keyboard_screen_window_4;
-    GX_PIXELMAP_BUTTON keyboard_screen_pixelmap_button_7;
-    GX_SINGLE_LINE_TEXT_INPUT keyboard_screen_input_field;
-    GX_PIXELMAP_BUTTON keyboard_screen_send;
-    GX_WINDOW keyboard_screen_keyboard;
-    GX_PIXELMAP_PROMPT keyboard_screen_number;
-    GX_PIXELMAP_PROMPT keyboard_screen_up_arrow;
-    GX_PIXELMAP_PROMPT keyboard_screen_space;
-    GX_PIXELMAP_PROMPT keyboard_screen_enter;
-    GX_PIXELMAP_PROMPT keyboard_screen_simble;
-    GX_PIXELMAP_PROMPT keyboard_screen_backspace;
-} KEYBOARD_SCREEN_CONTROL_BLOCK;
-
-typedef struct HEALTHY_PACE_CONTROL_BLOCK_STRUCT
-{
-    GX_WINDOW_MEMBERS_DECLARE
-    GX_PROMPT healthy_pace_title;
-    GX_ICON healthy_pace_icon_10_1;
-    GX_PROMPT healthy_pace_prompt_16;
-    GX_PROMPT healthy_pace_pace;
-} HEALTHY_PACE_CONTROL_BLOCK;
-
-typedef struct WEATHER_LOSANGELES_CONTROL_BLOCK_STRUCT
-{
-    GX_WINDOW_MEMBERS_DECLARE
-    GX_PROMPT weather_LosAngeles_city_name_2;
-    GX_WINDOW weather_LosAngeles_weather_frame;
-    GX_WINDOW weather_LosAngeles_weather_info;
-    GX_ICON weather_LosAngeles_icon_9;
-    GX_PROMPT weather_LosAngeles_current_T_2;
-    GX_PROMPT weather_LosAngeles_prompt_14_2;
-    GX_PROMPT weather_LosAngeles_prompt_15_7;
-    GX_PROMPT weather_LosAngeles_prompt_15_8;
-    GX_PROMPT weather_LosAngeles_prompt_15_9;
-    GX_PROMPT weather_LosAngeles_prompt_15_10;
-    GX_SCROLLBAR weather_LosAngeles_vertical_scroll_7;
-} WEATHER_LOSANGELES_CONTROL_BLOCK;
-
-typedef struct WEATHER_SANFRANCISCO_CONTROL_BLOCK_STRUCT
-{
-    GX_WINDOW_MEMBERS_DECLARE
-    GX_PROMPT weather_SanFrancisco_city_name_1;
-    GX_WINDOW weather_SanFrancisco_weather_frame;
-    GX_WINDOW weather_SanFrancisco_weather_info;
-    GX_ICON weather_SanFrancisco_icon_7;
-    GX_PROMPT weather_SanFrancisco_current_T;
-    GX_PROMPT weather_SanFrancisco_prompt_14;
-    GX_PROMPT weather_SanFrancisco_prompt_15_3;
-    GX_PROMPT weather_SanFrancisco_prompt_15_4;
-    GX_PROMPT weather_SanFrancisco_prompt_15_5;
-    GX_PROMPT weather_SanFrancisco_prompt_15_6;
-    GX_SCROLLBAR weather_SanFrancisco_vertical_scroll_6;
-} WEATHER_SANFRANCISCO_CONTROL_BLOCK;
-
-typedef struct CONTACT_INFO_EDIT_LIST_CONTROL_BLOCK_STRUCT
-{
-    GX_WINDOW_MEMBERS_DECLARE
-    GX_PROMPT contact_info_edit_list_title_firstname;
-    GX_PROMPT contact_info_edit_list_title_mobile;
-    GX_PROMPT contact_info_edit_list_title_office;
-    GX_PROMPT contact_info_edit_list_title_email;
-    GX_PROMPT contact_info_edit_list_title_address;
-    GX_SINGLE_LINE_TEXT_INPUT contact_info_edit_list_firstname;
-    GX_SINGLE_LINE_TEXT_INPUT contact_info_edit_list_mobile;
-    GX_SINGLE_LINE_TEXT_INPUT contact_info_edit_list_office;
-    GX_SINGLE_LINE_TEXT_INPUT contact_info_edit_list_email;
-    GX_SINGLE_LINE_TEXT_INPUT contact_info_edit_list_address;
-    GX_PROMPT contact_info_edit_list_title_lastname;
-    GX_SINGLE_LINE_TEXT_INPUT contact_info_edit_list_lastname;
-} CONTACT_INFO_EDIT_LIST_CONTROL_BLOCK;
-
-typedef struct CONTACT_INFO_LIST_CONTROL_BLOCK_STRUCT
-{
-    GX_WINDOW_MEMBERS_DECLARE
-    GX_PROMPT contact_info_list_title_mobile;
-    GX_PROMPT contact_info_list_title_office;
-    GX_PROMPT contact_info_list_title_email;
-    GX_PROMPT contact_info_list_mobile;
-    GX_PROMPT contact_info_list_office;
-    GX_PIXELMAP_BUTTON contact_info_list_text2mobile;
-    GX_PIXELMAP_BUTTON contact_info_list_text2office;
-    GX_PROMPT contact_info_list_email;
-    GX_PROMPT contact_info_list_title_address;
-    GX_MULTI_LINE_TEXT_VIEW contact_info_list_address;
-} CONTACT_INFO_LIST_CONTROL_BLOCK;
-
-typedef struct CONTACT_INFO_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    GX_WINDOW_MEMBERS_DECLARE
-    GX_PIXELMAP_BUTTON contact_info_screen_contact_info_back;
-    GX_PROMPT contact_info_screen_last_name;
-    GX_PROMPT contact_info_screen_first_name;
-    GX_PIXELMAP_BUTTON contact_info_screen_contact_info_edit;
-    GX_WINDOW contact_info_screen_contact_info_window;
-    GX_SCROLLBAR contact_info_screen_contact_info_list_scroll;
-} CONTACT_INFO_SCREEN_CONTROL_BLOCK;
-
-typedef struct ABOUT_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    GX_WINDOW_MEMBERS_DECLARE
-    GX_WINDOW about_screen_transparent_cover;
-    GX_PROMPT about_screen_prompt_8;
-    GX_PROMPT about_screen_prompt_9;
-    GX_PROMPT about_screen_prompt_10;
-    GX_PROMPT about_screen_prompt_10_2;
-    GX_PROMPT about_screen_prompt_11;
-} ABOUT_SCREEN_CONTROL_BLOCK;
-
-typedef struct LEFT_HOME_BUTTON_CONTROL_BLOCK_STRUCT
+typedef struct HOME_BUTTON_CONTROL_BLOCK_STRUCT
 {
     GX_PIXELMAP_BUTTON_MEMBERS_DECLARE
-} LEFT_HOME_BUTTON_CONTROL_BLOCK;
+} HOME_BUTTON_CONTROL_BLOCK;
 
-typedef struct RIGHT_HOME_BUTTON_CONTROL_BLOCK_STRUCT
-{
-    GX_PIXELMAP_BUTTON_MEMBERS_DECLARE
-} RIGHT_HOME_BUTTON_CONTROL_BLOCK;
-
-typedef struct TEMPLATE_MAIN_CONTROL_BLOCK_STRUCT
+typedef struct PAGE_3_CONTAINER_SCREEN_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
-    GX_ICON template_main_battery;
-    GX_ICON template_main_sound;
-    GX_ICON template_main_wifi;
-    GX_ICON template_main_bluetooth;
-} TEMPLATE_MAIN_CONTROL_BLOCK;
+} PAGE_3_CONTAINER_SCREEN_CONTROL_BLOCK;
 
-typedef struct MENU_WINDOW_3_CONTROL_BLOCK_STRUCT
+typedef struct PAGE_2_CONTAINER_SCREEN_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
-    GX_PIXELMAP_BUTTON menu_window_3_map;
-    GX_PIXELMAP_BUTTON menu_window_3_settings;
-} MENU_WINDOW_3_CONTROL_BLOCK;
+} PAGE_2_CONTAINER_SCREEN_CONTROL_BLOCK;
 
-typedef struct MENU_WINDOW_2_CONTROL_BLOCK_STRUCT
+typedef struct PAGE_1_CONTAINER_SCREEN_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
-    GX_PIXELMAP_BUTTON menu_window_2_games;
-    GX_PIXELMAP_BUTTON menu_window_2_clock;
-    GX_PIXELMAP_BUTTON menu_window_2_contacts;
-    GX_PIXELMAP_BUTTON menu_window_2_about;
-} MENU_WINDOW_2_CONTROL_BLOCK;
-
-typedef struct CLOCK_ADD_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_PIXELMAP_BUTTON clock_add_screen_clock_add_time;
-    GX_PIXELMAP_BUTTON clock_add_screen_clock_add_alarm;
-    GX_PIXELMAP_BUTTON clock_add_screen_clock_add_stopwatch;
-    GX_VERTICAL_LIST clock_add_screen_city_list;
-    GX_SCROLLBAR clock_add_screen_vertical_scroll_2;
-    GX_PIXELMAP_BUTTON clock_add_screen_clock_add_close;
-    GX_WINDOW clock_add_screen_window;
-    GX_SINGLE_LINE_TEXT_INPUT clock_add_screen_time_add_text_input;
-    GX_PIXELMAP_BUTTON clock_add_screen_clock_add_search;
-} CLOCK_ADD_SCREEN_CONTROL_BLOCK;
-
-typedef struct ALARM_ADD_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_PIXELMAP_BUTTON alarm_add_screen_alarm_add_time;
-    GX_PIXELMAP_BUTTON alarm_add_screen_alarm_add_alarm;
-    GX_PIXELMAP_BUTTON alarm_add_screen_alarm_add_stopwatch;
-    GX_PROMPT alarm_add_screen_alarm_add_title;
-    GX_PIXELMAP_BUTTON alarm_add_screen_close;
-    GX_PIXELMAP_BUTTON alarm_add_screen_hour_down;
-    GX_PIXELMAP_BUTTON alarm_add_screen_minute_up;
-    GX_PIXELMAP_BUTTON alarm_add_screen_am_pm;
-    GX_PROMPT alarm_add_screen_prompt_12_1;
-    GX_PROMPT alarm_add_screen_prompt_13;
-    GX_PROMPT alarm_add_screen_prompt_12_3;
-    GX_SINGLE_LINE_TEXT_INPUT alarm_add_screen_text_input_hour;
-    GX_SINGLE_LINE_TEXT_INPUT alarm_add_screen_text_input_minute;
-    GX_ICON alarm_add_screen_icon_1;
-    GX_ICON alarm_add_screen_icon_3;
-    GX_PIXELMAP_BUTTON alarm_add_screen_hour_up;
-    GX_PIXELMAP_BUTTON alarm_add_screen_minute_down;
-} ALARM_ADD_SCREEN_CONTROL_BLOCK;
-
-typedef struct ALARM_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_PIXELMAP_BUTTON alarm_screen_alarm_time;
-    GX_PIXELMAP_BUTTON alarm_screen_alarm_alarm;
-    GX_PIXELMAP_BUTTON alarm_screen_alarm_stopwatch;
-    GX_VERTICAL_LIST alarm_screen_alarm_list;
-    GX_SCROLLBAR alarm_screen_vertical_scroll_9;
-    GX_PIXELMAP_BUTTON alarm_screen_alarm_add;
-} ALARM_SCREEN_CONTROL_BLOCK;
-
-typedef struct STOPWATCH_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_PIXELMAP_BUTTON stopwatch_screen_stopwatch_time;
-    GX_PIXELMAP_BUTTON stopwatch_screen_stopwatch_alarm;
-    GX_PIXELMAP_BUTTON stopwatch_screen_stopwatch_stopwatch;
-    GX_PROMPT stopwatch_screen_title;
-    GX_PROMPT stopwatch_screen_prompt_minute;
-    GX_PROMPT stopwatch_screen_prompt_second;
-    GX_PROMPT stopwatch_screen_prompt_micro_second;
-    GX_PIXELMAP_BUTTON stopwatch_screen_stopwatch_start_stop;
-    GX_PIXELMAP_BUTTON stopwatch_screen_stopwatch_reset;
-    GX_ICON stopwatch_screen_icon_5;
-    GX_ICON stopwatch_screen_icon_6;
-    GX_ICON stopwatch_screen_icon_10;
-} STOPWATCH_SCREEN_CONTROL_BLOCK;
-
-typedef struct SETTINGS_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_PIXELMAP_BUTTON settings_screen_dashboard;
-    GX_PIXELMAP_BUTTON settings_screen_brush;
-    GX_PIXELMAP_BUTTON settings_screen_language;
-    GX_PIXELMAP_BUTTON settings_screen_sound;
-} SETTINGS_SCREEN_CONTROL_BLOCK;
-
-typedef struct MSG_SEND_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_PIXELMAP_BUTTON msg_send_screen_back;
-    GX_PROMPT msg_send_screen_prompt_1;
-    GX_WINDOW msg_send_screen_dialog_frame;
-    GX_WINDOW msg_send_screen_dialog;
-    GX_SCROLLBAR msg_send_screen_scroll;
-    GX_WINDOW msg_send_screen_window_3;
-    GX_PROMPT msg_send_screen_input_field;
-    GX_PIXELMAP_BUTTON msg_send_screen_pixelmap_button_4;
-    GX_PROMPT msg_send_screen_name;
-    GX_WINDOW msg_send_screen_preloader_window;
-} MSG_SEND_SCREEN_CONTROL_BLOCK;
-
-typedef struct MSG_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_PIXELMAP_BUTTON msg_screen_new_msg;
-    GX_PROMPT msg_screen_prompt_5;
-    GX_WINDOW msg_screen_text_input_bg;
-    GX_VERTICAL_LIST msg_screen_msg_list;
-    GX_SCROLLBAR msg_screen_vertical_scroll_8;
-    GX_SINGLE_LINE_TEXT_INPUT msg_screen_text_input;
-    GX_PIXELMAP_BUTTON msg_screen_search;
-} MSG_SCREEN_CONTROL_BLOCK;
-
-typedef struct HEALTHY_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_WINDOW healthy_screen_healthy_heart_rate;
-    GX_PROMPT healthy_screen_item_name;
-    GX_SPRITE healthy_screen_sprite;
-    GX_PROMPT healthy_screen_prompt;
-    GX_PROMPT healthy_screen_heart_rate;
-    GX_PIXELMAP_BUTTON healthy_screen_left_arrow;
-    GX_PIXELMAP_BUTTON healthy_screen_right_arrow;
-    GX_ICON healthy_screen_stopwatch;
-    GX_WINDOW healthy_screen_waveform_window;
-} HEALTHY_SCREEN_CONTROL_BLOCK;
-
-typedef struct WEATHER_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_WINDOW weather_screen_weather_NewYork;
-    GX_PROMPT weather_screen_city_name;
-    GX_WINDOW weather_screen_weather_frame;
-    GX_WINDOW weather_screen_weather_info;
-    GX_ICON weather_screen_icon_8;
-    GX_PROMPT weather_screen_current_T_1;
-    GX_PROMPT weather_screen_prompt_14_1;
-    GX_PROMPT weather_screen_hi;
-    GX_PROMPT weather_screen_low;
-    GX_PROMPT weather_screen_prompt_15_1;
-    GX_PROMPT weather_screen_prompt_15_2;
-    GX_SCROLLBAR weather_screen_vertical_scroll_5;
-    GX_PIXELMAP_BUTTON weather_screen_left_arrow;
-    GX_PIXELMAP_BUTTON weather_screen_right_arrow;
-} WEATHER_SCREEN_CONTROL_BLOCK;
-
-typedef struct CONTACT_INFO_EDIT_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_PIXELMAP_BUTTON contact_info_edit_screen_save;
-    GX_PROMPT contact_info_edit_screen_prompt_3;
-    GX_PIXELMAP_BUTTON contact_info_edit_screen_close;
-    GX_WINDOW contact_info_edit_screen_edit_window;
-    GX_SCROLLBAR contact_info_edit_screen_vertical_scroll_4;
-} CONTACT_INFO_EDIT_SCREEN_CONTROL_BLOCK;
-
-typedef struct CONTACT_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_VERTICAL_LIST contact_screen_contact_list;
-    GX_SCROLLBAR contact_screen_contact_list_scroll;
-    GX_WINDOW contact_screen_contact_text_input_bg;
-    GX_SINGLE_LINE_TEXT_INPUT contact_screen_contact_text_input;
-    GX_PIXELMAP_BUTTON contact_screen_contact_search;
-} CONTACT_SCREEN_CONTROL_BLOCK;
-
-typedef struct GAME_SCREEN_CONTROL_BLOCK_STRUCT
-{
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_VERTICAL_LIST game_screen_game_list;
-    GX_SCROLLBAR game_screen_vertical_scroll_3;
-} GAME_SCREEN_CONTROL_BLOCK;
+} PAGE_1_CONTAINER_SCREEN_CONTROL_BLOCK;
 
 typedef struct MAIN_SCREEN_CONTROL_BLOCK_STRUCT
 {
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_PROMPT main_screen_date;
-    GX_PROMPT main_screen_hour;
-    GX_PROMPT main_screen_am_pm;
-    GX_PIXELMAP_BUTTON main_screen_btn_menu_0;
-    GX_PIXELMAP_BUTTON main_screen_btn_menu_1;
-    GX_PIXELMAP_BUTTON main_screen_btn_menu_2;
-    GX_WINDOW main_screen_menu_window;
-    GX_WINDOW main_screen_menu_window_1;
-    GX_PIXELMAP_BUTTON main_screen_message;
-    GX_PIXELMAP_BUTTON main_screen_weather;
-    GX_PIXELMAP_BUTTON main_screen_calculator;
-    GX_PIXELMAP_BUTTON main_screen_healthy;
-    GX_ICON main_screen_lower_dot;
-    GX_ICON main_screen_upper_dot;
-    GX_PROMPT main_screen_minute;
+    GX_WINDOW_MEMBERS_DECLARE
 } MAIN_SCREEN_CONTROL_BLOCK;
 
-typedef struct CLOCK_SCREEN_CONTROL_BLOCK_STRUCT
+typedef struct WEATHER_SCREEN_CONTROL_BLOCK_STRUCT
 {
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_PIXELMAP_BUTTON clock_screen_time_time;
-    GX_PIXELMAP_BUTTON clock_screen_time_alarm;
-    GX_PIXELMAP_BUTTON clock_screen_time_stopwatch;
-    GX_PIXELMAP_BUTTON clock_screen_time_add;
-    GX_VERTICAL_LIST clock_screen_time_list;
-    GX_SCROLLBAR clock_screen_vertical_scroll;
-} CLOCK_SCREEN_CONTROL_BLOCK;
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_BUTTON weather_screen_calorie_button;
+    GX_RADIAL_PROGRESS_BAR weather_screen_calorie_burned_progress;
+    GX_ICON weather_screen_calorie_icon;
+    GX_NUMERIC_PROMPT weather_screen_calorie_burned_progress_val;
+    GX_PROMPT weather_screen_prompt;
+    GX_BUTTON weather_screen_running_button;
+    GX_RADIAL_PROGRESS_BAR weather_screen_running_progress;
+    GX_ICON weather_screen_icon_5;
+    GX_NUMERIC_PROMPT weather_screen_running_progress_val;
+    GX_PROMPT weather_screen_prompt_9;
+    GX_BUTTON weather_screen_ekg_button;
+    GX_RADIAL_PROGRESS_BAR weather_screen_ekg_progress;
+    GX_ICON weather_screen_icon_6;
+    GX_NUMERIC_PROMPT weather_screen_ekg_progress_val;
+    GX_PROMPT weather_screen_prompt_11;
+    GX_WINDOW weather_screen_window;
+    GX_ICON weather_screen_weather_icon;
+    GX_NUMERIC_PROMPT weather_screen_temperature_val;
+    GX_PROMPT weather_screen_prompt_1;
+    GX_PROMPT weather_screen_day_of_week;
+    GX_PROMPT weather_screen_date;
+    GX_PROMPT weather_screen_city;
+    GX_PROMPT weather_screen_second;
+    GX_NUMERIC_PROMPT weather_screen_hour;
+    GX_NUMERIC_PROMPT weather_screen_minute;
+    GX_PROMPT weather_screen_am_pm;
+    GX_PIXELMAP_BUTTON weather_screen_bell_button;
+    GX_PROMPT weather_screen_singer;
+    GX_PROMPT weather_screen_song;
+    GX_RADIAL_PROGRESS_BAR weather_screen_music_play_progress;
+    GX_PIXELMAP_BUTTON weather_screen_play_button;
+} WEATHER_SCREEN_CONTROL_BLOCK;
 
-typedef struct CALCULATOR_SCREEN_CONTROL_BLOCK_STRUCT
+typedef struct CLOCK_SCREEN_TEMPLATE_CONTROL_BLOCK_STRUCT
 {
-    TEMPLATE_MAIN_CONTROL_BLOCK base;
-    GX_ICON calculator_screen_text_input_bg;
-    GX_SINGLE_LINE_TEXT_INPUT calculator_screen_text_input;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_result;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_c;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_sign;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_percent;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_divide;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_multi;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_minus;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_plus;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_7;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_8;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_9;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_4;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_5;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_6;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_1;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_2;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_3;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_dot;
-    GX_PIXELMAP_BUTTON calculator_screen_calculator_0;
-} CALCULATOR_SCREEN_CONTROL_BLOCK;
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_CIRCULAR_GAUGE clock_screen_template_gauge;
+} CLOCK_SCREEN_TEMPLATE_CONTROL_BLOCK;
+
+typedef struct MESSAGE_TEMPLATE_CONTROL_BLOCK_STRUCT
+{
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_WINDOW message_template_message_bar;
+    GX_PROMPT message_template_second;
+    GX_NUMERIC_PROMPT message_template_hour;
+    GX_NUMERIC_PROMPT message_template_minute;
+    GX_PROMPT message_template_am_pm;
+    GX_PROMPT message_template_day_of_week;
+    GX_PROMPT message_template_comma;
+    GX_MULTI_LINE_TEXT_VIEW message_template_text_view;
+} MESSAGE_TEMPLATE_CONTROL_BLOCK;
+
+typedef struct WEATHER_INFO_TEMPLATE_CONTROL_BLOCK_STRUCT
+{
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_PROMPT weather_info_template_day_of_week;
+    GX_PROMPT weather_info_template_prompt_6;
+    GX_ICON weather_info_template_weather_icon;
+    GX_NUMERIC_PROMPT weather_info_template_high_temperature;
+    GX_NUMERIC_PROMPT weather_info_template_low_temperature;
+    GX_PROMPT weather_info_template_prompt_1;
+} WEATHER_INFO_TEMPLATE_CONTROL_BLOCK;
+
+typedef struct SCREEN_TEMPLATE_CONTROL_BLOCK_STRUCT
+{
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_WINDOW screen_template_title_bar;
+    GX_PROMPT screen_template_title;
+    GX_NUMERIC_PROMPT screen_template_hour;
+    GX_NUMERIC_PROMPT screen_template_minute;
+    GX_PROMPT screen_template_second;
+    GX_ICON screen_template_icon;
+} SCREEN_TEMPLATE_CONTROL_BLOCK;
+
+typedef struct EKG_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    SCREEN_TEMPLATE_CONTROL_BLOCK base;
+    GX_RADIAL_PROGRESS_BAR ekg_screen_progress;
+    GX_NUMERIC_PROMPT ekg_screen_systole_blood_pressure;
+    GX_ICON ekg_screen_heart_icon;
+    GX_NUMERIC_PROMPT ekg_screen_diastole_blood_pressure;
+    GX_PROMPT ekg_screen_prompt_21;
+    GX_PROMPT ekg_screen_prompt_21_1;
+    GX_ICON ekg_screen_icon_21;
+    GX_NUMERIC_PROMPT ekg_screen_heart_rate;
+    GX_PROMPT ekg_screen_prompt_20;
+} EKG_SCREEN_CONTROL_BLOCK;
+
+typedef struct YOGA_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    SCREEN_TEMPLATE_CONTROL_BLOCK base;
+    GX_RADIAL_PROGRESS_BAR yoga_screen_progress;
+    GX_NUMERIC_PROMPT yoga_screen_calories_burned;
+    GX_ICON yoga_screen_divide_line;
+    GX_ICON yoga_screen_yoga_icon;
+    GX_PROMPT yoga_screen_prompt_22;
+    GX_NUMERIC_PROMPT yoga_screen_yoga_minute;
+    GX_NUMERIC_PROMPT yoga_screen_yoga_hour;
+    GX_PROMPT yoga_screen_calorie_label;
+    GX_ICON yoga_screen_calorie_icon;
+    GX_ICON yoga_screen_icon_18;
+    GX_NUMERIC_PROMPT yoga_screen_progress_val;
+    GX_PROMPT yoga_screen_prompt_18;
+} YOGA_SCREEN_CONTROL_BLOCK;
+
+typedef struct STAND_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    SCREEN_TEMPLATE_CONTROL_BLOCK base;
+    GX_RADIAL_PROGRESS_BAR stand_screen_progress;
+    GX_ICON stand_screen_divide_line;
+    GX_ICON stand_screen_stand_icon;
+    GX_PROMPT stand_screen_min_label;
+    GX_ICON stand_screen_clock_icon;
+    GX_NUMERIC_PROMPT stand_screen_stand_minute_target;
+    GX_PROMPT stand_screen_prompt_22;
+    GX_NUMERIC_PROMPT stand_screen_stand_hour_target;
+    GX_ICON stand_screen_icon_8;
+    GX_NUMERIC_PROMPT stand_screen_stand_hour;
+    GX_NUMERIC_PROMPT stand_screen_stand_minute;
+    GX_ICON stand_screen_icon;
+    GX_ICON stand_screen_icon_15;
+    GX_NUMERIC_PROMPT stand_screen_progress_val;
+    GX_PROMPT stand_screen_prompt_16;
+} STAND_SCREEN_CONTROL_BLOCK;
+
+typedef struct RUN_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    SCREEN_TEMPLATE_CONTROL_BLOCK base;
+    GX_RADIAL_PROGRESS_BAR run_screen_progress;
+    GX_NUMERIC_PROMPT run_screen_running_distance;
+    GX_NUMERIC_PROMPT run_screen_running_minutes;
+    GX_ICON run_screen_divide_line;
+    GX_ICON run_screen_running_icon;
+    GX_NUMERIC_PROMPT run_screen_running_seconds;
+    GX_PROMPT run_screen_second_label;
+    GX_ICON run_screen_distance_icon;
+    GX_PROMPT run_screen_mile_label;
+    GX_NUMERIC_PROMPT run_screen_running_distance_fraction_part;
+    GX_ICON run_screen_icon_8;
+    GX_ICON run_screen_icon_12;
+    GX_NUMERIC_PROMPT run_screen_progress_val;
+    GX_PROMPT run_screen_prompt_14;
+} RUN_SCREEN_CONTROL_BLOCK;
+
+typedef struct CALORIES_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    SCREEN_TEMPLATE_CONTROL_BLOCK base;
+    GX_RADIAL_PROGRESS_BAR calories_screen_progress;
+    GX_NUMERIC_PROMPT calories_screen_calories_burned;
+    GX_NUMERIC_PROMPT calories_screen_calories_burned_target;
+    GX_ICON calories_screen_divide_line;
+    GX_ICON calories_screen_calories_icon;
+    GX_ICON calories_screen_icon_7;
+    GX_NUMERIC_PROMPT calories_screen_progress_val;
+    GX_PROMPT calories_screen_percent_label;
+} CALORIES_SCREEN_CONTROL_BLOCK;
+
+typedef struct FITNESS_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    SCREEN_TEMPLATE_CONTROL_BLOCK base;
+    GX_ICON fitness_screen_icon;
+    GX_ICON fitness_screen_icon_1;
+    GX_ICON fitness_screen_icon_2;
+    GX_ICON fitness_screen_icon_3;
+    GX_NUMERIC_PROMPT fitness_screen_running_steps;
+    GX_NUMERIC_PROMPT fitness_screen_running_distance;
+    GX_NUMERIC_PROMPT fitness_screen_prompt_3;
+    GX_PROMPT fitness_screen_prompt_4;
+    GX_PROMPT fitness_screen_prompt_5;
+    GX_PROMPT fitness_screen_prompt_2;
+    GX_ICON fitness_screen_ekd_dot_guide_bg;
+    GX_ICON fitness_screen_ekg_dot_icon;
+    GX_WINDOW fitness_screen_ekg_waveform_win;
+    GX_BUTTON fitness_screen_calorie_button;
+    GX_RADIAL_PROGRESS_BAR fitness_screen_calorie_burned_progress;
+    GX_ICON fitness_screen_calorie_icon;
+    GX_NUMERIC_PROMPT fitness_screen_calorie_burned_progress_val;
+    GX_PROMPT fitness_screen_prompt_7;
+    GX_BUTTON fitness_screen_standing_button;
+    GX_RADIAL_PROGRESS_BAR fitness_screen_standing_progress;
+    GX_ICON fitness_screen_icon_6;
+    GX_NUMERIC_PROMPT fitness_screen_standing_progress_val;
+    GX_PROMPT fitness_screen_prompt_11;
+    GX_BUTTON fitness_screen_running_button;
+    GX_RADIAL_PROGRESS_BAR fitness_screen_running_progress;
+    GX_ICON fitness_screen_icon_5;
+    GX_NUMERIC_PROMPT fitness_screen_running_progress_val;
+    GX_PROMPT fitness_screen_prompt_9;
+} FITNESS_SCREEN_CONTROL_BLOCK;
+
+typedef struct CLOCK_2_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    CLOCK_SCREEN_TEMPLATE_CONTROL_BLOCK base;
+} CLOCK_2_SCREEN_CONTROL_BLOCK;
+
+typedef struct CLOCK_1_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    CLOCK_SCREEN_TEMPLATE_CONTROL_BLOCK base;
+} CLOCK_1_SCREEN_CONTROL_BLOCK;
+
+typedef struct CLOCK_5_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_NUMERIC_PROMPT clock_5_screen_hour;
+    GX_NUMERIC_PROMPT clock_5_screen_minute;
+} CLOCK_5_SCREEN_CONTROL_BLOCK;
+
+typedef struct CLOCK_3_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_NUMERIC_PROMPT clock_3_screen_hour;
+    GX_NUMERIC_PROMPT clock_3_screen_minute;
+} CLOCK_3_SCREEN_CONTROL_BLOCK;
+
+typedef struct CLOCK_4_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_NUMERIC_PROMPT clock_4_screen_hour;
+    GX_NUMERIC_PROMPT clock_4_screen_minute;
+} CLOCK_4_SCREEN_CONTROL_BLOCK;
+
+typedef struct HOME_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_SPRITE home_screen_sprite;
+    GX_NUMERIC_PROMPT home_screen_time_hour;
+    GX_NUMERIC_PROMPT home_screen_time_minute;
+    GX_ICON home_screen_time_second_up;
+    GX_ICON home_screen_time_second_down;
+    GX_PROMPT home_screen_am_pm;
+    GX_PROMPT home_screen_day_of_week;
+    GX_PROMPT home_screen_date;
+} HOME_SCREEN_CONTROL_BLOCK;
+
+typedef struct MUSIC_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    SCREEN_TEMPLATE_CONTROL_BLOCK base;
+    GX_RADIAL_PROGRESS_BAR music_screen_play_progress;
+    GX_PIXELMAP_BUTTON music_screen_play_button;
+    GX_PROMPT music_screen_singer;
+    GX_PROMPT music_screen_song;
+    GX_PIXELMAP_BUTTON music_screen_reverse_button;
+    GX_PIXELMAP_BUTTON music_screen_forward_button;
+    GX_NUMERIC_PROMPT music_screen_hour;
+    GX_NUMERIC_PROMPT music_screen_minute;
+    GX_PROMPT music_screen_second;
+    GX_WINDOW music_screen_play_mode_win;
+    GX_PIXELMAP_BUTTON music_screen_play_list_button;
+    GX_PIXELMAP_BUTTON music_screen_play_randon_button;
+    GX_PIXELMAP_BUTTON music_screen_play_repeat_button;
+} MUSIC_SCREEN_CONTROL_BLOCK;
+
+typedef struct MESSAGE_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    SCREEN_TEMPLATE_CONTROL_BLOCK base;
+    GX_WINDOW message_screen_message_frame;
+    GX_SCROLLBAR message_screen_vertical_scroll_1;
+} MESSAGE_SCREEN_CONTROL_BLOCK;
+
+typedef struct WEATHER_SCREEN_TEMPLATE_CONTROL_BLOCK_STRUCT
+{
+    SCREEN_TEMPLATE_CONTROL_BLOCK base;
+    GX_WINDOW weather_screen_template_weather_frame;
+    GX_SCROLLBAR weather_screen_template_vertical_scroll;
+    WEATHER_INFO_TEMPLATE_CONTROL_BLOCK weather_screen_template_day_win_7;
+    WEATHER_INFO_TEMPLATE_CONTROL_BLOCK weather_screen_template_day_win_6;
+    WEATHER_INFO_TEMPLATE_CONTROL_BLOCK weather_screen_template_day_win_5;
+    WEATHER_INFO_TEMPLATE_CONTROL_BLOCK weather_screen_template_day_win_4;
+    WEATHER_INFO_TEMPLATE_CONTROL_BLOCK weather_screen_template_day_win_3;
+    WEATHER_INFO_TEMPLATE_CONTROL_BLOCK weather_screen_template_day_win_2;
+    WEATHER_INFO_TEMPLATE_CONTROL_BLOCK weather_screen_template_day_win_1;
+} WEATHER_SCREEN_TEMPLATE_CONTROL_BLOCK;
+
+typedef struct SANFRANCISCO_WEATHER_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    WEATHER_SCREEN_TEMPLATE_CONTROL_BLOCK base;
+} SANFRANCISCO_WEATHER_SCREEN_CONTROL_BLOCK;
+
+typedef struct LOSANGELES_WEATHER_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    WEATHER_SCREEN_TEMPLATE_CONTROL_BLOCK base;
+} LOSANGELES_WEATHER_SCREEN_CONTROL_BLOCK;
+
+typedef struct SANDIEGO_WEATHER_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    WEATHER_SCREEN_TEMPLATE_CONTROL_BLOCK base;
+} SANDIEGO_WEATHER_SCREEN_CONTROL_BLOCK;
 
 
 /* extern statically defined control blocks                                    */
 
 #ifndef GUIX_STUDIO_GENERATED_FILE
-extern SETTINGS_LANGUAGE_CONTROL_BLOCK settings_language;
-extern MAP_SCREEN_CONTROL_BLOCK map_screen;
-extern CLOCK_ADD_SCREEN_CONTROL_BLOCK clock_add_screen;
-extern ALARM_ADD_SCREEN_CONTROL_BLOCK alarm_add_screen;
-extern ALARM_SCREEN_CONTROL_BLOCK alarm_screen;
-extern STOPWATCH_SCREEN_CONTROL_BLOCK stopwatch_screen;
-extern SETTINGS_SCREEN_CONTROL_BLOCK settings_screen;
-extern KEYBOARD_SCREEN_CONTROL_BLOCK keyboard_screen;
-extern MSG_SEND_SCREEN_CONTROL_BLOCK msg_send_screen;
-extern MSG_SCREEN_CONTROL_BLOCK msg_screen;
-extern HEALTHY_PACE_CONTROL_BLOCK healthy_pace;
-extern HEALTHY_SCREEN_CONTROL_BLOCK healthy_screen;
-extern WEATHER_LOSANGELES_CONTROL_BLOCK weather_LosAngeles;
-extern WEATHER_SANFRANCISCO_CONTROL_BLOCK weather_SanFrancisco;
-extern WEATHER_SCREEN_CONTROL_BLOCK weather_screen;
-extern CONTACT_INFO_EDIT_LIST_CONTROL_BLOCK contact_info_edit_list;
-extern CONTACT_INFO_EDIT_SCREEN_CONTROL_BLOCK contact_info_edit_screen;
-extern CONTACT_INFO_LIST_CONTROL_BLOCK contact_info_list;
-extern CONTACT_INFO_SCREEN_CONTROL_BLOCK contact_info_screen;
-extern CONTACT_SCREEN_CONTROL_BLOCK contact_screen;
-extern GAME_SCREEN_CONTROL_BLOCK game_screen;
+extern HOME_BUTTON_CONTROL_BLOCK home_button;
+extern PAGE_3_CONTAINER_SCREEN_CONTROL_BLOCK page_3_container_screen;
+extern PAGE_2_CONTAINER_SCREEN_CONTROL_BLOCK page_2_container_screen;
+extern PAGE_1_CONTAINER_SCREEN_CONTROL_BLOCK page_1_container_screen;
 extern MAIN_SCREEN_CONTROL_BLOCK main_screen;
-extern CLOCK_SCREEN_CONTROL_BLOCK clock_screen;
-extern ABOUT_SCREEN_CONTROL_BLOCK about_screen;
-extern LEFT_HOME_BUTTON_CONTROL_BLOCK left_home_button;
-extern RIGHT_HOME_BUTTON_CONTROL_BLOCK right_home_button;
-extern CALCULATOR_SCREEN_CONTROL_BLOCK calculator_screen;
-extern TEMPLATE_MAIN_CONTROL_BLOCK template_main;
-extern MENU_WINDOW_3_CONTROL_BLOCK menu_window_3;
-extern MENU_WINDOW_2_CONTROL_BLOCK menu_window_2;
+extern WEATHER_SCREEN_CONTROL_BLOCK weather_screen;
+extern MUSIC_SCREEN_CONTROL_BLOCK music_screen;
+extern MESSAGE_SCREEN_CONTROL_BLOCK message_screen;
+extern SANFRANCISCO_WEATHER_SCREEN_CONTROL_BLOCK SanFrancisco_weather_screen;
+extern LOSANGELES_WEATHER_SCREEN_CONTROL_BLOCK LosAngeles_weather_screen;
+extern SANDIEGO_WEATHER_SCREEN_CONTROL_BLOCK SanDiego_weather_screen;
+extern CLOCK_SCREEN_TEMPLATE_CONTROL_BLOCK clock_screen_template;
+extern MESSAGE_TEMPLATE_CONTROL_BLOCK message_template;
+extern WEATHER_INFO_TEMPLATE_CONTROL_BLOCK weather_info_template;
+extern WEATHER_SCREEN_TEMPLATE_CONTROL_BLOCK weather_screen_template;
+extern SCREEN_TEMPLATE_CONTROL_BLOCK screen_template;
+extern EKG_SCREEN_CONTROL_BLOCK ekg_screen;
+extern YOGA_SCREEN_CONTROL_BLOCK yoga_screen;
+extern STAND_SCREEN_CONTROL_BLOCK stand_screen;
+extern RUN_SCREEN_CONTROL_BLOCK run_screen;
+extern CALORIES_SCREEN_CONTROL_BLOCK calories_screen;
+extern FITNESS_SCREEN_CONTROL_BLOCK fitness_screen;
+extern CLOCK_2_SCREEN_CONTROL_BLOCK clock_2_screen;
+extern CLOCK_1_SCREEN_CONTROL_BLOCK clock_1_screen;
+extern CLOCK_5_SCREEN_CONTROL_BLOCK clock_5_screen;
+extern CLOCK_3_SCREEN_CONTROL_BLOCK clock_3_screen;
+extern CLOCK_4_SCREEN_CONTROL_BLOCK clock_4_screen;
+extern HOME_SCREEN_CONTROL_BLOCK home_screen;
 #endif
 
 /* Declare event process functions, draw functions, and callback functions     */
 
-UINT settings_language_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-UINT map_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID map_screen_draw(GX_WINDOW *widget);
-VOID custom_pixelmap_button_draw(GX_PIXELMAP_BUTTON *widget);
-UINT clock_add_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID city_list_row_create(GX_VERTICAL_LIST *, GX_WIDGET *, INT);
-UINT alarm_add_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-UINT custom_text_input_process(GX_SINGLE_LINE_TEXT_INPUT *widget, GX_EVENT *event_ptr);
-UINT alarm_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID alarm_list_row_create(GX_VERTICAL_LIST *, GX_WIDGET *, INT);
-UINT stopwatch_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID stopwatch_pixelmap_button_draw(GX_PIXELMAP_BUTTON *widget);
-UINT settings_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-UINT keyboard_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-UINT input_field_event_process(GX_SINGLE_LINE_TEXT_INPUT *widget, GX_EVENT *event_ptr);
-UINT msg_send_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID preloader_windown_draw(GX_WINDOW *widget);
-UINT msg_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID msg_list_row_create(GX_VERTICAL_LIST *, GX_WIDGET *, INT);
-UINT msg_screen_text_input_event_handler(GX_SINGLE_LINE_TEXT_INPUT *widget, GX_EVENT *event_ptr);
-UINT healthy_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID waveform_window_draw(GX_WINDOW *widget);
-UINT weather_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID custom_text_input_draw(GX_SINGLE_LINE_TEXT_INPUT *widget);
-UINT contact_info_edit_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-UINT contact_info_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-UINT contact_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID contact_list_row_create(GX_VERTICAL_LIST *, GX_WIDGET *, INT);
-UINT template_main_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID game_list_row_create(GX_VERTICAL_LIST *, GX_WIDGET *, INT);
-UINT main_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-UINT menu_window_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-UINT clock_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID time_list_row_create(GX_VERTICAL_LIST *, GX_WIDGET *, INT);
 VOID root_home_button_draw(GX_PIXELMAP_BUTTON *widget);
-UINT calculator_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
-VOID calculator_pixelmap_button_draw(GX_PIXELMAP_BUTTON *widget);
+UINT main_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT weather_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+VOID time_format(GX_NUMERIC_PROMPT *, INT);
+UINT music_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+VOID custom_pixelmap_button_draw(GX_PIXELMAP_BUTTON *widget);
+UINT message_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT clock_screen_template_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT weather_screen_template_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT screen_template_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT ekg_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT yoga_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT stand_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT run_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT calories_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT fitness_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+VOID ekg_waveform_win_draw(GX_WINDOW *widget);
+UINT clock_5_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+VOID clock_5_screen_draw(GX_WINDOW *widget);
+UINT clock_3_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+VOID clock_3_screen_draw(GX_WINDOW *widget);
+UINT clock_4_screen_event_process(GX_WINDOW *widget, GX_EVENT *event_ptr);
+UINT home_screen_event_handler(GX_WINDOW *widget, GX_EVENT *event_ptr);
 
 /* Declare the GX_STUDIO_DISPLAY_INFO structure                                */
 
@@ -727,17 +568,17 @@ typedef struct GX_STUDIO_DISPLAY_INFO_STRUCT
 
 /* Declare Studio-generated functions for creating top-level widgets           */
 
-UINT gx_studio_radio_button_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
+UINT gx_studio_button_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_pixelmap_button_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_icon_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
+UINT gx_studio_radial_progress_bar_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_sprite_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_prompt_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
-UINT gx_studio_pixelmap_prompt_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
+UINT gx_studio_numeric_prompt_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_window_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
-UINT gx_studio_vertical_list_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
-UINT gx_studio_text_input_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_multi_line_text_view_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_vertical_scrollbar_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
+UINT gx_studio_circular_gauge_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_template_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 GX_WIDGET *gx_studio_widget_create(GX_BYTE *storage, GX_CONST GX_STUDIO_WIDGET *definition, GX_WIDGET *parent);
 UINT gx_studio_named_widget_create(char *name, GX_WIDGET *parent, GX_WIDGET **new_widget);

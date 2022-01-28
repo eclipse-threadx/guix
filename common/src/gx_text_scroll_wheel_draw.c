@@ -38,7 +38,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_round_text_draw               PORTABLE C      */
-/*                                                           6.1.7        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -91,6 +91,9 @@
 /*                                            rename RENESAS_DAVE2D       */
 /*                                            support conditional,        */
 /*                                            resulting in version 6.1.7  */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            removed alpha set,          */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 static UINT  _gx_text_scroll_wheel_round_text_draw(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID tColor, GX_RESOURCE_ID font_id,
@@ -112,8 +115,6 @@ GX_COLOR    old_fill_color;
     {
         return(GX_SUCCESS);
     }
-
-    brush -> gx_brush_alpha = GX_ALPHA_VALUE_OPAQUE;
 
     text_height = brush -> gx_brush_font -> gx_font_line_height;
 
@@ -181,7 +182,7 @@ GX_COLOR    old_fill_color;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_flat_text_draw                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -225,6 +226,9 @@ GX_COLOR    old_fill_color;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            removed alpha set,          */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 static UINT  _gx_text_scroll_wheel_flat_text_draw(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID tColor, GX_RESOURCE_ID font_id,
@@ -242,8 +246,6 @@ GX_BRUSH *brush;
     {
         return(GX_SUCCESS);
     }
-
-    brush -> gx_brush_alpha = GX_ALPHA_VALUE_OPAQUE;
 
     text_height = brush -> gx_brush_font -> gx_font_line_height;
 
@@ -391,7 +393,7 @@ UINT           (*text_draw)(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID tColor, 
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_text_scroll_wheel_text_get                      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -426,6 +428,10 @@ UINT           (*text_draw)(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID tColor, 
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  09-30-2020     Kenneth Maxwell          Initial Version 6.1           */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            updated with new bidi text  */
+/*                                            reorder function call,      */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_text_scroll_wheel_text_get(GX_TEXT_SCROLL_WHEEL *wheel, INT row, GX_STRING *string)
@@ -433,6 +439,8 @@ static UINT _gx_text_scroll_wheel_text_get(GX_TEXT_SCROLL_WHEEL *wheel, INT row,
 #ifdef GX_DYNAMIC_BIDI_TEXT_SUPPORT
 GX_BIDI_TEXT_INFO           text_info;
 GX_BIDI_RESOLVED_TEXT_INFO *resolved_info;
+GX_CANVAS                  *canvas;
+GX_DISPLAY                 *display;
 #endif
 
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -485,8 +493,9 @@ UINT status;
             text_info.gx_bidi_text_info_text = *string;
             text_info.gx_bidi_text_info_font = GX_NULL;
             text_info.gx_bidi_text_info_display_width = 0;
+            GX_UTILITY_TEXT_DIRECTION_GET(text_info.gx_bidi_text_info_direction, wheel, canvas, display);
 
-            if (_gx_utility_bidi_paragraph_reorder(&text_info, &resolved_info) == GX_SUCCESS)
+            if (_gx_utility_bidi_paragraph_reorder_ext(&text_info, &resolved_info) == GX_SUCCESS)
             {
                 wheel -> gx_text_scroll_wheel_bidi_resolved_text_info[row] = resolved_info;
             }

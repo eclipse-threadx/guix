@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.1                                               */
-/*  Date (dd.mm.yyyy): 27. 9.2021   Time (hh:mm): 11:07                        */
+/*  GUIX Studio Revision 6.1.9.2                                               */
+/*  Date (dd.mm.yyyy): 28.12.2021   Time (hh:mm): 13:10                        */
 /*******************************************************************************/
 
 
@@ -6734,7 +6734,7 @@ GX_CONST GX_STUDIO_WIDGET vitals_screen_BPM_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {53, 242, 75, 251},                      /* widget size                    */
+    {49, 242, 73, 251},                      /* widget size                    */
     &vitals_screen_hr_value_define,          /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(VITALS_SCREEN_CONTROL_BLOCK, vitals_screen_BPM_label), /* control block */
@@ -7190,7 +7190,7 @@ GX_CONST GX_STUDIO_WIDGET vitals_screen_prompt_10_8_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {241, 405, 256, 414},                    /* widget size                    */
+    {241, 405, 258, 414},                    /* widget size                    */
     &vitals_screen_prompt_11_18_define,      /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(VITALS_SCREEN_CONTROL_BLOCK, vitals_screen_prompt_10_8), /* control block */
@@ -7214,7 +7214,7 @@ GX_CONST GX_STUDIO_WIDGET vitals_screen_prompt_10_7_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {241, 425, 256, 434},                    /* widget size                    */
+    {241, 425, 258, 434},                    /* widget size                    */
     &vitals_screen_prompt_10_8_define,       /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(VITALS_SCREEN_CONTROL_BLOCK, vitals_screen_prompt_10_7), /* control block */
@@ -7238,7 +7238,7 @@ GX_CONST GX_STUDIO_WIDGET vitals_screen_prompt_10_6_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {241, 444, 256, 453},                    /* widget size                    */
+    {241, 444, 258, 453},                    /* widget size                    */
     &vitals_screen_prompt_10_7_define,       /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(VITALS_SCREEN_CONTROL_BLOCK, vitals_screen_prompt_10_6), /* control block */
@@ -8006,7 +8006,7 @@ GX_CONST GX_STUDIO_WIDGET vitals_screen_prompt_14_3_define =
     gx_studio_numeric_prompt_create,         /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {585, 165, 613, 178},                    /* widget size                    */
+    {586, 162, 612, 179},                    /* widget size                    */
     &vitals_screen_prompt_13_13_1_define,    /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(VITALS_SCREEN_CONTROL_BLOCK, vitals_screen_prompt_14_3), /* control block */
@@ -8438,7 +8438,7 @@ GX_CONST GX_STUDIO_WIDGET vitals_screen_medtype2_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {380, 326, 426, 343},                    /* widget size                    */
+    {380, 326, 427, 343},                    /* widget size                    */
     &vitals_screen_medtype2_value_define,    /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(VITALS_SCREEN_CONTROL_BLOCK, vitals_screen_medtype2_label), /* control block */

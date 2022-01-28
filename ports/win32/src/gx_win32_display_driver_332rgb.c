@@ -121,7 +121,7 @@ GX_WIN32_DISPLAY_DRIVER_DATA *instance = (GX_WIN32_DISPLAY_DRIVER_DATA *)display
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    win32_graphics_driver_setup_332rgb                  PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -154,6 +154,9 @@ GX_WIN32_DISPLAY_DRIVER_DATA *instance = (GX_WIN32_DISPLAY_DRIVER_DATA *)display
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT win32_graphics_driver_setup_332rgb(GX_DISPLAY *display)
@@ -178,14 +181,14 @@ GX_WIN32_DISPLAY_DRIVER_DATA *data;
 
     _gx_display_driver_332rgb_setup(display, data, gx_win32_display_buffer_toggle);
 
+    /* Create bitmap header for 332rgb display driver. */
+    win32_332rgb_bitmap_header_create(display);
+
     /* Create the GUIX / Windows event thread
        This thread is a substitute for a touch display
        or keyboard driver thread that would be running
        on embedded hardware. */
     GX_WIN32_EVENT_THREAD_CREATE(data, "GUI-WIN32-332rgb");
-
-    /* Create bitmap header for 332rgb display driver. */
-    win32_332rgb_bitmap_header_create(display);
 
     return(GX_SUCCESS);
 }

@@ -37,7 +37,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_circular_gauge_create                           PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -86,6 +86,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added resize notify status, */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_circular_gauge_create(GX_CIRCULAR_GAUGE *gauge,
@@ -119,6 +122,7 @@ UINT  _gx_circular_gauge_create(GX_CIRCULAR_GAUGE *gauge,
     gauge -> gx_circular_gauge_start_angle = 0;
     gauge -> gx_circular_gauge_current_angle = 0;
     gauge -> gx_circular_gauge_target_angle = 0;
+    gauge -> gx_widget_status |= GX_STATUS_RESIZE_NOTIFY;
 
     /* Determine if a parent widget was provided.  */
     if (parent)

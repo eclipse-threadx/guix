@@ -18,37 +18,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\alarm.c" />
-    <ClCompile Include="..\..\calculator.c" />
-    <ClCompile Include="..\..\clock.c" />
-    <ClCompile Include="..\..\clock_add.c" />
-    <ClCompile Include="..\..\contact.c" />
-    <ClCompile Include="..\..\custom_pixelmap_button_draw.c" />
-    <ClCompile Include="..\..\custom_checkbox.c" />
-    <ClCompile Include="..\..\demo_guix_smart_watch.c" />
-    <ClCompile Include="..\..\expression_evaluate.c" />
-    <ClCompile Include="..\..\game.c" />
-    <ClCompile Include="..\..\guix_smart_watch_resources.c" />
-    <ClCompile Include="..\..\guix_smart_watch_specifications.c" />
-    <ClCompile Include="..\..\healthy.c" />
-    <ClCompile Include="..\..\keyboard.c" />
-    <ClCompile Include="..\..\map.c" />
-    <ClCompile Include="..\..\message.c" />
-    <ClCompile Include="..\..\settings.c" />
-    <ClCompile Include="..\..\stopwatch.c" />
-    <ClCompile Include="..\..\weather.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\custom_checkbox.h" />
-    <ClInclude Include="..\..\demo_guix_smart_watch.h" />
-    <ClInclude Include="..\..\guix_smart_watch_resources.h" />
-    <ClInclude Include="..\..\guix_smart_watch_specifications.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj">
       <Project>{a3336f4f-7a7b-46d3-a7f0-a2aaed6c08ed}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\page_1_weather_screen_template.c" />
+    <ClCompile Include="..\..\page_2_clock_3_screen.c" />
+    <ClCompile Include="..\..\demo_guix_smart_watch.c" />
+    <ClCompile Include="..\..\guix_smart_watch_resources.c" />
+    <ClCompile Include="..\..\guix_smart_watch_specifications.c" />
+    <ClCompile Include="..\..\page_1_message_screen.c" />
+    <ClCompile Include="..\..\page_1_music_screen.c" />
+    <ClCompile Include="..\..\page_1_weather_screen.c" />
+    <ClCompile Include="..\..\page_2_clock_4_screen.c" />
+    <ClCompile Include="..\..\page_2_clock_5_screen.c" />
+    <ClCompile Include="..\..\page_2_clock_screen_template.c" />
+    <ClCompile Include="..\..\page_2_home_screen.c" />
+    <ClCompile Include="..\..\page_3_calories_screen.c" />
+    <ClCompile Include="..\..\page_3_ekg_screen.c" />
+    <ClCompile Include="..\..\page_3_fitness_screen.c" />
+    <ClCompile Include="..\..\page_3_run_screen.c" />
+    <ClCompile Include="..\..\page_3_stand_screen.c" />
+    <ClCompile Include="..\..\page_3_yoga_screen.c" />
+    <ClCompile Include="..\..\screen_template.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\demo_guix_smart_watch.h" />
+    <ClInclude Include="..\..\guix_smart_watch_resources.h" />
+    <ClInclude Include="..\..\guix_smart_watch_specifications.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{68EE441C-7D93-4F4A-B8E2-C7E6A6FCDC65}</ProjectGuid>

@@ -5,8 +5,8 @@
 /*  resource file(s). For more information please refer to the Azure RTOS GUIX */
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.0                                               */
-/*  Date (dd.mm.yyyy): 26. 7.2021   Time (hh:mm): 15:32                        */
+/*  GUIX Studio Revision 6.1.9.1                                               */
+/*  Date (dd.mm.yyyy):  1.12.2021   Time (hh:mm): 15:14                        */
 /*******************************************************************************/
 
 
@@ -2148,10 +2148,11 @@ GX_CONST GX_UBYTE display_1_STRING_12_English[] = "remove last index";
 GX_CONST GX_UBYTE display_1_STRING_14_English[] = "Vertical List";
 GX_CONST GX_UBYTE display_1_STRING_13_English[] = "Horizontal List";
 GX_CONST GX_UBYTE display_1_STRING_15_English[] = "0";
+GX_CONST GX_UBYTE display_1_STRING_16_English[] = "set total cols";
 
 /* String Table for display_1 language English                                 */
 
-GX_CONST GX_STRING display_1_English_string_table[16] =
+GX_CONST GX_STRING display_1_English_string_table[17] =
 {
     {GX_NULL, 0},
     {(GX_CONST GX_CHAR *)display_1_STRING_1_English, sizeof(display_1_STRING_1_English) - 1},
@@ -2168,7 +2169,8 @@ GX_CONST GX_STRING display_1_English_string_table[16] =
     {(GX_CONST GX_CHAR *)display_1_STRING_12_English, sizeof(display_1_STRING_12_English) - 1},
     {(GX_CONST GX_CHAR *)display_1_STRING_14_English, sizeof(display_1_STRING_14_English) - 1},
     {(GX_CONST GX_CHAR *)display_1_STRING_13_English, sizeof(display_1_STRING_13_English) - 1},
-    {(GX_CONST GX_CHAR *)display_1_STRING_15_English, sizeof(display_1_STRING_15_English) - 1}
+    {(GX_CONST GX_CHAR *)display_1_STRING_15_English, sizeof(display_1_STRING_15_English) - 1},
+    {(GX_CONST GX_CHAR *)display_1_STRING_16_English, sizeof(display_1_STRING_16_English) - 1}
 };
 
 /*  Language Table                                                             */

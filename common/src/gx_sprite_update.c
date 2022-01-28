@@ -38,7 +38,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_sprite_update                                   PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -75,6 +75,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            fix logic for restarting    */
+/*                                            sprite timer,               */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_sprite_update(GX_SPRITE *sprite)
@@ -83,41 +87,44 @@ GX_WIDGET       *widget = (GX_WIDGET *)sprite;
 GX_SPRITE_FRAME *frame;
 UINT             delayval;
 
-    if (sprite -> gx_sprite_frame_list)
+    if (sprite->gx_sprite_run_state == GX_SPRITE_RUNNING)
     {
-        if (sprite -> gx_sprite_current_frame + 1 >= sprite -> gx_sprite_frame_count)
+        if (sprite -> gx_sprite_frame_list)
         {
-            if (sprite -> gx_widget_style & GX_STYLE_SPRITE_LOOP)
+            if (sprite -> gx_sprite_current_frame + 1 >= sprite -> gx_sprite_frame_count)
             {
-                sprite -> gx_sprite_current_frame = 0;
+                if (sprite -> gx_widget_style & GX_STYLE_SPRITE_LOOP)
+                {
+                    sprite -> gx_sprite_current_frame = 0;
+                }
+                else
+                {
+                    sprite -> gx_sprite_run_state = GX_SPRITE_IDLE;
+                    _gx_widget_event_generate(widget, GX_EVENT_SPRITE_COMPLETE, 0);
+                    return;
+                }
             }
             else
             {
-                sprite -> gx_sprite_run_state = GX_SPRITE_IDLE;
-                _gx_widget_event_generate(widget, GX_EVENT_SPRITE_COMPLETE, 0);
-                return;
+                sprite -> gx_sprite_current_frame++;
             }
-        }
-        else
-        {
-            sprite -> gx_sprite_current_frame++;
-        }
 
-        frame = &sprite -> gx_sprite_frame_list[sprite -> gx_sprite_current_frame];
-        if (frame -> gx_sprite_frame_delay > 0)
-        {
-            delayval = frame -> gx_sprite_frame_delay;
+            frame = &sprite -> gx_sprite_frame_list[sprite -> gx_sprite_current_frame];
+            if (frame -> gx_sprite_frame_delay > 0)
+            {
+                delayval = frame -> gx_sprite_frame_delay;
+            }
+            else
+            {
+                delayval = 1;
+            }
+            _gx_system_timer_start(widget, GX_SPRITE_TIMER, delayval, 0);
+            _gx_system_dirty_mark(widget);
         }
         else
         {
-            delayval = 1;
+            sprite -> gx_sprite_run_state = GX_SPRITE_IDLE;
         }
-        _gx_system_timer_start(widget, GX_SPRITE_TIMER, delayval, 0);
-        _gx_system_dirty_mark(widget);
-    }
-    else
-    {
-        sprite -> gx_sprite_run_state = GX_SPRITE_IDLE;
     }
 }
 

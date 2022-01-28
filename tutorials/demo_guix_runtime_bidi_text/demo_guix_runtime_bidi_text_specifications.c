@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.1                                               */
-/*  Date (dd.mm.yyyy): 27. 9.2021   Time (hh:mm): 11:20                        */
+/*  GUIX Studio Revision 6.1.9.2                                               */
+/*  Date (dd.mm.yyyy): 28.12.2021   Time (hh:mm): 13:14                        */
 /*******************************************************************************/
 
 
@@ -377,7 +377,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_radio_button_English_define =
     gx_studio_radio_button_create,           /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {335, 55, 478, 84},                      /* widget size                    */
+    {335, 55, 487, 84},                      /* widget size                    */
     &main_screen_radio_button_Arabic_define, /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_radio_button_English), /* control block */

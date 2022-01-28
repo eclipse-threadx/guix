@@ -20,17 +20,16 @@
   <ItemGroup>
     <ClCompile Include="..\..\audio.c" />
     <ClCompile Include="..\..\base.c" />
-    <ClCompile Include="..\..\camera.c" />
-    <ClCompile Include="..\..\custom_slider.c" />
+    <ClCompile Include="..\..\climate.c" />
     <ClCompile Include="..\..\demo_guix_car_infotainment.c" />
     <ClCompile Include="..\..\demo_guix_car_infotainment_resources.c" />
     <ClCompile Include="..\..\demo_guix_car_infotainment_specifications.c" />
-    <ClCompile Include="..\..\navigation.c" />
+    <ClCompile Include="..\..\phone.c" />
     <ClCompile Include="..\..\vehicle.c" />
     <ClCompile Include="..\..\video.c" />
+    <ClCompile Include="..\..\volume_screen_base.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\custom_slider.h" />
     <ClInclude Include="..\..\demo_guix_car_infotainment.h" />
     <ClInclude Include="..\..\demo_guix_car_infotainment_resources.h" />
     <ClInclude Include="..\..\demo_guix_car_infotainment_specifications.h" />

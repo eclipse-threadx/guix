@@ -31,7 +31,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    win32_graphics_driver_setup_8bit_palette_rotated    PORTABLE C      */
-/*                                                           6.1.4        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -66,6 +66,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  02-02-2021     Kenneth Maxwell          Initial Version 6.1.4         */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT win32_graphics_driver_setup_8bit_palette_rotated(GX_DISPLAY* display)
@@ -92,14 +95,14 @@ UINT win32_graphics_driver_setup_8bit_palette_rotated(GX_DISPLAY* display)
     _gx_display_driver_8bit_palette_rotated_setup(display, data, gx_win32_display_buffer_toggle);
     display->gx_display_driver_palette_set = win32_display_driver_8bit_palette_set;
 
+    /* Create bitmap header for 8bit palette driver. */
+    win32_8bit_palette_bitmap_header_create(display);
+
     /* Create the GUIX / Windows event thread
        This thread is a substitute for a touch display
        or keyboard driver thread that would be running
        on embedded hardware. */
     GX_WIN32_EVENT_THREAD_CREATE(data, "GUI-WIN32-8bit-palette");
-
-    /* Create bitmap header for 8bit palette driver. */
-    win32_8bit_palette_bitmap_header_create(display);
 
     return(GX_SUCCESS);
 }

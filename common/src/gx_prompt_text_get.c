@@ -99,7 +99,7 @@ GX_STRING string;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_prompt_text_get_ext                             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -137,6 +137,10 @@ GX_STRING string;
 /*                                            added logic to retrieve     */
 /*                                            dynamic bidi text,          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            updated with new bidi text  */
+/*                                            reorder function call,      */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_prompt_text_get_ext(GX_PROMPT *prompt, GX_STRING *return_string)
@@ -146,6 +150,8 @@ UINT status = GX_SUCCESS;
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 GX_BIDI_TEXT_INFO           text_info;
 GX_BIDI_RESOLVED_TEXT_INFO *resolved_info;
+GX_CANVAS                  *canvas;
+GX_DISPLAY                 *display;
 #endif
 
     if (prompt -> gx_prompt_text_id)
@@ -169,8 +175,9 @@ GX_BIDI_RESOLVED_TEXT_INFO *resolved_info;
             text_info.gx_bidi_text_info_text = *return_string;
             text_info.gx_bidi_text_info_font = GX_NULL;
             text_info.gx_bidi_text_info_display_width = -1;
+            GX_UTILITY_TEXT_DIRECTION_GET(text_info.gx_bidi_text_info_direction, prompt, canvas, display);
 
-            if (_gx_utility_bidi_paragraph_reorder(&text_info, &resolved_info) == GX_SUCCESS)
+            if (_gx_utility_bidi_paragraph_reorder_ext(&text_info, &resolved_info) == GX_SUCCESS)
             {
                 prompt -> gx_prompt_bidi_resolved_text_info = resolved_info;
                 *return_string = *resolved_info -> gx_bidi_resolved_text_info_text;

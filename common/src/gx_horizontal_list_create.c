@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_vetical_list_create                             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -80,6 +80,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            initialized new horizontal  */
+/*                                            list control block member,  */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_horizontal_list_create(GX_HORIZONTAL_LIST *horizontal_list,
@@ -106,6 +110,7 @@ UINT  _gx_horizontal_list_create(GX_HORIZONTAL_LIST *horizontal_list,
     horizontal_list -> gx_horizontal_list_visible_columns = 0;
     horizontal_list -> gx_horizontal_list_child_count = 0;
     horizontal_list -> gx_window_scroll_info_get = _gx_horizontal_list_scroll_info_get;
+    horizontal_list -> gx_horizontal_list_idle_child_list = GX_NULL;
 
     /* Determine if a parent widget was provided.  */
     if (parent)

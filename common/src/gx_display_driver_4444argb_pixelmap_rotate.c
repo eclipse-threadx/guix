@@ -46,7 +46,7 @@
 /*                                                                        */
 /*    _gx_display_driver_4444argb_pixelmap_general_rotate                 */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -88,6 +88,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            corrected logic,            */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_4444argb_pixelmap_general_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -159,14 +162,11 @@ USHORT        alpha[4] = {0};
 
     /* Calculate the new rotation axis. */
 
-    x = GX_FIXED_VAL_TO_INT((cx - srcxres) * cosv - (cy - srcyres) * sinv);
-    y = GX_FIXED_VAL_TO_INT((cy - srcyres) * cosv + (cx - srcxres) * sinv);
+    xres = GX_FIXED_VAL_TO_INT((cx - srcxres) * cosv - (cy - srcyres) * sinv) + xres;
+    yres = GX_FIXED_VAL_TO_INT((cy - srcyres) * cosv + (cx - srcxres) * sinv) + xres;
 
-    x += xres;
-    y += yres;
-
-    newxpos = xpos + cx - x;
-    newypos = ypos + cy - y;
+    newxpos = xpos + cx - xres;
+    newypos = ypos + cy - yres;
 
     /* Loop through the destination's pixels.  */
     for (y = clip -> gx_rectangle_top - newypos; y <= clip -> gx_rectangle_bottom - newypos; y++)
@@ -179,8 +179,8 @@ USHORT        alpha[4] = {0};
             xdiff = GX_FIXED_VAL_TO_INT(xx << 8) & 0xff;
             ydiff = GX_FIXED_VAL_TO_INT(yy << 8) & 0xff;
 
-            xx = GX_FIXED_VAL_TO_INT(xx) + srcxres;
-            yy = GX_FIXED_VAL_TO_INT(yy) + srcyres;
+            xx = GX_FIXED_VAL_TO_INT(xx) + cx;
+            yy = GX_FIXED_VAL_TO_INT(yy) + cy;
 
             if ((xx >= -1) && (xx < pixelmap -> gx_pixelmap_width) &&
                 (yy >= -1) && (yy < pixelmap -> gx_pixelmap_height))

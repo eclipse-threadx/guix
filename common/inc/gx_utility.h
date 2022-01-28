@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_utility.h                                        PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -52,6 +52,10 @@
 /*                                            rename RENESAS_DAVE2D       */
 /*                                            support conditional,        */
 /*                                            resulting in version 6.1.7  */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added new bidi text         */
+/*                                            reordering API,             */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 
@@ -174,6 +178,19 @@ typedef struct GX_BIDI_BRACKET_PAIR_STRUCT
     ULONG gx_bidi_bracket_pair_open;
     ULONG gx_bidi_bracket_pair_close;
 } GX_BIDI_BRACKET_PAIR;
+
+#define GX_UTILITY_TEXT_DIRECTION_GET(direction, widget, canvas, display)                                                      \
+            direction = GX_LANGUAGE_DIRECTION_LTR;                                                                             \
+                                                                                                                               \
+            if (_gx_widget_canvas_get((GX_WIDGET *)widget, &canvas) == GX_SUCCESS)                                             \
+            {                                                                                                                  \
+                display = canvas -> gx_canvas_display;                                                                         \
+                                                                                                                               \
+                if (display -> gx_display_language_direction_table)                                                            \
+                {                                                                                                              \
+                    direction = (GX_BYTE)display -> gx_display_language_direction_table[display -> gx_display_active_language];\
+                }                                                                                                              \
+            }
 #endif
 
 #define GX_UTILITY_MATH_UINT_ADD(augend, addend, result) \
@@ -300,6 +317,7 @@ UINT _gx_utility_bidi_bracket_pair_get(ULONG code, GX_BIDI_BRACKET_PAIR *bracket
 UINT _gx_utility_bidi_character_type_get(ULONG code, GX_UBYTE *type);
 UINT _gx_utility_bidi_mirroring_get(USHORT code, USHORT *mirror);
 UINT _gx_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+UINT _gx_utility_bidi_paragraph_reorder_ext(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
 UINT _gx_utility_bidi_resolved_text_info_delete(GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
 #endif
 
@@ -347,6 +365,7 @@ UINT    _gxe_utility_string_to_alphamap(GX_CONST GX_CHAR *text, GX_CONST GX_FONT
 UINT    _gxe_utility_string_to_alphamap_ext(GX_CONST GX_STRING *text, GX_CONST GX_FONT *font, GX_PIXELMAP *textmap);
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 UINT    _gxe_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+UINT    _gxe_utility_bidi_paragraph_reorder_ext(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
 UINT    _gxe_utility_bidi_resolved_text_info_delete(GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
 #endif
 #endif

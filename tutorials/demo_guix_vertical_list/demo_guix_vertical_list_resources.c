@@ -5,8 +5,8 @@
 /*  resource file(s). For more information please refer to the Azure RTOS GUIX */
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.0                                               */
-/*  Date (dd.mm.yyyy): 26. 7.2021   Time (hh:mm): 15:33                        */
+/*  GUIX Studio Revision 6.1.9.1                                               */
+/*  Date (dd.mm.yyyy): 30.11.2021   Time (hh:mm): 10:37                        */
 /*******************************************************************************/
 
 
@@ -1917,10 +1917,12 @@ GX_CONST GX_UBYTE display_1_STRING_11_English[] = "button 3";
 GX_CONST GX_UBYTE display_1_STRING_14_English[] = "Vertical List";
 GX_CONST GX_UBYTE display_1_STRING_1_English[] = "0";
 GX_CONST GX_UBYTE display_1_STRING_2_English[] = "selected index set";
+GX_CONST GX_UBYTE display_1_STRING_4_English[] = "set total rows";
+GX_CONST GX_UBYTE display_1_STRING_5_English[] = "20";
 
 /* String Table for display_1 language English                                 */
 
-GX_CONST GX_STRING display_1_English_string_table[9] =
+GX_CONST GX_STRING display_1_English_string_table[11] =
 {
     {GX_NULL, 0},
     {(GX_CONST GX_CHAR *)display_1_STRING_3_English, sizeof(display_1_STRING_3_English) - 1},
@@ -1930,7 +1932,9 @@ GX_CONST GX_STRING display_1_English_string_table[9] =
     {(GX_CONST GX_CHAR *)display_1_STRING_11_English, sizeof(display_1_STRING_11_English) - 1},
     {(GX_CONST GX_CHAR *)display_1_STRING_14_English, sizeof(display_1_STRING_14_English) - 1},
     {(GX_CONST GX_CHAR *)display_1_STRING_1_English, sizeof(display_1_STRING_1_English) - 1},
-    {(GX_CONST GX_CHAR *)display_1_STRING_2_English, sizeof(display_1_STRING_2_English) - 1}
+    {(GX_CONST GX_CHAR *)display_1_STRING_2_English, sizeof(display_1_STRING_2_English) - 1},
+    {(GX_CONST GX_CHAR *)display_1_STRING_4_English, sizeof(display_1_STRING_4_English) - 1},
+    {(GX_CONST GX_CHAR *)display_1_STRING_5_English, sizeof(display_1_STRING_5_English) - 1}
 };
 
 /*  Language Table                                                             */

@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_radial_slider_needle_rectangle_calculate        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,6 +70,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            supported needle offset,    */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_radial_slider_needle_rectangle_calculate(GX_RADIAL_SLIDER *slider, GX_RECTANGLE *rectangle)
@@ -87,8 +90,8 @@ INT                    ypos;
         ypos = _gx_utility_math_sin(GX_FIXED_VAL_MAKE(info -> gx_radial_slider_info_current_angle));
 
         /* calculate sin and cos value of current angle value. */
-        xpos = GX_FIXED_VAL_RND(info -> gx_radial_slider_info_radius * xpos);
-        ypos = GX_FIXED_VAL_RND(info -> gx_radial_slider_info_radius * ypos);
+        xpos = GX_FIXED_VAL_RND((info -> gx_radial_slider_info_radius + info -> gx_radial_slider_info_needle_offset) * xpos);
+        ypos = GX_FIXED_VAL_RND((info -> gx_radial_slider_info_radius + info -> gx_radial_slider_info_needle_offset) * ypos);
 
         /* calculate needle position. */
         xpos += info -> gx_radial_slider_info_xcenter;

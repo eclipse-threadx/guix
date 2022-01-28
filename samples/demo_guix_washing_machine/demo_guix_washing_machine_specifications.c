@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.1                                               */
-/*  Date (dd.mm.yyyy): 27. 9.2021   Time (hh:mm): 11:08                        */
+/*  GUIX Studio Revision 6.1.9.0                                               */
+/*  Date (dd.mm.yyyy): 17.11.2021   Time (hh:mm): 15:09                        */
 /*******************************************************************************/
 
 
@@ -143,6 +143,7 @@ UINT gx_studio_radial_slider_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *
     slider_info.gx_radial_slider_info_ycenter = props->ycenter;
     slider_info.gx_radial_slider_info_radius = props->radius;
     slider_info.gx_radial_slider_info_track_width = props->track_width;
+    slider_info.gx_radial_slider_info_needle_offset = props->needle_offset;
     slider_info.gx_radial_slider_info_current_angle = props->current_angle;
     slider_info.gx_radial_slider_info_min_angle = props->min_angle;
     slider_info.gx_radial_slider_info_max_angle = props->max_angle;
@@ -982,6 +983,7 @@ GX_RADIAL_SLIDER_PROPERTIES water_level_window_water_level_slider_properties =
     159,                                     /* ycenter                        */
     140,                                     /* radius                         */
     20,                                      /* track width                    */
+    0,                                       /* needle offset                  */
     -20,                                     /* current angle                  */
     -40,                                     /* min angle                      */
     40,                                      /* max angle                      */
@@ -1274,8 +1276,9 @@ GX_RADIAL_SLIDER_PROPERTIES temperature_window_temperature_slider_properties =
 {
     159,                                     /* xcenter                        */
     159,                                     /* ycenter                        */
-    140,                                     /* radius                         */
-    20,                                      /* track width                    */
+    120,                                     /* radius                         */
+    40,                                      /* track width                    */
+    20,                                      /* needle offset                  */
     30,                                      /* current angle                  */
     -30,                                     /* min angle                      */
     210,                                     /* max angle                      */
@@ -1410,6 +1413,7 @@ GX_RADIAL_SLIDER_PROPERTIES wash_cycle_window_wash_cycle_slider_properties =
     159,                                     /* ycenter                        */
     139,                                     /* radius                         */
     20,                                      /* track width                    */
+    0,                                       /* needle offset                  */
     100,                                     /* current angle                  */
     -17,                                     /* min angle                      */
     196,                                     /* max angle                      */

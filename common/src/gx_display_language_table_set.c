@@ -206,3 +206,61 @@ GX_CONST GX_STRING **old_table = display -> gx_display_language_table;
     /* Return success.  */
     return(GX_SUCCESS);
 }
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_display_language_direction_table_set_ext        PORTABLE C      */
+/*                                                           6.1.10       */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This service sets the language direction table.                     */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    display                               Pointer to display            */
+/*    language_direciton_table              The language direction table  */
+/*                                            to be set                   */
+/*    num_languages                         Number of languages in the    */
+/*                                            table                       */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  01-31-2022     Ting Zhu                 Initial Version 6.1.10        */
+/*                                                                        */
+/**************************************************************************/
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT  _gx_display_language_direction_table_set(GX_DISPLAY *display, GX_CONST GX_UBYTE *language_direction_table, GX_UBYTE num_languages)
+{
+
+    if (num_languages != display->gx_display_language_table_size)
+    {
+        return(GX_INVALID_VALUE);
+    }
+
+    /* Setup the system string table information.  */
+    display -> gx_display_language_direction_table = language_direction_table;
+
+    /* Return success.  */
+    return(GX_SUCCESS);
+}
+#endif

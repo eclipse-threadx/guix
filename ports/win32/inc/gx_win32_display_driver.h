@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_win32_driver.h                                   PORTABLE C      */
-/*                                                           6.1.7        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -48,6 +48,9 @@
 /*                                            declared gx_win32_driver_   */
 /*                                            thread_initialize,          */
 /*                                            resulting in version 6.1.7  */
+/*  01-31-2022     Ting Zhu                 Modified comment(s), modified */
+/*                                            driver data structure,      */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 
@@ -84,8 +87,7 @@ typedef struct GX_WIN32_DISPLAY_DRIVER_STRUCT
     GX_BMP_INFO win32_driver_bmpinfo;
     HWND        win32_driver_winhandle;
     INT         win32_driver_ready;
-    TX_THREAD   win32_driver_thread;
-    ULONG       win32_driver_thread_stack[GX_WIN32_STACK_SIZE / sizeof(ULONG)];
+    HANDLE      win32_driver_thread_handle;
     GX_WIN32_DISPLAY_DRIVER_EXTRA_MEMBERS_DECLEARE
 } GX_WIN32_DISPLAY_DRIVER_DATA;
 
@@ -124,7 +126,7 @@ void                          gx_win32_driver_thread_initialize(GX_WIN32_DISPLAY
 HWND                          gx_win32_window_create(GX_WIN32_DISPLAY_DRIVER_DATA *gx_driver_ptr, WNDPROC gx_win32_event_process, INT xpos, INT ypos);
 LRESULT CALLBACK              gx_win32_event_process(HWND, UINT, WPARAM, LPARAM);
 void                          gx_win32_message_to_guix(USHORT event_type);
-void                          gx_win32_input_driver();
+void                          gx_win32_input_driver(GX_WIN32_DISPLAY_DRIVER_DATA *instance);
 GX_WIN32_DISPLAY_DRIVER_DATA *gx_win32_get_free_data_instance();
 GX_WIN32_DISPLAY_DRIVER_DATA *gx_win32_get_data_instance_by_win_handle(HWND winHandle);
 

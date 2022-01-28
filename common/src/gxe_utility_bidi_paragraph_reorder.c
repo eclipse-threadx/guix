@@ -35,20 +35,20 @@ GX_CALLER_CHECKING_EXTERNS
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gxe_utility_bidi_resolved_text_info_delete         PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
 /*                                                                        */
-/*    This function checks for errors in the utility bidi resolved text   */
-/*    info delete function call.                                          */
+/*    This function checks for errors in the utility bidi paragraph       */
+/*    reorder function call.                                              */
 /*                                                                        */
 /*  INPUT                                                                 */
 /*                                                                        */
-/*    reordered_text                        The head pointer of reordered */
-/*                                            bidi text information link  */
+/*    input_info                            Pointer to bidi text info     */
+/*    reordered_text                        Reordered text information    */
 /*                                                                        */
 /*  OUTPUT                                                                */
 /*                                                                        */
@@ -56,9 +56,9 @@ GX_CALLER_CHECKING_EXTERNS
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _gx_utility_bidi_resolved_text_info_delete                          */
-/*                                          Actual utility bidi resolved  */
-/*                                            text into delete function   */
+/*    _gx_utility_bidi_paragraph_reorder                                  */
+/*                                          Actual utility bidi paragraph */
+/*                                            reorder function            */
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
@@ -69,6 +69,8 @@ GX_CALLER_CHECKING_EXTERNS
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
@@ -84,6 +86,65 @@ UINT status;
 
     /* Call the actual utility bidi paragraph reorder function.  */
     status = _gx_utility_bidi_paragraph_reorder(input_info, resolved_info_head);
+
+    return status;
+}
+#endif
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gxe_utility_bidi_paragraph_reorder_ext             PORTABLE C      */
+/*                                                           6.1.10       */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks for errors in the utility bidi paragraph       */
+/*    reorder ext function call.                                          */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    input_info                            Pointer to bidi text info     */
+/*    reordered_text                        Reordered text information    */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_utility_bidi_paragraph_reorder_ext                              */
+/*                                          Actual utility bidi paragraph */
+/*                                            reorder ext function        */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  01-31-2022     Ting Zhu                 Initial Version 6.1.10        */
+/*                                                                        */
+/**************************************************************************/
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT _gxe_utility_bidi_paragraph_reorder_ext(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head)
+{
+UINT status;
+
+    /* Check for invalid input pointers.  */
+    if ((input_info == GX_NULL) || (resolved_info_head == GX_NULL))
+    {
+        return GX_PTR_ERROR;
+    }
+
+    /* Call the actual utility bidi paragraph reorder function.  */
+    status = _gx_utility_bidi_paragraph_reorder_ext(input_info, resolved_info_head);
 
     return status;
 }

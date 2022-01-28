@@ -2926,7 +2926,7 @@ GX_BIDI_RESOLVED_TEXT_INFO *bidi_text;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_utility_bidi_one_paragraph_reorder              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2969,6 +2969,9 @@ GX_BIDI_RESOLVED_TEXT_INFO *bidi_text;
 /*                                            updated with resolved text  */
 /*                                            info structure change,      */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Kenneth Maxwell          Modified comment(s), modified */
+/*                                            base level set logic,       */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_utility_bidi_one_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info, UINT *processed_size)
@@ -2989,10 +2992,23 @@ GX_BIDI_CONTEXT context;
 
     if (status == GX_SUCCESS)
     {
-        /* Compute paragraph embedding_level. */
-        status = _gx_utility_bidi_block_level_determine(&context, 0,
-                                                        (UINT)(context.gx_bidi_context_unit_count - 1),
-                                                        &context.gx_bidi_context_base_level);
+        switch (input_info -> gx_bidi_text_info_direction)
+        {
+        case GX_LANGUAGE_DIRECTION_LTR:
+            context.gx_bidi_context_base_level = 0;
+            break;
+
+        case GX_LANGUAGE_DIRECTION_RTL:
+            context.gx_bidi_context_base_level = 1;
+            break;
+
+        default:
+            /* Compute paragraph embedding_level. */
+            status = _gx_utility_bidi_block_level_determine(&context, 0,
+                                                            (UINT)(context.gx_bidi_context_unit_count - 1),
+                                                            &context.gx_bidi_context_base_level);
+            break;
+        }
     }
 
     if (status == GX_SUCCESS)
@@ -3063,7 +3079,7 @@ GX_BIDI_CONTEXT context;
 /*                                                                        */
 /*  INPUT                                                                 */
 /*                                                                        */
-/*    text_info                             Pointer to bidi text          */
+/*    input_info                            Pointer to bidi text info     */
 /*    reordered_text                        Reordered text information    */
 /*                                                                        */
 /*  OUTPUT                                                                */
@@ -3090,6 +3106,51 @@ GX_BIDI_CONTEXT context;
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head)
+{
+    input_info->gx_bidi_text_info_direction = -1;
+
+    return _gx_utility_bidi_paragraph_reorder_ext(input_info, resolved_info_head);
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_utility_bidi_paragraph_reorder_ext              PORTABLE C      */
+/*                                                           6.1.10       */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function reorders a bidi text for displaying.                  */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    input_info                            Pointer to bidi text info     */
+/*    reordered_text                        Reordered text information    */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  01-31-2022     Ting Zhu                 Initial Version 6.1.10        */
+/*                                                                        */
+/**************************************************************************/
+UINT _gx_utility_bidi_paragraph_reorder_ext(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head)
 {
 UINT                        status = GX_SUCCESS;
 GX_BIDI_TEXT_INFO           text_info;

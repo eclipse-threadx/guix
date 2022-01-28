@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_horizontal_list_total_columns_set               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -74,20 +74,33 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_horizontal_list_total_columns_set(GX_HORIZONTAL_LIST *list, INT count)
 {
 INT           page_index;
-INT           row;
+INT           index;
 GX_WIDGET    *test;
-GX_BOOL       list_count_change = GX_FALSE;
 GX_SCROLLBAR *pScroll;
 
     _gx_system_lock();
 
     /* Update total count of rows. */
     list -> gx_horizontal_list_total_columns = count;
+
+    /* Update selected index. */
+    if (list -> gx_horizontal_list_selected < 0)
+    {
+        list -> gx_horizontal_list_selected = 0;
+    }
+
+    if (list -> gx_horizontal_list_selected > count - 1)
+    {
+        list -> gx_horizontal_list_selected = count - 1;
+    }
 
     /* Calculate current page index. */
     page_index = list -> gx_horizontal_list_top_index;
@@ -113,6 +126,19 @@ GX_SCROLLBAR *pScroll;
         }
     }
 
+    /* Add idle children back to horizontal list.  */
+    if (list -> gx_horizontal_list_idle_child_list)
+    {
+        while (list -> gx_horizontal_list_idle_child_list)
+        {
+            test = list -> gx_horizontal_list_idle_child_list;
+            list -> gx_horizontal_list_idle_child_list = list -> gx_horizontal_list_idle_child_list -> gx_widget_next;
+
+            _gx_widget_attach((GX_WIDGET *)list, test);
+            list -> gx_horizontal_list_child_count++;
+        }
+    }
+
     /* Check whether list child count is larger than count. */
     while (list -> gx_horizontal_list_child_count > count)
     {
@@ -121,9 +147,11 @@ GX_SCROLLBAR *pScroll;
         if (test)
         {
             _gx_widget_detach(test);
-            list -> gx_horizontal_list_child_count--;
 
-            list_count_change = GX_TRUE;
+            /* Put detached widget to idle list.  */
+            test -> gx_widget_next = list -> gx_horizontal_list_idle_child_list;
+            list -> gx_horizontal_list_idle_child_list = test;
+            list -> gx_horizontal_list_child_count--;
         }
         else
         {
@@ -131,34 +159,20 @@ GX_SCROLLBAR *pScroll;
         }
     }
 
-    if ((!list_count_change && list -> gx_horizontal_list_child_count == count) ||
-        ((list -> gx_widget_style & GX_STYLE_WRAP) &&
-         (list -> gx_horizontal_list_visible_columns == count)))
+    list -> gx_horizontal_list_top_index = 0;
+    index = 0;
+    test = _gx_widget_first_client_child_get((GX_WIDGET *)list);
+
+    while (test)
     {
-        /* Re-populate list child. */
-        row = 0;
+        list -> gx_horizontal_list_callback(list, test, index++);
 
-        list -> gx_horizontal_list_top_index = 0;
-
-        test = _gx_widget_first_client_child_get((GX_WIDGET *)list);
-
-        while (test)
-        {
-            /* Reset child id. */
-            test -> gx_widget_id = (USHORT)(LIST_CHILD_ID_START + row);
-            test -> gx_widget_style &= ~GX_STYLE_DRAW_SELECTED;
-            list -> gx_horizontal_list_callback(list, test, row);
-
-            if (row == list -> gx_horizontal_list_selected)
-            {
-                test -> gx_widget_style |= GX_STYLE_DRAW_SELECTED;
-                _gx_system_dirty_mark(test);
-            }
-
-            test = _gx_widget_next_client_child_get(test);
-            row++;
-        }
+        test = _gx_widget_next_client_child_get(test);
     }
+
+    /* Reposition child widgets.  */
+    _gx_horizontal_list_children_position(list);
+
 
     /* Make new page index visible */
     _gx_horizontal_list_page_index_set(list, page_index);

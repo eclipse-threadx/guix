@@ -2,189 +2,195 @@
 
 #include "demo_guix_car_infotainment.h"
 
-/* Define variables. */
-GX_RESOURCE_ID    normal_top_icon_sound = GX_PIXELMAP_ID_TOP_ICON_SOUND_SPEAKER_FULL;
-GX_RESOURCE_ID    selected_top_icon_sound = GX_PIXELMAP_ID_TOP_ICON_SOUND_SPEAKER_FULL_ON;
+#if (MAIN_DISPLAY_X_RESOLUTION == 640)
+#define SCREEN_WEATHER_WIN_OFF_SHIFT 84
+#endif
 
-/* Define prototypes. */
-VOID speaker_show(GX_WIDGET *parent);
-VOID speaker_hide(GX_WIDGET *parent);
+static GX_RESOURCE_ID main_weather_icon_ids[] = { GX_PIXELMAP_ID_WEATHER_ICON_PARTLY_CLOUDY_OFF, GX_PIXELMAP_ID_WEATHER_ICON_PARTLY_CLOUDY };
+static GX_RESOURCE_ID screen_weather_icon_ids[] = { GX_PIXELMAP_ID_WEATHER_ICON_PARTLY_CLOUDY_SMALL_OFF, GX_PIXELMAP_ID_WEATHER_ICON_PARTLY_CLOUDY_SMALL };
+static GX_RESOURCE_ID logo_ids[] = { GX_PIXELMAP_ID_MICROSOFT_LOGO_OFF, GX_PIXELMAP_ID_MICROSOFT_AZURE_LOGO };
+extern INT bottom_button_alpha;
 
 /******************************************************************************************/
-/* Override default event processing of "screen_base" to handle signals from my child     */
+/* Deselect buttons in main screen.                                                       */
+/******************************************************************************************/
+VOID screen_btn_deselect()
+{
+    GX_WIDGET *child = main_screen.main_screen_btn_window.gx_widget_first_child;
+
+    while (child)
+    {
+        if ((child->gx_widget_type == GX_TYPE_PIXELMAP_BUTTON) &&
+            (child->gx_widget_style & GX_STYLE_BUTTON_PUSHED))
+        {
+            ((GX_BUTTON *)child)->gx_button_deselect_handler(child, GX_FALSE);
+
+            return;
+        }
+
+        child = child->gx_widget_next;
+       
+    }
+}
+
+/******************************************************************************************/
+/* Enable/Disable child widgets.                                                          */
+/******************************************************************************************/
+VOID enable_disable_widget(GX_WIDGET *parent, GX_BOOL enable)
+{
+    GX_WIDGET* child = parent->gx_widget_first_child;
+
+    if (enable)
+    {
+        gx_widget_style_add(parent, GX_STYLE_ENABLED);
+    }
+    else
+    {
+        gx_widget_style_remove(parent, GX_STYLE_ENABLED);
+    }
+
+    while (child)
+    {
+        enable_disable_widget(child, enable);
+
+        child = child->gx_widget_next;
+    }
+}
+
+/******************************************************************************************/
+/* Show/Hide screen contents.                                                             */
+/******************************************************************************************/
+VOID show_hide_screen_contents(GX_WINDOW* parent, GX_BOOL show)
+{
+    GX_WIDGET *child = parent->gx_widget_first_child;
+    INT shift;
+
+    while (child)
+    {
+        switch (child->gx_widget_id)
+        {
+        case ID_MAIN_WEATHER_WIN:
+            enable_disable_widget(child, show);
+            gx_icon_pixelmap_set(&main_screen.main_screen_weather_icon, main_weather_icon_ids[show], main_weather_icon_ids[show]);
+            break;
+
+        case ID_SCREEN_WEATHER_WIN:
+            enable_disable_widget(child, show);
+            gx_icon_pixelmap_set(&((SCREEN_BASE_CONTROL_BLOCK *)parent)->screen_base_weather_icon, screen_weather_icon_ids[show], screen_weather_icon_ids[show]);
+ 
+            if (show)
+            {
+                shift = -SCREEN_WEATHER_WIN_OFF_SHIFT;
+            }
+            else
+            {
+                shift = SCREEN_WEATHER_WIN_OFF_SHIFT;
+            }
+            gx_widget_shift(child, shift, 0, GX_TRUE);
+            break;
+
+        case ID_BTN_WIN:
+            enable_disable_widget(child, show);
+
+            if (show)
+            {
+                bottom_button_alpha = 255;
+            }
+            else
+            {
+                bottom_button_alpha = 50;
+            }
+            break;
+
+        case ID_LOGO:
+            gx_icon_pixelmap_set((GX_ICON*)child, logo_ids[show] , logo_ids[show]);
+            break;
+
+        case ID_ON_OFF_BTN:
+            break;
+
+        default:
+            if (show)
+            {
+                gx_widget_show(child);
+            }
+            else
+            {
+                gx_widget_hide(child);
+            }
+            break;
+        }
+
+        child = child->gx_widget_next;
+    }
+}
+
+/******************************************************************************************/
+/* Override the default event processing of "base" to handle signals from my child        */
 /* widgets.                                                                               */
 /******************************************************************************************/
-UINT base_screen_event_process(GX_WINDOW *window, GX_EVENT *event_ptr)
+UINT base_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
 {
-INT value;
-
     switch (event_ptr->gx_event_type)
     {
-    case GX_EVENT_SHOW:
-        /* Update top sound button pixelmaps. */
-        gx_pixelmap_button_pixelmap_set(&((SCREEN_BASE_CONTROL_BLOCK *)window)->screen_base_top_button_sound,
-            normal_top_icon_sound, selected_top_icon_sound, GX_NULL);
+        case GX_SIGNAL(ID_VEHICLE_BTN, GX_EVENT_RADIO_SELECT):
+            ToggleScreen((GX_WINDOW*)&vehicle_screen);
+            break;
 
-        map_delete(&decoded_map);
-        map_delete(&resized_map);
+        case GX_SIGNAL(ID_CLIMATE_BTN, GX_EVENT_RADIO_SELECT):
+            ToggleScreen((GX_WINDOW*)&climate_screen);
+            break;
 
-        gx_window_event_process(window, event_ptr);
-        break;
+        case GX_SIGNAL(ID_PHONE_BTN, GX_EVENT_RADIO_SELECT):
+            ToggleScreen((GX_WINDOW*)&phone_screen);
+            break;
 
-    case GX_EVENT_PEN_DOWN:
-        if (speaker_window.gx_widget_status & GX_STATUS_VISIBLE)
-        {
-            /* Slide out speaker window. */
-            speaker_hide((GX_WIDGET *)window);
-        }
-        gx_window_event_process(window, event_ptr);
-        break;
+        case GX_SIGNAL(ID_AUDIO_BTN, GX_EVENT_RADIO_SELECT):
+            ToggleScreen((GX_WINDOW*)&audio_screen);
+            break;
 
-    case GX_SIGNAL(ID_TOP_SOUND, GX_EVENT_CLICKED):
-        /* Slide in speaker window. */
-        speaker_show((GX_WIDGET *)window);
-        break;
+        case GX_SIGNAL(ID_VIDEO_BTN, GX_EVENT_RADIO_SELECT):
+            ToggleScreen((GX_WINDOW*)&video_screen);
+            break;
 
-    case GX_SIGNAL(ID_TOP_CAMERA, GX_EVENT_CLICKED):
-        if (window != (GX_WINDOW *)&camera_screen)
-        {
-            /* Toggle to camera screen. */
-            screen_toggle((GX_WINDOW *)&camera_screen, window);
-        }
-        break;
+        case GX_SIGNAL(ID_ON_OFF_BTN, GX_EVENT_CLICKED):
+            if (main_screen.main_screen_on_off_text.gx_prompt_text_id == GX_STRING_ID_OFF)
+            {
+                gx_window_wallpaper_set(window, GX_PIXELMAP_ID_BG_OFF, GX_PIXELMAP_ID_BG_OFF);
+                show_hide_screen_contents(window, GX_FALSE);
+                gx_prompt_text_id_set(&main_screen.main_screen_on_off_text, GX_STRING_ID_ON);
+            }
+            else
+            {
+                gx_window_wallpaper_set(window, GX_PIXELMAP_ID_BG_IMAGE, GX_PIXELMAP_ID_BG_IMAGE);
+                show_hide_screen_contents(window, GX_TRUE);
+                gx_prompt_text_id_set(&main_screen.main_screen_on_off_text, GX_STRING_ID_OFF);
+            }
+            break;
 
-    case GX_SIGNAL(ID_TOP_HOME, GX_EVENT_CLICKED):
-        if (window != (GX_WINDOW *)&main_screen)
-        {
-            /* Toggle to main screen. */
-            screen_toggle((GX_WINDOW *)&main_screen, window);
-        }
-        break;
-
-    case GX_SIGNAL(ID_SPEAKER_SLIDER, GX_EVENT_SLIDER_VALUE):
-        value = event_ptr->gx_event_payload.gx_event_intdata[0];
-
-        if (value < 30)
-        {
-            normal_top_icon_sound = GX_PIXELMAP_ID_ICON_SPEAKER_MUTE;
-            selected_top_icon_sound = GX_PIXELMAP_ID_ICON_SPEAKER_MUTE_ON;
-        }
-        else if (value < 70)
-        {
-            normal_top_icon_sound = GX_PIXELMAP_ID_ICON_SPEAKER_HALF;
-            selected_top_icon_sound = GX_PIXELMAP_ID_ICON_SPEAKER_HALF_ON;
-        }
-        else
-        {
-            normal_top_icon_sound = GX_PIXELMAP_ID_TOP_ICON_SOUND_SPEAKER_FULL;
-            selected_top_icon_sound = GX_PIXELMAP_ID_TOP_ICON_SOUND_SPEAKER_FULL_ON;
-        }
-        /* Reset pixelmap of sound button. */
-        gx_pixelmap_button_pixelmap_set(&((SCREEN_BASE_CONTROL_BLOCK *)window)->screen_base_top_button_sound,
-            normal_top_icon_sound, selected_top_icon_sound, GX_NULL);
-        break;
-
-    default:
-        return gx_window_event_process(window, event_ptr);
+        default:
+            return gx_window_event_process(window, event_ptr);
     }
 
     return 0;
 }
 
 /******************************************************************************************/
-/* Override default event processing of "speaker_window" to handle signals from my child  */
-/* widgets.                                                                               */
+/* Override the default event processing of "screen_base" to handle signals from my       */
+/* child widgets.                                                                         */
 /******************************************************************************************/
-UINT speaker_window_event_process(GX_WINDOW *window, GX_EVENT *event_ptr)
+UINT screen_base_event_process(GX_WINDOW *window, GX_EVENT *event_ptr)
 {
-GX_SLIDER_INFO *info;
-
-    /* Pickup speaker slider info. */
-    info = (GX_SLIDER_INFO *)&speaker_window.speaker_window_speaker_slider.gx_slider_info;
-
     switch (event_ptr->gx_event_type)
     {
-    case GX_EVENT_PEN_DOWN:
-        break;
-
-    case GX_SIGNAL(ID_SPEAKER_MUTE, GX_EVENT_CLICKED):
-        /* Set speaker slider value to min. */
-        gx_slider_value_set((GX_SLIDER *)&speaker_window.speaker_window_speaker_slider, info, info->gx_slider_info_min_val);
-        break;
-
-    case GX_SIGNAL(ID_SPEAKER_FULL, GX_EVENT_CLICKED):
-        /* Set speaker slider vlaue to max. */
-        gx_slider_value_set((GX_SLIDER *)&speaker_window.speaker_window_speaker_slider, info, info->gx_slider_info_max_val);
+    case GX_SIGNAL(ID_HOME_BTN, GX_EVENT_CLICKED):
+        ToggleScreen((GX_WINDOW *)&main_screen);
+        screen_btn_deselect();
         break;
 
     default:
-        return gx_window_event_process(window, event_ptr);
+        return base_event_process(window, event_ptr);
     }
 
     return 0;
-}
-
-/******************************************************************************************/
-/* Start an animation to slide in the speaker window.                                     */
-/******************************************************************************************/
-VOID speaker_show(GX_WIDGET *parent)
-{
-INT speaker_window_height;
-GX_ANIMATION *speaker_animation = GX_NULL;
-GX_ANIMATION_INFO speaker_animation_info;
-
-    gx_system_animation_get(&speaker_animation);
-    if (speaker_animation)
-    {
-        speaker_window_height = speaker_window.gx_widget_size.gx_rectangle_bottom - speaker_window.gx_widget_size.gx_rectangle_top + 1;
-        memset(&speaker_animation_info, 0, sizeof(GX_ANIMATION_INFO));
-
-        /* Set animation information. */
-        speaker_animation_info.gx_animation_frame_interval = 1;
-        speaker_animation_info.gx_animation_steps = 10;
-        speaker_animation_info.gx_animation_target = (GX_WIDGET *)&speaker_window;
-        speaker_animation_info.gx_animation_parent = parent;
-        speaker_animation_info.gx_animation_start_position.gx_point_x = parent->gx_widget_size.gx_rectangle_left;
-        speaker_animation_info.gx_animation_start_position.gx_point_y = parent->gx_widget_size.gx_rectangle_top - speaker_window_height;
-        speaker_animation_info.gx_animation_end_position.gx_point_x = parent->gx_widget_size.gx_rectangle_left;
-        speaker_animation_info.gx_animation_end_position.gx_point_y = parent->gx_widget_size.gx_rectangle_top;
-        speaker_animation_info.gx_animation_start_alpha = 255;
-        speaker_animation_info.gx_animation_end_alpha = 255;
-
-        /* Start animation. */
-        gx_animation_start(speaker_animation, &speaker_animation_info);
-    }
-}
-
-/******************************************************************************************/
-/* Start an animation to slide out the speaker window.                                    */
-/******************************************************************************************/
-VOID speaker_hide(GX_WIDGET *parent)
-{
-INT            speaker_window_height;
-GX_ANIMATION  *speaker_animation = GX_NULL;
-GX_ANIMATION_INFO speaker_animation_info;
-
-    gx_system_animation_get(&speaker_animation);
-    if (speaker_animation)
-    {
-        speaker_window_height = speaker_window.gx_widget_size.gx_rectangle_bottom - speaker_window.gx_widget_size.gx_rectangle_top + 1;
-        memset(&speaker_animation_info, 0, sizeof(GX_ANIMATION_INFO));
-
-        /* Set animation information. */
-        speaker_animation_info.gx_animation_frame_interval = 1;
-        speaker_animation_info.gx_animation_steps = 10;
-        speaker_animation_info.gx_animation_target = (GX_WIDGET *)&speaker_window;
-        speaker_animation_info.gx_animation_parent = parent;
-        speaker_animation_info.gx_animation_start_position.gx_point_x = parent->gx_widget_size.gx_rectangle_left;
-        speaker_animation_info.gx_animation_start_position.gx_point_y = parent->gx_widget_size.gx_rectangle_top;
-        speaker_animation_info.gx_animation_end_position.gx_point_x = parent->gx_widget_size.gx_rectangle_left;
-        speaker_animation_info.gx_animation_end_position.gx_point_y = parent->gx_widget_size.gx_rectangle_top - speaker_window_height;
-        speaker_animation_info.gx_animation_style = GX_ANIMATION_DETACH;
-        speaker_animation_info.gx_animation_start_alpha = 255;
-        speaker_animation_info.gx_animation_end_alpha = 255;
-
-        /* Start animation. */
-        gx_animation_start(speaker_animation, &speaker_animation_info);
-    }
 }

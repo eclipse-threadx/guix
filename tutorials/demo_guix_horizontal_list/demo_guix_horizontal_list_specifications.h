@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.0                                               */
-/*  Date (dd.mm.yyyy): 26. 7.2021   Time (hh:mm): 15:32                        */
+/*  GUIX Studio Revision 6.1.9.1                                               */
+/*  Date (dd.mm.yyyy):  1.12.2021   Time (hh:mm): 15:14                        */
 /*******************************************************************************/
 
 
@@ -26,6 +26,8 @@ extern   "C" {
 #define ID_BUTTON_PAGE_INDEX_SET 2
 #define ID_BUTTON_SELECTED_SET 3
 #define ID_TEXT_INPUT_SLECTED_SET 4
+#define ID_BUTTON_SET_TOTAL_COLS 5
+#define ID_TEXT_INPUT_SET_TOTAL_COLS 6
 
 
 /* Define animation ids                                                        */
@@ -138,6 +140,8 @@ typedef struct MAIN_SCREEN_CONTROL_BLOCK_STRUCT
     GX_TEXT_BUTTON main_screen_button_3;
     GX_PROMPT main_screen_title;
     GX_ICON main_screen_logo;
+    GX_TEXT_BUTTON main_screen_button_set_total_cols;
+    GX_SINGLE_LINE_TEXT_INPUT main_screen_text_input_set_total_cols;
 } MAIN_SCREEN_CONTROL_BLOCK;
 
 

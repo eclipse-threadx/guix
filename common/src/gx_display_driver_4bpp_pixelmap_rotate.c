@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_4bpp_pixelmap_raw_rotate         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -73,6 +73,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            corrected logic,            */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_4bpp_pixelmap_raw_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -128,14 +131,11 @@ GX_UBYTE      color;
     putrow += clip -> gx_rectangle_left >> 1;
 
     /* Calculate the new rotation axis. */
-    x = GX_FIXED_VAL_TO_INT((cx - srcxres) * cosv - (cy - srcyres) * sinv);
-    y = GX_FIXED_VAL_TO_INT((cy - srcyres) * cosv + (cx - srcxres) * sinv);
+    xres = GX_FIXED_VAL_TO_INT((cx - srcxres) * cosv - (cy - srcyres) * sinv) + xres;
+    yres = GX_FIXED_VAL_TO_INT((cy - srcyres) * cosv + (cx - srcxres) * sinv) + yres;
 
-    x += xres;
-    y += yres;
-
-    newxpos = xpos + cx - x;
-    newypos = ypos + cy - y;
+    newxpos = xpos + cx - xres;
+    newypos = ypos + cy - yres;
 
     /* For every pixel in destination bitmap, find its position in source bitmap,
        and set the pixel with the value in source bitmap.  */
@@ -153,11 +153,8 @@ GX_UBYTE      color;
 
         for (x = clip -> gx_rectangle_left - newxpos; x <= clip -> gx_rectangle_right - newxpos; x++)
         {
-            xx = GX_FIXED_VAL_TO_INT((x - xres) * cosv + (y - yres) * sinv);
-            yy = GX_FIXED_VAL_TO_INT((y - yres) * cosv - (x - xres) * sinv);
-
-            xx += srcxres;
-            yy += srcyres;
+            xx = GX_FIXED_VAL_TO_INT((x - xres) * cosv + (y - yres) * sinv) + cx;
+            yy = GX_FIXED_VAL_TO_INT((y - yres) * cosv - (x - xres) * sinv) + cy;
 
             if ((xx >= 0) && (xx < pixelmap -> gx_pixelmap_width) &&
                 (yy >= 0) && (yy < pixelmap -> gx_pixelmap_height))
@@ -196,7 +193,7 @@ GX_UBYTE      color;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_4bpp_pixelmap_transparent_rotate PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -236,6 +233,9 @@ GX_UBYTE      color;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            corrected logic,            */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_4bpp_pixelmap_transparent_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -298,11 +298,11 @@ INT           newypos;
     x = (cx - srcxres) * cosv - (cy - srcyres) * sinv;
     y = (cy - srcyres) * cosv + (cx - srcxres) * sinv;
 
-    x = GX_FIXED_VAL_TO_INT(x) + xres;
-    y = GX_FIXED_VAL_TO_INT(y) + yres;
+    xres = GX_FIXED_VAL_TO_INT(x) + xres;
+    yres = GX_FIXED_VAL_TO_INT(y) + yres;
 
-    newxpos = xpos + cx - x;
-    newypos = ypos + cy - y;
+    newxpos = xpos + cx - xres;
+    newypos = ypos + cy - yres;
 
     /* For every pixel in destination bitmap, find its position in source bitmap,
        and set the pixel with the value in source bitmap.  */
@@ -320,11 +320,8 @@ INT           newypos;
 
         for (x = clip -> gx_rectangle_left - newxpos; x <= clip -> gx_rectangle_right - newxpos; x++)
         {
-            xx = GX_FIXED_VAL_TO_INT((x - xres) * cosv + (y - yres) * sinv);
-            yy = GX_FIXED_VAL_TO_INT((y - yres) * cosv - (x - xres) * sinv);
-
-            xx += srcxres;
-            yy += srcyres;
+            xx = GX_FIXED_VAL_TO_INT((x - xres) * cosv + (y - yres) * sinv) + cx;
+            yy = GX_FIXED_VAL_TO_INT((y - yres) * cosv - (x - xres) * sinv) + cy;
 
             if ((xx >= 0) && (xx < pixelmap -> gx_pixelmap_width) &&
                 (yy >= 0) && (yy < pixelmap -> gx_pixelmap_height))

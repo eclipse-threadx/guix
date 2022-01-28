@@ -37,7 +37,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_circular_gauge_event_process                    PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -79,6 +79,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Ting Zhu                 Modified comment(s), improved */
+/*                                            logic to recalculate needle */
+/*                                            rectangle on resize event,  */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_circular_gauge_event_process(GX_CIRCULAR_GAUGE *gauge, GX_EVENT *event_ptr)
@@ -140,6 +144,12 @@ UINT status = GX_SUCCESS;
         {
             status = _gx_widget_event_process((GX_WIDGET *)gauge, event_ptr);
         }
+        break;
+
+    case GX_EVENT_RESIZED:
+
+        /* Recalculate needle rectangle. */
+        _gx_circular_gauge_needle_rectangle_calculate(gauge, gauge -> gx_circular_gauge_current_angle, &(gauge -> gx_circular_gauge_current_needle_rectangle));
         break;
 
     default:

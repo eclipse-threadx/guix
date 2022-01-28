@@ -2,66 +2,102 @@
 
 #include "demo_guix_smart_watch.h"
 
-#define SCREEN_STACK_SIZE  5
-#define SCRATCHPAD_PIXELS  MAIN_SCREEN_X_RESOLUTION * MAIN_SCREEN_Y_RESOLUTION * 2
-#define ANIMATION_ID_MENU_SLIDE 1
+#define MEMORY_POOL_BUFFER_SIZE  DISPLAY_1_X_RESOLUTION * DISPLAY_1_Y_RESOLUTION * 8
+#define ANIMATION_MIN_SLIDING_DIST 5
 
-/* Define prototypes.   */
+extern UINT win32_graphics_driver_setup_24xrgb(GX_DISPLAY* display);
+
+/* Define prototypes.  */
 VOID start_guix(VOID);
-VOID root_window_draw(GX_WINDOW *root);
-UINT root_window_event_handler(GX_WINDOW *window, GX_EVENT *event_ptr);
-VOID sys_time_update();
-VOID clock_update();
+VOID root_window_draw(GX_WINDOW* root);
+UINT root_window_event_process(GX_WINDOW* window, GX_EVENT* event_ptr);
 
-extern GX_STUDIO_DISPLAY_INFO guix_smart_watch_display_table[];
+/* Define variables.  */
+GX_WINDOW_ROOT *root;
+TIME system_time = {12, 9, 4, 15, 35, 0};
+static TX_BYTE_POOL memory_pool;
+static GX_UBYTE memory_pool_buffer[MEMORY_POOL_BUFFER_SIZE];
 
-TX_BYTE_POOL       memory_pool;
-GX_COLOR           scratchpad[SCRATCHPAD_PIXELS];
-GX_PIXELMAP_BUTTON home_button;
+static GX_ANIMATION slide_animation;
+static GX_EVENT slide_pen_down_event;
+static GX_BOOL slide_pen_down_valid = GX_FALSE;
 
-/* Define menu screen list. */
-GX_WIDGET *menu_screen_list[] = {
-    (GX_WIDGET *)&main_screen.main_screen_menu_window_1,
-    (GX_WIDGET *)&menu_window_2,
-    (GX_WIDGET *)&menu_window_3,
+/* Define screen lists for slide animation. */
+static GX_WIDGET *container_screen_list[] = {
+    (GX_WIDGET*)&page_1_container_screen,
+    (GX_WIDGET*)&page_2_container_screen,
+    (GX_WIDGET*)&page_3_container_screen,
     GX_NULL
 };
 
-/* Define current visble menus screen index.  */
-INT              current_menu = 0;
-
-GX_WINDOW_ROOT  *root;
-GX_WIDGET       *current_screen;
-
-const GX_CHAR *day_names[7] = {
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
+static GX_WIDGET* page_1_screen_list[] = {
+    (GX_WIDGET*)&message_screen,
+    (GX_WIDGET*)&music_screen,
+    (GX_WIDGET*)&weather_screen,
+    (GX_WIDGET*)&SanDiego_weather_screen,
+    (GX_WIDGET*)&LosAngeles_weather_screen,
+    (GX_WIDGET*)&SanFrancisco_weather_screen,
+    GX_NULL
 };
 
-const GX_CHAR *month_names[12] = {
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
+static GX_WIDGET* page_2_screen_list[] = {
+    (GX_WIDGET*)&clock_1_screen,
+    (GX_WIDGET*)&clock_2_screen,
+    (GX_WIDGET*)&home_screen,
+    (GX_WIDGET*)&clock_3_screen,
+    (GX_WIDGET*)&clock_4_screen,
+    (GX_WIDGET*)&clock_5_screen,
+    GX_NULL
 };
 
-GX_ANIMATION slide_animation;
-GX_ANIMATION animation[2];
+static GX_WIDGET* page_3_screen_list[] = {
+    (GX_WIDGET*)&yoga_screen,
+    (GX_WIDGET*)&ekg_screen,
+    (GX_WIDGET*)&fitness_screen,
+    (GX_WIDGET*)&calories_screen,
+    (GX_WIDGET*)&run_screen,
+    (GX_WIDGET*)&stand_screen,
+    GX_NULL
+};
 
-/*************************************************************************************/
+static VOID (*default_buffer_toggle)(GX_CANVAS* canvas, GX_RECTANGLE* dirty) = GX_NULL;
+
+/******************************************************************************************/
+/* Define custom buffer toggle function to draw watch frame before toggle.                */
+/******************************************************************************************/
+static VOID smart_watch_gx_win32_display_buffer_toggle(GX_CANVAS* canvas, GX_RECTANGLE* dirty)
+{
+    GX_PIXELMAP* map = GX_NULL;
+
+    gx_canvas_drawing_initiate(canvas, root, &canvas->gx_canvas_dirty_area);
+
+    gx_context_pixelmap_get(GX_PIXELMAP_ID_WATCH, &map);
+
+    if (map)
+    {
+        /* Draw smart watch frame.  */
+        gx_context_fill_color_set(GX_COLOR_ID_WHITE);
+        gx_canvas_pixelmap_draw((DISPLAY_1_X_RESOLUTION - map->gx_pixelmap_width) >> 1, 0, map);
+    }
+
+    gx_canvas_drawing_complete(canvas, GX_FALSE);
+
+    /* Call default win32 buffer toggle function.  */
+    default_buffer_toggle(canvas, dirty);
+}
+
+/******************************************************************************************/
+/* Application entry.                                                                     */
+/******************************************************************************************/
+int main(int argc, char** argv)
+{
+    tx_kernel_enter();
+    return(0);
+}
+
+/******************************************************************************************/
+/* Define memory allocator function.                                                     */
+/******************************************************************************************/
 VOID *memory_allocate(ULONG size)
 {
     VOID *memptr;
@@ -73,168 +109,84 @@ VOID *memory_allocate(ULONG size)
     return NULL;
 }
 
-/*************************************************************************************/
-void memory_free(VOID *mem)
+/******************************************************************************************/
+/* Define memory de-allocator function.                                                   */
+/******************************************************************************************/
+VOID memory_free(VOID *mem)
 {
     tx_byte_release(mem);
 }
 
-/*************************************************************************************/
-int main(int argc, char ** argv)
-{
-    tx_kernel_enter();
-    return(0);
-}
-
-/*************************************************************************************/
+/******************************************************************************************/
+/* Define tx_application_define function.                                                 */
+/******************************************************************************************/
 VOID tx_application_define(void *first_unused_memory)
 {
-    /* create byte pool*/
-    tx_byte_pool_create(&memory_pool, "scratchpad", scratchpad,
-        SCRATCHPAD_PIXELS * sizeof(GX_COLOR));
-
     start_guix();
 }
 
-/*************************************************************************************/
+/******************************************************************************************/
+/* Initiate and run GUIX.                                                                 */
+/******************************************************************************************/
 VOID  start_guix(VOID)
 {
-    GX_RECTANGLE size;
-
+    /* Create byte pool*/
+    tx_byte_pool_create(&memory_pool, "memory_pol", memory_pool_buffer, MEMORY_POOL_BUFFER_SIZE);
+    
     /* Initialize GUIX. */
     gx_system_initialize();
 
     /* Assign memory alloc/free functions. */
     gx_system_memory_allocator_set(memory_allocate, memory_free);
 
-    gx_studio_display_configure(MAIN_SCREEN, win32_graphics_driver_setup_24xrgb, 
-        LANGUAGE_ENGLISH, MAIN_SCREEN_THEME_DEFAULT, &root);
+    /* Configure display. */
+    gx_studio_display_configure(DISPLAY_1, win32_graphics_driver_setup_24xrgb, LANGUAGE_ENGLISH, DISPLAY_1_THEME_1, &root);
 
-    /* Create main screen */
-    gx_studio_named_widget_create("main_screen", (GX_WIDGET *) root, GX_NULL);
-    gx_studio_named_widget_create("left_home_button", (GX_WIDGET *)root, GX_NULL);
-    gx_studio_named_widget_create("right_home_button", (GX_WIDGET *)root, GX_NULL);
-    current_screen = (GX_WIDGET *)&main_screen;
+    default_buffer_toggle = root->gx_window_root_canvas->gx_canvas_display->gx_display_driver_buffer_toggle;
+    
+    /* Reset buffer toggle function.  */
+    root->gx_window_root_canvas->gx_canvas_display->gx_display_driver_buffer_toggle = smart_watch_gx_win32_display_buffer_toggle;
 
-    /* Create menu screens. */
-    gx_studio_named_widget_create("menu_window_2", GX_NULL, GX_NULL);
-    gx_studio_named_widget_create("menu_window_3", GX_NULL, GX_NULL);
+    /* Create main screens. */
+    gx_studio_named_widget_create("main_screen", (GX_WIDGET *)root, GX_NULL);
+    gx_studio_named_widget_create("home_button", (GX_WIDGET*)root, GX_NULL);
+    gx_studio_named_widget_create("page_1_container_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("page_2_container_screen", (GX_WIDGET *)&main_screen, GX_NULL);
+    gx_studio_named_widget_create("page_3_container_screen", GX_NULL, GX_NULL);
 
-    /* Create message screen. */
-    gx_studio_named_widget_create("msg_screen", GX_NULL, GX_NULL);
-    msg_list_children_create(&msg_screen.msg_screen_msg_list);
+    /* Create page 1 screens. */
+    gx_studio_named_widget_create("message_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("music_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("weather_screen", (GX_WIDGET *)&page_1_container_screen, GX_NULL);
+    gx_studio_named_widget_create("SanDiego_weather_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("LosAngeles_weather_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("SanFrancisco_weather_screen", GX_NULL, GX_NULL);
 
-    /* Create message send screen. */
-    gx_studio_named_widget_create("msg_send_screen", GX_NULL, GX_NULL);
+    /* Create page 2 screens. */
+    gx_studio_named_widget_create("home_screen", (GX_WIDGET *)&page_2_container_screen, GX_NULL);
+    gx_studio_named_widget_create("clock_1_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("clock_2_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("clock_3_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("clock_4_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("clock_5_screen", GX_NULL, GX_NULL);
 
-    /* Create keyboard screen. */
-    gx_studio_named_widget_create("keyboard_screen", GX_NULL, GX_NULL);
-    gx_single_line_text_input_style_add(&keyboard_screen.keyboard_screen_input_field, GX_STYLE_CURSOR_ALWAYS | GX_STYLE_CURSOR_BLINK);
-    keyboard_children_create();
+    /* Create page 3 screens.  */
+    gx_studio_named_widget_create("calories_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("ekg_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("fitness_screen", (GX_WIDGET *)&page_3_container_screen, GX_NULL);
+    gx_studio_named_widget_create("run_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("stand_screen", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("yoga_screen", GX_NULL, GX_NULL);
+    screens_initialize();
 
-    /* Create weather screens. */
-    gx_studio_named_widget_create("weather_screen", GX_NULL, GX_NULL);
-    gx_studio_named_widget_create("weather_LosAngeles", GX_NULL, GX_NULL);
-    gx_studio_named_widget_create("weather_SanFrancisco", GX_NULL, GX_NULL);
-    future_weather_list_children_create((GX_WIDGET *)&weather_screen.weather_screen_weather_info, CITY_NEW_YORK);
-    future_weather_list_children_create((GX_WIDGET *)&weather_SanFrancisco.weather_SanFrancisco_weather_info, CITY_SAN_FRANCISCO);
-    future_weather_list_children_create((GX_WIDGET *)&weather_LosAngeles.weather_LosAngeles_weather_info, CITY_LOS_ANGELES);
+    /* Reset root window draw function.  */
+    gx_widget_draw_set((GX_WIDGET *)root, root_window_draw);
 
-    /* Create healthy screens.  */
-    gx_studio_named_widget_create("healthy_screen", GX_NULL, GX_NULL);
-    gx_studio_named_widget_create("healthy_pace", GX_NULL, GX_NULL);
-    gx_widget_style_add(&healthy_screen.healthy_screen_heart_rate, GX_STYLE_TEXT_COPY);
-    gx_widget_style_add(&healthy_pace.healthy_pace_pace, GX_STYLE_TEXT_COPY);
-
-    /* Create calculator screen. */
-    gx_studio_named_widget_create("calculator_screen", GX_NULL, GX_NULL);
-
-    /* Create game screen. */
-    gx_studio_named_widget_create("game_screen", GX_NULL, GX_NULL);
-    game_list_children_create(&game_screen.game_screen_game_list);
-
-    /* Create clock screen. */
-    gx_studio_named_widget_create("clock_screen", GX_NULL, GX_NULL);
-    time_list_children_create(&clock_screen.clock_screen_time_list);
-
-    /* Create clock add screen. */
-    gx_studio_named_widget_create("clock_add_screen", GX_NULL, GX_NULL);
-    city_list_children_create(&clock_add_screen.clock_add_screen_city_list);
-
-    /* Create alarm screen. */
-    gx_studio_named_widget_create("alarm_screen", GX_NULL, GX_NULL);
-    alarm_list_children_create(&alarm_screen.alarm_screen_alarm_list);
-
-    /* Create alarm add screen. */
-    gx_studio_named_widget_create("alarm_add_screen", GX_NULL, GX_NULL);
-
-    /* Create stopwatch screen. */
-    gx_studio_named_widget_create("stopwatch_screen", GX_NULL, GX_NULL);
-    gx_widget_style_add(&stopwatch_screen.stopwatch_screen_prompt_micro_second, GX_STYLE_TEXT_COPY);
-    gx_widget_style_add(&stopwatch_screen.stopwatch_screen_prompt_minute, GX_STYLE_TEXT_COPY);
-    gx_widget_style_add(&stopwatch_screen.stopwatch_screen_prompt_second, GX_STYLE_TEXT_COPY);
-
-    /* Create contact screen. */
-    gx_studio_named_widget_create("contact_screen", GX_NULL, GX_NULL);
-    contact_list_children_create(&contact_screen.contact_screen_contact_list);
-
-    /* Create contact information screen. */
-    gx_studio_named_widget_create("contact_info_screen", GX_NULL, GX_NULL);
-
-    /* Create contact information list.  */
-    gx_studio_named_widget_create("contact_info_list", GX_NULL, GX_NULL);
-
-    /* Attach contact information list to contact information screen. */
-    gx_widget_back_attach((GX_WIDGET *)&contact_info_screen.contact_info_screen_contact_info_window, (GX_WIDGET *)&contact_info_list);
-    size = contact_info_screen.contact_info_screen_contact_info_window.gx_widget_size;
-    gx_widget_shift((GX_WIDGET *)&contact_info_list, size.gx_rectangle_left, size.gx_rectangle_top, GX_FALSE);
-
-    /* Create contact information edit screen. */
-    gx_studio_named_widget_create("contact_info_edit_screen", GX_NULL, GX_NULL);
-    gx_studio_named_widget_create("contact_info_edit_list", GX_NULL, GX_NULL);
-    gx_widget_back_attach((GX_WIDGET *)&contact_info_edit_screen.contact_info_edit_screen_edit_window, (GX_WIDGET *)&contact_info_edit_list);
-    size = contact_info_edit_screen.contact_info_edit_screen_edit_window.gx_widget_size;
-    gx_widget_shift((GX_WIDGET *)&contact_info_edit_list, size.gx_rectangle_left, size.gx_rectangle_top, GX_FALSE);
-
-    /* Set text input cursor height. */
-    gx_text_input_cursor_height_set(&contact_info_edit_list.contact_info_edit_list_firstname.gx_single_line_text_input_cursor_instance, 22);
-    gx_text_input_cursor_height_set(&contact_info_edit_list.contact_info_edit_list_lastname.gx_single_line_text_input_cursor_instance, 22);
-    gx_text_input_cursor_height_set(&contact_info_edit_list.contact_info_edit_list_mobile.gx_single_line_text_input_cursor_instance, 22);
-    gx_text_input_cursor_height_set(&contact_info_edit_list.contact_info_edit_list_office.gx_single_line_text_input_cursor_instance, 22);
-    gx_text_input_cursor_height_set(&contact_info_edit_list.contact_info_edit_list_email.gx_single_line_text_input_cursor_instance, 22);
-    gx_text_input_cursor_height_set(&contact_info_edit_list.contact_info_edit_list_address.gx_single_line_text_input_cursor_instance, 22);
-
-    /* Create about screen.  */
-    gx_studio_named_widget_create("about_screen", GX_NULL, GX_NULL);
-    gx_studio_named_widget_create("about_nested_window", GX_NULL, GX_NULL);
-
-    /* Create map screen. */
-    gx_studio_named_widget_create("map_screen", GX_NULL, GX_NULL);
-    gx_text_input_cursor_height_set(&map_screen.map_screen_text_input.gx_single_line_text_input_cursor_instance, 22);
-
-    /* Create setting screen.  */
-    gx_studio_named_widget_create("settings_screen", GX_NULL, GX_NULL);
-    gx_studio_named_widget_create("settings_language", GX_NULL, GX_NULL);
+    /* Reset root window event process function.  */
+    gx_widget_event_process_set((GX_WIDGET *)root, root_window_event_process);
 
     /* Create slide animation control block.  */
     gx_animation_create(&slide_animation);
-    gx_animation_create(&animation[0]);
-    gx_animation_create(&animation[1]);
-
-    /* Set root window draw function.  */
-    gx_widget_draw_set((GX_WIDGET *)root, root_window_draw);
-    gx_widget_event_process_set((GX_WIDGET *)root, root_window_event_handler);
-
-    /* Create home button in root window. */
-    gx_utility_rectangle_define(&size, 600, 20, 622, 37);
-    gx_pixelmap_button_create(&home_button, "", (GX_WIDGET *)root, GX_PIXELMAP_ID_MENU_ICON_HOME, GX_PIXELMAP_ID_MENU_ICON_HOME, GX_NULL,
-        GX_STYLE_ENABLED, ID_HOME, &size);
-    gx_widget_draw_set(&home_button, custom_pixelmap_button_draw);
-    gx_widget_fill_color_set(&home_button, GX_COLOR_ID_GRAY, GX_COLOR_ID_BLUE, GX_COLOR_ID_GRAY);
-
-    /* Add text copy style to time display prompts. */
-    gx_widget_style_add(&main_screen.main_screen_hour, GX_STYLE_TEXT_COPY);
-    gx_widget_style_add(&main_screen.main_screen_minute, GX_STYLE_TEXT_COPY);
 
     /* Show the root window.  */
     gx_widget_show(root);
@@ -243,278 +195,400 @@ VOID  start_guix(VOID)
     gx_system_start();
 }
 
-/*************************************************************************************/
-VOID root_window_draw(GX_WINDOW *root)
+/******************************************************************************************/
+/* Find visible screen from screen list.                                                  */
+/******************************************************************************************/
+static GX_WIDGET *find_visible_screen_of_screen_list(GX_WIDGET **screen_list)
 {
-GX_PIXELMAP *p_map = GX_NULL;
-INT          x_pos;
-
-    /* Call default root window draw. */
-    gx_window_draw(root);
-
-    gx_context_pixelmap_get(GX_PIXELMAP_ID_SMART_WATCH_FRAME, &p_map);
-
-    if (p_map)
+    INT index = 0;
+    while (screen_list[index])
     {
-        /* Draw smart watch frame.  */
-        x_pos = (MAIN_SCREEN_X_RESOLUTION - p_map->gx_pixelmap_width) >> 1;
-        gx_context_fill_color_set(GX_COLOR_ID_GRAY);
-        gx_canvas_pixelmap_draw(x_pos, 0, p_map);
+        if (screen_list[index]->gx_widget_status & GX_STATUS_VISIBLE)
+        {
+            return screen_list[index];
+        }
+
+        index++;
     }
 
-    gx_context_pixelmap_get(GX_PIXELMAP_ID_MS_AZURE_LOGO_SMALL, &p_map);
-
-    if (p_map)
-    {
-        /* Draw logo. */
-        gx_canvas_pixelmap_draw(15, 15, p_map);
-    }
-
-    gx_context_pixelmap_get(GX_PIXELMAP_ID_MENU_ICON_HOME, &p_map);
+    return GX_NULL;
 }
 
-/*************************************************************************************/
-UINT root_window_event_handler(GX_WINDOW *window, GX_EVENT *event_ptr)
+/******************************************************************************************/
+/* Get page list by specified container screen.                                           */
+/******************************************************************************************/
+static GX_WIDGET **get_page_screen_list(GX_WIDGET *screen_container)
 {
-    switch (event_ptr->gx_event_type)
+    GX_WIDGET** page_list = GX_NULL;
+
+    switch (screen_container->gx_widget_id)
     {
-    case GX_SIGNAL(ID_HOME, GX_EVENT_CLICKED):
-        if (current_screen != (GX_WIDGET *)&main_screen)
-        {
-            /* Switch to main screen. */
-            screen_switch((GX_WIDGET *)window, (GX_WIDGET *)&main_screen);
-        }
+    case ID_PAGE_1_CONTAINER_SCREEN:
+        page_list = page_1_screen_list;
         break;
 
-    default:
-        return gx_window_root_event_process((GX_WINDOW_ROOT *)window, event_ptr);
+    case ID_PAGE_2_CONTAINER_SCREEN:
+        page_list = page_2_screen_list;
+        break;
+
+    case ID_PAGE_3_CONTAINER_SCREEN:
+        page_list = page_3_screen_list;
+        break;
     }
 
-    return 0;
+    return page_list;
 }
 
-/*************************************************************************************/
-VOID menu_indication_button_update()
+/******************************************************************************************/
+/* Get screen container by specified screen.                                              */
+/******************************************************************************************/
+static GX_WIDGET *get_screen_container(GX_WIDGET* screen)
 {
-INT         index;
-GX_WIDGET   *widget;
+    GX_WIDGET** screen_list;
+    INT index = 0;
+    INT j;
 
-    /* Search current visible menu index. */
-    for (index = 0; index < 3; index++)
+    while (container_screen_list[index])
     {
-        widget = menu_screen_list[index];
+        screen_list = get_page_screen_list(container_screen_list[index]);
+        j = 0;
 
-        if (widget->gx_widget_status & GX_STATUS_VISIBLE)
+        while (screen_list[j])
         {
-            current_menu = index;
-            break;
+            if (screen_list[j] == screen)
+            {
+                return container_screen_list[index];
+            }
+            j++;
         }
+        index++;
     }
 
-    gx_system_widget_find(ID_BTN_MENU_0, GX_SEARCH_DEPTH_INFINITE, &widget);
-    gx_widget_fill_color_set(widget, GX_COLOR_ID_GRAY, GX_COLOR_ID_GRAY, GX_COLOR_ID_GRAY);
-    gx_widget_style_remove(widget, GX_STYLE_BUTTON_PUSHED);
-
-    gx_system_widget_find(ID_BTN_MENU_1, GX_SEARCH_DEPTH_INFINITE, &widget);
-    gx_widget_fill_color_set(widget, GX_COLOR_ID_GRAY, GX_COLOR_ID_GRAY, GX_COLOR_ID_GRAY);
-    gx_widget_style_remove(widget, GX_STYLE_BUTTON_PUSHED);
-
-    gx_system_widget_find(ID_BTN_MENU_2, GX_SEARCH_DEPTH_INFINITE, &widget);
-    gx_widget_fill_color_set(widget, GX_COLOR_ID_GRAY, GX_COLOR_ID_GRAY, GX_COLOR_ID_GRAY);
-    gx_widget_style_remove(widget, GX_STYLE_BUTTON_PUSHED);
-
-
-    switch (current_menu)
-    {
-    case 0:
-        gx_system_widget_find(ID_BTN_MENU_0, GX_SEARCH_DEPTH_INFINITE, &widget);
-        break;
-    case 1:
-        gx_system_widget_find(ID_BTN_MENU_1, GX_SEARCH_DEPTH_INFINITE, &widget);
-        break;
-    case 2:
-        gx_system_widget_find(ID_BTN_MENU_2, GX_SEARCH_DEPTH_INFINITE, &widget);
-        break;
-    }
-    gx_widget_fill_color_set(widget, GX_COLOR_ID_MILK_WHITE, GX_COLOR_ID_MILK_WHITE, GX_COLOR_ID_MILK_WHITE);
-    gx_widget_style_add(widget, GX_STYLE_BUTTON_PUSHED);
+    return GX_NULL;
 }
 
-/*************************************************************************************/
-UINT main_screen_event_handler(GX_WINDOW *window, GX_EVENT *event_ptr)
+/******************************************************************************************/
+/* Enable vertical slide animation.                                                       */
+/******************************************************************************************/
+static GX_BOOL enable_vertical_slide_animation()
 {
-
-    switch (event_ptr->gx_event_type)
-    {
-    case GX_EVENT_SHOW:
-        /* Set current time. */
-        clock_update();
-
-        /* Start a timer to update time. */
-        gx_system_timer_start(&main_screen, CLOCK_TIMER, GX_TICKS_SECOND, GX_TICKS_SECOND);
-        return template_main_event_handler(window, event_ptr);
-
-    case GX_SIGNAL(ID_MESSAGE, GX_EVENT_CLICKED):
-        screen_switch(window->gx_widget_parent, (GX_WIDGET *)&msg_screen);
-        break;
-    case GX_SIGNAL(ID_WEATHER, GX_EVENT_CLICKED):
-        screen_switch(window->gx_widget_parent, (GX_WIDGET *)&weather_screen);
-        break;
-    case GX_SIGNAL(ID_CALCULATOR, GX_EVENT_CLICKED):
-        screen_switch(window->gx_widget_parent, (GX_WIDGET *)&calculator_screen);
-        break;
-    case GX_SIGNAL(ID_HEALTHY, GX_EVENT_CLICKED):
-        screen_switch(window->gx_widget_parent, (GX_WIDGET *)&healthy_screen);
-        break;
-
-    case GX_SIGNAL(ID_GAMES, GX_EVENT_CLICKED):
-        screen_switch(window->gx_widget_parent, (GX_WIDGET *)&game_screen);
-        break;
-    case GX_SIGNAL(ID_CLOCK, GX_EVENT_CLICKED):
-        screen_switch(window->gx_widget_parent, (GX_WIDGET *)&clock_screen);
-        break;
-    case GX_SIGNAL(ID_CONTACTS, GX_EVENT_CLICKED):
-        screen_switch(window->gx_widget_parent, (GX_WIDGET *)&contact_screen);
-        break;
-    case GX_SIGNAL(ID_ABOUT, GX_EVENT_CLICKED):
-        screen_switch(window->gx_widget_parent, (GX_WIDGET *)&about_screen);
-        break;
-    case GX_SIGNAL(ID_MAP, GX_EVENT_CLICKED):
-        screen_switch(window->gx_widget_parent, (GX_WIDGET *)&map_screen);
-        break;
-    case GX_SIGNAL(ID_SETTINGS, GX_EVENT_CLICKED):
-        screen_switch(window->gx_widget_parent, (GX_WIDGET *)&settings_screen);
-        break;
-
-    case GX_SIGNAL(ID_BTN_MENU_0, GX_EVENT_RADIO_SELECT):
-        screen_list_slide(menu_screen_list, (GX_WIDGET *)&main_screen.main_screen_menu_window, SLIDE_RIGHT);
-        break;
-
-    case GX_SIGNAL(ID_BTN_MENU_1, GX_EVENT_RADIO_SELECT):
-        if (current_menu == 0)
-        {
-            screen_list_slide(menu_screen_list, (GX_WIDGET *)&main_screen.main_screen_menu_window, SLIDE_LEFT);
-        }
-        else
-        {
-            screen_list_slide(menu_screen_list, (GX_WIDGET *)&main_screen.main_screen_menu_window, SLIDE_RIGHT);
-        }
-        break;
-
-    case GX_SIGNAL(ID_BTN_MENU_2, GX_EVENT_RADIO_SELECT):
-        screen_list_slide(menu_screen_list, (GX_WIDGET *)&main_screen.main_screen_menu_window, SLIDE_LEFT);
-        break;
-    case GX_EVENT_TIMER:
-        if (event_ptr->gx_event_payload.gx_event_timer_id == CLOCK_TIMER)
-        {
-            clock_update();
-        }
-        break;
-    }
-    return gx_window_event_process(window, event_ptr);
-}
-
-/*************************************************************************************/
-VOID start_slide_animation(GX_WINDOW *window)
-{
-GX_ANIMATION_INFO slide_animation_info;
+    GX_ANIMATION_INFO slide_animation_info;
 
     memset(&slide_animation_info, 0, sizeof(GX_ANIMATION_INFO));
-    slide_animation_info.gx_animation_parent = (GX_WIDGET *)window;
-    slide_animation_info.gx_animation_style = GX_ANIMATION_SCREEN_DRAG | GX_ANIMATION_HORIZONTAL;
-    slide_animation_info.gx_animation_id = ANIMATION_ID_MENU_SLIDE;
-    slide_animation_info.gx_animation_frame_interval = 1;
-    slide_animation_info.gx_animation_slide_screen_list = menu_screen_list;
+    slide_animation_info.gx_animation_parent = (GX_WIDGET*)&main_screen;
+    slide_animation_info.gx_animation_style = GX_ANIMATION_SCREEN_DRAG | GX_ANIMATION_VERTICAL | GX_ANIMATION_WRAP;
+    slide_animation_info.gx_animation_id = SCREEN_SLIDE_ANIMATION_ID;
+    slide_animation_info.gx_animation_frame_interval = 20 / GX_SYSTEM_TIMER_MS;
+    slide_animation_info.gx_animation_slide_screen_list = container_screen_list;
 
-    gx_animation_drag_enable(&slide_animation, (GX_WIDGET *)window, &slide_animation_info);
+    gx_animation_drag_enable(&slide_animation, (GX_WIDGET*)&main_screen, &slide_animation_info);
+
+    return GX_SUCCESS;
 }
 
-/*************************************************************************************/
-UINT menu_window_event_handler(GX_WINDOW *window, GX_EVENT *event_ptr)
+/******************************************************************************************/
+/* Enable horizontal slide animation.                                                     */
+/******************************************************************************************/
+static GX_BOOL enable_horizontal_slide_animation()
 {
+    GX_ANIMATION_INFO slide_animation_info;
 
-    switch (event_ptr->gx_event_type)
+    memset(&slide_animation_info, 0, sizeof(GX_ANIMATION_INFO));
+
+    /* Find the visible page container screen.  */
+    slide_animation_info.gx_animation_parent = find_visible_screen_of_screen_list(container_screen_list);
+
+    if (slide_animation_info.gx_animation_parent)
     {
-    case GX_EVENT_SHOW:
-        start_slide_animation(window);
-        return gx_widget_event_process(window, event_ptr);
+        slide_animation_info.gx_animation_style = GX_ANIMATION_SCREEN_DRAG | GX_ANIMATION_HORIZONTAL | GX_ANIMATION_WRAP;
+        slide_animation_info.gx_animation_id = SCREEN_SLIDE_ANIMATION_ID;
+        slide_animation_info.gx_animation_frame_interval = 20 / GX_SYSTEM_TIMER_MS;
+        slide_animation_info.gx_animation_slide_screen_list = get_page_screen_list(slide_animation_info.gx_animation_parent);
 
-    case GX_EVENT_HIDE:
-        gx_animation_drag_disable(&slide_animation, (GX_WIDGET *)window);
-        return gx_widget_event_process(window, event_ptr);
+        /* Enable slide animation for the visible page container screen.  */
+        gx_animation_drag_enable(&slide_animation, slide_animation_info.gx_animation_parent, &slide_animation_info);
 
-    case GX_EVENT_ANIMATION_COMPLETE:
-        menu_indication_button_update();
-        break;
-
-    default:
-        return gx_window_event_process(window, event_ptr);
+        return GX_SUCCESS;
     }
 
-    return 0;
+    return GX_FALSE;
 }
 
-/*************************************************************************************/
-VOID clock_update()
+/******************************************************************************************/
+/* Update system clock.                                                                   */
+/******************************************************************************************/
+static VOID system_clock_update()
 {
 #ifdef WIN32
-    GX_CHAR hour_string_buffer[MAX_TIME_TEXT_LENGTH + 1];
-    GX_CHAR minute_string_buffer[MAX_TIME_TEXT_LENGTH + 1];
-    GX_CHAR am_pm_buffer[MAX_TIME_TEXT_LENGTH + 1];
-    GX_CHAR date_string_buffer[20];
-    GX_STRING string;
-
     SYSTEMTIME local_time;
     GetLocalTime(&local_time);
 
-    if (local_time.wSecond & 0x1)
-    {
-        gx_widget_fill_color_set(&main_screen.main_screen_lower_dot, GX_COLOR_ID_MILK_WHITE, GX_COLOR_ID_MILK_WHITE, GX_COLOR_ID_MILK_WHITE);
-        gx_widget_fill_color_set(&main_screen.main_screen_upper_dot, GX_COLOR_ID_MILK_WHITE, GX_COLOR_ID_MILK_WHITE, GX_COLOR_ID_MILK_WHITE);
-    }
-    else
-    {
-        gx_widget_fill_color_set(&main_screen.main_screen_lower_dot, GX_COLOR_ID_GRAY, GX_COLOR_ID_GRAY, GX_COLOR_ID_GRAY);
-        gx_widget_fill_color_set(&main_screen.main_screen_upper_dot, GX_COLOR_ID_GRAY, GX_COLOR_ID_GRAY, GX_COLOR_ID_GRAY);
-    }
-
-    if (local_time.wHour < 12)
-    {
-        sprintf(hour_string_buffer, "%02d", local_time.wHour);
-        sprintf(minute_string_buffer, "%02d", local_time.wMinute);
-        memcpy(am_pm_buffer, "AM", 3);
-    }
-    else
-    {
-        sprintf(hour_string_buffer, "%02d", local_time.wHour);
-        sprintf(minute_string_buffer, "%02d", local_time.wMinute);
-        memcpy(am_pm_buffer, "PM", 3);
-    }
-
-    string.gx_string_ptr = hour_string_buffer;
-    string.gx_string_length = string_length_get(hour_string_buffer, MAX_TIME_TEXT_LENGTH);
-    gx_prompt_text_set_ext(&main_screen.main_screen_hour, &string);
-
-    string.gx_string_ptr = minute_string_buffer;
-    string.gx_string_length = string_length_get(minute_string_buffer, MAX_TIME_TEXT_LENGTH);
-    gx_prompt_text_set_ext(&main_screen.main_screen_minute, &string);
-
-    string.gx_string_ptr = am_pm_buffer;
-    string.gx_string_length = string_length_get(am_pm_buffer, MAX_TIME_TEXT_LENGTH);
-    gx_prompt_text_set_ext(&main_screen.main_screen_am_pm, &string);
-
-    sprintf(date_string_buffer, "%s, %s %02d", day_names[local_time.wDayOfWeek], month_names[local_time.wMonth - 1], local_time.wDay);
-
-    string.gx_string_ptr = date_string_buffer;
-    string.gx_string_length = string_length_get(date_string_buffer, sizeof(date_string_buffer) - 1);
-    gx_prompt_text_set_ext(&main_screen.main_screen_date, &string);
-
+    system_time.month = local_time.wMonth;
+    system_time.day = local_time.wDay;
+    system_time.day_of_week = local_time.wDayOfWeek;
+    system_time.hour = local_time.wHour;
+    system_time.minute = local_time.wMinute;
+    system_time.second = local_time.wSecond;
 #else
+    system_time.second++;
+    if (system_time.second >= 60)
+    {
+        system_time.second = 0;
+        system_time.minute++;
+
+        if (system_time.minute >= 60)
+        {
+            system_time.minute = 0;
+        }
+    }
 #endif
 }
 
-/*************************************************************************************/
-VOID root_home_button_draw(GX_PIXELMAP_BUTTON *widget)
+/******************************************************************************************/
+/* Send event to current screen.                                                          */
+/******************************************************************************************/
+static VOID send_event_to_current_screen(INT event_type)
+{
+    GX_EVENT myevent;
+    GX_WIDGET *parent;
+
+    /* Find visible screen container.  */
+    parent = find_visible_screen_of_screen_list(container_screen_list);
+
+    /* Find visible screen.  */
+    parent = find_visible_screen_of_screen_list(get_page_screen_list(parent));
+
+    if (parent)
+    {
+        memset(&myevent, 0, sizeof(GX_EVENT));
+        myevent.gx_event_type = event_type;
+        myevent.gx_event_target = parent;
+        gx_system_event_send(&myevent);
+    }
+}
+
+/******************************************************************************************/
+/* Slide to home screen.                                                                  */
+/******************************************************************************************/
+static VOID slide_to_home_screen()
+{
+    GX_WIDGET *current_screen_container;
+    GX_WIDGET *target_screen_container;
+    GX_WIDGET *current_screen;
+    GX_WIDGET *target_screen = (GX_WIDGET *)&home_screen;
+
+    /* Find the visible page container screen.  */
+    current_screen_container = find_visible_screen_of_screen_list(container_screen_list);
+
+    /* Find visible screen.  */
+    current_screen = find_visible_screen_of_screen_list(get_page_screen_list(current_screen_container));
+
+    if (current_screen == target_screen)
+    {
+        return;
+    }
+
+    target_screen_container = get_screen_container(target_screen);
+
+    if (current_screen_container == target_screen_container)
+    {
+        page_screen_slide(current_screen, target_screen);
+    }
+    else
+    {
+        container_screen_slide(current_screen, target_screen);
+    }
+}
+
+/******************************************************************************************/
+/* Start animation to slide from current screen to the specified screen of the same page. */
+/******************************************************************************************/
+VOID page_screen_slide(GX_WIDGET *current_screen, GX_WIDGET *target_screen)
+{
+    GX_WIDGET *screen_container;
+    GX_WIDGET **screen_list;
+    INT current_screen_index = 0;
+    INT target_screen_index = 0;
+    INT index = 0;
+    GX_ANIMATION *animation;
+    GX_ANIMATION_INFO animation_info;
+    GX_RECTANGLE *size;
+    INT width;
+    INT distance;
+
+    if (slide_animation.gx_animation_status != GX_ANIMATION_IDLE)
+    {
+        return;
+    }
+
+    /* Find the visible page container screen.  */
+    screen_container = find_visible_screen_of_screen_list(container_screen_list);
+
+    /* Find screen list for the visible screen container.  */
+    screen_list = get_page_screen_list(screen_container);
+
+    while (screen_list[index])
+    {
+        if (screen_list[index] == current_screen)
+        {
+            current_screen_index = index;
+        }
+        else if (screen_list[index] == target_screen)
+        {
+            target_screen_index = index;
+        }
+
+        index++;
+    }
+
+    size = &screen_container->gx_widget_size;
+    width = size->gx_rectangle_right - size->gx_rectangle_left + 1;
+    distance = width * (target_screen_index - current_screen_index);
+
+    memset(&animation_info, 0, sizeof(GX_ANIMATION_INFO));
+    animation_info.gx_animation_frame_interval = 1;
+    animation_info.gx_animation_id = SCREEN_SLIDE_ANIMATION_ID;
+    animation_info.gx_animation_steps = 300 / GX_SYSTEM_TIMER_MS;
+    animation_info.gx_animation_start_alpha = 255;
+    animation_info.gx_animation_end_alpha = 255;
+    animation_info.gx_animation_parent = screen_container;
+    animation_info.gx_animation_start_position.gx_point_y = size->gx_rectangle_top;
+    animation_info.gx_animation_end_position.gx_point_y = size->gx_rectangle_top;
+    animation_info.gx_animation_style = GX_ANIMATION_TRANSLATE | GX_ANIMATION_DETACH;
+
+    index = current_screen_index;
+    while (index != target_screen_index)
+    {
+        animation_info.gx_animation_target = screen_list[index];
+        animation_info.gx_animation_start_position.gx_point_x = size->gx_rectangle_left + (width * (index - current_screen_index));
+        animation_info.gx_animation_end_position.gx_point_x = animation_info.gx_animation_start_position.gx_point_x - distance;
+
+        if (gx_system_animation_get(&animation) == GX_SUCCESS)
+        {
+            gx_animation_start(animation, &animation_info);
+        }
+
+        if (current_screen_index < target_screen_index)
+        {
+            index++;
+        }
+        else
+        {
+            index--;
+        }
+    }
+
+    animation_info.gx_animation_target = screen_list[index];
+    animation_info.gx_animation_style = GX_ANIMATION_TRANSLATE;
+    animation_info.gx_animation_start_position.gx_point_x = size->gx_rectangle_left + distance;
+    animation_info.gx_animation_end_position.gx_point_x = size->gx_rectangle_left;
+
+    gx_animation_start(&slide_animation, &animation_info);
+}
+
+/******************************************************************************************/
+/* Start animation to slide from current screen to the specified screen of another page.  */
+/******************************************************************************************/
+VOID container_screen_slide(GX_WIDGET* current_screen, GX_WIDGET* target_screen)
+{
+    GX_WIDGET *current_screen_container;
+    GX_WIDGET *target_screen_container;
+    GX_WIDGET **screen_list;
+    INT current_screen_index = 0;
+    INT target_screen_index = 0;
+    INT index = 0;
+    GX_ANIMATION* animation;
+    GX_ANIMATION_INFO animation_info;
+    GX_RECTANGLE* size;
+    INT height;
+    INT distance;
+    GX_WIDGET* child = GX_NULL;
+
+    if (slide_animation.gx_animation_status != GX_ANIMATION_IDLE)
+    {
+        return;
+    }
+
+    /* Find the visible page container screen.  */
+    current_screen_container = find_visible_screen_of_screen_list(container_screen_list);
+    target_screen_container = get_screen_container(target_screen);
+
+    gx_widget_first_child_get(target_screen_container, &child);
+    if (child != target_screen)
+    {
+        gx_widget_detach(child);
+        gx_widget_attach(target_screen_container, target_screen);
+        gx_widget_shift(target_screen,
+            target_screen_container->gx_widget_size.gx_rectangle_left - target_screen->gx_widget_size.gx_rectangle_left,
+            target_screen_container->gx_widget_size.gx_rectangle_top - target_screen->gx_widget_size.gx_rectangle_top, GX_FALSE);
+    }
+
+    /* Find screen list for the visible screen container.  */
+    screen_list = container_screen_list;
+
+    while (screen_list[index])
+    {
+        if (screen_list[index] == current_screen_container)
+        {
+            current_screen_index = index;
+        }
+        else if (screen_list[index] == target_screen_container)
+        {
+            target_screen_index = index;
+        }
+
+        index++;
+    }
+
+    size = &main_screen.gx_widget_size;
+    height = size->gx_rectangle_bottom - size->gx_rectangle_top + 1;
+    distance = height * (target_screen_index - current_screen_index);
+
+    memset(&animation_info, 0, sizeof(GX_ANIMATION_INFO));
+    animation_info.gx_animation_frame_interval = 1;
+    animation_info.gx_animation_id = SCREEN_SLIDE_ANIMATION_ID;
+    animation_info.gx_animation_steps = 300 / GX_SYSTEM_TIMER_MS;
+    animation_info.gx_animation_start_alpha = 255;
+    animation_info.gx_animation_end_alpha = 255;
+    animation_info.gx_animation_parent = (GX_WIDGET *)&main_screen;
+    animation_info.gx_animation_start_position.gx_point_x = size->gx_rectangle_left;
+    animation_info.gx_animation_end_position.gx_point_x = size->gx_rectangle_left;
+    animation_info.gx_animation_style = GX_ANIMATION_TRANSLATE | GX_ANIMATION_DETACH;
+
+    index = current_screen_index;
+    while(index != target_screen_index)
+    {
+        animation_info.gx_animation_target = screen_list[index];
+        animation_info.gx_animation_start_position.gx_point_y = size->gx_rectangle_top + (height * (index - current_screen_index));
+        animation_info.gx_animation_end_position.gx_point_y = animation_info.gx_animation_start_position.gx_point_y - distance;
+
+        if (gx_system_animation_get(&animation) == GX_SUCCESS)
+        {
+            gx_animation_start(animation, &animation_info);
+        }
+
+        if (current_screen_index < target_screen_index)
+        {
+            index++;
+        }
+        else
+        {
+            index--;
+        }
+    }
+
+    animation_info.gx_animation_target = screen_list[index];
+    animation_info.gx_animation_style = GX_ANIMATION_TRANSLATE;
+    animation_info.gx_animation_start_position.gx_point_y = size->gx_rectangle_top + distance;
+    animation_info.gx_animation_end_position.gx_point_y = size->gx_rectangle_top;
+
+    gx_animation_start(&slide_animation, &animation_info);
+}
+
+/******************************************************************************************/
+/* Override the default drawing of the home button.                                       */
+/******************************************************************************************/
+VOID root_home_button_draw(GX_PIXELMAP_BUTTON* widget)
 {
     if (widget->gx_widget_style & GX_STYLE_BUTTON_PUSHED)
     {
@@ -522,31 +596,139 @@ VOID root_home_button_draw(GX_PIXELMAP_BUTTON *widget)
     }
 }
 
-/*************************************************************************************/
-VOID screen_switch(GX_WIDGET *parent, GX_WIDGET *new_screen)
+/******************************************************************************************/
+/* Override the default drawing of the root window.                                       */
+/******************************************************************************************/
+VOID root_window_draw(GX_WINDOW* root)
 {
-    gx_widget_detach(current_screen);
-    gx_widget_attach(parent, new_screen);
-    current_screen = new_screen;
+    GX_PIXELMAP* map = GX_NULL;
+
+    /* Call default root window draw. */
+    gx_window_draw(root);
+
+    gx_context_pixelmap_get(GX_PIXELMAP_ID_MICROSOFT_AZURE_LOGO, &map);
+
+    if (map)
+    {
+        /* Draw logo. */
+        gx_canvas_pixelmap_draw(15, 15, map);
+    }
 }
 
-/*************************************************************************************/
-UINT string_length_get(GX_CONST GX_CHAR* input_string, UINT max_string_length)
+/******************************************************************************************/
+/* Override the default event processing of the root window to handle signals from my     */
+/* child widgets.                                                                         */
+/******************************************************************************************/
+UINT root_window_event_process(GX_WINDOW *window, GX_EVENT *event_ptr)
 {
-    UINT length = 0;
-
-    if (input_string)
+    switch (event_ptr->gx_event_type)
     {
-        /* Traverse the string.  */
-        for (length = 0; input_string[length]; length++)
-        {
-            /* Check if the string length is bigger than the max string length.  */
-            if (length >= max_string_length)
-            {
-                break;
-            }
-        }
+    case GX_SIGNAL(ID_HOME_BUTTON, GX_EVENT_CLICKED):
+        slide_to_home_screen();
+        break;
+
+    default:
+        return gx_window_root_event_process((GX_WINDOW_ROOT*)window, event_ptr);
     }
 
-    return length;
+    return 0;
+}
+
+/******************************************************************************************/
+/* Override the default event processing of the "main_screen" to handle signals from my   */
+/* child widgets.                                                                         */
+/******************************************************************************************/
+UINT main_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
+{
+    UINT status = GX_SUCCESS;
+    INT horizontal_dist;
+    INT vertical_dist;
+    GX_WIDGET *parent;
+
+    switch (event_ptr->gx_event_type)
+    {
+    case GX_EVENT_SHOW:
+
+        /* Update system time. */
+        system_clock_update();
+
+        /* Start a timer to update time. */
+        gx_system_timer_start(window, SYSTEM_CLOCK_TIMER_ID, GX_TICKS_SECOND, GX_TICKS_SECOND);
+
+        return gx_window_event_process(window, event_ptr);
+
+    case GX_EVENT_TIMER:
+        if (event_ptr->gx_event_payload.gx_event_timer_id == SYSTEM_CLOCK_TIMER_ID)
+        {
+            system_clock_update();
+            music_play_progress_update();
+        }
+        break;
+
+    case GX_EVENT_PEN_DOWN:
+        if (slide_animation.gx_animation_status == GX_ANIMATION_IDLE)
+        {
+            /* Reserve pen down event for later use.  */
+            slide_pen_down_event = *event_ptr;
+            slide_pen_down_valid = GX_TRUE;
+        }
+        break;
+
+    case GX_EVENT_PEN_DRAG:
+        if (slide_animation.gx_animation_status == GX_ANIMATION_IDLE && slide_pen_down_valid)
+        {
+            horizontal_dist = GX_ABS(slide_pen_down_event.gx_event_payload.gx_event_pointdata.gx_point_x - event_ptr->gx_event_payload.gx_event_pointdata.gx_point_x);
+            vertical_dist = GX_ABS(slide_pen_down_event.gx_event_payload.gx_event_pointdata.gx_point_y - event_ptr->gx_event_payload.gx_event_pointdata.gx_point_y);
+
+            if ((horizontal_dist > ANIMATION_MIN_SLIDING_DIST) || vertical_dist > ANIMATION_MIN_SLIDING_DIST)
+            {
+                if (horizontal_dist > vertical_dist)
+                {
+                    /* Horizontal slide direction. */
+                    status = enable_horizontal_slide_animation();
+                }
+                else
+                {
+                    /* Vertical slide direction. */
+                    status = enable_vertical_slide_animation();
+                }
+
+                if (status == GX_SUCCESS)
+                {
+                    send_event_to_current_screen(USER_EVENT_ANIMATION_STOP);
+
+                    parent = slide_animation.gx_animation_info.gx_animation_parent;
+
+                    /* Pass pen down and pen drag event to slide animation parent to process sliding animation.  */
+                    parent->gx_widget_event_process_function(parent, &slide_pen_down_event);
+                    parent->gx_widget_event_process_function(parent, event_ptr);
+                }
+            }
+        }
+        break;
+
+    case GX_EVENT_ANIMATION_COMPLETE:
+        if (event_ptr->gx_event_sender == SCREEN_SLIDE_ANIMATION_ID)
+        {
+            /* Disable slide animation.  */
+            gx_animation_drag_disable(&slide_animation, slide_animation.gx_animation_info.gx_animation_parent);
+
+            send_event_to_current_screen(USER_EVENT_ANIMATION_START);
+        }
+        break;
+
+    case GX_EVENT_PEN_UP:
+        if (slide_animation.gx_animation_status == GX_ANIMATION_IDLE)
+        {
+            /* Disable slide animation.  */
+            gx_animation_drag_disable(&slide_animation, slide_animation.gx_animation_info.gx_animation_parent);
+        }
+        slide_pen_down_valid = GX_FALSE;
+        break;
+
+    default:
+        return gx_window_event_process((GX_WINDOW*)window, event_ptr);
+    }
+
+    return 0;
 }

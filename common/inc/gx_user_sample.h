@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_user.h                                           PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -42,6 +42,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  01-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            fixed typo,                 */
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 
@@ -53,7 +56,7 @@
    GUI API services, comment out the definition below to reduce system
    overhead.
  */
-/* #define GUIX_DISABLE_MULTITHREAD_SUPPORT */
+/* #define GX_DISABLE_MULTITHREAD_SUPPORT */
 
 /* Defined, GUIX disables UTF8 support.  */
 /* #define GX_DISABLE_UTF8_SUPPORT */
