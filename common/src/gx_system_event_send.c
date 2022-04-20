@@ -32,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_event_send                               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,12 +70,16 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-25-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_system_event_send(GX_EVENT *in_event)
 {
-UINT    status = GX_SYSTEM_ERROR;
-GX_BOOL check_send_flick = GX_FALSE;
+UINT       status = GX_SYSTEM_ERROR;
+GX_BOOL    check_send_flick = GX_FALSE;
+GX_WIDGET *target = GX_NULL;
 
     switch (in_event -> gx_event_type)
     {
@@ -89,6 +93,12 @@ GX_BOOL check_send_flick = GX_FALSE;
 
     case GX_EVENT_PEN_UP:
         check_send_flick = GX_TRUE;
+
+        if (_gx_system_capture_count > 0)
+        {
+            /* Get the widget that owns the system input.  */
+            target = *_gx_system_input_capture_stack;
+        }
         break;
     }
 
@@ -105,7 +115,7 @@ GX_BOOL check_send_flick = GX_FALSE;
 
     if (check_send_flick)
     {
-        _gx_system_pen_flick_test();
+        _gx_system_pen_flick_test(target);
     }
     return status;
 }

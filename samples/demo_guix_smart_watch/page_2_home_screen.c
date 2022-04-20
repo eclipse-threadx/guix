@@ -2,6 +2,7 @@
 
 /* Extern system time.  */
 extern TIME system_time;
+static TIME screen_time_record = { -1, -1, -1, -1, -1, -1 };
 
 /* Define text id list for day of week names.  */
 static GX_RESOURCE_ID day_name_ids[] = {
@@ -56,7 +57,7 @@ static UINT string_length_get(GX_CONST GX_CHAR* input_string, UINT max_string_le
 /******************************************************************************************/
 /* Update clock time.                                                                     */
 /******************************************************************************************/
-static VOID screen_clock_update()
+static VOID screen_time_update()
 {
     GX_RESOURCE_ID am_pm_text_id;
     GX_CHAR date_string_buffer[20];
@@ -82,21 +83,41 @@ static VOID screen_clock_update()
         am_pm_text_id = GX_STRING_ID_PM;
     }
 
-    gx_numeric_prompt_value_set(&home_screen.home_screen_time_hour, system_time.hour);
-    gx_numeric_prompt_value_set(&home_screen.home_screen_time_minute, system_time.minute);
-    gx_prompt_text_id_set(&home_screen.home_screen_am_pm, am_pm_text_id);
-    gx_prompt_text_id_set(&home_screen.home_screen_day_of_week, day_name_ids[system_time.day_of_week]);
-
-    gx_widget_string_get_ext(&home_screen, month_name_ids[system_time.month - 1], &string);
-    
-    if(string.gx_string_ptr)
+    if (screen_time_record.hour != system_time.hour)
     {
-        sprintf(date_string_buffer, ", %s %d", string.gx_string_ptr, system_time.day);
-
-        string.gx_string_ptr = date_string_buffer;
-        string.gx_string_length = string_length_get(date_string_buffer, sizeof(date_string_buffer) - 1);
-        gx_prompt_text_set_ext(&home_screen.home_screen_date, &string);
+        gx_numeric_prompt_value_set(&home_screen.home_screen_time_hour, system_time.hour);
     }
+    
+    if (screen_time_record.minute != system_time.minute)
+    {
+        gx_numeric_prompt_value_set(&home_screen.home_screen_time_minute, system_time.minute);
+    }
+
+    if (home_screen.home_screen_am_pm.gx_prompt_text_id != am_pm_text_id)
+    {
+        gx_prompt_text_id_set(&home_screen.home_screen_am_pm, am_pm_text_id);
+    }
+
+    if (screen_time_record.day_of_week != system_time.day_of_week)
+    {
+        gx_prompt_text_id_set(&home_screen.home_screen_day_of_week, day_name_ids[system_time.day_of_week]);
+    }
+
+    if ((screen_time_record.month != system_time.month) || (screen_time_record.day != system_time.day))
+    {
+        gx_widget_string_get_ext(&home_screen, month_name_ids[system_time.month - 1], &string);
+
+        if (string.gx_string_ptr)
+        {
+            sprintf(date_string_buffer, ", %s %d", string.gx_string_ptr, system_time.day);
+
+            string.gx_string_ptr = date_string_buffer;
+            string.gx_string_length = string_length_get(date_string_buffer, sizeof(date_string_buffer) - 1);
+            gx_prompt_text_set_ext(&home_screen.home_screen_date, &string);
+        }
+    }
+
+    screen_time_record = system_time;
 }
 
 /******************************************************************************************/
@@ -110,9 +131,9 @@ UINT home_screen_event_handler(GX_WINDOW* window, GX_EVENT* event_ptr)
     case GX_EVENT_SHOW:
 
         gx_window_event_process(window, event_ptr);
-            
+
         /* Update clock time. */
-        screen_clock_update();
+        screen_time_update();
 
         /* Start a timer to update clock.  */
         gx_system_timer_start(window, SCREEN_CLOCK_TIMER_ID, GX_TICKS_SECOND, GX_TICKS_SECOND);
@@ -139,7 +160,7 @@ UINT home_screen_event_handler(GX_WINDOW* window, GX_EVENT* event_ptr)
         if (event_ptr->gx_event_payload.gx_event_timer_id == SCREEN_CLOCK_TIMER_ID)
         {
             /* Update clock time. */
-            screen_clock_update();
+            screen_time_update();
         }
         break;
 

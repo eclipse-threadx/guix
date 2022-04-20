@@ -29,13 +29,14 @@
 #include "gx_system.h"
 #include "gx_animation.h"
 #include "gx_utility.h"
+#include "gx_canvas.h"
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_animation_slide_landing                         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -73,6 +74,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-25-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added canvas and block move */
+/*                                            support,                    */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_animation_slide_landing(GX_ANIMATION *animation)
@@ -84,6 +89,8 @@ GX_WIDGET         *target_2 = GX_NULL;
 INT                x_shift = 0;
 INT                y_shift = 0;
 GX_RECTANGLE       target_size;
+GX_RECTANGLE       block;
+GX_VALUE           border_width;
 
     parent = animation -> gx_animation_info.gx_animation_parent;
 
@@ -114,6 +121,12 @@ GX_RECTANGLE       target_size;
     else
     {
         target_size = target_1 -> gx_widget_size;
+    }
+
+    if (animation -> gx_animation_canvas)
+    {
+        _gx_utility_rectangle_shift(&target_size, animation -> gx_animation_canvas -> gx_canvas_display_offset_x,
+                                    animation -> gx_animation_canvas -> gx_canvas_display_offset_y);
     }
 
     if (info -> gx_animation_style & GX_ANIMATION_EASING_FUNC_MASK)
@@ -173,12 +186,34 @@ GX_RECTANGLE       target_size;
         ((y_shift < 0) && ((GX_VALUE)(target_size.gx_rectangle_top + y_shift) > parent -> gx_widget_size.gx_rectangle_top)) ||
         ((y_shift > 0) && ((GX_VALUE)(target_size.gx_rectangle_top + y_shift) < parent -> gx_widget_size.gx_rectangle_top)))
     {
-        /* Shift animation targets one step toward target position.  */
-        _gx_widget_shift(target_1, (GX_VALUE)x_shift, (GX_VALUE)y_shift, GX_TRUE);
-
-        if (target_2)
+        if (animation -> gx_animation_canvas)
         {
-            _gx_widget_shift(target_2, (GX_VALUE)x_shift, (GX_VALUE)y_shift, GX_TRUE);
+            _gx_canvas_offset_set(animation -> gx_animation_canvas,
+                                  (GX_VALUE)(animation -> gx_animation_canvas -> gx_canvas_display_offset_x + x_shift),
+                                  (GX_VALUE)(animation -> gx_animation_canvas -> gx_canvas_display_offset_y + y_shift));
+        }
+        else
+        {
+            /* Shift animation targets one step toward target position.  */
+
+            if (info -> gx_animation_style & GX_ANIMATION_BLOCK_MOVE)
+            {
+                _gx_widget_scroll_shift(target_1, (GX_VALUE)x_shift, (GX_VALUE)y_shift, GX_TRUE);
+
+                if (target_2)
+                {
+                    _gx_widget_scroll_shift(target_2, (GX_VALUE)x_shift, (GX_VALUE)y_shift, GX_TRUE);
+                }
+            }
+            else
+            {
+                _gx_widget_shift(target_1, (GX_VALUE)x_shift, (GX_VALUE)y_shift, GX_TRUE);
+
+                if (target_2)
+                {
+                    _gx_widget_shift(target_2, (GX_VALUE)x_shift, (GX_VALUE)y_shift, GX_TRUE);
+                }
+            }
         }
     }
     else
@@ -198,18 +233,49 @@ GX_RECTANGLE       target_size;
             x_shift = parent -> gx_widget_size.gx_rectangle_left - target_size.gx_rectangle_left;
         }
 
-        if (target_2)
+        if (animation -> gx_animation_canvas)
         {
-            /* Detach the first target. */
-            _gx_widget_detach(target_1);
+            /* hide the animation root */
+            if (target_1 -> gx_widget_parent)
+            {
+                _gx_widget_hide(target_1 -> gx_widget_parent);
+            }
 
-            /* Move the second target to its final position. */
-            _gx_widget_shift(target_2, (GX_VALUE)x_shift, (GX_VALUE)y_shift, GX_TRUE);
+            /* attach the widget to it's parent */
+            if (target_2)
+            {
+                _gx_widget_detach(target_1);
+                target_1 = target_2;
+            }
+
+            _gx_widget_shift(target_1,
+                             (GX_VALUE)(x_shift + animation -> gx_animation_canvas -> gx_canvas_display_offset_x),
+                             (GX_VALUE)(y_shift + animation -> gx_animation_canvas -> gx_canvas_display_offset_y), GX_TRUE);
+
+            _gx_widget_attach(parent, target_1);
+
+            _gx_canvas_hide(animation -> gx_animation_canvas);
+            _gx_system_canvas_refresh();
         }
         else
         {
+            if (target_2)
+            {
+                /* Detach the first target. */
+                _gx_widget_detach(target_1);
+
+                target_1 = target_2;
+            }
+
             /* No second target, just move the first target to its final position. */
-            _gx_widget_shift(target_1, (GX_VALUE)x_shift, (GX_VALUE)y_shift, GX_TRUE);
+            if (info -> gx_animation_style & GX_ANIMATION_BLOCK_MOVE)
+            {
+                _gx_widget_scroll_shift(target_1, (GX_VALUE)x_shift, (GX_VALUE)y_shift, GX_TRUE);
+            }
+            else
+            {
+                _gx_widget_shift(target_1, (GX_VALUE)x_shift, (GX_VALUE)y_shift, GX_TRUE);
+            }
         }
 
         /* Reset animation information. */
@@ -219,6 +285,13 @@ GX_RECTANGLE       target_size;
 
         /* Send animation complete event.  */
         _gx_animation_complete_event_send(animation);
+    }
+
+    if (info -> gx_animation_style & GX_ANIMATION_BLOCK_MOVE)
+    {
+        _gx_widget_border_width_get(parent, &border_width);
+        _gx_widget_client_get(parent, border_width, &block);
+        _gx_widget_block_move(parent, &block, (GX_VALUE)x_shift, (GX_VALUE)y_shift);
     }
 
     /* Return completion status code. */

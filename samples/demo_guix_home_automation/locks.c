@@ -38,6 +38,7 @@ static CONTROLLER_BASE_CONTROL_BLOCK *lock_controller_list[] = {
 static LOCK_INFO lock_info = { GX_TRUE, GX_TRUE };
 
 extern GX_ANIMATION slide_animation;
+extern int screen_animation_count;
 
 /******************************************************************************************/
 /* Custom button select function.                                                         */
@@ -499,6 +500,36 @@ VOID locks_screen_animation_start()
             break;
         }
     }
+}
+
+/******************************************************************************************/
+/* Stop all animations in locks screen.                                                   */
+/******************************************************************************************/
+VOID locks_screen_animation_stop()
+{
+    CONTROLLER_BASE_CONTROL_BLOCK* lock_controller;
+    INT index = 0;
+
+    while (1)
+    {
+        lock_controller = lock_controller_list[index];
+
+        if (lock_controller)
+        {
+            if (lock_controller->gx_widget_status & GX_STATUS_VISIBLE)
+            {
+                gx_animation_delete(GX_NULL, (GX_WIDGET*)lock_controller);
+            }
+
+            index++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    
+    screen_animation_count = 0;
 }
 
 /******************************************************************************************/

@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.9.2                                               */
-/*  Date (dd.mm.yyyy): 28.12.2021   Time (hh:mm): 11:00                        */
+/*  GUIX Studio Revision 6.1.10.0                                              */
+/*  Date (dd.mm.yyyy): 11. 4.2022   Time (hh:mm): 09:30                        */
 /*******************************************************************************/
 
 
@@ -16,6 +16,7 @@
 #include "guix_smart_watch_specifications.h"
 
 static GX_WIDGET *gx_studio_nested_widget_create(GX_BYTE *control, GX_CONST GX_STUDIO_WIDGET *definition, GX_WIDGET *parent);
+SCREEN_SLIDE_PARENT_CONTROL_BLOCK screen_slide_parent;
 HOME_BUTTON_CONTROL_BLOCK home_button;
 PAGE_3_CONTAINER_SCREEN_CONTROL_BLOCK page_3_container_screen;
 PAGE_2_CONTAINER_SCREEN_CONTROL_BLOCK page_2_container_screen;
@@ -297,6 +298,34 @@ UINT gx_studio_template_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *contr
     }
     return status;
 }
+GX_WINDOW_PROPERTIES screen_slide_parent_properties =
+{
+    0                                        /* wallpaper pixelmap id          */
+};
+
+GX_CONST GX_STUDIO_WIDGET screen_slide_parent_define =
+{
+    "screen_slide_parent",
+    GX_TYPE_WINDOW,                          /* widget type                    */
+    GX_ID_NONE,                              /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_NONE|GX_STYLE_ENABLED,   /* style flags                    */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(SCREEN_SLIDE_PARENT_CONTROL_BLOCK), /* control block size           */
+    GX_COLOR_ID_WINDOW_FILL,                 /* normal color id                */
+    GX_COLOR_ID_WINDOW_FILL,                 /* selected color id              */
+    GX_COLOR_ID_DISABLED_FILL,               /* disabled color id              */
+    gx_studio_window_create,                 /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {0, 0, 257, 288},                        /* widget size                    */
+    GX_NULL,                                 /* next widget                    */
+    GX_NULL,                                 /* child widget                   */
+    0,                                       /* control block                  */
+    (void *) &screen_slide_parent_properties /* extended properties            */
+};
 GX_PIXELMAP_BUTTON_PROPERTIES home_button_properties =
 {
     GX_PIXELMAP_ID_WATCH_HOME_BUTTON,        /* normal pixelmap id             */
@@ -340,7 +369,7 @@ GX_CONST GX_STUDIO_WIDGET page_3_container_screen_define =
     #if defined(GX_WIDGET_USER_DATA)
     0,                                       /* user data                      */
     #endif
-    GX_STYLE_BORDER_NONE|GX_STYLE_TRANSPARENT|GX_STYLE_ENABLED,   /* style flags */
+    GX_STYLE_BORDER_NONE|GX_STYLE_ENABLED,   /* style flags                    */
     GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
     sizeof(PAGE_3_CONTAINER_SCREEN_CONTROL_BLOCK), /* control block size       */
     GX_COLOR_ID_WINDOW_FILL,                 /* normal color id                */
@@ -368,7 +397,7 @@ GX_CONST GX_STUDIO_WIDGET page_2_container_screen_define =
     #if defined(GX_WIDGET_USER_DATA)
     0,                                       /* user data                      */
     #endif
-    GX_STYLE_BORDER_NONE|GX_STYLE_TRANSPARENT|GX_STYLE_ENABLED,   /* style flags */
+    GX_STYLE_BORDER_NONE|GX_STYLE_ENABLED,   /* style flags                    */
     GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
     sizeof(PAGE_2_CONTAINER_SCREEN_CONTROL_BLOCK), /* control block size       */
     GX_COLOR_ID_WINDOW_FILL,                 /* normal color id                */
@@ -396,7 +425,7 @@ GX_CONST GX_STUDIO_WIDGET page_1_container_screen_define =
     #if defined(GX_WIDGET_USER_DATA)
     0,                                       /* user data                      */
     #endif
-    GX_STYLE_BORDER_NONE|GX_STYLE_TRANSPARENT|GX_STYLE_ENABLED,   /* style flags */
+    GX_STYLE_BORDER_NONE|GX_STYLE_ENABLED,   /* style flags                    */
     GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
     sizeof(PAGE_1_CONTAINER_SCREEN_CONTROL_BLOCK), /* control block size       */
     GX_COLOR_ID_WINDOW_FILL,                 /* normal color id                */
@@ -424,7 +453,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_define =
     #if defined(GX_WIDGET_USER_DATA)
     0,                                       /* user data                      */
     #endif
-    GX_STYLE_BORDER_NONE|GX_STYLE_TRANSPARENT|GX_STYLE_ENABLED,   /* style flags */
+    GX_STYLE_BORDER_NONE|GX_STYLE_ENABLED,   /* style flags                    */
     GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
     sizeof(MAIN_SCREEN_CONTROL_BLOCK),       /* control block size             */
     GX_COLOR_ID_WINDOW_FILL,                 /* normal color id                */
@@ -5925,7 +5954,7 @@ GX_CONST GX_STUDIO_WIDGET home_screen_sprite_define =
     #if defined(GX_WIDGET_USER_DATA)
     0,                                       /* user data                      */
     #endif
-    GX_STYLE_BORDER_NONE|GX_STYLE_ENABLED|GX_STYLE_SPRITE_AUTO|GX_STYLE_SPRITE_LOOP,   /* style flags */
+    GX_STYLE_BORDER_NONE|GX_STYLE_ENABLED|GX_STYLE_SPRITE_LOOP,   /* style flags */
     GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
     sizeof(GX_SPRITE),                       /* control block size             */
     GX_COLOR_ID_WIDGET_FILL,                 /* normal color id                */
@@ -6902,6 +6931,7 @@ GX_CONST GX_STUDIO_WIDGET SanDiego_weather_screen_define =
 };
 GX_CONST GX_STUDIO_WIDGET_ENTRY guix_smart_watch_widget_table[] =
 {
+    { &screen_slide_parent_define, (GX_WIDGET *) &screen_slide_parent },
     { &home_button_define, (GX_WIDGET *) &home_button },
     { &page_3_container_screen_define, (GX_WIDGET *) &page_3_container_screen },
     { &page_2_container_screen_define, (GX_WIDGET *) &page_2_container_screen },

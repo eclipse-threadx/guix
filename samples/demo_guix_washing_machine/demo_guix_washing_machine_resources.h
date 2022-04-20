@@ -5,8 +5,8 @@
 /*  resource file(s). For more information please refer to the Azure RTOS GUIX */
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.8.0                                               */
-/*  Date (dd.mm.yyyy): 26. 7.2021   Time (hh:mm): 15:32                        */
+/*  GUIX Studio Revision 6.1.10.0                                              */
+/*  Date (dd.mm.yyyy): 31. 3.2022   Time (hh:mm): 15:20                        */
 /*******************************************************************************/
 
 
@@ -63,7 +63,7 @@
 #define GX_PIXELMAP_ID_MICROSOFT_AZURE_LOGO 17
 #define GX_PIXELMAP_ID_PAUSE 18
 #define GX_PIXELMAP_ID_PLAY 19
-#define GX_PIXELMAP_ID_WAVE_CLEAR_WHITE 20
+#define GX_PIXELMAP_ID_WAVE 20
 #define MAIN_DISPLAY_PIXELMAP_TABLE_SIZE 21
 
 /* String Ids                                                                  */

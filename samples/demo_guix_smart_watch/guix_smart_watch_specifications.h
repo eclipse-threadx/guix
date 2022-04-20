@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.9.2                                               */
-/*  Date (dd.mm.yyyy): 28.12.2021   Time (hh:mm): 11:00                        */
+/*  GUIX Studio Revision 6.1.10.0                                              */
+/*  Date (dd.mm.yyyy): 11. 4.2022   Time (hh:mm): 09:30                        */
 /*******************************************************************************/
 
 
@@ -166,6 +166,11 @@ typedef struct
 
 
 /* Declare top-level control blocks                                            */
+
+typedef struct SCREEN_SLIDE_PARENT_CONTROL_BLOCK_STRUCT
+{
+    GX_WINDOW_MEMBERS_DECLARE
+} SCREEN_SLIDE_PARENT_CONTROL_BLOCK;
 
 typedef struct HOME_BUTTON_CONTROL_BLOCK_STRUCT
 {
@@ -487,6 +492,7 @@ typedef struct SANDIEGO_WEATHER_SCREEN_CONTROL_BLOCK_STRUCT
 /* extern statically defined control blocks                                    */
 
 #ifndef GUIX_STUDIO_GENERATED_FILE
+extern SCREEN_SLIDE_PARENT_CONTROL_BLOCK screen_slide_parent;
 extern HOME_BUTTON_CONTROL_BLOCK home_button;
 extern PAGE_3_CONTAINER_SCREEN_CONTROL_BLOCK page_3_container_screen;
 extern PAGE_2_CONTAINER_SCREEN_CONTROL_BLOCK page_2_container_screen;

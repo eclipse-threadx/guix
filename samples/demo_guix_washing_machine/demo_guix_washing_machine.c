@@ -10,6 +10,9 @@
 #define PROGRESS_DOT_SPACE   9
 #define PROGRESS_ALPHA_SHIFT 10
 
+#define ROTATION_DISTANCE 25
+#define WASH_CYCLE_TEMPERATURE_RING_WIDTH 52
+
 /* Define variables.  */
 TX_BYTE_POOL    memory_pool;
 GX_CHAR         memory_buffer[MEMORY_BUFFER_SIZE];
@@ -133,16 +136,31 @@ VOID  guix_setup()
 /******************************************************************************************/
 VOID mark_wave_animation_parent_dirty()
 {
+    GX_RECTANGLE dirty_area;
+    GX_WIDGET *parent;
+
     if (wash_cycle_window.gx_widget_status & GX_STATUS_VISIBLE)
     {
-        /* Mark wash cycle window dirty.  */
-        gx_system_dirty_mark((GX_WIDGET*)&wash_cycle_window);
+        parent = (GX_WIDGET *)&wash_cycle_window;
     }
     else if (temperature_window.gx_widget_status & GX_STATUS_VISIBLE)
     {
-        /* Mark temperature window dirty.  */
-        gx_system_dirty_mark((GX_WIDGET*)&temperature_window);
+        parent = (GX_WIDGET *)&temperature_window;
     }
+    else
+    {
+        return;
+    }
+
+    /* Calculate wave area. */
+    dirty_area = parent->gx_widget_size;
+    dirty_area.gx_rectangle_left = (GX_VALUE)(dirty_area.gx_rectangle_left + WASH_CYCLE_TEMPERATURE_RING_WIDTH);
+    dirty_area.gx_rectangle_top = (GX_VALUE)(dirty_area.gx_rectangle_top + WASH_CYCLE_TEMPERATURE_RING_WIDTH);
+    dirty_area.gx_rectangle_right = (GX_VALUE)(dirty_area.gx_rectangle_right - WASH_CYCLE_TEMPERATURE_RING_WIDTH);
+    dirty_area.gx_rectangle_bottom = (GX_VALUE)(dirty_area.gx_rectangle_bottom - WASH_CYCLE_TEMPERATURE_RING_WIDTH);
+
+    /* Mark wave area as dirty. */
+    gx_system_dirty_partial_add(parent, &dirty_area);
 }
 
 /******************************************************************************************/
@@ -332,61 +350,50 @@ VOID time_format(GX_NUMERIC_PROMPT* prompt, INT value)
 }
 
 /******************************************************************************************/
-/* Draw map with specified rotation angle.                                                */
-/******************************************************************************************/
-VOID animation_wave_one_circle_draw(INT xpos, INT ypos, GX_PIXELMAP *map, INT xcor, INT ycor, INT angle)
-{
-    GX_PIXELMAP outmap;
-
-    if ((angle % 360) == 0)
-    {
-        gx_canvas_pixelmap_draw(xpos, ypos, map);
-    }
-    else
-    {
-        xpos += xcor;
-        ypos += ycor;
-
-        if (gx_utility_pixelmap_rotate(map, angle, &outmap, &xcor, &ycor) == GX_SUCCESS)
-        {
-            gx_canvas_pixelmap_draw(xpos - xcor, ypos - ycor, &outmap);
-
-            memory_free((void*)outmap.gx_pixelmap_data);
-        }
-    }
-}
-
-/******************************************************************************************/
 /* Draw animation wave in the center of specified window.                                 */
 /******************************************************************************************/
 VOID animation_wave_draw(GX_WINDOW* window)
 {
     GX_RECTANGLE *size = &window->gx_widget_size;
+    INT scaled_angle;
+    INT xdist;
+    INT ydist;
+    INT xcenter;
+    INT ycenter;
+    INT width;
+    INT height;
     GX_PIXELMAP *map;
-    INT xpos;
-    INT ypos;
-    INT xcor;
-    INT ycor;
 
-    gx_context_pixelmap_get(GX_PIXELMAP_ID_WAVE_CLEAR_WHITE, &map);
+    gx_context_pixelmap_get(GX_PIXELMAP_ID_WAVE, &map);
 
-    xcor = map->gx_pixelmap_width * 3 / 5;
-    ycor = map->gx_pixelmap_height / 2;
+    width = size->gx_rectangle_right - size->gx_rectangle_left + 1;
+    height = size->gx_rectangle_bottom - size->gx_rectangle_top + 1;
+    xcenter = size->gx_rectangle_left + (width >> 1);
+    ycenter = size->gx_rectangle_top + (height >> 1);
 
-    xpos = (size->gx_rectangle_left + size->gx_rectangle_right - map->gx_pixelmap_width) / 2 - 20;
-    ypos = (size->gx_rectangle_top + size->gx_rectangle_bottom - map->gx_pixelmap_height) / 2;
+    gx_context_brush_define(GX_COLOR_ID_WHITE, GX_COLOR_ID_WHITE, GX_BRUSH_ALIAS | GX_BRUSH_SOLID_FILL);
+    gx_context_brush_width_set(1);
 
-    gx_context_fill_color_set(GX_COLOR_ID_WHITE);
+    scaled_angle = GX_FIXED_VAL_MAKE(wave_rotation_angle);
+    xdist = GX_FIXED_VAL_TO_INT(gx_utility_math_cos(scaled_angle) * ROTATION_DISTANCE);
+    ydist = GX_FIXED_VAL_TO_INT(gx_utility_math_sin(scaled_angle) * ROTATION_DISTANCE);
 
-    animation_wave_one_circle_draw(xpos, ypos, map, xcor, ycor, wave_rotation_angle);
+    width = (map->gx_pixelmap_width >> 1);
+    height = (map->gx_pixelmap_height >> 1);
 
-    xpos += 10;
+    gx_canvas_pixelmap_draw(xcenter + xdist - width, ycenter + ydist - height, map);
 
-    animation_wave_one_circle_draw(xpos, ypos, map, xcor, ycor, wave_rotation_angle + 60);
+    scaled_angle = GX_FIXED_VAL_MAKE(wave_rotation_angle + 60);
+    xdist = GX_FIXED_VAL_TO_INT(gx_utility_math_cos(scaled_angle) * ROTATION_DISTANCE);
+    ydist = GX_FIXED_VAL_TO_INT(gx_utility_math_sin(scaled_angle) * ROTATION_DISTANCE);
 
-    ypos += 10;
+    gx_canvas_pixelmap_draw(xcenter + xdist - width, ycenter + ydist - height, map);
 
-    animation_wave_one_circle_draw(xpos, ypos, map, xcor, ycor, wave_rotation_angle + 120);
+    scaled_angle = GX_FIXED_VAL_MAKE(wave_rotation_angle + 120);
+    xdist = GX_FIXED_VAL_TO_INT(gx_utility_math_cos(scaled_angle) * ROTATION_DISTANCE);
+    ydist = GX_FIXED_VAL_TO_INT(gx_utility_math_sin(scaled_angle) * ROTATION_DISTANCE);
+
+    gx_canvas_pixelmap_draw(xcenter + xdist - width, ycenter + ydist - height, map);
 }
 
 /******************************************************************************************/

@@ -11,10 +11,17 @@ extern UINT win32_graphics_driver_setup_24xrgb(GX_DISPLAY* display);
 VOID start_guix(VOID);
 VOID root_window_draw(GX_WINDOW* root);
 UINT root_window_event_process(GX_WINDOW* window, GX_EVENT* event_ptr);
+VOID demo_thread_entry(ULONG thread_input);
+
+/* Create stack and control block for demo thread. */
+static TX_THREAD demo_thread;
+static ULONG demo_thread_stack[1024];
 
 /* Define variables.  */
 GX_WINDOW_ROOT *root;
 TIME system_time = {12, 9, 4, 15, 35, 0};
+static INT screen_clock_record_hour = -1;
+static INT screen_clock_record_minute = -1;
 static TX_BYTE_POOL memory_pool;
 static GX_UBYTE memory_pool_buffer[MEMORY_POOL_BUFFER_SIZE];
 
@@ -60,31 +67,18 @@ static GX_WIDGET* page_3_screen_list[] = {
     GX_NULL
 };
 
-static VOID (*default_buffer_toggle)(GX_CANVAS* canvas, GX_RECTANGLE* dirty) = GX_NULL;
+#ifndef WIN32
+#define USE_CANVAS_FOR_SCREEN_SLIDE_ANIMATION
+#endif
 
-/******************************************************************************************/
-/* Define custom buffer toggle function to draw watch frame before toggle.                */
-/******************************************************************************************/
-static VOID smart_watch_gx_win32_display_buffer_toggle(GX_CANVAS* canvas, GX_RECTANGLE* dirty)
-{
-    GX_PIXELMAP* map = GX_NULL;
+#ifdef USE_CANVAS_FOR_SCREEN_SLIDE_ANIMATION
+#define ANIMATION_CANVAS_WIDTH (258 * 2)
+#define ANIMATION_CANVAS_HEIGHT (289 * 2)
 
-    gx_canvas_drawing_initiate(canvas, root, &canvas->gx_canvas_dirty_area);
-
-    gx_context_pixelmap_get(GX_PIXELMAP_ID_WATCH, &map);
-
-    if (map)
-    {
-        /* Draw smart watch frame.  */
-        gx_context_fill_color_set(GX_COLOR_ID_WHITE);
-        gx_canvas_pixelmap_draw((DISPLAY_1_X_RESOLUTION - map->gx_pixelmap_width) >> 1, 0, map);
-    }
-
-    gx_canvas_drawing_complete(canvas, GX_FALSE);
-
-    /* Call default win32 buffer toggle function.  */
-    default_buffer_toggle(canvas, dirty);
-}
+GX_COLOR animation_canvas_memory[ANIMATION_CANVAS_WIDTH * ANIMATION_CANVAS_HEIGHT];
+GX_CANVAS              animation_canvas;
+GX_WINDOW_ROOT         animation_root;
+#endif
 
 /******************************************************************************************/
 /* Application entry.                                                                     */
@@ -122,14 +116,21 @@ VOID memory_free(VOID *mem)
 /******************************************************************************************/
 VOID tx_application_define(void *first_unused_memory)
 {
-    start_guix();
+    tx_thread_create(&demo_thread, "Demo Thread", demo_thread_entry, 0,
+        demo_thread_stack, sizeof(demo_thread_stack),
+        GX_SYSTEM_THREAD_PRIORITY + 1,
+        GX_SYSTEM_THREAD_PRIORITY + 1, TX_NO_TIME_SLICE, TX_AUTO_START);
 }
 
 /******************************************************************************************/
 /* Initiate and run GUIX.                                                                 */
 /******************************************************************************************/
-VOID  start_guix(VOID)
+VOID demo_thread_entry(ULONG thread_input)
 {
+#ifdef USE_CANVAS_FOR_SCREEN_SLIDE_ANIMATION
+GX_RECTANGLE size;
+#endif
+      
     /* Create byte pool*/
     tx_byte_pool_create(&memory_pool, "memory_pol", memory_pool_buffer, MEMORY_POOL_BUFFER_SIZE);
     
@@ -141,11 +142,6 @@ VOID  start_guix(VOID)
 
     /* Configure display. */
     gx_studio_display_configure(DISPLAY_1, win32_graphics_driver_setup_24xrgb, LANGUAGE_ENGLISH, DISPLAY_1_THEME_1, &root);
-
-    default_buffer_toggle = root->gx_window_root_canvas->gx_canvas_display->gx_display_driver_buffer_toggle;
-    
-    /* Reset buffer toggle function.  */
-    root->gx_window_root_canvas->gx_canvas_display->gx_display_driver_buffer_toggle = smart_watch_gx_win32_display_buffer_toggle;
 
     /* Create main screens. */
     gx_studio_named_widget_create("main_screen", (GX_WIDGET *)root, GX_NULL);
@@ -179,6 +175,8 @@ VOID  start_guix(VOID)
     gx_studio_named_widget_create("yoga_screen", GX_NULL, GX_NULL);
     screens_initialize();
 
+    gx_studio_named_widget_create("screen_slide_parent", GX_NULL, GX_NULL);
+
     /* Reset root window draw function.  */
     gx_widget_draw_set((GX_WIDGET *)root, root_window_draw);
 
@@ -188,6 +186,20 @@ VOID  start_guix(VOID)
     /* Create slide animation control block.  */
     gx_animation_create(&slide_animation);
 
+#ifdef USE_CANVAS_FOR_SCREEN_SLIDE_ANIMATION
+    gx_canvas_create(&animation_canvas, GX_NULL,
+        root->gx_window_root_canvas->gx_canvas_display,
+        GX_CANVAS_SIMPLE,
+        ANIMATION_CANVAS_WIDTH, ANIMATION_CANVAS_HEIGHT,
+        animation_canvas_memory, ANIMATION_CANVAS_WIDTH * ANIMATION_CANVAS_HEIGHT * sizeof(GX_COLOR));
+
+    gx_utility_rectangle_define(&size, 0, 0, ANIMATION_CANVAS_WIDTH - 1, ANIMATION_CANVAS_HEIGHT - 1);
+    gx_window_root_create(&animation_root, "animation_root", &animation_canvas, GX_STYLE_BORDER_NONE, GX_NULL, &size);
+    gx_canvas_hide(&animation_canvas);
+
+    gx_canvas_hardware_layer_bind(&animation_canvas, 2);
+#endif
+    
     /* Show the root window.  */
     gx_widget_show(root);
 
@@ -276,11 +288,16 @@ static GX_BOOL enable_vertical_slide_animation()
 
     memset(&slide_animation_info, 0, sizeof(GX_ANIMATION_INFO));
     slide_animation_info.gx_animation_parent = (GX_WIDGET*)&main_screen;
-    slide_animation_info.gx_animation_style = GX_ANIMATION_SCREEN_DRAG | GX_ANIMATION_VERTICAL | GX_ANIMATION_WRAP;
-    slide_animation_info.gx_animation_id = SCREEN_SLIDE_ANIMATION_ID;
+    slide_animation_info.gx_animation_style = GX_ANIMATION_SCREEN_DRAG | GX_ANIMATION_VERTICAL | GX_ANIMATION_WRAP | GX_ANIMATION_BLOCK_MOVE;
+    slide_animation_info.gx_animation_id = SCREEN_DRAG_ANIMATION_ID;
     slide_animation_info.gx_animation_frame_interval = 20 / GX_SYSTEM_TIMER_MS;
     slide_animation_info.gx_animation_slide_screen_list = container_screen_list;
-
+    slide_animation_info.gx_animation_start_alpha = 255;
+    slide_animation_info.gx_animation_end_alpha = 255;
+#ifdef USE_CANVAS_FOR_SCREEN_SLIDE_ANIMATION
+    gx_animation_canvas_define(&slide_animation, &animation_canvas);
+#endif
+        
     gx_animation_drag_enable(&slide_animation, (GX_WIDGET*)&main_screen, &slide_animation_info);
 
     return GX_SUCCESS;
@@ -300,11 +317,16 @@ static GX_BOOL enable_horizontal_slide_animation()
 
     if (slide_animation_info.gx_animation_parent)
     {
-        slide_animation_info.gx_animation_style = GX_ANIMATION_SCREEN_DRAG | GX_ANIMATION_HORIZONTAL | GX_ANIMATION_WRAP;
-        slide_animation_info.gx_animation_id = SCREEN_SLIDE_ANIMATION_ID;
+        slide_animation_info.gx_animation_style = GX_ANIMATION_SCREEN_DRAG | GX_ANIMATION_HORIZONTAL | GX_ANIMATION_WRAP | GX_ANIMATION_BLOCK_MOVE;
+        slide_animation_info.gx_animation_id = SCREEN_DRAG_ANIMATION_ID;
         slide_animation_info.gx_animation_frame_interval = 20 / GX_SYSTEM_TIMER_MS;
         slide_animation_info.gx_animation_slide_screen_list = get_page_screen_list(slide_animation_info.gx_animation_parent);
-
+        slide_animation_info.gx_animation_start_alpha = 255;
+        slide_animation_info.gx_animation_end_alpha = 255;
+#ifdef USE_CANVAS_FOR_SCREEN_SLIDE_ANIMATION
+        gx_animation_canvas_define(&slide_animation, &animation_canvas);
+#endif
+    
         /* Enable slide animation for the visible page container screen.  */
         gx_animation_drag_enable(&slide_animation, slide_animation_info.gx_animation_parent, &slide_animation_info);
 
@@ -345,6 +367,49 @@ static VOID system_clock_update()
 }
 
 /******************************************************************************************/
+/* Clear time record of screens.                                                          */
+/******************************************************************************************/
+VOID clear_screen_clock_record()
+{
+    screen_clock_record_hour = -1;
+    screen_clock_record_minute = -1;
+}
+
+/******************************************************************************************/
+/* Update screen clock.                                                                   */
+/******************************************************************************************/
+VOID screen_clock_update(GX_NUMERIC_PROMPT *hour, GX_NUMERIC_PROMPT *minute, GX_PROMPT *second)
+{
+    GX_RESOURCE_ID text_color_id;
+
+    if (screen_clock_record_hour != system_time.hour)
+    {
+        gx_numeric_prompt_value_set(hour, system_time.hour);
+        screen_clock_record_hour = system_time.hour;
+    }
+
+    if (screen_clock_record_minute != system_time.minute)
+    {
+        gx_numeric_prompt_value_set(minute, system_time.minute);
+        screen_clock_record_minute = system_time.minute;
+    }
+
+    if (second)
+    {
+        if (system_time.second & 0x1)
+        {
+            text_color_id = GX_COLOR_ID_WHITE;
+        }
+        else
+        {
+            text_color_id = GX_COLOR_ID_GRAY;
+        }
+
+        gx_prompt_text_color_set(second, text_color_id, text_color_id, text_color_id);
+    }
+}
+
+/******************************************************************************************/
 /* Send event to current screen.                                                          */
 /******************************************************************************************/
 static VOID send_event_to_current_screen(INT event_type)
@@ -363,7 +428,7 @@ static VOID send_event_to_current_screen(INT event_type)
         memset(&myevent, 0, sizeof(GX_EVENT));
         myevent.gx_event_type = event_type;
         myevent.gx_event_target = parent;
-        gx_system_event_send(&myevent);
+        parent->gx_widget_event_process_function(parent, &myevent);
     }
 }
 
@@ -412,7 +477,8 @@ VOID page_screen_slide(GX_WIDGET *current_screen, GX_WIDGET *target_screen)
     INT index = 0;
     GX_ANIMATION *animation;
     GX_ANIMATION_INFO animation_info;
-    GX_RECTANGLE *size;
+    GX_RECTANGLE *parent_size;
+    GX_RECTANGLE size;
     INT width;
     INT distance;
 
@@ -420,6 +486,8 @@ VOID page_screen_slide(GX_WIDGET *current_screen, GX_WIDGET *target_screen)
     {
         return;
     }
+
+    send_event_to_current_screen(USER_EVENT_ANIMATION_STOP);
 
     /* Find the visible page container screen.  */
     screen_container = find_visible_screen_of_screen_list(container_screen_list);
@@ -441,9 +509,22 @@ VOID page_screen_slide(GX_WIDGET *current_screen, GX_WIDGET *target_screen)
         index++;
     }
 
-    size = &screen_container->gx_widget_size;
-    width = size->gx_rectangle_right - size->gx_rectangle_left + 1;
+    parent_size = &screen_container->gx_widget_size;
+    width = parent_size->gx_rectangle_right - parent_size->gx_rectangle_left + 1;
     distance = width * (target_screen_index - current_screen_index);
+
+    size = *parent_size;
+
+    if (target_screen_index > current_screen_index)
+    {
+        size.gx_rectangle_right = size.gx_rectangle_left + distance + width - 1;
+    }
+    else
+    {
+        size.gx_rectangle_left = size.gx_rectangle_right + distance - width + 1;
+    }
+
+    gx_widget_resize(&screen_slide_parent, &size);
 
     memset(&animation_info, 0, sizeof(GX_ANIMATION_INFO));
     animation_info.gx_animation_frame_interval = 1;
@@ -452,20 +533,25 @@ VOID page_screen_slide(GX_WIDGET *current_screen, GX_WIDGET *target_screen)
     animation_info.gx_animation_start_alpha = 255;
     animation_info.gx_animation_end_alpha = 255;
     animation_info.gx_animation_parent = screen_container;
-    animation_info.gx_animation_start_position.gx_point_y = size->gx_rectangle_top;
-    animation_info.gx_animation_end_position.gx_point_y = size->gx_rectangle_top;
-    animation_info.gx_animation_style = GX_ANIMATION_TRANSLATE | GX_ANIMATION_DETACH;
+    animation_info.gx_animation_target = (GX_WIDGET *)&screen_slide_parent;
+    animation_info.gx_animation_start_position.gx_point_x = size.gx_rectangle_left;
+    animation_info.gx_animation_start_position.gx_point_y = size.gx_rectangle_top;
+    animation_info.gx_animation_end_position.gx_point_x= size.gx_rectangle_left - distance;
+    animation_info.gx_animation_end_position.gx_point_y = size.gx_rectangle_top;
+    animation_info.gx_animation_style = GX_ANIMATION_TRANSLATE | GX_ANIMATION_BLOCK_MOVE;
 
     index = current_screen_index;
-    while (index != target_screen_index)
+    while (1)
     {
-        animation_info.gx_animation_target = screen_list[index];
-        animation_info.gx_animation_start_position.gx_point_x = size->gx_rectangle_left + (width * (index - current_screen_index));
-        animation_info.gx_animation_end_position.gx_point_x = animation_info.gx_animation_start_position.gx_point_x - distance;
+        gx_widget_attach(&screen_slide_parent, screen_list[index]);
 
-        if (gx_system_animation_get(&animation) == GX_SUCCESS)
+        size.gx_rectangle_left = parent_size->gx_rectangle_left + (width * (index - current_screen_index));
+        size.gx_rectangle_right = size.gx_rectangle_left + width - 1;
+        gx_widget_resize(screen_list[index], &size);
+
+        if (index == target_screen_index)
         {
-            gx_animation_start(animation, &animation_info);
+            break;
         }
 
         if (current_screen_index < target_screen_index)
@@ -478,12 +564,10 @@ VOID page_screen_slide(GX_WIDGET *current_screen, GX_WIDGET *target_screen)
         }
     }
 
-    animation_info.gx_animation_target = screen_list[index];
-    animation_info.gx_animation_style = GX_ANIMATION_TRANSLATE;
-    animation_info.gx_animation_start_position.gx_point_x = size->gx_rectangle_left + distance;
-    animation_info.gx_animation_end_position.gx_point_x = size->gx_rectangle_left;
-
-    gx_animation_start(&slide_animation, &animation_info);
+    if (gx_system_animation_get(&animation) == GX_SUCCESS)
+    {
+        gx_animation_start(animation, &animation_info);
+    }
 }
 
 /******************************************************************************************/
@@ -499,7 +583,8 @@ VOID container_screen_slide(GX_WIDGET* current_screen, GX_WIDGET* target_screen)
     INT index = 0;
     GX_ANIMATION* animation;
     GX_ANIMATION_INFO animation_info;
-    GX_RECTANGLE* size;
+    GX_RECTANGLE *parent_size;
+    GX_RECTANGLE size;
     INT height;
     INT distance;
     GX_WIDGET* child = GX_NULL;
@@ -508,6 +593,8 @@ VOID container_screen_slide(GX_WIDGET* current_screen, GX_WIDGET* target_screen)
     {
         return;
     }
+
+    send_event_to_current_screen(USER_EVENT_ANIMATION_STOP);
 
     /* Find the visible page container screen.  */
     current_screen_container = find_visible_screen_of_screen_list(container_screen_list);
@@ -540,9 +627,22 @@ VOID container_screen_slide(GX_WIDGET* current_screen, GX_WIDGET* target_screen)
         index++;
     }
 
-    size = &main_screen.gx_widget_size;
-    height = size->gx_rectangle_bottom - size->gx_rectangle_top + 1;
+    parent_size = &main_screen.gx_widget_size;
+    height = parent_size->gx_rectangle_bottom - parent_size->gx_rectangle_top + 1;
     distance = height * (target_screen_index - current_screen_index);
+
+    size = *parent_size;
+
+    if (target_screen_index > current_screen_index)
+    {
+        size.gx_rectangle_bottom = size.gx_rectangle_top + distance + height - 1;
+    }
+    else
+    {
+        size.gx_rectangle_top = size.gx_rectangle_bottom + distance - height + 1;
+    }
+
+    gx_widget_resize(&screen_slide_parent, &size);
 
     memset(&animation_info, 0, sizeof(GX_ANIMATION_INFO));
     animation_info.gx_animation_frame_interval = 1;
@@ -551,20 +651,26 @@ VOID container_screen_slide(GX_WIDGET* current_screen, GX_WIDGET* target_screen)
     animation_info.gx_animation_start_alpha = 255;
     animation_info.gx_animation_end_alpha = 255;
     animation_info.gx_animation_parent = (GX_WIDGET *)&main_screen;
-    animation_info.gx_animation_start_position.gx_point_x = size->gx_rectangle_left;
-    animation_info.gx_animation_end_position.gx_point_x = size->gx_rectangle_left;
-    animation_info.gx_animation_style = GX_ANIMATION_TRANSLATE | GX_ANIMATION_DETACH;
+    animation_info.gx_animation_target = (GX_WIDGET *)&screen_slide_parent;
+    animation_info.gx_animation_start_position.gx_point_x = size.gx_rectangle_left;
+    animation_info.gx_animation_start_position.gx_point_y = size.gx_rectangle_top;
+    animation_info.gx_animation_end_position.gx_point_x = size.gx_rectangle_left;
+    animation_info.gx_animation_end_position.gx_point_y = size.gx_rectangle_top - distance;
+    animation_info.gx_animation_style = GX_ANIMATION_TRANSLATE | GX_ANIMATION_BLOCK_MOVE;
 
     index = current_screen_index;
-    while(index != target_screen_index)
-    {
-        animation_info.gx_animation_target = screen_list[index];
-        animation_info.gx_animation_start_position.gx_point_y = size->gx_rectangle_top + (height * (index - current_screen_index));
-        animation_info.gx_animation_end_position.gx_point_y = animation_info.gx_animation_start_position.gx_point_y - distance;
 
-        if (gx_system_animation_get(&animation) == GX_SUCCESS)
+    while(1)
+    {
+        gx_widget_attach(&screen_slide_parent, screen_list[index]);
+
+        size.gx_rectangle_top = parent_size->gx_rectangle_top + (height * (index - current_screen_index));
+        size.gx_rectangle_bottom = size.gx_rectangle_top + height - 1;
+        gx_widget_resize(screen_list[index], &size);
+
+        if (index == target_screen_index)
         {
-            gx_animation_start(animation, &animation_info);
+            break;
         }
 
         if (current_screen_index < target_screen_index)
@@ -577,12 +683,10 @@ VOID container_screen_slide(GX_WIDGET* current_screen, GX_WIDGET* target_screen)
         }
     }
 
-    animation_info.gx_animation_target = screen_list[index];
-    animation_info.gx_animation_style = GX_ANIMATION_TRANSLATE;
-    animation_info.gx_animation_start_position.gx_point_y = size->gx_rectangle_top + distance;
-    animation_info.gx_animation_end_position.gx_point_y = size->gx_rectangle_top;
-
-    gx_animation_start(&slide_animation, &animation_info);
+    if (gx_system_animation_get(&animation) == GX_SUCCESS)
+    {
+        gx_animation_start(animation, &animation_info);
+    }
 }
 
 /******************************************************************************************/
@@ -612,6 +716,15 @@ VOID root_window_draw(GX_WINDOW* root)
     {
         /* Draw logo. */
         gx_canvas_pixelmap_draw(15, 15, map);
+    }
+    
+    gx_context_pixelmap_get(GX_PIXELMAP_ID_WATCH, &map);
+
+    if (map)
+    {
+        /* Draw smart watch frame.  */
+        gx_context_fill_color_set(GX_COLOR_ID_WHITE);
+        gx_canvas_pixelmap_draw((DISPLAY_1_X_RESOLUTION - map->gx_pixelmap_width) >> 1, 0, map);
     }
 }
 
@@ -654,8 +767,14 @@ UINT main_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
 
         /* Start a timer to update time. */
         gx_system_timer_start(window, SYSTEM_CLOCK_TIMER_ID, GX_TICKS_SECOND, GX_TICKS_SECOND);
+        
+        status = gx_window_event_process(window, event_ptr);
 
-        return gx_window_event_process(window, event_ptr);
+        if(home_screen.gx_widget_status & GX_STATUS_VISIBLE)
+        {
+            gx_sprite_start(&home_screen.home_screen_sprite, 0);
+        }
+        break;
 
     case GX_EVENT_TIMER:
         if (event_ptr->gx_event_payload.gx_event_timer_id == SYSTEM_CLOCK_TIMER_ID)
@@ -708,11 +827,23 @@ UINT main_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
         break;
 
     case GX_EVENT_ANIMATION_COMPLETE:
-        if (event_ptr->gx_event_sender == SCREEN_SLIDE_ANIMATION_ID)
+        if (event_ptr->gx_event_sender == SCREEN_DRAG_ANIMATION_ID)
         {
             /* Disable slide animation.  */
             gx_animation_drag_disable(&slide_animation, slide_animation.gx_animation_info.gx_animation_parent);
 
+            send_event_to_current_screen(USER_EVENT_ANIMATION_START);
+        }
+        else if (event_ptr->gx_event_sender == SCREEN_SLIDE_ANIMATION_ID)
+        {
+            gx_widget_attach(screen_slide_parent.gx_widget_parent, screen_slide_parent.gx_widget_last_child);
+            parent = screen_slide_parent.gx_widget_first_child;
+            while (parent)
+            {
+                gx_widget_detach(parent);
+                parent = parent->gx_widget_next;
+            }
+            gx_widget_detach(&screen_slide_parent);
             send_event_to_current_screen(USER_EVENT_ANIMATION_START);
         }
         break;
@@ -730,5 +861,5 @@ UINT main_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
         return gx_window_event_process((GX_WINDOW*)window, event_ptr);
     }
 
-    return 0;
+    return status;
 }

@@ -2,20 +2,11 @@
 
 #define CLOCK_SLIDE_SHIFT 30
 
-/* Extern system time.  */
-extern TIME system_time;
+#define TARGET_XPOS_MIN 227
+#define TARGET_XPOS_MAX (TARGET_XPOS_MIN + CLOCK_SLIDE_SHIFT)
 
 /* Define clock slide animation control blocks. */
 static GX_ANIMATION clock_slide_animation[2];
-
-/******************************************************************************************/
-/* Update clock time.                                                                     */
-/******************************************************************************************/
-static VOID screen_clock_update()
-{
-    gx_numeric_prompt_value_set(&clock_4_screen.clock_4_screen_hour, system_time.hour);
-    gx_numeric_prompt_value_set(&clock_4_screen.clock_4_screen_minute, system_time.minute);
-}
 
 /******************************************************************************************/
 /* Start clock slide animation.                                                           */
@@ -25,15 +16,18 @@ static void clock_slide_animation_start()
     GX_ANIMATION_INFO info;
     GX_WIDGET *target_hour = (GX_WIDGET*)&clock_4_screen.clock_4_screen_hour;
     GX_WIDGET *target_minute = (GX_WIDGET*)&clock_4_screen.clock_4_screen_minute;
-    INT sign;
+    GX_VALUE hour_end_xpos;
+    GX_VALUE minute_end_xpos;
 
     if (target_hour->gx_widget_size.gx_rectangle_left < target_minute->gx_widget_size.gx_rectangle_left)
     {
-        sign = 1;
+        hour_end_xpos = TARGET_XPOS_MAX;
+        minute_end_xpos = TARGET_XPOS_MIN;
     }
     else
     {
-        sign = -1;
+        hour_end_xpos = TARGET_XPOS_MIN;
+        minute_end_xpos = TARGET_XPOS_MAX;
     }
 
     memset(&info, 0, sizeof(GX_ANIMATION_INFO));
@@ -42,19 +36,19 @@ static void clock_slide_animation_start()
     info.gx_animation_start_alpha = 255;
     info.gx_animation_end_alpha = 255;
     info.gx_animation_frame_interval = 40 / GX_SYSTEM_TIMER_MS;
-    info.gx_animation_steps = 30;
     info.gx_animation_id = CLOCK_SLIDE_ANIMATION_ID;
     info.gx_animation_start_position.gx_point_x = target_hour->gx_widget_size.gx_rectangle_left;
+    info.gx_animation_end_position.gx_point_x = hour_end_xpos;
     info.gx_animation_start_position.gx_point_y = target_hour->gx_widget_size.gx_rectangle_top;
-    info.gx_animation_end_position.gx_point_x = info.gx_animation_start_position.gx_point_x + CLOCK_SLIDE_SHIFT * sign;
     info.gx_animation_end_position.gx_point_y = info.gx_animation_start_position.gx_point_y;
+    info.gx_animation_steps = GX_ABS(info.gx_animation_end_position.gx_point_x - info.gx_animation_start_position.gx_point_x);
 
     gx_animation_start(&clock_slide_animation[0], &info);
 
     info.gx_animation_target = target_minute;
     info.gx_animation_start_position.gx_point_x = target_minute->gx_widget_size.gx_rectangle_left;
+    info.gx_animation_end_position.gx_point_x = minute_end_xpos;
     info.gx_animation_start_position.gx_point_y = target_minute->gx_widget_size.gx_rectangle_top;
-    info.gx_animation_end_position.gx_point_x = info.gx_animation_start_position.gx_point_x - CLOCK_SLIDE_SHIFT * sign;
     info.gx_animation_end_position.gx_point_y = info.gx_animation_start_position.gx_point_y;
 
     gx_animation_start(&clock_slide_animation[1], &info);
@@ -80,7 +74,8 @@ UINT clock_4_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
     case GX_EVENT_SHOW:
         gx_animation_create(&clock_slide_animation[0]);
         gx_animation_create(&clock_slide_animation[1]);
-        screen_clock_update();
+        clear_screen_clock_record();
+        screen_clock_update(&clock_4_screen.clock_4_screen_hour, &clock_4_screen.clock_4_screen_minute, GX_NULL);
         gx_system_timer_start(window, SCREEN_CLOCK_TIMER_ID, GX_TICKS_SECOND, GX_TICKS_SECOND);
         return gx_window_event_process(window, event_ptr);
 
@@ -107,7 +102,7 @@ UINT clock_4_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
     case GX_EVENT_TIMER:
         if (event_ptr->gx_event_payload.gx_event_timer_id == SCREEN_CLOCK_TIMER_ID)
         {
-            screen_clock_update();
+            screen_clock_update(&clock_4_screen.clock_4_screen_hour, &clock_4_screen.clock_4_screen_minute, GX_NULL);
         }
         break;
 

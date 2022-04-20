@@ -144,8 +144,7 @@ UINT passcode_screen_event_process(GX_WINDOW *window, GX_EVENT *event_ptr)
         break;
 
     case GX_SIGNAL(ID_CLOSE, GX_EVENT_CLICKED):
-        gx_widget_attach(window->gx_widget_parent, app_info.current_screen);
-        gx_widget_detach(window);
+        toggle_screen(app_info.previous_screen);
         break;
 
     default:

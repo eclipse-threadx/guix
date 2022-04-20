@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.9.0                                               */
-/*  Date (dd.mm.yyyy): 28.10.2021   Time (hh:mm): 10:18                        */
+/*  GUIX Studio Revision 6.1.10.1                                              */
+/*  Date (dd.mm.yyyy): 23. 3.2022   Time (hh:mm): 14:56                        */
 /*******************************************************************************/
 
 
@@ -374,6 +374,10 @@ UINT gx_studio_icon_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_b
     if (props->selected_pixelmap_id)
     {
         gx_icon_pixelmap_set(icon, props->normal_pixelmap_id, props->selected_pixelmap_id);
+    }
+    else
+    {
+        gx_widget_resize((GX_WIDGET *)icon, (GX_RECTANGLE *)&info->size);
     }
     return status;
 }

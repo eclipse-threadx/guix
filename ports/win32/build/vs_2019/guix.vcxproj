@@ -53,6 +53,7 @@
     <ClCompile Include="..\..\..\..\common\src\gxe_generic_scroll_wheel_row_height_set.c" />
     <ClCompile Include="..\..\..\..\common\src\gxe_generic_scroll_wheel_total_rows_set.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_animation_delete.c" />
+    <ClCompile Include="..\..\..\..\common\src\gx_canvas_text_draw.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_display_driver_16bpp_rotated_block_move.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_display_driver_16bpp_rotated_canvas_copy.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_display_driver_16bpp_rotated_horizontal_line_draw.c" />
@@ -586,7 +587,6 @@
     <ClCompile Include="..\..\..\..\common\src\gx_canvas_rotated_text_draw.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_canvas_shift.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_canvas_show.c" />
-    <ClCompile Include="..\..\..\..\common\src\gx_canvas_text_draw.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_checkbox_create.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_checkbox_draw.c" />
     <ClCompile Include="..\..\..\..\common\src\gx_checkbox_event_process.c" />

@@ -115,7 +115,6 @@ int screen_animation_count = 0;
 static GX_BOOL is_animation_active()
 {
     if (page_slide_animation_count ||
-        screen_animation_count ||
         slide_animation.gx_animation_status != GX_ANIMATION_IDLE)
     {
         return GX_TRUE;
@@ -228,7 +227,7 @@ VOID title_animation_start(CONTROLLER_BASE_CONTROL_BLOCK *base)
         info.gx_animation_target = target;
         info.gx_animation_start_alpha = 255;
         info.gx_animation_end_alpha = 255;
-        info.gx_animation_steps = 400 / GX_SYSTEM_TIMER_MS;
+        info.gx_animation_steps = 100 / GX_SYSTEM_TIMER_MS;
         info.gx_animation_frame_interval = 2;
         info.gx_animation_start_position.gx_point_x = base->gx_widget_size.gx_rectangle_left + 22;
         info.gx_animation_start_position.gx_point_y = base->gx_widget_size.gx_rectangle_top - 18;
@@ -261,7 +260,7 @@ static VOID slide_animation_start(GX_WINDOW *window)
         slide_animation_info.gx_animation_style = GX_ANIMATION_SCREEN_DRAG | GX_ANIMATION_HORIZONTAL | GX_ANIMATION_WRAP | GX_ANIMATION_SINE_EASE_OUT;
         slide_animation_info.gx_animation_id = ANIMATION_ID_DRAG_SLIDE;
         slide_animation_info.gx_animation_frame_interval = 1;
-        slide_animation_info.gx_animation_steps = 600 / GX_SYSTEM_TIMER_MS;
+        slide_animation_info.gx_animation_steps = 400 / GX_SYSTEM_TIMER_MS;
         slide_animation_info.gx_animation_slide_screen_list = info->window_list;
 
         gx_animation_drag_enable(&slide_animation, (GX_WIDGET *)window, &slide_animation_info);
@@ -668,6 +667,35 @@ UINT screen_base_event_process(GX_WINDOW *window, GX_EVENT *event_ptr)
         gx_window_event_process(window, event_ptr);
         break;
 
+    case GX_EVENT_HIDE:
+        switch (window->gx_widget_id)
+        {
+        case ID_LIGHTS_SCREEN:
+            lights_screen_animation_stop();
+            break;
+
+        case ID_THERMOSTAT_SCREEN:
+            thermostat_screen_animation_stop();
+            break;
+
+        case ID_LOCKS_SCREEN:
+            locks_screen_animation_stop();
+            break;
+
+        case ID_WEATHER_SCREEN:
+            weather_screen_animation_stop();
+            break;
+        }
+
+        /* Delete footer animations.  */
+        gx_animation_delete(GX_NULL, (GX_WIDGET *)window);
+
+        /* Disable drag slide animation. */
+        gx_animation_drag_disable(&slide_animation, (GX_WIDGET*)&((SCREEN_BASE_CONTROL_BLOCK*)window)->screen_base_slide_win);
+
+        gx_window_event_process(window, event_ptr);
+        break;
+
     case GX_SIGNAL(ID_HOME, GX_EVENT_CLICKED):
         if (!is_animation_active())
         {
@@ -680,8 +708,7 @@ UINT screen_base_event_process(GX_WINDOW *window, GX_EVENT *event_ptr)
         if (!is_animation_active())
         {
             /* Toggle to passcode screen. */
-            gx_widget_attach(window->gx_widget_parent, (GX_WIDGET *)&passcode_screen);
-            gx_widget_detach(window);
+            toggle_screen((GX_WIDGET *)&passcode_screen);
         }
         break;
 
@@ -710,7 +737,10 @@ UINT screen_base_event_process(GX_WINDOW *window, GX_EVENT *event_ptr)
         break;
 
     case GX_EVENT_ANIMATION_COMPLETE:
-        on_animation_complete(window, event_ptr);
+        if (window -> gx_widget_status & GX_STATUS_VISIBLE)
+        {
+            on_animation_complete(window, event_ptr);
+        }
         break;
 
     default:

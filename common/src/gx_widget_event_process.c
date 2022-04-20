@@ -127,7 +127,7 @@ GX_WIDGET *end = GX_NULL;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_widget_event_process                            PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -171,6 +171,10 @@ GX_WIDGET *end = GX_NULL;
 /*                                            avoid pass widget delete    */
 /*                                            event to parent,            */
 /*                                            resulting in version 6.1.3  */
+/*  04-25-2022     Ting Zhu                 Modified comment(s), modified */
+/*                                            system input release logic  */
+/*                                            on widget hide event,       */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_widget_event_process(GX_WIDGET *widget, GX_EVENT *event_ptr)
@@ -178,6 +182,7 @@ UINT  _gx_widget_event_process(GX_WIDGET *widget, GX_EVENT *event_ptr)
 GX_WIDGET *child;
 GX_EVENT   new_event;
 UINT       status = GX_SUCCESS;
+GX_EVENT   input_release_event;
 
     /* Process relative to the type of event. */
     switch (event_ptr -> gx_event_type)
@@ -198,7 +203,10 @@ UINT       status = GX_SUCCESS;
             /* Check if the widget still owns system input. */
             if (widget -> gx_widget_status & GX_STATUS_OWNS_INPUT)
             {
-                _gx_system_input_release(widget);
+                memset(&input_release_event, 0, sizeof(GX_EVENT));
+                input_release_event.gx_event_target = widget;
+                input_release_event.gx_event_type = GX_EVENT_INPUT_RELEASE;
+                widget -> gx_widget_event_process_function(widget, &input_release_event);
             }
             _gx_widget_children_event_process(widget, event_ptr);
         }

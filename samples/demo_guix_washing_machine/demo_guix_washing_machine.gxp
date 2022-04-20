@@ -4,7 +4,7 @@
 <header>
 <project_version>55</project_version>
 <guix_version>60110</guix_version>
-<studio_version>6010900</studio_version>
+<studio_version>6011000</studio_version>
 <project_name>demo_guix_washing_machine</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
@@ -1959,7 +1959,7 @@
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
-<enabled>TRUE</enabled>
+<enabled>FALSE</enabled>
 <compress>FALSE</compress>
 <folder_id>4100</folder_id>
 <resource>
@@ -1969,7 +1969,7 @@
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
-<enabled>TRUE</enabled>
+<enabled>FALSE</enabled>
 <compress>TRUE</compress>
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
@@ -1985,7 +1985,7 @@
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
-<enabled>TRUE</enabled>
+<enabled>FALSE</enabled>
 <compress>TRUE</compress>
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
@@ -2001,7 +2001,7 @@
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
-<enabled>TRUE</enabled>
+<enabled>FALSE</enabled>
 <compress>TRUE</compress>
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
@@ -2017,7 +2017,7 @@
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
-<enabled>TRUE</enabled>
+<enabled>FALSE</enabled>
 <compress>TRUE</compress>
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
@@ -2048,15 +2048,15 @@
 </resource>
 <resource>
 <type>PIXELMAP</type>
-<name>WAVE_CLEAR_WHITE</name>
+<name>WAVE</name>
 <pathinfo>
-<pathname>graphics\wave-clear-white.png</pathname>
+<pathname>graphics\wave.png</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<alpha>TRUE</alpha>
+<alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
 <color_format>26</color_format>
@@ -2350,15 +2350,6 @@
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
 <folder_id>4099</folder_id>
-<resource>
-<name>Add New String</name>
-<pathinfo>
-<pathtype>project_relative</pathtype>
-</pathinfo>
-<is_default>FALSE</is_default>
-<enabled>TRUE</enabled>
-<compress>FALSE</compress>
-</resource>
 <resource>
 <name>Add New String</name>
 <pathinfo>

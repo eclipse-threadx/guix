@@ -4,7 +4,7 @@
 <header>
 <project_version>55</project_version>
 <guix_version>60108</guix_version>
-<studio_version>6010902</studio_version>
+<studio_version>6011001</studio_version>
 <project_name>demo_guix_home_automation</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
@@ -4134,6 +4134,15 @@
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
 </resource>
+<resource>
+<name>Add New String</name>
+<pathinfo>
+<pathtype>project_relative</pathtype>
+</pathinfo>
+<is_default>FALSE</is_default>
+<enabled>TRUE</enabled>
+<compress>FALSE</compress>
+</resource>
 </resource>
 <vscroll_appearance>
 <scroll_width>20</scroll_width>
@@ -8103,10 +8112,10 @@
 <type>prompt</type>
 <app_name>degree_lable</app_name>
 <size>
-<left>395</left>
-<top>195</top>
-<right>406</right>
-<bottom>212</bottom>
+<left>398</left>
+<top>180</top>
+<right>414</right>
+<bottom>202</bottom>
 </size>
 <style>268451840</style>
 <allocation>0</allocation>
@@ -8117,7 +8126,7 @@
 <template>FALSE</template>
 <visible_at_startup>FALSE</visible_at_startup>
 <string_id>STRING_16</string_id>
-<font_id>SYSTEM</font_id>
+<font_id>NORMAL</font_id>
 <normal_text_color>TEXT</normal_text_color>
 <selected_text_color>SELECTED_TEXT</selected_text_color>
 <disabled_text_color>DISABLED_TEXT</disabled_text_color>
@@ -11603,9 +11612,9 @@
 <app_name>lower_dot</app_name>
 <size>
 <left>281</left>
-<top>196</top>
+<top>176</top>
 <right>287</right>
-<bottom>202</bottom>
+<bottom>182</bottom>
 </size>
 <style>269615104</style>
 <allocation>0</allocation>

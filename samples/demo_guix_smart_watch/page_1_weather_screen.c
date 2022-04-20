@@ -3,7 +3,6 @@
 #define ANIMATION_TOTAL_STEPS 20
 #define CAL_ANIMATION_VAL(val) ((val) * animation_step / ANIMATION_TOTAL_STEPS)
 
-extern TIME system_time;
 static INT animation_step = 0;
 
 /******************************************************************************************/
@@ -64,28 +63,6 @@ static void animation_update()
 }
 
 /******************************************************************************************/
-/* Update title bar clock.                                                                */
-/******************************************************************************************/
-static VOID update_title_clock()
-{
-    GX_RESOURCE_ID text_color_id;
-
-    gx_numeric_prompt_value_set(&weather_screen.weather_screen_hour, system_time.hour);
-    gx_numeric_prompt_value_set(&weather_screen.weather_screen_minute, system_time.minute);
-
-    if (system_time.second & 0x1)
-    {
-        text_color_id = GX_COLOR_ID_WHITE;
-    }
-    else
-    {
-        text_color_id = GX_COLOR_ID_GRAY;
-    }
-
-    gx_prompt_text_color_set(&weather_screen.weather_screen_second, text_color_id, text_color_id, text_color_id);
-}
-
-/******************************************************************************************/
 /* Override the default event processing of "weather_screen" to handle signals from my    */
 /* child widgets.                                                                         */
 /******************************************************************************************/
@@ -95,7 +72,8 @@ UINT weather_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
     {
     case GX_EVENT_SHOW:
         screen_data_reset();
-        update_title_clock();
+        clear_screen_clock_record();
+        screen_clock_update(&weather_screen.weather_screen_hour, &weather_screen.weather_screen_minute, &weather_screen.weather_screen_second);
         weather_screen_music_progress_update();
         gx_system_timer_start(window, SCREEN_CLOCK_TIMER_ID, GX_TICKS_SECOND, GX_TICKS_SECOND);
         return gx_window_event_process(window, event_ptr);
@@ -116,7 +94,7 @@ UINT weather_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
             break;
 
         case SCREEN_CLOCK_TIMER_ID:
-            update_title_clock((SCREEN_TEMPLATE_CONTROL_BLOCK*)window);
+            screen_clock_update(&weather_screen.weather_screen_hour, &weather_screen.weather_screen_minute, &weather_screen.weather_screen_second);
             weather_screen_music_progress_update();
             break;
         }

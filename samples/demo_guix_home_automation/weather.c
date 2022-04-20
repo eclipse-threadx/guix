@@ -79,15 +79,15 @@ typedef struct WEATHER_ANIMATION_INFO_STRUCT{
    weather information page switches. */
 WEATHER_ANIMATION_INFO animation_info_list[] = {
     { ID_WEATHER_WIN, 0, -128, 28, 23, 23 },
-    { ID_WIND_WIN, 10, -128, 28, 110, 110 },
-    { ID_HUMIDITY_WIN, 20, -128, 28, 197, 197 },
+    { ID_WIND_WIN, 5, -128, 28, 110, 110 },
+    { ID_HUMIDITY_WIN, 10, -128, 28, 197, 197 },
     { ID_THU_WIN, 0, 611, 434, 15, 15 },
-    { ID_FRI_WIN, 10, 611, 434, 53, 53 },
-    { ID_SAT_WIN, 20, 611, 434, 91, 91 },
-    { ID_SUN_WIN, 30, 611, 434, 130, 130 },
-    { ID_MON_WIN, 40, 611, 434, 168, 168 },
-    { ID_TUE_WIN, 50, 611, 434, 206, 206 },
-    { ID_WED_WIN, 60, 611, 434, 243, 243 },
+    { ID_FRI_WIN, 5, 611, 434, 53, 53 },
+    { ID_SAT_WIN, 10, 611, 434, 91, 91 },
+    { ID_SUN_WIN, 15, 611, 434, 130, 130 },
+    { ID_MON_WIN, 20, 611, 434, 168, 168 },
+    { ID_TUE_WIN, 25, 611, 434, 206, 206 },
+    { ID_WED_WIN, 30, 611, 434, 243, 243 },
     { ID_TITLE, 0, 200, 200, -42, 24 },
     { 0, 0, 0, 0, 0, 0 }
 };
@@ -227,7 +227,7 @@ static VOID start_weather_children_animation(WEATHER_INFO *info)
     animation_info.gx_animation_style = 0;
     animation_info.gx_animation_start_alpha = 255;
     animation_info.gx_animation_end_alpha = 255;
-    animation_info.gx_animation_steps = 1000 / GX_SYSTEM_TIMER_MS;
+    animation_info.gx_animation_steps = 400 / GX_SYSTEM_TIMER_MS;
     animation_info.gx_animation_frame_interval = 1;
 
     /* Start animations descriped in animation information list. */
@@ -303,6 +303,26 @@ VOID weather_screen_animation_start()
 
         info++;
     }
+}
+
+/******************************************************************************************/
+/* Stop all animations in weather screen.                                                 */
+/******************************************************************************************/
+VOID weather_screen_animation_stop()
+{
+    WEATHER_INFO* info = weather_info_list;
+
+    while (info->widget)
+    {
+        if (info->widget->gx_widget_status & GX_STATUS_VISIBLE)
+        {
+            gx_animation_delete(GX_NULL, (GX_WIDGET *)info->widget);
+        }
+
+        info++;
+    }
+    
+    screen_animation_count = 0;
 }
 
 /******************************************************************************************/

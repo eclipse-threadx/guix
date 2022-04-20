@@ -94,8 +94,6 @@ VOID update_water_level_numeric_values(INT value)
     GX_RADIAL_SLIDER_INFO *info = &water_level_window.water_level_window_water_level_slider.gx_radial_slider_info;
     INT water_level;
 
-    gx_button_select((GX_BUTTON*)get_button_widget(value));
-
     /* Convert angle value to temperature value.  */
     water_level = (info->gx_radial_slider_info_current_angle - info->gx_radial_slider_info_min_angle) *
                   (MAX_WATER_LEVEL - MIN_WATER_LEVEL) /
@@ -149,6 +147,11 @@ UINT water_level_window_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
     case GX_SIGNAL(ID_BTN_LOW, GX_EVENT_RADIO_SELECT):
     case GX_SIGNAL(ID_BTN_MIN, GX_EVENT_RADIO_SELECT):
         update_water_level_slider_value(event_ptr->gx_event_sender);
+        break;
+
+    case GX_SIGNAL(ID_WATER_LEVEL_SLIDER, GX_EVENT_ANIMATION_COMPLETE):
+        gx_button_select((GX_BUTTON*)get_button_widget(water_level_window.water_level_window_water_level_slider.
+                                                       gx_radial_slider_info.gx_radial_slider_info_current_angle));
         break;
 
     default:

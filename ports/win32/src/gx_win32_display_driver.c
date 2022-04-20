@@ -1442,7 +1442,7 @@ WNDCLASS  wndclass;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    WndProc                                            PORTABLE C       */
-/*                                                           6.1.10       */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1478,6 +1478,9 @@ WNDCLASS  wndclass;
 /*  01-31-2022     Ting Zhu                 Modified comment(s), modified */
 /*                                            GUIX event send logic,      */
 /*                                            resulting in version 6.1.10 */
+/*  04-25-2022     Ting Zhu                 Modified comment(s), improved */
+/*                                            timer event send logic,     */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 LRESULT CALLBACK gx_win32_event_process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1501,7 +1504,16 @@ GX_BOOL                       check_key_event;
     case WM_TIMER:
         NewEvent.gx_event_type = GX_EVENT_TIMER;
         NewEvent.gx_event_payload.gx_event_ulongdata = 1;
-        gx_win32_event_to_guix(&NewEvent);
+
+#ifdef GX_THREADX_BINDING
+        _tx_thread_context_save();
+#endif
+
+        gx_system_event_fold(&NewEvent);
+
+#ifdef GX_THREADX_BINDING
+        _tx_thread_context_restore();
+#endif
         return 0;
 
     case WM_PAINT:

@@ -28,6 +28,7 @@ static THERMOSTAT_INFO thermostat_info_list[] = {
 
 /* This variable is used for screen slide animation. */
 extern GX_ANIMATION slide_animation;
+extern int screen_animation_count;
 
 /******************************************************************************************/
 /* Retrieve thermostat information with specified thermostat controller.                  */
@@ -278,6 +279,26 @@ VOID thermostat_screen_animation_start()
 
         info++;
     }
+}
+
+/******************************************************************************************/
+/* Stop all animations in thermostat screen.                                              */
+/******************************************************************************************/
+VOID thermostat_screen_animation_stop()
+{
+    THERMOSTAT_INFO* info = thermostat_info_list;
+
+    while (info->controller)
+    {
+        if (info->controller->base.gx_widget_status & GX_STATUS_VISIBLE)
+        {
+            gx_animation_delete(GX_NULL, (GX_WIDGET *)&info->controller->base);
+        }
+
+        info++;
+    }
+    
+    screen_animation_count = 0;
 }
 
 

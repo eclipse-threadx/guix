@@ -29,7 +29,7 @@ GX_ANIMATION slide_animation;
 GX_PIXELMAP main_screen_bg;
 
 /* Define application varaible to record current screen and overrall energy used today. */
-APP_INFO app_info = { (GX_WIDGET *)&main_screen.main_screen_home_window, 8746594 };
+APP_INFO app_info = { (GX_WIDGET *)&main_screen.main_screen_home_window, GX_NULL, 8746594 };
 
 const GX_CHAR *day_names[7] = {
     "Sunday",
@@ -298,7 +298,7 @@ VOID fade_in_home_window(int event_type)
 /******************************************************************************************/
 VOID toggle_screen(GX_WIDGET *new_screen)
 {
-    if (new_screen->gx_widget_id == app_info.current_screen->gx_widget_id)
+    if (!new_screen || new_screen->gx_widget_id == app_info.current_screen->gx_widget_id)
     {
         /* no change. */
         return;
@@ -358,6 +358,7 @@ VOID toggle_screen(GX_WIDGET *new_screen)
         break;
     }
 
+    app_info.previous_screen = app_info.current_screen;
     app_info.current_screen = new_screen;
 }
 

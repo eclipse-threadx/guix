@@ -94,10 +94,10 @@ UINT weather_screen_template_event_process(GX_WINDOW *window, GX_EVENT *event_pt
     {
     case GX_EVENT_SHOW:
         update_screen_weather_info((WEATHER_SCREEN_TEMPLATE_CONTROL_BLOCK *)window);
-        return gx_window_event_process(window, event_ptr);
+        return screen_template_event_process(window, event_ptr);
 
     default:
-        return gx_window_event_process(window, event_ptr);
+        return screen_template_event_process(window, event_ptr);
     }
 
     return 0;

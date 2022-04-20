@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_system.h                                         PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -50,6 +50,10 @@
 /*                                            added GX_DISABLE_THREADX_   */
 /*                                            TIMER_SOURCE configuration, */
 /*                                            resulting in version 6.1.3  */
+/*  04-25-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added new parameter to      */
+/*                                            _gx_system_pen_flick_test,  */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 
@@ -116,7 +120,7 @@ VOID _gx_system_input_unlock(VOID);
 
 VOID _gx_system_pen_speed_init(GX_POINT *current);
 VOID _gx_system_pen_speed_update(GX_POINT *current);
-VOID _gx_system_pen_flick_test(VOID);
+VOID _gx_system_pen_flick_test(GX_WIDGET *target);
 UINT _gx_system_pen_configure(GX_PEN_CONFIGURATION *pen_configuration);
 
 UINT _gx_system_private_string_copy(GX_STRING *ptr_address, GX_CONST GX_STRING *text);

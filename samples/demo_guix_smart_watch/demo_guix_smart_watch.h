@@ -10,8 +10,9 @@
 #define FITNESS_SCREEN_CHART_TIMER_ID      3
 #define SCREEN_ANIMATION_TIMER_ID          4
 
-#define SCREEN_SLIDE_ANIMATION_ID 1
+#define SCREEN_DRAG_ANIMATION_ID 1
 #define CLOCK_SLIDE_ANIMATION_ID  2
+#define SCREEN_SLIDE_ANIMATION_ID 3
 
 #define USER_EVENT_ANIMATION_START GX_FIRST_APP_EVENT
 #define USER_EVENT_ANIMATION_STOP  GX_FIRST_APP_EVENT + 1
@@ -35,6 +36,8 @@ typedef struct TIME_STRUCT {
 VOID *memory_allocate(ULONG size);
 VOID  memory_free(VOID *mem);
 
+VOID clear_screen_clock_record();
+VOID screen_clock_update(GX_NUMERIC_PROMPT* hour, GX_NUMERIC_PROMPT* minute, GX_PROMPT* second);
 VOID page_screen_slide(GX_WIDGET *current_screen, GX_WIDGET *target_screen);
 VOID container_screen_slide(GX_WIDGET *current_screen, GX_WIDGET *target_screen);
 VOID screens_initialize();

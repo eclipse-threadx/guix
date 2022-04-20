@@ -28,14 +28,14 @@
 #include "gx_widget.h"
 #include "gx_system.h"
 #include "gx_animation.h"
-
+#include "gx_utility.h"
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_animation_slide_landing_start                   PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-25-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added canvas support,       */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_animation_slide_landing_start(GX_ANIMATION *animation)
@@ -93,8 +96,16 @@ GX_RECTANGLE      *target_size;
 
         target_size = &target -> gx_widget_size;
 
-        info -> gx_animation_start_position.gx_point_x = target_size -> gx_rectangle_left;
-        info -> gx_animation_start_position.gx_point_y = target_size -> gx_rectangle_top;
+        if (animation -> gx_animation_canvas)
+        {
+            info -> gx_animation_start_position.gx_point_x = (GX_VALUE)(target_size -> gx_rectangle_left + animation -> gx_animation_canvas -> gx_canvas_display_offset_x);
+            info -> gx_animation_start_position.gx_point_y = (GX_VALUE)(target_size -> gx_rectangle_top + animation -> gx_animation_canvas -> gx_canvas_display_offset_y);
+        }
+        else
+        {
+            info -> gx_animation_start_position.gx_point_x = target_size -> gx_rectangle_left;
+            info -> gx_animation_start_position.gx_point_y = target_size -> gx_rectangle_top;
+        }
 
         /* Start a landing timer. */
         _gx_system_timer_start(info -> gx_animation_parent, GX_ANIMATION_SLIDE_TIMER,

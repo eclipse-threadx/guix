@@ -180,3 +180,81 @@ UINT text_length = 0;
     return(status);
 }
 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gxe_canvas_aligned_text_draw_ext                   PORTABLE C      */
+/*                                                           6.1.11       */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks errors in the canvas aligned text draw         */
+/*    function call.                                                      */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    string                                String to draw                */
+/*    rectangle                             Drawing area                  */
+/*    alignment                             Alignment style               */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_canvas_aligned_text_draw_ext      The actual function           */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  04-25-2022     Ting Zhu                 Initial Version 6.1.11        */
+/*                                                                        */
+/**************************************************************************/
+UINT _gxe_canvas_aligned_text_draw(GX_CONST GX_STRING *string, GX_RECTANGLE *rectangle, ULONG alignment)
+{
+UINT status;
+UINT text_length = 0;
+
+    /* Check for appropriate caller.  */
+    GX_INIT_AND_THREADS_CALLER_CHECKING
+
+    /* Check for invalid input pointers.  */
+    if ((string == GX_NULL) || (rectangle == GX_NULL) || (string -> gx_string_ptr == GX_NULL))
+    {
+        return GX_PTR_ERROR;
+    }
+
+    if (_gx_system_current_draw_context == GX_NULL)
+    {
+        return GX_INVALID_CONTEXT;
+    }
+
+    status = _gx_utility_string_length_check(string -> gx_string_ptr, &text_length, string -> gx_string_length);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
+
+    if (text_length < string -> gx_string_length)
+    {
+        return GX_INVALID_STRING_LENGTH;
+    }
+
+    /* Call actual widget height get function.  */
+    status = _gx_canvas_aligned_text_draw(string, rectangle, alignment);
+
+    /* Return successful completion.  */
+    return(status);
+}
+

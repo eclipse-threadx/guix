@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_canvas.h                                         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -44,6 +44,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-25-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added new declarations,     */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 
@@ -107,6 +110,7 @@ UINT _gx_canvas_rotated_text_draw_ext(GX_CONST GX_STRING *text, GX_VALUE xcenter
 UINT _gx_canvas_shift(GX_CANVAS *canvas, GX_VALUE x, GX_VALUE y);
 UINT _gx_canvas_show(GX_CANVAS *canvas);
 
+UINT _gx_canvas_aligned_text_draw(GX_CONST GX_STRING *string, GX_RECTANGLE *rectangle, ULONG alignment);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_canvas_text_draw(GX_VALUE x_start, GX_VALUE y_start, GX_CONST GX_CHAR *string, INT length);
 #endif
@@ -153,6 +157,7 @@ UINT _gxe_canvas_rotated_text_draw(GX_CONST GX_CHAR *text, GX_VALUE xcenter,  GX
 UINT _gxe_canvas_rotated_text_draw_ext(GX_CONST GX_STRING *text, GX_VALUE xcenter, GX_VALUE ycenter, INT angle);
 UINT _gxe_canvas_shift(GX_CANVAS *canvas, GX_VALUE x, GX_VALUE y);
 UINT _gxe_canvas_show(GX_CANVAS *canvas);
+UINT _gxe_canvas_aligned_text_draw(GX_CONST GX_STRING *string, GX_RECTANGLE *rectangle, ULONG alignment);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_canvas_text_draw(GX_VALUE x_start, GX_VALUE y_start, GX_CONST GX_CHAR *string, INT length);
 #endif

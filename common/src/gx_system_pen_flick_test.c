@@ -32,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_pen_flick_test                           PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -67,9 +67,12 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-25-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added a new parameter,      */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
-VOID _gx_system_pen_flick_test(VOID)
+VOID _gx_system_pen_flick_test(GX_WIDGET *target)
 {
 GX_EVENT flick_event;
 INT      abs_speed_x;
@@ -110,7 +113,7 @@ ULONG    current_clock;
     }
     if (flick_event.gx_event_type)
     {
-        flick_event.gx_event_target = GX_NULL;
+        flick_event.gx_event_target = target;
         flick_event.gx_event_sender = 0;
 
 #ifdef GX_THREADX_BINDING

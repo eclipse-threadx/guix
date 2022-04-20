@@ -4,23 +4,21 @@
 
 #define LINE_LENGTH 25
 
-/* Extern system time.  */
-extern TIME system_time;
+#define TARGET_HOUR_MIN_XPOS 206
+#define TARGET_HOUR_MIN_YPOS 132
+#define TARGET_HOUR_MAX_XPOS (TARGET_HOUR_MIN_XPOS + CLOCK_SLIDE_SHIFT)
+#define TARGET_HOUR_MAX_YPOS (TARGET_HOUR_MIN_YPOS + CLOCK_SLIDE_SHIFT)
+
+#define TARGET_MINIUTE_MIN_XPOS 211
+#define TARGET_MINIUTE_MIN_YPOS 218
+#define TARGET_MINIUTE_MAX_XPOS (TARGET_MINIUTE_MIN_XPOS + CLOCK_SLIDE_SHIFT)
+#define TARGET_MINIUTE_MAX_YPOS (TARGET_MINIUTE_MIN_YPOS + CLOCK_SLIDE_SHIFT)
 
 /* Define clock slide animation control blocks. */
 static GX_ANIMATION clock_slide_animation[2];
 
 /* Define local variable for background wave animation.  */
 static INT wave_rotation_angle = 0;
-
-/******************************************************************************************/
-/* Update clock time.                                                                     */
-/******************************************************************************************/
-static VOID screen_clock_update()
-{
-    gx_numeric_prompt_value_set(&clock_5_screen.clock_5_screen_hour, system_time.hour);
-    gx_numeric_prompt_value_set(&clock_5_screen.clock_5_screen_minute, system_time.minute);
-}
 
 /******************************************************************************************/
 /* Start clock slide animation.                                                           */
@@ -30,15 +28,22 @@ static void clock_slide_animation_start()
     GX_ANIMATION_INFO info;
     GX_WIDGET* target_hour = (GX_WIDGET*)&clock_5_screen.clock_5_screen_hour;
     GX_WIDGET* target_minute = (GX_WIDGET*)&clock_5_screen.clock_5_screen_minute;
-    INT sign;
+    GX_POINT target_hour_end_pos;
+    GX_POINT target_minute_end_pos;
 
     if (target_hour->gx_widget_size.gx_rectangle_left < target_minute->gx_widget_size.gx_rectangle_left)
     {
-        sign = 1;
+        target_hour_end_pos.gx_point_x = TARGET_HOUR_MAX_XPOS;
+        target_hour_end_pos.gx_point_y = TARGET_HOUR_MAX_YPOS;
+        target_minute_end_pos.gx_point_x = TARGET_MINIUTE_MIN_XPOS;
+        target_minute_end_pos.gx_point_y = TARGET_MINIUTE_MIN_YPOS;
     }
     else
     {
-        sign = -1;
+        target_hour_end_pos.gx_point_x = TARGET_HOUR_MIN_XPOS;
+        target_hour_end_pos.gx_point_y = TARGET_HOUR_MIN_YPOS;
+        target_minute_end_pos.gx_point_x = TARGET_MINIUTE_MAX_XPOS;
+        target_minute_end_pos.gx_point_y = TARGET_MINIUTE_MAX_YPOS;
     }
 
     memset(&info, 0, sizeof(GX_ANIMATION_INFO));
@@ -47,20 +52,18 @@ static void clock_slide_animation_start()
     info.gx_animation_start_alpha = 255;
     info.gx_animation_end_alpha = 255;
     info.gx_animation_frame_interval = 40 / GX_SYSTEM_TIMER_MS;
-    info.gx_animation_steps = 40;
     info.gx_animation_id = CLOCK_SLIDE_ANIMATION_ID;
     info.gx_animation_start_position.gx_point_x = target_hour->gx_widget_size.gx_rectangle_left;
     info.gx_animation_start_position.gx_point_y = target_hour->gx_widget_size.gx_rectangle_top;
-    info.gx_animation_end_position.gx_point_x = info.gx_animation_start_position.gx_point_x + CLOCK_SLIDE_SHIFT * sign;
-    info.gx_animation_end_position.gx_point_y = info.gx_animation_start_position.gx_point_y + CLOCK_SLIDE_SHIFT * sign;
+    info.gx_animation_end_position = target_hour_end_pos;
+    info.gx_animation_steps = GX_ABS(info.gx_animation_end_position.gx_point_x - info.gx_animation_start_position.gx_point_x);
 
     gx_animation_start(&clock_slide_animation[0], &info);
 
     info.gx_animation_target = target_minute;
     info.gx_animation_start_position.gx_point_x = target_minute->gx_widget_size.gx_rectangle_left;
     info.gx_animation_start_position.gx_point_y = target_minute->gx_widget_size.gx_rectangle_top;
-    info.gx_animation_end_position.gx_point_x = info.gx_animation_start_position.gx_point_x - CLOCK_SLIDE_SHIFT * sign;
-    info.gx_animation_end_position.gx_point_y = info.gx_animation_start_position.gx_point_y - CLOCK_SLIDE_SHIFT * sign;
+    info.gx_animation_end_position = target_minute_end_pos;
 
     gx_animation_start(&clock_slide_animation[1], &info);
 }
@@ -85,7 +88,8 @@ UINT clock_5_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
     case GX_EVENT_SHOW:
         gx_animation_create(&clock_slide_animation[0]);
         gx_animation_create(&clock_slide_animation[1]);
-        screen_clock_update();
+        clear_screen_clock_record();
+        screen_clock_update(&clock_5_screen.clock_5_screen_hour, &clock_5_screen.clock_5_screen_minute, GX_NULL);
         gx_system_timer_start(window, SCREEN_CLOCK_TIMER_ID, GX_TICKS_SECOND, GX_TICKS_SECOND);
         return gx_window_event_process(window, event_ptr);
 
@@ -114,7 +118,7 @@ UINT clock_5_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
         switch (event_ptr->gx_event_payload.gx_event_timer_id)
         {
         case SCREEN_CLOCK_TIMER_ID:
-            screen_clock_update();
+            screen_clock_update(&clock_5_screen.clock_5_screen_hour, &clock_5_screen.clock_5_screen_minute, GX_NULL);
             break;
 
         case SCREEN_ANIMATION_TIMER_ID:

@@ -28,7 +28,7 @@
 #include "gx_system.h"
 #include "gx_utility.h"
 #include "gx_canvas.h"
-
+#include "gx_context.h"
 
 /**************************************************************************/
 /*                                                                        */
@@ -287,5 +287,94 @@ GX_FONT *font = context -> gx_draw_context_brush.gx_brush_font;
     }
 
     return(status);
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_canvas_aligned_text_draw                        PORTABLE C      */
+/*                                                           6.1.11       */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function draws text to canvas with specified alignment style.  */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    string                                String to draw                */
+/*    rectangle                             Drawing area                  */
+/*    alignment                             Alignment style               */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_context_brush_get                 Get context brush             */
+/*    _gx_system_string_width_get_ext       Get string width              */
+/*    _gx_canvas_text_draw_ext              Actual text draw function     */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*    GUIX Internal Code                                                  */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  04-25-2022     Ting Zhu                 Initial Version 6.1.11        */
+/*                                                                        */
+/**************************************************************************/
+UINT  _gx_canvas_aligned_text_draw(GX_CONST GX_STRING *string, GX_RECTANGLE *rectangle, ULONG alignment)
+{
+GX_VALUE  text_width;
+GX_VALUE  text_height;
+GX_VALUE  x_pos;
+GX_VALUE  y_pos;
+GX_BRUSH *brush;
+GX_VALUE  rect_width;
+GX_VALUE  rect_height;
+
+    _gx_context_brush_get(&brush);
+
+    if (!brush -> gx_brush_font)
+    {
+        return GX_INVALID_FONT;
+    }
+
+    text_height = brush -> gx_brush_font -> gx_font_line_height;
+
+    rect_width = (GX_VALUE)(rectangle -> gx_rectangle_right - rectangle -> gx_rectangle_left + 1);
+    rect_height = (GX_VALUE)(rectangle -> gx_rectangle_bottom - rectangle -> gx_rectangle_top + 1);
+
+    x_pos = rectangle -> gx_rectangle_left;
+    y_pos = rectangle -> gx_rectangle_top;
+    y_pos = (GX_VALUE)(y_pos + (rect_height - text_height) / 2);
+
+    switch (alignment & GX_STYLE_TEXT_ALIGNMENT_MASK)
+    {
+    case GX_STYLE_TEXT_RIGHT:
+        _gx_system_string_width_get_ext(brush -> gx_brush_font, string, &text_width);
+        x_pos = (GX_VALUE)(x_pos + rect_width - 1);
+        x_pos = (GX_VALUE)(x_pos - text_width);
+        break;
+
+    case GX_STYLE_TEXT_LEFT:
+        break;
+
+    default:
+        _gx_system_string_width_get_ext(brush -> gx_brush_font, string, &text_width);
+        x_pos = (GX_VALUE)(x_pos + ((rect_width - text_width) / 2));
+        break;
+    }
+
+    /* Draw the text.  */
+    return _gx_canvas_text_draw_ext(x_pos, y_pos, string);
 }
 

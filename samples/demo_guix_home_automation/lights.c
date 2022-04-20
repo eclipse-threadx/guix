@@ -24,6 +24,8 @@ static LIGHT_INFO light_info_list[] = {
 };
 
 extern GX_ANIMATION slide_animation;
+extern int screen_animation_count;
+
 UINT string_length_get(GX_CONST GX_CHAR* input_string, UINT max_string_length);
 
 /******************************************************************************************/
@@ -297,6 +299,27 @@ VOID lights_screen_animation_start()
 
         info++;
     }
+}
+
+/******************************************************************************************/
+/* Stop all animations in lights screen.                                                  */
+/******************************************************************************************/
+VOID lights_screen_animation_stop()
+{
+    LIGHT_INFO *info = light_info_list;
+
+    while (info->light)
+    {
+        if (info->light->base.gx_widget_status & GX_STATUS_VISIBLE)
+        {
+            /* Light controller is visible. */
+            gx_animation_delete(GX_NULL, (GX_WIDGET *)&info->light->base);
+        }
+
+        info++;
+    }
+    
+    screen_animation_count = 0;
 }
 
 /******************************************************************************************/

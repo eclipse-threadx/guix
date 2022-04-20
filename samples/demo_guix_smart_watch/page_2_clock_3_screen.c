@@ -22,20 +22,8 @@
 /*  310    <-     230                       */
 /********************************************/
 
-/* Extern system time.  */
-extern TIME system_time;
-
 /* Define rotate angle for background animation.  */
 static INT rotate_angle = 50;
-
-/******************************************************************************************/
-/* Update clock time.                                                                     */
-/******************************************************************************************/
-static VOID screen_clock_update()
-{
-    gx_numeric_prompt_value_set(&clock_3_screen.clock_3_screen_hour, system_time.hour);
-    gx_numeric_prompt_value_set(&clock_3_screen.clock_3_screen_minute, system_time.minute);
-}
 
 /******************************************************************************************/
 /* Update rotate angle.                                                                   */
@@ -60,7 +48,7 @@ UINT clock_3_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
     switch (event_ptr->gx_event_type)
     {
     case GX_EVENT_SHOW:
-        screen_clock_update();
+        screen_clock_update(&clock_3_screen.clock_3_screen_hour, &clock_3_screen.clock_3_screen_minute, GX_NULL);
         gx_system_timer_start(window, SCREEN_CLOCK_TIMER_ID, GX_TICKS_SECOND, GX_TICKS_SECOND);
         return gx_window_event_process(window, event_ptr);
 
@@ -76,7 +64,7 @@ UINT clock_3_screen_event_process(GX_WINDOW* window, GX_EVENT* event_ptr)
         switch (event_ptr->gx_event_payload.gx_event_timer_id)
         {
         case SCREEN_CLOCK_TIMER_ID:
-            screen_clock_update();
+            screen_clock_update(&clock_3_screen.clock_3_screen_hour, &clock_3_screen.clock_3_screen_minute, GX_NULL);
             break;
 
         case SCREEN_ANIMATION_TIMER_ID:

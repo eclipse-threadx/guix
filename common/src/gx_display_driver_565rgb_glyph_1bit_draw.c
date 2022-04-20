@@ -50,7 +50,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_16bpp_glyph_1bit_draw            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -89,6 +89,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-25-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            fixed access violation bug, */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_16bpp_glyph_1bit_draw(GX_DRAW_CONTEXT *context, GX_RECTANGLE *draw_area, GX_POINT *map_offset, GX_CONST GX_GLYPH *glyph)
@@ -196,11 +199,12 @@ VOID    (*blend_func)(GX_DRAW_CONTEXT *, INT, INT, GX_COLOR, GX_UBYTE);
         {
             xval = draw_area -> gx_rectangle_left;
             glyph_data = glyph_row;
-            alpha = *(glyph_data);
             mask = init_mask;
             num_bits = pixel_in_first_byte;
             for (i = 0; i < num_bytes; i++)
             {
+                alpha = *(glyph_data++);
+
                 if ((i == (num_bytes - 1)) && (num_bytes > 1))
                 {
                     num_bits = pixel_in_last_byte;
@@ -236,8 +240,6 @@ VOID    (*blend_func)(GX_DRAW_CONTEXT *, INT, INT, GX_COLOR, GX_UBYTE);
                     xval++;
                     break;
                 }
-                glyph_data++;
-                alpha = *(glyph_data);
                 num_bits = 8;
                 mask = 0x80;
             }
@@ -252,12 +254,13 @@ VOID    (*blend_func)(GX_DRAW_CONTEXT *, INT, INT, GX_COLOR, GX_UBYTE);
         for (row = 0; row < y_height; row++)
         {
             glyph_data = glyph_row;
-            alpha = *(glyph_data);
             mask = init_mask;
             num_bits = pixel_in_first_byte;
             put = line_start;
             for (i = 0; i < num_bytes; i++)
             {
+                alpha = *(glyph_data++);
+
                 if ((i == (num_bytes - 1)) && (num_bytes > 1))
                 {
                     num_bits = pixel_in_last_byte;
@@ -293,8 +296,6 @@ VOID    (*blend_func)(GX_DRAW_CONTEXT *, INT, INT, GX_COLOR, GX_UBYTE);
                     put++;
                     break;
                 }
-                glyph_data++;
-                alpha = *(glyph_data);
                 num_bits = 8;
                 mask = 0x80;
             }

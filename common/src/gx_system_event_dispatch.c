@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_event_dispatch                           PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,18 +70,22 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-25-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_system_event_dispatch(GX_EVENT *in_event)
 {
 
-GX_WIDGET        *target = GX_NULL;
-GX_WINDOW_ROOT   *root_window;
-GX_EVENT          out_event;
-GX_POINT          pen_pos;
-UINT              return_code = 0;
-#if defined (GX_MOUSE_SUPPORT)
-GX_DISPLAY       *display;
+GX_WIDGET      *target = GX_NULL;
+GX_WINDOW_ROOT *root_window;
+GX_EVENT        out_event;
+GX_POINT        pen_pos;
+UINT            return_code = 0;
+
+#if defined(GX_MOUSE_SUPPORT)
+GX_DISPLAY *display;
 #endif
     /* check for NULL event. This happens when an event is purged */
     if (in_event -> gx_event_type == 0)
@@ -102,7 +106,7 @@ GX_DISPLAY       *display;
     {
         switch (out_event.gx_event_type)
         {
-        #if defined(GX_MOUSE_SUPPORT)
+#if defined(GX_MOUSE_SUPPORT)
         case GX_EVENT_PEN_MOVE:
             /* Find the top root window under this click position */
             pen_pos = out_event.gx_event_payload.gx_event_pointdata;
@@ -110,9 +114,9 @@ GX_DISPLAY       *display;
 
             if (root_window)
             {
-                /* mouse cursor coordinates are display relative, not canvas relative, 
+                /* mouse cursor coordinates are display relative, not canvas relative,
                    so set cursor position before canvas offset is applied
-                */
+                 */
                 display = root_window -> gx_window_root_canvas -> gx_canvas_display;
                 if (display -> gx_display_mouse_position_set)
                 {
@@ -120,7 +124,7 @@ GX_DISPLAY       *display;
                 }
             }
             break;
-        #endif
+#endif
 
         case GX_EVENT_PEN_DOWN:
         case GX_EVENT_PEN_UP:
@@ -129,15 +133,34 @@ GX_DISPLAY       *display;
             /* get absolute click position */
             pen_pos = out_event.gx_event_payload.gx_event_pointdata;
 
-            /* Find the top root window under this click position */
-            root_window = _gx_system_top_root_find(&out_event);
+            if (_gx_system_capture_count > 0)
+            {
+                /* Get the widget that owns the system input.  */
+                target = *_gx_system_input_capture_stack;
+
+                if (target)
+                {
+                    
+                    /* Find the root window of the widget that owns the system input. */
+                    root_window = (GX_WINDOW_ROOT *)target -> gx_widget_parent;
+                    while (root_window && root_window -> gx_widget_parent)
+                    {
+                        root_window = (GX_WINDOW_ROOT *)root_window -> gx_widget_parent;
+                    }
+                }
+            }
+            else
+            {
+                /* Find the top root window under this click position */
+                root_window = _gx_system_top_root_find(&out_event);
+            }
 
             if (root_window)
             {
 #if defined(GX_MOUSE_SUPPORT)
-                /* mouse cursor coordinates are display relative, not canvas relative, 
+                /* mouse cursor coordinates are display relative, not canvas relative,
                    so set cursor position before canvas offset is applied
-                */
+                 */
                 display = root_window -> gx_window_root_canvas -> gx_canvas_display;
                 if (display -> gx_display_mouse_position_set)
                 {
@@ -150,14 +173,8 @@ GX_DISPLAY       *display;
                     (GX_VALUE)(pen_pos.gx_point_x - root_window -> gx_window_root_canvas -> gx_canvas_display_offset_x);
                 pen_pos.gx_point_y =
                     (GX_VALUE)(pen_pos.gx_point_y - root_window -> gx_window_root_canvas -> gx_canvas_display_offset_y);
-            }
-            if (_gx_system_capture_count > 0)
-            {
-                target = *_gx_system_input_capture_stack;
-            }
-            else
-            {
-                if (root_window)
+
+                if (!target)
                 {
                     /* find the child of this root under the click position */
                     target = _gx_system_top_widget_find((GX_WIDGET *)root_window, pen_pos, GX_STATUS_SELECTABLE);

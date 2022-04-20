@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_animation_update                                PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -77,6 +77,9 @@
 /*  12-31-2020     Kenneth Maxwell          Modified comment(s), improve  */
 /*                                            linear animation accuracy,  */
 /*                                            resulting in version 6.1.3  */
+/*  04-25-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added block move support,   */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_animation_update(VOID)
@@ -90,6 +93,8 @@ INT                y_current;
 INT                x_trans = 0;
 INT                y_trans = 0;
 GX_ANIMATION_INFO *info;
+GX_WIDGET         *parent;
+GX_RECTANGLE       block;
 
     animation = _gx_system_animation_list;
 
@@ -219,7 +224,23 @@ GX_ANIMATION_INFO *info;
             else
             {
                 /* adjust target position */
-                _gx_widget_shift(target, (GX_VALUE)x_trans, (GX_VALUE)y_trans, GX_TRUE);
+                if (animation -> gx_animation_info.gx_animation_style & GX_ANIMATION_BLOCK_MOVE)
+                {
+                    parent = animation -> gx_animation_info.gx_animation_parent;
+                    if (_gx_utility_rectangle_overlap_detect(&target -> gx_widget_size, &parent -> gx_widget_size, &block))
+                    {
+                        _gx_widget_scroll_shift(target, (GX_VALUE)x_trans, (GX_VALUE)y_trans, GX_TRUE);
+                        _gx_widget_block_move(parent, &block, (GX_VALUE)x_trans, (GX_VALUE)y_trans);
+                    }
+                    else
+                    {
+                        _gx_widget_shift(target, (GX_VALUE)x_trans, (GX_VALUE)y_trans, GX_TRUE);
+                    }
+                }
+                else
+                {
+                    _gx_widget_shift(target, (GX_VALUE)x_trans, (GX_VALUE)y_trans, GX_TRUE);
+                }
             }
         }
         animation = next;

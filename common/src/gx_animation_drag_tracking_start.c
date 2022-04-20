@@ -27,14 +27,15 @@
 #include "gx_api.h"
 #include "gx_widget.h"
 #include "gx_animation.h"
-
+#include "gx_system.h"
+#include "gx_canvas.h"
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_animation_drag_tracking_start                   PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -68,6 +69,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-25-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added canvas support,       */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_animation_drag_tracking_start(GX_ANIMATION *animation, GX_POINT penpos)
@@ -76,9 +80,13 @@ GX_ANIMATION_INFO *info;
 GX_RECTANGLE       size;
 INT                width;
 GX_WIDGET         *target_1;
-GX_WIDGET         *target_2;
+GX_WIDGET         *target_2 = GX_NULL;
 INT                index;
 INT                current_pos;
+GX_WINDOW_ROOT    *root;
+GX_VALUE           left;
+GX_VALUE           top;
+VOID               (*active_display_area_set)(INT layer, GX_RECTANGLE *size);
 
     info = &animation -> gx_animation_info;
 
@@ -158,11 +166,12 @@ INT                current_pos;
         }
     }
 
+    target_1 = info -> gx_animation_slide_screen_list[animation -> gx_animation_slide_target_index_1];
+
     if ((index >= 0) && (index < animation -> gx_animation_slide_screen_list_size))
     {
         animation -> gx_animation_slide_target_index_2 = (GX_VALUE)(index);
 
-        target_1 = info -> gx_animation_slide_screen_list[animation -> gx_animation_slide_target_index_1];
         target_2 = info -> gx_animation_slide_screen_list[index];
 
         size = target_2 -> gx_widget_size;
@@ -214,12 +223,84 @@ INT                current_pos;
         /* Resize the second animation target. */
         _gx_widget_resize(target_2, &size);
 
-        /* Attach the second target to animation parent.  */
-        _gx_widget_attach(info -> gx_animation_parent, target_2);
+        if (!animation -> gx_animation_canvas)
+        {
+
+            /* Attach the second target to animation parent.  */
+            _gx_widget_attach(info -> gx_animation_parent, target_2);
+        }
     }
     else
     {
         animation -> gx_animation_slide_target_index_2 = -1;
+    }
+
+    if (animation -> gx_animation_canvas)
+    {
+        /* Find animation root.  */
+        root = _gx_system_root_window_created_list;
+        while (root && root -> gx_window_root_canvas != animation -> gx_animation_canvas)
+        {
+            root = (GX_WINDOW_ROOT *)root -> gx_widget_next;
+        }
+
+        if (animation -> gx_animation_slide_direction == GX_ANIMATION_SLIDE_UP ||
+            animation -> gx_animation_slide_direction == GX_ANIMATION_SLIDE_LEFT ||
+            (!target_2))
+        {
+            left = target_1 -> gx_widget_size.gx_rectangle_left;
+            top = target_1 -> gx_widget_size.gx_rectangle_top;
+        }
+        else
+        {
+            left = target_2 -> gx_widget_size.gx_rectangle_left;
+            top = target_2 -> gx_widget_size.gx_rectangle_top;
+        }
+
+        if (left || top)
+        {
+            _gx_widget_shift(target_1, (GX_VALUE)-left, (GX_VALUE)-top, GX_TRUE);
+
+            if (target_2)
+            {
+                _gx_widget_shift(target_2, (GX_VALUE)-left, (GX_VALUE)-top, GX_TRUE);
+            }
+        }
+
+        /* Position the canvas at the animation starting position.  */
+        _gx_canvas_offset_set(animation -> gx_animation_canvas, left, top);
+
+        if (animation -> gx_animation_canvas -> gx_canvas_hardware_layer >= 0)
+        {
+            active_display_area_set = animation -> gx_animation_canvas -> gx_canvas_display -> gx_display_layer_services -> gx_display_layer_active_display_area_set;
+
+            if (active_display_area_set)
+            {
+                /* Set active display area as the animation parent widget size. */
+                active_display_area_set(animation -> gx_animation_canvas -> gx_canvas_hardware_layer, &info -> gx_animation_parent -> gx_widget_size);
+            }
+        }
+
+        if (root)
+        {
+            /* Link the target to the animation root window.  */
+            _gx_widget_attach((GX_WIDGET *)root, target_1);
+
+            if (target_2)
+            {
+                _gx_widget_attach((GX_WIDGET *)root, target_2);
+            }
+
+            /* and show the animation root window to make everything visible */
+            _gx_widget_show((GX_WIDGET *)root);
+            _gx_canvas_drawing_initiate(animation -> gx_animation_canvas, (GX_WIDGET *)root, &root -> gx_widget_size);
+            _gx_widget_children_draw((GX_WIDGET *)root);
+            _gx_canvas_drawing_complete(animation -> gx_animation_canvas, GX_FALSE);
+
+            /* set the initial alpha and make our canvas visible */
+            _gx_canvas_alpha_set(animation -> gx_animation_canvas, info -> gx_animation_start_alpha);
+            _gx_canvas_show(animation -> gx_animation_canvas);
+        }
     }
 
     /* Return completion status code. */

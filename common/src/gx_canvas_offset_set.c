@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_offset_set                               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.11       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,6 +70,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-25-2022     Ting Zhu                 Modified comment(s), fixed    */
+/*                                            canvas dirty mark logic,    */
+/*                                            resulting in version 6.1.11 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_canvas_offset_set(GX_CANVAS *canvas, GX_VALUE xoffset, GX_VALUE yoffset)
@@ -115,6 +118,11 @@ VOID (*offset_function)(INT layer, GX_VALUE x, GX_VALUE y);
         oldpos.gx_rectangle_top = canvas -> gx_canvas_display_offset_y;
         oldpos.gx_rectangle_right = (GX_VALUE)(oldpos.gx_rectangle_left + canvas -> gx_canvas_x_resolution - 1);
         oldpos.gx_rectangle_bottom = (GX_VALUE)(oldpos.gx_rectangle_top + canvas -> gx_canvas_y_resolution - 1);
+
+        if (backcanvas -> gx_canvas_draw_count > 0)
+        {
+             _gx_utility_rectangle_combine(&oldpos, &backcanvas -> gx_canvas_dirty_area);
+        }
 
         /* mark the background as dirty */
         _gx_canvas_dirty_mark(backcanvas, &oldpos);

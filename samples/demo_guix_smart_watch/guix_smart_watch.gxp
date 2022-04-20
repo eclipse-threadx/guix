@@ -4,7 +4,7 @@
 <header>
 <project_version>55</project_version>
 <guix_version>60109</guix_version>
-<studio_version>6010902</studio_version>
+<studio_version>6011000</studio_version>
 <project_name>guix_smart_watch</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
@@ -3034,7 +3034,7 @@
 </pathinfo>
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
-<compress>TRUE</compress>
+<compress>FALSE</compress>
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
@@ -3051,7 +3051,7 @@
 </pathinfo>
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
-<compress>TRUE</compress>
+<compress>FALSE</compress>
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
@@ -3085,7 +3085,7 @@
 </pathinfo>
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
-<compress>TRUE</compress>
+<compress>FALSE</compress>
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
@@ -3833,6 +3833,24 @@
 <widget_folder>
 <folder_name>default_folder</folder_name>
 <widget>
+<type>window</type>
+<app_name>screen_slide_parent</app_name>
+<size>
+<left>0</left>
+<top>0</top>
+<right>257</right>
+<bottom>288</bottom>
+</size>
+<style>1073741824</style>
+<allocation>0</allocation>
+<accepts_focus>TRUE</accepts_focus>
+<normal_fill_color>WINDOW_FILL</normal_fill_color>
+<selected_fill_color>WINDOW_FILL</selected_fill_color>
+<disabled_fill_color>DISABLED_FILL</disabled_fill_color>
+<template>FALSE</template>
+<visible_at_startup>FALSE</visible_at_startup>
+</widget>
+<widget>
 <type>pixelmap_button</type>
 <app_name>home_button</app_name>
 <size>
@@ -3862,7 +3880,7 @@
 <right>442</right>
 <bottom>384</bottom>
 </size>
-<style>1342177280</style>
+<style>1073741824</style>
 <allocation>0</allocation>
 <accepts_focus>TRUE</accepts_focus>
 <normal_fill_color>WINDOW_FILL</normal_fill_color>
@@ -3881,7 +3899,7 @@
 <right>442</right>
 <bottom>384</bottom>
 </size>
-<style>1342177280</style>
+<style>1073741824</style>
 <allocation>0</allocation>
 <accepts_focus>TRUE</accepts_focus>
 <normal_fill_color>WINDOW_FILL</normal_fill_color>
@@ -3900,7 +3918,7 @@
 <right>442</right>
 <bottom>384</bottom>
 </size>
-<style>1342177280</style>
+<style>1073741824</style>
 <allocation>0</allocation>
 <accepts_focus>TRUE</accepts_focus>
 <normal_fill_color>WINDOW_FILL</normal_fill_color>
@@ -3919,7 +3937,7 @@
 <right>442</right>
 <bottom>384</bottom>
 </size>
-<style>1342177280</style>
+<style>1073741824</style>
 <allocation>0</allocation>
 <accepts_focus>TRUE</accepts_focus>
 <normal_fill_color>WINDOW_FILL</normal_fill_color>
@@ -8153,7 +8171,7 @@
 <right>442</right>
 <bottom>384</bottom>
 </size>
-<style>1073741872</style>
+<style>1073741856</style>
 <allocation>0</allocation>
 <accepts_focus>TRUE</accepts_focus>
 <normal_fill_color>WIDGET_FILL</normal_fill_color>

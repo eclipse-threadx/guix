@@ -1,8 +1,5 @@
 #include "demo_guix_smart_watch.h"
 
-/* Extern system time.  */
-extern TIME system_time;
-
 /* Define screen properties.  */
 static SCREEN_INFO screen_info_list[] = {
     {(GX_WIDGET*)&message_screen, GX_PIXELMAP_ID_ICON_BELL, 0, GX_TRUE},
@@ -24,21 +21,7 @@ static SCREEN_INFO screen_info_list[] = {
 /******************************************************************************************/
 static VOID update_title_clock(SCREEN_TEMPLATE_CONTROL_BLOCK *template)
 {
-    GX_RESOURCE_ID text_color_id;
-
-    gx_numeric_prompt_value_set(&template->screen_template_hour, system_time.hour);
-    gx_numeric_prompt_value_set(&template->screen_template_minute, system_time.minute);
-
-    if (system_time.second & 0x1)
-    {
-        text_color_id = GX_COLOR_ID_WHITE;
-    }
-    else
-    {
-        text_color_id = GX_COLOR_ID_GRAY;
-    }
-
-    gx_prompt_text_color_set(&template->screen_template_second, text_color_id, text_color_id, text_color_id);
+    screen_clock_update(&template->screen_template_hour, &template->screen_template_minute, &template->screen_template_second);
 }
 
 /******************************************************************************************/
@@ -88,6 +71,8 @@ UINT screen_template_event_process(GX_WINDOW *window, GX_EVENT* event_ptr)
     switch (event_ptr->gx_event_type)
     {
     case GX_EVENT_SHOW:
+
+        clear_screen_clock_record();
 
         /* Update title bar clock.  */
         update_title_clock((SCREEN_TEMPLATE_CONTROL_BLOCK *)window);

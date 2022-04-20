@@ -26,6 +26,7 @@
 /* Define application information structure. */
 typedef struct APP_INFO_STRUCT{
     GX_WIDGET *current_screen; /* Pointer to current screen. */
+    GX_WIDGET *previous_screen; /* Pointer to previous screen. */
     INT        overall_energy_today; /* Overall energy used today. */
 }APP_INFO;
 
@@ -38,20 +39,24 @@ VOID lights_screen_init();
 VOID lights_title_init();
 VOID lights_screen_reset();
 VOID lights_screen_animation_start();
+VOID lights_screen_animation_stop();
 GX_RESOURCE_ID light_selected_map_id_get(GX_RADIAL_SLIDER *slider);
 
 VOID thermostat_screen_init();
 VOID thermostat_title_init();
 VOID thermostat_screen_reset();
 VOID thermostat_screen_animation_start();
+VOID thermostat_screen_animation_stop();
 
 VOID locks_screen_init();
 VOID locks_title_init();
 VOID locks_screen_reset();
 VOID locks_screen_animation_start();
+VOID locks_screen_animation_stop();
 
 VOID weather_screen_init();
 VOID weather_screen_reset();
 VOID weather_screen_animation_start();
+VOID weather_screen_animation_stop();
 
 VOID pagination_button_enable_disable(GX_WINDOW *window, GX_BOOL enabled);
