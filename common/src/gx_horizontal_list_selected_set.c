@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_horizontal_list_selected_set                    PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.12       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -74,6 +74,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  07-29-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added support for           */
+/*                                            GX_STYLE_REPEAT_SELECT,     */
+/*                                            resulting in version 6.1.12 */
 /*                                                                        */
 /**************************************************************************/
 
@@ -87,7 +91,10 @@ INT        right_index;
 
     if (horizontal_list -> gx_horizontal_list_selected == index)
     {
-        return GX_SUCCESS;
+        if ((horizontal_list -> gx_widget_style & GX_STYLE_REPEAT_SELECT) == 0)
+        {
+            return GX_SUCCESS;
+        }
     }
 
     if (index < 0)

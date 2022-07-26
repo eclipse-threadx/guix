@@ -123,7 +123,7 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_display_driver_32xrgb_pixelmap_compressed_alpha_write           */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.12       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -161,6 +161,8 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  07-29-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1.12 */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_32argb_pixelmap_compressed_alpha_write(GX_DRAW_CONTEXT *context,
@@ -205,7 +207,7 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
     }
 
     /* now we are on the first visible row, copy pixels until we get
-       to the enf of the last visible row
+       to the end of the last visible row
      */
 
     while (yval <= clip -> gx_rectangle_bottom)

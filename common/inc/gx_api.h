@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.1.12       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -92,6 +92,10 @@
 /*                                            added new animation flag    */
 /*                                            GX_ANIMATION_BLOCK_MOVE,    */
 /*                                            resulting in version 6.1.11 */
+/*  07-29-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added new style             */
+/*                                            GX_STYLE_REPEAT_SELECT,     */
+/*                                            resulting in version 6.1.12 */
 /*                                                                        */
 /**************************************************************************/
 
@@ -115,7 +119,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 1
-#define GUIX_PATCH_VERSION 11
+#define GUIX_PATCH_VERSION 12
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -799,6 +803,7 @@ typedef struct GX_STRING_STRUCT
 #define GX_STYLE_CENTER_SELECTED            0x00000010UL
 #define GX_STYLE_WRAP                       0x00000020UL
 #define GX_STYLE_FLICKABLE                  0x00000040UL
+#define GX_STYLE_REPEAT_SELECT              0x00000080UL
 
 
 /* Define Icon, Pixelmap button and Icon button alignment flags.  */

@@ -4,7 +4,7 @@
 <header>
 <project_version>55</project_version>
 <guix_version>60108</guix_version>
-<studio_version>6010902</studio_version>
+<studio_version>6011200</studio_version>
 <project_name>guix_medical</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
@@ -6436,7 +6436,7 @@
 <right>619</right>
 <bottom>464</bottom>
 </size>
-<style>1073741824</style>
+<style>1073741952</style>
 <allocation>0</allocation>
 <accepts_focus>TRUE</accepts_focus>
 <normal_fill_color>BLACK</normal_fill_color>

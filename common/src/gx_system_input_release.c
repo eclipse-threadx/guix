@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_input_release                            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.12       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,11 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  07-29-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            optimized logic and ensured */
+/*                                            released stack entries are  */
+/*                                            reset to NULL,              */
+/*                                            resulting in version 6.1.12 */
 /*                                                                        */
 /**************************************************************************/
 
@@ -92,7 +97,6 @@ UINT        status = GX_PTR_ERROR;
                 {
                     _gx_widget_status_remove(owner, GX_STATUS_OWNS_INPUT);
                     _gx_system_capture_count--;
-                    *stackptr = GX_NULL;
                     status = GX_SUCCESS;
                     break;
                 }
@@ -102,14 +106,13 @@ UINT        status = GX_PTR_ERROR;
             if (status == GX_SUCCESS)
             {
                 /* collapse the stack if this entry was in the middle */
-                if (stackptr < stacktop)
+                while (stackptr < stacktop)
                 {
-                    while (stackptr < stacktop)
-                    {
-                        *stackptr = *(stackptr + 1);
-                        stackptr++;
-                    }
+                    *stackptr = *(stackptr + 1);
+                    stackptr++;
                 }
+                *stackptr = GX_NULL;
+
                 if (_gx_system_capture_count > 0)
                 {
                     stacktop--;

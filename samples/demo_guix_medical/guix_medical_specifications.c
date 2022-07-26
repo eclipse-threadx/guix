@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.10.1                                              */
-/*  Date (dd.mm.yyyy): 23. 3.2022   Time (hh:mm): 14:56                        */
+/*  GUIX Studio Revision 6.1.12.0                                              */
+/*  Date (dd.mm.yyyy): 19. 7.2022   Time (hh:mm): 09:53                        */
 /*******************************************************************************/
 
 
@@ -5402,7 +5402,7 @@ GX_CONST GX_STUDIO_WIDGET patients_screen_patient_list_define =
     #if defined(GX_WIDGET_USER_DATA)
     0,                                       /* user data                      */
     #endif
-    GX_STYLE_BORDER_NONE|GX_STYLE_ENABLED,   /* style flags                    */
+    GX_STYLE_BORDER_NONE|GX_STYLE_ENABLED|GX_STYLE_REPEAT_SELECT,   /* style flags */
     GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
     sizeof(GX_VERTICAL_LIST),                /* control block size             */
     GX_COLOR_ID_BLACK,                       /* normal color id                */

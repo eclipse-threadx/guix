@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_vertical_list_selected_set                      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.12       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -75,6 +75,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  07-29-2022     Kenneth Maxwell          Added support for GX_STYLE_   */
+/*                                            REPEAT_SELECT,              */
+/*                                            resulting in version 6.1.12 */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_vertical_list_selected_set(GX_VERTICAL_LIST *vertical_list, INT index)
@@ -85,9 +88,12 @@ INT        page_index = vertical_list -> gx_vertical_list_top_index;
 INT        top_index;
 INT        bottom_index;
 
-    if (vertical_list -> gx_vertical_list_selected == index)
+   if (vertical_list -> gx_vertical_list_selected == index)
     {
-        return GX_SUCCESS;
+        if ((vertical_list -> gx_widget_style & GX_STYLE_REPEAT_SELECT) == 0)
+        {
+            return GX_SUCCESS;
+        }
     }
 
     if (index < 0)

@@ -54,6 +54,7 @@ VOID start_guix(VOID)
     /* Create the patients screen.  */
     gx_studio_named_widget_create("patients_screen", GX_NULL, GX_NULL);
     patient_list_children_create(&patients_screen);
+    gx_widget_style_add(&patients_screen.patients_screen_patient_list, GX_STYLE_REPEAT_SELECT);
 
     /* Show the root window to make it and patients screen visible.  */
     gx_widget_show(root);

@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_vertical_list_event_process                     PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.12       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -86,6 +86,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  07-29-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            fixed bug in EVENT_PEN_DRAG */
+/*                                            handler,                    */
+/*                                            resulting in version 6.1.12 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_vertical_list_event_process(GX_VERTICAL_LIST *list, GX_EVENT *event_ptr)
@@ -100,6 +104,7 @@ INT           list_height;
 INT           widget_height;
 INT           new_pen_index;
 GX_WIDGET   **stackptr;
+GX_WIDGET   **stacktop;
 GX_EVENT      input_release_event;
 
     switch (event_ptr -> gx_event_type)
@@ -219,12 +224,14 @@ GX_EVENT      input_release_event;
             {
                 /* Start sliding, remove other widgets from input capture stack.  */
                 stackptr = _gx_system_input_capture_stack;
+                stacktop = _gx_system_input_capture_stack + _gx_system_capture_count;
+
                 memset(&input_release_event, 0, sizeof(GX_EVENT));
                 input_release_event.gx_event_type = GX_EVENT_INPUT_RELEASE;
 
-                while (*stackptr)
+                while (stackptr < stacktop)
                 {
-                    if (*stackptr != widget)
+                    if (*stackptr != GX_NULL && *stackptr != widget)
                     {
                         input_release_event.gx_event_target = *stackptr;
                         _gx_system_event_send(&input_release_event);
