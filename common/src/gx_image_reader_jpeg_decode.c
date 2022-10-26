@@ -298,7 +298,7 @@ GX_UBYTE b;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_dislay_driver_jpeg_quantization_table_set       PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -331,6 +331,10 @@ GX_UBYTE b;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            prevented underflow from    */
+/*                                            bad input data,             */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_quantization_table_set(GX_JPEG_INFO *jpeg_info, UINT segment_len)
@@ -362,6 +366,10 @@ INT       index;
             jpeg_info -> gx_jpeg_quantization_table[table_index][index] = *jpeg_data++;
         }
 
+        if (segment_len < 65)
+        {
+            return GX_INVALID_FORMAT;
+        }
         segment_len -= 65;
     }
 
@@ -373,7 +381,7 @@ INT       index;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_huffcode_find                 PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -412,6 +420,10 @@ INT       index;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            changed bit_count to		  */
+/*											  GX_VALUE data type          */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_huffcode_find(GX_JPEG_INFO *jpeg_info,
@@ -422,18 +434,18 @@ static UINT _gx_image_reader_jpeg_huffcode_find(GX_JPEG_INFO *jpeg_info,
                                                 GX_UBYTE *code_value)
 {
 UINT i_bit;
-UINT bit_count;
-UINT code;
-UINT code_cal = 0;
-UINT code_index = 0;
+GX_VALUE bit_count;
+INT code;
+INT code_cal = 0;
+INT code_index = 0;
 
     for (i_bit = 0; i_bit < 16; i_bit++)
     {
-        bit_count = (UINT)(jpeg_info -> gx_jpeg_huffman_bits_count[table_class][table_id][i_bit]);
+        bit_count = (GX_VALUE)(jpeg_info -> gx_jpeg_huffman_bits_count[table_class][table_id][i_bit]);
 
         if (bit_count)
         {
-            code = (scan_buffer) >> (31 - i_bit);
+            code = (INT) ((scan_buffer) >> (31 - i_bit));
 
             if (code <= code_cal + bit_count - 1)
             {
@@ -459,7 +471,7 @@ UINT code_index = 0;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_huffman_table_set                  PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -492,6 +504,10 @@ UINT code_index = 0;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added range test to prevent */
+/*                                            underflow,                  */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_huffman_table_set(GX_JPEG_INFO *jpeg_info, UINT segment_len)
@@ -499,10 +515,17 @@ static UINT _gx_image_reader_huffman_table_set(GX_JPEG_INFO *jpeg_info, UINT seg
 GX_UBYTE *jpeg_data = jpeg_info -> gx_jpeg_data + jpeg_info -> gx_jpeg_data_index;
 GX_UBYTE  table_class;
 GX_UBYTE  table_id;
+GX_UBYTE  bit_count;
 UINT      code_index;
 UINT      i_bits;
 UINT      i_counts;
 USHORT    i_table_size;
+
+    /* must have at least one code for each of 16 huffman bit lengths */
+    if (segment_len < 19)
+    {
+        return GX_INVALID_FORMAT;
+    }
 
     /* Minus two-byte length. */
     jpeg_info -> gx_jpeg_data_index += (INT)segment_len;
@@ -511,11 +534,14 @@ USHORT    i_table_size;
 
     while (segment_len)
     {
-
         /* table_calss: 0 DC 1 AC */
         table_class = ((*jpeg_data) >> 4) & 1;
         table_id = (*jpeg_data++) & 0x01;
 
+        if (segment_len < 17)
+        {
+            return GX_INVALID_FORMAT;
+        }
         segment_len -= 17;
 
         i_table_size = 0;
@@ -524,11 +550,15 @@ USHORT    i_table_size;
         /* Read the number of Huffman codes for each bit length, from 1 to 16. */
         for (i_bits = 0; i_bits < 16; i_bits++)
         {
-            jpeg_info -> gx_jpeg_huffman_bits_count[table_class][table_id][i_bits] = (*jpeg_data);
+            bit_count = *jpeg_data++;
 
-            segment_len -= (*jpeg_data);
-
-            i_table_size = (USHORT)(i_table_size + (*jpeg_data++));
+            if (segment_len < bit_count)
+            {
+                return GX_INVALID_FORMAT;
+            }
+            jpeg_info -> gx_jpeg_huffman_bits_count[table_class][table_id][i_bits] = bit_count;
+            segment_len -= bit_count;
+            i_table_size = (USHORT)(i_table_size + bit_count);
         }
 
         /* The max i_table_size is 16 * 255, overflow cannot occur. */
@@ -630,6 +660,11 @@ INT       i_component;
     /* Read image components. */
     jpeg_info -> gx_jpeg_num_of_components = *jpeg_data++;
 
+    if (jpeg_info -> gx_jpeg_num_of_components > JPG_MAX_COMPONENTS)
+    {
+        return GX_FAILURE;
+    }
+
     for (i_component = 0; i_component < jpeg_info -> gx_jpeg_num_of_components; i_component++)
     {
         /* Read component id */
@@ -696,6 +731,11 @@ INT       index;
     /* Read the number of image components.  */
     jpeg_info -> gx_jpeg_num_of_components = *jpeg_data++;
 
+    if (jpeg_info -> gx_jpeg_num_of_components > JPG_MAX_COMPONENTS)
+    {
+        return GX_FAILURE;
+    }
+
     for (index = 0; index < jpeg_info -> gx_jpeg_num_of_components; index++)
     {
         /* skip image component */
@@ -717,7 +757,7 @@ INT       index;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_dc_decode                     PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -755,6 +795,9 @@ INT       index;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added range test,           */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_dc_decode(GX_JPEG_INFO *jpeg_info, UINT i_component)
@@ -765,6 +808,11 @@ GX_UBYTE code_value;
 INT      Diff;
 UINT     table_index = jpeg_info -> gx_jpeg_dc_table_index[i_component];
 GX_BOOL  negative;
+
+    if (table_index >= HUFF_TABLE_DIMENSION)
+    {
+        return GX_FAILURE;
+    }
 
     _gx_image_reader_jpeg_bits_get(jpeg_info, 16, &scan_buffer);
 
@@ -808,7 +856,7 @@ GX_BOOL  negative;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_ac_decode                     PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -846,6 +894,9 @@ GX_BOOL  negative;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added range test,           */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_ac_decode(GX_JPEG_INFO *jpeg_info, UINT i_component)
@@ -859,6 +910,11 @@ INT      ac_coefficient;
 UINT     ac_counter = 1;
 UINT     table_index = jpeg_info -> gx_jpeg_ac_table_index[i_component];
 INT      negative;
+
+    if (table_index >= HUFF_TABLE_DIMENSION)
+    {
+        return GX_FAILURE;
+    }
 
     while (ac_counter < 64)
     {
@@ -1056,7 +1112,7 @@ INT temp_block[64];
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_dequantize_idct               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1093,19 +1149,52 @@ INT temp_block[64];
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added range check for       */
+/*                                            stride, changed return val, */
+/*                                            added range check for       */
+/*                                            table_index,                */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
-static void _gx_image_reader_jpeg_dequantize_idct(GX_JPEG_INFO *jpeg_info, GX_UBYTE *data, UINT i_component)
+static UINT _gx_image_reader_jpeg_dequantize_idct(GX_JPEG_INFO *jpeg_info, GX_UBYTE *data, UINT i_component)
 {
 INT       table_index;
-INT       stride = ((jpeg_info -> gx_jpeg_sample_factor[i_component] & 0xf0) >> 1);
+INT       stride;
 GX_UBYTE *outptr = data;
 INT       index;
 INT       x;
 INT       y;
 INT       jpeg_block[64];
 
+    if (i_component >= JPG_MAX_COMPONENTS)
+    {
+        return GX_FAILURE;
+    }
+
+    stride = ((jpeg_info -> gx_jpeg_sample_factor[i_component] & 0xf0) >> 1);
+
+    if (i_component == 0)
+    {
+        if (stride > 32)
+        {
+            return GX_FAILURE;
+        }
+    }
+    else
+    {
+        if (stride > 8)
+        {
+            return GX_FAILURE;
+        }
+    }
+
     table_index = jpeg_info -> gx_jpeg_qantization_table_index[i_component];
+
+    if (table_index >= JPG_QUANT_TABLE_DIMENSION)
+    {
+        return GX_FAILURE;
+    }
 
     for (index = 0; index < 64; index++)
     {
@@ -1126,6 +1215,7 @@ INT       jpeg_block[64];
 
         outptr += stride;
     }
+    return GX_SUCCESS;
 }
 
 /**************************************************************************/
@@ -1133,7 +1223,7 @@ INT       jpeg_block[64];
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_one_block_decode              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1170,17 +1260,23 @@ INT       jpeg_block[64];
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            returned result of          */
+/*                                            dequantize_idct,            */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_one_block_decode(GX_JPEG_INFO *jpeg_info, UINT i_component, GX_UBYTE *block_data)
 {
+    UINT status = GX_SUCCESS;
+
     memset(jpeg_info -> gx_jpeg_vecter, 0, 64 * sizeof(UINT));
     _gx_image_reader_jpeg_dc_decode(jpeg_info, i_component);
     _gx_image_reader_jpeg_ac_decode(jpeg_info, i_component);
 
-    _gx_image_reader_jpeg_dequantize_idct(jpeg_info, block_data, i_component);
+    status = _gx_image_reader_jpeg_dequantize_idct(jpeg_info, block_data, i_component);
 
-    return GX_SUCCESS;
+    return status;
 }
 
 /**************************************************************************/
@@ -1279,7 +1375,7 @@ INT       width_in_bytes;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_decompress                    PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1314,6 +1410,9 @@ INT       width_in_bytes;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            abort if block decode fails,*/
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_decompress(GX_JPEG_INFO *jpeg_info)
@@ -1324,6 +1423,7 @@ int x;
 int y;
 int xx;
 int yy;
+UINT status = GX_SUCCESS;
 
     _gx_jpg_bit_buffer = 0;
     _gx_jpg_bit_count = 0;
@@ -1353,42 +1453,48 @@ int yy;
     {
         for (x = 0; x < jpeg_info -> gx_jpeg_width; x += 8 * w)
         {
-            /* Decode one MCU*/
-            for (yy = 0; yy < h; yy++)
+            /* Decode one MCU */
+            for (yy = 0; yy < h && status == GX_SUCCESS; yy++)
             {
-                for (xx = 0; xx < w; xx++)
+                for (xx = 0; xx < w && status == GX_SUCCESS; xx++)
                 {
                     /* Y */
-                    _gx_image_reader_jpeg_one_block_decode(jpeg_info, 0, jpeg_info -> gx_jpeg_Y_block + yy * 128 + xx * 8);
+                    status = _gx_image_reader_jpeg_one_block_decode(jpeg_info, 0, jpeg_info -> gx_jpeg_Y_block + yy * 128 + xx * 8);
                 }
             }
 
-            if (jpeg_info -> gx_jpeg_num_of_components > 1)
+            if (status == GX_SUCCESS && jpeg_info -> gx_jpeg_num_of_components > 1)
             {
                 /* Cb */
-                _gx_image_reader_jpeg_one_block_decode(jpeg_info, 1, jpeg_info -> gx_jpeg_Cb_block);
+                status = _gx_image_reader_jpeg_one_block_decode(jpeg_info, 1, jpeg_info -> gx_jpeg_Cb_block);
 
-                /* Cr*/
-                _gx_image_reader_jpeg_one_block_decode(jpeg_info, 2, jpeg_info -> gx_jpeg_Cr_block);
-            }
-
-            if (jpeg_info -> gx_jpeg_mcu_draw)
-            {
-                if (jpeg_info -> gx_jpeg_draw_context)
+                /* Cr */
+                if (status == GX_SUCCESS)
                 {
-                    jpeg_info -> gx_jpeg_mcu_draw(jpeg_info,
-                                                  jpeg_info -> gx_jpeg_draw_xpos + x,
-                                                  jpeg_info -> gx_jpeg_draw_ypos + y);
+                    status = _gx_image_reader_jpeg_one_block_decode(jpeg_info, 2, jpeg_info -> gx_jpeg_Cr_block);
                 }
             }
-            else
+
+            if (status == GX_SUCCESS)
             {
-                _gx_image_reader_jpeg_one_mcu_write(jpeg_info, x, y);
+                if (jpeg_info -> gx_jpeg_mcu_draw)
+                {
+                    if (jpeg_info -> gx_jpeg_draw_context)
+                    {
+                        jpeg_info -> gx_jpeg_mcu_draw(jpeg_info,
+                                                      jpeg_info -> gx_jpeg_draw_xpos + x,
+                                                      jpeg_info -> gx_jpeg_draw_ypos + y);
+                    }
+                }
+                else
+                {
+                    _gx_image_reader_jpeg_one_mcu_write(jpeg_info, x, y);
+                }
             }
         }
     }
 
-    return GX_SUCCESS;
+    return status;
 }
 
 /**************************************************************************/

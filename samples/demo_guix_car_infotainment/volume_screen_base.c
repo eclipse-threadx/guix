@@ -14,6 +14,8 @@ static int progress_bar_animation_step = 0;
 static int progress_bar_animation_target_val = 0;
 static int progress_bar_animation_start_val = 0;
 
+extern GX_WINDOW *current_screen;
+
 /******************************************************************************************/
 /* Update volume value.                                                                   */
 /******************************************************************************************/
@@ -159,7 +161,7 @@ UINT volume_progress_bar_event_process(GX_PROGRESS_BAR *bar, GX_EVENT* event_ptr
     INT val;
     GX_RECTANGLE* size = &bar->gx_widget_size;
     GX_PROGRESS_BAR_INFO* info = &bar->gx_progress_bar_info;
-    VOLUME_SCREEN_BASE_CONTROL_BLOCK *base = (VOLUME_SCREEN_BASE_CONTROL_BLOCK *)bar->gx_widget_parent->gx_widget_parent;
+    VOLUME_SCREEN_BASE_CONTROL_BLOCK *base;
 
     if (event_ptr->gx_event_type == GX_EVENT_PEN_DOWN)
     {
@@ -167,7 +169,12 @@ UINT volume_progress_bar_event_process(GX_PROGRESS_BAR *bar, GX_EVENT* event_ptr
         {
             /* Unmute.  */
             is_mute = GX_FALSE;
-            gx_widget_style_remove(&base->volume_screen_base_mute_btn, GX_STYLE_BUTTON_PUSHED);
+
+            if (current_screen)
+            {
+                base = (VOLUME_SCREEN_BASE_CONTROL_BLOCK*)current_screen;
+                gx_widget_style_remove(&base->volume_screen_base_mute_btn, GX_STYLE_BUTTON_PUSHED);
+            }
         }
 
         val = (size->gx_rectangle_bottom - event_ptr->gx_event_payload.gx_event_pointdata.gx_point_y + 2);

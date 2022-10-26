@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_image_reader.h                                   PORTABLE C      */
-/*                                                           6.1.7        */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -48,6 +48,10 @@
 /*                                            improved png decoding       */
 /*                                            performance,                */
 /*                                            resulting in version 6.1.7  */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added definitions for fixed */
+/*                                            size table dimensions,      */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
@@ -72,33 +76,38 @@
 #define GX_PNG_HUFFMAN_LIT_TABLE_SIZE           286
 #define GX_PNG_HUFFMAN_LIT_CODE_LEN_TABLE_SIZE  288
 #define GX_PNG_HUFFMAN_DIST_CODE_LEN_TABLE_SIZE 32
+#define GX_PNG_HUFFMAN_DIST_TABLE_SIZE          30
 #define GX_PNG_PALETTE_TABLE_SIZE               256
 #define GX_PNG_SCRATCH_BUFFER_SIZE              (GX_PNG_CRC_TABLE_SIZE +                   \
                                                  GX_PNG_HUFFMAN_LIT_TABLE_SIZE +           \
                                                  GX_PNG_HUFFMAN_LIT_CODE_LEN_TABLE_SIZE +  \
                                                  GX_PNG_HUFFMAN_DIST_CODE_LEN_TABLE_SIZE + \
                                                  GX_PNG_PALETTE_TABLE_SIZE)
+#define JPG_MAX_COMPONENTS                       3
+#define HUFF_TABLE_DIMENSION                     2
+#define JPG_QUANT_TABLE_DIMENSION                4
 
 /* Control block used internally for jpeg reader.  */
 
 typedef struct GX_JPEG_INFO_STRUCT
 {
+    UINT             (*gx_jpeg_mcu_draw)(struct GX_JPEG_INFO_STRUCT *, INT, INT);
     USHORT           gx_jpeg_width;
     USHORT           gx_jpeg_height;
     INT              gx_jpeg_num_of_components;
-    GX_UBYTE         gx_jpeg_sample_factor[3];
-    GX_UBYTE         gx_jpeg_component_id[3];
-    GX_UBYTE         gx_jpeg_qantization_table_index[3];
-    GX_UBYTE         gx_jpeg_dc_table_index[3];
-    GX_UBYTE         gx_jpeg_ac_table_index[3];
-    INT              gx_jpeg_quantization_table[4][64];
-    INT             *gx_jpeg_huffman_table[2][2];
-    GX_VALUE         gx_jpeg_huffman_bits_count[2][2][16];
+    GX_UBYTE         gx_jpeg_sample_factor[JPG_MAX_COMPONENTS];
+    GX_UBYTE         gx_jpeg_component_id[JPG_MAX_COMPONENTS];
+    GX_UBYTE         gx_jpeg_qantization_table_index[JPG_MAX_COMPONENTS];
+    GX_UBYTE         gx_jpeg_dc_table_index[JPG_MAX_COMPONENTS];
+    GX_UBYTE         gx_jpeg_ac_table_index[JPG_MAX_COMPONENTS];
+    INT              gx_jpeg_quantization_table[JPG_QUANT_TABLE_DIMENSION][64];
+    INT             *gx_jpeg_huffman_table[HUFF_TABLE_DIMENSION][HUFF_TABLE_DIMENSION];
+    GX_VALUE         gx_jpeg_huffman_bits_count[HUFF_TABLE_DIMENSION][HUFF_TABLE_DIMENSION][16];
     INT              gx_jpeg_restart_interval;
     GX_UBYTE         gx_jpeg_Y_block[256];
     GX_UBYTE         gx_jpeg_Cr_block[64];
     GX_UBYTE         gx_jpeg_Cb_block[64];
-    INT              gx_jpeg_pre_dc[3];
+    INT              gx_jpeg_pre_dc[JPG_MAX_COMPONENTS];
     INT              gx_jpeg_vecter[64];
     GX_UBYTE        *gx_jpeg_data;
     INT              gx_jpeg_data_size;
@@ -106,7 +115,6 @@ typedef struct GX_JPEG_INFO_STRUCT
     GX_UBYTE        *gx_jpeg_decoded_data;
     UINT             gx_jpeg_decoded_data_size;
     GX_DRAW_CONTEXT *gx_jpeg_draw_context;
-    UINT                 (*gx_jpeg_mcu_draw)(struct GX_JPEG_INFO_STRUCT *, INT, INT);
     INT              gx_jpeg_draw_xpos;
     INT              gx_jpeg_draw_ypos;
 } GX_JPEG_INFO;
@@ -134,7 +142,7 @@ typedef struct GX_PNG_STRUCT
     INT      *gx_png_huffman_lit_table;    /* 286 */
     INT      *gx_png_huffman_lit_code_len; /* 286 */
     INT       gx_png_huffman_lit_bits_count[17];
-    INT       gx_png_huffman_dist_table[30];
+    INT       gx_png_huffman_dist_table[GX_PNG_HUFFMAN_DIST_TABLE_SIZE];
     INT      *gx_png_huffman_dist_code_len; /* 32 */
     INT       gx_png_huffman_dist_bits_count[17];
     GX_COLOR *gx_png_palette_table;         /* 256 */

@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_generic_scroll_wheel_scroll                     PORTABLE C      */
-/*                                                           6.1.7        */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -77,9 +77,12 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  06-02-2021        Ting Zhu              Initial Version 6.1.7         */
+/*  10-31-2022        Kenneth Maxwell       Modified comment(s),          */
+/*                                            changed return type,        */
+/*                                            resulting in version 6.2.0  */ 
 /*                                                                        */
 /**************************************************************************/
-VOID _gx_generic_scroll_wheel_scroll(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE shift)
+INT _gx_generic_scroll_wheel_scroll(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE shift)
 {
 GX_WIDGET *child;
 INT        y_shift;
@@ -88,7 +91,7 @@ INT        max_shift;
 
     if (!shift)
     {
-        return;
+        return GX_SUCCESS;
     }
 
     if (!wheel -> gx_scroll_wheel_wrap_style_check((GX_SCROLL_WHEEL *)wheel))
@@ -160,5 +163,6 @@ INT        max_shift;
     {
         _gx_system_dirty_mark((GX_WIDGET *)wheel);
     }
+    return GX_SUCCESS;
 }
 

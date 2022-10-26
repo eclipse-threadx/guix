@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_scroll_wheel.h                                   PORTABLE C      */
-/*                                                           6.1.7        */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -50,6 +50,10 @@
 /*                                            generic scroll wheel,       */
 /*                                            resulting in version 6.1.7  */
 /*                                                                        */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            changed prototype for       */
+/*                                            generic_scroll_wheel_scroll,*/
+/*                                            resulting in version 6.2.0  */
 /**************************************************************************/
 
 #ifndef GX_SCROLL_WHEEL_H
@@ -139,7 +143,7 @@ VOID    _gx_generic_scroll_wheel_down_wrap(GX_GENERIC_SCROLL_WHEEL *wheel);
 VOID    _gx_generic_scroll_wheel_draw(GX_GENERIC_SCROLL_WHEEL *wheel);
 UINT    _gx_generic_scroll_wheel_event_process(GX_GENERIC_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
 UINT    _gx_generic_scroll_wheel_row_height_set(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE row_height);
-VOID    _gx_generic_scroll_wheel_scroll(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE shift);
+INT     _gx_generic_scroll_wheel_scroll(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE shift);
 UINT    _gx_generic_scroll_wheel_total_rows_set(GX_GENERIC_SCROLL_WHEEL *wheel, INT count);
 VOID    _gx_generic_scroll_wheel_up_wrap(GX_GENERIC_SCROLL_WHEEL *wheel);
 GX_BOOL _gx_generic_scroll_wheel_wrap_style_check(GX_GENERIC_SCROLL_WHEEL *wheel);

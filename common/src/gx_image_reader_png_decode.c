@@ -474,7 +474,7 @@ static VOID _gx_image_reader_png_bits_skip(UINT num_of_skip_bits)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_IHDR_chunk_read                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -508,6 +508,9 @@ static VOID _gx_image_reader_png_bits_skip(UINT num_of_skip_bits)
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added data boundary check,  */
 /*                                            resulting in version 6.1    */
+/*  10-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added invalid value check,  */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_IHDR_chunk_read(GX_PNG *png)
@@ -530,13 +533,13 @@ static UINT _gx_image_reader_png_IHDR_chunk_read(GX_PNG *png)
     _gx_image_reader_png_4bytes_read(png, &png -> gx_png_height);
 
     /* Limited max png width to 14 bits. */
-    if (png -> gx_png_width > GX_MAX_PIXELMAP_RESOLUTION)
+    if ((png -> gx_png_width < 0) || (png -> gx_png_width > GX_MAX_PIXELMAP_RESOLUTION))
     {
         return GX_INVALID_WIDTH;
     }
 
     /* Limited max png height to 14 bits. */
-    if (png -> gx_png_height > GX_MAX_PIXELMAP_RESOLUTION)
+    if ((png -> gx_png_height < 0) || (png -> gx_png_height > GX_MAX_PIXELMAP_RESOLUTION))
     {
         return GX_INVALID_HEIGHT;
     }
@@ -890,7 +893,7 @@ INT  pos[16];
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_ll_huffman_read                PORTABLE C      */
-/*                                                           6.1.7        */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -932,6 +935,9 @@ INT  pos[16];
 /*  06-02-2021     Ting Zhu                 Modified comment(s),          */
 /*                                            added invalid value check,  */
 /*                                            resulting in version 6.1.7  */
+/*  10-31-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added invalid value check,  */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_ll_huffman_read(GX_PNG *png, UINT hlit, UINT hdist)
@@ -1102,6 +1108,13 @@ INT  index;
             {
                 pos[index] = png -> gx_png_huffman_dist_bits_count[index - 1];
             }
+
+            if (pos[index] >= GX_PNG_HUFFMAN_DIST_TABLE_SIZE)
+            {
+                /* Invalid data. */
+                return GX_FAILURE;
+            }
+
             png -> gx_png_huffman_dist_table[pos[index]++] = (INT)i;
         }
     }
@@ -1862,7 +1875,7 @@ INT pa, pb, pc;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_unfilter                       PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1895,6 +1908,9 @@ INT pa, pb, pc;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added null pointer check,   */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_unfilter(GX_PNG *png)
@@ -1905,6 +1921,12 @@ INT pos;
 INT bpp = png -> gx_png_bpp;
 INT x;
 INT y;
+
+    if (png -> gx_png_decoded_data == GX_NULL)
+    {
+        /* This happens when IDAT chunk is missing. */
+        return GX_FAILURE;
+    }
 
     byte_width = (png -> gx_png_width * bpp + 7) >> 3;
     bpp = (bpp + 7) >> 3;
@@ -2001,7 +2023,7 @@ INT y;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_decode                         PORTABLE C      */
-/*                                                           6.1.7        */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2056,6 +2078,9 @@ INT y;
 /*                                            improved png decoding       */
 /*                                            performance,                */
 /*                                            resulting in version 6.1.7  */
+/*  10-31-2022     Ting Zhu                 Modified comment(s), and      */
+/*                                            added invalid value check,  */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_image_reader_png_decode(GX_CONST GX_UBYTE *read_data, ULONG data_size, GX_PIXELMAP *outmap)
@@ -2116,14 +2141,15 @@ GX_BOOL decoded_done = GX_FALSE;
         _bit_buffer = 0;
         _bit_count = 0;
 
-        while (png.gx_png_data_index + 4 < png.gx_png_data_size)
+        while (png.gx_png_data_index < png.gx_png_data_size - 4)
         {
             /* data_len*/
             _gx_image_reader_png_4bytes_read(&png, &data_len);
 
             png.gx_png_trunk_crc = 0xffffffff;
 
-            if (png.gx_png_data_index + data_len + 4 > png.gx_png_data_size)
+            if ((data_len < 0) ||
+                (data_len > png.gx_png_data_size - png.gx_png_data_index - 4))
             {
                 status = GX_INVALID_SIZE;
                 break;
@@ -2155,7 +2181,7 @@ GX_BOOL decoded_done = GX_FALSE;
             {
                 status = _gx_image_reader_png_PLTE_chunk_read(&png);
             }
-            else if (strncmp(chunk_type, "tRNS", 4) == 0)
+            else if ((strncmp(chunk_type, "tRNS", 4) == 0) && (png.gx_png_trans == GX_NULL))
             {
                 /* Read transparent information. */
                 status = _gx_image_reader_png_tRNS_chunk_read(&png);

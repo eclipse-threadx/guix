@@ -4,7 +4,7 @@
 <header>
 <project_version>55</project_version>
 <guix_version>60108</guix_version>
-<studio_version>6011001</studio_version>
+<studio_version>6011200</studio_version>
 <project_name>demo_guix_home_automation</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
@@ -4116,15 +4116,6 @@
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
 <folder_id>4099</folder_id>
-<resource>
-<name>Add New String</name>
-<pathinfo>
-<pathtype>project_relative</pathtype>
-</pathinfo>
-<is_default>FALSE</is_default>
-<enabled>TRUE</enabled>
-<compress>FALSE</compress>
-</resource>
 <resource>
 <name>Add New String</name>
 <pathinfo>

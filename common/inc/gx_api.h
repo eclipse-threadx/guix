@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.1.12       */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -96,6 +96,11 @@
 /*                                            added new style             */
 /*                                            GX_STYLE_REPEAT_SELECT,     */
 /*                                            resulting in version 6.1.12 */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused style flag   */
+/*                                            GX_SCROLLBAR_BACKGROUND_    */
+/*                                            TILE,                       */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -118,8 +123,8 @@ extern   "C" {
 
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
-#define GUIX_MINOR_VERSION 1
-#define GUIX_PATCH_VERSION 12
+#define GUIX_MINOR_VERSION 2
+#define GUIX_PATCH_VERSION 0
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -872,7 +877,6 @@ typedef struct GX_STRING_STRUCT
 
 /* Define Scroll Bar styles.  */
 
-#define GX_SCROLLBAR_BACKGROUND_TILE        0x00010000UL
 #define GX_SCROLLBAR_RELATIVE_THUMB         0x00020000UL
 #define GX_SCROLLBAR_END_BUTTONS            0x00040000UL
 #define GX_SCROLLBAR_VERTICAL               0x01000000UL

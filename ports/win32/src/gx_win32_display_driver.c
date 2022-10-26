@@ -239,6 +239,10 @@ GX_WIN32_DISPLAY_DRIVER_DATA win32_instance_data[GX_MAX_WIN32_DISPLAYS];
 UINT                         win32_timer_id = 0;
 extern int                   gx_main(int, char **);
 
+#ifdef GX_THREADX_BINDING
+extern ULONG                 _tx_thread_system_state;
+#endif
+
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
@@ -1792,7 +1796,7 @@ GX_WIN32_DISPLAY_DRIVER_DATA *instance = (GX_WIN32_DISPLAY_DRIVER_DATA *)thread_
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    gx_win32_driver_thread_initialize                  PORTABLE C       */
-/*                                                           6.1.10       */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1831,6 +1835,9 @@ GX_WIN32_DISPLAY_DRIVER_DATA *instance = (GX_WIN32_DISPLAY_DRIVER_DATA *)thread_
 /*  01-31-2022     Ting Zhu                 Modified comment(s), modified */
 /*                                            to use multi-media timer,   */
 /*                                            resulting in version 6.1.10 */
+/*  10-31-2022     Ting Zhu                 Modified comment(s), added    */
+/*                                            ThreadX system state check, */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 void gx_win32_driver_thread_initialize(GX_WIN32_DISPLAY_DRIVER_DATA *instance)
@@ -1841,6 +1848,14 @@ void gx_win32_driver_thread_initialize(GX_WIN32_DISPLAY_DRIVER_DATA *instance)
 
     /* Mark the driver as ready. */
     instance->win32_driver_ready = 1;
+
+#ifdef GX_THREADX_BINDING
+    while (_tx_thread_system_state != 0)
+    {
+        /* ThreadX is not ready. */
+        Sleep(1);
+    }
+#endif
 
     /* Driver is ready, force a redraw. */
     gx_win32_message_to_guix(GX_EVENT_REDRAW);

@@ -4,7 +4,7 @@
 <header>
 <project_version>55</project_version>
 <guix_version>60108</guix_version>
-<studio_version>6010900</studio_version>
+<studio_version>6011200</studio_version>
 <project_name>demo_guix_car_infotainment</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
@@ -7533,6 +7533,7 @@
 <template>FALSE</template>
 <visible_at_startup>FALSE</visible_at_startup>
 <framecount>11</framecount>
+<apply_to_all_frames>FALSE</apply_to_all_frames>
 <framelist>
 <sprite_frame>
 <pixelmap>LLIGHT01</pixelmap>
@@ -7642,6 +7643,7 @@
 <template>FALSE</template>
 <visible_at_startup>FALSE</visible_at_startup>
 <framecount>11</framecount>
+<apply_to_all_frames>FALSE</apply_to_all_frames>
 <framelist>
 <sprite_frame>
 <pixelmap>LLIGHT01</pixelmap>
@@ -9473,6 +9475,7 @@
 <ycenter>141</ycenter>
 <radius>123</radius>
 <track_width>36</track_width>
+<needle_offset>0</needle_offset>
 <current_angle>120</current_angle>
 <min_angle>-52</min_angle>
 <max_angle>232</max_angle>

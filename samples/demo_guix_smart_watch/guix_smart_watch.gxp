@@ -4,7 +4,7 @@
 <header>
 <project_version>55</project_version>
 <guix_version>60109</guix_version>
-<studio_version>6011000</studio_version>
+<studio_version>6011200</studio_version>
 <project_name>guix_smart_watch</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
