@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_event_dispatch                           PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -73,13 +73,16 @@
 /*  04-25-2022     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
 /*                                            resulting in version 6.1.11 */
+/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s), fixed    */
+/*                                            a gcc warning,              */
+/*                                            resulting in version 6.x    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_system_event_dispatch(GX_EVENT *in_event)
 {
 
 GX_WIDGET      *target = GX_NULL;
-GX_WINDOW_ROOT *root_window;
+GX_WINDOW_ROOT *root_window = GX_NULL;
 GX_EVENT        out_event;
 GX_POINT        pen_pos;
 UINT            return_code = 0;
