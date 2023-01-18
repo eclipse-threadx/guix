@@ -39,6 +39,53 @@ See [Overview of Azure RTOS GUIX](https://learn.microsoft.com/azure/rtos/guix/ov
 
 The master branch has the most recent code with all new features and bug fixes. It does not represent the latest General Availability (GA) release of the library. Each official release (preview or GA) will be tagged to mark the commit and push it into the Github releases tab, e.g. `v6.2-rel`.
 
+> When you see xx-xx-xxxx, 6.x or x.x in function header, this means the file is not officially released yet. They will be updated in the next release. See example below.
+```
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _tx_initialize_low_level                          Cortex-M23/GNU    */
+/*                                                           6.x          */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Scott Larson, Microsoft Corporation                                 */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function is responsible for any low-level processor            */
+/*    initialization, including setting up interrupt vectors, setting     */
+/*    up a periodic timer interrupt source, saving the system stack       */
+/*    pointer for use in ISR processing later, and finding the first      */
+/*    available RAM memory address for tx_application_define.             */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    _tx_initialize_kernel_enter           ThreadX entry function        */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  09-30-2020      Scott Larson            Initial Version 6.1           */
+/*  xx-xx-xxxx      Scott Larson            Include tx_user.h,            */
+/*                                            resulting in version 6.x    */
+/*                                                                        */
+/**************************************************************************/ 
+```
+
 ## Component dependencies
 
 The main components of Azure RTOS are each provided in their own repository, but there are dependencies between them, as shown in the following graph. This is important to understand when setting up your builds.
