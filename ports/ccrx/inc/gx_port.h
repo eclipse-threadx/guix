@@ -146,7 +146,7 @@ typedef unsigned char GX_UCHAR;
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Version 6.1.12 *";
+    "Copyright (c) Microsoft Corporation. All rights reserved.  *  GUIX Version 6.2.1 *";
 #else
 extern  CHAR _gx_version_id[];
 #endif

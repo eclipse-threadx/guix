@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.2.0        */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -101,6 +101,9 @@
 /*                                            GX_SCROLLBAR_BACKGROUND_    */
 /*                                            TILE,                       */
 /*                                            resulting in version 6.2.0  */
+/*  03-08-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            updated patch version,      */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -124,7 +127,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 2
-#define GUIX_PATCH_VERSION 0
+#define GUIX_PATCH_VERSION 1
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__

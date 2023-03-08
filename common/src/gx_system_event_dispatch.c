@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_event_dispatch                           PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -73,9 +73,9 @@
 /*  04-25-2022     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
 /*                                            resulting in version 6.1.11 */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s), fixed    */
+/*  03-08-2023     Ting Zhu                 Modified comment(s), fixed    */
 /*                                            a gcc warning,              */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_system_event_dispatch(GX_EVENT *in_event)

@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_generic_scroll_wheel_scroll                     PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -80,9 +80,9 @@
 /*  10-31-2022        Kenneth Maxwell       Modified comment(s),          */
 /*                                            changed return type,        */
 /*                                            resulting in version 6.2.0  */
-/*  xx-xx-xxxx        Ting Zhu              Modified comment(s),          */
+/*  03-08-2023        Ting Zhu              Modified comment(s),          */
 /*                                            changed return type,        */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_generic_scroll_wheel_scroll(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE shift)

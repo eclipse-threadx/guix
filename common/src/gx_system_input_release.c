@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_input_release                            PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.2.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -74,9 +74,9 @@
 /*                                            released stack entries are  */
 /*                                            reset to NULL,              */
 /*                                            resulting in version 6.1.12 */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  03-08-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.2.1  */
 /*                                                                        */
 /**************************************************************************/
 
