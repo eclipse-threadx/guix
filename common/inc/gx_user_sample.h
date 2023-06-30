@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_user.h                                           PORTABLE C      */
-/*                                                           6.1.10       */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -45,6 +45,10 @@
 /*  01-31-2022     Kenneth Maxwell          Modified comment(s),          */
 /*                                            fixed typo,                 */
 /*                                            resulting in version 6.1.10 */
+/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*                                            added GX_ENABLE_ARM_HELIUM  */
+/*                                            definition,                 */
+/*                                            resulting in version 6.x    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -68,5 +72,9 @@
 /* This can be defined to insert an application specific data 
    field into the GX_WIDGET control block */
 /* #define GX_WIDGET_USER_DATA */
+
+/* This can be defined to enable the use of ARM Helium intrinsics for 
+   JPEG decoding. */
+/* #define GX_ENABLE_ARM_HELIUM */
 #endif
 

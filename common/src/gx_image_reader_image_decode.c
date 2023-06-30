@@ -108,7 +108,7 @@ GX_CONST GX_UBYTE *buffer;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_image_decode                       PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -143,6 +143,10 @@ GX_CONST GX_UBYTE *buffer;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*                                            modified jpeg decode        */
+/*                                            function parameter list,    */
+/*                                            resulting in version 6.x    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
@@ -156,7 +160,7 @@ UINT status;
     switch (image_reader -> gx_image_reader_image_type)
     {
     case GX_IMAGE_TYPE_JPG:
-        status = _gx_image_reader_jpeg_decode(image_reader -> gx_image_reader_source_data, image_reader -> gx_image_reader_source_data_size, outmap);
+        status = _gx_image_reader_jpeg_decode(image_reader, outmap);
         break;
 
     case GX_IMAGE_TYPE_PNG:

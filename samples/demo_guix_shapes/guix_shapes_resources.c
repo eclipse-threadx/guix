@@ -5,8 +5,8 @@
 /*  resource file(s). For more information please refer to the Azure RTOS GUIX */
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.12.0                                              */
-/*  Date (dd.mm.yyyy): 25. 8.2022   Time (hh:mm): 18:22                        */
+/*  GUIX Studio Revision 6.2.1.2                                               */
+/*  Date (dd.mm.yyyy):  5. 6.2023   Time (hh:mm): 15:03                        */
 /*******************************************************************************/
 
 
@@ -7647,7 +7647,7 @@ static GX_CONST GX_FONT DEFAULT_THEME_SCREEN_LABEL =
 /* Font Table                                                                  */
 
 
-extern GX_FONT _gx_system_font_8bpp;
+extern GX_CONST GX_FONT _gx_system_font_8bpp;
 GX_CONST GX_FONT *display_1_default_theme_font_table[] =
 {
     &_gx_system_font_8bpp,

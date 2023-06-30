@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_display.h                                        PORTABLE C      */
-/*                                                           6.1.10       */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -60,12 +60,14 @@
 /*                                            added language direction    */
 /*                                            table set declarations,     */
 /*                                            resulting in version 6.1.10 */
+/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*                                            removed unused prototypes,  */
+/*                                            resulting in version 6.x    */
 /*                                                                        */
 /**************************************************************************/
 
 #ifndef GX_DISPLAY_H
 #define GX_DISPLAY_H
-
 
 /* Define Display management constants.  */
 
@@ -283,7 +285,6 @@ VOID     _gx_display_driver_565rgb_rotated_pixelmap_blend(GX_DRAW_CONTEXT *conte
 VOID     _gx_display_driver_565rgb_rotated_pixelmap_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
                                                            INT angle, INT rot_cx, INT rot_cy);
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
-USHORT   _gx_display_driver_565rgb_YCbCr2RGB(INT y, INT cb, INT cr);
 VOID     _gx_display_driver_565rgb_rotated_jpeg_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
 VOID     _gx_display_driver_565rgb_rotated_png_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
 #endif
@@ -301,7 +302,6 @@ VOID     _gx_display_driver_24xrgb_rotated_pixel_blend(GX_DRAW_CONTEXT *context,
 
 
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
-UINT     _gx_display_driver_24xrgb_YCbCr2RGB(INT y, INT cb, INT cr);
 VOID     _gx_display_driver_24xrgb_jpeg_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
 VOID     _gx_display_driver_24xrgb_png_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);
 VOID     _gx_display_driver_24xrgb_rotated_jpeg_draw(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap);

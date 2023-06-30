@@ -376,7 +376,7 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-//*    [gx_display_driver_pixel_blend]       Basic display driver pixel    */
+/*    [gx_display_driver_pixel_blend]       Basic display driver pixel    */
 /*                                            blend function              */
 /*                                                                        */
 /*  CALLED BY                                                             */

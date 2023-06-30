@@ -25,185 +25,15 @@
 /* Include necessary system files.  */
 
 #include "gx_api.h"
-#include "gx_context.h"
-#include "gx_system.h"
-#include "gx_image_reader.h"
 #include "gx_display.h"
-
-#define RANGE_1555XRGB_PIXEL(val) if (val > 255) \
-    {                                            \
-        val = 31;                                \
-    }                                            \
-    else if (val < 0)                            \
-    {                                            \
-        val = 0;                                 \
-    }                                            \
-    else                                         \
-    {                                            \
-        val >>= 3;                               \
-    }
-
-/**************************************************************************/
-/*                                                                        */
-/*  FUNCTION                                               RELEASE        */
-/*                                                                        */
-/*    _gx_display_driver_1555xrgb_YCbCr2RGB               PORTABLE C      */
-/*                                                           6.1          */
-/*  AUTHOR                                                                */
-/*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
-/*                                                                        */
-/*  DESCRIPTION                                                           */
-/*                                                                        */
-/*    Converts YCbCr value to 1555XRGB color space.                       */
-/*                                                                        */
-/*  INPUT                                                                 */
-/*                                                                        */
-/*    y                                     Luminance                     */
-/*    cb                                    Chroma (Blue-difference)      */
-/*    cr                                    Chroma (Red-difference)       */
-/*                                                                        */
-/*  OUTPUT                                                                */
-/*                                                                        */
-/*    Value                                 1555 XRGB value               */
-/*                                                                        */
-/*  CALLS                                                                 */
-/*                                                                        */
-/*    None                                                                */
-/*                                                                        */
-/*  CALLED BY                                                             */
-/*                                                                        */
-/*    _gx_display_driver_1555xrgb_one_mcu_draw                            */
-/*                                                                        */
-/*  RELEASE HISTORY                                                       */
-/*                                                                        */
-/*    DATE              NAME                      DESCRIPTION             */
-/*                                                                        */
-/*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
-/*                                            resulting in version 6.1    */
-/*                                                                        */
-/**************************************************************************/
-#if defined(GX_SOFTWARE_DECODER_SUPPORT)
-static USHORT _gx_display_driver_1555xrgb_YCbCr2RGB(INT y, INT cb, INT cr)
-{
-INT red;
-INT green;
-INT blue;
-
-    cb = cb - 128;
-    cr = cr - 128;
-
-    red = y + cr + (cr >> 2) + (cr >> 3);
-    green = y - ((cb >> 2) + (cb >> 4) + (cb >> 5)) - ((cr >> 1) + (cr >> 3) + (cr >> 4) + (cr >> 6));
-    blue = y + cb + (cb >> 1) + (cb >> 2);
-
-
-    /* Make sure the range of the RGB values are within bound. */
-    RANGE_1555XRGB_PIXEL(red)
-    RANGE_1555XRGB_PIXEL(green)
-    RANGE_1555XRGB_PIXEL(blue)
-
-    return (USHORT)((red << 10) | (green << 5 | blue));
-}
-#endif
-
-/**************************************************************************/
-/*                                                                        */
-/*  FUNCTION                                               RELEASE        */
-/*                                                                        */
-/*    _gx_display_driver_1555xrgb_mcu_draw                PORTABLE C      */
-/*                                                           6.1          */
-/*  AUTHOR                                                                */
-/*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
-/*                                                                        */
-/*  DESCRIPTION                                                           */
-/*                                                                        */
-/*    Internal helper function to draw one MCU of decoded JPEG data.      */
-/*                                                                        */
-/*  INPUT                                                                 */
-/*                                                                        */
-/*    context                               GUIX draw context             */
-/*    xpos                                  X position to draw            */
-/*    ypos                                  y position to draw            */
-/*    jpeg_info                             JPEG control block            */
-/*                                                                        */
-/*  OUTPUT                                                                */
-/*                                                                        */
-/*    Status Code                                                         */
-/*                                                                        */
-/*  CALLS                                                                 */
-/*                                                                        */
-/*    _gx_display_driver_565rgb_YCbCr2RGB                                 */
-/*                                                                        */
-/*  CALLED BY                                                             */
-/*                                                                        */
-/*    _gx_display_driver_jpeg_decode                                      */
-/*                                                                        */
-/*  RELEASE HISTORY                                                       */
-/*                                                                        */
-/*    DATE              NAME                      DESCRIPTION             */
-/*                                                                        */
-/*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
-/*                                            resulting in version 6.1    */
-/*                                                                        */
-/**************************************************************************/
-#if defined(GX_SOFTWARE_DECODER_SUPPORT)
-static UINT _gx_display_driver_1555xrgb_mcu_draw(GX_JPEG_INFO *jpeg_info, INT xpos, INT ypos)
-{
-USHORT          *put;
-INT              x;
-INT              y;
-INT              w;
-INT              h;
-INT              coff;
-GX_UBYTE         Y;
-GX_UBYTE         Cb;
-GX_UBYTE         Cr;
-
-GX_DRAW_CONTEXT *context = jpeg_info -> gx_jpeg_draw_context;
-GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
-
-    h = (jpeg_info -> gx_jpeg_sample_factor[0] >> 4);
-    w = (jpeg_info -> gx_jpeg_sample_factor[0] & 0x0f);
-
-    put = (USHORT *)context -> gx_draw_context_memory;
-    put += ypos * context -> gx_draw_context_pitch;
-    put += xpos;
-
-    for (y = 0; y < 8 * w; y++)
-    {
-        for (x = 0; x < 8 * h; x++)
-        {
-
-            if ((xpos + x >= clip -> gx_rectangle_left) && (xpos + x <= clip -> gx_rectangle_right) &&
-                (ypos + y >= clip -> gx_rectangle_top) && (ypos + y <= clip -> gx_rectangle_bottom))
-            {
-                coff = x / w + ((y / h) << 3);
-
-                Y = jpeg_info -> gx_jpeg_Y_block[x + y * w * 8];
-                Cb = jpeg_info -> gx_jpeg_Cb_block[coff];
-                Cr = jpeg_info -> gx_jpeg_Cr_block[coff];
-
-                put[x] = _gx_display_driver_1555xrgb_YCbCr2RGB(Y, Cb, Cr);
-            }
-        }
-
-        put += context -> gx_draw_context_pitch;
-    }
-
-    return GX_SUCCESS;
-}
-#endif
+#include "gx_image_reader.h"
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_dislay_driver_565rgb_jpeg_draw                  PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -240,6 +70,10 @@ GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*                                            removed a parameter from    */
+/*                                            jpeg mcu decode function,   */
+/*                                            resulting in version 6.x    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
@@ -248,8 +82,7 @@ VOID _gx_display_driver_1555xrgb_jpeg_draw(GX_DRAW_CONTEXT *context, INT xpos, I
 
     _gx_image_reader_jpeg_mcu_decode(pixelmap -> gx_pixelmap_data,
                                      pixelmap -> gx_pixelmap_data_size,
-                                     context, xpos, ypos,
-                                     _gx_display_driver_1555xrgb_mcu_draw);
+                                     context, xpos, ypos);
 }
 #endif
 
