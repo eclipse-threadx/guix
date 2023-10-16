@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ProjectWorkspace xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_mpw.xsd">
+
+  <SchemaVersion>1.0</SchemaVersion>
+
+  <Header>### uVision Project, (C) Keil Software</Header>
+
+  <WorkspaceName>WorkSpace</WorkspaceName>
+
+  <project>
+    <PathAndName>.\gx\gx.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\tx\tx.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\demo_guix_jpeg_decoding_565rgb\demo_guix_jpeg_decoding_565rgb.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\demo_guix_jpeg_decoding_1555xrgb\demo_guix_jpeg_decoding_1555xrgb.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\demo_guix_jpeg_decode_24xrgb_rotated_ccw\demo_guix_jpeg_decode_24xrgb_rotated_ccw.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
+    <NodeIsExpanded>1</NodeIsExpanded>
+  </project>
+
+</ProjectWorkspace>

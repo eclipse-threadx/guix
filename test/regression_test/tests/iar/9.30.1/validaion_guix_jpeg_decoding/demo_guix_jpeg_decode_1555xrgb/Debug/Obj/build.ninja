@@ -1,0 +1,30 @@
+#Generating source browse information for project demo_guix_jpeg_decode_1555xrgb
+
+
+#Abbreviations
+cc = C$:\Program$ Files$ (x86)\IAR$ Systems\Embedded$ Workbench$ 8.4\common\bin\SourceIndexer.exe
+ll = C$:\Program$ Files$ (x86)\IAR$ Systems\Embedded$ Workbench$ 8.4\common\bin\PbdLink.exe
+bd = C$:\Program$ Files$ (x86)\IAR$ Systems\Embedded$ Workbench$ 8.4\common\bin\makeBrowseData.exe
+
+
+
+#Rules
+rule index
+  depfile = $out.dep
+  command = $cc -out=$out -f $in
+rule link
+  command = $ll -M $out $in
+rule browsedata
+  command = $bd $in -output  $out
+
+
+
+#Build steps
+build common_code.pbi : index common_code.xcl
+build demo_jpeg_decode_1555xrgb_resources.pbi : index demo_jpeg_decode_1555xrgb_resources.xcl
+build demo_jpeg_decode_1555xrgb_specifications.pbi : index demo_jpeg_decode_1555xrgb_specifications.xcl
+build main.pbi : index main.xcl
+build demo_guix_jpeg_decode_1555xrgb.pbd : link common_code.pbi demo_jpeg_decode_1555xrgb_resources.pbi demo_jpeg_decode_1555xrgb_specifications.pbi main.pbi
+build demo_guix_jpeg_decode_1555xrgb.pbw : browsedata demo_guix_jpeg_decode_1555xrgb.pbd
+
+

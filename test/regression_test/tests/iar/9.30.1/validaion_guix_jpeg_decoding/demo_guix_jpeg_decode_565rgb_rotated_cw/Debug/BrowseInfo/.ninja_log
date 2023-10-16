@@ -1,0 +1,11 @@
+# ninja log v5
+1	163	7073083720000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_565rgb_rotated_cw/Debug/BrowseInfo/demo_jpeg_decode_565rgb_rotated_cw_specifications.xcl	39405818f191a5e8
+9	192	7073083720000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_565rgb_rotated_cw/Debug/BrowseInfo/common_code.xcl	9c2391043f370d09
+16	219	7073083720000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_565rgb_rotated_cw/Debug/BrowseInfo/demo_jpeg_decode_565rgb_rotated_cw_resources.xcl	83e37f43b67e630
+24	249	7073083720000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_565rgb_rotated_cw/Debug/BrowseInfo/main.xcl	3e7c9c9e1f507141
+185	642	7073083734524585	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_565rgb_rotated_cw/Debug/BrowseInfo/demo_jpeg_decode_565rgb_rotated_cw_specifications.pbi	6431ad4c1cf38613
+213	673	7073083734858503	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_565rgb_rotated_cw/Debug/BrowseInfo/common_code.pbi	dd388c043687c83a
+271	721	7073083735318809	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_565rgb_rotated_cw/Debug/BrowseInfo/main.pbi	15fdd7a0dd969e1a
+243	1056	7073083738669496	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_565rgb_rotated_cw/Debug/BrowseInfo/demo_jpeg_decode_565rgb_rotated_cw_resources.pbi	b8ecd2d07051b6dc
+1065	1227	7073083740457176	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_565rgb_rotated_cw/Debug/BrowseInfo/demo_guix_jpeg_decode_565rgb_rotated_cw.pbd	d55fe081dc2bb2bc
+1241	2048	7073083748265981	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_565rgb_rotated_cw/Debug/BrowseInfo/demo_guix_jpeg_decode_565rgb_rotated_cw.pbw	6db7caa09a22ea00
