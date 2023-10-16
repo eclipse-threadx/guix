@@ -1,0 +1,3 @@
+[submodule "externals/threadx"]
+	path = externals/threadx
+	url = https://github.com/azure-rtos/threadx
