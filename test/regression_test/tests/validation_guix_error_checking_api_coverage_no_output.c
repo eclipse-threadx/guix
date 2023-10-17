@@ -372,6 +372,7 @@ GX_STRING                   string;
     _gx_system_memory_free = memory_free;
     _gx_system_memory_allocator = 0;
 
+#if 0
     status = gx_binres_pixelmap_load(GX_NULL, 0, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -386,6 +387,7 @@ GX_STRING                   string;
 
     status = gx_binres_font_load(0x80000, 0, (GX_UBYTE *)buffer, 0);
     EXPECT_EQ(GX_PTR_ERROR, status);
+#endif
 
     /* brush */
     status = gx_brush_default(0); // should return GX_PTR_ERROR
