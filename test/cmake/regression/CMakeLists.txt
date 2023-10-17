@@ -30,7 +30,8 @@ set(NO_UTF8_DEMOS
     synergy_glyph_draw_16bpp
     synergy_glyph_draw_32bpp
     text_rotation)
-set(EXTENDED_UNICODE_DEMOS extended_unicode standalone_binres_load_extended_unicode_32bpp)
+set(EXTENDED_UNICODE_DEMOS extended_unicode)
+#set(EXTENDED_UNICODE_DEMOS extended_unicode standalone_binres_load_extended_unicode_32bpp)
 set(OTHER_DEMOS
     all_widgets
     all_widgets_32argb
@@ -117,8 +118,8 @@ set(OTHER_DEMOS
     synergy_32bpp_16bppdriver
     synergy_565rgb
     synergy_32argb
-    standalone_binres_load_16bpp
-    standalone_binres_load_8bpp
+#    standalone_binres_load_16bpp
+#    standalone_binres_load_8bpp
     all_widgets_synergy_565rgb
     all_widgets_synergy
     jpeg_draw_32bpp
@@ -226,7 +227,7 @@ endforeach()
 # demos of tutorials
 set(DEMO_IN_TUTORIALS
     demo_guix_binres
-    demo_guix_binres_standalone
+#    demo_guix_binres_standalone
     demo_guix_circular_gauge
     demo_guix_drop_list
     demo_guix_menu
