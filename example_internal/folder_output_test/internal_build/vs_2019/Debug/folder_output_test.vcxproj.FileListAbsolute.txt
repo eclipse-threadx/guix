@@ -1,0 +1,1 @@
+C:\Ting\guix\example_internal\folder_output_test\internal_build\vs_2019\Debug\folder_output_test.exe

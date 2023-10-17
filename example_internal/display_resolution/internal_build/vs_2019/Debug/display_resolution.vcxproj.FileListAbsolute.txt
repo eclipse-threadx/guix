@@ -1,0 +1,1 @@
+C:\Ting\guix\example_internal\display_resolution\internal_build\vs_2019\Debug\display_resolution.exe

@@ -1,0 +1,4 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (two_displays.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  demo_guix_two_displays_binres.c
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  two_displays_binres.vcxproj -> C:\Ting\guix\example_internal\two_displays_binres\build\vs_2019\Debug\two_displays_binres.exe

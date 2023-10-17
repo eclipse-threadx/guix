@@ -1,0 +1,1 @@
+C:\Ting\guix\example_internal\color_convert_8bpp\internal_build\vs_2019\Debug\color_convert_8bpp.exe

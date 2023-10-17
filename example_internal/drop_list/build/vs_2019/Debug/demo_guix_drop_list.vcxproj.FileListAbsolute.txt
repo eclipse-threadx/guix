@@ -1,0 +1,1 @@
+C:\Ting\guix\example_internal\drop_list\build\vs_2019\Debug\demo_guix_drop_list.exe

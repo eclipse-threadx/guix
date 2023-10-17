@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE GUIX_Studio_Resource>
+<resource_project>
+<header>
+<name>pixelmaps</name>
+<version>56</version>
+<converter>GUIX Studio</converter>
+<studio_version>6030000</studio_version>
+<guix_version>60300</guix_version>
+<target_cpu>Generic</target_cpu>
+<target_tools>Generic</target_tools>
+<dave2d_graph_accelerator>FALSE</dave2d_graph_accelerator>
+</header>
+<display_info>
+<display_color_format>GX_COLOR_FORMAT_24XRGB</display_color_format>
+<rotation_angle>None</rotation_angle>
+</display_info>
+<resource>
+<type>PIXELMAP</type>
+<name>APPLE</name>
+<pathinfo>
+<pathname>..\common_resources\graphics\rotate_apple.png</pathname>
+<pathtype>project_relative</pathtype>
+</pathinfo>
+<compress>TRUE</compress>
+<alpha>TRUE</alpha>
+<dither>FALSE</dither>
+<raw>FALSE</raw>
+<color_format>GX_COLOR_FORMAT_8BIT_PALETTE</color_format>
+<palette_type>Shared</palette_type>
+</resource>
+<resource>
+<type>PIXELMAP</type>
+<name>FISH</name>
+<pathinfo>
+<pathname>..\common_resources\graphics\fish.jpg</pathname>
+<pathtype>project_relative</pathtype>
+</pathinfo>
+<compress>TRUE</compress>
+<alpha>FALSE</alpha>
+<dither>FALSE</dither>
+<raw>FALSE</raw>
+<color_format>GX_COLOR_FORMAT_8BIT_PALETTE</color_format>
+<palette_type>Shared</palette_type>
+</resource>
+</resource_project>

@@ -1,0 +1,1 @@
+C:\Ting\guix\example_internal\keyboard_8bpp\internal_build\vs_2019\Debug\keyboard_8bpp.exe

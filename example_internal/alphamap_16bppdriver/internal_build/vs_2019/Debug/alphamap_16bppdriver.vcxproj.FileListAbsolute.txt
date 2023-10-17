@@ -1,0 +1,1 @@
+C:\Ting\guix\example_internal\alphamap_16bppdriver\internal_build\vs_2019\Debug\alphamap_16bppdriver.exe

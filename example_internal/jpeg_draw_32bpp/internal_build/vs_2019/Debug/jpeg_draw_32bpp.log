@@ -1,0 +1,9 @@
+﻿  demo_guix_jpeg_draw_32bpp.c
+  jpeg_draw_32bpp_resources.c
+  jpeg_draw_32bpp_specifications.c
+  restart_interval_jpeg_map.c
+  Generating Code...
+demo_guix_jpeg_draw_32bpp.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4098: defaultlib 'LIBCMTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+  jpeg_draw_32bpp.vcxproj -> C:\Ting\guix\example_internal\jpeg_draw_32bpp\internal_build\vs_2019\Debug\jpeg_draw_32bpp.exe

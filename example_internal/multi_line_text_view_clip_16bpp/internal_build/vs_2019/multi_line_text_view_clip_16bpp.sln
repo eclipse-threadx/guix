@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multi_line_text_view_clip_16bpp", "multi_line_text_view_clip_16bpp.vcxproj", "{DD846BFC-3332-43BA-8BB6-A93262C7064C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD846BFC-3332-43BA-8BB6-A93262C7064C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DD846BFC-3332-43BA-8BB6-A93262C7064C}.Debug|Win32.Build.0 = Debug|Win32
+		{DD846BFC-3332-43BA-8BB6-A93262C7064C}.Release|Win32.ActiveCfg = Release|Win32
+		{DD846BFC-3332-43BA-8BB6-A93262C7064C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54DD365C-B40B-41B3-A9E8-56CE61A1DCE8}
+	EndGlobalSection
+EndGlobal

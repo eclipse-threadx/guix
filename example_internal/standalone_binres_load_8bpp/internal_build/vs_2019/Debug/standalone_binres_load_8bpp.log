@@ -1,0 +1,4 @@
+﻿  demo_guix_standalone_binres_load_8bpp.c
+C:\Ting\guix\example_internal\standalone_binres_load_8bpp\demo_guix_standalone_binres_load_8bpp.c(97,5): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Ting\guix\example_internal\standalone_binres_load_8bpp\demo_guix_standalone_binres_load_8bpp.c(115,14): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  standalone_binres_load_8bpp.vcxproj -> C:\Ting\guix\example_internal\standalone_binres_load_8bpp\internal_build\vs_2019\Debug\standalone_binres_load_8bpp.exe

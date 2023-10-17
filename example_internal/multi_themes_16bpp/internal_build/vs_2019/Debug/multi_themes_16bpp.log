@@ -1,0 +1,6 @@
+﻿  demo_guix_multi_themes_16bpp.c
+  multi_themes_16bpp_resources.c
+  multi_themes_16bpp_specifications.c
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  multi_themes_16bpp.vcxproj -> C:\Ting\guix\example_internal\multi_themes_16bpp\internal_build\vs_2019\Debug\multi_themes_16bpp.exe

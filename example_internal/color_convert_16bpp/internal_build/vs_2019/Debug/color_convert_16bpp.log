@@ -1,0 +1,7 @@
+﻿  color_convert_16bpp_resources.c
+  color_convert_16bpp_specifications.c
+  demo_guix_color_convert_16bpp.c
+C:\Ting\guix\example_internal\color_convert_16bpp\demo_guix_color_convert_16bpp.c(100,18): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Ting\guix\example_internal\color_convert_16bpp\demo_guix_color_convert_16bpp.c(96,10): warning C4101: 'status': unreferenced local variable
+  Generating Code...
+  color_convert_16bpp.vcxproj -> C:\Ting\guix\example_internal\color_convert_16bpp\internal_build\vs_2019\Debug\color_convert_16bpp.exe

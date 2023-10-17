@@ -1,0 +1,1 @@
+C:\Ting\guix\example_internal\graphics_palette\internal_build\vs_2019\Debug\graphics_palette.exe

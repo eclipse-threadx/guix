@@ -1,0 +1,1 @@
+C:\Ting\guix\example_internal\demo_320_240\demo_guix_sprite\internal_build\vs_2019\Debug\guix_sprite.exe

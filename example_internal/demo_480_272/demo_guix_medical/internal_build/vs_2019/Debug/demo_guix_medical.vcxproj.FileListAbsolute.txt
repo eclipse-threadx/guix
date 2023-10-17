@@ -1,0 +1,2 @@
+C:\Ting\guix\example_internal\demo_480_272\demo_guix_medical\internal_build\vs_2019\Debug\demo_guix_medical.vcxproj.AssemblyReference.cache
+C:\Ting\guix\example_internal\demo_480_272\demo_guix_medical\internal_build\vs_2019\Debug\demo_guix_medical.exe

@@ -1,0 +1,6 @@
+﻿  demo_guix_two_displays.c
+C:\Ting\guix\example_internal\two_displays\demo_guix_two_displays.c(99,14): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Ting\guix\example_internal\two_displays\demo_guix_two_displays.c(140,63): warning C4133: 'function': incompatible types - from 'GX_UBYTE ***' to 'GX_STRING ***'
+C:\Ting\guix\example_internal\two_displays\demo_guix_two_displays.c(163,117): warning C4133: 'function': incompatible types - from 'GX_STRING **' to 'GX_UBYTE **'
+C:\Ting\guix\example_internal\two_displays\demo_guix_two_displays.c(175,117): warning C4133: 'function': incompatible types - from 'GX_STRING **' to 'GX_UBYTE **'
+  two_displays.vcxproj -> C:\Ting\guix\example_internal\two_displays\internal_build\vs_2019\Debug\two_displays.exe

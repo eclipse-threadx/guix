@@ -1,0 +1,1 @@
+C:\Ting\guix\example_internal\bidi_text_line_break_static\internal_build\vs_2019\Debug\bidi_text_line_break_static.exe

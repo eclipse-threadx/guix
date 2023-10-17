@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE GUIX_Studio_Resource>
+<resource_project>
+<header>
+<name>pixelmap_compress_4444argb</name>
+<version>56</version>
+<converter>GUIX Studio</converter>
+<studio_version>6030000</studio_version>
+<guix_version>60300</guix_version>
+<target_cpu>Generic</target_cpu>
+<target_tools>Generic</target_tools>
+<dave2d_graph_accelerator>FALSE</dave2d_graph_accelerator>
+</header>
+<display_info>
+<display_color_format>GX_COLOR_FORMAT_565RGB</display_color_format>
+<rotation_angle>None</rotation_angle>
+</display_info>
+<resource>
+<type>PIXELMAP</type>
+<name>COMPRESS_4444ARGB</name>
+<pathinfo>
+<pathname>..\common_resources\graphics\sprite\frame_000.png</pathname>
+<pathtype>project_relative</pathtype>
+</pathinfo>
+<compress>TRUE</compress>
+<alpha>TRUE</alpha>
+<dither>FALSE</dither>
+<raw>FALSE</raw>
+<color_format>GX_COLOR_FORMAT_4444ARGB</color_format>
+<palette_type>None</palette_type>
+</resource>
+</resource_project>
