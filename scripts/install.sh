@@ -2,8 +2,8 @@
 #
 # Install necessary softwares for Ubuntu.
 
-apt-get update
-apt-get install -y \
+sudo apt-get update
+sudo apt-get install -y \
     gcc-multilib \
     git \
     g++ \
@@ -18,7 +18,7 @@ apt-get install -y \
 wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
 CODENAME=$(lsb_release -c | cut -f2 -d':' | sed 's/\t//')
 apt-add-repository "deb https://apt.kitware.com/ubuntu/ $CODENAME main"
-apt-get -y install cmake
+sudo apt-get -y install cmake
 
 
 python3 -m pip install --upgrade pip
