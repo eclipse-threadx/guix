@@ -24,10 +24,10 @@ jobs:
         submodules: true
     
     - name: Install softwares
-      run: ./.build/install.sh
+      run: ./scripts/install.sh
 
     - name: Build GUIX
-      run: /.build/build.sh
+      run: ./scripts/build.sh
 
     - name: Test GUIX
-      run: /.build/test.sh
+      run: ./scripts/test.sh
