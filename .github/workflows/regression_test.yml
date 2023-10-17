@@ -1,0 +1,32 @@
+# This is a basic workflow that is manually triggered
+
+name: regression_test
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "linux_job"
+  linux_job:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+    
+    - name: Install softwares
+      run: ./.build/install.sh
+
+    - name: Build GUIX
+      run: /.build/build.sh
+
+    - name: Test GUIX
+      run: /.build/test.sh
