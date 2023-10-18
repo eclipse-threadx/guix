@@ -1,5 +1,8 @@
 #!/bin/bash
 #
+# Deleteing unneeded packages to save some space.
+sudo apt-get remove -y '^dotnet-.*'
+
 # Install necessary softwares for Ubuntu.
 
 sudo apt-get update
