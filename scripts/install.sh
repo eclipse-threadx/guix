@@ -1,10 +1,7 @@
 #!/bin/bash
 #
-# Delete large packages
-#sudo apt-get remove -y '^dotnet-.*'
 
 # Remove large folder
-#rm -rf /usr/share/dotnet/
 rm -rf /opt/hostedtoolcache
 
 # Install necessary softwares for Ubuntu.
