@@ -2,6 +2,7 @@
 #
 # Deleteing unneeded packages to save some space.
 sudo apt-get remove -y '^dotnet-.*'
+rm -rf /usr/share/dotnet/
 
 # Install necessary softwares for Ubuntu.
 
