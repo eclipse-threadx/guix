@@ -37,7 +37,7 @@ jobs:
       if: always()
       with:
         files: |
-          */Testing/**/*.xml
+          ./test/cmake/build/**/Testing/**/*.xml
        
 
     - name: Test GUIX (PublishCodeCoverageResults)
