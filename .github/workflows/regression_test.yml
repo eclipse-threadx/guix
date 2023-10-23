@@ -31,8 +31,17 @@ jobs:
 
     - name: Test GUIX
       run: ./scripts/test.sh
+      
+    - name: Test GUIX (PublishTestReports)
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: |
+          */Testing/**/*.xml
+       
 
     - name: Test GUIX (PublishCodeCoverageResults)
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
-        filename: ./cmake/coverage_report/default_build_coverage.xml
+        filename: ./test/cmake/coverage_report/default_build_coverage.xml
+        
