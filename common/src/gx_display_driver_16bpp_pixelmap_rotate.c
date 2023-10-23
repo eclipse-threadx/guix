@@ -580,7 +580,7 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_16bpp_pixelmap_simple_rotate     PORTABLE C      */
-/*                                                           6.1.7        */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -622,6 +622,10 @@ VOID          (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR col
 /*  06-02-2021     Kenneth Maxwell          Modified comment(s),          */
 /*                                            remove unused assignment,   */
 /*                                            resulting in version 6.1.7  */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_16bpp_pixelmap_simple_rotate(GX_DRAW_CONTEXT *context, INT xpos, INT ypos, GX_PIXELMAP *pixelmap,
@@ -640,6 +644,10 @@ INT           newypos;
 
     clip = context -> gx_draw_context_clip;
 
+    putrow = (USHORT *)context -> gx_draw_context_memory;
+
+    GX_CALCULATE_PUTROW(putrow, clip -> gx_rectangle_left, clip -> gx_rectangle_top, context);
+
     if (angle == 90)
     {
         width = pixelmap -> gx_pixelmap_height;
@@ -647,10 +655,6 @@ INT           newypos;
 
         newxpos = xpos + cx - (width - 1 - cy);
         newypos = ypos + cy - cx;
-
-        putrow = (USHORT *)context -> gx_draw_context_memory;
-        putrow += clip -> gx_rectangle_top * context -> gx_draw_context_pitch;
-        putrow += clip -> gx_rectangle_left;
 
         for (y = clip -> gx_rectangle_top - newypos; y <= clip -> gx_rectangle_bottom - newypos; y++)
         {
@@ -677,10 +681,6 @@ INT           newypos;
         newxpos = xpos + cx - (width - 1 - cx);
         newypos = ypos + cy - (height - 1 - cy);
 
-        putrow = (USHORT *)context -> gx_draw_context_memory;
-        putrow += clip -> gx_rectangle_top * context -> gx_draw_context_pitch;
-        putrow += clip -> gx_rectangle_left;
-
         for (y = clip -> gx_rectangle_top - newypos; y <= clip -> gx_rectangle_bottom - newypos; y++)
         {
             put = putrow;
@@ -702,10 +702,6 @@ INT           newypos;
 
         newxpos = xpos + cx - cy;
         newypos = ypos + cx - (height - 1 - cy);
-
-        putrow = (USHORT *)context -> gx_draw_context_memory;
-        putrow += clip -> gx_rectangle_top * context -> gx_draw_context_pitch;
-        putrow += clip -> gx_rectangle_left;
 
         for (y = clip -> gx_rectangle_top - newypos; y <= clip -> gx_rectangle_bottom - newypos; y++)
         {

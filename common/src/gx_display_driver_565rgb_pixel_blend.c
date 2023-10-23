@@ -44,7 +44,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_565rgb_pixel_blend              PORTABLE C       */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -83,6 +83,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_565rgb_pixel_blend(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR fcolor, GX_UBYTE alpha)
@@ -94,14 +98,12 @@ GX_UBYTE balpha;
 USHORT   bcolor;
 USHORT  *put;
 
-
     /* Is the pixel non-transparent? */
     if (alpha > 0)
     {
         /* calculate address of pixel */
         put = (USHORT *)context -> gx_draw_context_memory;
-        put += context -> gx_draw_context_pitch * y;
-        put += x;
+        GX_CALCULATE_PUTROW(put, x, y, context);
 
         /* No need to blend if alpha value is 255. */
         if (alpha == 255)

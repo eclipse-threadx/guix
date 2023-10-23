@@ -536,7 +536,7 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*                                                                        */
 /*    _gx_display_driver_565rgb_horizontal_pixelmap_line_raw_write        */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.X          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -573,6 +573,10 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_horizontal_pixelmap_line_raw_write(GX_DRAW_CONTEXT *context,
@@ -596,8 +600,7 @@ GX_PIXELMAP     *pixelmap;
     if ((info -> draw) && (xstart <= xend))
     {
         put = (USHORT *)context -> gx_draw_context_memory;
-        put += y * context -> gx_draw_context_pitch;
-        put += xstart;
+        GX_CALCULATE_PUTROW(put, xstart, y, context);
 
         /*calculate the offset.*/
         offset = (info -> x_offset % pic_width);
@@ -723,7 +726,7 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*                                                                        */
 /*    _gx_display_driver_565rgb_horizontal_pixelmap_line_compressed_write */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -760,6 +763,10 @@ VOID               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_horizontal_pixelmap_line_compressed_write(GX_DRAW_CONTEXT *context,
@@ -781,7 +788,7 @@ GX_PIXELMAP     *pixelmap;
         start_pos = xstart - (info -> x_offset % pixelmap -> gx_pixelmap_width);
 
         put = (USHORT *)context -> gx_draw_context_memory;
-        put += y * context -> gx_draw_context_pitch + start_pos;
+        GX_CALCULATE_PUTROW(put, start_pos, y, context);
 
         /*Repeat the draw operation to fill the whole dirty area.*/
         while (start_pos <= xend)

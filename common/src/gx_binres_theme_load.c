@@ -312,7 +312,7 @@ static UINT _gx_binres_palette_header_load(GX_BINRES_DATA_INFO *info, GX_PALETTE
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_font_header_load                         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -346,13 +346,21 @@ static UINT _gx_binres_palette_header_load(GX_BINRES_DATA_INFO *info, GX_PALETTE
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            removed use of memcpy,      */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            made the function public,   */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
-static UINT _gx_binres_font_header_load(GX_BINRES_DATA_INFO *info, GX_FONT_HEADER *header)
+UINT _gx_binres_font_header_load(GX_BINRES_DATA_INFO *info, GX_FONT_HEADER *header)
 {
     GX_BINRES_READ_USHORT(header -> gx_font_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
+
+    if(header -> gx_font_header_magic_number != GX_MAGIC_NUMBER)
+    {
+        return GX_INVALID_FORMAT;
+    }
 
     GX_BINRES_READ_USHORT(header -> gx_font_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
@@ -424,6 +432,11 @@ ULONG read_data = 0;
 
     GX_BINRES_READ_USHORT(header -> gx_page_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
+
+    if(header -> gx_page_header_magic_number != GX_MAGIC_NUMBER)
+    {
+        return GX_INVALID_FORMAT;
+    }
 
     GX_BINRES_READ_USHORT(header -> gx_page_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
@@ -515,7 +528,7 @@ static UINT _gx_binres_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_GLYPH_HEA
     GX_BINRES_READ_ULONG(header -> gx_glyph_header_map_offset, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
-	GX_BINRES_READ_USHORT(header -> gx_glyph_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset);
+    GX_BINRES_READ_USHORT(header -> gx_glyph_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
     GX_BINRES_READ_SHORT(header -> gx_glyph_header_ascent, info -> gx_binres_root_address + info -> gx_binres_read_offset);
@@ -604,7 +617,7 @@ static UINT _gx_binres_kerning_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_K
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_pixelmap_header_load                     PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -638,6 +651,9 @@ static UINT _gx_binres_kerning_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_K
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            removed use of memcpy,      */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added magic number check,   */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
@@ -645,6 +661,11 @@ static UINT _gx_binres_pixelmap_header_load(GX_BINRES_DATA_INFO *info, GX_PIXELM
 {
     GX_BINRES_READ_USHORT(header -> gx_pixelmap_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
+
+    if (header -> gx_pixelmap_header_magic_number != GX_MAGIC_NUMBER)
+    {
+        return GX_INVALID_FORMAT;
+    }
 
     GX_BINRES_READ_USHORT(header -> gx_pixelmap_header_index, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
@@ -690,8 +711,152 @@ static UINT _gx_binres_pixelmap_header_load(GX_BINRES_DATA_INFO *info, GX_PIXELM
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
+/*    _gx_binres_font_buffer_size_get                     PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function calculates the required buffer size needed for        */
+/*    loading the font from the current position.                         */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    info                                  Binary resource control block */
+/*    buffer_size                           The required buffer size      */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_binres_font_header_load           Read font header              */
+/*    _gx_binres_page_header_load           Read font page header         */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    GUIX Internal Code                                                  */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+#ifdef GX_BINARY_RESOURCE_SUPPORT
+UINT _gx_binres_font_buffer_size_get(GX_BINRES_DATA_INFO *info, UINT *buffer_size, GX_BOOL reset_read_offset)
+{
+UINT           status;
+GX_FONT_HEADER font_header;
+GX_PAGE_HEADER page_header;
+USHORT         page_index;
+UINT           glyph_count;
+UINT           read_offset = 0;
+UINT           temp;
+UINT           size = 0;
+UINT           old_offset;
+
+	if(reset_read_offset)
+	{
+		old_offset = info -> gx_binres_read_offset;
+	}
+
+    status = _gx_binres_font_header_load(info, &font_header);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
+
+    if (font_header.gx_font_header_data_offset)
+    {
+        /* The font data is not follow the header directly,
+           the data offset gives the position where the font
+           data located. */
+
+        /* Record current data offset. */
+        read_offset = info -> gx_binres_read_offset;
+
+        /* Temporarily reset data offset of access font data. */
+        info -> gx_binres_read_offset = font_header.gx_font_header_data_offset;
+
+        /* Load font header. */
+        _gx_binres_font_header_load(info, &font_header);
+    }
+
+    for (page_index = 0; page_index < font_header.gx_font_header_page_count; page_index++)
+    {
+        /* Load page header. */
+        status = _gx_binres_page_header_load(info, &page_header);
+
+        if(status != GX_SUCCESS)
+        {
+            return status;
+        }
+
+        info -> gx_binres_read_offset += page_header.gx_page_header_data_size;
+
+#if defined(GX_EXTENDED_UNICODE_SUPPORT)
+        if (page_header.gx_page_header_last_glyph > GX_MAX_GLYPH_CODE)
+        {
+            return GX_INVALID_FONT;
+        }
+#endif
+
+        /* Max glyph code is 0x10f000, overflow cannot occur. */
+        glyph_count = (UINT)(page_header.gx_page_header_last_glyph - page_header.gx_page_header_first_glyph + 1);
+
+        /* Calculate size for loading font page. */
+        temp = sizeof(GX_FONT);
+
+        /* Calculate size for loading glyphs. */
+        if (page_header.gx_page_header_format & GX_FONT_FORMAT_COMPRESSED)
+        {
+            temp += sizeof(GX_COMPRESSED_GLYPH) * glyph_count;
+        }
+#if defined(GX_FONT_KERNING_SUPPORT)
+        else if (page_header.gx_page_header_format & GX_FONT_FORMAT_KERNING)
+        {
+            temp += sizeof(GX_KERNING_GLYPH) * glyph_count;
+        }
+#endif
+        else
+        {
+            temp += sizeof(GX_GLYPH) * glyph_count;
+        }
+
+        GX_UTILITY_MATH_UINT_ADD(size, temp, size);
+    }
+
+    if (read_offset)
+    {
+        /* Restore data offset. */
+        info -> gx_binres_read_offset = read_offset;
+        read_offset = 0;
+    }
+
+    *buffer_size = size;
+
+    if (reset_read_offset)
+    {
+        /* Reset offset.  */
+        info -> gx_binres_read_offset = old_offset;
+    }
+
+    return GX_SUCCESS;
+}
+#endif
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
 /*    _gx_binres_theme_table_buffer_allocate              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -715,8 +880,7 @@ static UINT _gx_binres_pixelmap_header_load(GX_BINRES_DATA_INFO *info, GX_PIXELM
 /*                                            allocation function         */
 /*    _gx_binres_resource_header_load       Read resource header          */
 /*    _gx_binres_theme_header_load          Read theme header             */
-/*    _gx_binres_font_header_load           Read font header              */
-/*    _gx_binres_page_header_load           Read font page header         */
+/*    _gx_binres_font_buffer_size_get       Get required font buffer size */
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
@@ -729,20 +893,19 @@ static UINT _gx_binres_pixelmap_header_load(GX_BINRES_DATA_INFO *info, GX_PIXELM
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_theme_buffer_allocate(GX_BINRES_DATA_INFO *info, INT theme_id)
 {
+UINT               status = GX_SUCCESS;
 GX_RESOURCE_HEADER res_header;
 GX_THEME_HEADER    theme_header;
-GX_FONT_HEADER     font_header;
-GX_PAGE_HEADER     page_header;
 USHORT             theme_index;
 USHORT             font_index;
-USHORT             page_index;
-UINT               glyph_count;
-UINT               read_offset = 0;
 UINT               temp;
 
     /* Read resource header.  */
@@ -790,77 +953,14 @@ UINT               temp;
 
                 for (font_index = 0; font_index < theme_header.gx_theme_header_font_count; font_index++)
                 {
-                    _gx_binres_font_header_load(info, &font_header);
+                    status = _gx_binres_font_buffer_size_get(info, &temp, GX_FALSE);
 
-                    if (font_header.gx_font_header_magic_number != GX_MAGIC_NUMBER)
+                    if (status != GX_SUCCESS)
                     {
-                        return GX_INVALID_FORMAT;
+                        return status;
                     }
 
-                    if (font_header.gx_font_header_data_offset)
-                    {
-                        /* The font data is not follow the header directly,
-                           the data offset gives the position where the font
-                           data located. */
-
-                        /* Record current data offset. */
-                        read_offset = info -> gx_binres_read_offset;
-
-                        /* Temporarily reset data offset of access font data. */
-                        info -> gx_binres_read_offset = font_header.gx_font_header_data_offset;
-
-                        /* Load font header. */
-                        _gx_binres_font_header_load(info, &font_header);
-                    }
-
-                    for (page_index = 0; page_index < font_header.gx_font_header_page_count; page_index++)
-                    {
-                        /* Load page header. */
-                        _gx_binres_page_header_load(info, &page_header);
-                        info -> gx_binres_read_offset += page_header.gx_page_header_data_size;
-
-                        if (page_header.gx_page_header_magic_number != GX_MAGIC_NUMBER)
-                        {
-                            return GX_INVALID_FORMAT;
-                        }
-#if defined(GX_EXTENDED_UNICODE_SUPPORT)
-                        if (page_header.gx_page_header_last_glyph > GX_MAX_GLYPH_CODE)
-                        {
-                            return GX_INVALID_FONT;
-                        }
-#endif
-
-                        /* Max glyph code is 0x10f000, overflow cannot occur. */
-                        glyph_count = (UINT)(page_header.gx_page_header_last_glyph - page_header.gx_page_header_first_glyph + 1);
-
-                        /* Calculate size for loading font page. */
-                        temp = sizeof(GX_FONT);
-
-                        /* Calculate size for loading glyphs. */
-                        if (page_header.gx_page_header_format & GX_FONT_FORMAT_COMPRESSED)
-                        {
-                            temp += sizeof(GX_COMPRESSED_GLYPH) * glyph_count;
-                        }
-#if defined(GX_FONT_KERNING_SUPPORT)
-                        else if (page_header.gx_page_header_format & GX_FONT_FORMAT_KERNING)
-                        {
-                            temp += sizeof(GX_KERNING_GLYPH) * glyph_count;
-                        }
-#endif
-                        else
-                        {
-                            temp += sizeof(GX_GLYPH) * glyph_count;
-                        }
-
-                        GX_UTILITY_MATH_UINT_ADD(info -> gx_binres_buffer_size, temp, info -> gx_binres_buffer_size);
-                    }
-
-                    if (read_offset)
-                    {
-                        /* Restore data offset. */
-                        info -> gx_binres_read_offset = read_offset;
-                        read_offset = 0;
-                    }
+                    GX_UTILITY_MATH_UINT_ADD(info -> gx_binres_buffer_size, temp, info -> gx_binres_buffer_size);
                 }
             }
 
@@ -894,7 +994,10 @@ UINT               temp;
     memset(info -> gx_binres_buffer, 0, info -> gx_binres_buffer_size);
     info -> gx_binres_buffer_index = 0;
 
-    return GX_SUCCESS;
+    /* Reset read offset.  */
+    info -> gx_binres_read_offset = 0;
+
+    return status;
 }
 #endif
 
@@ -1182,21 +1285,19 @@ USHORT               index = 0;
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _gx_binres_font_load                                PORTABLE C      */
-/*                                                           6.1          */
+/*    _gx_binres_one_font_load                            PORTABLE C      */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*    Ting Zhu, Microsoft Corporation                                     */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
 /*                                                                        */
-/*    This service loads a font table from a binary data buffer.          */
+/*    This service loads a font from a binary data buffer.                */
 /*                                                                        */
 /*  INPUT                                                                 */
 /*                                                                        */
 /*    info                                  Binary resource control block */
-/*    page_count                            The number of pages that a    */
-/*                                            font contains.              */
 /*    return_font                           Returned font                 */
 /*                                                                        */
 /*  OUTPUT                                                                */
@@ -1205,6 +1306,7 @@ USHORT               index = 0;
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
+/*    _gx_binres_font_header_load           Read font header              */
 /*    _gx_binres_page_header_load           Read font page header         */
 /*    _gx_binres_compressed_glyphs_read     Read compressed glyph data    */
 /*    _gx_binres_glyphs_read                Read glyph data               */
@@ -1217,77 +1319,136 @@ USHORT               index = 0;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
-/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
-/*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
-static UINT _gx_binres_font_load(GX_BINRES_DATA_INFO *info, USHORT page_count, GX_FONT **return_font)
+UINT _gx_binres_one_font_load(GX_BINRES_DATA_INFO *info, GX_FONT **return_font)
 {
 UINT           status = GX_SUCCESS;
+GX_FONT_HEADER font_header;
 GX_PAGE_HEADER header;
 GX_FONT       *font;
 GX_FONT       *head_page = GX_NULL;
 GX_FONT       *pre_page = GX_NULL;
 USHORT         index;
 USHORT         glyph_count;
+UINT           read_offset = 0;
 
-    for (index = 0; index < page_count; index++)
+    /* Read font header.  */
+    status = _gx_binres_font_header_load(info, &font_header);
+
+    if (status != GX_SUCCESS)
     {
-        /* Read page header.  */
-        _gx_binres_page_header_load(info, &header);
-
-        font = (GX_FONT *)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
-        info -> gx_binres_buffer_index += sizeof(GX_FONT);
-
-        font -> gx_font_baseline = header.gx_page_header_baseline;
-        font -> gx_font_first_glyph = header.gx_page_header_first_glyph;
-        font -> gx_font_format = header.gx_page_header_format;
-        font -> gx_font_last_glyph = header.gx_page_header_last_glyph;
-        font -> gx_font_line_height = header.gx_page_header_line_height;
-        font -> gx_font_postspace = header.gx_page_header_postspace;
-        font -> gx_font_prespace = header.gx_page_header_prespace;
-
-        /* Read glyphs data.  */
-        glyph_count = (USHORT)(font -> gx_font_last_glyph - font -> gx_font_first_glyph + 1);
-
-        if (font -> gx_font_format & GX_FONT_FORMAT_COMPRESSED)
-        {
-            status = _gx_binres_compressed_glyphs_address_get(info, glyph_count, &font -> gx_font_glyphs.gx_font_compressed_glyphs);
-        }
-#if defined(GX_FONT_KERNING_SUPPORT)
-        else if (font -> gx_font_format & GX_FONT_FORMAT_KERNING)
-        {
-            status = _gx_binres_kerning_glyphs_address_get(info, glyph_count, &font -> gx_font_glyphs.gx_font_kerning_glyphs);
-        }
-#endif /* GX_FONT_KERNING_SUPPORT */
-        else
-        {
-            status = _gx_binres_glyphs_address_get(info, glyph_count, &font -> gx_font_glyphs.gx_font_normal_glyphs);
-        }
-
-        if (status != GX_SUCCESS)
-        {
-            break;
-        }
-
-        font -> gx_font_next_page = NULL;
-
-        if (!head_page)
-        {
-            head_page = font;
-        }
-
-        if (pre_page)
-        {
-            pre_page -> gx_font_next_page = font;
-        }
-
-        pre_page = font;
+        return status;
     }
 
-    *return_font = head_page;
+    if (font_header.gx_font_header_deault)
+    {
+        switch (font_header.gx_font_header_bits)
+        {
+        case 1:
+            head_page = (GX_FONT *)&_gx_system_font_mono;
+            break;
+
+        case 4:
+            head_page = (GX_FONT *)&_gx_system_font_4bpp;
+            break;
+
+        case 8:
+            head_page = (GX_FONT *)&_gx_system_font_8bpp;
+            break;
+        }
+    }
+    else
+    {
+        if (font_header.gx_font_header_data_offset)
+        {
+            /* The font data is not follow the header directly,
+               the data offset gives the position where the font
+               data located. */
+
+            /* Record current data offset. */
+            read_offset = info -> gx_binres_read_offset;
+
+            /* Temporarily reset data offset to access font data. */
+            info -> gx_binres_read_offset = font_header.gx_font_header_data_offset;
+
+            /* Read font header. */
+            _gx_binres_font_header_load(info, &font_header);
+        }
+
+        for (index = 0; index < font_header.gx_font_header_page_count; index++)
+        {
+            /* Read page header.  */
+            status = _gx_binres_page_header_load(info, &header);
+
+            if (status != GX_SUCCESS)
+            {
+                return status;
+            }
+
+            font = (GX_FONT *)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
+            info -> gx_binres_buffer_index += sizeof(GX_FONT);
+
+            font -> gx_font_baseline = header.gx_page_header_baseline;
+            font -> gx_font_first_glyph = header.gx_page_header_first_glyph;
+            font -> gx_font_format = header.gx_page_header_format;
+            font -> gx_font_last_glyph = header.gx_page_header_last_glyph;
+            font -> gx_font_line_height = header.gx_page_header_line_height;
+            font -> gx_font_postspace = header.gx_page_header_postspace;
+            font -> gx_font_prespace = header.gx_page_header_prespace;
+
+            /* Read glyphs data.  */
+            glyph_count = (USHORT)(font -> gx_font_last_glyph - font -> gx_font_first_glyph + 1);
+
+            if (font -> gx_font_format & GX_FONT_FORMAT_COMPRESSED)
+            {
+                status = _gx_binres_compressed_glyphs_address_get(info, glyph_count, &font -> gx_font_glyphs.gx_font_compressed_glyphs);
+            }
+#if defined(GX_FONT_KERNING_SUPPORT)
+            else if (font -> gx_font_format & GX_FONT_FORMAT_KERNING)
+            {
+                status = _gx_binres_kerning_glyphs_address_get(info, glyph_count, &font -> gx_font_glyphs.gx_font_kerning_glyphs);
+            }
+#endif /* GX_FONT_KERNING_SUPPORT */
+            else
+            {
+                status = _gx_binres_glyphs_address_get(info, glyph_count, &font -> gx_font_glyphs.gx_font_normal_glyphs);
+            }
+
+            if (status != GX_SUCCESS)
+            {
+                break;
+            }
+
+            font -> gx_font_next_page = NULL;
+
+            if (!head_page)
+            {
+                head_page = font;
+            }
+
+            if (pre_page)
+            {
+                pre_page -> gx_font_next_page = font;
+            }
+
+            pre_page = font;
+        }
+    }
+
+    if (read_offset)
+    {
+        /* Restore data offset. */
+        info -> gx_binres_read_offset = read_offset;
+        read_offset = 0;
+    }
+
+    if (return_font)
+    {
+        *return_font = head_page;
+    }
 
     return status;
 }
@@ -1435,7 +1596,7 @@ GX_COLOR         *palette_table = GX_NULL;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_binres_font_table_load                          PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1456,8 +1617,7 @@ GX_COLOR         *palette_table = GX_NULL;
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _gx_binres_font_header_load           Read font header              */
-/*    _gx_binres_font_read                  Read font data                */
+/*    _gx_binres_one_font_load              Load one font                 */
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
@@ -1470,78 +1630,28 @@ GX_COLOR         *palette_table = GX_NULL;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_font_table_load(GX_BINRES_DATA_INFO *info, USHORT table_size, GX_FONT ***returned_font_table)
 {
-UINT           status = GX_SUCCESS;
-GX_FONT_HEADER header;
-GX_FONT      **font_table = GX_NULL;
-USHORT         index;
-UINT           read_offset = 0;
-
-    if (!table_size)
-    {
-        return status;
-    }
+UINT      status = GX_SUCCESS;
+GX_FONT **font_table = GX_NULL;
+USHORT    index;
 
     font_table = (GX_FONT **)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
     info -> gx_binres_buffer_index += sizeof(GX_FONT *) * table_size;
 
     for (index = 0; index < table_size; index++)
     {
-        /* Read font header.  */
-        _gx_binres_font_header_load(info, &header);
+        status = _gx_binres_one_font_load(info, &font_table[index]);
 
-        if (header.gx_font_header_deault)
+        if (status != GX_SUCCESS)
         {
-            switch (header.gx_font_header_bits)
-            {
-            case 1:
-                font_table[index] = (GX_FONT *)&_gx_system_font_mono;
-                break;
-
-            case 4:
-                font_table[index] = (GX_FONT *)&_gx_system_font_4bpp;
-                break;
-
-            case 8:
-                font_table[index] = (GX_FONT *)&_gx_system_font_8bpp;
-                break;
-            }
-        }
-        else
-        {
-            if (header.gx_font_header_data_offset)
-            {
-                /* The font data is not follow the header directly,
-                   the data offset gives the position where the font
-                   data located. */
-
-                /* Record current data offset. */
-                read_offset = info -> gx_binres_read_offset;
-
-                /* Temporarily reset data offset to access font data. */
-                info -> gx_binres_read_offset = header.gx_font_header_data_offset;
-
-                /* Read font header. */
-                _gx_binres_font_header_load(info, &header);
-            }
-
-            status = _gx_binres_font_load(info, header.gx_font_header_page_count, &font_table[index]);
-
-            if (status != GX_SUCCESS)
-            {
-                break;
-            }
-
-            if (read_offset)
-            {
-                /* Restore data offset. */
-                info -> gx_binres_read_offset = read_offset;
-                read_offset = 0;
-            }
+            return status;
         }
     }
 
@@ -1555,8 +1665,135 @@ UINT           read_offset = 0;
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
+/*    _gx_binres_one_pixelmap_load                        PORTABLE C      */
+/*                                                           6.3.0        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Ting Zhu, Microsoft Corporation                                     */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function loads one pixelmap from resource data memory.         */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    info                                  Binary resource control block */
+/*    returned_pixelmap                     Returned pixelmap table       */
+/*    map_id                                Loaded pixelmap ID            */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    Status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_binres_pixelmap_header_load       Read pixelmap header          */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    GUIX Internal Code                                                  */
+/*                                                                        */
+/*  RELEASE HISTORY                                                       */
+/*                                                                        */
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
+/*                                                                        */
+/**************************************************************************/
+#ifdef GX_BINARY_RESOURCE_SUPPORT
+UINT _gx_binres_one_pixelmap_load(GX_BINRES_DATA_INFO *info, GX_PIXELMAP **returned_pixelmap, USHORT *map_id)
+{
+UINT               status = GX_SUCCESS;
+GX_PIXELMAP_HEADER header;
+ULONG              size;
+UINT               read_offset = 0;
+
+GX_PIXELMAP       *pixelmap;
+
+    /* Read pixelmap header.  */
+    status = _gx_binres_pixelmap_header_load(info, &header);
+
+    if (status)
+    {
+        return status;
+    }
+
+    if (header.gx_pixelmap_header_data_offset)
+    {
+        /* The pixelmap data is not follow the header directly,
+           the data offset gives the position where the pixelmap
+           data located. */
+
+        /* Record current data offset. */
+        read_offset = info -> gx_binres_read_offset;
+
+        /* Temporarily reset data offset to access pixelmap data. */
+        info -> gx_binres_read_offset = header.gx_pixelmap_header_data_offset;
+
+        /* Read pixelmap header. */
+        _gx_binres_pixelmap_header_load(info, &header);
+    }
+
+    /* Allocate memory for pixelmap.  */
+    pixelmap = (GX_PIXELMAP *)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
+    info -> gx_binres_buffer_index += sizeof(GX_PIXELMAP);
+
+    pixelmap -> gx_pixelmap_aux_data_size = header.gx_pixelmap_header_aux_data_size;
+    pixelmap -> gx_pixelmap_data_size = header.gx_pixelmap_header_map_size;
+    pixelmap -> gx_pixelmap_flags = header.gx_pixelmap_header_flags;
+    pixelmap -> gx_pixelmap_format = header.gx_pixelmap_header_format;
+    pixelmap -> gx_pixelmap_width = (GX_VALUE)header.gx_pixelmap_header_width;
+    pixelmap -> gx_pixelmap_height = (GX_VALUE)header.gx_pixelmap_header_height;
+    pixelmap -> gx_pixelmap_transparent_color = header.gx_pixelmap_header_transparent_color;
+    pixelmap -> gx_pixelmap_version_major = header.gx_pixelmap_header_version_major;
+    pixelmap -> gx_pixelmap_version_minor = header.gx_pixelmap_header_version_minor;
+
+    /* Skip padding bytes. */
+    info -> gx_binres_read_offset = (info -> gx_binres_read_offset + 3) & (~0x03UL);
+
+    /* Read pixelmap data.  */
+    size = pixelmap -> gx_pixelmap_data_size;
+    if (size)
+    {
+        pixelmap -> gx_pixelmap_data = (GX_UBYTE *)(info -> gx_binres_root_address + info -> gx_binres_read_offset);
+        info -> gx_binres_read_offset += size;
+    }
+
+    /* Read pixelmap aux data.  */
+    size = pixelmap -> gx_pixelmap_aux_data_size;
+    if (size)
+    {
+        pixelmap -> gx_pixelmap_aux_data = (GX_UBYTE *)(info -> gx_binres_root_address + info -> gx_binres_read_offset);
+        info -> gx_binres_read_offset += size;
+    }
+
+    if (read_offset)
+    {
+        /* Restore data offset. */
+        info -> gx_binres_read_offset = read_offset;
+        read_offset = 0;
+    }
+
+    if (returned_pixelmap)
+    {
+        *returned_pixelmap = pixelmap;
+    }
+
+    if (map_id)
+    {
+        *map_id = header.gx_pixelmap_header_index;
+    }
+
+    return status;
+}
+
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
 /*    _gx_binres_pixelmap_table_load                      PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1577,7 +1814,7 @@ UINT           read_offset = 0;
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _gx_binres_pixelmap_header_load       Read pixelmap header          */
+/*    _gx_binres_one_pixelmap_load          Load one pixelmap             */
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */
@@ -1590,115 +1827,34 @@ UINT           read_offset = 0;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
-#ifdef GX_BINARY_RESOURCE_SUPPORT
-static UINT _gx_binres_pixelmap_table_load(GX_BINRES_DATA_INFO *info, USHORT table_size, GX_PIXELMAP ***returned_pixelmap_table)
+static UINT _gx_binres_pixelmap_table_load(GX_BINRES_DATA_INFO *info, USHORT table_size, GX_PIXELMAP **pixelmap_table)
 {
-UINT               status = GX_SUCCESS;
-GX_PIXELMAP_HEADER header;
-GX_PIXELMAP      **pixelmap_table = GX_NULL;
-USHORT             index;
-ULONG              size;
-GX_BOOL            keep_looping;
-UINT               read_offset = 0;
-
-    if (table_size <= 1)
-    {
-        return GX_SUCCESS;
-    }
-
-    pixelmap_table = (GX_PIXELMAP **)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
-    info -> gx_binres_buffer_index += sizeof(GX_PIXELMAP *) * table_size;
+UINT         status = GX_SUCCESS;
+USHORT       index;
+USHORT       map_id;
+GX_PIXELMAP *pixelmap;
 
     for (index = 1; index < table_size; index++)
     {
-        /* Read pixelmap header.  */
-        _gx_binres_pixelmap_header_load(info, &header);
+        status = _gx_binres_one_pixelmap_load(info, &pixelmap, &map_id);
 
-        if (header.gx_pixelmap_header_magic_number != GX_MAGIC_NUMBER)
+        while (index < map_id)
         {
-            return GX_INVALID_FORMAT;
+            pixelmap_table[index++] = GX_NULL;
         }
 
-        if (header.gx_pixelmap_header_data_offset)
+        pixelmap_table[index] = pixelmap;
+
+        if (status)
         {
-            /* The pixelmap data is not follow the header directly,
-               the data offset gives the position where the pixelmap
-               data located. */
-
-            /* Record current data offset. */
-            read_offset = info -> gx_binres_read_offset;
-
-            /* Temporarily reset data offset to access pixelmap data. */
-            info -> gx_binres_read_offset = header.gx_pixelmap_header_data_offset;
-
-            /* Read pixelmap header. */
-            _gx_binres_pixelmap_header_load(info, &header);
-        }
-
-        keep_looping = GX_TRUE;
-
-        while (keep_looping)
-        {
-            keep_looping = GX_FALSE;
-
-            /* Allocate memory for pixelmap.  */
-            pixelmap_table[index] = (GX_PIXELMAP *)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
-            info -> gx_binres_buffer_index += sizeof(GX_PIXELMAP);
-
-            switch (index)
-            {
-            case GX_PIXELMAP_RADIO_ON_ID:
-            case GX_PIXELMAP_RADIO_OFF_ID:
-            case GX_PIXELMAP_CHECKBOX_ON_ID:
-            case GX_PIXELMAP_CHECKBOX_OFF_ID:
-                if (index != header.gx_pixelmap_header_index)
-                {
-                    pixelmap_table[index++] = GX_NULL;
-                    keep_looping = GX_TRUE;
-                }
-            }
-        }
-
-        pixelmap_table[index] -> gx_pixelmap_aux_data_size = header.gx_pixelmap_header_aux_data_size;
-        pixelmap_table[index] -> gx_pixelmap_data_size = header.gx_pixelmap_header_map_size;
-        pixelmap_table[index] -> gx_pixelmap_flags = header.gx_pixelmap_header_flags;
-        pixelmap_table[index] -> gx_pixelmap_format = header.gx_pixelmap_header_format;
-        pixelmap_table[index] -> gx_pixelmap_width = (GX_VALUE)header.gx_pixelmap_header_width;
-        pixelmap_table[index] -> gx_pixelmap_height = (GX_VALUE)header.gx_pixelmap_header_height;
-        pixelmap_table[index] -> gx_pixelmap_transparent_color = header.gx_pixelmap_header_transparent_color;
-        pixelmap_table[index] -> gx_pixelmap_version_major = header.gx_pixelmap_header_version_major;
-        pixelmap_table[index] -> gx_pixelmap_version_minor = header.gx_pixelmap_header_version_minor;
-
-        /* Skip padding bytes. */
-        info -> gx_binres_read_offset = (info -> gx_binres_read_offset + 3) & (~0x03UL);
-
-        /* Read pixelmap data.  */
-        size = pixelmap_table[index] -> gx_pixelmap_data_size;
-        if (size)
-        {
-            pixelmap_table[index] -> gx_pixelmap_data = (GX_UBYTE *)(info -> gx_binres_root_address + info -> gx_binres_read_offset);
-            info -> gx_binres_read_offset += size;
-        }
-
-        /* Read pixelmap aux data.  */
-        size = pixelmap_table[index] -> gx_pixelmap_aux_data_size;
-        if (size)
-        {
-            pixelmap_table[index] -> gx_pixelmap_aux_data = (GX_UBYTE *)(info -> gx_binres_root_address + info -> gx_binres_read_offset);
-            info -> gx_binres_read_offset += size;
-        }
-
-        if (read_offset)
-        {
-            /* Restore data offset. */
-            info -> gx_binres_read_offset = read_offset;
-            read_offset = 0;
+            return status;
         }
     }
-
-    *returned_pixelmap_table = pixelmap_table;
 
     return status;
 }
@@ -1776,7 +1932,6 @@ INT                 index;
 
     if (status == GX_SUCCESS)
     {
-        info.gx_binres_read_offset = 0;
         status = _gx_binres_resource_header_load(&info, &header);
     }
 
@@ -1817,7 +1972,7 @@ INT                 index;
                 }
 
                 /* Read font table.  */
-                if ((status == GX_SUCCESS) && theme_header.gx_theme_header_font_data_size)
+                if ((status == GX_SUCCESS) && theme_header.gx_theme_header_font_data_size && theme_header.gx_theme_header_font_count)
                 {
                     status = _gx_binres_font_table_load(&info,
                                                         theme_header.gx_theme_header_font_count,
@@ -1825,11 +1980,16 @@ INT                 index;
                 }
 
                 /* Read pixelmap table.  */
-                if ((status == GX_SUCCESS) && theme_header.gx_theme_header_pixelmap_data_size)
+                if ((status == GX_SUCCESS) && theme_header.gx_theme_header_pixelmap_data_size && theme_header.gx_theme_header_pixelmap_count)
                 {
+                    /* Allocate pixelmap table size.  */
+                    theme -> theme_pixelmap_table = (GX_PIXELMAP **)(info.gx_binres_buffer + info.gx_binres_buffer_index);
+                    info.gx_binres_buffer_index += sizeof(GX_PIXELMAP *) * (UINT)(theme_header.gx_theme_header_pixelmap_count + 1);
+
+                    /* Load pixelmap table.  */
                     status = _gx_binres_pixelmap_table_load(&info,
-                                                            (USHORT)(theme_header.gx_theme_header_pixelmap_count + 1),
-                                                            &theme -> theme_pixelmap_table);
+                                                            theme -> theme_pixelmap_table_size,
+                                                            theme -> theme_pixelmap_table);
                 }
 
                 if (status == GX_SUCCESS)

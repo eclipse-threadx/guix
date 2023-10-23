@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_drawing_initiate                         PORTABLE C      */
-/*                                                           6.1.5        */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -86,6 +86,10 @@
 /*  03-02-2021     Kenneth Maxwell          Modified comment(s), added    */
 /*                                            flip rotation support,      */
 /*                                            resulting in version 6.1.5  */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_canvas_drawing_initiate(GX_CANVAS *canvas, GX_WIDGET *who, GX_RECTANGLE *dirty_area)
@@ -122,6 +126,21 @@ GX_DISPLAY      *display = canvas -> gx_canvas_display;
     {
         /* initialize the dirty rectangle */
         canvas -> gx_canvas_dirty_area = *dirty_area;
+
+#ifdef GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+        if (canvas -> gx_canvas_status & GX_CANVAS_PARTIAL_FRAME_BUFFER)
+        {
+            canvas -> gx_canvas_memory_width = (GX_VALUE)(dirty_area -> gx_rectangle_right - dirty_area -> gx_rectangle_left + 1);
+            canvas -> gx_canvas_memory_width = (GX_VALUE)((canvas -> gx_canvas_memory_width + 3) & 0xFFFC);
+            canvas -> gx_canvas_memory_height = (GX_VALUE)(canvas -> gx_canvas_memory_size / display -> gx_display_driver_row_pitch_get((USHORT)canvas -> gx_canvas_memory_width));
+            if (canvas -> gx_canvas_memory_height < (dirty_area -> gx_rectangle_bottom - dirty_area -> gx_rectangle_top + 1))
+            {
+                return GX_INVALID_MEMORY_SIZE;
+            }
+            canvas -> gx_canvas_memory_offset_x = dirty_area -> gx_rectangle_left;
+            canvas -> gx_canvas_memory_offset_y = dirty_area -> gx_rectangle_top;
+        }
+#endif
     }
 
     /* Are we nested?  */
@@ -146,7 +165,23 @@ GX_DISPLAY      *display = canvas -> gx_canvas_display;
         if (new_context -> gx_draw_context_display -> gx_display_rotation_angle == GX_SCREEN_ROTATION_NONE ||
             new_context -> gx_draw_context_display -> gx_display_rotation_angle == GX_SCREEN_ROTATION_FLIP)
         {
+#ifdef GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+            if (canvas -> gx_canvas_status & GX_CANVAS_PARTIAL_FRAME_BUFFER)
+            {
+                new_context -> gx_draw_context_pitch = canvas -> gx_canvas_memory_width;
+                new_context -> gx_draw_context_offset_x = canvas -> gx_canvas_memory_offset_x;
+                new_context -> gx_draw_context_offset_y = canvas -> gx_canvas_memory_offset_y;
+            }
+            else
+            {
+                new_context -> gx_draw_context_pitch = canvas -> gx_canvas_x_resolution;
+                new_context -> gx_draw_context_offset_x = 0;
+                new_context -> gx_draw_context_offset_y = 0;
+            }
+
+#else
             new_context -> gx_draw_context_pitch = canvas -> gx_canvas_x_resolution;
+#endif
         }
         else
         {

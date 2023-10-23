@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_display.h                                        PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -60,9 +60,11 @@
 /*                                            added language direction    */
 /*                                            table set declarations,     */
 /*                                            resulting in version 6.1.10 */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            removed unused prototypes,  */
-/*                                            resulting in version 6.x    */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -540,5 +542,15 @@ VOID *_win32_canvas_memory_prepare(GX_CANVAS *canvas, GX_RECTANGLE *dirty);
         /* Not supported. */                                  \
         return;                                               \
     }
+#endif
+
+#if defined GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+#define GX_CALCULATE_PUTROW(putrow, xpos, ypos, context)\
+    putrow += (ypos - context->gx_draw_context_offset_y) * context->gx_draw_context_pitch;\
+    putrow += (xpos - context->gx_draw_context_offset_x)
+#else
+#define GX_CALCULATE_PUTROW(putrow, xpos, ypos, context)\
+    putrow += ypos * context->gx_draw_context_pitch;\
+    putrow += xpos
 #endif
 

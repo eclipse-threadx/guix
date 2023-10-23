@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_user.h                                           PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -45,10 +45,11 @@
 /*  01-31-2022     Kenneth Maxwell          Modified comment(s),          */
 /*                                            fixed typo,                 */
 /*                                            resulting in version 6.1.10 */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
-/*                                            added GX_ENABLE_ARM_HELIUM  */
-/*                                            definition,                 */
-/*                                            resulting in version 6.x    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s), added    */
+/*                                            GX_ENABLE_ARM_HELIUM and    */
+/*                                            partial canvas frame buffer */
+/*                                            support configurations,     */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -76,5 +77,18 @@
 /* This can be defined to enable the use of ARM Helium intrinsics for 
    JPEG decoding. */
 /* #define GX_ENABLE_ARM_HELIUM */
+
+/* This can be defined to enable the partial canvas frame buffer feature. */
+/* #define GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER */
+
+/* The two following definitions can be used to specify the canvas refresh directions for the partial canvas frame buffer feature.
+   By default, the canvas refreshes its dirty areas one by one.
+   If the application requires refreshing the canvas in a specific direction to mitigate tearing effects, one of the following two definitions can be used.
+   In this scenario, the total dirty area that covers all the dirty areas is calculated, and then the canvas is refreshed in the direction
+   defined by one of the following two definitions. */
+
+/* #define GX_CANVAS_REFRESH_DIRECTION_HORIZONTAL */
+/* #define GX_CANVAS_REFRESH_DIRECTION_VERTICAL */
+
 #endif
 

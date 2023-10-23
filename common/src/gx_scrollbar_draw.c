@@ -37,7 +37,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_scrollbar_draw                                  PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -83,6 +83,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            improved logic,             */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID  _gx_scrollbar_draw(GX_SCROLLBAR *scrollbar)
@@ -216,13 +219,15 @@ GX_COLOR     fill_color;
 
                 /* Reset dirty area temporarily to avoid cover the end pixelmap area. */
                 old_dirty = _gx_system_current_draw_context -> gx_draw_context_dirty;
-                _gx_utility_rectangle_combine(&old_dirty, &size);
-                _gx_system_current_draw_context -> gx_draw_context_dirty = size;
+                if(_gx_utility_rectangle_overlap_detect(&old_dirty, &size, &size) == GX_TRUE)
+                {
+                    _gx_system_current_draw_context -> gx_draw_context_dirty = size;
 
-                _gx_canvas_pixelmap_draw(xpos, ypos, map);
+                    _gx_canvas_pixelmap_draw(xpos, ypos, map);
 
-                /* Set dirty area back. */
-                _gx_system_current_draw_context -> gx_draw_context_dirty = old_dirty;
+                    /* Set dirty area back. */
+                    _gx_system_current_draw_context -> gx_draw_context_dirty = old_dirty;
+                }
             }
         }
     }

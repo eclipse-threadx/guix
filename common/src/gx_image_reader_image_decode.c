@@ -108,7 +108,7 @@ GX_CONST GX_UBYTE *buffer;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_image_decode                       PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -143,10 +143,10 @@ GX_CONST GX_UBYTE *buffer;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            modified jpeg decode        */
 /*                                            function parameter list,    */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)

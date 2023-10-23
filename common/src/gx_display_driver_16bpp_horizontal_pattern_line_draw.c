@@ -34,7 +34,7 @@
 /*                                                                        */
 /*    _gx_display_driver_16bpp_horizontal_pattern_line_draw               */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_16bpp_horizontal_pattern_line_draw(GX_DRAW_CONTEXT *context, INT xstart, INT xend, INT ypos)
@@ -86,11 +90,8 @@ INT     len = xend - xstart + 1;
     /* pick up start address of canvas memory */
     rowstart = (USHORT *)context -> gx_draw_context_memory;
 
-    /* calculate start of row address */
-    rowstart +=  context -> gx_draw_context_pitch * ypos;
+    GX_CALCULATE_PUTROW(rowstart, xstart, ypos, context);
 
-    /* calculate pixel address */
-    rowstart +=  xstart;
     /* draw 1-pixel hi lines to fill width */
 
     /* pick up the requested pattern and mask */

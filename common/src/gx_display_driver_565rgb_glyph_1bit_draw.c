@@ -50,7 +50,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_16bpp_glyph_1bit_draw            PORTABLE C      */
-/*                                                           6.1.11       */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -92,6 +92,10 @@
 /*  04-25-2022     Ting Zhu                 Modified comment(s),          */
 /*                                            fixed access violation bug, */
 /*                                            resulting in version 6.1.11 */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_16bpp_glyph_1bit_draw(GX_DRAW_CONTEXT *context, GX_RECTANGLE *draw_area, GX_POINT *map_offset, GX_CONST GX_GLYPH *glyph)
@@ -188,10 +192,9 @@ VOID    (*blend_func)(GX_DRAW_CONTEXT *, INT, INT, GX_COLOR, GX_UBYTE);
     y_height = (UINT)(draw_area -> gx_rectangle_bottom - draw_area -> gx_rectangle_top + 1);
 
     line_start = (USHORT *)context -> gx_draw_context_memory;
-    line_start += context -> gx_draw_context_pitch * (draw_area -> gx_rectangle_top);
-    line_start += draw_area -> gx_rectangle_left;
+    GX_CALCULATE_PUTROW(line_start, draw_area -> gx_rectangle_left, draw_area -> gx_rectangle_top, context);
 
-#if defined (GX_BRUSH_ALPHA_SUPPORT)
+#if defined(GX_BRUSH_ALPHA_SUPPORT)
     if (brush_alpha != 0xff)
     {
         yval = draw_area -> gx_rectangle_top;

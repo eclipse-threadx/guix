@@ -178,7 +178,7 @@ INT       index;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_huffcode_find                 PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -221,9 +221,9 @@ INT       index;
 /*                                            changed bit_count to        */
 /*                                            GX_VALUE data type,         */
 /*                                            resulting in version 6.2.0  */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_huffcode_find(GX_JPEG_INFO *jpeg_info,
@@ -266,7 +266,7 @@ GX_HUFFCODE_INFO *code_info;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_huffman_table_set                  PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -303,9 +303,9 @@ GX_HUFFCODE_INFO *code_info;
 /*                                            added range test to prevent */
 /*                                            underflow,                  */
 /*                                            resulting in version 6.2.0  */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_huffman_table_set(GX_JPEG_INFO *jpeg_info, UINT segment_len)
@@ -554,7 +554,7 @@ INT       index;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_dc_decode                     PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -595,9 +595,9 @@ INT       index;
 /*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added range test,           */
 /*                                            resulting in version 6.2.0  */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_dc_decode(GX_JPEG_INFO *jpeg_info, UINT i_component)
@@ -654,7 +654,7 @@ GX_BOOL  negative;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_ac_decode                     PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -695,9 +695,9 @@ GX_BOOL  negative;
 /*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
 /*                                            added range test,           */
 /*                                            resulting in version 6.2.0  */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_ac_decode(GX_JPEG_INFO *jpeg_info, UINT i_component)
@@ -834,7 +834,7 @@ INT      negative;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_dequantize_idct               PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -891,7 +891,7 @@ INT      negative;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_jpeg_dequantize_idct(INT *block, INT *quant_table, GX_BYTE *out, INT stride)
@@ -1099,7 +1099,7 @@ int16_t const    *base;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_1d_idct                       PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1135,9 +1135,9 @@ int16_t const    *base;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_jpeg_1d_idct(INT *input_data, INT *output_data, INT post_scale, INT round)
@@ -1190,7 +1190,7 @@ INT t;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_dequantize_idct               PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1234,9 +1234,9 @@ INT t;
 /*                                            added range check for       */
 /*                                            table_index,                */
 /*                                            resulting in version 6.2.0  */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_jpeg_dequantize_idct(INT *block, INT *quant_table, GX_BYTE *out, INT stride)
@@ -1291,7 +1291,7 @@ INT                      row;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_one_block_decode              PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1332,9 +1332,9 @@ INT                      row;
 /*                                            returned result of          */
 /*                                            dequantize_idct,            */
 /*                                            resulting in version 6.2.0  */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_one_block_decode(GX_JPEG_INFO *jpeg_info, UINT i_component, GX_BYTE *block_data)
@@ -1386,7 +1386,7 @@ INT stride;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_24xrgb_pixel_write_helium     PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1423,34 +1423,18 @@ INT stride;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_jpeg_24xrgb_pixel_write_helium(GX_JPEG_INFO *jpeg_info, uint8x16_t vred, uint8x16_t vgreen, uint8x16_t vblue, INT size)
 {
-static uint8x16_t voffset = {0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60};
-static uint8x16_t valpha = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
-mve_pred16_t      p;
+INT index;
 
-    if (size == 16)
+    for(index = 0; index < size; index++)
     {
-        vstrbq_scatter_offset_u8(jpeg_info -> gx_jpeg_putdata++, voffset, vblue);
-        vstrbq_scatter_offset_u8(jpeg_info -> gx_jpeg_putdata++, voffset, vgreen);
-        vstrbq_scatter_offset_u8(jpeg_info -> gx_jpeg_putdata++, voffset, vred);
-        vstrbq_scatter_offset_u8(jpeg_info -> gx_jpeg_putdata++, voffset, valpha);
+        *((GX_COLOR *)jpeg_info -> gx_jpeg_putdata) = 0xff000000 | ((ULONG)vred[index] << 16) | ((ULONG)vgreen[index] << 8) | (ULONG)vblue[index];
 
-        jpeg_info -> gx_jpeg_putdata += 60;
-    }
-    else
-    {
-        /* Write the specified size of RGB values to memory.  */
-        p = 0xffff >> (16 - size);
-        vstrbq_scatter_offset_p_u8(jpeg_info -> gx_jpeg_putdata++, voffset, vblue, p);
-        vstrbq_scatter_offset_p_u8(jpeg_info -> gx_jpeg_putdata++, voffset, vgreen, p);
-        vstrbq_scatter_offset_p_u8(jpeg_info -> gx_jpeg_putdata++, voffset, vred, p);
-        vstrbq_scatter_offset_p_u8(jpeg_info -> gx_jpeg_putdata++, voffset, valpha, p);
-
-        jpeg_info -> gx_jpeg_putdata += ((size - 1) << 2);
+        jpeg_info -> gx_jpeg_putdata += 4;
     }
 }
 #else
@@ -1459,7 +1443,7 @@ mve_pred16_t      p;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_1555xrgb_pixel_write          PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1492,7 +1476,7 @@ mve_pred16_t      p;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_jpeg_24xrgb_pixel_write(GX_JPEG_INFO *jpeg_info, GX_UBYTE red, GX_UBYTE green, GX_UBYTE blue)
@@ -1509,7 +1493,7 @@ static VOID _gx_image_reader_jpeg_24xrgb_pixel_write(GX_JPEG_INFO *jpeg_info, GX
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_24bpp_pixel_write_helium      PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1547,7 +1531,7 @@ static VOID _gx_image_reader_jpeg_24xrgb_pixel_write(GX_JPEG_INFO *jpeg_info, GX
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_jpeg_24bpp_pixel_write_helium(GX_JPEG_INFO *jpeg_info, uint8x16_t vred, uint8x16_t vgreen, uint8x16_t vblue, INT size)
@@ -1578,7 +1562,7 @@ mve_pred16_t      p;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_24bpp_pixel_write             PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1611,7 +1595,7 @@ mve_pred16_t      p;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_jpeg_24bpp_pixel_write(GX_JPEG_INFO *jpeg_info, GX_UBYTE red, GX_UBYTE green, GX_UBYTE blue)
@@ -1628,7 +1612,7 @@ static VOID _gx_image_reader_jpeg_24bpp_pixel_write(GX_JPEG_INFO *jpeg_info, GX_
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_565rgb_pixel_write_helium     PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1672,7 +1656,7 @@ static VOID _gx_image_reader_jpeg_24bpp_pixel_write(GX_JPEG_INFO *jpeg_info, GX_
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_jpeg_565rgb_pixel_write_helium(GX_JPEG_INFO *jpeg_info, uint8x16_t vred, uint8x16_t vgreen, uint8x16_t vblue, INT size)
@@ -1729,7 +1713,7 @@ GX_UBYTE     blue[16];
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_1555xrgb_pixel_write          PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1762,7 +1746,7 @@ GX_UBYTE     blue[16];
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_jpeg_565rgb_pixel_write(GX_JPEG_INFO *jpeg_info, GX_UBYTE red, GX_UBYTE green, GX_UBYTE blue)
@@ -1783,7 +1767,7 @@ static VOID _gx_image_reader_jpeg_565rgb_pixel_write(GX_JPEG_INFO *jpeg_info, GX
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_1555xrgb_pixel_write_helium   PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1827,7 +1811,7 @@ static VOID _gx_image_reader_jpeg_565rgb_pixel_write(GX_JPEG_INFO *jpeg_info, GX
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_jpeg_1555xrgb_pixel_write_helium(GX_JPEG_INFO *jpeg_info, uint8x16_t vred, uint8x16_t vgreen, uint8x16_t vblue, INT size)
@@ -1884,7 +1868,7 @@ GX_UBYTE     blue[16];
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_1555xrgb_pixel_write          PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1917,7 +1901,7 @@ GX_UBYTE     blue[16];
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_jpeg_1555xrgb_pixel_write(GX_JPEG_INFO *jpeg_info, GX_UBYTE red, GX_UBYTE green, GX_UBYTE blue)
@@ -1937,7 +1921,7 @@ static VOID _gx_image_reader_jpeg_1555xrgb_pixel_write(GX_JPEG_INFO *jpeg_info, 
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_pixel_write_info_set          PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1979,7 +1963,7 @@ static VOID _gx_image_reader_jpeg_1555xrgb_pixel_write(GX_JPEG_INFO *jpeg_info, 
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_pixel_write_info_set(GX_JPEG_INFO *jpeg_info)
@@ -2063,7 +2047,7 @@ static UINT _gx_image_reader_jpeg_pixel_write_info_set(GX_JPEG_INFO *jpeg_info)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_one_mcu_write                 PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2103,9 +2087,11 @@ static UINT _gx_image_reader_jpeg_pixel_write_info_set(GX_JPEG_INFO *jpeg_info)
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            added Helium support,       */
-/*                                            resulting in version 6.x    */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_one_mcu_write(GX_JPEG_INFO *jpeg_info, INT xpos, INT ypos, INT h, INT v)
@@ -2162,8 +2148,13 @@ INT        blue;
     }
 
     put = (GX_UBYTE *)jpeg_info -> gx_jpeg_output_buffer;
+#if defined(GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER)
+    put += (ypos + ystart - jpeg_info -> gx_jpeg_output_buffer_offset_y) * jpeg_info -> gx_jpeg_output_stride;
+    put += (xpos + xstart - jpeg_info -> gx_jpeg_output_buffer_offset_x) * jpeg_info -> gx_jpeg_output_bpp;
+#else
     put += (ypos + ystart) * jpeg_info -> gx_jpeg_output_stride;
     put += (xpos + xstart) * jpeg_info -> gx_jpeg_output_bpp;
+#endif
 
 #if defined(GX_ENABLE_ARM_HELIUM)
     index = (h == 1 ? 0 : (h - 1 + (xstart % h)));
@@ -2224,7 +2215,7 @@ INT        blue;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_one_mcu_rotated_write         PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -2261,7 +2252,7 @@ INT        blue;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  10-31-2023     Ting Zhu                 Initial Version 6.3.0         */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_one_mcu_rotated_write(GX_JPEG_INFO *jpeg_info, INT xpos, INT ypos, INT h, INT v)
@@ -2427,7 +2418,7 @@ GX_BYTE    sign = 1;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_decompress                    PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2465,9 +2456,9 @@ GX_BYTE    sign = 1;
 /*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
 /*                                            abort if block decode fails,*/
 /*                                            resulting in version 6.2.0  */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_decompress(GX_JPEG_INFO *jpeg_info)
@@ -2542,7 +2533,7 @@ UINT (*one_mcu_write)(GX_JPEG_INFO *jpeg_info, INT xpos, INT ypos, INT h, INT v)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_decode_blocks                 PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2584,9 +2575,9 @@ UINT (*one_mcu_write)(GX_JPEG_INFO *jpeg_info, INT xpos, INT ypos, INT h, INT v)
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s), removed  */
+/*  10-31-2023     Ting Zhu                 Modified comment(s), removed  */
 /*                                            huffman table free logic,   */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_jpeg_decode_blocks(GX_JPEG_INFO *jpeg_info)
@@ -2689,7 +2680,7 @@ UINT      status = GX_SUCCESS;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_decode                        PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2724,9 +2715,9 @@ UINT      status = GX_SUCCESS;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_image_reader_jpeg_decode(GX_IMAGE_READER *image_reader, GX_PIXELMAP *outmap)
@@ -2794,7 +2785,7 @@ GX_JPEG_INFO *jpeg_info;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_jpeg_mcu_decode                    PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -2833,9 +2824,9 @@ GX_JPEG_INFO *jpeg_info;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_image_reader_jpeg_mcu_decode(GX_CONST GX_UBYTE *read_data, ULONG data_size,
@@ -2871,8 +2862,15 @@ GX_JPEG_INFO *jpeg_info;
     jpeg_info -> gx_jpeg_output_color_format = context -> gx_draw_context_display -> gx_display_color_format;
     jpeg_info -> gx_jpeg_output_rotation_angle = context -> gx_draw_context_display -> gx_display_rotation_angle;
     jpeg_info -> gx_jpeg_output_buffer = (GX_UBYTE *)context -> gx_draw_context_memory;
+#ifdef GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+    jpeg_info -> gx_jpeg_output_width = (USHORT)context -> gx_draw_context_canvas -> gx_canvas_memory_width;
+    jpeg_info -> gx_jpeg_output_height = (USHORT)context -> gx_draw_context_canvas -> gx_canvas_memory_height;
+    jpeg_info -> gx_jpeg_output_buffer_offset_x = context -> gx_draw_context_offset_x;
+    jpeg_info -> gx_jpeg_output_buffer_offset_y = context -> gx_draw_context_offset_y;
+#else
     jpeg_info -> gx_jpeg_output_width = (USHORT)context -> gx_draw_context_canvas -> gx_canvas_x_resolution;
     jpeg_info -> gx_jpeg_output_height = (USHORT)context -> gx_draw_context_canvas -> gx_canvas_y_resolution;
+#endif
     jpeg_info -> gx_jpeg_output_clip = *context -> gx_draw_context_clip;
 
 

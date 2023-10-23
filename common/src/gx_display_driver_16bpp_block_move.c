@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_16bpp_block_move                 PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added canvas status check,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_16bpp_block_move(GX_DRAW_CONTEXT *context,
@@ -80,6 +83,14 @@ INT     width;
 INT     width_in_bytes;
 INT     y;
 INT     height;
+
+#ifdef GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+    if (context -> gx_draw_context_canvas -> gx_canvas_status & GX_CANVAS_PARTIAL_FRAME_BUFFER)
+    {
+        /* Not supported. */
+        return;
+    }
+#endif
 
     if (xshift)
     {

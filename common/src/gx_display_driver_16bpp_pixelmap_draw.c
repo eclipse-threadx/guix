@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_565rgb_pixelmap_raw_write        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.X          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_pixelmap_raw_write(GX_DRAW_CONTEXT *context,
@@ -85,8 +89,8 @@ GX_CONST USHORT *get;
 GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
 
     putrow = (USHORT *)context -> gx_draw_context_memory;
-    putrow += clip -> gx_rectangle_top * context -> gx_draw_context_pitch;
-    putrow += clip -> gx_rectangle_left;
+
+    GX_CALCULATE_PUTROW(putrow, clip->gx_rectangle_left, clip->gx_rectangle_top, context);
 
     getrow = (USHORT *)(pixelmap -> gx_pixelmap_data);
     getrow += pixelmap -> gx_pixelmap_width * (clip -> gx_rectangle_top - ypos);
@@ -201,7 +205,7 @@ void               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*                                                                        */
 /*    _gx_display_driver_565rgb_pixelmap_compressed_write                 */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.X          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -237,6 +241,10 @@ void               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_pixelmap_compressed_write(GX_DRAW_CONTEXT *context,
@@ -281,8 +289,8 @@ GX_RECTANGLE    *clip = context -> gx_draw_context_clip;
        to the enf of the last visible row
      */
     putrow = (USHORT *)context -> gx_draw_context_memory;
-    putrow += yval * context -> gx_draw_context_pitch;
-    putrow += xpos;
+
+    GX_CALCULATE_PUTROW(putrow, xpos, yval, context);
 
     while (yval <= clip -> gx_rectangle_bottom)
     {
@@ -534,7 +542,7 @@ void               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_565rgb_palette_pixelmap_raw_write  PORTABLE C    */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -570,6 +578,10 @@ void               (*blend_func)(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLO
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_palette_pixelmap_raw_write(GX_DRAW_CONTEXT *context,
@@ -590,8 +602,8 @@ GX_UBYTE           b;
 GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 
     putrow = (USHORT *)context -> gx_draw_context_memory;
-    putrow += clip -> gx_rectangle_top * context -> gx_draw_context_pitch;
-    putrow += clip -> gx_rectangle_left;
+
+    GX_CALCULATE_PUTROW(putrow, clip->gx_rectangle_left, clip->gx_rectangle_top, context);
 
     getrow = (GX_UBYTE *)(pixelmap -> gx_pixelmap_data);
     getrow += pixelmap -> gx_pixelmap_width * (clip -> gx_rectangle_top - ypos);
@@ -624,7 +636,7 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_display_driver_565rgb_palette_pixelmap_transparent_raw_write    */
 /*                                                           PORTABLE C   */
-/*                                                           6.1          */
+/*                                                           6.X          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -660,6 +672,10 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_palette_pixelmap_transparent_raw_write(GX_DRAW_CONTEXT *context,
@@ -679,9 +695,8 @@ GX_UBYTE           b;
 
 GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 
-    putrow = (USHORT *)context -> gx_draw_context_memory;
-    putrow += clip -> gx_rectangle_top * context -> gx_draw_context_pitch;
-    putrow += clip -> gx_rectangle_left;
+    putrow = (USHORT *)context->gx_draw_context_memory;
+    GX_CALCULATE_PUTROW(putrow, clip->gx_rectangle_left, clip->gx_rectangle_top, context);
 
     getrow = (GX_UBYTE *)(pixelmap -> gx_pixelmap_data);
     getrow += pixelmap -> gx_pixelmap_width * (clip -> gx_rectangle_top - ypos);
@@ -720,7 +735,7 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*    _gx_display_driver_565rgb_palette_pixelmap_transparent_compressed   */
 /*      _write                                                            */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -757,6 +772,10 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_palette_pixelmap_transparent_compressed_write(GX_DRAW_CONTEXT *context,
@@ -805,8 +824,7 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
     /* Now we are on the first visible row, copy pixels until we get
        to the end of the last visible row. */
     putrow = (USHORT *)context -> gx_draw_context_memory;
-    putrow += yval * context -> gx_draw_context_pitch;
-    putrow += xpos;
+    GX_CALCULATE_PUTROW(putrow, xpos, yval, context);
 
     palette = (GX_COLOR *)pixelmap -> gx_pixelmap_aux_data;
 
@@ -923,7 +941,7 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_display_driver_565rgb_palette_pixelmap_compressed_write         */
 /*                                                        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -959,6 +977,10 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_display_driver_565rgb_palette_pixelmap_compressed_write(GX_DRAW_CONTEXT *context,
@@ -1006,8 +1028,7 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
     /* Now we are on the first visible row, copy pixels until we get
        to the end of the last visible row. */
     putrow = (USHORT *)context -> gx_draw_context_memory;
-    putrow += yval * context -> gx_draw_context_pitch;
-    putrow += xpos;
+    GX_CALCULATE_PUTROW(putrow, xpos, yval, context);
 
     palette = (GX_COLOR *)pixelmap -> gx_pixelmap_aux_data;
 

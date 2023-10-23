@@ -1302,33 +1302,35 @@ VOID                         *memptr;
         return;
     }
 
-    /* Driver just becomes ready. So we need to refresh the whole display. */
-    if (driver_instance -> win32_driver_ready == 1)
-    {
-        gx_utility_rectangle_define(&canvas -> gx_canvas_dirty_area, 0, 0,
-                                    canvas -> gx_canvas_x_resolution - 1,
-                                    canvas -> gx_canvas_y_resolution - 1);
-        driver_instance -> win32_driver_ready = 2;
-    }
-
     gx_utility_rectangle_define(&Limit, 0, 0,
                                 canvas -> gx_canvas_x_resolution - 1,
                                 canvas -> gx_canvas_y_resolution - 1);
 
-    if (gx_utility_rectangle_overlap_detect(&Limit, &canvas -> gx_canvas_dirty_area, &Copy))
+    if (gx_utility_rectangle_overlap_detect(&Limit, dirty, &Copy))
     {
         memptr = _win32_canvas_memory_prepare(canvas, &Copy);
 
-        INT xsrc = Copy.gx_rectangle_left;
-        INT ysrc = Copy.gx_rectangle_top;
+        INT xsrc;
+        INT ysrc;
 
-        gx_utility_rectangle_shift(&Copy, canvas -> gx_canvas_display_offset_x, canvas -> gx_canvas_display_offset_y);
-
-        win_device = GetDC(driver_instance -> win32_driver_winhandle);
+        win_device = GetDC(driver_instance->win32_driver_winhandle);
         SetMapMode(win_device, MM_TEXT);
 
-        driver_instance -> win32_driver_bmpinfo.gx_bmp_header.biWidth = canvas -> gx_canvas_x_resolution;
-        driver_instance -> win32_driver_bmpinfo.gx_bmp_header.biHeight = canvas -> gx_canvas_y_resolution;
+#ifdef GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+        xsrc = Copy.gx_rectangle_left - canvas->gx_canvas_memory_offset_x;
+        ysrc = Copy.gx_rectangle_top - canvas->gx_canvas_memory_offset_y;
+
+        driver_instance->win32_driver_bmpinfo.gx_bmp_header.biWidth = canvas->gx_canvas_memory_width;
+        driver_instance->win32_driver_bmpinfo.gx_bmp_header.biHeight = canvas->gx_canvas_memory_height;
+#else
+        xsrc = Copy.gx_rectangle_left;
+        ysrc = Copy.gx_rectangle_top;
+
+        driver_instance->win32_driver_bmpinfo.gx_bmp_header.biWidth = canvas->gx_canvas_x_resolution;
+        driver_instance->win32_driver_bmpinfo.gx_bmp_header.biHeight = canvas->gx_canvas_y_resolution;
+#endif
+
+        gx_utility_rectangle_shift(&Copy, canvas->gx_canvas_display_offset_x, canvas->gx_canvas_display_offset_y);
 
         Top = Copy.gx_rectangle_top;
         Left = Copy.gx_rectangle_left;

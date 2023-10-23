@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    gx_image_reader.h                                   PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -52,9 +52,11 @@
 /*                                            added definitions for fixed */
 /*                                            size table dimensions,      */
 /*                                            resulting in version 6.2.0  */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s), added    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s), added    */
 /*                                            support for ARM Helium,     */
-/*                                            resulting in version 6.x    */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_SOFTWARE_DECODER_SUPPORT)
@@ -133,6 +135,10 @@ typedef struct GX_JPEG_INFO_STRUCT
     VOID             (*gx_jpeg_pixel_write)(struct GX_JPEG_INFO_STRUCT *jpeg_info, GX_UBYTE red, GX_UBYTE green, GX_UBYTE blue);
 #endif
     GX_UBYTE        *gx_jpeg_output_buffer;
+#if defined(GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER)
+    GX_VALUE         gx_jpeg_output_buffer_offset_x;
+    GX_VALUE         gx_jpeg_output_buffer_offset_y;
+#endif
     USHORT           gx_jpeg_output_width;
     USHORT           gx_jpeg_output_height;
     INT              gx_jpeg_output_stride;

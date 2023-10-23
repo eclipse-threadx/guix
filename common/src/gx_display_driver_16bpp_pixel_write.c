@@ -32,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_16bpp_pixel_write                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -67,17 +67,17 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_16bpp_pixel_write(GX_DRAW_CONTEXT *context, INT x, INT y, GX_COLOR color)
 {
 USHORT *put = (USHORT *)context -> gx_draw_context_memory;
 
-    /* calculate address of scan line */
-    put += context -> gx_draw_context_pitch * y;
-
-    /* step in by x coordinate */
-    put += x;
+    GX_CALCULATE_PUTROW(put, x, y, context);
 
     /* write the pixel value */
     *put = (USHORT)color;
