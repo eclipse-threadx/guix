@@ -45,7 +45,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_565rgb_canvas_blend              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -83,7 +83,9 @@
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
-/*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added canvas status check,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_565rgb_canvas_blend(GX_CANVAS *canvas, GX_CANVAS *composite)
@@ -102,6 +104,14 @@ GX_UBYTE     alpha, balpha;
 USHORT       bcolor;
 INT          row;
 INT          col;
+
+#ifdef GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER
+    if (canvas -> gx_canvas_status & GX_CANVAS_PARTIAL_FRAME_BUFFER)
+    {
+        /* Not supported. */
+        return;
+    }
+#endif
 
     dirty.gx_rectangle_left = dirty.gx_rectangle_top = 0;
     dirty.gx_rectangle_right = (GX_VALUE)(canvas -> gx_canvas_x_resolution - 1);

@@ -31,7 +31,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_16bpp_vertical_line_draw         PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -70,6 +70,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_16bpp_vertical_line_draw(GX_DRAW_CONTEXT *context, INT ystart, INT yend, INT xpos, INT width, GX_COLOR color)
@@ -98,11 +102,7 @@ GX_UBYTE alpha;
     /* pick up starting address of canvas memory */
     rowstart = (USHORT *)context -> gx_draw_context_memory;
 
-    /* calculate start of scanline */
-    rowstart += context -> gx_draw_context_pitch * ystart;
-
-    /* offset into starting pixel */
-    rowstart += xpos;
+    GX_CALCULATE_PUTROW(rowstart, xpos, ystart, context);
 
     /* draw line from top to bottom */
     for (row = 0; row < len; row++)

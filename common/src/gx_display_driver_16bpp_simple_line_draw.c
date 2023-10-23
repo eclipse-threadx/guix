@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_16bpp_simple_line_draw           PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -75,6 +75,10 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added partial canvas buffer */
+/*                                            support,                    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_16bpp_simple_line_draw(GX_DRAW_CONTEXT *context, INT xstart, INT ystart, INT xend, INT yend)
@@ -103,8 +107,9 @@ INT           dy = GX_ABS(yend - ystart);
 
 GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 GX_COLOR      linecolor = context -> gx_draw_context_brush.gx_brush_line_color;
-#if defined GX_BRUSH_ALPHA_SUPPORT  
-GX_UBYTE      alpha;
+
+#if defined GX_BRUSH_ALPHA_SUPPORT
+GX_UBYTE alpha;
 
     alpha = context -> gx_draw_context_brush.gx_brush_alpha;
     if (alpha == 0)
@@ -136,8 +141,11 @@ GX_UBYTE      alpha;
         y_increment = 0 - context -> gx_draw_context_pitch;
     }
 
-    put = (USHORT *)(context -> gx_draw_context_memory) + ystart * context -> gx_draw_context_pitch + xstart;
-    next_put = (USHORT *)(context -> gx_draw_context_memory) + yend * context -> gx_draw_context_pitch + xend;
+    put = (USHORT *)(context -> gx_draw_context_memory);
+    GX_CALCULATE_PUTROW(put, xstart, ystart, context);
+
+    next_put = (USHORT *)(context -> gx_draw_context_memory);
+    GX_CALCULATE_PUTROW(next_put, xend, yend, context);
 
 
     end_point.gx_point_x = (GX_VALUE)xstart;
@@ -296,7 +304,7 @@ GX_UBYTE      alpha;
                     PIXEL_WRITE(put, linecolor);
                     put += context -> gx_draw_context_pitch;
                 }
-            }   
+            }
         }
         else
         {
@@ -461,3 +469,4 @@ GX_UBYTE      alpha;
         }
     }
 }
+

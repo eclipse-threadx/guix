@@ -24,6 +24,8 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_binres_language_info_load.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_binres_language_table_load.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_binres_theme_load.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_binres_pixelmap_load.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_binres_font_load.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_brush_default.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_brush_define.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_button_background_draw.c
@@ -913,6 +915,8 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_binres_language_info_load.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_binres_language_table_load.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_binres_theme_load.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_binres_pixelmap_load.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_binres_font_load.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_brush_default.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_brush_define.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_button_create.c

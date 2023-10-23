@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_button_text_set                 PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -67,14 +67,24 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added return status check,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT  _gx_multi_line_text_button_text_set(GX_MULTI_LINE_TEXT_BUTTON *button, GX_CONST GX_CHAR *text)
 {
-    _gx_text_button_text_set((GX_TEXT_BUTTON *)button, text);
-    _gx_multi_line_text_button_line_pointers_set(button);
-    return GX_SUCCESS;
+UINT status;
+
+    status = _gx_text_button_text_set((GX_TEXT_BUTTON *)button, text);
+
+    if (status == GX_SUCCESS)
+    {
+        _gx_multi_line_text_button_line_pointers_set(button);
+    }
+
+    return status;
 }
 #endif
 
@@ -83,7 +93,7 @@ UINT  _gx_multi_line_text_button_text_set(GX_MULTI_LINE_TEXT_BUTTON *button, GX_
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_button_text_set_ext             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -117,11 +127,20 @@ UINT  _gx_multi_line_text_button_text_set(GX_MULTI_LINE_TEXT_BUTTON *button, GX_
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added return status check,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_multi_line_text_button_text_set_ext(GX_MULTI_LINE_TEXT_BUTTON *button, GX_CONST GX_STRING *text)
 {
-    _gx_text_button_text_set_ext((GX_TEXT_BUTTON *)button, text);
-    _gx_multi_line_text_button_line_pointers_set(button);
-    return GX_SUCCESS;
+UINT status;
+
+    status = _gx_text_button_text_set_ext((GX_TEXT_BUTTON *)button, text);
+
+    if (status == GX_SUCCESS)
+    {
+        _gx_multi_line_text_button_line_pointers_set(button);
+    }
+    return status;
 }

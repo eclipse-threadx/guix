@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE GUIX_Studio_Resource>
+<resource_project>
+<header>
+<name>font_vera</name>
+<version>56</version>
+<converter>GUIX Studio</converter>
+<studio_version>6020105</studio_version>
+<guix_version>60201</guix_version>
+<target_cpu>Generic</target_cpu>
+<target_tools>Generic</target_tools>
+<dave2d_graph_accelerator>FALSE</dave2d_graph_accelerator>
+</header>
+<display_info>
+<display_color_format>GX_COLOR_FORMAT_565RGB</display_color_format>
+<rotation_angle>None</rotation_angle>
+</display_info>
+<resource>
+<type>FONT</type>
+<name>VERA</name>
+<pathinfo>
+<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathtype>project_relative</pathtype>
+</pathinfo>
+<compress>FALSE</compress>
+<height>20</height>
+<font_bits>8</font_bits>
+<font_kerning>FALSE</font_kerning>
+<font_page_data>
+<first_char>32</first_char>
+<last_char>126</last_char>
+</font_page_data>
+</resource>
+</resource_project>

@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_canvas_mouse_show                               PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -65,6 +65,9 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added canvas status check,  */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_MOUSE_SUPPORT)
@@ -72,6 +75,14 @@ UINT _gx_canvas_mouse_show(GX_CANVAS *canvas)
 {
 GX_DISPLAY           *display;
 GX_MOUSE_CURSOR_INFO *mouse_info;
+
+#if defined(GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER)
+    if (canvas -> gx_canvas_status & GX_CANVAS_PARTIAL_FRAME_BUFFER)
+    {
+        /* Not supported.  */
+        return GX_FAILURE;
+    }
+#endif
 
     display = canvas -> gx_canvas_display;
     mouse_info = display -> gx_display_mouse.gx_mouse_cursor_info;

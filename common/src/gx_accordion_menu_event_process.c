@@ -238,7 +238,7 @@ GX_WIDGET   *child;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_accordion_menu_close_animation_update           PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -276,6 +276,9 @@ GX_WIDGET   *child;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added NULL pointer check,   */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_accordion_menu_close_animation_update(GX_ACCORDION_MENU *accordion)
@@ -286,6 +289,11 @@ GX_VALUE     height;
 GX_VALUE     shift;
 GX_RECTANGLE size;
 GX_WIDGET   *child;
+
+    if (!deselected)
+    {
+        return GX_SUCCESS;
+    }
 
     child = deselected -> gx_menu_list.gx_widget_first_child;
 
@@ -334,7 +342,7 @@ GX_WIDGET   *child;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_accordion_menu_open_animation_update            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -370,6 +378,9 @@ GX_WIDGET   *child;
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            added NULL pointer check,   */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_accordion_menu_open_animation_update(GX_ACCORDION_MENU *accordion)
@@ -380,6 +391,11 @@ GX_RECTANGLE size;
 GX_VALUE     list_children_height = 0;
 GX_VALUE     height = 0;
 GX_WIDGET   *child;
+
+    if (!selected)
+    {
+        return GX_SUCCESS;
+    }
 
     child = selected -> gx_menu_list.gx_widget_first_child;
 

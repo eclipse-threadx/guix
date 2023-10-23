@@ -34,7 +34,7 @@ GX_CALLER_CHECKING_EXTERNS
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gxe_scrollbar_reset                                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -71,6 +71,8 @@ GX_CALLER_CHECKING_EXTERNS
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gxe_scrollbar_reset(GX_SCROLLBAR *scrollbar, GX_SCROLL_INFO *info)
@@ -92,7 +94,7 @@ UINT status;
         return(GX_INVALID_WIDGET);
     }
 
-    /* Check fro valid scroll info.  */
+    /* Check for valid scroll info.  */
     if ((info != GX_NULL) && ((info -> gx_scroll_value > info -> gx_scroll_maximum) ||
                               (info -> gx_scroll_value < info -> gx_scroll_minimum)))
     {

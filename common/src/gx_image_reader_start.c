@@ -292,7 +292,7 @@ static UINT _gx_image_reader_pixelmap_info_set(GX_IMAGE_READER *image_reader, GX
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_start                              PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.3.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -340,9 +340,9 @@ static UINT _gx_image_reader_pixelmap_info_set(GX_IMAGE_READER *image_reader, GX
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  10-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved logic,             */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.3.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_image_reader_start(GX_IMAGE_READER *image_reader, GX_PIXELMAP *outmap)
