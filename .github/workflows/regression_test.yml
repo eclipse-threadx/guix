@@ -44,4 +44,10 @@ jobs:
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: ./test/cmake/coverage_report/default_build_coverage.xml
+       
+    - name: Test GUIX (PublishCodeCoverageResults)       
+      uses: 5monkeys/cobertura-action@master
+        with:
+          path: src/test.xml
+          minimum_coverage: 75
         
