@@ -46,8 +46,10 @@ jobs:
         filename: ./test/cmake/coverage_report/default_build_coverage.xml
        
     - name: Test GUIX (PublishCodeCoverageResults)       
-      uses: 5monkeys/cobertura-action@master
-        with:
-          path: src/test.xml
-          minimum_coverage: 75
+      uses: 5monkeys/cobertura-action@v13
+      with:
+        path: ./test/cmake/coverage_report/default_build_coverage.xml
+        minimum_coverage: 75
+        show_line: true
+        show_branch: true
         
