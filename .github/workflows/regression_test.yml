@@ -36,7 +36,7 @@ jobs:
       uses: actions/upload-pages-artifact@v2.0.0
       with:
         name: test_report
-        path: ./test/cmake/build/**/default_build_coverage.txt
+        path: ./test/cmake/build/default_build_coverage/default_build_coverage.txt
           
     - name: Test GUIX (PublishCodeCoverageResults)
       uses: irongut/CodeCoverageSummary@v1.3.0
