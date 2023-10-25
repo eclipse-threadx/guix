@@ -31,11 +31,13 @@ jobs:
 
     - name: Test GUIX
       run: ./scripts/test.sh
-      
-    - name: Test GUIX (Upload Test Report)
-      uses: actions/upload-pages-artifact@v1
+
+    - name: Test GUIX (PublishTestReports)
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
       with:
-        path: ./test/cmake/build/**/Testing/**/*.xml
+        files: |
+          ./test/cmake/build/**/Testing/*build*.txt
       
     - name: Test GUIX (Upload Coverage Report)
       uses: actions/upload-pages-artifact@v1
