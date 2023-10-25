@@ -35,8 +35,7 @@ jobs:
     - name: Test GUIX (Upload Test Report)
       uses: actions/upload-pages-artifact@v1
       with:
-        files: |
-          ./test/cmake/build/**/Testing/**/*.xml
+        path: ./test/cmake/build/**/Testing/**/*.xml
       
     - name: Test GUIX (Upload Coverage Report)
       uses: actions/upload-pages-artifact@v1
