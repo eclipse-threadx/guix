@@ -32,24 +32,14 @@ jobs:
     - name: Test GUIX
       run: ./scripts/test.sh
       
-    - name: Test GUIX (PublishTestReports)
-      uses: EnricoMi/publish-unit-test-result-action@v2
-      if: always()
+    - name: Test GUIX (Upload Test Report)
+      uses: actions/upload-pages-artifact@v1
       with:
         files: |
           ./test/cmake/build/**/Testing/**/*.xml
-       
-
-    - name: Test GUIX (PublishCodeCoverageResults)
-      uses: irongut/CodeCoverageSummary@v1.3.0
+      
+    - name: Test GUIX (Upload Coverage Report)
+      uses: actions/upload-pages-artifact@v1
       with:
-        filename: ./test/cmake/coverage_report/default_build_coverage.xml
-       
-    - name: Test GUIX (PublishCodeCoverageResults)       
-      uses: 5monkeys/cobertura-action@v13
-      with:
-        path: ./test/cmake/coverage_report/default_build_coverage.xml
-        minimum_coverage: 75
-        show_line: true
-        show_branch: true
+        path: ./test/cmake/coverage_report
         
