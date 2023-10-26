@@ -56,6 +56,7 @@ jobs:
         path: ./test/cmake/coverage_report/**/*
 
     - name: Write to workflow job summary
+      if: success() || failure()
       run: |
         SUMMARY=$'# Testing Job Summary\n## Second Level Heading\nHello GitHub'
         echo "$SUMMARY" >> $GITHUB_STEP_SUMMARY
