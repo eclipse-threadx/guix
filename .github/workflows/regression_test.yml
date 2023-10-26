@@ -33,19 +33,25 @@ jobs:
       run: ./scripts/test.sh
 
     - name: Test GUIX (UploadTestResults)
+      if: success() || failure()
       uses: actions/upload-artifact@v3.1.3
       with:
-        name: test_report
-        path: ./test/cmake/build/**/*build*.txt
+        name: test_reports_GUIX
+        path: |
+          ./test/cmake/build/*.txt
+          ./test/cmake/build/*/Testing/**/*.xml
+          ./test/cmake/build/**/*.bin
           
     - name: Test GUIX (PublishCodeCoverageResults)
+      if: success() || failure()
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: ./test/cmake/coverage_report/default_build_coverage.xml
         
     - name: Test GUIX (UploadCodeCoverageResults)
+      if: success() || failure()
       uses: actions/upload-artifact@v3.1.3
       with:
-        name: default_coverage_report
-        path: ./test/cmake/coverage_report/default_build_coverage
+        name: default_build_coverage
+        path: ./test/cmake/coverage_report/**/*
         
