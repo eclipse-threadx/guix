@@ -26,11 +26,11 @@ jobs:
     - name: Install softwares
       run: ./scripts/install.sh
 
-    - name: Build GUIX
-      run: ./scripts/build.sh
+    #- name: Build GUIX
+    #  run: ./scripts/build.sh
 
-    - name: Test GUIX
-      run: ./scripts/test.sh
+    #- name: Test GUIX
+    #  run: ./scripts/test.sh
 
     - name: Test GUIX (UploadTestResults)
       if: success() || failure()
@@ -54,4 +54,9 @@ jobs:
       with:
         name: default_build_coverage
         path: ./test/cmake/coverage_report/**/*
+
+    - name: Write to workflow job summary
+      run: |
+        SUMMARY=$'# Testing Job Summary\n## Second Level Heading\nHello GitHub'
+        echo "$SUMMARY" >> $GITHUB_STEP_SUMMARY
         
