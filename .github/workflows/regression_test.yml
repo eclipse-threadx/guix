@@ -31,7 +31,14 @@ jobs:
 
     - name: Test GUIX
       run: ./scripts/test.sh
-
+      
+    - name: Publish Test Reports
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: |
+          ./test/cmake/build/*/*.xml
+          
     - name: Upload Test Results
       if: success() || failure()
       uses: actions/upload-artifact@v3.1.3
