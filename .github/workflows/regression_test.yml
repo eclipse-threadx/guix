@@ -48,7 +48,11 @@ jobs:
           ./test/cmake/build/*.txt
           ./test/cmake/build/*/Testing/**/*.xml
           ./test/cmake/build/**/regression/output_files/*.bin
-          
+    - name: Publish Code Coverage Results
+      uses: codecov/codecov-action@v1.0.13
+      with: 
+        file: ./test/cmake/coverage_report/default_build_coverage.xml
+        
     - name: Generate Code Coverage Results Summary
       if: success() || failure()
       uses: irongut/CodeCoverageSummary@v1.3.0
