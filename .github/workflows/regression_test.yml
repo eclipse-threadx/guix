@@ -47,7 +47,7 @@ jobs:
         path: |
           ./test/cmake/build/*.txt
           ./test/cmake/build/*/Testing/**/*.xml
-          ./test/cmake/build/**/*.bin
+          ./test/cmake/build/**/regression/output_files/*.bin
           
     - name: Generate Code Coverage Results Summary
       if: success() || failure()
