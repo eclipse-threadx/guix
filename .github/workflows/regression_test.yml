@@ -40,8 +40,8 @@ jobs:
     - name: Test GUIX
       run: ./scripts/test.sh
       
-    - name: Publish Test Reports
-      uses: EnricoMi/publish-unit-test-result-action@v2
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2.11.0
       if: always()
       with:
         files: |
