@@ -69,6 +69,7 @@ jobs:
         
     - name: Deploy GitHub Pages site
       if: success() || failure()
+      id: deployment
       uses: actions/deploy-pages@v1.2.9
 
     - name: Generate Code Coverage Results Summary
