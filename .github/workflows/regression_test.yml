@@ -82,5 +82,6 @@ jobs:
     - name: Write Code Coverage Result Summary
       if: success() || failure()
       run: |
-        SUMMARY=$'# Testing Job Summary\n## Second Level Heading\nHello GitHub'
+        echo "# Coverage Report Summary\n" >> $GITHUB_STEP_SUMMARY
         cat code-coverage-results.md > $GITHUB_STEP_SUMMARY
+        echo "url=${{ steps.deployment.outputs.page_url }}" > $GITHUB_STEP_SUMMARY
