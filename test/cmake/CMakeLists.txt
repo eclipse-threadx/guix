@@ -115,7 +115,7 @@ add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../ guix)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/regression regression)
 
 # Create output files
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/output_files)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/regression/output_files)
 
 # Coverage
 if(CMAKE_BUILD_TYPE MATCHES ".*_coverage")
