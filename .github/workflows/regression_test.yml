@@ -81,7 +81,6 @@ jobs:
         output: file
 
     - name: Write Code Coverage Result Summary
-      if: success() || failure()
       run: |
         echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
         cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
