@@ -18,8 +18,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     permissions:
-      pages: write
-      id-token: read|write
+      pages: read|write
+      id-token: write
       
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -85,4 +85,4 @@ jobs:
       run: |
         echo "# Coverage Report Summary" >> $GITHUB_STEP_SUMMARY
         cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
-        echo '\\n### [Open Coverage Report](${{ steps.deployment.outputs.page_url }})' >> $GITHUB_STEP_SUMMARY
+        echo '\n### [Open Coverage Report](${{ steps.deployment.outputs.page_url }})' >> $GITHUB_STEP_SUMMARY
