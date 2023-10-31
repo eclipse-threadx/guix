@@ -83,5 +83,5 @@ jobs:
       if: success() || failure()
       run: |
         echo "# Coverage Report Summary\n" >> $GITHUB_STEP_SUMMARY
-        cat code-coverage-results.md > $GITHUB_STEP_SUMMARY
-        echo "url=${{ steps.deployment.outputs.page_url }}" > $GITHUB_STEP_SUMMARY
+        cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+        echo "url=${page_url}" >> $GITHUB_STEP_SUMMARY
