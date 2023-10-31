@@ -62,22 +62,18 @@ jobs:
           ./test/cmake/build/**/regression/output_files/*.bin
 
     - name: Configure GitHub Pages
-      if: success() || failure()
       uses: actions/configure-pages@v3.0.6
         
     - name: Upload GitHub Pages artifact
-      if: success() || failure()
       uses: actions/upload-pages-artifact@v2.0.0
       with:
         path: ./test/cmake/coverage_report/default_build_coverage
         
     - name: Deploy GitHub Pages site
-      if: success() || failure()
       id: deployment
       uses: actions/deploy-pages@v1.2.9
 
     - name: Generate Code Coverage Results Summary
-      if: success() || failure()
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: ./test/cmake/coverage_report/default_build_coverage.xml
