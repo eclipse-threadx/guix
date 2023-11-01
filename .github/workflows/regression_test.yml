@@ -84,8 +84,9 @@ jobs:
 
     - name: Write Code Coverage Report URL
       run: |
-        echo -e "\n" >> code-coverage-results.md
-        echo '[Open Coverage Report](${{ steps.deployment.outputs.page_url }})' >> code-coverage-results.md
+        cat code-coverage-results.md > code-coverage-summary.md
+        echo -e "\n" >> code-coverage-summary.md
+        echo '[Open Coverage Report](${{ steps.deployment.outputs.page_url }})' >> code-coverage-summary.md
         
     - name: Create CheckRun for Code Coverage
       uses: LouisBrunner/checks-action@v1.6.2
@@ -93,4 +94,4 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         name: Code Coverage
         output: "{\"summary\":\"Code Coverage\"}"
-        output_text_description_file: code-coverage-results.md
+        output_text_description_file: code-coverage-summary.md
