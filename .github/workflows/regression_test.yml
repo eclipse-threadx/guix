@@ -84,4 +84,4 @@ jobs:
       run: |
         echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
         cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
-        echo '\n### [Open Coverage Report](${{ steps.deployment.outputs.page_url }})' >> $GITHUB_STEP_SUMMARY
+        echo '### [Open Coverage Report](${{ steps.deployment.outputs.page_url }})' >> $GITHUB_STEP_SUMMARY
