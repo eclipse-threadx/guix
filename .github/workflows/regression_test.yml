@@ -78,6 +78,8 @@ jobs:
       with:
         filename: ./test/cmake/coverage_report/default_build_coverage.xml
         format: markdown
+        badge: true
+        hide_complexity: true
         output: file
 
     - name: Write Code Coverage Result Summary
