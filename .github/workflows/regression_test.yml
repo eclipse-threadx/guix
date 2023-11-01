@@ -12,7 +12,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "linux_job"
-  linux_job:
+  run_tests:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -82,9 +82,15 @@ jobs:
         hide_complexity: true
         output: file
 
-    - name: Write Code Coverage Result Summary
+    - name: Write Code Coverage Report URL
       run: |
-        echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
-        cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
-        echo -e "\n" >> $GITHUB_STEP_SUMMARY
-        echo '[Open Coverage Report](${{ steps.deployment.outputs.page_url }})' >> $GITHUB_STEP_SUMMARY
+        echo -e "\n" >> code-coverage-results.md
+        echo '[Open Coverage Report](${{ steps.deployment.outputs.page_url }})' >> code-coverage-results.md
+        
+    - name: Create CheckRun for Code Coverage
+      uses: LouisBrunner/checks-action@v1.6.2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        name: Code Coverage
+        output: "{\"summary\":\"Code Coverage\"}"
+        output_text_description_file: code-coverage-results.md
