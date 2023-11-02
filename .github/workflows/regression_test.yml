@@ -96,4 +96,4 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         name: Code Coverage
         conclusion: ${{ job.status }}
-        output: code-coverage-summary.md
+        output_text_description_file: code-coverage-summary.md
