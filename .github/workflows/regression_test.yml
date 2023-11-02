@@ -97,6 +97,7 @@ jobs:
         name: Code Coverage
         conclusion: ${{ job.status }}
         output: |
-          {"summary":" "}
+          {"summary":"Coverage Report"}
         output_text_description_file: code-coverage-summary.md
+        details_url: ${{ steps.deployment.outputs.page_url }}
         
