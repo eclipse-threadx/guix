@@ -61,6 +61,12 @@ jobs:
           ./test/cmake/build/*/Testing/**/*.xml
           ./test/cmake/build/**/regression/output_files/*.bin
 
+    - name: Codecov
+      uses: codecov/codecov-action@v1.0.13
+      with:
+        file: ./test/cmake/coverage_report/default_build_coverage.xml
+        full_report: ./test/cmake/coverage_report/default_build_coverage
+    
     - name: Configure GitHub Pages
       uses: actions/configure-pages@v3.0.6
         
