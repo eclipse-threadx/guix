@@ -36,10 +36,10 @@ VOID tx_application_define(void *first_unused_memory)
 
 static VOID control_thread_entry(ULONG input)
 {
-GX_POINT pos = {0};
+GX_POINT pos;
+
     /* accordion menu */
     gx_accordion_menu_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_accordion_menu_draw(GX_NULL);
     gx_accordion_menu_event_process(GX_NULL, GX_NULL);
     gx_accordion_menu_position(GX_NULL);
     
@@ -61,10 +61,8 @@ GX_POINT pos = {0};
     gx_brush_define(GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     
     /* button */
-    //gx_button_background_draw(GX_NULL);
     gx_button_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     gx_button_deselect(GX_NULL, GX_TRUE);
-    //gx_button_draw(GX_NULL);
     gx_button_event_process(GX_NULL, GX_NULL);
     gx_button_select(GX_NULL);
     
@@ -88,7 +86,6 @@ GX_POINT pos = {0};
 #endif
     gx_canvas_offset_set(GX_NULL, GX_NULL, GX_NULL);
     gx_canvas_pie_draw(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    gx_canvas_pixel_draw(pos);
     gx_canvas_pixelmap_blend(GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     gx_canvas_pixelmap_draw(GX_NULL, GX_NULL, GX_NULL);
     gx_canvas_pixelmap_get(GX_NULL);
@@ -103,7 +100,6 @@ GX_POINT pos = {0};
     
     /* checkbox */
     gx_checkbox_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_checkbox_draw(GX_NULL);
     gx_checkbox_event_process(GX_NULL, GX_NULL);
     gx_checkbox_pixelmap_set(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     gx_checkbox_select(GX_NULL);
@@ -112,9 +108,7 @@ GX_POINT pos = {0};
     gx_circular_gauge_angle_get(GX_NULL, GX_NULL);
     gx_circular_gauge_angle_set(GX_NULL, GX_NULL);
     gx_circular_gauge_animation_set(GX_NULL, GX_NULL, GX_NULL);
-    //gx_circular_gauge_background_draw(GX_NULL);
     gx_circular_gauge_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_circular_gauge_draw(GX_NULL);
     gx_circular_gauge_event_process(GX_NULL, GX_NULL);
     
     /* context brush */
@@ -172,12 +166,9 @@ GX_POINT pos = {0};
     gx_horizontal_scrollbar_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     
     /* icon */
-    //gx_icon_background_draw(GX_NULL);
     gx_icon_button_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_icon_button_draw(GX_NULL);
     gx_icon_button_pixelmap_set(GX_NULL, GX_NULL);
     gx_icon_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_icon_draw(GX_NULL);
     gx_icon_event_process(GX_NULL, GX_NULL);
     gx_icon_pixelmap_set(GX_NULL, GX_NULL, GX_NULL);
     
@@ -187,26 +178,19 @@ GX_POINT pos = {0};
     gx_image_reader_start(GX_NULL, GX_NULL);
     
     /* line chart */
-    //gx_line_chart_axis_draw(GX_NULL);
     gx_line_chart_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_line_chart_data_draw(GX_NULL);
-    //gx_line_chart_draw(GX_NULL);
     gx_line_chart_update(GX_NULL, GX_NULL, GX_NULL);
     gx_line_chart_y_scale_calculate(GX_NULL, GX_NULL);
     
     /* menu */
     gx_menu_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_menu_draw(GX_NULL);
     gx_menu_insert(GX_NULL, GX_NULL);
     gx_menu_remove(GX_NULL, GX_NULL);
-    //gx_menu_text_draw(GX_NULL);
     gx_menu_text_offset_set(GX_NULL, GX_NULL, GX_NULL);
     
     /* multi line text button */
     gx_multi_line_text_button_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_multi_line_text_button_draw(GX_NULL);
     gx_multi_line_text_button_event_process(GX_NULL, GX_NULL);
-    //gx_multi_line_text_button_text_draw(GX_NULL);
     gx_multi_line_text_button_text_id_set(GX_NULL, GX_NULL);
     gx_multi_line_text_button_text_set(GX_NULL, GX_NULL);
     
@@ -234,7 +218,6 @@ GX_POINT pos = {0};
 
     /* multi line text view */
     gx_multi_line_text_view_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_multi_line_text_view_draw(GX_NULL);
     gx_multi_line_text_view_event_process(GX_NULL, GX_NULL);
     gx_multi_line_text_view_font_set(GX_NULL, GX_NULL);
     gx_multi_line_text_view_line_space_set(GX_NULL, GX_NULL);
@@ -260,40 +243,32 @@ GX_POINT pos = {0};
     
     /* pixelmap button */
     gx_pixelmap_button_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_pixelmap_button_draw(GX_NULL);
     gx_pixelmap_button_event_process(GX_NULL, GX_NULL);
     gx_pixelmap_button_pixelmap_set(GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     
     /* pixelmap prompt */
     gx_pixelmap_prompt_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_pixelmap_prompt_draw(GX_NULL);
     gx_pixelmap_prompt_pixelmap_set(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     
     /* pixelmap slider*/
     gx_pixelmap_slider_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_pixelmap_slider_draw(GX_NULL);
     gx_pixelmap_slider_event_process(GX_NULL, GX_NULL);
     gx_pixelmap_slider_pixelmap_set(GX_NULL, GX_NULL);
     
     /* progress bar */ 
-    //gx_progress_bar_background_draw(GX_NULL);
     gx_progress_bar_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_progress_bar_draw();
     gx_progress_bar_event_process(GX_NULL, GX_NULL);
     gx_progress_bar_font_set(GX_NULL, GX_NULL);
     gx_progress_bar_info_set(GX_NULL, GX_NULL);
     gx_progress_bar_pixelmap_set(GX_NULL, GX_NULL);
     gx_progress_bar_range_set(GX_NULL, GX_NULL, GX_NULL);
     gx_progress_bar_text_color_set(GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_progress_bar_text_draw(GX_NULL);
     gx_progress_bar_value_set(GX_NULL, GX_NULL);
     
     /* prompt */
     gx_prompt_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_prompt_draw(GX_NULL);
     gx_prompt_font_set(GX_NULL, GX_NULL);
     gx_prompt_text_color_set(GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_prompt_text_draw(GX_NULL);
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
     gx_prompt_text_get(GX_NULL, GX_NULL);
 #endif
@@ -303,19 +278,15 @@ GX_POINT pos = {0};
     
     /* radial progress bar */ 
     gx_radial_progress_bar_anchor_set(GX_NULL, GX_NULL);
-    //gx_radial_progress_bar_background_draw(GX_NULL);
     gx_radial_progress_bar_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_radial_progress_bar_draw();
     gx_radial_progress_bar_event_process(GX_NULL, GX_NULL);
     gx_radial_progress_bar_font_set(GX_NULL, GX_NULL);
     gx_radial_progress_bar_info_set(GX_NULL, GX_NULL);
     gx_radial_progress_bar_text_color_set(GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_radial_progress_bar_text_draw();
     gx_radial_progress_bar_value_set(GX_NULL, GX_NULL);
     
     /* radio button */
     gx_radio_button_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_radio_button_draw(GX_NULL);
     gx_radio_button_pixelmap_set(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
    
     /* radial slider */
@@ -337,11 +308,9 @@ GX_POINT pos = {0};
     
     /* scroll thumb */
     gx_scroll_thumb_create(GX_NULL, GX_NULL, GX_NULL);
-    //gx_scroll_thumb_draw(GX_NULL);
     gx_scroll_thumb_event_process(GX_NULL, GX_NULL);
     
     /* scrollbar */
-    //gx_scrollbar_draw(GX_NULL);
     gx_scrollbar_event_process(GX_NULL, GX_NULL);
     gx_scrollbar_limit_check(GX_NULL);
     gx_scrollbar_reset(GX_NULL, GX_NULL);
@@ -365,7 +334,6 @@ GX_POINT pos = {0};
     gx_single_line_text_input_character_insert(GX_NULL, GX_NULL, GX_NULL);
     gx_single_line_text_input_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     gx_single_line_text_input_draw_position_get(GX_NULL, GX_NULL, GX_NULL);
-    //gx_single_line_text_input_draw(GX_NULL);
     gx_single_line_text_input_end(GX_NULL);
     gx_single_line_text_input_event_process(GX_NULL, GX_NULL);
     gx_single_line_text_input_fill_color_set(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
@@ -382,12 +350,9 @@ GX_POINT pos = {0};
 
     /* slider */
     gx_slider_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_slider_draw(GX_NULL);
     gx_slider_event_process(GX_NULL, GX_NULL);
     gx_slider_info_set(GX_NULL, GX_NULL);
-    //gx_slider_needle_draw(GX_NULL);
     gx_slider_needle_position_get(GX_NULL, GX_NULL, GX_NULL);
-    //gx_slider_tickmarks_draw(GX_NULL);
     gx_slider_travel_get(GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     gx_slider_value_calculate(GX_NULL, GX_NULL, GX_NULL);
     gx_slider_value_set(GX_NULL, GX_NULL, GX_NULL);
@@ -426,7 +391,6 @@ GX_POINT pos = {0};
     gx_system_pen_configure(GX_NULL);
     gx_system_scroll_appearance_get(GX_NULL, GX_NULL);
     gx_system_scroll_appearance_set(GX_NULL, GX_NULL);
-    gx_system_start();
     gx_system_string_get(GX_NULL, GX_NULL);
     gx_system_string_table_get(GX_NULL, GX_NULL, GX_NULL);
     gx_system_string_width_get(GX_NULL, GX_NULL, GX_NULL, GX_NULL);
@@ -437,10 +401,8 @@ GX_POINT pos = {0};
     
     /* text button */
     gx_text_button_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_text_button_draw(GX_NULL);
     gx_text_button_font_set(GX_NULL, GX_NULL);
     gx_text_button_text_color_set(GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_text_button_text_draw(GX_NULL);
     gx_text_button_text_get(GX_NULL, GX_NULL);
     gx_text_button_text_id_set(GX_NULL, GX_NULL);
     gx_text_button_text_set(GX_NULL, GX_NULL);
@@ -455,7 +417,6 @@ GX_POINT pos = {0};
     gx_text_scroll_wheel_font_set(GX_NULL, GX_NULL, GX_NULL);
     gx_text_scroll_wheel_text_color_set(GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     gx_text_scroll_wheel_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_text_scroll_wheel_draw();
     
     /* utility gradient */
     gx_utility_gradient_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
@@ -463,7 +424,6 @@ GX_POINT pos = {0};
     
     /* tree view */
     gx_tree_view_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_tree_view_draw();
     gx_tree_view_event_process(GX_NULL, GX_NULL);
     gx_tree_view_indentation_set(GX_NULL, GX_NULL);
     gx_tree_view_position(GX_NULL);
@@ -512,20 +472,16 @@ GX_POINT pos = {0};
     gx_widget_attach(GX_NULL, GX_NULL);
     gx_widget_back_attach(GX_NULL, GX_NULL);
     gx_widget_back_move(GX_NULL, GX_NULL);
-    //gx_widget_background_draw(GX_NULL);
     gx_widget_block_move(GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_widget_border_draw(GX_NULL);
     gx_widget_border_style_set(GX_NULL, GX_NULL);
     gx_widget_border_width_get(GX_NULL, GX_NULL);
     gx_widget_canvas_get(GX_NULL, GX_NULL);
     gx_widget_child_detect(GX_NULL, GX_NULL, GX_NULL);
-    //gx_widget_children_draw(GX_NULL);
     gx_widget_color_get(GX_NULL, GX_NULL, GX_NULL);
     gx_widget_client_get(GX_NULL, GX_NULL, GX_NULL);
     gx_widget_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     gx_widget_delete(GX_NULL);
     gx_widget_detach(GX_NULL);
-    //gx_widget_draw(GX_NULL);
     gx_widget_draw_set(GX_NULL, GX_NULL);
     gx_widget_event_generate(GX_NULL, GX_NULL, GX_NULL);
     gx_widget_event_process(GX_NULL, GX_NULL);
@@ -553,19 +509,15 @@ GX_POINT pos = {0};
     gx_widget_style_remove(GX_NULL, GX_NULL);
     gx_widget_style_set(GX_NULL, GX_NULL);
     gx_widget_text_blend(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_widget_text_draw(GX_NULL);
-    //gx_widget_text_id_draw(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
     gx_widget_type_find(GX_NULL, GX_NULL, GX_NULL);
     gx_widget_width_get(GX_NULL, GX_NULL);
     
     /* window */
-    //gx_window_background_draw(GX_NULL):
     gx_window_client_height_get(GX_NULL, GX_NULL);
     gx_window_client_scroll(GX_NULL, GX_NULL, GX_NULL);
     gx_window_client_width_get(GX_NULL, GX_NULL);
     gx_window_close(GX_NULL);
     gx_window_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);
-    //gx_window_draw(GX_NULL);
     gx_window_event_process(GX_NULL, GX_NULL);
     gx_window_execute(GX_NULL, GX_NULL);
     gx_window_root_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL);

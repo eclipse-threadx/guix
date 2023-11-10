@@ -169,6 +169,7 @@ GX_STRING                   string;
     gx_display_create(&default_display, "linux_display", gx_validation_display_driver_setup_24xrgb, 0, 0); //create display
 
     /* accordion_menu */
+    printf("accordion_menu\n");
     memset(&accordion_menu, 0, sizeof(GX_ACCORDION_MENU));
     /* accordion menu create*/
     status = gx_accordion_menu_create(GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL, GX_NULL); // first parameter GX_ACCORDION_MENU * is null;
@@ -198,6 +199,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     /* animation */
+    printf("animation\n");
     memset(&animation, 0, sizeof(GX_ANIMATION));
     memset(&canvas, 0, sizeof(GX_CANVAS));
     status = gx_animation_canvas_define(0, 0); // should return GX_PTR_ERROR
@@ -337,6 +339,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SUCCESS, status);
 
     /* binary */
+    printf("binary\n");
     status = gx_binres_language_table_load(0, &returned_language_table); // should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -388,6 +391,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     /* brush */
+    printf("brush\n");
     status = gx_brush_default(0); // should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -401,6 +405,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SUCCESS, status);
 
     /* button */
+    printf("button\n");
     status = gx_button_create(0, 0, 0, 0, 0, 0); // button is NULL
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -464,6 +469,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SUCCESS, status);
 
     /* canvas */
+    printf("canvas\n");
     status = gx_canvas_alpha_set(0, 0); // should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -785,6 +791,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_CONTEXT, status);
     
     /* checkbox */
+    printf("checkbox\n");
     memset(&checkbox, 0, sizeof(GX_CHECKBOX));
     gx_checkbox_create(0, "checkbox", 0, 0, 0, 0, 0); // should return GX_PTR_ERROR
     status = gx_checkbox_create(&checkbox, "checkbox", 0, 0, 0, 0, 0); // size is NULL
@@ -842,6 +849,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SUCCESS, status);
 
     /* circular gauge */
+    printf("circular gauge\n");
     memset(&circular_gauge, 0, sizeof(GX_CIRCULAR_GAUGE));
     status = gx_circular_gauge_angle_get(&circular_gauge, 0);//// should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -887,6 +895,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SUCCESS, status);
     
     /* context brush */
+    printf("context brush\n");
     status = gx_context_brush_default(0);// should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -985,6 +994,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_RESOURCE_ID, status);
     
     /* display */
+    printf("display\n");    
     status = gx_display_active_language_set(0, 0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -1093,6 +1103,7 @@ GX_STRING                   string;
     status = gx_display_theme_install(&display, 0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
     
+    printf("drop list\n");
     status = gx_drop_list_close(0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -1139,6 +1150,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* horizontal list */
+    printf("horizontal list\n");
     status = gx_horizontal_list_children_position(0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -1222,6 +1234,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_ALREADY_CREATED, status);
     
     /* icon */
+    printf("icon button\n");
     memset(&icon_button, 0, sizeof(GX_ICON_BUTTON));
     status = gx_icon_button_create(&icon_button, 0, 0, 0, 0, 0, 0); //should return GX_PTR_ERROR  
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1240,6 +1253,8 @@ GX_STRING                   string;
     status = gx_icon_button_pixelmap_set(0, 1);//should return GX_PTR_ERROR  
     EXPECT_EQ(GX_PTR_ERROR, status);
     
+    /* icon */
+    printf("icon\n");
     memset(&icon, 0, sizeof(GX_ICON));
     status = gx_icon_create(0, 0, 0, 0, 0, 0, 0, 0); // should return GX_PTR_ERROR  
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1263,6 +1278,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* image reader */
+    printf("image reader\n");
     status = gx_image_reader_create(&image_reader, 0, 0, 0, 0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -1279,6 +1295,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* line chart */
+    printf("line chart\n");
     memset(&line_chart, 0, sizeof(GX_LINE_CHART));
     status = gx_line_chart_create(&line_chart, 0, 0, 0, 0, 0, 0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1302,6 +1319,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* menu */
+    printf("menu\n");
     memset(&menu, 0, sizeof(GX_MENU));
     status = gx_menu_create(&menu, 0, 0, 0, 0, 0, 0, 0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1334,6 +1352,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* multi line text button */
+    printf("multi line text button\n");
     memset(&multi_line_text_button, 0, sizeof(GX_MULTI_LINE_TEXT_BUTTON));
     status = gx_multi_line_text_button_create(&multi_line_text_button, 0, 0, 0, 0, 0, 0);// should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1541,6 +1560,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* numeric pixelmap prompt */
+    printf("numeric pixelmap prompt\n");
     memset(&numeric_pixelmap_prompt, 0, sizeof(GX_NUMERIC_PIXELMAP_PROMPT));
     status = gx_numeric_pixelmap_prompt_create(&numeric_pixelmap_prompt, 0, 0, 0, 0, 0, 0, 0);// should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1563,6 +1583,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* numeric prompt */
+    printf("numeric prompt\n");
     memset(&numeric_prompt, 0, sizeof(GX_NUMERIC_PROMPT));
     status = gx_numeric_prompt_create(&numeric_prompt, 0, 0, 0, 0, 0, 0);// should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1585,6 +1606,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* numeric scroll wheel */
+    printf("numeric scroll wheel\n");
     memset(&numeric_scroll_wheel, 0, sizeof(GX_NUMERIC_SCROLL_WHEEL));
     status = gx_numeric_scroll_wheel_create(&numeric_scroll_wheel, 0, 0, 0, 0, 0, 0, 0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1604,6 +1626,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* pixelmap button */
+    printf("pixelmap button\n");
     status = gx_pixelmap_button_create(&pixelmap_button, 0, 0, 0, 0, 0, 0, 0, 0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -1635,6 +1658,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SUCCESS, status);
     
     /* pixelmap prompt */
+    printf("pixelmap prompt\n");
     memset(&pixelmap_prompt, 0, sizeof(GX_PIXELMAP_PROMPT));
     status = gx_pixelmap_prompt_create(&pixelmap_prompt, 0, 0, 0, 0, 0, 0, 0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1650,6 +1674,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* pixelmap slider */
+    printf("pixelmap slider\n");
     memset(&pixelmap_slider, 0, sizeof(GX_PIXELMAP_SLIDER));
     status = gx_pixelmap_slider_create(&pixelmap_slider, 0, 0, &slider_info, 0, 0, 0, &size); // should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1687,6 +1712,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* progress bar */
+    printf("progress bar\n");
     memset(&progress_bar, 0, sizeof(GX_PROGRESS_BAR));
     status = gx_progress_bar_create(&progress_bar, 0, 0, 0, 0, 0, 0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1754,6 +1780,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* prompt */
+    printf("prompt\n");
     memset(&prompt, 0, sizeof(GX_PROMPT));
     status = gx_prompt_create(&prompt, 0, 0, 0, 0, 0, 0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -1859,6 +1886,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SYSTEM_MEMORY_ERROR, status);
     
     /* radial progress bar */
+    printf("radial progress bar\n");
     status = gx_radial_progress_bar_anchor_set(0, 1);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -1926,6 +1954,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_WIDGET, status);
     
     /* radial slider */
+    printf("radial slider\n");
     memset(&radial_slider, 0, sizeof(GX_RADIAL_SLIDER));
     status = gx_radial_slider_anchor_angles_set(0, 0, 0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -2065,6 +2094,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SUCCESS, status);
 
     /* radio button */
+    printf("radio button\n");
     memset(&radio_button, 0, sizeof(GX_RADIO_BUTTON));
     status = gx_radio_button_create(&radio_button, 0, 0, 0, 0, 0, 0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -2092,6 +2122,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_WIDGET, status);
     
     /* screen stack */
+    printf("screen stack\n");
     memset(&screen_stack_control, 0, sizeof(GX_SCREEN_STACK_CONTROL));
     status = gx_screen_stack_create(&screen_stack_control, 0, 0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -2112,6 +2143,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     /* scroll thumb */
+    printf("scroll thumb\n");
     memset(&scroll_thumb, 0, sizeof(GX_SCROLL_THUMB));
     status = gx_scroll_thumb_create(&scroll_thumb, 0, 0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_SUCCESS, status);
@@ -2145,6 +2177,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SUCCESS, status);
     
     /* scrollbar */
+    printf("scrollbar\n");
     memset(&scrollbar, 0, sizeof(GX_SCROLLBAR));
     status = gx_scrollbar_event_process(&scrollbar, 0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -2195,6 +2228,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_VALUE, status);
     
     /* scroll wheel */
+    printf("scroll wheel\n");
     memset(&scroll_wheel, 0, sizeof(GX_SCROLL_WHEEL));
     status = gx_scroll_wheel_create(&scroll_wheel, 0, 0, 0, 0, 0, 0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -2297,6 +2331,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_VALUE, status);
     
     /* single line text input */
+    printf("single line text input\n");
     status = gx_single_line_text_input_backspace(0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -2511,6 +2546,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_WIDGET, status);
     
     /* slider */
+    printf("slider\n");
     memset(&slider, 0, sizeof(GX_SLIDER));
     status = gx_slider_create(&slider, 0, 0, 0, 0, 0, 0, 0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -2658,6 +2694,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
     /* sprite */
+    printf("sprite\n");
     memset(&sprite, 0, sizeof(GX_SPRITE));
     status = gx_sprite_create(&sprite, 0, 0, 0, 0, 0, 0, 0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -2727,6 +2764,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SUCCESS, status);
     
     /* string scroll wheel */
+    printf("string scroll wheel\n");
     memset(&string_scroll_wheel, 0, sizeof(GX_STRING_SCROLL_WHEEL));
     status = gx_string_scroll_wheel_create(&string_scroll_wheel, 0, 0, 0, 0, 0, 0, 0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -2769,6 +2807,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_VALUE, status);
 
     /* system */
+    printf("system\n");
     default_display.gx_display_language_table_size = 0;
     status = gx_system_active_language_set(0);//should return GX_INVALID_VALUE
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -2963,6 +3002,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_NOT_FOUND, status);
     
     /* text button */
+    printf("text button\n");
     memset(&text_button, 0, sizeof(GX_TEXT_BUTTON));
     status = gx_text_button_create(&text_button, 0, 0, 0, 0, 0, 0); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -3039,6 +3079,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SUCCESS, status);
     
     /* text input cursor */
+    printf("text input cursor\n");
     status = gx_text_input_cursor_blink_interval_set(0, 1); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -3062,6 +3103,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_VALUE, status);
 
     /* text scroll wheel */
+    printf("text scroll wheel\n");
     memset(&text_scroll_wheel, 0 ,sizeof(GX_TEXT_SCROLL_WHEEL));
     status = gx_text_scroll_wheel_callback_set(&text_scroll_wheel, 0);//should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
@@ -3108,6 +3150,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SUCCESS, status);
 
     /* utility gradient */
+    printf("utility gradient\n");
     status = gx_utility_gradient_create(0, 1, 2, 3, 4, 5); //should return GX_PTR_ERROR
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -3228,6 +3271,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_WIDGET, status);
     
     /* utility */
+    printf("utility\n");
     gx_utility_canvas_to_bmp(0, 0, 0);
     memset(&canvas, 0, sizeof(GX_CANVAS));
     canvas.gx_canvas_display = &default_display;
@@ -3363,6 +3407,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_INVALID_FORMAT, status);
 
     /* gx_utility_rectangle_center. */
+    printf("utility rectangle center\n");
     gx_utility_rectangle_center(&size, 0); //should return GX_PTR_ERROR
     size.gx_rectangle_left = size.gx_rectangle_right + 1;
     gx_utility_rectangle_center(&size, &size); //should return GX_INVALID_SIZE
@@ -3464,6 +3509,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_SYSTEM_MEMORY_ERROR, status);
     
     /* vertical list */
+    printf("vertical list\n");
     memset(&vertical_list, 0, sizeof(GX_VERTICAL_LIST));
     gx_vertical_list_children_position(0); // should return GX_PTR_ERROR
     vertical_list.gx_widget_type = 0;
@@ -3528,6 +3574,7 @@ GX_STRING                   string;
     gx_vertical_scrollbar_create(&scrollbar, 0, &parent, 0, 0); //should return GX_INVALID_WIDGET
     
     /* widget */
+    printf("widget\n");
     _gx_system_memory_allocator = 0;
     gx_widget_allocate(&widget.gx_widget_parent, 0); //should return GX_SYSTEM_MEMORY_ERROR
     _gx_system_memory_allocator = memory_allocate;
@@ -3857,6 +3904,7 @@ GX_STRING                   string;
     gx_widget_width_get(&widget, (GX_VALUE *)&color);//should return GX_INVALID_WIDGET
     
     /* window */
+    printf("window\n");
     memset(&window, 0, sizeof(GX_WINDOW));
     gx_window_client_height_get(&window, 0); //should return GX_PTR_ERROR
     window.gx_widget_type = 0;
@@ -3920,6 +3968,7 @@ GX_STRING                   string;
     gx_window_execute(&window, 0); //should return GX_INVALID_WIDGET
     
     /* window root */
+    printf("window root\n");
     memset(&window_root, 0, sizeof(GX_WINDOW_ROOT));
     gx_window_root_create(&window_root, 0, 0, 0, 0, 0); //should return GX_PTR_ERROR
     gx_window_root_create(&window_root, 0, 0, 0, 0, &size); //should return GX_PTR_ERROR
