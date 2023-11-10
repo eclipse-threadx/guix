@@ -90,6 +90,13 @@ jobs:
         echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
         cat code-coverage-summary.md >> $GITHUB_STEP_SUMMARY
         
+    - name: Add Code Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: code-coverage-summary.md
+        
     - name: Create CheckRun for Code Coverage
       uses: LouisBrunner/checks-action@v1.6.2
       with:
