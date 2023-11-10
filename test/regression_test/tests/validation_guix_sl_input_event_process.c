@@ -154,10 +154,14 @@ TEST                      *test = test_list;
                 tx_thread_sleep(test->sleep_times);
             }
         }
-        gx_validation_set_frame_id(frame_id++);
-        gx_validation_set_frame_comment(test->comment);
-        gx_validation_screen_refresh();
-	printf("%s\n", test->comment);
+
+        if(test->event_type != GX_EVENT_PEN_DRAG)
+        {
+            gx_validation_set_frame_id(frame_id++);
+            gx_validation_set_frame_comment(test->comment);
+            gx_validation_screen_refresh();
+            printf("%s\n", test->comment);
+        }
         test++;
     }
 

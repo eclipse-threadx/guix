@@ -157,9 +157,12 @@ int                       index;
                 tx_thread_sleep(test->sleep_time);
             }
 
-            gx_validation_set_frame_id(frame_id++);
-            gx_validation_set_frame_comment(test->comment);
-            gx_validation_screen_refresh();
+            if(test->event_type != GX_EVENT_PEN_DRAG)
+            {
+                gx_validation_set_frame_id(frame_id++);
+                gx_validation_set_frame_comment(test->comment);
+                gx_validation_screen_refresh();
+            }
 
             test++;
         }
