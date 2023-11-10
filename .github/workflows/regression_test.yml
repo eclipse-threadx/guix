@@ -94,7 +94,7 @@ jobs:
       uses: marocchino/sticky-pull-request-comment@v2
       if: github.event_name == 'pull_request'
       with:
-        recreate: true
+        append: true
         path: code-coverage-summary.md
         
     - name: Create CheckRun for Code Coverage
