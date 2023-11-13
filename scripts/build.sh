@@ -1,2 +1,2 @@
 #!/bin/bash
-$(dirname `realpath $0`)/../test/cmake/run.sh build all
+$(dirname `realpath $0`)/../test/guix_test/cmake/run.sh build all
