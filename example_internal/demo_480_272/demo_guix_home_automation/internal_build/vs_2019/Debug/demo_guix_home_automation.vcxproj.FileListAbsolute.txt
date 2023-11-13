@@ -1,1 +1,0 @@
-C:\Ting\guix\example_internal\demo_480_272\demo_guix_home_automation\internal_build\vs_2019\Debug\demo_guix_home_automation.exe

@@ -1,1 +1,0 @@
-C:\Ting\guix\example_internal\glyph_draw\internal_build\vs_2019\Debug\glyph_draw.exe

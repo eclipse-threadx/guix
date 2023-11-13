@@ -1,1 +1,0 @@
-C:\Ting\guix\example_internal\generic_scroll_wheel\internal_build\vs_2019\Debug\generic_scroll_wheel.exe

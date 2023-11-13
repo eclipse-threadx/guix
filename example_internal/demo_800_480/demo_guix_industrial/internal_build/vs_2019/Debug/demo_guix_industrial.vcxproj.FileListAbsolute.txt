@@ -1,2 +1,0 @@
-C:\Ting\guix\example_internal\demo_800_480\demo_guix_industrial\internal_build\vs_2019\Debug\demo_guix_industrial.vcxproj.AssemblyReference.cache
-C:\Ting\guix\example_internal\demo_800_480\demo_guix_industrial\internal_build\vs_2019\Debug\demo_guix_industrial.exe
