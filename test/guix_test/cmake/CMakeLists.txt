@@ -111,7 +111,7 @@ add_compile_options(
 
 enable_testing()
 
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../ guix)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ guix)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/regression regression)
 
 # Create output files
