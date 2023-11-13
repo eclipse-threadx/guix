@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_guix_home_automation",
 		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED} = {A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guix", "..\..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj", "{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guix", "..\..\..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj", "{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

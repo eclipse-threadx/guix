@@ -79,14 +79,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../../../ports/win32/lib/vs_2019</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019</AdditionalLibraryDirectories>
       <AdditionalDependencies>gx_5_3_3.lib;tx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -97,14 +97,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\common\inc;..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\common\inc;..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>gx.lib;tx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -117,7 +117,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\common\inc;..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\common\inc;..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -126,7 +126,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>gx.lib;tx.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

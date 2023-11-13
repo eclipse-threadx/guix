@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pixelmap_1bpp", "pixelmap_1bpp.vcxproj", "{65C6E04F-41E4-4B34-A65C-BC829AF43E07}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guix", "..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj", "{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guix", "..\..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj", "{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

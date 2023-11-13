@@ -48,12 +48,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\common\inc;../../../../ports/win32/lib/vs_2019;..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\common\inc;../../../../../ports/win32/lib/vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>;../../../../ports/win32/lib/vs_2019;../../../../ports/win32/build/vs_2019/Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>;../../../../../ports/win32/lib/vs_2019;../../../../../ports/win32/build/vs_2019/Debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>gx.lib;tx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -66,14 +66,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-	  <AdditionalIncludeDirectories>..\..\..\..\common\inc;../../../../ports/win32/lib/vs_2019;..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+	  <AdditionalIncludeDirectories>..\..\..\..\..\common\inc;../../../../../ports/win32/lib/vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-	  <AdditionalLibraryDirectories>;../../../../ports/win32/lib/vs_2019;../../../../ports/win32/build/vs_2019/Debug</AdditionalLibraryDirectories>
+	  <AdditionalLibraryDirectories>;../../../../../ports/win32/lib/vs_2019;../../../../../ports/win32/build/vs_2019/Debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>gx.lib;tx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -87,7 +87,7 @@
     <ClCompile Include="..\..\vertical_fill.c" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj">
+    <ProjectReference Include="..\..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj">
       <Project>{a3336f4f-7a7b-46d3-a7f0-a2aaed6c08ed}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

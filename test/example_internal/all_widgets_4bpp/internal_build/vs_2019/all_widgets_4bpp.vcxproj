@@ -27,7 +27,7 @@
     <ClInclude Include="..\..\all_widgets_4bpp_specifications.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj">
+    <ProjectReference Include="..\..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj">
       <Project>{a3336f4f-7a7b-46d3-a7f0-a2aaed6c08ed}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
@@ -67,12 +67,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\..\common\inc;..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\common\inc;..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>gx.lib;tx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

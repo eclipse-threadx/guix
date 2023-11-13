@@ -59,12 +59,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\..\common\inc;..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\common\inc;..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>gx.lib;tx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multi_line_text_view_font_32bpp", "multi_line_text_view_font_32bpp.vcxproj", "{A13A9A28-5EEC-4E39-8F90-43BD295C7D88}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guix", "..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj", "{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guix", "..\..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj", "{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -61,13 +61,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\common\inc;../../../../ports/win32/lib/vs_2019;..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\common\inc;../../../../../ports/win32/lib/vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>tx.lib;gx.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../../../ports/win32/lib/vs_2019;../../../../ports/win32/build/vs_2019/Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019;../../../../../ports/win32/build/vs_2019/Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

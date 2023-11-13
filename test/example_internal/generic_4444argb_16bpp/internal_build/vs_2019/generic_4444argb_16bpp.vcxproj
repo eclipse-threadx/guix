@@ -56,11 +56,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\..\common\inc;..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\common\inc;..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)../../../../ports/win32/lib/vs_2019;$(SolutionDir)../../../../ports/win32/build/vs_2019/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)../../../../../ports/win32/lib/vs_2019;$(SolutionDir)../../../../../ports/win32/build/vs_2019/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>tx.lib;gx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

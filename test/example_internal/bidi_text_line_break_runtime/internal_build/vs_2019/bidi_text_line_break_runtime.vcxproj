@@ -61,12 +61,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;GX_DYNAMIC_BIDI_TEXT_SUPPORT;GX_DYNAMIC_ARABIC_SHAPING_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\..\common\inc;$(SolutionDir)../../../../ports/win32/inc;$(SolutionDir)../../../../ports/win32/lib/vs_2019;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\..\..\common\inc;$(SolutionDir)../../../../../ports/win32/inc;$(SolutionDir)../../../../../ports/win32/lib/vs_2019;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)../../../../ports/win32/lib/vs_2019;$(SolutionDir)../../../../ports/win32/build/vs_2019/Debug_GX_DYNAMIC_BIDI_TEXT_SUPPORT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)../../../../../ports/win32/lib/vs_2019;$(SolutionDir)../../../../../ports/win32/build/vs_2019/Debug_GX_DYNAMIC_BIDI_TEXT_SUPPORT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>tx.lib;gx.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -79,7 +79,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\..\common\inc;$(SolutionDir)../../../../ports/win32/inc;$(SolutionDir)../../../../ports/win32/lib/vs_2019;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\..\..\common\inc;$(SolutionDir)../../../../../ports/win32/inc;$(SolutionDir)../../../../../ports/win32/lib/vs_2019;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

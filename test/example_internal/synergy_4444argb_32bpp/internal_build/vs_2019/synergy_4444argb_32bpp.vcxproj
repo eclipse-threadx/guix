@@ -20,7 +20,7 @@
     <ClInclude Include="..\..\synergy_4444argb_32bpp_specifications.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj">
+    <ProjectReference Include="..\..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj">
       <Project>{a3336f4f-7a7b-46d3-a7f0-a2aaed6c08ed}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
@@ -61,14 +61,14 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\..\..\common\inc;..\..\..\..\ports\win32\inc;$(SolutionDir)/../../../../ports/win32/lib/vs_2019</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\..\..\..\common\inc;..\..\..\..\..\ports\win32\inc;$(SolutionDir)/../../../../../ports/win32/lib/vs_2019</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)/../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>tx.lib;gx.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>

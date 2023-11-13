@@ -64,14 +64,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../../../ports/win32/lib/vs_2019</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019</AdditionalLibraryDirectories>
       <AdditionalDependencies>gx_5_5_1.lib;tx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -84,7 +84,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -93,7 +93,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>gx_5_5_1.lib;tx.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019;$(SolutionDir)/../../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
