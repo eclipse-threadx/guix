@@ -12,7 +12,7 @@ endif()
 message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}.")
 
 get_filename_component(
-  externals ${CMAKE_CURRENT_SOURCE_DIR}/../../../externals ABSOLUTE)
+  externals ${CMAKE_CURRENT_SOURCE_DIR}/.. ABSOLUTE)
 add_subdirectory(${externals}/threadx threadx)
 target_compile_options(threadx PRIVATE -DTX_ENABLE_EVENT_TRACE)
 if(NOT DEFINED ENV{ENABLE_IDLE})

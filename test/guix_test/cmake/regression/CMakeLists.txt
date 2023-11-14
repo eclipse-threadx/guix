@@ -4,7 +4,7 @@ cmake_policy(SET CMP0057 NEW)
 project(regression_test LANGUAGES C)
 
 # Set directories
-get_filename_component(ROOT_DIR ${CMAKE_CURRENT_LIST_DIR}/../../../ ABSOLUTE)
+get_filename_component(ROOT_DIR ${CMAKE_CURRENT_LIST_DIR}/../../../../ ABSOLUTE)
 
 # Demos of different type of build cases
 set(NO_UTF8_DEMOS
@@ -189,7 +189,7 @@ set(PALETTE_MODE_AA_TEXT_COLORS_16_DEMOS
 set(PARTIAL_CANVAS_SUPPORT_DEMOS partial_frame_buffer_16bpp)
 
 # Set directories for demos
-set(EXAMPLE_INTERNAL_DIR ${ROOT_DIR}/example_internal)
+set(EXAMPLE_INTERNAL_DIR ${ROOT_DIR}/test/example_internal)
 foreach(
   demo
   ${NO_UTF8_DEMOS};${EXTENDED_UNICODE_DEMOS};${OTHER_DEMOS};${MOUSE_SUPPORT_DEMOS};${FONT_KERNING_SUPPORT_DEMOS};${DYNAMIC_BIDI_TEXT_DEMOS};
@@ -256,7 +256,7 @@ set(DEMO_SCREENSHOT_TO_BITMAP
     screenshot_to_bitmap_4bpp)
 
 # Set directories for demos
-set(SCREENSHOT_TO_BITMAP_DIR ${ROOT_DIR}/example_internal/screenshot_to_bitmap)
+set(SCREENSHOT_TO_BITMAP_DIR ${ROOT_DIR}/test/example_internal/screenshot_to_bitmap)
 foreach(demo ${DEMO_SCREENSHOT_TO_BITMAP})
   set(${demo}_SOURCE_DIRECTORY ${SCREENSHOT_TO_BITMAP_DIR}/${demo})
 endforeach()
@@ -2223,11 +2223,11 @@ set(demo_guix_widget_animation_FILE_LIST
     demo_guix_widget_animation_specifications.c)
 
 # Display driver
-set(SOURCE_DIR ${ROOT_DIR}/src/display_driver)
-set(DAVE2D_SIMULATION_SOURCE_DIR ${ROOT_DIR}/src/display_driver/win32/renesas_dave2d)
+set(SOURCE_DIR ${ROOT_DIR}/test/guix_test/display_driver)
+set(DAVE2D_SIMULATION_SOURCE_DIR ${ROOT_DIR}/test/guix_test/display_driver/win32/renesas_dave2d)
 set(display_driver_files
     # Linux
-    ${SOURCE_DIR}/linux/linux_screen_driver_16bpp.c
+    #${SOURCE_DIR}/linux/linux_screen_driver_16bpp.c
     # Renesas
     ${DAVE2D_SIMULATION_SOURCE_DIR}/gx_dave2d_simulation_display_driver_8bit_palette_setup.c
     ${DAVE2D_SIMULATION_SOURCE_DIR}/gx_dave2d_simulation_display_driver_8bpp_glyph_1bit_draw.c
@@ -2276,11 +2276,11 @@ set(display_driver_files
 add_library(display_driver ${display_driver_files})
 target_link_libraries(display_driver PUBLIC azrtos::guix m)
 target_include_directories(
-  display_driver PUBLIC ${SOURCE_DIR}/linux ${ROOT_DIR}/src/display_driver/win32/renesas_dave2d
+  display_driver PUBLIC ${SOURCE_DIR}/linux ${ROOT_DIR}/test/guix_test/display_driver/win32/renesas_dave2d
                         ${SOURCE_DIR}/validation/)
 
 # Utility
-set(SOURCE_DIR ${ROOT_DIR}/test/regression_test)
+set(SOURCE_DIR ${ROOT_DIR}/test/guix_test/regression_test)
 set(test_utility_files
     ${SOURCE_DIR}/utility/gx_validation_compare_file_data.c
     ${SOURCE_DIR}/utility/gx_validation_display_driver_1bpp.c
@@ -2380,7 +2380,7 @@ foreach(demo ${demos})
       add_test(${CMAKE_BUILD_TYPE}::${test_case} ${test_case})
     else()
       add_test(${CMAKE_BUILD_TYPE}::${test_case} ${test_case} -checksum -gpath
-               ${ROOT_DIR}/test/golden_files/)
+               ${ROOT_DIR}/test/guix_test/golden_files/)
     endif()
   endforeach()
 endforeach()
