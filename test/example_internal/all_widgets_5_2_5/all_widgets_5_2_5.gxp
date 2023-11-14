@@ -1180,7 +1180,7 @@
 <type>FONT</type>
 <name>FONT_8BIT</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1337,7 +1337,7 @@
 <type>FONT</type>
 <name>FONT_4BIT</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\VeraBd.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\VeraBd.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1494,7 +1494,7 @@
 <type>FONT</type>
 <name>FONT_1BIT</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\VeraBI.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\VeraBI.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>

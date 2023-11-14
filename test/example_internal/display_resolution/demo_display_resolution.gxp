@@ -1180,7 +1180,7 @@
 <type>FONT</type>
 <name>VERABD</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\VeraBd.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\VeraBd.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>

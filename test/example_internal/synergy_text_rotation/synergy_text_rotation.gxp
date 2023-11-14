@@ -1202,7 +1202,7 @@
 <type>FONT</type>
 <name>MID_NUMBER</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1359,7 +1359,7 @@
 <type>FONT</type>
 <name>SMALL_BOLD</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\VeraBd.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\VeraBd.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1516,7 +1516,7 @@
 <type>FONT</type>
 <name>SCREEN_LABEL</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1673,7 +1673,7 @@
 <type>FONT</type>
 <name>MONO_FONT</name>
 <pathinfo>
-<pathname>..\..\fonts\veraserif\VeraSe.ttf</pathname>
+<pathname>..\..\..\fonts\veraserif\VeraSe.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>

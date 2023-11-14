@@ -833,7 +833,7 @@
 <type>FONT</type>
 <name>PROMPT</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
@@ -1166,7 +1166,7 @@
 <type>FONT</type>
 <name>CJK</name>
 <pathinfo>
-<pathname>..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
+<pathname>..\..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -2331,7 +2331,7 @@
 <type>FONT</type>
 <name>PROMPT</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
@@ -2664,7 +2664,7 @@
 <type>FONT</type>
 <name>CJK</name>
 <pathinfo>
-<pathname>..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
+<pathname>..\..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -3820,7 +3820,7 @@
 <type>FONT</type>
 <name>PROMPT</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
@@ -4153,7 +4153,7 @@
 <type>FONT</type>
 <name>CJK</name>
 <pathinfo>
-<pathname>..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
+<pathname>..\..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -5309,7 +5309,7 @@
 <type>FONT</type>
 <name>PROMPT</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
@@ -5642,7 +5642,7 @@
 <type>FONT</type>
 <name>CJK</name>
 <pathinfo>
-<pathname>..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
+<pathname>..\..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -6798,7 +6798,7 @@
 <type>FONT</type>
 <name>PROMPT</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>TRUE</is_default>
@@ -7131,7 +7131,7 @@
 <type>FONT</type>
 <name>CJK</name>
 <pathinfo>
-<pathname>..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
+<pathname>..\..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>

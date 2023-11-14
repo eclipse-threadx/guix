@@ -1136,7 +1136,7 @@
 <type>FONT</type>
 <name>LARGE_BOLD</name>
 <pathinfo>
-<pathname>..\..\..\fonts\verasans\VeraBd.ttf</pathname>
+<pathname>..\..\..\..\fonts\verasans\VeraBd.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1293,7 +1293,7 @@
 <type>FONT</type>
 <name>BOLD</name>
 <pathinfo>
-<pathname>..\..\..\fonts\verasans\VeraBd.ttf</pathname>
+<pathname>..\..\..\..\fonts\verasans\VeraBd.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>

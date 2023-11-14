@@ -1159,7 +1159,7 @@
 <type>FONT</type>
 <name>SMALL</name>
 <pathinfo>
-<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1316,7 +1316,7 @@
 <type>FONT</type>
 <name>LARG_NUMBER</name>
 <pathinfo>
-<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1473,7 +1473,7 @@
 <type>FONT</type>
 <name>NORMAL</name>
 <pathinfo>
-<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1630,7 +1630,7 @@
 <type>FONT</type>
 <name>BIG</name>
 <pathinfo>
-<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1787,7 +1787,7 @@
 <type>FONT</type>
 <name>MIDDLE</name>
 <pathinfo>
-<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>

@@ -1218,7 +1218,7 @@
 <type>FONT</type>
 <name>Title</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1376,7 +1376,7 @@
 <type>FONT</type>
 <name>LARGE_FONT</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\VeraBd.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\VeraBd.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1534,7 +1534,7 @@
 <type>FONT</type>
 <name>SCROLL_WHEEL_NORMAL</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1692,7 +1692,7 @@
 <type>FONT</type>
 <name>SCROLL_WHEEL_SELECTED</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>

@@ -1257,7 +1257,7 @@
 <type>FONT</type>
 <name>NORMAL_FONT</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1414,7 +1414,7 @@
 <type>FONT</type>
 <name>SELECTED_FONT</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1571,7 +1571,7 @@
 <type>FONT</type>
 <name>BOLD</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\VeraBd.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\VeraBd.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1728,7 +1728,7 @@
 <type>FONT</type>
 <name>ITALIC</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\VeraIt.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\VeraIt.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
@@ -1885,7 +1885,7 @@
 <type>FONT</type>
 <name>BOLD_ITALIC</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\VeraBI.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\VeraBI.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>
