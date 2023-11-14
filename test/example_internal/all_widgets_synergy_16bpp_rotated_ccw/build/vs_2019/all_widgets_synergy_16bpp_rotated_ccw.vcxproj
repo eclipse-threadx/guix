@@ -68,15 +68,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\..\common\inc;..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\..\common\inc;..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\inc;..\..\..\..\guix_test\display_driver\win32\renesas_dave2d</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\build\vs_2019\Debug_GX_SYNERGY_FONT_FORMAT_SUPPORT</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gx.lib;tx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\..\ports\win32\lib\vs_2019;..\..\..\..\..\ports\win32\build\vs_2019\Debug_GX_SYNERGY_FONT_FORMAT_SUPPORT;..\..\..\..\guix_test\display_driver\win32\renesas_dave2d\vs_2019\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gx.lib;tx.lib;renesas_dave2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

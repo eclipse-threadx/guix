@@ -87,7 +87,7 @@
       <BrowseInformation>false</BrowseInformation>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\common\inc;$(ProjectDir)..\..\..\..\..\ports\win32\inc;$(ProjectDir)..\..\..\..\..\externals\threadx\common\inc;$(ProjectDir)..\..\..\..\..\externals\threadx\ports\win32\vs_2019\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\common\inc;$(ProjectDir)..\..\..\..\..\..\ports\win32\inc;$(ProjectDir)..\..\..\..\..\..\ports\win32\lib\vs_2019</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
