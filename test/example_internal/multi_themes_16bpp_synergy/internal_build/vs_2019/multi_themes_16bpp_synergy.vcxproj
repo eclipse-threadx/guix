@@ -68,7 +68,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019;../../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gx.lib;tx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gx.lib;tx.lib;renesas_dave2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -92,7 +92,7 @@
       <OptimizeReferences>
       </OptimizeReferences>
       <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019;../../../../../ports/win32/build/vs_2019/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tx.lib;gx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tx.lib;renesas_dave2d.lib;gx.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkTimeCodeGeneration>
       </LinkTimeCodeGeneration>
     </Link>
