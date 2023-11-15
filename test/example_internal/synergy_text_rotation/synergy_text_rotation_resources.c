@@ -5,8 +5,8 @@
 /*  resource file(s). For more information please refer to the Azure RTOS GUIX */
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
-/*  GUIX Studio Revision 6.2.1.2                                               */
-/*  Date (dd.mm.yyyy):  5. 6.2023   Time (hh:mm): 15:13                        */
+/*  GUIX Studio Revision 6.3.0.0                                               */
+/*  Date (dd.mm.yyyy): 14.11.2023   Time (hh:mm): 17:01                        */
 /*******************************************************************************/
 
 
@@ -6984,7 +6984,13 @@ GX_CONST GX_FONT *main_display_default_theme_font_table[] =
 
 /* DEFAULT_THEME_BUTTON pixelmap data                                          */
 
+#ifdef WIN32
+static GX_CONST GX_UBYTE MAIN_DISPLAY_DEFAULT_THEME_BUTTON_pixelmap_data[8565] =
+#else
 static GX_CONST GX_UBYTE MAIN_DISPLAY_DEFAULT_THEME_BUTTON_pixelmap_data[8565] __attribute__((aligned(4))) =
+{
+
+#endif
 {
     0x03, 0xa8, 0x96, 0x86, 0x00, 0xa8, 0x96, 0x86, 0x16, 0xa8, 0x96, 0x86, 0x86, 
     0xa8, 0x96, 0x86, 0xb6, 0xff, 0xa8, 0x96, 0x86, 0xcc, 0xbc, 0xa8, 0x96, 0x86, 
@@ -7663,7 +7669,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_DEFAULT_THEME_BUTTON_pixelmap =
 
 /* DEFAULT_THEME_BUTTON_ACTIVE pixelmap data                                   */
 
+#ifdef WIN32
+static GX_CONST GX_UBYTE MAIN_DISPLAY_DEFAULT_THEME_BUTTON_ACTIVE_pixelmap_data[8529] =
+#else
 static GX_CONST GX_UBYTE MAIN_DISPLAY_DEFAULT_THEME_BUTTON_ACTIVE_pixelmap_data[8529] __attribute__((aligned(4))) =
+{
+
+#endif
 {
     0x03, 0xdb, 0xab, 0x18, 0x00, 0xc5, 0xa2, 0x47, 0x2f, 0xd0, 0xa6, 0x30, 0xd6, 
     0xd7, 0xa9, 0x21, 0xf7, 0xff, 0xdb, 0xab, 0x18, 0xff, 0xbc, 0xdb, 0xab, 0x18, 
@@ -8340,7 +8352,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_DEFAULT_THEME_BUTTON_ACTIVE_pixelmap =
 
 /* DEFAULT_THEME_EXPRESS_LOGIC_LOGO pixelmap data                              */
 
+#ifdef WIN32
+static GX_CONST GX_UBYTE MAIN_DISPLAY_DEFAULT_THEME_EXPRESS_LOGIC_LOGO_pixelmap_data[3339] =
+#else
 static GX_CONST GX_UBYTE MAIN_DISPLAY_DEFAULT_THEME_EXPRESS_LOGIC_LOGO_pixelmap_data[3339] __attribute__((aligned(4))) =
+{
+
+#endif
 {
     0xaf, 0xc6, 0xc6, 0xc6, 0x00, 0x06, 0xc9, 0xc9, 0xc9, 0x00, 0xaf, 0xaf, 0xaf, 
     0x00, 0x90, 0x90, 0x90, 0x00, 0x93, 0x93, 0x93, 0x00, 0x93, 0x93, 0x93, 0x7d, 
@@ -8617,7 +8635,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_DEFAULT_THEME_EXPRESS_LOGIC_LOGO_pixelmap =
 
 /* DEFAULT_THEME_GUIX_LOGO pixelmap data                                       */
 
+#ifdef WIN32
+static GX_CONST GX_UBYTE MAIN_DISPLAY_DEFAULT_THEME_GUIX_LOGO_pixelmap_data[2833] =
+#else
 static GX_CONST GX_UBYTE MAIN_DISPLAY_DEFAULT_THEME_GUIX_LOGO_pixelmap_data[2833] __attribute__((aligned(4))) =
+{
+
+#endif
 {
     0x01, 0xff, 0xff, 0xff, 0x12, 0x32, 0x2e, 0x2a, 0x42, 0x8d, 0xff, 0xff, 0xff, 
     0x00, 0x03, 0xff, 0xff, 0xff, 0x1f, 0x69, 0x65, 0x62, 0x7d, 0x37, 0x33, 0x2e, 
@@ -8855,7 +8879,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_DEFAULT_THEME_GUIX_LOGO_pixelmap =
 
 /* DEFAULT_THEME_HOME pixelmap data                                            */
 
+#ifdef WIN32
+static GX_CONST GX_UBYTE MAIN_DISPLAY_DEFAULT_THEME_HOME_pixelmap_data[900] =
+#else
 static GX_CONST GX_UBYTE MAIN_DISPLAY_DEFAULT_THEME_HOME_pixelmap_data[900] __attribute__((aligned(4))) =
+{
+
+#endif
 {
     0x89, 0xa8, 0x96, 0x86, 0x00, 0x09, 0xa8, 0x96, 0x86, 0x88, 0xa8, 0x96, 0x86, 
     0xff, 0xa8, 0x96, 0x86, 0xdd, 0xa8, 0x96, 0x86, 0x33, 0xa8, 0x96, 0x86, 0x00, 

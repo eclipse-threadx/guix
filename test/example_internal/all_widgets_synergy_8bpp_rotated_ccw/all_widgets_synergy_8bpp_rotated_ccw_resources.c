@@ -5,8 +5,8 @@
 /*  resource file(s). For more information please refer to the Azure RTOS GUIX */
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
-/*  GUIX Studio Revision 6.2.1.2                                               */
-/*  Date (dd.mm.yyyy):  5. 6.2023   Time (hh:mm): 15:07                        */
+/*  GUIX Studio Revision 6.3.0.0                                               */
+/*  Date (dd.mm.yyyy): 14.11.2023   Time (hh:mm): 16:42                        */
 /*******************************************************************************/
 
 
@@ -4942,7 +4942,13 @@ GX_CONST GX_FONT *Main_Display_theme_1_font_table[] =
 
 /* THEME_1_RADIO_ON pixelmap data                                              */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_RADIO_ON_pixelmap_data[191] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_RADIO_ON_pixelmap_data[191] =
+{
+
+#endif
 {
     0x84, 0xff, 0x05, 0x8d, 0x76, 0x14, 0x76, 0x76, 0x8d, 0x84, 0xff, 0x82, 0xff, 
     0x02, 0x0d, 0x14, 0x90, 0x83, 0xbc, 0x02, 0x90, 0x14, 0x0d, 0x82, 0xff, 0x0f, 
@@ -4977,7 +4983,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_RADIO_ON_pixelmap =
 
 /* THEME_1_RADIO_OFF pixelmap data                                             */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_RADIO_OFF_pixelmap_data[191] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_RADIO_OFF_pixelmap_data[191] =
+{
+
+#endif
 {
     0x84, 0xff, 0x05, 0x8d, 0x76, 0x14, 0x76, 0x76, 0x8d, 0x84, 0xff, 0x82, 0xff, 
     0x02, 0x0d, 0x14, 0x90, 0x83, 0xbc, 0x02, 0x90, 0x14, 0x0d, 0x82, 0xff, 0x0f, 
@@ -5012,7 +5024,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_RADIO_OFF_pixelmap =
 
 /* THEME_1_CHECKBOX_ON pixelmap data                                           */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_CHECKBOX_ON_pixelmap_data[237] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_CHECKBOX_ON_pixelmap_data[237] =
+{
+
+#endif
 {
     0x8f, 0x57, 0x04, 0x57, 0x85, 0x1a, 0x1a, 0xd8, 0x83, 0x4a, 0x82, 0xfd, 0x03, 
     0x0c, 0x3b, 0x0b, 0x57, 0x04, 0x57, 0x1a, 0xbc, 0xbc, 0xb7, 0x82, 0x1c, 0x01, 
@@ -5051,7 +5069,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_CHECKBOX_ON_pixelmap =
 
 /* THEME_1_CHECKBOX_OFF pixelmap data                                          */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_CHECKBOX_OFF_pixelmap_data[186] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_CHECKBOX_OFF_pixelmap_data[186] =
+{
+
+#endif
 {
     0x8f, 0x57, 0x03, 0x57, 0x85, 0x1a, 0x1a, 0x83, 0xd8, 0x82, 0x4a, 0x04, 0xfd, 
     0x0c, 0x3b, 0x0b, 0x57, 0x01, 0x57, 0x1a, 0x84, 0xbc, 0x82, 0xb7, 0x82, 0x1c, 
@@ -5086,7 +5110,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_CHECKBOX_OFF_pixelmap =
 
 /* THEME_1_BLACK_PAUSE pixelmap data                                           */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_BLACK_PAUSE_pixelmap_data[1444] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_BLACK_PAUSE_pixelmap_data[1444] =
+{
+
+#endif
 {
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
     0xff, 0x33, 0x02, 0x02, 0x02, 0x02, 0x30, 0x30, 0x02, 0x33, 0xff, 0xff, 0xff, 
@@ -5218,7 +5248,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_BLACK_PAUSE_pixelmap =
 
 /* THEME_1_BUTTON_DISABLED pixelmap data                                       */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_BUTTON_DISABLED_pixelmap_data[4181] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_BUTTON_DISABLED_pixelmap_data[4181] =
+{
+
+#endif
 {
     0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 
     0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 
@@ -5560,7 +5596,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_BUTTON_DISABLED_pixelmap =
 
 /* THEME_1_COLLAPSE pixelmap data                                              */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_COLLAPSE_pixelmap_data[82] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_COLLAPSE_pixelmap_data[82] =
+{
+
+#endif
 {
     0x89, 0x18, 0x00, 0x18, 0x87, 0xff, 0x00, 0x18, 0x00, 0x18, 0x82, 0xff, 0x01, 
     0x18, 0x18, 0x82, 0xff, 0x00, 0x18, 0x00, 0x18, 0x82, 0xff, 0x01, 0x18, 0x18, 
@@ -5587,7 +5629,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_COLLAPSE_pixelmap =
 
 /* THEME_1_EXPAND pixelmap data                                                */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_EXPAND_pixelmap_data[76] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_EXPAND_pixelmap_data[76] =
+{
+
+#endif
 {
     0x89, 0x18, 0x00, 0x18, 0x87, 0xff, 0x00, 0x18, 0x00, 0x18, 0x82, 0xff, 0x01, 
     0x18, 0x18, 0x82, 0xff, 0x00, 0x18, 0x00, 0x18, 0x82, 0xff, 0x01, 0x18, 0x18, 
@@ -5613,7 +5661,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_EXPAND_pixelmap =
 
 /* THEME_1_FILL pixelmap data                                                  */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_FILL_pixelmap_data[135] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_FILL_pixelmap_data[135] =
+{
+
+#endif
 {
     0x30, 0x30, 0x30, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 
     0x03, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x04, 0xad, 0xad, 
@@ -5644,7 +5698,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_FILL_pixelmap =
 
 /* THEME_1_FISH pixelmap data                                                  */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_FISH_pixelmap_data[21092] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_FISH_pixelmap_data[21092] =
+{
+
+#endif
 {
     0x01, 0x7a, 0x8a, 0x84, 0x7e, 0x09, 0x6d, 0x7a, 0x7e, 0x7e, 0x8a, 0x6d, 0x6d, 
     0x7a, 0x6d, 0x42, 0x86, 0x7a, 0x00, 0x6d, 0x85, 0x7a, 0x01, 0x8e, 0x8e, 0x82, 
@@ -7287,7 +7347,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_FISH_pixelmap =
 
 /* THEME_1_GAUGEMETER pixelmap data                                            */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_GAUGEMETER_pixelmap_data[44887] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_GAUGEMETER_pixelmap_data[44887] =
+{
+
+#endif
 {
     0xff, 0xff, 0xff, 0xff, 0x97, 0xff, 0xff, 0xff, 0xff, 0xff, 0x97, 0xff, 0xff, 
     0xff, 0xff, 0xff, 0x97, 0xff, 0xff, 0xff, 0xff, 0xff, 0x97, 0xff, 0xff, 0xff, 
@@ -10760,7 +10826,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_GAUGEMETER_pixelmap =
 
 /* THEME_1_HORIZONTAL_FILL_BKGND pixelmap data                                 */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_HORIZONTAL_FILL_BKGND_pixelmap_data[690] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_HORIZONTAL_FILL_BKGND_pixelmap_data[690] =
+{
+
+#endif
 {
     0x95, 0xff, 0x95, 0xff, 0x95, 0xff, 0x92, 0xff, 0x02, 0x2e, 0xff, 0xff, 0x93, 
     0xff, 0x01, 0x2e, 0xff, 0x93, 0xff, 0x01, 0x2e, 0xff, 0x94, 0xff, 0x00, 0x3d, 
@@ -10834,7 +10906,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_HORIZONTAL_FILL_BKGND_pixelmap =
 
 /* THEME_1_I_EMPTYFILL_MIDDLE pixelmap data                                    */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_EMPTYFILL_MIDDLE_pixelmap_data[44] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_EMPTYFILL_MIDDLE_pixelmap_data[44] =
+{
+
+#endif
 {
     0x89, 0x3d, 0x89, 0xff, 0x89, 0xff, 0x89, 0xff, 0x89, 0xff, 0x89, 0xff, 0x89, 
     0xff, 0x89, 0xff, 0x89, 0xff, 0x89, 0xff, 0x89, 0xff, 0x89, 0xff, 0x89, 0xff, 
@@ -10858,7 +10936,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_EMPTYFILL_MIDDLE_pixelmap =
 
 /* THEME_1_I_EMPTYFILL_MIDDLE_HORIZONTAL pixelmap data                         */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_EMPTYFILL_MIDDLE_HORIZONTAL_pixelmap_data[40] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_EMPTYFILL_MIDDLE_HORIZONTAL_pixelmap_data[40] =
+{
+
+#endif
 {
     0x94, 0xff, 0x00, 0x3d, 0x94, 0xff, 0x00, 0x3d, 0x94, 0xff, 0x00, 0x3d, 0x94, 
     0xff, 0x00, 0x3d, 0x94, 0xff, 0x00, 0x3d, 0x94, 0xff, 0x00, 0x3d, 0x94, 0xff, 
@@ -10882,7 +10966,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_EMPTYFILL_MIDDLE_HORIZONTAL_pixelmap
 
 /* THEME_1_I_EMPTYFILL_RIGHT pixelmap data                                     */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_EMPTYFILL_RIGHT_pixelmap_data[74] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_EMPTYFILL_RIGHT_pixelmap_data[74] =
+{
+
+#endif
 {
     0x93, 0xff, 0x01, 0x2e, 0x3d, 0x93, 0xff, 0x01, 0x3d, 0x3d, 0x93, 0xff, 0x01, 
     0x2e, 0x3d, 0x93, 0xff, 0x01, 0x3d, 0x3d, 0x92, 0xff, 0x02, 0x01, 0x3d, 0x3d, 
@@ -10908,7 +10998,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_EMPTYFILL_RIGHT_pixelmap =
 
 /* THEME_1_I_EMPTYFILL_TOP pixelmap data                                       */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_EMPTYFILL_TOP_pixelmap_data[117] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_EMPTYFILL_TOP_pixelmap_data[117] =
+{
+
+#endif
 {
     0x84, 0x3d, 0x84, 0xff, 0x02, 0x2e, 0x3d, 0x2e, 0x83, 0x3d, 0x82, 0xff, 0x83, 
     0xff, 0x05, 0x01, 0x2e, 0x3d, 0x3d, 0xff, 0xff, 0x85, 0xff, 0x03, 0x2e, 0x3d, 
@@ -10938,7 +11034,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_EMPTYFILL_TOP_pixelmap =
 
 /* THEME_1_I_INDICATOR pixelmap data                                           */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_INDICATOR_pixelmap_data[433] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_INDICATOR_pixelmap_data[433] =
+{
+
+#endif
 {
     0x94, 0xff, 0x94, 0xff, 0x94, 0xff, 0x89, 0xff, 0x02, 0x07, 0x18, 0x35, 0x87, 
     0xff, 0x88, 0xff, 0x04, 0xab, 0x39, 0x0f, 0x0b, 0x35, 0x86, 0xff, 0x87, 0xff, 
@@ -10992,7 +11094,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_INDICATOR_pixelmap =
 
 /* THEME_1_I_INDICATOR_HORIZONTAL pixelmap data                                */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_INDICATOR_HORIZONTAL_pixelmap_data[252] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_INDICATOR_HORIZONTAL_pixelmap_data[252] =
+{
+
+#endif
 {
     0xa2, 0xff, 0xa2, 0xff, 0xa2, 0xff, 0xa2, 0xff, 0xa2, 0xff, 0x85, 0xff, 0x01, 
     0x06, 0x1f, 0x91, 0x18, 0x00, 0x07, 0x87, 0xff, 0x84, 0xff, 0x02, 0x06, 0x0a, 
@@ -11032,7 +11140,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_INDICATOR_HORIZONTAL_pixelmap =
 
 /* THEME_1_I_MEDICATIONSGREEN_LG pixelmap data                                 */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_MEDICATIONSGREEN_LG_pixelmap_data[1444] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_MEDICATIONSGREEN_LG_pixelmap_data[1444] =
+{
+
+#endif
 {
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
@@ -11164,7 +11278,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_MEDICATIONSGREEN_LG_pixelmap =
 
 /* THEME_1_I_MEDICATIONSRED_LG pixelmap data                                   */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_MEDICATIONSRED_LG_pixelmap_data[1444] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_MEDICATIONSRED_LG_pixelmap_data[1444] =
+{
+
+#endif
 {
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
@@ -11296,7 +11416,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_MEDICATIONSRED_LG_pixelmap =
 
 /* THEME_1_I_ORANGEFILL_BOTTOM pixelmap data                                   */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_ORANGEFILL_BOTTOM_pixelmap_data[124] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_ORANGEFILL_BOTTOM_pixelmap_data[124] =
+{
+
+#endif
 {
     0x84, 0xff, 0x84, 0x3d, 0x82, 0xff, 0x03, 0x3d, 0xbe, 0x70, 0xeb, 0x82, 0xee, 
     0x04, 0xff, 0xff, 0x3d, 0x5f, 0xee, 0x84, 0x61, 0x03, 0xff, 0x2e, 0x5f, 0xee, 
@@ -11326,7 +11452,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_ORANGEFILL_BOTTOM_pixelmap =
 
 /* THEME_1_I_ORANGEFILL_LEFT pixelmap data                                     */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_ORANGEFILL_LEFT_pixelmap_data[158] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_ORANGEFILL_LEFT_pixelmap_data[158] =
+{
+
+#endif
 {
     0x86, 0xff, 0x00, 0x2e, 0x82, 0x3d, 0x00, 0x2e, 0x82, 0x3d, 0x00, 0x2e, 0x85, 
     0xff, 0x84, 0xff, 0x01, 0x01, 0x84, 0x87, 0xb9, 0x03, 0x59, 0xd7, 0x01, 0x2e, 
@@ -11359,7 +11491,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_ORANGEFILL_LEFT_pixelmap =
 
 /* THEME_1_I_ORANGEFILL_MIDDLE pixelmap data                                   */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_ORANGEFILL_MIDDLE_pixelmap_data[52] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_ORANGEFILL_MIDDLE_pixelmap_data[52] =
+{
+
+#endif
 {
     0x89, 0x3d, 0x89, 0xee, 0x89, 0x61, 0x89, 0x61, 0x89, 0x61, 0x89, 0x61, 0x89, 
     0xee, 0x89, 0x8c, 0x89, 0xb8, 0x89, 0xb9, 0x89, 0xb9, 0x89, 0xb9, 0x89, 0xb9, 
@@ -11384,7 +11522,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_ORANGEFILL_MIDDLE_pixelmap =
 
 /* THEME_1_I_ORANGEFILL_MIDDLE_HORIZONTAL pixelmap data                        */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_ORANGEFILL_MIDDLE_HORIZONTAL_pixelmap_data[180] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_ORANGEFILL_MIDDLE_HORIZONTAL_pixelmap_data[180] =
+{
+
+#endif
 {
     0x01, 0xff, 0x3d, 0x82, 0xb9, 0x00, 0xb8, 0x86, 0xb9, 0x02, 0xb8, 0x8c, 0xee, 
     0x83, 0x61, 0x01, 0xee, 0x3d, 0x01, 0xff, 0x3d, 0x82, 0xb9, 0x00, 0xb8, 0x86, 
@@ -11418,7 +11562,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_ORANGEFILL_MIDDLE_HORIZONTAL_pixelma
 
 /* THEME_1_I_PATIENTLIST_LG pixelmap data                                      */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_PATIENTLIST_LG_pixelmap_data[713] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_I_PATIENTLIST_LG_pixelmap_data[713] =
+{
+
+#endif
 {
     0xa5, 0xff, 0xa5, 0xff, 0xa5, 0xff, 0xa5, 0xff, 0xa5, 0xff, 0xa5, 0xff, 0x85, 
     0xff, 0x01, 0xd9, 0xd9, 0x9d, 0xff, 0x83, 0xff, 0x04, 0xad, 0xd9, 0xd9, 0xc5, 
@@ -11493,7 +11643,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_I_PATIENTLIST_LG_pixelmap =
 
 /* THEME_1_NEEDLE pixelmap data                                                */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_NEEDLE_pixelmap_data[4218] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_NEEDLE_pixelmap_data[4218] =
+{
+
+#endif
 {
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
@@ -11838,7 +11994,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_NEEDLE_pixelmap =
 
 /* THEME_1_ORANGE_BUTTON pixelmap data                                         */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ORANGE_BUTTON_pixelmap_data[2352] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ORANGE_BUTTON_pixelmap_data[2352] =
+{
+
+#endif
 {
     0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 
     0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 
@@ -12039,7 +12201,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_ORANGE_BUTTON_pixelmap =
 
 /* THEME_1_ORANGE_BUTTON_4444ARGB pixelmap data                                */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ORANGE_BUTTON_4444ARGB_pixelmap_data[2352] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ORANGE_BUTTON_4444ARGB_pixelmap_data[2352] =
+{
+
+#endif
 {
     0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 
     0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 
@@ -12240,7 +12408,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_ORANGE_BUTTON_4444ARGB_pixelmap =
 
 /* THEME_1_ORANGE_BUTTON_PRESSED pixelmap data                                 */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ORANGE_BUTTON_PRESSED_pixelmap_data[2930] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ORANGE_BUTTON_PRESSED_pixelmap_data[2930] =
+{
+
+#endif
 {
     0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 
     0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0xcc, 0xff, 0x99, 0xff, 
@@ -12486,7 +12660,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_ORANGE_BUTTON_PRESSED_pixelmap =
 
 /* THEME_1_PALETTE_C_A pixelmap data                                           */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_PALETTE_C_A_pixelmap_data[583] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_PALETTE_C_A_pixelmap_data[583] =
+{
+
+#endif
 {
     0xa5, 0xff, 0xa5, 0xff, 0xa5, 0xff, 0x8a, 0xff, 0x82, 0x92, 0x92, 0xfe, 0x84, 
     0xff, 0x89, 0xff, 0x00, 0xf1, 0x95, 0x7b, 0x00, 0x85, 0x83, 0xff, 0x88, 0xff, 
@@ -12551,7 +12731,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_PALETTE_C_A_pixelmap =
 
 /* THEME_1_ROTATE_APPLE pixelmap data                                          */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ROTATE_APPLE_pixelmap_data[52065] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ROTATE_APPLE_pixelmap_data[52065] =
+{
+
+#endif
 {
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
@@ -16577,7 +16763,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_ROTATE_APPLE_pixelmap =
 
 /* THEME_1_ROTATE_FISH pixelmap data                                           */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ROTATE_FISH_pixelmap_data[30240] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ROTATE_FISH_pixelmap_data[30240] =
+{
+
+#endif
 {
     0x7a, 0x8a, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x6d, 0x7a, 0x7e, 0x7e, 0x8a, 0x6d, 
     0x6d, 0x7a, 0x6d, 0x42, 0x7a, 0x7a, 0x7a, 0x7a, 0x7a, 0x7a, 0x7a, 0x6d, 0x7a, 
@@ -18924,7 +19116,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_ROTATE_FISH_pixelmap =
 
 /* THEME_1_ROTATE_FOOT pixelmap data                                           */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ROTATE_FOOT_pixelmap_data[26820] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_ROTATE_FOOT_pixelmap_data[26820] =
+{
+
+#endif
 {
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
@@ -21008,7 +21206,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_ROTATE_FOOT_pixelmap =
 
 /* THEME_1_SCROLL_WHEEL_SELECTED_BG pixelmap data                              */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_SCROLL_WHEEL_SELECTED_BG_pixelmap_data[135] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_SCROLL_WHEEL_SELECTED_BG_pixelmap_data[135] =
+{
+
+#endif
 {
     0x30, 0x30, 0x30, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 
     0x03, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x04, 0xad, 0xad, 
@@ -21039,7 +21243,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_SCROLL_WHEEL_SELECTED_BG_pixelmap =
 
 /* THEME_1_TFIELD_FILL_SMALL pixelmap data                                     */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_TFIELD_FILL_SMALL_pixelmap_data[44] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_TFIELD_FILL_SMALL_pixelmap_data[44] =
+{
+
+#endif
 {
     0x00, 0xbf, 0x8c, 0xc3, 0x88, 0x91, 0x8a, 0x68, 0x01, 0x91, 0xbf, 0x00, 0xbf, 
     0x8c, 0xc3, 0x88, 0x91, 0x8a, 0x68, 0x01, 0x91, 0xbf, 0x00, 0xbf, 0x8c, 0xc3, 
@@ -21063,7 +21273,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_TFIELD_FILL_SMALL_pixelmap =
 
 /* THEME_1_TFIELD_LEFT_SMALL pixelmap data                                     */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_TFIELD_LEFT_SMALL_pixelmap_data[53] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_TFIELD_LEFT_SMALL_pixelmap_data[53] =
+{
+
+#endif
 {
     0x82, 0xff, 0x8a, 0xd0, 0x83, 0x5f, 0x8d, 0xbf, 0x00, 0xd0, 0x82, 0xff, 0x03, 
     0xff, 0xd0, 0xbf, 0xbf, 0x8c, 0xc3, 0x88, 0x91, 0x84, 0x68, 0x04, 0x91, 0x91, 
@@ -21088,7 +21304,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_TFIELD_LEFT_SMALL_pixelmap =
 
 /* THEME_1_TFIELD_RIGHT_SMALL pixelmap data                                    */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_TFIELD_RIGHT_SMALL_pixelmap_data[49] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1_TFIELD_RIGHT_SMALL_pixelmap_data[49] =
+{
+
+#endif
 {
     0x00, 0xbf, 0x8c, 0xc3, 0x88, 0x91, 0x8a, 0x68, 0x01, 0x91, 0xbf, 0x00, 0xbf, 
     0x8c, 0xc3, 0x88, 0x91, 0x8a, 0x68, 0x01, 0x91, 0xbf, 0x01, 0xff, 0xbf, 0x8b, 
@@ -21112,7 +21334,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1_TFIELD_RIGHT_SMALL_pixelmap =
 
 /* THEME_1__COMPRESS pixelmap data                                             */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1__COMPRESS_pixelmap_data[230] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1__COMPRESS_pixelmap_data[230] =
+{
+
+#endif
 {
     0x91, 0x8d, 0x91, 0x8d, 0x02, 0x8d, 0x8d, 0xbb, 0x82, 0xc5, 0x82, 0xa6, 0x83, 
     0xdb, 0x84, 0x8d, 0x03, 0x8d, 0x8d, 0xc5, 0xa6, 0x82, 0xdb, 0x8a, 0x8d, 0x02, 
@@ -21150,7 +21378,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1__COMPRESS_pixelmap =
 
 /* THEME_1__COMPRESS_TRANS pixelmap data                                       */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1__COMPRESS_TRANS_pixelmap_data[1366] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1__COMPRESS_TRANS_pixelmap_data[1366] =
+{
+
+#endif
 {
     0x99, 0xff, 0x86, 0x57, 0xf3, 0xff, 0x95, 0xff, 0x8e, 0x57, 0xef, 0xff, 0x92, 
     0xff, 0x93, 0x57, 0xed, 0xff, 0x90, 0xff, 0x97, 0x57, 0xeb, 0xff, 0x8d, 0xff, 
@@ -29255,7 +29489,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1__PNG_pixelmap =
 
 /* THEME_1__RAW pixelmap data                                                  */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1__RAW_pixelmap_data[30240] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1__RAW_pixelmap_data[30240] =
+{
+
+#endif
 {
     0x7a, 0x8a, 0x7e, 0x7e, 0x7e, 0x7e, 0x7e, 0x6d, 0x7a, 0x7e, 0x7e, 0x8a, 0x6d, 
     0x6d, 0x7a, 0x6d, 0x42, 0x7a, 0x7a, 0x7a, 0x7a, 0x7a, 0x7a, 0x7a, 0x6d, 0x7a, 
@@ -31602,7 +31842,13 @@ GX_CONST GX_PIXELMAP MAIN_DISPLAY_THEME_1__RAW_pixelmap =
 
 /* THEME_1__TRANS pixelmap data                                                */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1__TRANS_pixelmap_data[1444] =
+#else
+static GX_CONST GX_UBYTE MAIN_DISPLAY_THEME_1__TRANS_pixelmap_data[1444] =
+{
+
+#endif
 {
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 

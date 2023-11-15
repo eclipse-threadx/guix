@@ -5,8 +5,8 @@
 /*  resource file(s). For more information please refer to the Azure RTOS GUIX */
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
-/*  GUIX Studio Revision 6.2.1.2                                               */
-/*  Date (dd.mm.yyyy):  5. 6.2023   Time (hh:mm): 15:09                        */
+/*  GUIX Studio Revision 6.3.0.0                                               */
+/*  Date (dd.mm.yyyy): 14.11.2023   Time (hh:mm): 16:49                        */
 /*******************************************************************************/
 
 
@@ -66,7 +66,13 @@ GX_CONST GX_FONT *display_1_default_theme_font_table[] =
 
 /* DEFAULT_THEME_RADIO_ON pixelmap data                                        */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_RADIO_ON_pixelmap_data[660] =
+#else
+static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_RADIO_ON_pixelmap_data[660] =
+{
+
+#endif
 {
     0x83, 0xff, 0xff, 0xff, 0x00, 0x07, 0xf8, 0xf5, 0xf2, 0x80, 0xd2, 0xc1, 0xae, 
     0xcc, 0xb6, 0x9b, 0x7c, 0xff, 0xae, 0x90, 0x6e, 0xff, 0xb2, 0x95, 0x75, 0xff, 
@@ -137,7 +143,13 @@ GX_CONST GX_PIXELMAP DISPLAY_1_DEFAULT_THEME_RADIO_ON_pixelmap =
 
 /* DEFAULT_THEME_RADIO_OFF pixelmap data                                       */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_RADIO_OFF_pixelmap_data[660] =
+#else
+static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_RADIO_OFF_pixelmap_data[660] =
+{
+
+#endif
 {
     0x83, 0xff, 0xff, 0xff, 0x00, 0x07, 0xf8, 0xf5, 0xf2, 0xff, 0xd2, 0xc1, 0xae, 
     0xb3, 0xb6, 0x9b, 0x7c, 0xff, 0xae, 0x90, 0x6e, 0xff, 0xb2, 0x95, 0x75, 0xff, 
@@ -208,7 +220,13 @@ GX_CONST GX_PIXELMAP DISPLAY_1_DEFAULT_THEME_RADIO_OFF_pixelmap =
 
 /* DEFAULT_THEME_CHECKBOX_ON pixelmap data                                     */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_CHECKBOX_ON_pixelmap_data[920] =
+#else
+static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_CHECKBOX_ON_pixelmap_data[920] =
+{
+
+#endif
 {
     0x8f, 0x80, 0x51, 0x1c, 0xff, 0x0f, 0x80, 0x51, 0x1c, 0xff, 0xb8, 0xc0, 0xb9, 
     0xff, 0xc2, 0xdb, 0xe2, 0xff, 0xb8, 0xd2, 0xd9, 0xff, 0xaf, 0xcf, 0xd9, 0xff, 
@@ -299,7 +317,13 @@ GX_CONST GX_PIXELMAP DISPLAY_1_DEFAULT_THEME_CHECKBOX_ON_pixelmap =
 
 /* DEFAULT_THEME_CHECKBOX_OFF pixelmap data                                    */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_CHECKBOX_OFF_pixelmap_data[802] =
+#else
+static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_CHECKBOX_OFF_pixelmap_data[802] =
+{
+
+#endif
 {
     0x8f, 0x80, 0x51, 0x1c, 0xff, 0x0f, 0x80, 0x51, 0x1c, 0xff, 0xb8, 0xc0, 0xb9, 
     0xff, 0xc2, 0xdb, 0xe2, 0xff, 0xb8, 0xd2, 0xd9, 0xff, 0xaf, 0xcf, 0xd9, 0xff, 
@@ -438,7 +462,13 @@ GX_CONST GX_PIXELMAP DISPLAY_1_DEFAULT_THEME_PIXELMAP_ALPHA_pixelmap =
 
 /* DEFAULT_THEME_PIXELMAP_COMPRESSED pixelmap data                             */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_PIXELMAP_COMPRESSED_pixelmap_data[920] =
+#else
+static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_PIXELMAP_COMPRESSED_pixelmap_data[920] =
+{
+
+#endif
 {
     0x8f, 0x80, 0x51, 0x1c, 0xff, 0x0f, 0x80, 0x51, 0x1c, 0xff, 0xb8, 0xc0, 0xb9, 
     0xff, 0xc2, 0xdb, 0xe2, 0xff, 0xb8, 0xd2, 0xd9, 0xff, 0xaf, 0xcf, 0xd9, 0xff, 
@@ -529,7 +559,13 @@ GX_CONST GX_PIXELMAP DISPLAY_1_DEFAULT_THEME_PIXELMAP_COMPRESSED_pixelmap =
 
 /* DEFAULT_THEME_PIXELMAP_COMPRESSED_ALPHA pixelmap data                       */
 
+#ifdef WIN32
 static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_PIXELMAP_COMPRESSED_ALPHA_pixelmap_data[660] =
+#else
+static GX_CONST GX_UBYTE DISPLAY_1_DEFAULT_THEME_PIXELMAP_COMPRESSED_ALPHA_pixelmap_data[660] =
+{
+
+#endif
 {
     0x83, 0xff, 0xff, 0xff, 0x00, 0x07, 0xf8, 0xf5, 0xf2, 0xff, 0xd2, 0xc1, 0xae, 
     0xb3, 0xb6, 0x9b, 0x7c, 0xff, 0xae, 0x90, 0x6e, 0xff, 0xb2, 0x95, 0x75, 0xff, 

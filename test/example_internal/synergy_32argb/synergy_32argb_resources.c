@@ -5,8 +5,8 @@
 /*  resource file(s). For more information please refer to the Azure RTOS GUIX */
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
-/*  GUIX Studio Revision 6.2.1.2                                               */
-/*  Date (dd.mm.yyyy):  5. 6.2023   Time (hh:mm): 15:13                        */
+/*  GUIX Studio Revision 6.3.0.0                                               */
+/*  Date (dd.mm.yyyy): 14.11.2023   Time (hh:mm): 17:00                        */
 /*******************************************************************************/
 
 
@@ -66,7 +66,13 @@ GX_CONST GX_FONT *display_1_theme_1_font_table[] =
 
 /* THEME_1_RADIO_ON pixelmap data                                              */
 
+#ifdef WIN32
+static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_ON_pixelmap_data[660] =
+#else
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_ON_pixelmap_data[660] __attribute__((aligned(4))) =
+{
+
+#endif
 {
     0x83, 0xff, 0xff, 0xff, 0x00, 0x07, 0xf8, 0xf5, 0xf2, 0x80, 0xd2, 0xc1, 0xae, 
     0xcc, 0xb6, 0x9b, 0x7c, 0xff, 0xae, 0x90, 0x6e, 0xff, 0xb2, 0x95, 0x75, 0xff, 
@@ -137,7 +143,13 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_RADIO_ON_pixelmap =
 
 /* THEME_1_RADIO_OFF pixelmap data                                             */
 
+#ifdef WIN32
+static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_OFF_pixelmap_data[660] =
+#else
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_OFF_pixelmap_data[660] __attribute__((aligned(4))) =
+{
+
+#endif
 {
     0x83, 0xff, 0xff, 0xff, 0x00, 0x07, 0xf8, 0xf5, 0xf2, 0xff, 0xd2, 0xc1, 0xae, 
     0xb3, 0xb6, 0x9b, 0x7c, 0xff, 0xae, 0x90, 0x6e, 0xff, 0xb2, 0x95, 0x75, 0xff, 
@@ -208,7 +220,13 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_RADIO_OFF_pixelmap =
 
 /* THEME_1_CHECKBOX_ON pixelmap data                                           */
 
+#ifdef WIN32
+static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_ON_pixelmap_data[466] =
+#else
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_ON_pixelmap_data[466] __attribute__((aligned(4))) =
+{
+
+#endif
 {
     0x8f, 0x90, 0x1a, 0x0f, 0x90, 0x1a, 0x17, 0xbe, 0xd8, 0xe6, 0x97, 0xde, 0x75, 
     0xde, 0x74, 0xde, 0x53, 0xde, 0x31, 0xde, 0x10, 0xd6, 0x11, 0xde, 0x32, 0xde, 
@@ -264,7 +282,13 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_CHECKBOX_ON_pixelmap =
 
 /* THEME_1_CHECKBOX_OFF pixelmap data                                          */
 
+#ifdef WIN32
+static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_OFF_pixelmap_data[396] =
+#else
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_OFF_pixelmap_data[396] __attribute__((aligned(4))) =
+{
+
+#endif
 {
     0x8f, 0x90, 0x1a, 0x0f, 0x90, 0x1a, 0x17, 0xbe, 0xd8, 0xe6, 0x97, 0xde, 0x75, 
     0xde, 0x74, 0xde, 0x53, 0xde, 0x32, 0xde, 0x10, 0xde, 0x10, 0xd6, 0xef, 0xd5, 
@@ -542,7 +566,13 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_FISH_pixelmap =
 
 /* THEME_1_RED_APPLE pixelmap data                                             */
 
+#ifdef WIN32
+static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RED_APPLE_pixelmap_data[57810] =
+#else
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RED_APPLE_pixelmap_data[57810] __attribute__((aligned(4))) =
+{
+
+#endif
 {
     0xcb, 0x00, 0x00, 0x00, 0x00, 0x14, 0xb6, 0xc8, 0xc8, 0x0e, 0x79, 0xa5, 0x98, 
     0x52, 0x38, 0x7b, 0x69, 0x8d, 0x44, 0x83, 0x71, 0xa9, 0x51, 0x8e, 0x7e, 0xcc, 
