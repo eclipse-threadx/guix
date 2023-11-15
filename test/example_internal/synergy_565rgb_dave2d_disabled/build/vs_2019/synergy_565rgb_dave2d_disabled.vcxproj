@@ -61,8 +61,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\..\..\ports\win32\lib\vs_2019;$(SolutionDir)..\..\..\..\..\ports\win32\build\vs_2019\$(Configuration);..\..\..\..\guix_test\display_driver\win32\renesas_dave2d\vs_2019\Debug;$(SolutionDir)..\..\..\..\..\src\display_driver\win32\renesas_dave2d\vs_2019\$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tx.lib;renesas_dave2d.lib;gx.lib;renesas_dave2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\..\..\ports\win32\lib\vs_2019;$(SolutionDir)..\..\..\..\..\ports\win32\build\vs_2019\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tx.lib;gx.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>

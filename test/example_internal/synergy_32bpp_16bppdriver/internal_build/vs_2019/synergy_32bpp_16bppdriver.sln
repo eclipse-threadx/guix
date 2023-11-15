@@ -7,8 +7,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guix", "..\..\..\..\..\port
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "synergy_32bpp_16bppdriver", "synergy_32bpp_16bppdriver.vcxproj", "{C488E713-2FF7-4337-84CB-E0AC499382DF}"
 	ProjectSection(ProjectDependencies) = postProject
+		{12756028-95C9-4286-AB62-AFD33B929165} = {12756028-95C9-4286-AB62-AFD33B929165}
 		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED} = {A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "renesas_dave2d", "..\..\..\..\guix_test\display_driver\win32\renesas_dave2d\vs_2019\renesas_dave2d.vcxproj", "{12756028-95C9-4286-AB62-AFD33B929165}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +27,10 @@ Global
 		{C488E713-2FF7-4337-84CB-E0AC499382DF}.Debug|x86.Build.0 = Debug|Win32
 		{C488E713-2FF7-4337-84CB-E0AC499382DF}.Release|x86.ActiveCfg = Release|Win32
 		{C488E713-2FF7-4337-84CB-E0AC499382DF}.Release|x86.Build.0 = Release|Win32
+		{12756028-95C9-4286-AB62-AFD33B929165}.Debug|x86.ActiveCfg = Debug|Win32
+		{12756028-95C9-4286-AB62-AFD33B929165}.Debug|x86.Build.0 = Debug|Win32
+		{12756028-95C9-4286-AB62-AFD33B929165}.Release|x86.ActiveCfg = Debug|Win32
+		{12756028-95C9-4286-AB62-AFD33B929165}.Release|x86.Build.0 = Debug|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
