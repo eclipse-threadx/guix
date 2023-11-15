@@ -87,8 +87,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019;..\..\..\..\..\ports\win32\build\vs_2019\$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gx.lib;tx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../../../../ports/win32/lib/vs_2019;..\..\..\..\..\ports\win32\build\vs_2019\$(Configuration);..\..\..\..\guix_test\display_driver\win32\renesas_dave2d\vs_2019\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gx.lib;tx.lib;renesas_dave2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug_no_threadx|Win32'">
