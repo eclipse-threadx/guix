@@ -6,7 +6,7 @@
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
 /*  GUIX Studio Revision 6.3.0.0                                               */
-/*  Date (dd.mm.yyyy): 14.11.2023   Time (hh:mm): 17:00                        */
+/*  Date (dd.mm.yyyy): 15.11.2023   Time (hh:mm): 14:57                        */
 /*******************************************************************************/
 
 
@@ -8766,8 +8766,6 @@ GX_CONST GX_FONT *display_1_theme_1_font_table[] =
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_ON_pixelmap_data[660] =
 #else
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_ON_pixelmap_data[660] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x83, 0xf8, 0xfc, 0xf8, 0x00, 0x07, 0xf8, 0xf4, 0xf0, 0x80, 0xd0, 0xc0, 0xa8, 
@@ -8843,8 +8841,6 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_RADIO_ON_pixelmap =
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_OFF_pixelmap_data[660] =
 #else
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_OFF_pixelmap_data[660] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x83, 0xf8, 0xfc, 0xf8, 0x00, 0x07, 0xf8, 0xf4, 0xf0, 0xff, 0xd0, 0xc0, 0xa8, 
@@ -8920,8 +8916,6 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_RADIO_OFF_pixelmap =
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_ON_pixelmap_data[466] =
 #else
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_ON_pixelmap_data[466] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x8f, 0x90, 0x1a, 0x0f, 0x90, 0x1a, 0x17, 0xbe, 0xd8, 0xe6, 0x97, 0xde, 0x75, 
@@ -8982,8 +8976,6 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_CHECKBOX_ON_pixelmap =
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_OFF_pixelmap_data[396] =
 #else
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_OFF_pixelmap_data[396] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x8f, 0x90, 0x1a, 0x0f, 0x90, 0x1a, 0x17, 0xbe, 0xd8, 0xe6, 0x97, 0xde, 0x75, 

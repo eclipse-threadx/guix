@@ -6,7 +6,7 @@
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
 /*  GUIX Studio Revision 6.3.0.0                                               */
-/*  Date (dd.mm.yyyy): 14.11.2023   Time (hh:mm): 17:00                        */
+/*  Date (dd.mm.yyyy): 15.11.2023   Time (hh:mm): 14:57                        */
 /*******************************************************************************/
 
 
@@ -298,8 +298,6 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_CHECKBOX_OFF_pixelmap =
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_ICON_FOOT_ALPHA_pixelmap_data[4706] =
 #else
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_ICON_FOOT_ALPHA_pixelmap_data[4706] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x89, 0xff, 0x0f, 0xff, 0x48, 0x01, 0x8c, 0x48, 0x01, 0x0b, 0x48, 0x41, 0x48, 
@@ -687,8 +685,6 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_ICON_FOOT_ALPHA_pixelmap =
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RAINBOW200_ALPHA_COMPRESS_pixelmap_data[18088] =
 #else
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RAINBOW200_ALPHA_COMPRESS_pixelmap_data[18088] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x22, 0x95, 0xb4, 0x55, 0xc4, 0x35, 0xb4, 0x62, 0xc4, 0x60, 0xd3, 0x40, 0xe4, 

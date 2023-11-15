@@ -5,8 +5,8 @@
 /*  resource file(s). For more information please refer to the Azure RTOS GUIX */
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
-/*  GUIX Studio Revision 6.3.0.0                                               */
-/*  Date (dd.mm.yyyy): 14.11.2023   Time (hh:mm): 17:01                        */
+/*  GUIX Studio Revision 6.2.1.2                                               */
+/*  Date (dd.mm.yyyy):  6. 6.2023   Time (hh:mm): 09:37                        */
 /*******************************************************************************/
 
 
@@ -1660,13 +1660,7 @@ GX_CONST GX_FONT *display_1_theme_1_font_table[] =
 
 /* THEME_1_RADIO_ON pixelmap data                                              */
 
-#ifdef WIN32
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_ON_pixelmap_data[195] =
-#else
-static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_ON_pixelmap_data[195] =
-{
-
-#endif
 {
     0x83, 0xff, 0x06, 0xde, 0xac, 0x6d, 0x39, 0x8e, 0xc8, 0xac, 0x84, 0xff, 0x82, 
     0xff, 0x09, 0x34, 0xc4, 0x51, 0xa2, 0xb5, 0x7e, 0xa2, 0x76, 0xc4, 0x84, 0x82, 
@@ -1702,13 +1696,7 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_RADIO_ON_pixelmap =
 
 /* THEME_1_RADIO_OFF pixelmap data                                             */
 
-#ifdef WIN32
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_OFF_pixelmap_data[194] =
-#else
-static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_RADIO_OFF_pixelmap_data[194] =
-{
-
-#endif
 {
     0x83, 0xff, 0x06, 0xde, 0xac, 0x6d, 0x39, 0x8e, 0xc8, 0xac, 0x84, 0xff, 0x82, 
     0xff, 0x08, 0x34, 0xc4, 0x51, 0xa2, 0xb5, 0x7e, 0xa2, 0x76, 0xc4, 0x83, 0xff, 
@@ -1743,13 +1731,7 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_RADIO_OFF_pixelmap =
 
 /* THEME_1_CHECKBOX_ON pixelmap data                                           */
 
-#ifdef WIN32
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_ON_pixelmap_data[242] =
-#else
-static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_ON_pixelmap_data[242] =
-{
-
-#endif
 {
     0x8f, 0x2d, 0x0f, 0x2d, 0x7f, 0x9a, 0xe1, 0x6e, 0x8f, 0x3d, 0x54, 0x85, 0x85, 
     0x54, 0x54, 0x85, 0x62, 0xca, 0x2d, 0x0f, 0x2d, 0x9a, 0x52, 0xb2, 0x61, 0xe3, 
@@ -1788,13 +1770,7 @@ GX_CONST GX_PIXELMAP DISPLAY_1_THEME_1_CHECKBOX_ON_pixelmap =
 
 /* THEME_1_CHECKBOX_OFF pixelmap data                                          */
 
-#ifdef WIN32
 static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_OFF_pixelmap_data[217] =
-#else
-static GX_CONST GX_UBYTE DISPLAY_1_THEME_1_CHECKBOX_OFF_pixelmap_data[217] =
-{
-
-#endif
 {
     0x8f, 0x2d, 0x0f, 0x2d, 0x7f, 0x9a, 0xe1, 0x6e, 0x8f, 0x3d, 0x54, 0x85, 0xdc, 
     0xdc, 0x62, 0x65, 0xbe, 0xca, 0x2d, 0x0f, 0x2d, 0x9a, 0x52, 0x8c, 0x1c, 0xe3, 

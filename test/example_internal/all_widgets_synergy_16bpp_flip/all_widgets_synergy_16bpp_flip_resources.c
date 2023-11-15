@@ -6,7 +6,7 @@
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
 /*  GUIX Studio Revision 6.3.0.0                                               */
-/*  Date (dd.mm.yyyy): 14.11.2023   Time (hh:mm): 16:35                        */
+/*  Date (dd.mm.yyyy): 15.11.2023   Time (hh:mm): 14:53                        */
 /*******************************************************************************/
 
 
@@ -14191,8 +14191,6 @@ GX_CONST GX_FONT *Primary_theme_1_font_table[] =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_RADIO_ON_pixelmap_data[660] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_RADIO_ON_pixelmap_data[660] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x83, 0xf8, 0xfc, 0xf8, 0x00, 0x07, 0xf8, 0xf4, 0xf0, 0x80, 0xd0, 0xc0, 0xa8, 
@@ -14268,8 +14266,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_RADIO_ON_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_RADIO_OFF_pixelmap_data[660] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_RADIO_OFF_pixelmap_data[660] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x83, 0xf8, 0xfc, 0xf8, 0x00, 0x07, 0xf8, 0xf4, 0xf0, 0xff, 0xd0, 0xc0, 0xa8, 
@@ -14345,8 +14341,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_RADIO_OFF_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_CHECKBOX_ON_pixelmap_data[466] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_CHECKBOX_ON_pixelmap_data[466] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x8f, 0x90, 0x1a, 0x0f, 0x90, 0x1a, 0x17, 0xbe, 0xd8, 0xe6, 0x97, 0xde, 0x75, 
@@ -14407,8 +14401,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_CHECKBOX_ON_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_CHECKBOX_OFF_pixelmap_data[396] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_CHECKBOX_OFF_pixelmap_data[396] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x8f, 0x90, 0x1a, 0x0f, 0x90, 0x1a, 0x17, 0xbe, 0xd8, 0xe6, 0x97, 0xde, 0x75, 
@@ -14464,8 +14456,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_CHECKBOX_OFF_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_BLACK_PAUSE_pixelmap_data[3536] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_BLACK_PAUSE_pixelmap_data[3536] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xa5, 0x00, 0x00, 0x00, 0x00, 0x05, 0x30, 0x34, 0x30, 0x00, 0x38, 0x38, 0x38, 
@@ -14763,8 +14753,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_BLACK_PAUSE_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_BUTTON_DISABLED_pixelmap_data[6770] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_BUTTON_DISABLED_pixelmap_data[6770] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xff, 0x00, 0x00, 0x00, 0x00, 0x8f, 0x00, 0x00, 0x00, 0x00, 0xff, 0x00, 0x00, 
@@ -15310,8 +15298,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_BUTTON_DISABLED_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_COLLAPSE_pixelmap_data[146] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_COLLAPSE_pixelmap_data[146] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x89, 0x80, 0x80, 0x80, 0xff, 0x00, 0x80, 0x80, 0x80, 0xff, 0x87, 0x00, 0x00, 
@@ -15348,8 +15334,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_COLLAPSE_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_DROP_LIST_BG_pixelmap_data[11558] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_DROP_LIST_BG_pixelmap_data[11558] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xff, 0x0f, 0xa5, 0xf7, 0x0f, 0xa5, 0x05, 0x30, 0xa5, 0x10, 0xa5, 0x30, 0xa5, 
@@ -16264,8 +16248,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_DROP_LIST_BG_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_DROP_LIST_BUTTON_pixelmap_data[1016] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_DROP_LIST_BUTTON_pixelmap_data[1016] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xa5, 0x70, 0x98, 0x98, 0xff, 0x00, 0x70, 0x98, 0x98, 0xff, 0xa3, 0x00, 0x00, 
@@ -16369,8 +16351,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_DROP_LIST_BUTTON_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_EXPAND_pixelmap_data[202] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_EXPAND_pixelmap_data[202] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x89, 0x80, 0x80, 0x80, 0xff, 0x00, 0x80, 0x80, 0x80, 0xff, 0x87, 0x00, 0x00, 
@@ -16451,8 +16431,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_FILL_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FISH_pixelmap_data[56088] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FISH_pixelmap_data[56088] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x0a, 0xa1, 0x11, 0x02, 0x1a, 0x61, 0x09, 0x41, 0x09, 0x81, 0x11, 0x81, 0x11, 
@@ -20792,8 +20770,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_FISH_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_000_pixelmap_data[4661] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_000_pixelmap_data[4661] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 
@@ -21177,8 +21153,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_FRAME_000_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_001_pixelmap_data[4321] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_001_pixelmap_data[4321] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 
@@ -21536,8 +21510,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_FRAME_001_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_002_pixelmap_data[4201] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_002_pixelmap_data[4201] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 
@@ -21886,8 +21858,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_FRAME_002_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_003_pixelmap_data[4596] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_003_pixelmap_data[4596] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 
@@ -22266,8 +22236,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_FRAME_003_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_004_pixelmap_data[4303] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_004_pixelmap_data[4303] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 
@@ -22624,8 +22592,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_FRAME_004_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_005_pixelmap_data[4212] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_FRAME_005_pixelmap_data[4212] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 0x00, 0x00, 0xe3, 0x00, 0x00, 
@@ -22975,8 +22941,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_FRAME_005_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_GUAGEMETER_pixelmap_data[162721] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_GUAGEMETER_pixelmap_data[162721] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xff, 0x00, 0x00, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x97, 0x00, 0x00, 
@@ -35519,8 +35483,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_GUAGEMETER_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_HORIZONTAL_FILL_BKGND_pixelmap_data[9245] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_HORIZONTAL_FILL_BKGND_pixelmap_data[9245] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x83, 0xf8, 0xfc, 0xf8, 0x00, 0x03, 0x00, 0x04, 0x00, 0x0d, 0x00, 0x04, 0x00, 
@@ -36257,8 +36219,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_HORIZONTAL_FILL_BKGND_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_EMPTYFILL_MIDDLE_pixelmap_data[662] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_EMPTYFILL_MIDDLE_pixelmap_data[662] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x02, 0x00, 0x04, 0x00, 0xa7, 0x08, 0x0c, 0x08, 0x7c, 0x18, 0x1c, 0x18, 0x5e, 
@@ -36334,8 +36294,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_EMPTYFILL_MIDDLE_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_EMPTYFILL_MIDDLE_HORIZONTAL_pixelmap_data[663] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_EMPTYFILL_MIDDLE_HORIZONTAL_pixelmap_data[663] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x82, 0x00, 0x04, 0x00, 0xa7, 0x00, 0x08, 0x08, 0x08, 0xa7, 0x82, 0x00, 0x04, 
@@ -36412,8 +36370,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_EMPTYFILL_MIDDLE_HORIZONTAL_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_EMPTYFILL_RIGHT_pixelmap_data[790] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_EMPTYFILL_RIGHT_pixelmap_data[790] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x06, 0x00, 0x04, 0x00, 0xb2, 0x00, 0x04, 0x00, 0xb2, 0x00, 0x04, 0x00, 0xb5, 
@@ -36499,8 +36455,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_EMPTYFILL_RIGHT_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_EMPTYFILL_TOP_pixelmap_data[714] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_EMPTYFILL_TOP_pixelmap_data[714] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x08, 0xf8, 0xfc, 0xf8, 0x00, 0xf8, 0xfc, 0xf8, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -36580,8 +36534,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_EMPTYFILL_TOP_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_HISTORY_LG_pixelmap_data[4291] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_HISTORY_LG_pixelmap_data[4291] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xa5, 0xf8, 0xfc, 0xf8, 0x00, 0x00, 0xf8, 0xfc, 0xf8, 0x00, 0x8a, 0x00, 0x00, 
@@ -36937,8 +36889,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_HISTORY_LG_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_INDICATOR_pixelmap_data[1803] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_INDICATOR_pixelmap_data[1803] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x85, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 
@@ -37102,8 +37052,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_INDICATOR_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_INDICATOR_HORIZONTAL_pixelmap_data[2775] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_INDICATOR_HORIZONTAL_pixelmap_data[2775] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x85, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 
@@ -37342,8 +37290,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_INDICATOR_HORIZONTAL_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_MEDICATIONSGREEN_LG_pixelmap_data[2889] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_MEDICATIONSGREEN_LG_pixelmap_data[2889] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xa5, 0xf8, 0xfc, 0xf8, 0x00, 0xa5, 0xf8, 0xfc, 0xf8, 0x00, 0x84, 0xf8, 0xfc, 
@@ -37591,8 +37537,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_MEDICATIONSGREEN_LG_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_MEDICATIONSRED_LG_pixelmap_data[2806] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_MEDICATIONSRED_LG_pixelmap_data[2806] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xa5, 0xf8, 0xfc, 0xf8, 0x00, 0xa5, 0xf8, 0xfc, 0xf8, 0x00, 0x84, 0xf8, 0xfc, 
@@ -37833,8 +37777,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_MEDICATIONSRED_LG_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_ORANGEFILL_BOTTOM_pixelmap_data[843] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_ORANGEFILL_BOTTOM_pixelmap_data[843] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x15, 0x00, 0x04, 0x00, 0xc7, 0x00, 0x8c, 0xf8, 0xff, 0x00, 0x68, 0xf8, 0xff, 
@@ -37924,8 +37866,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_ORANGEFILL_BOTTOM_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_ORANGEFILL_LEFT_pixelmap_data[662] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_ORANGEFILL_LEFT_pixelmap_data[662] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x82, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x04, 0x00, 0x0d, 0x00, 0x04, 0x00, 
@@ -38044,8 +37984,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_ORANGEFILL_MIDDLE_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_ORANGEFILL_MIDDLE_HORIZONTAL_pixelmap_data[133] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_ORANGEFILL_MIDDLE_HORIZONTAL_pixelmap_data[133] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x89, 0x00, 0x04, 0x00, 0xc7, 0x89, 0x00, 0x8c, 0xf8, 0xff, 0x89, 0x00, 0x68, 
@@ -38081,8 +38019,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_I_ORANGEFILL_MIDDLE_HORIZONTAL_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_PATIENTLIST_LG_pixelmap_data[3449] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_I_PATIENTLIST_LG_pixelmap_data[3449] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x85, 0xf8, 0xfc, 0xf8, 0x00, 0x89, 0x00, 0x00, 0x00, 0x00, 0x05, 0x40, 0x40, 
@@ -38996,8 +38932,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_NEEDLE_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_ORANGE_BUTTON_pixelmap_data[7319] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_ORANGE_BUTTON_pixelmap_data[7319] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xff, 0xf8, 0xfc, 0xf8, 0x00, 0x8f, 0xf8, 0xfc, 0xf8, 0x00, 0xff, 0xf8, 0xfc, 
@@ -39586,8 +39520,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_ORANGE_BUTTON_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_ORANGE_BUTTON_PRESSED_pixelmap_data[11407] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_ORANGE_BUTTON_PRESSED_pixelmap_data[11407] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0xff, 0xf8, 0xfc, 0xf8, 0x00, 0x8f, 0xf8, 0xfc, 0xf8, 0x00, 0xff, 0xf8, 0xfc, 
@@ -47948,8 +47880,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_RED_APPLE_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_SAVE_ICON_pixelmap_data[962] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_SAVE_ICON_pixelmap_data[962] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x91, 0xd8, 0xc7, 0xbc, 0xff, 0x91, 0xd8, 0xc7, 0xbc, 0xff, 0x11, 0xd8, 0xc7, 
@@ -48049,8 +47979,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_SAVE_ICON_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_TFIELD_FILL_SMALL_pixelmap_data[180] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_TFIELD_FILL_SMALL_pixelmap_data[180] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x83, 0x28, 0x4c, 0x80, 0xff, 0x83, 0x38, 0x6c, 0xb8, 0xff, 0x83, 0x58, 0x88, 
@@ -48130,8 +48058,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_TFIELD_LEFT_SMALL_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_TFIELD_RIGHT_SMALL_pixelmap_data[395] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_TFIELD_RIGHT_SMALL_pixelmap_data[395] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x03, 0x28, 0x4c, 0x80, 0xff, 0x28, 0x4c, 0x80, 0xf7, 0x28, 0x4c, 0x80, 0x7a, 
@@ -48187,8 +48113,6 @@ GX_CONST GX_PIXELMAP PRIMARY_THEME_1_TFIELD_RIGHT_SMALL_pixelmap =
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_TOP_BAR_BACKGROUND_pixelmap_data[190] =
 #else
 static GX_CONST GX_UBYTE PRIMARY_THEME_1_TOP_BAR_BACKGROUND_pixelmap_data[190] __attribute__((aligned(4))) =
-{
-
 #endif
 {
     0x91, 0x4c, 0x4c, 0x4c, 0xff, 0x91, 0x4a, 0x4a, 0x4a, 0xff, 0x91, 0x4a, 0x4a, 
