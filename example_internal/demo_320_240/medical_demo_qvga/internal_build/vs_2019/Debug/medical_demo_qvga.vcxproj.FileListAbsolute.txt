@@ -1,1 +1,0 @@
-C:\Ting\guix\example_internal\demo_320_240\medical_demo_qvga\internal_build\vs_2019\Debug\medical_demo_qvga.exe

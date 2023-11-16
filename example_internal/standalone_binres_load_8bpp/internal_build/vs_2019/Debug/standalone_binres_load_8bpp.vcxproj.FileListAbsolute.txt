@@ -1,1 +1,0 @@
-C:\Ting\guix\example_internal\standalone_binres_load_8bpp\internal_build\vs_2019\Debug\standalone_binres_load_8bpp.exe

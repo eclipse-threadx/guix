@@ -1,1 +1,0 @@
-C:\Ting\guix\example_internal\all_widgets_32argb_rotated_ccw\internal_build\vs_2019\Debug\all_widgets_32argb_rotated_ccw.exe

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guix", "..\..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj", "{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "binres_theme_static_language", "binres_theme_static_language.vcxproj", "{3F948D96-A88E-4D99-AA2C-E35ECA713055}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED} = {A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Debug|Win32.Build.0 = Debug|Win32
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Release|Win32.ActiveCfg = Release|Win32
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Release|Win32.Build.0 = Release|Win32
+		{3F948D96-A88E-4D99-AA2C-E35ECA713055}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3F948D96-A88E-4D99-AA2C-E35ECA713055}.Debug|Win32.Build.0 = Debug|Win32
+		{3F948D96-A88E-4D99-AA2C-E35ECA713055}.Release|Win32.ActiveCfg = Release|Win32
+		{3F948D96-A88E-4D99-AA2C-E35ECA713055}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E293BE07-FFF7-4199-ADC9-74F2EAAFCD57}
+	EndGlobalSection
+EndGlobal

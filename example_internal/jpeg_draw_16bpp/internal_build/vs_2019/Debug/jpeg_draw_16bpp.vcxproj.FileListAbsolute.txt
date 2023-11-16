@@ -1,1 +1,0 @@
-C:\Ting\guix\example_internal\jpeg_draw_16bpp\internal_build\vs_2019\Debug\jpeg_draw_16bpp.exe

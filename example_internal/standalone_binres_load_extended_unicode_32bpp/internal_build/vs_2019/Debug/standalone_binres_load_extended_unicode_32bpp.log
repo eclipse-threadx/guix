@@ -1,7 +1,0 @@
-﻿  demo_guix_standalone_binres_load_extended_unicode_32bpp.c
-C:\Ting\guix\example_internal\standalone_binres_load_extended_unicode_32bpp\demo_guix_standalone_binres_load_extended_unicode_32bpp.c(104,5): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Ting\guix\example_internal\standalone_binres_load_extended_unicode_32bpp\demo_guix_standalone_binres_load_extended_unicode_32bpp.c(121,14): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  standalone_binres_load_extended_unicode_32bpp_resources.c
-  standalone_binres_load_extended_unicode_32bpp_specifications.c
-  Generating Code...
-  standalone_binres_load_extended_unicode_32bpp.vcxproj -> C:\Ting\guix\example_internal\standalone_binres_load_extended_unicode_32bpp\internal_build\vs_2019\Debug\standalone_binres_load_extended_unicode_32bpp.exe
