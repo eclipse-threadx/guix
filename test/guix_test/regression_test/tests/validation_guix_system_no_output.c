@@ -58,7 +58,6 @@ UINT test_event_handler(GX_WINDOW *window, GX_EVENT *event_ptr)
 
 static VOID control_thread_entry(ULONG input)
 {
-GX_BOOL                  test_successed = GX_TRUE;
 UINT                     status;
 GX_EVENT                 my_event;
 GX_PEN_CONFIGURATION     configure;
@@ -67,24 +66,17 @@ GX_MULTI_LINE_TEXT_VIEW  view;
 GX_FONT                 *font;
 GX_VALUE                 width;
 GX_STRING                string;
+int                      failed_tests = 0;
 
     memset(&my_event, 0, sizeof(GX_EVENT));
 
     /* Test gx_system_input_release. */
     _gx_system_input_capture((GX_WIDGET *)&button_screen);
     status = _gx_system_input_release((GX_WIDGET *)&window_screen);
-
-    if(status != GX_NO_CHANGE)
-    {
-        test_successed = GX_FALSE;
-    }
-
+    EXPECT_EQ(GX_NO_CHANGE, status);
     window_screen.gx_widget_status |= GX_STATUS_OWNS_INPUT;
     status = _gx_system_input_release((GX_WIDGET *)&window_screen);
-    if(status != GX_PTR_ERROR)
-    {
-        test_successed = GX_FALSE;
-    }
+    EXPECT_EQ(GX_PTR_ERROR, status);
 
     /* Test _gx_system_pen_flick_test. */
     configure.gx_pen_configuration_min_drag_dist = GX_FIXED_VAL_MAKE(10);
@@ -117,10 +109,7 @@ GX_STRING                string;
 
         my_event.gx_event_type = GX_EVENT_PEN_UP;
         gx_system_event_send(&my_event);
-        if(flick_count != 1)
-        {
-            test_successed = GX_FALSE;
-        }
+        EXPECT_EQ(1, flick_count);
     }
 
     /* Test _gx_system_private_string_delete. */
@@ -133,40 +122,30 @@ GX_STRING                string;
     gx_widget_delete((GX_WIDGET *)&view);
     if(view.gx_multi_line_text_view_text.gx_string_ptr == GX_NULL)
     {
-        test_successed = GX_FALSE;
+        failed_tests++;
+        PRINT_ERROR("");
+
     }
+
     gx_multi_line_text_view_create(&view, "text_view", &text_screen, 0, GX_STYLE_TEXT_COPY, 0, &text_screen.gx_widget_size);
     gx_widget_delete((GX_WIDGET *)&view);
-
-    if(view.gx_multi_line_text_view_text.gx_string_ptr != GX_NULL)
-    {
-        test_successed = GX_FALSE;
-    }
+    EXPECT_EQ(GX_NULL, view.gx_multi_line_text_view_text.gx_string_ptr);
 
     gx_system_memory_allocator_set(GX_NULL, GX_NULL);
     
     /* Test _gx_system_dirty_mark. */
     status = _gx_system_dirty_mark(GX_NULL);
-    if(status != GX_PTR_ERROR)
-    {
-        test_successed = GX_FALSE;
-    }
+    EXPECT_EQ(GX_PTR_ERROR, status);
 
     /* Test _gx_system_dirty_partial_add. */
     status = _gx_system_dirty_partial_add(GX_NULL, GX_NULL);
-    if(status != GX_PTR_ERROR)
-    {
-        test_successed = GX_FALSE;
-    }
+    EXPECT_EQ(GX_PTR_ERROR, status);
 
     /* Test _gx_system_dirty_entry_shift. */
     _gx_system_dirty_entry_shift(GX_NULL, 0, 0);
     gx_widget_status_add(&window_screen, GX_STATUS_VISIBLE | GX_STATUS_DIRTY);
     _gx_system_dirty_entry_shift((GX_WIDGET *)&window_screen, 10, 10);
-    if(_gx_system_lock_nesting != 0)
-    {
-        test_successed = GX_FALSE;
-    }
+    EXPECT_EQ(0, _gx_system_lock_nesting);
 
     /* Test gx_system_string_width_get. */
     memset(test_string, 'A', TEST_STRING_SIZE);
@@ -176,13 +155,9 @@ GX_STRING                string;
     string.gx_string_ptr = test_string;
     string.gx_string_length = TEST_STRING_SIZE;
     gx_system_string_width_get_ext(font, &string, &width);
-    if(width != 0x7fff)
-    {
-        test_successed = GX_FALSE;
-    }
+    EXPECT_EQ(0x7fff, width);
 
-
-    if(test_successed)
+    if(!failed_tests)
     {
         gx_validation_print_test_result(TEST_SUCCESS);
         exit(0);
