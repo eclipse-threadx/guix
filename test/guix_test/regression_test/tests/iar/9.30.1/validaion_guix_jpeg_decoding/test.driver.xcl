@@ -1,0 +1,15 @@
+"--endian=little" 
+
+"--cpu=Cortex-M85.no_pacbti" 
+
+"--cmse" 
+
+"--fpu=VFPv5_d16helium" 
+
+"--semihosting" 
+
+"--multicore_nr_of_cores=1" 
+
+
+
+

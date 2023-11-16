@@ -1,0 +1,11 @@
+# ninja log v5
+11	172	7073083820000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_8bit_palette/Debug/BrowseInfo/demo_jpeg_decode_8bit_palette_resources.xcl	a5e70c58fa048f7a
+1	200	7073083820000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_8bit_palette/Debug/BrowseInfo/demo_jpeg_decode_8bit_palette_specifications.xcl	79a3a945093868dc
+28	229	7073083830000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_8bit_palette/Debug/BrowseInfo/common_code.xcl	6fc321845c1882c8
+45	260	7073083830000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_8bit_palette/Debug/BrowseInfo/main.xcl	afc7c25e2dbcb7d
+221	700	7073083835319910	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_8bit_palette/Debug/BrowseInfo/demo_jpeg_decode_8bit_palette_specifications.pbi	66bce5b86c661bcd
+251	725	7073083835555123	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_8bit_palette/Debug/BrowseInfo/common_code.pbi	84191eb1c1c039be
+279	766	7073083835968545	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_8bit_palette/Debug/BrowseInfo/main.pbi	b46a8a5537b7e147
+192	952	7073083837820027	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_8bit_palette/Debug/BrowseInfo/demo_jpeg_decode_8bit_palette_resources.pbi	88c65bb41d5c9f22
+961	1131	7073083839696176	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_8bit_palette/Debug/BrowseInfo/demo_guix_jpeg_decode_8bit_palette.pbd	1655115aeacf6fb7
+1145	2026	7073083848240834	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_8bit_palette/Debug/BrowseInfo/demo_guix_jpeg_decode_8bit_palette.pbw	c0e7e9345e8177f2

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE GUIX_Studio_Resource>
+<resource_project>
+<header>
+<name>font_old_italic_4bpp</name>
+<version>56</version>
+<converter>GUIX Studio</converter>
+<studio_version>6030000</studio_version>
+<guix_version>60300</guix_version>
+<target_cpu>Generic</target_cpu>
+<target_tools>Generic</target_tools>
+<dave2d_graph_accelerator>FALSE</dave2d_graph_accelerator>
+</header>
+<display_info>
+<display_color_format>GX_COLOR_FORMAT_24XRGB</display_color_format>
+<rotation_angle>None</rotation_angle>
+</display_info>
+<resource>
+<type>FONT</type>
+<name>OLD_ITALIC_4BPP</name>
+<pathinfo>
+<pathname>..\common_resources\fonts\Italica Vetus 1-201.otf</pathname>
+<pathtype>project_relative</pathtype>
+</pathinfo>
+<compress>FALSE</compress>
+<height>35</height>
+<font_bits>4</font_bits>
+<font_kerning>FALSE</font_kerning>
+<font_page_data>
+<first_char>32</first_char>
+<last_char>126</last_char>
+</font_page_data>
+<font_page_data>
+<first_char>66304</first_char>
+<last_char>66339</last_char>
+</font_page_data>
+<font_page_data>
+<first_char>1114109</first_char>
+<last_char>1114109</last_char>
+</font_page_data>
+</resource>
+</resource_project>

@@ -1,0 +1,2097 @@
+###############################################################################
+#
+# IAR ELF Linker V9.30.1.335/W64 for ARM                  28/Jun/2023  17:33:18
+# Copyright 2007-2022 IAR Systems AB.
+#
+#    Output file                  =
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\Exe\demo_guix_jpeg_decode_565rgb.out
+#    Map file                     =
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\List\demo_guix_jpeg_decode_565rgb.map
+#    Import CMSE library file out =
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\Exe\demo_guix_jpeg_draw_import_lib.o
+#    Command line                 =
+#        -f
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\Exe\demo_guix_jpeg_decode_565rgb.out.rsp
+#        (C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\Obj\common_code.o
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\Obj\demo_jpeg_decode_565rgb_resources.o
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\Obj\demo_jpeg_decode_565rgb_specifications.o
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\Obj\main.o
+#        --no_out_extension -o
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\Exe\demo_guix_jpeg_decode_565rgb.out
+#        --map
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\List\demo_guix_jpeg_decode_565rgb.map
+#        --config
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\..\test_flash.icf
+#        --semihosting
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\..\gx\Debug\Exe\gx.a
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\..\tx\Debug\Exe\tx.a
+#        --entry __iar_program_start --vfe --text_out locale
+#        --import_cmse_lib_out
+#        C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\Exe\demo_guix_jpeg_draw_import_lib.o
+#        --cpu=Cortex-M85.no_pacbti --fpu=VFPv5_d16)
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__CPP_Runtime   = 1
+__Heap_Handler  = DLMalloc
+__SystemLibrary = DLib
+__dlib_version  = 6
+
+
+*******************************************************************************
+*** HEAP SELECTION
+***
+
+The advanced heap was selected because the application calls
+memory allocation functions outside of system library functions,
+there are calls to deallocation functions in the application, and
+the application appears to be primarily optimized for speed.
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A0":  place at address 0x1000'0000 { ro section .intvec };
+"P1":  place in [from 0x1000'0000 to 0x1007'ffff] { ro };
+define block CSTACK with size = 1'280, alignment = 8 { };
+define block HEAP with size = 260K, alignment = 8 { };
+"P2":  place in [from 0x2100'0000 to 0x211f'ffff] {
+          rw, block CSTACK, block HEAP };
+initialize by copy { rw };
+
+No sections matched the following patterns:
+
+  section FREE_MEM  in "P4"
+  section SD_RAM    in "P3"
+
+
+  Section            Kind         Address      Size  Object
+  -------            ----         -------      ----  ------
+"A0":                                          0x40
+  .intvec            ro code  0x1000'0000      0x40  vector_table_M.o [5]
+                            - 0x1000'0040      0x40
+
+"P1":                                      0x4'31b4
+  .rodata            const    0x1000'0040    0xa1a0  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1000'a1e0    0x8794  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1001'2974    0x7750  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1001'a0c4    0x76fc  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1002'17c0    0x3a20  demo_jpeg_decode_565rgb_resources.o [1]
+  .text              ro code  0x1002'51e0    0x1cc8  gx_image_reader_png_decode.o [3]
+  .text              ro code  0x1002'6ea8      0x2a  strncmp.o [2]
+  .text              ro code  0x1002'6ed2      0x7e  lz77_init_single.o [5]
+  .text              ro code  0x1002'6f50      0xa6  ABImemcpy.o [5]
+  .text              ro code  0x1002'6ff6      0x16  gx_display_driver_565rgb_native_color_get.o [3]
+  .text              ro code  0x1002'700c       0x6  ABImemclr4.o [5]
+  .text              ro code  0x1002'7012       0xa  xsprout.o [2]
+  .text              ro code  0x1002'701c      0x3a  ABImemset48.o [5]
+  .text              ro code  0x1002'7056       0x6  gx_display_driver_16bpp_row_pitch_get.o [3]
+  .text              ro code  0x1002'705c       0x6  ABImemclr.o [5]
+  .text              ro code  0x1002'7062       0x2  vectortrap_M.o [5]
+  .text              ro code  0x1002'7064      0x96  ABImemmove.o [5]
+  .text              ro code  0x1002'70fc      0x66  ABImemset.o [5]
+  .text              ro code  0x1002'7164    0x14d4  dlmalloc.o [2]
+  .text              ro code  0x1002'8638       0x6  abort.o [2]
+  .text              ro code  0x1002'8640      0x2c  xgetmemchunk.o [2]
+  .text              ro code  0x1002'866c      0x14  exit.o [6]
+  .text              ro code  0x1002'8680      0x7c  iarttio.o [6]
+  .text              ro code  0x1002'86fc       0x8  XShttio.o [2]
+  .text              ro code  0x1002'8704    0x10f4  gx_image_reader_jpeg_decode.o [3]
+  .text              ro code  0x1002'97f8      0x16  gx_utility_rectangle_define.o [3]
+  .text              ro code  0x1002'9810     0xee2  gx_display_driver_16bpp_pixelmap_draw.o [3]
+  .text              ro code  0x1002'a6f2      0x70  gx_display_driver_565rgb_pixel_blend.o [3]
+  .text              ro code  0x1002'a762      0x14  gx_display_driver_16bpp_pixel_write.o [3]
+  .text              ro code  0x1002'a778     0x4ac  gx_display_driver_16bpp_pixelmap_blend.o [3]
+  .text              ro code  0x1002'ac24     0xe78  gx_display_driver_16bpp_pixelmap_rotate.o [3]
+  .text              ro code  0x1002'ba9c       0x8  gx_utility_math_cos.o [3]
+  .text              ro code  0x1002'baa4      0x88  gx_utility_math_sin.o [3]
+  .text              ro code  0x1002'bb2c     0xbd0  gx_display_driver_generic_aliased_wide_arc_draw.o [3]
+  .text              ro code  0x1002'c6fc     0x12c  gx_utility_circle_point_get.o [3]
+  .text              ro code  0x1002'c828     0x36c  gx_display_driver_arc_clipping_get.o [3]
+  .text              ro code  0x1002'cb94      0x36  gx_utility_rectangle_point_detect.o [3]
+  .text              ro code  0x1002'cbcc      0xec  gx_utility_math_sqrt.o [3]
+  .text              ro code  0x1002'ccb8     0x35a  gx_display_driver_generic_aliased_filled_circle_draw.o [3]
+  .text              ro code  0x1002'd014     0x7c0  gx_display_driver_565rgb_horizontal_pixelmap_line_draw.o [3]
+  .text              ro code  0x1002'd7d4     0x7a4  gx_image_reader_pixel_write_callback_set.o [3]
+  .text              ro code  0x1002'df78      0xa6  gx_image_reader_nearest_palette_color_get.o [3]
+  .text              ro code  0x1002'e020     0x3bc  gx_image_reader_start.o [3]
+  .text              ro code  0x1002'e3dc      0x72  gx_image_reader_image_decode.o [3]
+  .text              ro code  0x1002'e450     0x6b8  gx_image_reader_pixel_read_callback_set.o [3]
+  .text              ro code  0x1002'eb08     0x388  gx_image_reader_colorspace_convert.o [3]
+  .text              ro code  0x1002'ee90     0x38e  gx_image_reader_rle_encode.o [3]
+  .text              ro code  0x1002'f220     0x764  gx_utility_easing_function_calculate.o [3]
+  .text              ro code  0x1002'f984     0x760  gx_display_driver_generic_wide_arc_draw.o [3]
+  .text              ro code  0x1003'00e4     0x222  gx_display_driver_generic_filled_circle_draw.o [3]
+  .text              ro code  0x1003'0308     0x740  gx_display_driver_generic_aliased_wide_ellipse_draw.o [3]
+  .text              ro code  0x1003'0a48     0x730  gx_display_driver_generic_polygon_fill.o [3]
+  .text              ro code  0x1003'1178     0x67c  gx_utility_canvas_to_bmp.o [3]
+  .text              ro code  0x1003'17f4      0x38  gx_utility_rectangle_inside_detect.o [3]
+  .text              ro code  0x1003'182c     0x634  gx_display_driver_generic_ellipse_draw.o [3]
+  .text              ro code  0x1003'1e60     0x634  gx_display_driver_16bpp_simple_line_draw.o [3]
+  .text              ro code  0x1003'2494     0x60a  gx_display_driver_simple_line_alpha_draw.o [3]
+  .text              ro code  0x1003'2a9e      0x50  gx_utility_rectangle_overlap_detect.o [3]
+  .text              ro code  0x1003'2af0     0x608  gx_display_driver_generic_arc_fill.o [3]
+  .text              ro code  0x1003'30f8     0x608  gx_display_driver_generic_simple_pie_fill.o [3]
+  .text              ro code  0x1003'3700     0x5c8  gx_display_driver_generic_aliased_ellipse_draw.o [3]
+  .text              ro code  0x1003'3cc8     0x5b4  gx_display_driver_generic_aliased_line_draw.o [3]
+  .text              ro code  0x1003'427c     0x544  gx_display_driver_generic_wide_ellipse_draw.o [3]
+  .text              ro code  0x1003'47c0     0x50c  gx_display_driver_generic_aliased_fixed_point_line_draw.o [3]
+  .text              ro code  0x1003'4ccc     0x4e5  xprintfsmall_nomb.o [2]
+  .text              ro code  0x1003'51b4      0x16  strchr.o [5]
+  .text              ro code  0x1003'51cc      0x40  xfail_s.o [2]
+  .text              ro code  0x1003'520c      0x36  strlen.o [5]
+  .text              ro code  0x1003'5244      0x58  memchr.o [5]
+  .text              ro code  0x1003'529c     0x4e0  common_code.o [1]
+  .text              ro code  0x1003'577c       0x4  heaptramp0.o [2]
+  .text              ro code  0x1003'5780     0x1d4  gx_display_driver_565rgb_setup.o [3]
+  .text              ro code  0x1003'5954      0xb8  fwrite.o [2]
+  .text              ro code  0x1003'5a0c      0x40  sprintf.o [2]
+  .text              ro code  0x1003'5a4c      0x2a  fopen.o [2]
+  .text              ro code  0x1003'5a76      0x18  gxe_utility_rectangle_define.o [3]
+  .text              ro code  0x1003'5a90      0x5c  gxe_utility_canvas_to_bmp.o [3]
+  .text              ro code  0x1003'5aec      0x7e  fclose.o [2]
+  .text              ro code  0x1003'5b6c      0x28  printf.o [2]
+  .text              ro code  0x1003'5b94      0x56  strnlen_s.o [5]
+  .text              ro code  0x1003'5bea      0x16  gx_window_background_draw.o [3]
+  .text              ro code  0x1003'5c00      0x20  gxe_context_pixelmap_get.o [3]
+  .text              ro code  0x1003'5c20      0x58  gxe_canvas_pixelmap_draw.o [3]
+  .text              ro code  0x1003'5c78      0x22  gxe_image_reader_create.o [3]
+  .text              ro code  0x1003'5c9a      0x18  gxe_image_reader_palette_set.o [3]
+  .text              ro code  0x1003'5cb4      0x54  gxe_image_reader_start.o [3]
+  .text              ro code  0x1003'5d08      0xb4  xfwprep.o [2]
+  .text              ro code  0x1003'5dbc      0xac  fflush.o [2]
+  .text              ro code  0x1003'5e68      0xd0  xfofind.o [2]
+  .text              ro code  0x1003'5f38      0xf8  xfoprep.o [2]
+  .text              ro code  0x1003'6030      0x18  close.o [6]
+  .text              ro code  0x1003'6048      0x14  remove.o [6]
+  .text              ro code  0x1003'605c      0xdc  gx_window_border_draw.o [3]
+  .text              ro code  0x1003'6138      0x24  gx_context_pixelmap_get.o [3]
+  .text              ro code  0x1003'615c      0xb0  gx_canvas_pixelmap_draw.o [3]
+  .text              ro code  0x1003'620c      0x48  gx_image_reader_create.o [3]
+  .text              ro code  0x1003'6254       0x8  gx_image_reader_palette_set.o [3]
+  .text              ro code  0x1003'625c      0x24  fseek.o [2]
+  .text              ro code  0x1003'6280      0x10  write.o [6]
+  .text              ro code  0x1003'6290      0x4c  xfopen.o [2]
+  .text              ro code  0x1003'62dc     0x110  XShHandles.o [2]
+  .text              ro code  0x1003'63ec      0x3a  gx_widget_border_width_get.o [3]
+  .text              ro code  0x1003'6426      0x48  gx_widget_client_get.o [3]
+  .text              ro code  0x1003'646e     0x46a  gx_widget_border_draw.o [3]
+  .text              ro code  0x1003'68d8       0xe  gx_widget_context_fill_set.o [3]
+  .text              ro code  0x1003'68e8      0xa8  gx_canvas_pixelmap_tile.o [3]
+  .text              ro code  0x1003'6990      0xd8  xfspos.o [2]
+  .text              ro code  0x1003'6a68      0x1e  dwrite.o [6]
+  .text              ro code  0x1003'6a86      0x46  open.o [6]
+  .text              ro code  0x1003'6acc      0x1c  gx_context_line_color_set.o [3]
+  .text              ro code  0x1003'6ae8      0x10  gx_context_brush_width_set.o [3]
+  .text              ro code  0x1003'6af8     0x240  gx_canvas_line_draw.o [3]
+  .text              ro code  0x1003'6d38       0xe  gx_widget_height_get.o [3]
+  .text              ro code  0x1003'6d48      0x34  gx_context_brush_define.o [3]
+  .text              ro code  0x1003'6d7c     0x1f8  gx_canvas_rectangle_draw.o [3]
+  .text              ro code  0x1003'6f74      0x1c  gx_context_fill_color_set.o [3]
+  .text              ro code  0x1003'6f90      0x84  gx_canvas_pixel_draw.o [3]
+  .text              ro code  0x1003'7014       0xc  xfgpos.o [2]
+  .text              ro code  0x1003'7020      0x4e  lseek.o [6]
+  .text              ro code  0x1003'706e      0x20  iarwstd.o [6]
+  .text              ro code  0x1003'708e      0x22  iarwrite.o [6]
+  .text              ro code  0x1003'70b0      0x30  gx_context_color_get.o [3]
+  .text              ro code  0x1003'70e0       0xe  gx_brush_define.o [3]
+  .rodata            const    0x1003'70f0     0x474  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1003'7564     0x420  gx_display_driver_generic_aliased_wide_circle_draw.o [3]
+  .text              ro code  0x1003'7984     0x3dc  gx_display_driver_generic_alphamap_draw.o [3]
+  .text              ro code  0x1003'7d60     0x328  gx_display_driver_generic_aliased_arc_draw.o [3]
+  .text              ro code  0x1003'8088     0x316  gx_display_driver_565rgb_glyph_1bit_draw.o [3]
+  .text              ro code  0x1003'83a0     0x304  gx_system_initialize.o [3]
+  .text              ro code  0x1003'86a4      0x98  gx_utility_ltoa.o [3]
+  .text              ro code  0x1003'873c      0x26  gx_utility_string_length_check.o [3]
+  .text              ro code  0x1003'8762      0x18  gx_animation_create.o [3]
+  .text              ro code  0x1003'877c      0x7c  tx_timer_create.o [7]
+  .text              ro code  0x1003'87f8      0x74  tx_queue_create.o [7]
+  .text              ro code  0x1003'886c      0x60  tx_mutex_create.o [7]
+  .text              ro code  0x1003'88cc     0x12c  tx_thread_create.o [7]
+  .text              ro code  0x1003'89f8      0x60  tx_timer_system_activate.o [7]
+  .text              ro code  0x1003'8a58      0x44  tx_thread_stack_build.o [7]
+  .text              ro code  0x1003'8a9c     0x124  tx_thread_system_resume.o [7]
+  .text              ro code  0x1003'8bc0      0x3c  tx_thread_system_preempt_check.o [7]
+  .text              ro code  0x1003'8bfc      0x2c  tx_timer_system_deactivate.o [7]
+  .text              ro code  0x1003'8c28     0x300  gx_display_driver_generic_ellipse_fill.o [3]
+  .text              ro code  0x1003'8f28     0x2f8  gx_display_driver_generic_wide_circle_draw.o [3]
+  .text              ro code  0x1003'9220     0x2d4  gx_display_driver_generic_rotated_wide_line_fill.o [3]
+  .text              ro code  0x1003'94f4     0x2d4  gx_display_driver_generic_wide_line_fill.o [3]
+  .text              ro code  0x1003'97c8     0x2ce  gx_widget_event_process.o [3]
+  .text              ro code  0x1003'9a96      0x1c  gx_widget_children_event_process.o [3]
+  .text              ro code  0x1003'9ab2      0x30  gx_widget_event_generate.o [3]
+  .text              ro code  0x1003'9ae2      0x10  gx_system_dirty_mark.o [3]
+  .text              ro code  0x1003'9af2      0x16  gx_widget_event_to_parent.o [3]
+  .text              ro code  0x1003'9b08      0x1e  gx_widget_focus_next.o [3]
+  .text              ro code  0x1003'9b26      0x1e  gx_widget_focus_previous.o [3]
+  .text              ro code  0x1003'9b44      0xb4  gx_system_input_release.o [3]
+  .text              ro code  0x1003'9bf8      0x68  gx_system_event_send.o [3]
+  .text              ro code  0x1003'9c60     0x182  gx_system_dirty_partial_add.o [3]
+  .text              ro code  0x1003'9de4      0x88  gx_system_focus_claim.o [3]
+  .text              ro code  0x1003'9e6c      0x40  gx_system_lock.o [3]
+  .text              ro code  0x1003'9eac       0xc  gx_widget_status_remove.o [3]
+  .text              ro code  0x1003'9eb8      0x40  gx_system_unlock.o [3]
+  .text              ro code  0x1003'9ef8      0x30  gx_system_pen_speed_init.o [3]
+  .text              ro code  0x1003'9f28      0x74  gx_system_pen_speed_update.o [3]
+  .text              ro code  0x1003'9f9c     0x16c  tx_queue_send.o [7]
+  .text              ro code  0x1003'a108      0x88  gx_system_pen_flick_test.o [3]
+  .text              ro code  0x1003'a190      0x20  gx_utility_rectangle_shift.o [3]
+  .text              ro code  0x1003'a1b0      0x42  gx_utility_rectangle_combine.o [3]
+  .text              ro code  0x1003'a1f4      0x18  gx_system_error_process.o [3]
+  .text              ro code  0x1003'a20c      0x2a  gx_widget_child_detect.o [3]
+  .text              ro code  0x1003'a238      0x14  tx_thread_identify.o [7]
+  .text              ro code  0x1003'a24c     0x114  tx_mutex_get.o [7]
+  .text              ro code  0x1003'a360     0x1e0  tx_mutex_put.o [7]
+  .text              ro code  0x1003'a540      0x14  tx_time_get.o [7]
+  .text              ro code  0x1003'a554     0x1a0  tx_thread_system_suspend.o [7]
+  .text              ro code  0x1003'a6f4      0xc8  tx_mutex_priority_change.o [7]
+  .text              ro code  0x1003'a7bc      0xa8  tx_mutex_prioritize.o [7]
+  .text              ro code  0x1003'a864     0x2c0  gx_display_driver_generic_arc_draw.o [3]
+  .text              ro code  0x1003'ab24     0x2a0  gx_display_driver_generic_glyph_4bpp_draw.o [3]
+  .text              ro code  0x1003'adc4     0x294  gx_display_driver_generic_aliased_circle_draw.o [3]
+  .text              ro code  0x1003'b058     0x290  demo_jpeg_decode_565rgb_specifications.o [1]
+  .text              ro code  0x1003'b2e8      0x7c  gxe_window_create.o [3]
+  .text              ro code  0x1003'b364      0x54  gxe_window_wallpaper_set.o [3]
+  .text              ro code  0x1003'b3b8      0x54  gxe_menu_insert.o [3]
+  .text              ro code  0x1003'b40c      0x5c  gxe_widget_fill_color_set.o [3]
+  .text              ro code  0x1003'b468      0x16  gxe_widget_status_remove.o [3]
+  .text              ro code  0x1003'b480      0x60  gxe_widget_draw_set.o [3]
+  .text              ro code  0x1003'b4e0      0x1a  gxe_widget_event_process_set.o [3]
+  .text              ro code  0x1003'b4fc      0x20  gxe_widget_allocate.o [3]
+  .text              ro code  0x1003'b51c      0x68  gxe_widget_attach.o [3]
+  .text              ro code  0x1003'b584      0xb0  strcmp_fast.o [5]
+  .text              ro code  0x1003'b634      0x70  gxe_display_create.o [3]
+  .text              ro code  0x1003'b6a4      0x50  gxe_display_color_table_set.o [3]
+  .text              ro code  0x1003'b6f4      0x4c  gxe_display_font_table_set.o [3]
+  .text              ro code  0x1003'b740      0x4c  gxe_display_pixelmap_table_set.o [3]
+  .text              ro code  0x1003'b78c      0x50  gxe_system_scroll_appearance_set.o [3]
+  .text              ro code  0x1003'b7dc      0xb4  gxe_display_language_table_set.o [3]
+  .text              ro code  0x1003'b890      0x6c  gxe_display_active_language_set.o [3]
+  .text              ro code  0x1003'b8fc      0xa8  gxe_canvas_create.o [3]
+  .text              ro code  0x1003'b9a4      0x74  gxe_window_root_create.o [3]
+  .text              ro code  0x1003'ba18      0x84  gx_window_create.o [3]
+  .text              ro code  0x1003'ba9c      0x28  gx_window_wallpaper_set.o [3]
+  .text              ro code  0x1003'bac4      0x22  gx_menu_insert.o [3]
+  .text              ro code  0x1003'bae6      0x1c  gx_widget_fill_color_set.o [3]
+  .text              ro code  0x1003'bb02       0x6  gx_widget_draw_set.o [3]
+  .text              ro code  0x1003'bb08       0x6  gx_widget_event_process_set.o [3]
+  .text              ro code  0x1003'bb10      0x2c  gx_widget_allocate.o [3]
+  .text              ro code  0x1003'bb3c      0x30  gx_widget_attach.o [3]
+  .text              ro code  0x1003'bb6c      0x60  gx_display_create.o [3]
+  .text              ro code  0x1003'bbcc      0x12  gx_display_color_table_set.o [3]
+  .text              ro code  0x1003'bbde      0x12  gx_display_font_table_set.o [3]
+  .text              ro code  0x1003'bbf0      0x12  gx_display_pixelmap_table_set.o [3]
+  .text              ro code  0x1003'bc04      0x50  gx_system_scroll_appearance_set.o [3]
+  .text              ro code  0x1003'bc54      0x50  gx_display_language_table_set.o [3]
+  .text              ro code  0x1003'bca4      0x48  gx_display_active_language_set.o [3]
+  .text              ro code  0x1003'bcec      0xb8  gx_canvas_create.o [3]
+  .text              ro code  0x1003'bda4      0x60  gx_window_root_create.o [3]
+  .text              ro code  0x1003'be04      0xac  gx_widget_create.o [3]
+  .text              ro code  0x1003'beb0      0x46  gx_widget_link.o [3]
+  .text              ro code  0x1003'bef6      0x24  gx_widget_detach.o [3]
+  .text              ro code  0x1003'bf1c      0x40  gx_display_canvas_dirty.o [3]
+  .text              ro code  0x1003'bf5c      0x38  gx_system_all_canvas_dirty.o [3]
+  .text              ro code  0x1003'bf94      0x7c  gx_widget_unlink.o [3]
+  .text              ro code  0x1003'c010      0x5e  gx_widget_show.o [3]
+  .text              ro code  0x1003'c06e      0x76  gx_widget_hide.o [3]
+  .text              ro code  0x1003'c0e4      0x5a  gx_widget_clipping_update.o [3]
+  .text              ro code  0x1003'c140      0x30  gx_system_views_free.o [3]
+  .text              ro code  0x1003'c170      0x24  gx_window_view_update_detect.o [3]
+  .text              ro code  0x1003'c194      0xa8  gx_widget_nav_order_initialize.o [3]
+  .text              ro code  0x1003'c23c      0x76  gx_widget_child_clipping_update.o [3]
+  .text              ro code  0x1003'c2b4     0x284  gx_display_driver_generic_circle_fill.o [3]
+  .rodata            const    0x1003'c538     0x268  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1003'c7a0     0x268  demo_jpeg_decode_565rgb_resources.o [1]
+  .text              ro code  0x1003'ca08     0x220  gx_display_driver_generic_circle_draw.o [3]
+  .text              ro code  0x1003'cc28     0x1f0  tx_queue_receive.o [7]
+  .rodata            const    0x1003'ce18     0x1e4  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1003'cffc     0x1b4  demo_jpeg_decode_565rgb_resources.o [1]
+  .text              ro code  0x1003'd1b0     0x18c  gx_animation_update.o [3]
+  .text              ro code  0x1003'd33c     0x11a  gx_animation_complete.o [3]
+  .text              ro code  0x1003'd456      0x30  gx_canvas_alpha_set.o [3]
+  .text              ro code  0x1003'd486      0xba  gx_canvas_offset_set.o [3]
+  .text              ro code  0x1003'd540      0xde  gx_widget_scroll_shift.o [3]
+  .text              ro code  0x1003'd61e      0xb8  gx_widget_block_move.o [3]
+  .text              ro code  0x1003'd6d8     0x178  gx_widget_shift.o [3]
+  .text              ro code  0x1003'd850      0x70  gx_animation_stop.o [3]
+  .text              ro code  0x1003'd8c0      0x3c  gx_system_screen_stack_push.o [3]
+  .text              ro code  0x1003'd8fc      0xa8  gx_widget_delete.o [3]
+  .text              ro code  0x1003'd9a4      0xc0  gx_canvas_hide.o [3]
+  .text              ro code  0x1003'da64     0x150  gx_system_canvas_refresh.o [3]
+  .text              ro code  0x1003'dbb4      0x28  gx_system_animation_free.o [3]
+  .text              ro code  0x1003'dbdc      0x38  gx_canvas_dirty_mark.o [3]
+  .text              ro code  0x1003'dc14      0x2c  gx_widget_canvas_get.o [3]
+  .text              ro code  0x1003'dc40       0xe  gx_widget_width_get.o [3]
+  .text              ro code  0x1003'dc50     0x188  gx_canvas_drawing_initiate.o [3]
+  .text              ro code  0x1003'ddd8      0xb4  gx_canvas_block_move.o [3]
+  .text              ro code  0x1003'de8c      0x60  gx_canvas_drawing_complete.o [3]
+  .text              ro code  0x1003'deec      0x78  gx_system_event_fold.o [3]
+  .text              ro code  0x1003'df64      0xac  tx_timer_deactivate.o [7]
+  .text              ro code  0x1003'e010      0x3c  gx_system_dirty_list_remove.o [3]
+  .text              ro code  0x1003'e04c      0x7c  gx_system_timer_stop.o [3]
+  .text              ro code  0x1003'e0c8      0x5c  gx_system_event_remove.o [3]
+  .text              ro code  0x1003'e124      0x14  gx_widget_free.o [3]
+  .text              ro code  0x1003'e138      0x18  gx_system_views_update.o [3]
+  .text              ro code  0x1003'e150     0x152  gx_system_dirty_list_trim.o [3]
+  .text              ro code  0x1003'e2a4      0x58  gx_widget_children_draw.o [3]
+  .text              ro code  0x1003'e2fc     0x154  gx_canvas_composite_create.o [3]
+  .text              ro code  0x1003'e450      0x36  gx_window_root_find.o [3]
+  .text              ro code  0x1003'e486       0xe  gx_context_brush_default.o [3]
+  .text              ro code  0x1003'e494      0x70  gx_system_all_views_free.o [3]
+  .text              ro code  0x1003'e504      0x58  gx_system_root_view_add.o [3]
+  .text              ro code  0x1003'e55c      0x1e  gx_brush_default.o [3]
+  .text              ro code  0x1003'e57a      0xec  gx_system_view_split.o [3]
+  .text              ro code  0x1003'e666      0x24  gx_system_view_add.o [3]
+  .text              ro code  0x1003'e68c      0x7e  gx_system_view_fold.o [3]
+  .text              ro code  0x1003'e70c      0x24  gx_system_free_view_get.o [3]
+  .text              ro code  0x1003'e730     0x188  gx_display_driver_generic_simple_wide_line_draw.o [3]
+  .text              ro code  0x1003'e8b8     0x180  gx_display_driver_generic_wide_line_points_calculate.o [3]
+  .text              ro code  0x1003'ea38     0x182  gx_display_driver_generic_aliased_wide_line_draw.o [3]
+  .rodata            const    0x1003'ebbc     0x168  gx_utility_math_sin.o [3]
+  .text              ro code  0x1003'ed24     0x154  gx_display_driver_16bpp_block_move.o [3]
+  .text              ro code  0x1003'ee78     0x148  gx_display_driver_generic_glyph_8bpp_draw.o [3]
+  .text              ro code  0x1003'efc0     0x134  main.o [1]
+  .text              ro code  0x1003'f0f4      0x38  gxe_system_initialize.o [3]
+  .text              ro code  0x1003'f12c      0x44  gxe_system_memory_allocator_set.o [3]
+  .text              ro code  0x1003'f170      0x58  gxe_widget_show.o [3]
+  .text              ro code  0x1003'f1c8      0x38  gxe_system_start.o [3]
+  .text              ro code  0x1003'f200      0x5c  gxe_canvas_drawing_initiate.o [3]
+  .text              ro code  0x1003'f25c      0x12  gx_window_draw.o [3]
+  .text              ro code  0x1003'f270      0x14  gx_system_memory_allocator_set.o [3]
+  .text              ro code  0x1003'f284      0x1c  gx_system_start.o [3]
+  .text              ro code  0x1003'f2a0      0x6c  tx_thread_resume.o [7]
+  .text              ro code  0x1003'f30c     0x134  gx_window_event_process.o [3]
+  .text              ro code  0x1003'f440      0x74  gx_widget_child_focus_assign.o [3]
+  .text              ro code  0x1003'f4b4      0xd4  gx_widget_front_move.o [3]
+  .text              ro code  0x1003'f588      0x72  gx_window_scroll.o [3]
+  .text              ro code  0x1003'f5fc     0x128  gx_display_driver_565rgb_canvas_blend.o [3]
+  .text              ro code  0x1003'f724     0x106  gx_display_driver_generic_pie_fill.o [3]
+  .rodata            const    0x1003'f82c     0x100  gx_utility_math_sqrt.o [3]
+  .rodata            const    0x1003'f92c      0xe4  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1003'fa10      0xd4  gx_system_event_dispatch.o [3]
+  .text              ro code  0x1003'fae4      0x58  gx_system_top_root_find.o [3]
+  .text              ro code  0x1003'fb3c      0x3e  gx_system_top_widget_find.o [3]
+  .text              ro code  0x1003'fb7c      0xc0  tx_mutex_cleanup.o [7]
+  .rodata            const    0x1003'fc3c      0xb4  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1003'fcf0      0xb0  gx_display_driver_16bpp_horizontal_pattern_line_draw.o [3]
+  .text              ro code  0x1003'fda0      0xae  gx_display_driver_16bpp_canvas_copy.o [3]
+  .rodata            const    0x1003'fe50      0xa8  main.o [1]
+  .rodata            const    0x1003'fef8      0xa8  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1003'ffa0      0xa8  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'0048      0x9a  gx_window_scroll_info_get.o [3]
+  .rodata            const    0x1004'00e4      0x90  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'0174      0x90  gx_display_driver_16bpp_vertical_pattern_line_draw.o [3]
+  .rodata            const    0x1004'0204      0x84  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0288      0x84  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'030c      0x84  gx_system_thread_entry.o [3]
+  .text              ro code  0x1004'0390      0x6c  gx_system_timer_update.o [3]
+  .text              ro code  0x1004'03fc      0x84  tx_queue_cleanup.o [7]
+  .text              ro code  0x1004'0480      0x82  gx_display_driver_16bpp_horizontal_line_draw.o [3]
+  .text              ro code  0x1004'0502      0x4e  gx_display_driver_horizontal_line_alpha_draw.o [3]
+  .text              ro code  0x1004'0550      0x7e  gx_display_driver_16bpp_vertical_line_draw.o [3]
+  .text              ro code  0x1004'05ce      0x50  gx_display_driver_vertical_line_alpha_draw.o [3]
+  .text              ro code  0x1004'0620      0x7c  tx_thread_shell_entry.o [7]
+  .rodata            const    0x1004'069c      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0714      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'078c      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0804      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'087c      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'08f4      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'096c      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'09e4      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0a5c      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0ad4      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0b4c      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0bc4      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0c3c      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0cb4      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0d2c      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0da4      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0e1c      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0e94      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0f0c      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0f84      0x78  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'0ffc      0x74  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'1070      0x70  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'10e0      0x70  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1150      0x6c  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'11bc      0x6c  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1228      0x6c  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1294      0x6c  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1300      0x6c  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'136c      0x6c  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'13d8      0x68  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1440      0x68  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'14a8      0x64  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'150c      0x64  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1570      0x64  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'15d4      0x64  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1638      0x64  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'169c      0x64  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1700      0x64  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1764      0x64  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'17c8      0x64  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'182c      0x64  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'1890      0x62  gx_display_driver_generic_polygon_draw.o [3]
+  .rodata            const    0x1004'18f4      0x60  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1954      0x60  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'19b4      0x60  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1a14      0x60  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1a74      0x5c  common_code.o [1]
+  .rodata            const    0x1004'1ad0      0x58  common_code.o [1]
+  .rodata            const    0x1004'1b28      0x58  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1b80      0x54  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1bd4      0x54  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1c28      0x54  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1c7c      0x54  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1cd0      0x54  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'1d24      0x54  fputc.o [2]
+  .rodata            const    0x1004'1d78      0x50  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1dc8      0x50  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1e18      0x50  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1e68      0x50  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1eb8      0x4c  gx_image_reader_png_decode.o [3]
+  .text              ro code  0x1004'1f04      0x4c  gx_display_driver_565rgb_png_draw.o [3]
+  .rodata            const    0x1004'1f50      0x48  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1f98      0x48  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'1fe0      0x48  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2028      0x48  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2070      0x48  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'20b8      0x48  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2100      0x48  xfoprep.o [2]
+  .text              ro code  0x1004'2148      0x48  gx_window_root_event_process.o [3]
+  .text              ro code  0x1004'2190      0x1c  gx_canvas_shift.o [3]
+  .rodata            const    0x1004'21ac      0x44  demo_jpeg_decode_565rgb_specifications.o [1]
+  .text              ro code  0x1004'21f0      0x44  gx_system_timer_expiration.o [3]
+  .text              ro code  0x1004'2234      0x44  putchar.o [2]
+  .rodata            const    0x1004'2278      0x40  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'22b8      0x40  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'22f8      0x40  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2338      0x40  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2378      0x40  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'23b8      0x40  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'23f8      0x40  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2438      0x40  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2478      0x40  gx_image_reader_jpeg_decode.o [3]
+  .text              ro code  0x1004'24b8      0x40  xcloseall.o [2]
+  .rodata            const    0x1004'24f8      0x38  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'2530      0x38  zero_init3.o [5]
+  .rodata            const    0x1004'2568      0x34  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'259c      0x34  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'25d0      0x34  tx_thread_timeout.o [7]
+  .rodata            const    0x1004'2604      0x30  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2634      0x28  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'265c      0x28  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2684      0x28  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'26ac      0x28  data_init.o [5]
+  .text              ro code  0x1004'26d4      0x26  gx_widget_background_draw.o [3]
+  .rodata            const    0x1004'26fc      0x24  common_code.o [1]
+  .rodata            const    0x1004'2720      0x24  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2744      0x24  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2768      0x24  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'278c      0x22  fpinit_M.o [4]
+  .iar.init_table    const    0x1004'27b0      0x20  - Linker created -
+  .rodata            const    0x1004'27d0      0x20  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'27f0      0x1e  cmain.o [5]
+  .text              ro code  0x1004'280e       0x4  low_level_init.o [2]
+  .text              ro code  0x1004'2812       0x4  exit.o [2]
+  .text              ro code  0x1004'2818       0xe  cexit.o [5]
+  .rodata            const    0x1004'2828      0x1c  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'2844      0x1c  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'2860      0x1c  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'287c      0x1c  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'2898      0x1c  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'28b4      0x1c  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'28d0      0x1c  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'28ec      0x1c  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'2908      0x1c  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'2924      0x1c  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2940      0x1c  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'295c      0x1c  cstartup_M.o [5]
+  .rodata            const    0x1004'2978      0x18  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'2990      0x18  gx_display_driver_565rgb_jpeg_draw.o [3]
+  .text              ro code  0x1004'29a8      0x16  xprout.o [2]
+  .rodata            const    0x1004'29c0      0x14  demo_jpeg_decode_565rgb_specifications.o [1]
+  .rodata            const    0x1004'29d4      0x14  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'29e8      0x12  gx_widget_draw.o [3]
+  .rodata            const    0x1004'29fc      0x10  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'2a0c      0x10  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2a1c       0xc  demo_jpeg_decode_565rgb_resources.o [1]
+  .rodata            const    0x1004'2a28       0xc  demo_jpeg_decode_565rgb_specifications.o [1]
+  .rodata            const    0x1004'2a34       0xc  demo_jpeg_decode_565rgb_specifications.o [1]
+  .rodata            const    0x1004'2a40       0xc  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2a4c       0xc  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2a58       0x8  gx_system_font_8bpp.o [3]
+  .rodata            const    0x1004'2a60       0x8  gx_system_font_8bpp.o [3]
+  .text              ro code  0x1004'2a68       0x0  cstart_closeall.o [5]
+  .rodata            const    0x1004'2a68       0x0  zero_init3.o [5]
+  .rodata            const    0x1004'2a68       0x0  lz77_init_single.o [5]
+  Initializer bytes  const    0x1004'2a68     0x78c  <for P2-1>
+                            - 0x1004'31f4  0x4'31b4
+
+"P2", part 1 of 3:                            0x9cc
+  P2-1                        0x2100'0000     0x9cc  <Init block>
+    .data            inited   0x2100'0000      0x10  demo_jpeg_decode_565rgb_resources.o [1]
+    .data            inited   0x2100'0010      0x28  demo_jpeg_decode_565rgb_resources.o [1]
+    .data            inited   0x2100'0038       0x4  demo_jpeg_decode_565rgb_resources.o [1]
+    .data            inited   0x2100'003c      0x70  demo_jpeg_decode_565rgb_resources.o [1]
+    .data            inited   0x2100'00ac       0x4  demo_jpeg_decode_565rgb_resources.o [1]
+    .data            inited   0x2100'00b0      0x38  demo_jpeg_decode_565rgb_specifications.o [1]
+    .data            inited   0x2100'00e8       0xc  main.o [1]
+    .data            inited   0x2100'00f4       0x4  tx_thread_initialize.o [7]
+    .data            inited   0x2100'00f8     0x7d4  gx_utility_easing_function_calculate.o [3]
+    .data            inited   0x2100'08cc      0x48  xfiles.o [2]
+    .data            inited   0x2100'0914      0x48  xfiles.o [2]
+    .data            inited   0x2100'095c      0x48  xfiles.o [2]
+    .data            inited   0x2100'09a4      0x20  xfiles.o [2]
+    .data            inited   0x2100'09c4       0x8  XShttio.o [2]
+                            - 0x2100'09cc     0x9cc
+
+"P2", part 2 of 3:                         0x7'5690
+  .bss               zero     0x2100'09cc  0x7'0800  demo_jpeg_decode_565rgb_specifications.o [1]
+  .bss               zero     0x2107'11cc    0x2058  gx_system_initialize.o [3]
+  .bss               zero     0x2107'3224    0x1900  gx_system_initialize.o [3]
+  .bss               zero     0x2107'4b24     0x56c  tx_timer_initialize.o [7]
+  .bss               zero     0x2107'5090     0x400  common_code.o [1]
+  .bss               zero     0x2107'5490     0x33c  demo_jpeg_decode_565rgb_specifications.o [1]
+  .bss               zero     0x2107'57cc     0x230  gx_display_driver_generic_polygon_fill.o [3]
+  .bss               zero     0x2107'59fc     0x1d8  dlmalloc.o [2]
+  .bss               zero     0x2107'5bd4     0x124  demo_jpeg_decode_565rgb_specifications.o [1]
+  .bss               zero     0x2107'5cf8      0xa8  tx_thread_initialize.o [7]
+  .bss               zero     0x2107'5da0      0x80  XShHandles.o [2]
+  .bss               zero     0x2107'5e20      0x78  demo_jpeg_decode_565rgb_specifications.o [1]
+  .bss               zero     0x2107'5e98      0x70  demo_jpeg_decode_565rgb_specifications.o [1]
+  .bss               zero     0x2107'5f08      0x50  xfiles.o [2]
+  .bss               zero     0x2107'5f58      0x50  xfiles.o [2]
+  .bss               zero     0x2107'5fa8      0x30  tx_initialize_high_level.o [7]
+  .bss               zero     0x2107'5fd8      0x28  common_code.o [1]
+  .bss               zero     0x2107'6000      0x28  gx_display_driver_generic_wide_line_points_calculate.o [3]
+  .bss               zero     0x2107'6028      0x18  dlmalloc.o [2]
+  .bss               zero     0x2107'6040       0x8  common_code.o [1]
+  .bss               zero     0x2107'6048       0x8  gx_image_reader_png_decode.o [3]
+  .bss               zero     0x2107'6050       0x4  demo_jpeg_decode_565rgb_specifications.o [1]
+  .bss               zero     0x2107'6054       0x4  xgetmemchunk.o [2]
+  .bss               zero     0x2107'6058       0x4  xfail_s.o [2]
+                            - 0x2107'605c  0x7'5690
+
+"P2", part 3 of 3:                         0x4'1500
+  CSTACK                      0x2107'6060     0x500  <Block>
+    CSTACK           uninit   0x2107'6060     0x500  <Block tail>
+  HEAP                        0x2107'6560  0x4'1000  <Block>
+    HEAP             uninit   0x2107'6560  0x4'1000  <Block tail>
+                            - 0x210b'7560  0x4'1500
+
+Unused ranges:
+
+         From           To       Size
+         ----           --       ----
+  0x1004'31f4  0x1007'ffff   0x3'ce0c
+  0x2107'605c  0x2107'605f        0x4
+  0x210b'7560  0x211f'ffff  0x14'8aa0
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address      Size
+          -------      ----
+Zero (__iar_zero_init3)
+    1 destination range, total size 0x7'5690:
+          0x2100'09cc  0x7'5690
+
+Copy/lz77 (__iar_lz77_init_single3)
+    1 source range, total size 0x78c (77% of destination):
+          0x1004'2a68     0x78c
+    1 destination range, total size 0x9cc:
+          0x2100'0000     0x9cc
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                                                     ro code  ro data  rw data
+    ------                                                     -------  -------  -------
+command line/config:
+    ------------------------------------------------------------------------------------
+    Total:
+
+C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\Obj: [1]
+    common_code.o                                                1'248      216    1'072
+    demo_jpeg_decode_565rgb_resources.o                                 154'651      176
+    demo_jpeg_decode_565rgb_specifications.o                       656      155  462'212
+    main.o                                                         308      177       12
+    ------------------------------------------------------------------------------------
+    Total:                                                       2'212  155'199  463'472
+
+dl7M_tlf.a: [2]
+    XShHandles.o                                                   272               128
+    XShttio.o                                                        8        7        8
+    abort.o                                                          6
+    dlmalloc.o                                                   5'332               496
+    exit.o                                                           4
+    fclose.o                                                       126
+    fflush.o                                                       172
+    fopen.o                                                         42
+    fputc.o                                                         84
+    fseek.o                                                         36
+    fwrite.o                                                       184
+    heaptramp0.o                                                     4
+    low_level_init.o                                                 4
+    printf.o                                                        40
+    putchar.o                                                       68
+    sprintf.o                                                       64
+    strncmp.o                                                       42
+    xcloseall.o                                                     64
+    xfail_s.o                                                       64                 4
+    xfgpos.o                                                        12
+    xfiles.o                                                                191      408
+    xfofind.o                                                      208
+    xfopen.o                                                        76
+    xfoprep.o                                                      248       72
+    xfspos.o                                                       216
+    xfwprep.o                                                      180
+    xgetmemchunk.o                                                  44                 4
+    xprintfsmall_nomb.o                                          1'253
+    xprout.o                                                        22
+    xsprout.o                                                       10
+    ------------------------------------------------------------------------------------
+    Total:                                                       8'885      270    1'048
+
+gx.a: [3]
+    gx_animation_complete.o                                        282
+    gx_animation_create.o                                           24
+    gx_animation_stop.o                                            112
+    gx_animation_update.o                                          396
+    gx_brush_default.o                                              30
+    gx_brush_define.o                                               14
+    gx_canvas_alpha_set.o                                           48
+    gx_canvas_block_move.o                                         180
+    gx_canvas_composite_create.o                                   340
+    gx_canvas_create.o                                             184
+    gx_canvas_dirty_mark.o                                          56
+    gx_canvas_drawing_complete.o                                    96
+    gx_canvas_drawing_initiate.o                                   392
+    gx_canvas_hide.o                                               192
+    gx_canvas_line_draw.o                                          576
+    gx_canvas_offset_set.o                                         186
+    gx_canvas_pixel_draw.o                                         132
+    gx_canvas_pixelmap_draw.o                                      176
+    gx_canvas_pixelmap_tile.o                                      168
+    gx_canvas_rectangle_draw.o                                     504
+    gx_canvas_shift.o                                               28
+    gx_context_brush_default.o                                      14
+    gx_context_brush_define.o                                       52
+    gx_context_brush_width_set.o                                    16
+    gx_context_color_get.o                                          48
+    gx_context_fill_color_set.o                                     28
+    gx_context_line_color_set.o                                     28
+    gx_context_pixelmap_get.o                                       36
+    gx_display_active_language_set.o                                72
+    gx_display_canvas_dirty.o                                       64
+    gx_display_color_table_set.o                                    18
+    gx_display_create.o                                             96
+    gx_display_driver_16bpp_block_move.o                           340
+    gx_display_driver_16bpp_canvas_copy.o                          174
+    gx_display_driver_16bpp_horizontal_line_draw.o                 130
+    gx_display_driver_16bpp_horizontal_pattern_line_draw.o         176
+    gx_display_driver_16bpp_pixel_write.o                           20
+    gx_display_driver_16bpp_pixelmap_blend.o                     1'196
+    gx_display_driver_16bpp_pixelmap_draw.o                      3'810
+    gx_display_driver_16bpp_pixelmap_rotate.o                    3'704
+    gx_display_driver_16bpp_row_pitch_get.o                          6
+    gx_display_driver_16bpp_simple_line_draw.o                   1'588
+    gx_display_driver_16bpp_vertical_line_draw.o                   126
+    gx_display_driver_16bpp_vertical_pattern_line_draw.o           144
+    gx_display_driver_565rgb_canvas_blend.o                        296
+    gx_display_driver_565rgb_glyph_1bit_draw.o                     790
+    gx_display_driver_565rgb_horizontal_pixelmap_line_draw.o     1'984
+    gx_display_driver_565rgb_jpeg_draw.o                            24
+    gx_display_driver_565rgb_native_color_get.o                     22
+    gx_display_driver_565rgb_pixel_blend.o                         112
+    gx_display_driver_565rgb_png_draw.o                             76
+    gx_display_driver_565rgb_setup.o                               468
+    gx_display_driver_arc_clipping_get.o                           876
+    gx_display_driver_generic_aliased_arc_draw.o                   808
+    gx_display_driver_generic_aliased_circle_draw.o                660
+    gx_display_driver_generic_aliased_ellipse_draw.o             1'480
+    gx_display_driver_generic_aliased_filled_circle_draw.o         858
+    gx_display_driver_generic_aliased_fixed_point_line_draw.o    1'292
+    gx_display_driver_generic_aliased_line_draw.o                1'460
+    gx_display_driver_generic_aliased_wide_arc_draw.o            3'024
+    gx_display_driver_generic_aliased_wide_circle_draw.o         1'056
+    gx_display_driver_generic_aliased_wide_ellipse_draw.o        1'856
+    gx_display_driver_generic_aliased_wide_line_draw.o             386
+    gx_display_driver_generic_alphamap_draw.o                      988
+    gx_display_driver_generic_arc_draw.o                           704
+    gx_display_driver_generic_arc_fill.o                         1'544
+    gx_display_driver_generic_circle_draw.o                        544
+    gx_display_driver_generic_circle_fill.o                        644
+    gx_display_driver_generic_ellipse_draw.o                     1'588
+    gx_display_driver_generic_ellipse_fill.o                       768
+    gx_display_driver_generic_filled_circle_draw.o                 546
+    gx_display_driver_generic_glyph_4bpp_draw.o                    672
+    gx_display_driver_generic_glyph_8bpp_draw.o                    328
+    gx_display_driver_generic_pie_fill.o                           262
+    gx_display_driver_generic_polygon_draw.o                        98
+    gx_display_driver_generic_polygon_fill.o                     1'840               560
+    gx_display_driver_generic_rotated_wide_line_fill.o             724
+    gx_display_driver_generic_simple_pie_fill.o                  1'544
+    gx_display_driver_generic_simple_wide_line_draw.o              392
+    gx_display_driver_generic_wide_arc_draw.o                    1'888
+    gx_display_driver_generic_wide_circle_draw.o                   760
+    gx_display_driver_generic_wide_ellipse_draw.o                1'348
+    gx_display_driver_generic_wide_line_fill.o                     724
+    gx_display_driver_generic_wide_line_points_calculate.o         384                40
+    gx_display_driver_horizontal_line_alpha_draw.o                  78
+    gx_display_driver_simple_line_alpha_draw.o                   1'546
+    gx_display_driver_vertical_line_alpha_draw.o                    80
+    gx_display_font_table_set.o                                     18
+    gx_display_language_table_set.o                                 80
+    gx_display_pixelmap_table_set.o                                 18
+    gx_image_reader_colorspace_convert.o                           904
+    gx_image_reader_create.o                                        72
+    gx_image_reader_image_decode.o                                 114
+    gx_image_reader_jpeg_decode.o                                4'340       64
+    gx_image_reader_nearest_palette_color_get.o                    166
+    gx_image_reader_palette_set.o                                    8
+    gx_image_reader_pixel_read_callback_set.o                    1'720
+    gx_image_reader_pixel_write_callback_set.o                   1'956
+    gx_image_reader_png_decode.o                                 7'368       76        8
+    gx_image_reader_rle_encode.o                                   910
+    gx_image_reader_start.o                                        956
+    gx_menu_insert.o                                                34
+    gx_system_all_canvas_dirty.o                                    56
+    gx_system_all_views_free.o                                     112
+    gx_system_animation_free.o                                      40
+    gx_system_canvas_refresh.o                                     336
+    gx_system_dirty_list_remove.o                                   60
+    gx_system_dirty_list_trim.o                                    338
+    gx_system_dirty_mark.o                                          16
+    gx_system_dirty_partial_add.o                                  386
+    gx_system_error_process.o                                       24
+    gx_system_event_dispatch.o                                     212
+    gx_system_event_fold.o                                         120
+    gx_system_event_remove.o                                        92
+    gx_system_event_send.o                                         104
+    gx_system_focus_claim.o                                        136
+    gx_system_font_8bpp.o                                                 9'552
+    gx_system_free_view_get.o                                       36
+    gx_system_initialize.o                                         772            14'680
+    gx_system_input_release.o                                      180
+    gx_system_lock.o                                                64
+    gx_system_memory_allocator_set.o                                20
+    gx_system_pen_flick_test.o                                     136
+    gx_system_pen_speed_init.o                                      48
+    gx_system_pen_speed_update.o                                   116
+    gx_system_root_view_add.o                                       88
+    gx_system_screen_stack_push.o                                   60
+    gx_system_scroll_appearance_set.o                               80
+    gx_system_start.o                                               28
+    gx_system_thread_entry.o                                       132
+    gx_system_timer_expiration.o                                    68
+    gx_system_timer_stop.o                                         124
+    gx_system_timer_update.o                                       108
+    gx_system_top_root_find.o                                       88
+    gx_system_top_widget_find.o                                     62
+    gx_system_unlock.o                                              64
+    gx_system_view_add.o                                            36
+    gx_system_view_fold.o                                          126
+    gx_system_view_split.o                                         236
+    gx_system_views_free.o                                          48
+    gx_system_views_update.o                                        24
+    gx_utility_canvas_to_bmp.o                                   1'660
+    gx_utility_circle_point_get.o                                  300
+    gx_utility_easing_function_calculate.o                       1'892    1'543    2'004
+    gx_utility_ltoa.o                                              152
+    gx_utility_math_cos.o                                            8
+    gx_utility_math_sin.o                                          136      360
+    gx_utility_math_sqrt.o                                         236      256
+    gx_utility_rectangle_combine.o                                  66
+    gx_utility_rectangle_define.o                                   22
+    gx_utility_rectangle_inside_detect.o                            56
+    gx_utility_rectangle_overlap_detect.o                           80
+    gx_utility_rectangle_point_detect.o                             54
+    gx_utility_rectangle_shift.o                                    32
+    gx_utility_string_length_check.o                                38
+    gx_widget_allocate.o                                            44
+    gx_widget_attach.o                                              48
+    gx_widget_background_draw.o                                     38
+    gx_widget_block_move.o                                         184
+    gx_widget_border_draw.o                                      1'130
+    gx_widget_border_width_get.o                                    58
+    gx_widget_canvas_get.o                                          44
+    gx_widget_child_clipping_update.o                              118
+    gx_widget_child_detect.o                                        42
+    gx_widget_child_focus_assign.o                                 116
+    gx_widget_children_draw.o                                       88
+    gx_widget_children_event_process.o                              28
+    gx_widget_client_get.o                                          72
+    gx_widget_clipping_update.o                                     90
+    gx_widget_context_fill_set.o                                    14
+    gx_widget_create.o                                             172
+    gx_widget_delete.o                                             168
+    gx_widget_detach.o                                              36
+    gx_widget_draw.o                                                18
+    gx_widget_draw_set.o                                             6
+    gx_widget_event_generate.o                                      48
+    gx_widget_event_process.o                                      718
+    gx_widget_event_process_set.o                                    6
+    gx_widget_event_to_parent.o                                     22
+    gx_widget_fill_color_set.o                                      28
+    gx_widget_focus_next.o                                          30
+    gx_widget_focus_previous.o                                      30
+    gx_widget_free.o                                                20
+    gx_widget_front_move.o                                         212
+    gx_widget_height_get.o                                          14
+    gx_widget_hide.o                                               118
+    gx_widget_link.o                                                70
+    gx_widget_nav_order_initialize.o                               168
+    gx_widget_scroll_shift.o                                       222
+    gx_widget_shift.o                                              376
+    gx_widget_show.o                                                94
+    gx_widget_status_remove.o                                       12
+    gx_widget_unlink.o                                             124
+    gx_widget_width_get.o                                           14
+    gx_window_background_draw.o                                     22
+    gx_window_border_draw.o                                        220
+    gx_window_create.o                                             132
+    gx_window_draw.o                                                18
+    gx_window_event_process.o                                      308
+    gx_window_root_create.o                                         96
+    gx_window_root_event_process.o                                  72
+    gx_window_root_find.o                                           54
+    gx_window_scroll.o                                             114
+    gx_window_scroll_info_get.o                                    154
+    gx_window_view_update_detect.o                                  36
+    gx_window_wallpaper_set.o                                       40
+    gxe_canvas_create.o                                            168
+    gxe_canvas_drawing_initiate.o                                   92
+    gxe_canvas_pixelmap_draw.o                                      88
+    gxe_context_pixelmap_get.o                                      32
+    gxe_display_active_language_set.o                              108
+    gxe_display_color_table_set.o                                   80
+    gxe_display_create.o                                           112
+    gxe_display_font_table_set.o                                    76
+    gxe_display_language_table_set.o                               180
+    gxe_display_pixelmap_table_set.o                                76
+    gxe_image_reader_create.o                                       34
+    gxe_image_reader_palette_set.o                                  24
+    gxe_image_reader_start.o                                        84
+    gxe_menu_insert.o                                               84
+    gxe_system_initialize.o                                         56
+    gxe_system_memory_allocator_set.o                               68
+    gxe_system_scroll_appearance_set.o                              80
+    gxe_system_start.o                                              56
+    gxe_utility_canvas_to_bmp.o                                     92
+    gxe_utility_rectangle_define.o                                  24
+    gxe_widget_allocate.o                                           32
+    gxe_widget_attach.o                                            104
+    gxe_widget_draw_set.o                                           96
+    gxe_widget_event_process_set.o                                  26
+    gxe_widget_fill_color_set.o                                     92
+    gxe_widget_show.o                                               88
+    gxe_widget_status_remove.o                                      22
+    gxe_window_create.o                                            124
+    gxe_window_root_create.o                                       116
+    gxe_window_wallpaper_set.o                                      84
+    ------------------------------------------------------------------------------------
+    Total:                                                      90'200   11'851   17'292
+
+m7M_tlv.a: [4]
+    fpinit_M.o                                                      34
+    ------------------------------------------------------------------------------------
+    Total:                                                          34
+
+rt7M_tl.a: [5]
+    ABImemclr.o                                                      6
+    ABImemclr4.o                                                     6
+    ABImemcpy.o                                                    166
+    ABImemmove.o                                                   150
+    ABImemset.o                                                    102
+    ABImemset48.o                                                   58
+    cexit.o                                                         14
+    cmain.o                                                         30
+    cstart_closeall.o
+    cstartup_M.o                                                    28
+    data_init.o                                                     40
+    lz77_init_single.o                                             126
+    memchr.o                                                        88
+    strchr.o                                                        22
+    strcmp_fast.o                                                  176
+    strlen.o                                                        54
+    strnlen_s.o                                                     86
+    vector_table_M.o                                                64
+    vectortrap_M.o                                                   2
+    zero_init3.o                                                    56
+    ------------------------------------------------------------------------------------
+    Total:                                                       1'274
+
+shb_l.a: [6]
+    close.o                                                         24
+    dwrite.o                                                        30
+    exit.o                                                          20
+    iarttio.o                                                      124
+    iarwrite.o                                                      34
+    iarwstd.o                                                       32
+    lseek.o                                                         78
+    open.o                                                          70
+    remove.o                                                        20
+    write.o                                                         16
+    ------------------------------------------------------------------------------------
+    Total:                                                         448
+
+tx.a: [7]
+    tx_initialize_high_level.o                                                        48
+    tx_mutex_cleanup.o                                             192
+    tx_mutex_create.o                                               96
+    tx_mutex_get.o                                                 276
+    tx_mutex_prioritize.o                                          168
+    tx_mutex_priority_change.o                                     200
+    tx_mutex_put.o                                                 480
+    tx_queue_cleanup.o                                             132
+    tx_queue_create.o                                              116
+    tx_queue_receive.o                                             496
+    tx_queue_send.o                                                364
+    tx_thread_create.o                                             300
+    tx_thread_identify.o                                            20
+    tx_thread_initialize.o                                                    4      172
+    tx_thread_resume.o                                             108
+    tx_thread_shell_entry.o                                        124
+    tx_thread_stack_build.o                                         68
+    tx_thread_system_preempt_check.o                                60
+    tx_thread_system_resume.o                                      292
+    tx_thread_system_suspend.o                                     416
+    tx_thread_timeout.o                                             52
+    tx_time_get.o                                                   20
+    tx_timer_create.o                                              124
+    tx_timer_deactivate.o                                          172
+    tx_timer_initialize.o                                                          1'388
+    tx_timer_system_activate.o                                      96
+    tx_timer_system_deactivate.o                                    44
+    ------------------------------------------------------------------------------------
+    Total:                                                       4'416        4    1'608
+
+    Gaps                                                            85       22
+    Linker created                                                           32  267'520
+----------------------------------------------------------------------------------------
+    Grand Total:                                               107'554  167'378  750'940
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                       Address      Size  Type      Object
+-----                       -------      ----  ----      ------
+.iar.init_table$$Base   0x1004'27b0             --   Gb  - Linker created -
+.iar.init_table$$Limit  0x1004'27d0             --   Gb  - Linker created -
+?main                   0x1004'27f1            Code  Gb  cmain.o [5]
+BusFault_Handler        0x1002'7063            Code  Wk  vectortrap_M.o [5]
+CSTACK$$Base            0x2107'6060             --   Gb  - Linker created -
+CSTACK$$Limit           0x2107'6560             --   Gb  - Linker created -
+DISPLAY_1_THEME_1_CHECKBOX_OFF_pixelmap
+                        0x1004'287c      0x1c  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_CHECKBOX_OFF_pixelmap_data
+                        0x1003'cffc     0x1b4  Data  Lc  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_CHECKBOX_ON_pixelmap
+                        0x1004'2860      0x1c  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_CHECKBOX_ON_pixelmap_data
+                        0x1003'ce18     0x1e4  Data  Lc  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_FISH_SMALL_411_pixelmap
+                        0x1004'2898      0x1c  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_FISH_SMALL_411_pixelmap_data
+                        0x1001'a0c4    0x76fc  Data  Lc  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_FISH_SMALL_420_pixelmap
+                        0x1004'28b4      0x1c  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_FISH_SMALL_420_pixelmap_data
+                        0x1001'2974    0x7750  Data  Lc  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_FISH_SMALL_422_pixelmap
+                        0x1004'28d0      0x1c  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_FISH_SMALL_422_pixelmap_data
+                        0x1000'a1e0    0x8794  Data  Lc  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_FISH_SMALL_444_pixelmap
+                        0x1004'28ec      0x1c  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_FISH_SMALL_444_pixelmap_data
+                        0x1000'0040    0xa1a0  Data  Lc  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_RADIO_OFF_pixelmap
+                        0x1004'2844      0x1c  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_RADIO_OFF_pixelmap_data
+                        0x1003'c7a0     0x268  Data  Lc  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_RADIO_ON_pixelmap
+                        0x1004'2828      0x1c  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_RADIO_ON_pixelmap_data
+                        0x1003'c538     0x268  Data  Lc  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_RED_APPLE_pixelmap
+                        0x1004'2908      0x1c  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+DISPLAY_1_THEME_1_RED_APPLE_pixelmap_data
+                        0x1002'17c0    0x3a20  Data  Lc  demo_jpeg_decode_565rgb_resources.o [1]
+DebugMon_Handler        0x1002'7063            Code  Wk  vectortrap_M.o [5]
+HEAP$$Base              0x2107'6560             --   Gb  - Linker created -
+HEAP$$Limit             0x210b'7560             --   Gb  - Linker created -
+HardFault_Handler       0x1002'7063            Code  Wk  vectortrap_M.o [5]
+LinePoints              0x2107'6000      0x28  Data  Lc  gx_display_driver_generic_wide_line_points_calculate.o [3]
+MemManage_Handler       0x1002'7063            Code  Wk  vectortrap_M.o [5]
+NMI_Handler             0x1002'7063            Code  Wk  vectortrap_M.o [5]
+PendSV_Handler          0x1002'7063            Code  Wk  vectortrap_M.o [5]
+Region$$Table$$Base     0x1004'27b0             --   Gb  - Linker created -
+Region$$Table$$Limit    0x1004'27d0             --   Gb  - Linker created -
+SVC_Handler             0x1002'7063            Code  Wk  vectortrap_M.o [5]
+SysTick_Handler         0x1003'52a5       0xc  Code  Gb  common_code.o [1]
+UsageFault_Handler      0x1002'7063            Code  Wk  vectortrap_M.o [5]
+_Close_all              0x1004'24b9      0x40  Code  Gb  xcloseall.o [2]
+_Files                  0x2100'09a4      0x20  Data  Gb  xfiles.o [2]
+_Fofind                 0x1003'5e69      0x46  Code  Gb  xfofind.o [2]
+_Fofree                 0x1003'5eaf      0x86  Code  Gb  xfofind.o [2]
+_Fopen                  0x1003'6291      0x3c  Code  Gb  xfopen.o [2]
+_Fopen::rwacc           0x1003'62cc      0x10  Data  Lc  xfopen.o [2]
+_Foprep                 0x1003'5f39      0xf8  Code  Gb  xfoprep.o [2]
+_Foprep::init           0x1004'2100      0x48  Data  Lc  xfoprep.o [2]
+_Fspos                  0x1003'6991      0xd8  Code  Gb  xfspos.o [2]
+_Fwprep                 0x1003'5d09      0xb4  Code  Gb  xfwprep.o [2]
+_LC                     0x1003'4ccd       0x6  Code  Lc  xprintfsmall_nomb.o [2]
+_LitobSmallNoMb         0x1003'508f      0xd0  Code  Lc  xprintfsmall_nomb.o [2]
+_Nnl                    0x1003'7015       0xc  Code  Gb  xfgpos.o [2]
+_PrintfSmallNoMb        0x1003'4cd3     0x3b0  Code  Gb  xprintfsmall_nomb.o [2]
+_Prout                  0x1004'29a9      0x16  Code  Gb  xprout.o [2]
+_PutcharsSmallNoMb      0x1003'515f      0x2e  Code  Lc  xprintfsmall_nomb.o [2]
+_SProut                 0x1002'7013       0xa  Code  Gb  xsprout.o [2]
+__aeabi_memclr          0x1002'705d            Code  Gb  ABImemclr.o [5]
+__aeabi_memclr4         0x1002'700d            Code  Gb  ABImemclr4.o [5]
+__aeabi_memcpy          0x1002'6f51            Code  Gb  ABImemcpy.o [5]
+__aeabi_memcpy4         0x1002'6f71            Code  Gb  ABImemcpy.o [5]
+__aeabi_memcpy8         0x1002'6f71            Code  Gb  ABImemcpy.o [5]
+__aeabi_memmove         0x1002'7065            Code  Gb  ABImemmove.o [5]
+__aeabi_memmove4        0x1002'7065            Code  Gb  ABImemmove.o [5]
+__aeabi_memmove8        0x1002'7065            Code  Gb  ABImemmove.o [5]
+__aeabi_memset          0x1002'70fd            Code  Gb  ABImemset.o [5]
+__aeabi_memset4         0x1002'701d            Code  Gb  ABImemset48.o [5]
+__aeabi_memset8         0x1002'701d            Code  Gb  ABImemset48.o [5]
+__cexit_closeall        0x1004'281b            Code  Gb  cexit.o [5]
+__close                 0x1003'6031      0x18  Code  Gb  close.o [6]
+__cmain                 0x1004'27f1            Code  Gb  cmain.o [5]
+__cstart_closeall       0x1004'2a68            Data  Gb  cstart_closeall.o [5]
+__data_GetMemChunk      0x1002'8641      0x2c  Code  Gb  xgetmemchunk.o [2]
+__data_GetMemChunk::start
+                        0x2107'6054       0x4  Data  Lc  xgetmemchunk.o [2]
+__dwrite                0x1003'6a69      0x1e  Code  Gb  dwrite.o [6]
+__exit                  0x1002'866d      0x14  Code  Gb  exit.o [6]
+__iar_Fail_s            0x1003'51cd      0x1c  Code  Gb  xfail_s.o [2]
+__iar_Memchr            0x1003'5245            Code  Gb  memchr.o [5]
+__iar_Memset            0x1002'70fd            Code  Gb  ABImemset.o [5]
+__iar_Memset4_word      0x1002'7025            Code  Gb  ABImemset48.o [5]
+__iar_Memset8_word      0x1002'7025            Code  Gb  ABImemset48.o [5]
+__iar_Memset_word       0x1002'7105            Code  Gb  ABImemset.o [5]
+__iar_Stderr            0x2100'095c      0x48  Data  Gb  xfiles.o [2]
+__iar_Stdin             0x2100'08cc      0x48  Data  Gb  xfiles.o [2]
+__iar_Stdout            0x2100'0914      0x48  Data  Gb  xfiles.o [2]
+__iar_Strchr            0x1003'51b5            Code  Gb  strchr.o [5]
+__iar_close_ttio        0x1002'8681      0x2c  Code  Gb  iarttio.o [6]
+__iar_data_init3        0x1004'26ad      0x28  Code  Gb  data_init.o [5]
+__iar_dlfree            0x1002'8103     0x52c  Code  Gb  dlmalloc.o [2]
+__iar_dlmalloc          0x1002'71ed     0xf16  Code  Gb  dlmalloc.o [2]
+__iar_fast_strcmp       0x1003'b595            Code  Gb  strcmp_fast.o [5]
+__iar_get_ttio          0x1002'86ad      0x4c  Code  Gb  iarttio.o [6]
+__iar_init_vfp          0x1004'278d            Code  Gb  fpinit_M.o [4]
+__iar_lookup_ttioh      0x1002'86fd       0x8  Code  Gb  XShttio.o [2]
+__iar_lz77_init_single3
+                        0x1002'6ed3      0x7e  Code  Gb  lz77_init_single.o [5]
+__iar_program_start     0x1004'295d            Code  Gb  cstartup_M.o [5]
+__iar_sh_Discard        0x1003'6321      0x42  Code  Gb  XShHandles.o [2]
+__iar_sh_Init           0x1003'62dd      0x44  Code  Gb  XShHandles.o [2]
+__iar_sh_Move           0x1003'6363      0x46  Code  Gb  XShHandles.o [2]
+__iar_sh_Pos            0x1003'63a9      0x40  Code  Gb  XShHandles.o [2]
+__iar_sh_stdout         0x1003'706f      0x20  Code  Gb  iarwstd.o [6]
+__iar_sh_write          0x1003'708f      0x22  Code  Gb  iarwrite.o [6]
+__iar_ttio_handles      0x2100'09c4       0x8  Data  Lc  XShttio.o [2]
+__iar_zero_init3        0x1004'2531      0x38  Code  Gb  zero_init3.o [5]
+__low_level_init        0x1004'280f       0x4  Code  Gb  low_level_init.o [2]
+__lseek                 0x1003'7021      0x4e  Code  Gb  lseek.o [6]
+__open                  0x1003'6a87      0x46  Code  Gb  open.o [6]
+__vector_table          0x1000'0000            Data  Gb  vector_table_M.o [5]
+__write                 0x1003'6281      0x10  Code  Gb  write.o [6]
+_bit_buffer             0x2107'6048       0x4  Data  Lc  gx_image_reader_png_decode.o [3]
+_bit_count              0x2107'604c       0x4  Data  Lc  gx_image_reader_png_decode.o [3]
+_call_main              0x1004'27fd            Code  Gb  cmain.o [5]
+_exit                   0x1004'2819            Code  Gb  cexit.o [5]
+_gm_                    0x2107'59fc     0x1d8  Data  Lc  dlmalloc.o [2]
+_gx_animation_complete  0x1003'd367      0xf0  Code  Gb  gx_animation_complete.o [3]
+_gx_animation_complete_event_send
+                        0x1003'd33d      0x2a  Code  Gb  gx_animation_complete.o [3]
+_gx_animation_create    0x1003'8763      0x18  Code  Gb  gx_animation_create.o [3]
+_gx_animation_stop      0x1003'd851      0x70  Code  Gb  gx_animation_stop.o [3]
+_gx_animation_update    0x1003'd1b1     0x18c  Code  Gb  gx_animation_update.o [3]
+_gx_brush_default       0x1003'e55d      0x1e  Code  Gb  gx_brush_default.o [3]
+_gx_brush_define        0x1003'70e1       0xe  Code  Gb  gx_brush_define.o [3]
+_gx_canvas_alpha_set    0x1003'd457      0x30  Code  Gb  gx_canvas_alpha_set.o [3]
+_gx_canvas_block_move   0x1003'ddd9      0xb4  Code  Gb  gx_canvas_block_move.o [3]
+_gx_canvas_composite_create
+                        0x1003'e2fd     0x154  Code  Gb  gx_canvas_composite_create.o [3]
+_gx_canvas_create       0x1003'bced      0xb8  Code  Gb  gx_canvas_create.o [3]
+_gx_canvas_dirty_mark   0x1003'dbdd      0x38  Code  Gb  gx_canvas_dirty_mark.o [3]
+_gx_canvas_drawing_complete
+                        0x1003'de8d      0x60  Code  Gb  gx_canvas_drawing_complete.o [3]
+_gx_canvas_drawing_initiate
+                        0x1003'dc51     0x188  Code  Gb  gx_canvas_drawing_initiate.o [3]
+_gx_canvas_hide         0x1003'd9a5      0xc0  Code  Gb  gx_canvas_hide.o [3]
+_gx_canvas_line_draw    0x1003'6af9     0x240  Code  Gb  gx_canvas_line_draw.o [3]
+_gx_canvas_offset_set   0x1003'd487      0xba  Code  Gb  gx_canvas_offset_set.o [3]
+_gx_canvas_pixel_draw   0x1003'6f91      0x84  Code  Gb  gx_canvas_pixel_draw.o [3]
+_gx_canvas_pixelmap_draw
+                        0x1003'615d      0xb0  Code  Gb  gx_canvas_pixelmap_draw.o [3]
+_gx_canvas_pixelmap_tile
+                        0x1003'68e9      0xa8  Code  Gb  gx_canvas_pixelmap_tile.o [3]
+_gx_canvas_rectangle_draw
+                        0x1003'6ddb     0x196  Code  Gb  gx_canvas_rectangle_draw.o [3]
+_gx_canvas_rectangle_fill
+                        0x1003'6d7d      0x5e  Code  Lc  gx_canvas_rectangle_draw.o [3]
+_gx_canvas_shift        0x1004'2191      0x1c  Code  Gb  gx_canvas_shift.o [3]
+_gx_context_brush_default
+                        0x1003'e487       0xe  Code  Gb  gx_context_brush_default.o [3]
+_gx_context_brush_define
+                        0x1003'6d49      0x34  Code  Gb  gx_context_brush_define.o [3]
+_gx_context_brush_width_set
+                        0x1003'6ae9      0x10  Code  Gb  gx_context_brush_width_set.o [3]
+_gx_context_color_get   0x1003'70b1      0x30  Code  Gb  gx_context_color_get.o [3]
+_gx_context_fill_color_set
+                        0x1003'6f75      0x1c  Code  Gb  gx_context_fill_color_set.o [3]
+_gx_context_line_color_set
+                        0x1003'6acd      0x1c  Code  Gb  gx_context_line_color_set.o [3]
+_gx_context_pixelmap_get
+                        0x1003'6139      0x24  Code  Gb  gx_context_pixelmap_get.o [3]
+_gx_display_active_language_set
+                        0x1003'bca5      0x48  Code  Gb  gx_display_active_language_set.o [3]
+_gx_display_canvas_dirty
+                        0x1003'bf1d      0x40  Code  Gb  gx_display_canvas_dirty.o [3]
+_gx_display_color_table_set
+                        0x1003'bbcd      0x12  Code  Gb  gx_display_color_table_set.o [3]
+_gx_display_create      0x1003'bb6d      0x60  Code  Gb  gx_display_create.o [3]
+_gx_display_driver_16bpp_4444argb_pixelmap_compressed_write
+                        0x1002'a1e1     0x248  Code  Lc  gx_display_driver_16bpp_pixelmap_draw.o [3]
+_gx_display_driver_16bpp_block_move
+                        0x1003'ed25     0x154  Code  Gb  gx_display_driver_16bpp_block_move.o [3]
+_gx_display_driver_16bpp_canvas_copy
+                        0x1003'fda1      0xae  Code  Gb  gx_display_driver_16bpp_canvas_copy.o [3]
+_gx_display_driver_16bpp_glyph_1bit_draw
+                        0x1003'8089     0x316  Code  Gb  gx_display_driver_565rgb_glyph_1bit_draw.o [3]
+_gx_display_driver_16bpp_horizontal_line_draw
+                        0x1004'0481      0x82  Code  Gb  gx_display_driver_16bpp_horizontal_line_draw.o [3]
+_gx_display_driver_16bpp_horizontal_pattern_line_draw
+                        0x1003'fcf1      0xb0  Code  Gb  gx_display_driver_16bpp_horizontal_pattern_line_draw.o [3]
+_gx_display_driver_16bpp_pixel_write
+                        0x1002'a763      0x14  Code  Gb  gx_display_driver_16bpp_pixel_write.o [3]
+_gx_display_driver_16bpp_pixelmap_compressed_blend
+                        0x1002'a8bd     0x126  Code  Lc  gx_display_driver_16bpp_pixelmap_blend.o [3]
+_gx_display_driver_16bpp_pixelmap_raw_blend
+                        0x1002'a779      0x84  Code  Lc  gx_display_driver_16bpp_pixelmap_blend.o [3]
+_gx_display_driver_16bpp_pixelmap_rotate
+                        0x1002'b119     0x97c  Code  Gb  gx_display_driver_16bpp_pixelmap_rotate.o [3]
+_gx_display_driver_16bpp_pixelmap_simple_alpha_rotate
+                        0x1002'aeb1     0x266  Code  Gb  gx_display_driver_16bpp_pixelmap_rotate.o [3]
+_gx_display_driver_16bpp_pixelmap_simple_rotate
+                        0x1002'ac25     0x28a  Code  Gb  gx_display_driver_16bpp_pixelmap_rotate.o [3]
+_gx_display_driver_16bpp_row_pitch_get
+                        0x1002'7057       0x6  Code  Gb  gx_display_driver_16bpp_row_pitch_get.o [3]
+_gx_display_driver_16bpp_simple_line_draw
+                        0x1003'1e61     0x634  Code  Gb  gx_display_driver_16bpp_simple_line_draw.o [3]
+_gx_display_driver_16bpp_vertical_line_draw
+                        0x1004'0551      0x7e  Code  Gb  gx_display_driver_16bpp_vertical_line_draw.o [3]
+_gx_display_driver_16bpp_vertical_pattern_line_draw
+                        0x1004'0175      0x90  Code  Gb  gx_display_driver_16bpp_vertical_pattern_line_draw.o [3]
+_gx_display_driver_565rgb_canvas_blend
+                        0x1003'f5fd     0x128  Code  Gb  gx_display_driver_565rgb_canvas_blend.o [3]
+_gx_display_driver_565rgb_horizontal_pixelmap_line_compressed_alpha_blend
+                        0x1002'd165     0x174  Code  Lc  gx_display_driver_565rgb_horizontal_pixelmap_line_draw.o [3]
+_gx_display_driver_565rgb_horizontal_pixelmap_line_compressed_alpha_write
+                        0x1002'd461     0x152  Code  Lc  gx_display_driver_565rgb_horizontal_pixelmap_line_draw.o [3]
+_gx_display_driver_565rgb_horizontal_pixelmap_line_compressed_blend
+                        0x1002'd015     0x150  Code  Lc  gx_display_driver_565rgb_horizontal_pixelmap_line_draw.o [3]
+_gx_display_driver_565rgb_horizontal_pixelmap_line_compressed_write
+                        0x1002'd2d9     0x186  Code  Lc  gx_display_driver_565rgb_horizontal_pixelmap_line_draw.o [3]
+_gx_display_driver_565rgb_horizontal_pixelmap_line_draw
+                        0x1002'd5b5     0x21a  Code  Gb  gx_display_driver_565rgb_horizontal_pixelmap_line_draw.o [3]
+_gx_display_driver_565rgb_jpeg_draw
+                        0x1004'2991      0x18  Code  Gb  gx_display_driver_565rgb_jpeg_draw.o [3]
+_gx_display_driver_565rgb_native_color_get
+                        0x1002'6ff7      0x16  Code  Gb  gx_display_driver_565rgb_native_color_get.o [3]
+_gx_display_driver_565rgb_palette_pixelmap_compressed_write
+                        0x1002'9f39     0x2a8  Code  Lc  gx_display_driver_16bpp_pixelmap_draw.o [3]
+_gx_display_driver_565rgb_palette_pixelmap_transparent_compressed_write
+                        0x1002'9ccd     0x26a  Code  Lc  gx_display_driver_16bpp_pixelmap_draw.o [3]
+_gx_display_driver_565rgb_pixel_blend
+                        0x1002'a6f3      0x70  Code  Gb  gx_display_driver_565rgb_pixel_blend.o [3]
+_gx_display_driver_565rgb_pixelmap_alpha_blend
+                        0x1002'a7fd      0xbe  Code  Lc  gx_display_driver_16bpp_pixelmap_blend.o [3]
+_gx_display_driver_565rgb_pixelmap_alpha_write
+                        0x1002'98d1      0x94  Code  Lc  gx_display_driver_16bpp_pixelmap_draw.o [3]
+_gx_display_driver_565rgb_pixelmap_blend
+                        0x1002'a9e5     0x23c  Code  Gb  gx_display_driver_16bpp_pixelmap_blend.o [3]
+_gx_display_driver_565rgb_pixelmap_compressed_alpha_write
+                        0x1002'9b39     0x194  Code  Lc  gx_display_driver_16bpp_pixelmap_draw.o [3]
+_gx_display_driver_565rgb_pixelmap_compressed_write
+                        0x1002'9965     0x1d4  Code  Lc  gx_display_driver_16bpp_pixelmap_draw.o [3]
+_gx_display_driver_565rgb_pixelmap_draw
+                        0x1002'a42d     0x2c6  Code  Gb  gx_display_driver_16bpp_pixelmap_draw.o [3]
+_gx_display_driver_565rgb_pixelmap_raw_write
+                        0x1002'9811      0xc0  Code  Lc  gx_display_driver_16bpp_pixelmap_draw.o [3]
+_gx_display_driver_565rgb_png_draw
+                        0x1004'1f05      0x4c  Code  Gb  gx_display_driver_565rgb_png_draw.o [3]
+_gx_display_driver_565rgb_setup
+                        0x1003'5781     0x1d4  Code  Gb  gx_display_driver_565rgb_setup.o [3]
+_gx_display_driver_arc_clipping_get
+                        0x1002'c829     0x36c  Code  Gb  gx_display_driver_arc_clipping_get.o [3]
+_gx_display_driver_generic_aliased_arc_draw
+                        0x1003'7d61     0x302  Code  Gb  gx_display_driver_generic_aliased_arc_draw.o [3]
+_gx_display_driver_generic_aliased_circle_draw
+                        0x1003'adc5     0x26e  Code  Gb  gx_display_driver_generic_aliased_circle_draw.o [3]
+_gx_display_driver_generic_aliased_ellipse_draw
+                        0x1003'3701     0x5a2  Code  Gb  gx_display_driver_generic_aliased_ellipse_draw.o [3]
+_gx_display_driver_generic_aliased_filled_circle_draw
+                        0x1002'ccb9     0x354  Code  Gb  gx_display_driver_generic_aliased_filled_circle_draw.o [3]
+_gx_display_driver_generic_aliased_fixed_point_line_draw
+                        0x1003'47c1     0x50c  Code  Gb  gx_display_driver_generic_aliased_fixed_point_line_draw.o [3]
+_gx_display_driver_generic_aliased_line_draw
+                        0x1003'3cc9     0x5b4  Code  Gb  gx_display_driver_generic_aliased_line_draw.o [3]
+_gx_display_driver_generic_aliased_wide_arc_draw
+                        0x1002'c485     0x256  Code  Gb  gx_display_driver_generic_aliased_wide_arc_draw.o [3]
+_gx_display_driver_generic_aliased_wide_circle_draw
+                        0x1003'7565     0x3fc  Code  Gb  gx_display_driver_generic_aliased_wide_circle_draw.o [3]
+_gx_display_driver_generic_aliased_wide_ellipse_draw
+                        0x1003'0309     0x714  Code  Gb  gx_display_driver_generic_aliased_wide_ellipse_draw.o [3]
+_gx_display_driver_generic_aliased_wide_line_draw
+                        0x1003'ea39     0x182  Code  Gb  gx_display_driver_generic_aliased_wide_line_draw.o [3]
+_gx_display_driver_generic_alphamap_compressed_alpha_draw
+                        0x1003'7985     0x154  Code  Lc  gx_display_driver_generic_alphamap_draw.o [3]
+_gx_display_driver_generic_alphamap_compressed_draw
+                        0x1003'7ad9     0x130  Code  Lc  gx_display_driver_generic_alphamap_draw.o [3]
+_gx_display_driver_generic_alphamap_draw
+                        0x1003'7c09     0x152  Code  Gb  gx_display_driver_generic_alphamap_draw.o [3]
+_gx_display_driver_generic_arc_draw
+                        0x1003'a865     0x2a0  Code  Gb  gx_display_driver_generic_arc_draw.o [3]
+_gx_display_driver_generic_arc_fill
+                        0x1003'2af1     0x5de  Code  Gb  gx_display_driver_generic_arc_fill.o [3]
+_gx_display_driver_generic_circle_draw
+                        0x1003'ca09     0x200  Code  Gb  gx_display_driver_generic_circle_draw.o [3]
+_gx_display_driver_generic_circle_fill
+                        0x1003'c2b5     0x25e  Code  Gb  gx_display_driver_generic_circle_fill.o [3]
+_gx_display_driver_generic_ellipse_draw
+                        0x1003'182d     0x612  Code  Gb  gx_display_driver_generic_ellipse_draw.o [3]
+_gx_display_driver_generic_ellipse_fill
+                        0x1003'8c29     0x300  Code  Gb  gx_display_driver_generic_ellipse_fill.o [3]
+_gx_display_driver_generic_filled_circle_draw
+                        0x1003'00e5     0x21e  Code  Gb  gx_display_driver_generic_filled_circle_draw.o [3]
+_gx_display_driver_generic_glyph_4bit_draw
+                        0x1003'ab25     0x2a0  Code  Gb  gx_display_driver_generic_glyph_4bpp_draw.o [3]
+_gx_display_driver_generic_glyph_8bit_draw
+                        0x1003'ee79     0x148  Code  Gb  gx_display_driver_generic_glyph_8bpp_draw.o [3]
+_gx_display_driver_generic_pie_fill
+                        0x1003'f725     0x106  Code  Gb  gx_display_driver_generic_pie_fill.o [3]
+_gx_display_driver_generic_polygon_draw
+                        0x1004'1891      0x62  Code  Gb  gx_display_driver_generic_polygon_draw.o [3]
+_gx_display_driver_generic_polygon_fill
+                        0x1003'0a49     0x730  Code  Gb  gx_display_driver_generic_polygon_fill.o [3]
+_gx_display_driver_generic_polygon_fill::aet
+                        0x2107'57cc     0x118  Data  Lc  gx_display_driver_generic_polygon_fill.o [3]
+_gx_display_driver_generic_polygon_fill::net
+                        0x2107'58e4     0x118  Data  Lc  gx_display_driver_generic_polygon_fill.o [3]
+_gx_display_driver_generic_rotated_wide_line_fill
+                        0x1003'9221     0x2d4  Code  Gb  gx_display_driver_generic_rotated_wide_line_fill.o [3]
+_gx_display_driver_generic_simple_aliased_wide_arc_draw
+                        0x1002'bb2d     0x950  Code  Lc  gx_display_driver_generic_aliased_wide_arc_draw.o [3]
+_gx_display_driver_generic_simple_pie_fill
+                        0x1003'30f9     0x5de  Code  Gb  gx_display_driver_generic_simple_pie_fill.o [3]
+_gx_display_driver_generic_simple_wide_arc_draw
+                        0x1002'f985     0x532  Code  Lc  gx_display_driver_generic_wide_arc_draw.o [3]
+_gx_display_driver_generic_simple_wide_line_draw
+                        0x1003'e731     0x188  Code  Gb  gx_display_driver_generic_simple_wide_line_draw.o [3]
+_gx_display_driver_generic_wide_arc_draw
+                        0x1002'fec1     0x202  Code  Gb  gx_display_driver_generic_wide_arc_draw.o [3]
+_gx_display_driver_generic_wide_circle_draw
+                        0x1003'8f29     0x2e8  Code  Gb  gx_display_driver_generic_wide_circle_draw.o [3]
+_gx_display_driver_generic_wide_ellipse_draw
+                        0x1003'427d     0x532  Code  Gb  gx_display_driver_generic_wide_ellipse_draw.o [3]
+_gx_display_driver_generic_wide_line_fill
+                        0x1003'94f5     0x2d4  Code  Gb  gx_display_driver_generic_wide_line_fill.o [3]
+_gx_display_driver_generic_wide_line_points_calculate
+                        0x1003'e8b9     0x180  Code  Gb  gx_display_driver_generic_wide_line_points_calculate.o [3]
+_gx_display_driver_horizontal_line_alpha_draw
+                        0x1004'0503      0x4e  Code  Gb  gx_display_driver_horizontal_line_alpha_draw.o [3]
+_gx_display_driver_simple_line_alpha_draw
+                        0x1003'2495     0x60a  Code  Gb  gx_display_driver_simple_line_alpha_draw.o [3]
+_gx_display_driver_vertical_line_alpha_draw
+                        0x1004'05cf      0x50  Code  Gb  gx_display_driver_vertical_line_alpha_draw.o [3]
+_gx_display_font_table_set
+                        0x1003'bbdf      0x12  Code  Gb  gx_display_font_table_set.o [3]
+_gx_display_language_table_set_ext
+                        0x1003'bc55      0x4c  Code  Gb  gx_display_language_table_set.o [3]
+_gx_display_pixelmap_table_set
+                        0x1003'bbf1      0x12  Code  Gb  gx_display_pixelmap_table_set.o [3]
+_gx_image_reader_1555xrgb_pixel_read
+                        0x1002'e805      0x38  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_1555xrgb_pixel_write
+                        0x1002'da33      0x50  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_1555xrgb_rle_pixel_write
+                        0x1002'd9d9      0x5a  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_16bit_gray_alpha_read
+                        0x1002'e68b      0x1e  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_16bit_gray_read
+                        0x1002'e797      0x36  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_1bit_pixel_read
+                        0x1002'e463      0x76  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_1bpp_pixel_read
+                        0x1002'e8c3      0x28  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_1bpp_transparent_read
+                        0x1002'e8eb      0x44  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_24bit_pixel_read
+                        0x1002'e6c1      0x3a  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_24xrgb_pixel_write
+                        0x1002'd81f      0x30  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_24xrgb_rotated_pixel_write
+                        0x1002'd84f      0x3c  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_2bit_pixel_read
+                        0x1002'e4d9      0x82  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_32argb_pixel_read
+                        0x1002'e75d      0x20  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_32argb_pixel_write
+                        0x1002'd88b      0x2e  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_32bit_gray_alpha_read
+                        0x1002'e6a9      0x18  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_32bit_pixel_read
+                        0x1002'e77d      0x1a  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_4444argb_pixel_read
+                        0x1002'e83d      0x24  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_4444argb_pixel_write
+                        0x1002'da83      0x5c  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_4444argb_transparent_write
+                        0x1002'dadf      0x4e  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_48bit_pixel_read
+                        0x1002'e6fb      0x46  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_4bit_grayscale_pixel_read
+                        0x1002'e861      0x22  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_4bit_grayscale_pixel_write
+                        0x1002'db2d      0x60  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_4bit_grayscale_transparent_read
+                        0x1002'e883      0x40  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_4bit_grayscale_transparent_write
+                        0x1002'db8d      0xb2  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_4bit_pixel_read
+                        0x1002'e55b      0x82  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_565rgb_pixel_read
+                        0x1002'e7cd      0x38  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_565rgb_pixel_write
+                        0x1002'd913      0x50  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_565rgb_rle_pixel_write
+                        0x1002'd8b9      0x5a  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_565rgb_rotated_pixel_write
+                        0x1002'd963      0x76  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_64bit_pixel_read
+                        0x1002'e741      0x1c  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_8bit_alpha_read
+                        0x1002'e451      0x12  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_8bit_alpha_write
+                        0x1002'd7d5      0x14  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_8bit_palette_pixel_read
+                        0x1002'e63f      0x4c  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_8bit_palette_write
+                        0x1002'd7e9      0x36  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_8bit_pixel_read
+                        0x1002'e5dd      0x62  Code  Lc  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_colorspace_convert
+                        0x1002'eda9      0xd4  Code  Gb  gx_image_reader_colorspace_convert.o [3]
+_gx_image_reader_create
+                        0x1003'620d      0x48  Code  Gb  gx_image_reader_create.o [3]
+_gx_image_reader_image_decode
+                        0x1002'e3dd      0x72  Code  Gb  gx_image_reader_image_decode.o [3]
+_gx_image_reader_jpeg_1555xrgb_pixel_write
+                        0x1002'8e6d      0x20  Code  Lc  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_1d_idct
+                        0x1002'8705     0x178  Code  Lc  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_24bpp_pixel_write
+                        0x1002'8e33      0x1a  Code  Lc  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_24xrgb_pixel_write
+                        0x1002'8e15      0x1e  Code  Lc  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_565rgb_pixel_write
+                        0x1002'8e4d      0x20  Code  Lc  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_decode
+                        0x1002'967b      0xb0  Code  Gb  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_decode_blocks
+                        0x1002'9375     0x306  Code  Lc  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_decompress
+                        0x1002'91c1     0x1b2  Code  Lc  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_dequantize_idct::reorder_index
+                        0x1004'2478      0x40  Data  Lc  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_mcu_decode
+                        0x1002'972b      0xa8  Code  Gb  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_one_block_decode
+                        0x1002'887d     0x598  Code  Lc  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_one_mcu_rotated_write
+                        0x1002'8ff9     0x1c8  Code  Lc  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_jpeg_one_mcu_write
+                        0x1002'8e8d     0x16c  Code  Lc  gx_image_reader_jpeg_decode.o [3]
+_gx_image_reader_monochrome_pixel_write
+                        0x1002'dc3f      0x8a  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_monochrome_transparent_write
+                        0x1002'dcc9      0xbc  Code  Lc  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_nearest_palette_color_get
+                        0x1002'df79      0xa6  Code  Gb  gx_image_reader_nearest_palette_color_get.o [3]
+_gx_image_reader_one_row_convert
+                        0x1002'ed2f      0x2e  Code  Lc  gx_image_reader_colorspace_convert.o [3]
+_gx_image_reader_one_row_dither
+                        0x1002'eb09     0x226  Code  Lc  gx_image_reader_colorspace_convert.o [3]
+_gx_image_reader_one_row_rotated_convert
+                        0x1002'ed5d      0x4a  Code  Lc  gx_image_reader_colorspace_convert.o [3]
+_gx_image_reader_palette_set
+                        0x1003'6255       0x8  Code  Gb  gx_image_reader_palette_set.o [3]
+_gx_image_reader_pixel_read_callback_set
+                        0x1002'e92f     0x17c  Code  Gb  gx_image_reader_pixel_read_callback_set.o [3]
+_gx_image_reader_pixel_write_callback_set
+                        0x1002'dd85     0x1aa  Code  Gb  gx_image_reader_pixel_write_callback_set.o [3]
+_gx_image_reader_png_4bytes_read
+                        0x1002'5273      0x30  Code  Lc  gx_image_reader_png_decode.o [3]
+_gx_image_reader_png_bits_get
+                        0x1002'52d3      0xac  Code  Lc  gx_image_reader_png_decode.o [3]
+_gx_image_reader_png_chunk_type_read
+                        0x1002'52a3      0x30  Code  Lc  gx_image_reader_png_decode.o [3]
+_gx_image_reader_png_crc_get
+                        0x1002'51e1      0x92  Code  Lc  gx_image_reader_png_decode.o [3]
+_gx_image_reader_png_decode
+                        0x1002'5825    0x164c  Code  Gb  gx_image_reader_png_decode.o [3]
+_gx_image_reader_png_huffcode_decode
+                        0x1002'5381     0x49a  Code  Lc  gx_image_reader_png_decode.o [3]
+_gx_image_reader_rgb2gray
+                        0x1002'e021      0x32  Code  Gb  gx_image_reader_start.o [3]
+_gx_image_reader_rle_encode
+                        0x1002'f1d9      0x46  Code  Gb  gx_image_reader_rle_encode.o [3]
+_gx_image_reader_rle_encode_size_get
+                        0x1002'f165      0x74  Code  Gb  gx_image_reader_rle_encode.o [3]
+_gx_image_reader_rle_one_row_encode
+                        0x1002'ee91     0x2d4  Code  Lc  gx_image_reader_rle_encode.o [3]
+_gx_image_reader_start  0x1002'e055     0x37a  Code  Gb  gx_image_reader_start.o [3]
+_gx_menu_insert         0x1003'bac5      0x22  Code  Gb  gx_menu_insert.o [3]
+_gx_system_active_theme
+                        0x2107'1840       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_active_timer_list
+                        0x2107'17ec       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_all_canvas_dirty
+                        0x1003'bf5d      0x38  Code  Gb  gx_system_all_canvas_dirty.o [3]
+_gx_system_all_views_free
+                        0x1003'e495      0x70  Code  Gb  gx_system_all_views_free.o [3]
+_gx_system_animation_free
+                        0x1003'dbb5      0x28  Code  Gb  gx_system_animation_free.o [3]
+_gx_system_animation_free_list
+                        0x2107'17f4       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_animation_list
+                        0x2107'17f8       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_animation_pool
+                        0x2107'121c     0x180  Data  Gb  gx_system_initialize.o [3]
+_gx_system_canvas_created_count
+                        0x2107'17dc       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_canvas_created_list
+                        0x2107'17d8       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_canvas_refresh
+                        0x1003'da65     0x150  Code  Gb  gx_system_canvas_refresh.o [3]
+_gx_system_capture_count
+                        0x2107'181c       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_clipboard    0x2107'184c       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_clipboard_size
+                        0x2107'1850       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_clock_delta  0x2107'182c       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_current_draw_context
+                        0x2107'17e4       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_dirty_entry_shift
+                        0x1003'9c61      0x88  Code  Gb  gx_system_dirty_partial_add.o [3]
+_gx_system_dirty_list_remove
+                        0x1003'e011      0x3c  Code  Gb  gx_system_dirty_list_remove.o [3]
+_gx_system_dirty_list_trim
+                        0x1003'e151     0x152  Code  Gb  gx_system_dirty_list_trim.o [3]
+_gx_system_dirty_mark   0x1003'9ae3      0x10  Code  Gb  gx_system_dirty_mark.o [3]
+_gx_system_dirty_partial_add
+                        0x1003'9ce9      0xfa  Code  Gb  gx_system_dirty_partial_add.o [3]
+_gx_system_display_created_count
+                        0x2107'17d4       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_display_created_list
+                        0x2107'17d0       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_draw_context_stack
+                        0x2107'1854     0x260  Data  Gb  gx_system_initialize.o [3]
+_gx_system_draw_context_stack_end
+                        0x2107'17e8       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_error_count  0x2107'1848       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_error_process
+                        0x1003'a1f5      0x18  Code  Gb  gx_system_error_process.o [3]
+_gx_system_event_dispatch
+                        0x1003'fa11      0xd4  Code  Gb  gx_system_event_dispatch.o [3]
+_gx_system_event_fold   0x1003'deed      0x78  Code  Gb  gx_system_event_fold.o [3]
+_gx_system_event_queue  0x2107'2cfc      0x3c  Data  Gb  gx_system_initialize.o [3]
+_gx_system_event_queue_memory
+                        0x2107'2d98     0x480  Data  Gb  gx_system_initialize.o [3]
+_gx_system_event_remove
+                        0x1003'e0c9      0x5c  Code  Gb  gx_system_event_remove.o [3]
+_gx_system_event_send   0x1003'9bf9      0x68  Code  Gb  gx_system_event_send.o [3]
+_gx_system_focus_claim  0x1003'9de5      0x88  Code  Gb  gx_system_focus_claim.o [3]
+_gx_system_focus_owner  0x2107'180c       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_font_8bpp    0x1004'29d4      0x14  Data  Gb  gx_system_font_8bpp.o [3]
+_gx_system_free_timer_list
+                        0x2107'17f0       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_free_view_get
+                        0x1003'e70d      0x24  Code  Gb  gx_system_free_view_get.o [3]
+_gx_system_free_views   0x2107'1808       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_gradient_list
+                        0x2107'17fc       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_horizontal_scrollbar_appearance
+                        0x2107'11f4      0x28  Data  Gb  gx_system_initialize.o [3]
+_gx_system_horizontal_scrollbar_style
+                        0x2107'1814       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_initialize   0x1003'83a1     0x298  Code  Gb  gx_system_initialize.o [3]
+_gx_system_input_capture_stack
+                        0x2107'1c34      0x10  Data  Gb  gx_system_initialize.o [3]
+_gx_system_input_owner  0x2107'1818       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_input_release
+                        0x1003'9b45      0xb4  Code  Gb  gx_system_input_release.o [3]
+_gx_system_last_clock   0x2107'1828       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_last_error   0x2107'1844       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_last_pen_point
+                        0x2107'17bc       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_lock         0x1003'9e6d      0x40  Code  Gb  gx_system_lock.o [3]
+_gx_system_lock_nesting
+                        0x2107'1824       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_lock_thread  0x2107'1820       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_memory_allocator
+                        0x2107'1800       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_memory_allocator_set
+                        0x1003'f271      0x14  Code  Gb  gx_system_memory_allocator_set.o [3]
+_gx_system_memory_free  0x2107'1804       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_pen_configuration
+                        0x2107'17b4       0x8  Data  Gb  gx_system_initialize.o [3]
+_gx_system_pen_flick_test
+                        0x1003'a109      0x88  Code  Gb  gx_system_pen_flick_test.o [3]
+_gx_system_pen_speed_init
+                        0x1003'9ef9      0x30  Code  Gb  gx_system_pen_speed_init.o [3]
+_gx_system_pen_speed_update
+                        0x1003'9f29      0x74  Code  Gb  gx_system_pen_speed_update.o [3]
+_gx_system_pen_speed_x  0x2107'1830       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_pen_speed_y  0x2107'1834       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_protect      0x2107'2d38      0x34  Data  Gb  gx_system_initialize.o [3]
+_gx_system_rich_text_context_stack
+                        0x2107'139c      0xcc  Data  Gb  gx_system_initialize.o [3]
+_gx_system_rich_text_context_stack_save
+                        0x2107'1468      0xcc  Data  Gb  gx_system_initialize.o [3]
+_gx_system_root_view_add
+                        0x1003'e505      0x58  Code  Gb  gx_system_root_view_add.o [3]
+_gx_system_root_window_created_list
+                        0x2107'17e0       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_scratchpad   0x2107'3224    0x1900  Data  Gb  gx_system_initialize.o [3]
+_gx_system_screen_stack
+                        0x2107'3218       0xc  Data  Gb  gx_system_initialize.o [3]
+_gx_system_screen_stack_push
+                        0x1003'd8c1      0x3c  Code  Gb  gx_system_screen_stack_push.o [3]
+_gx_system_scroll_appearance_set
+                        0x1003'bc05      0x50  Code  Gb  gx_system_scroll_appearance_set.o [3]
+_gx_system_start        0x1003'f285      0x1c  Code  Gb  gx_system_start.o [3]
+_gx_system_theme_table  0x2107'1838       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_theme_table_size
+                        0x2107'183c       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_thread       0x2107'1c44      0xb8  Data  Gb  gx_system_initialize.o [3]
+_gx_system_thread_entry
+                        0x1004'030d      0x84  Code  Gb  gx_system_thread_entry.o [3]
+_gx_system_thread_stack
+                        0x2107'1cfc    0x1000  Data  Gb  gx_system_initialize.o [3]
+_gx_system_timer        0x2107'2d6c      0x2c  Data  Gb  gx_system_initialize.o [3]
+_gx_system_timer_expiration
+                        0x1004'21f1      0x44  Code  Gb  gx_system_timer_expiration.o [3]
+_gx_system_timer_memory
+                        0x2107'1534     0x280  Data  Gb  gx_system_initialize.o [3]
+_gx_system_timer_stop   0x1003'e04d      0x7c  Code  Gb  gx_system_timer_stop.o [3]
+_gx_system_timer_update
+                        0x1004'0391      0x6c  Code  Gb  gx_system_timer_update.o [3]
+_gx_system_top_root_find
+                        0x1003'fae5      0x58  Code  Gb  gx_system_top_root_find.o [3]
+_gx_system_top_widget_find
+                        0x1003'fb3d      0x3e  Code  Gb  gx_system_top_widget_find.o [3]
+_gx_system_unlock       0x1003'9eb9      0x40  Code  Gb  gx_system_unlock.o [3]
+_gx_system_version_string
+                        0x2107'17c0      0x10  Data  Gb  gx_system_initialize.o [3]
+_gx_system_vertical_scrollbar_appearance
+                        0x2107'11cc      0x28  Data  Gb  gx_system_initialize.o [3]
+_gx_system_vertical_scrollbar_style
+                        0x2107'1810       0x4  Data  Gb  gx_system_initialize.o [3]
+_gx_system_view_add     0x1003'e667      0x24  Code  Gb  gx_system_view_add.o [3]
+_gx_system_view_fold    0x1003'e68d      0x7e  Code  Gb  gx_system_view_fold.o [3]
+_gx_system_view_memory  0x2107'1ab4     0x180  Data  Gb  gx_system_initialize.o [3]
+_gx_system_view_split   0x1003'e57b      0xec  Code  Gb  gx_system_view_split.o [3]
+_gx_system_views_free   0x1003'c141      0x30  Code  Gb  gx_system_views_free.o [3]
+_gx_system_views_update
+                        0x1003'e139      0x18  Code  Gb  gx_system_views_update.o [3]
+_gx_utility_bounce_ease_out
+                        0x1002'f221      0x78  Code  Lc  gx_utility_easing_function_calculate.o [3]
+_gx_utility_canvas_to_bmp
+                        0x1003'1425     0x3d0  Code  Gb  gx_utility_canvas_to_bmp.o [3]
+_gx_utility_circle_point_get
+                        0x1002'c6fd     0x12c  Code  Gb  gx_utility_circle_point_get.o [3]
+_gx_utility_easing_function_calculate
+                        0x1002'f299     0x6e4  Code  Gb  gx_utility_easing_function_calculate.o [3]
+_gx_utility_ltoa        0x1003'86a5      0x98  Code  Gb  gx_utility_ltoa.o [3]
+_gx_utility_math_cos    0x1002'ba9d       0x8  Code  Gb  gx_utility_math_cos.o [3]
+_gx_utility_math_sin    0x1002'baa5      0x88  Code  Gb  gx_utility_math_sin.o [3]
+_gx_utility_math_sqrt   0x1002'cbcd      0xec  Code  Gb  gx_utility_math_sqrt.o [3]
+_gx_utility_pow_0_10_table
+                        0x2100'00f8     0x7d4  Data  Lc  gx_utility_easing_function_calculate.o [3]
+_gx_utility_rectangle_combine
+                        0x1003'a1b1      0x42  Code  Gb  gx_utility_rectangle_combine.o [3]
+_gx_utility_rectangle_define
+                        0x1002'97f9      0x16  Code  Gb  gx_utility_rectangle_define.o [3]
+_gx_utility_rectangle_inside_detect
+                        0x1003'17f5      0x38  Code  Gb  gx_utility_rectangle_inside_detect.o [3]
+_gx_utility_rectangle_overlap_detect
+                        0x1003'2a9f      0x50  Code  Gb  gx_utility_rectangle_overlap_detect.o [3]
+_gx_utility_rectangle_point_detect
+                        0x1002'cb95      0x36  Code  Gb  gx_utility_rectangle_point_detect.o [3]
+_gx_utility_rectangle_shift
+                        0x1003'a191      0x20  Code  Gb  gx_utility_rectangle_shift.o [3]
+_gx_utility_string_length_check
+                        0x1003'873d      0x26  Code  Gb  gx_utility_string_length_check.o [3]
+_gx_utility_write_bitmap_header
+                        0x1003'1179     0x2a4  Code  Lc  gx_utility_canvas_to_bmp.o [3]
+_gx_widget_allocate     0x1003'bb11      0x2c  Code  Gb  gx_widget_allocate.o [3]
+_gx_widget_attach       0x1003'bb3d      0x30  Code  Gb  gx_widget_attach.o [3]
+_gx_widget_background_draw
+                        0x1004'26d5      0x26  Code  Gb  gx_widget_background_draw.o [3]
+_gx_widget_block_move   0x1003'd61f      0xb8  Code  Gb  gx_widget_block_move.o [3]
+_gx_widget_border_draw  0x1003'646f     0x46a  Code  Gb  gx_widget_border_draw.o [3]
+_gx_widget_border_width_get
+                        0x1003'63ed      0x3a  Code  Gb  gx_widget_border_width_get.o [3]
+_gx_widget_canvas_get   0x1003'dc15      0x2c  Code  Gb  gx_widget_canvas_get.o [3]
+_gx_widget_child_clipping_update
+                        0x1003'c23d      0x76  Code  Gb  gx_widget_child_clipping_update.o [3]
+_gx_widget_child_detect
+                        0x1003'a20d      0x2a  Code  Gb  gx_widget_child_detect.o [3]
+_gx_widget_child_focus_assign
+                        0x1003'f441      0x74  Code  Gb  gx_widget_child_focus_assign.o [3]
+_gx_widget_children_draw
+                        0x1003'e2a5      0x58  Code  Gb  gx_widget_children_draw.o [3]
+_gx_widget_children_event_process
+                        0x1003'9a97      0x1c  Code  Gb  gx_widget_children_event_process.o [3]
+_gx_widget_client_get   0x1003'6427      0x48  Code  Gb  gx_widget_client_get.o [3]
+_gx_widget_clipping_update
+                        0x1003'c0e5      0x5a  Code  Gb  gx_widget_clipping_update.o [3]
+_gx_widget_context_fill_set
+                        0x1003'68d9       0xe  Code  Gb  gx_widget_context_fill_set.o [3]
+_gx_widget_create       0x1003'be05      0xac  Code  Gb  gx_widget_create.o [3]
+_gx_widget_delete       0x1003'd95d      0x48  Code  Gb  gx_widget_delete.o [3]
+_gx_widget_delete_helper
+                        0x1003'd8fd      0x5a  Code  Lc  gx_widget_delete.o [3]
+_gx_widget_detach       0x1003'bef7      0x24  Code  Gb  gx_widget_detach.o [3]
+_gx_widget_draw         0x1004'29e9      0x12  Code  Gb  gx_widget_draw.o [3]
+_gx_widget_draw_set     0x1003'bb03       0x6  Code  Gb  gx_widget_draw_set.o [3]
+_gx_widget_event_generate
+                        0x1003'9ab3      0x30  Code  Gb  gx_widget_event_generate.o [3]
+_gx_widget_event_process
+                        0x1003'97c9     0x2ce  Code  Gb  gx_widget_event_process.o [3]
+_gx_widget_event_process_set
+                        0x1003'bb09       0x6  Code  Gb  gx_widget_event_process_set.o [3]
+_gx_widget_event_to_parent
+                        0x1003'9af3      0x16  Code  Gb  gx_widget_event_to_parent.o [3]
+_gx_widget_fill_color_set
+                        0x1003'bae7      0x1c  Code  Gb  gx_widget_fill_color_set.o [3]
+_gx_widget_focus_next   0x1003'9b09      0x1e  Code  Gb  gx_widget_focus_next.o [3]
+_gx_widget_focus_previous
+                        0x1003'9b27      0x1e  Code  Gb  gx_widget_focus_previous.o [3]
+_gx_widget_free         0x1003'e125      0x14  Code  Gb  gx_widget_free.o [3]
+_gx_widget_front_move   0x1003'f4b5      0xd4  Code  Gb  gx_widget_front_move.o [3]
+_gx_widget_height_get   0x1003'6d39       0xe  Code  Gb  gx_widget_height_get.o [3]
+_gx_widget_hide         0x1003'c06f      0x76  Code  Gb  gx_widget_hide.o [3]
+_gx_widget_link         0x1003'beb1      0x46  Code  Gb  gx_widget_link.o [3]
+_gx_widget_nav_order_initialize
+                        0x1003'c195      0xa8  Code  Gb  gx_widget_nav_order_initialize.o [3]
+_gx_widget_scroll_shift
+                        0x1003'd57f      0xa0  Code  Gb  gx_widget_scroll_shift.o [3]
+_gx_widget_scroll_shift_helper
+                        0x1003'd541      0x3e  Code  Lc  gx_widget_scroll_shift.o [3]
+_gx_widget_shift        0x1003'd773      0xda  Code  Gb  gx_widget_shift.o [3]
+_gx_widget_shift_helper
+                        0x1003'd6d9      0x9a  Code  Lc  gx_widget_shift.o [3]
+_gx_widget_show         0x1003'c011      0x5e  Code  Gb  gx_widget_show.o [3]
+_gx_widget_status_remove
+                        0x1003'9ead       0xc  Code  Gb  gx_widget_status_remove.o [3]
+_gx_widget_unlink       0x1003'bf95      0x7c  Code  Gb  gx_widget_unlink.o [3]
+_gx_widget_width_get    0x1003'dc41       0xe  Code  Gb  gx_widget_width_get.o [3]
+_gx_window_background_draw
+                        0x1003'5beb      0x16  Code  Gb  gx_window_background_draw.o [3]
+_gx_window_border_draw  0x1003'605d      0xdc  Code  Gb  gx_window_border_draw.o [3]
+_gx_window_create       0x1003'ba19      0x84  Code  Gb  gx_window_create.o [3]
+_gx_window_draw         0x1003'f25d      0x12  Code  Gb  gx_window_draw.o [3]
+_gx_window_event_process
+                        0x1003'f30d     0x134  Code  Gb  gx_window_event_process.o [3]
+_gx_window_root_create  0x1003'bda5      0x60  Code  Gb  gx_window_root_create.o [3]
+_gx_window_root_event_process
+                        0x1004'2149      0x48  Code  Gb  gx_window_root_event_process.o [3]
+_gx_window_root_find    0x1003'e451      0x36  Code  Gb  gx_window_root_find.o [3]
+_gx_window_scroll       0x1003'f589      0x72  Code  Gb  gx_window_scroll.o [3]
+_gx_window_scroll_info_get
+                        0x1004'0049      0x9a  Code  Gb  gx_window_scroll_info_get.o [3]
+_gx_window_view_update_detect
+                        0x1003'c171      0x24  Code  Gb  gx_window_view_update_detect.o [3]
+_gx_window_wallpaper_set
+                        0x1003'ba9d      0x28  Code  Gb  gx_window_wallpaper_set.o [3]
+_gxe_canvas_create      0x1003'b8fd      0xa8  Code  Gb  gxe_canvas_create.o [3]
+_gxe_canvas_drawing_initiate
+                        0x1003'f201      0x5c  Code  Gb  gxe_canvas_drawing_initiate.o [3]
+_gxe_canvas_pixelmap_draw
+                        0x1003'5c21      0x58  Code  Gb  gxe_canvas_pixelmap_draw.o [3]
+_gxe_context_pixelmap_get
+                        0x1003'5c01      0x20  Code  Gb  gxe_context_pixelmap_get.o [3]
+_gxe_display_active_language_set
+                        0x1003'b891      0x6c  Code  Gb  gxe_display_active_language_set.o [3]
+_gxe_display_color_table_set
+                        0x1003'b6a5      0x50  Code  Gb  gxe_display_color_table_set.o [3]
+_gxe_display_create     0x1003'b635      0x70  Code  Gb  gxe_display_create.o [3]
+_gxe_display_font_table_set
+                        0x1003'b6f5      0x4c  Code  Gb  gxe_display_font_table_set.o [3]
+_gxe_display_language_table_set_ext
+                        0x1003'b7dd      0xa6  Code  Gb  gxe_display_language_table_set.o [3]
+_gxe_display_pixelmap_table_set
+                        0x1003'b741      0x4c  Code  Gb  gxe_display_pixelmap_table_set.o [3]
+_gxe_image_reader_create
+                        0x1003'5c79      0x22  Code  Gb  gxe_image_reader_create.o [3]
+_gxe_image_reader_palette_set
+                        0x1003'5c9b      0x18  Code  Gb  gxe_image_reader_palette_set.o [3]
+_gxe_image_reader_start
+                        0x1003'5cb5      0x54  Code  Gb  gxe_image_reader_start.o [3]
+_gxe_menu_insert        0x1003'b3b9      0x54  Code  Gb  gxe_menu_insert.o [3]
+_gxe_system_initialize  0x1003'f0f5      0x38  Code  Gb  gxe_system_initialize.o [3]
+_gxe_system_memory_allocator_set
+                        0x1003'f12d      0x44  Code  Gb  gxe_system_memory_allocator_set.o [3]
+_gxe_system_scroll_appearance_set
+                        0x1003'b78d      0x50  Code  Gb  gxe_system_scroll_appearance_set.o [3]
+_gxe_system_start       0x1003'f1c9      0x38  Code  Gb  gxe_system_start.o [3]
+_gxe_utility_canvas_to_bmp
+                        0x1003'5a91      0x5c  Code  Gb  gxe_utility_canvas_to_bmp.o [3]
+_gxe_utility_rectangle_define
+                        0x1003'5a77      0x18  Code  Gb  gxe_utility_rectangle_define.o [3]
+_gxe_widget_allocate    0x1003'b4fd      0x20  Code  Gb  gxe_widget_allocate.o [3]
+_gxe_widget_attach      0x1003'b51d      0x68  Code  Gb  gxe_widget_attach.o [3]
+_gxe_widget_draw_set    0x1003'b481      0x60  Code  Gb  gxe_widget_draw_set.o [3]
+_gxe_widget_event_process_set
+                        0x1003'b4e1      0x1a  Code  Gb  gxe_widget_event_process_set.o [3]
+_gxe_widget_fill_color_set
+                        0x1003'b40d      0x5c  Code  Gb  gxe_widget_fill_color_set.o [3]
+_gxe_widget_show        0x1003'f171      0x58  Code  Gb  gxe_widget_show.o [3]
+_gxe_widget_status_remove
+                        0x1003'b469      0x16  Code  Gb  gxe_widget_status_remove.o [3]
+_gxe_window_create      0x1003'b2e9      0x7c  Code  Gb  gxe_window_create.o [3]
+_gxe_window_root_create
+                        0x1003'b9a5      0x74  Code  Gb  gxe_window_root_create.o [3]
+_gxe_window_wallpaper_set
+                        0x1003'b365      0x54  Code  Gb  gxe_window_wallpaper_set.o [3]
+_tx_block_pool_created_count
+                        0x2107'5fcc       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_block_pool_created_ptr
+                        0x2107'5fc8       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_build_options       0x2107'5d14       0x4  Data  Gb  tx_thread_initialize.o [7]
+_tx_byte_pool_created_count
+                        0x2107'5fd4       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_byte_pool_created_ptr
+                        0x2107'5fd0       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_event_flags_created_count
+                        0x2107'5fbc       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_event_flags_created_ptr
+                        0x2107'5fb8       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_mutex_cleanup       0x1003'fb7d      0x70  Code  Gb  tx_mutex_cleanup.o [7]
+_tx_mutex_create        0x1003'886d      0x60  Code  Gb  tx_mutex_create.o [7]
+_tx_mutex_created_count
+                        0x2107'5fc4       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_mutex_created_ptr   0x2107'5fc0       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_mutex_get           0x1003'a24d     0x114  Code  Gb  tx_mutex_get.o [7]
+_tx_mutex_prioritize    0x1003'a7bd      0xa8  Code  Gb  tx_mutex_prioritize.o [7]
+_tx_mutex_priority_change
+                        0x1003'a6f5      0xc8  Code  Gb  tx_mutex_priority_change.o [7]
+_tx_mutex_put           0x1003'a361     0x1e0  Code  Gb  tx_mutex_put.o [7]
+_tx_mutex_thread_release
+                        0x1003'fbed      0x42  Code  Gb  tx_mutex_cleanup.o [7]
+_tx_queue_cleanup       0x1004'03fd      0x84  Code  Gb  tx_queue_cleanup.o [7]
+_tx_queue_create        0x1003'87f9      0x74  Code  Gb  tx_queue_create.o [7]
+_tx_queue_created_count
+                        0x2107'5fb4       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_queue_created_ptr   0x2107'5fb0       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_queue_receive       0x1003'cc29     0x1f0  Code  Gb  tx_queue_receive.o [7]
+_tx_queue_send          0x1003'9f9d     0x16c  Code  Gb  tx_queue_send.o [7]
+_tx_semaphore_created_count
+                        0x2107'5fac       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_semaphore_created_ptr
+                        0x2107'5fa8       0x4  Data  Gb  tx_initialize_high_level.o [7]
+_tx_thread_create       0x1003'88cd     0x12c  Code  Gb  tx_thread_create.o [7]
+_tx_thread_created_count
+                        0x2107'5d04       0x4  Data  Gb  tx_thread_initialize.o [7]
+_tx_thread_created_ptr  0x2107'5d00       0x4  Data  Gb  tx_thread_initialize.o [7]
+_tx_thread_current_ptr  0x2107'5cf8       0x4  Data  Gb  tx_thread_initialize.o [7]
+_tx_thread_execute_ptr  0x2107'5cfc       0x4  Data  Gb  tx_thread_initialize.o [7]
+_tx_thread_highest_priority
+                        0x2107'5d08       0x4  Data  Gb  tx_thread_initialize.o [7]
+_tx_thread_identify     0x1003'a239      0x14  Code  Gb  tx_thread_identify.o [7]
+_tx_thread_mutex_release
+                        0x2107'5d10       0x4  Data  Gb  tx_thread_initialize.o [7]
+_tx_thread_preempt_disable
+                        0x2107'5d0c       0x4  Data  Gb  tx_thread_initialize.o [7]
+_tx_thread_preempted_maps
+                        0x2107'5d1c       0x4  Data  Gb  tx_thread_initialize.o [7]
+_tx_thread_priority_list
+                        0x2107'5d20      0x80  Data  Gb  tx_thread_initialize.o [7]
+_tx_thread_priority_maps
+                        0x2107'5d18       0x4  Data  Gb  tx_thread_initialize.o [7]
+_tx_thread_resume       0x1003'f2a1      0x6c  Code  Gb  tx_thread_resume.o [7]
+_tx_thread_shell_entry  0x1004'0621      0x7c  Code  Gb  tx_thread_shell_entry.o [7]
+_tx_thread_stack_build  0x1003'8a59            Code  Gb  tx_thread_stack_build.o [7]
+_tx_thread_system_preempt_check
+                        0x1003'8bc1      0x3c  Code  Gb  tx_thread_system_preempt_check.o [7]
+_tx_thread_system_resume
+                        0x1003'8a9d     0x124  Code  Gb  tx_thread_system_resume.o [7]
+_tx_thread_system_state
+                        0x2100'00f4       0x4  Data  Gb  tx_thread_initialize.o [7]
+_tx_thread_system_suspend
+                        0x1003'a555     0x1a0  Code  Gb  tx_thread_system_suspend.o [7]
+_tx_thread_timeout      0x1004'25d1      0x34  Code  Gb  tx_thread_timeout.o [7]
+_tx_time_get            0x1003'a541      0x14  Code  Gb  tx_time_get.o [7]
+_tx_timer_create        0x1003'877d      0x7c  Code  Gb  tx_timer_create.o [7]
+_tx_timer_created_count
+                        0x2107'4b40       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_created_ptr   0x2107'4b3c       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_current_ptr   0x2107'4b34       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_deactivate    0x1003'df65      0xac  Code  Gb  tx_timer_deactivate.o [7]
+_tx_timer_expired       0x2107'4b38       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_expired_time_slice
+                        0x2107'4b28       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_expired_timer_ptr
+                        0x2107'4b44       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_list          0x2107'4b58      0x80  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_list_end      0x2107'4b30       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_list_start    0x2107'4b2c       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_priority      0x2107'4b50       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_stack_size    0x2107'4b4c       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_stack_start   0x2107'4b48       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_system_activate
+                        0x1003'89f9      0x60  Code  Gb  tx_timer_system_activate.o [7]
+_tx_timer_system_clock  0x2107'4b24       0x4  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_system_deactivate
+                        0x1003'8bfd      0x2c  Code  Gb  tx_timer_system_deactivate.o [7]
+_tx_timer_thread        0x2107'4bd8      0xb8  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_thread_stack_area
+                        0x2107'4c90     0x400  Data  Gb  tx_timer_initialize.o [7]
+_tx_timer_time_slice    0x2107'4b54       0x4  Data  Gb  tx_timer_initialize.o [7]
+abort                   0x1002'8639       0x6  Code  Gb  abort.o [2]
+canvas_fp               0x2107'5ff4       0x4  Data  Lc  common_code.o [1]
+char_21                 0x1004'2634      0x28  Data  Lc  gx_system_font_8bpp.o [3]
+char_22                 0x1004'27d0      0x20  Data  Lc  gx_system_font_8bpp.o [3]
+char_23                 0x1004'14a8      0x64  Data  Lc  gx_system_font_8bpp.o [3]
+char_24                 0x1004'069c      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_25                 0x1003'fef8      0xa8  Data  Lc  gx_system_font_8bpp.o [3]
+char_26                 0x1004'0204      0x84  Data  Lc  gx_system_font_8bpp.o [3]
+char_27                 0x1004'2a0c      0x10  Data  Lc  gx_system_font_8bpp.o [3]
+char_28                 0x1004'2278      0x40  Data  Lc  gx_system_font_8bpp.o [3]
+char_29                 0x1004'22b8      0x40  Data  Lc  gx_system_font_8bpp.o [3]
+char_2a                 0x1004'2720      0x24  Data  Lc  gx_system_font_8bpp.o [3]
+char_2b                 0x1004'1b80      0x54  Data  Lc  gx_system_font_8bpp.o [3]
+char_2c                 0x1004'2978      0x18  Data  Lc  gx_system_font_8bpp.o [3]
+char_2d                 0x1004'2a58       0x8  Data  Lc  gx_system_font_8bpp.o [3]
+char_2e                 0x1004'2a60       0x8  Data  Lc  gx_system_font_8bpp.o [3]
+char_2f                 0x1004'1070      0x70  Data  Lc  gx_system_font_8bpp.o [3]
+char_30                 0x1004'150c      0x64  Data  Lc  gx_system_font_8bpp.o [3]
+char_31                 0x1004'1d78      0x50  Data  Lc  gx_system_font_8bpp.o [3]
+char_32                 0x1004'1570      0x64  Data  Lc  gx_system_font_8bpp.o [3]
+char_33                 0x1004'15d4      0x64  Data  Lc  gx_system_font_8bpp.o [3]
+char_34                 0x1004'1638      0x64  Data  Lc  gx_system_font_8bpp.o [3]
+char_35                 0x1004'169c      0x64  Data  Lc  gx_system_font_8bpp.o [3]
+char_36                 0x1004'1700      0x64  Data  Lc  gx_system_font_8bpp.o [3]
+char_37                 0x1004'1764      0x64  Data  Lc  gx_system_font_8bpp.o [3]
+char_38                 0x1004'17c8      0x64  Data  Lc  gx_system_font_8bpp.o [3]
+char_39                 0x1004'182c      0x64  Data  Lc  gx_system_font_8bpp.o [3]
+char_3a                 0x1004'2924      0x1c  Data  Lc  gx_system_font_8bpp.o [3]
+char_3b                 0x1004'2568      0x34  Data  Lc  gx_system_font_8bpp.o [3]
+char_3c                 0x1004'22f8      0x40  Data  Lc  gx_system_font_8bpp.o [3]
+char_3d                 0x1004'2604      0x30  Data  Lc  gx_system_font_8bpp.o [3]
+char_3e                 0x1004'2338      0x40  Data  Lc  gx_system_font_8bpp.o [3]
+char_3f                 0x1004'1bd4      0x54  Data  Lc  gx_system_font_8bpp.o [3]
+char_40                 0x1003'f92c      0xe4  Data  Lc  gx_system_font_8bpp.o [3]
+char_41                 0x1004'0714      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_42                 0x1004'1150      0x6c  Data  Lc  gx_system_font_8bpp.o [3]
+char_43                 0x1004'078c      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_44                 0x1004'0804      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_45                 0x1004'18f4      0x60  Data  Lc  gx_system_font_8bpp.o [3]
+char_46                 0x1004'1954      0x60  Data  Lc  gx_system_font_8bpp.o [3]
+char_47                 0x1004'087c      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_48                 0x1004'08f4      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_49                 0x1004'2744      0x24  Data  Lc  gx_system_font_8bpp.o [3]
+char_4a                 0x1004'19b4      0x60  Data  Lc  gx_system_font_8bpp.o [3]
+char_4b                 0x1004'096c      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_4c                 0x1004'1a14      0x60  Data  Lc  gx_system_font_8bpp.o [3]
+char_4d                 0x1004'0288      0x84  Data  Lc  gx_system_font_8bpp.o [3]
+char_4e                 0x1004'09e4      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_4f                 0x1004'00e4      0x90  Data  Lc  gx_system_font_8bpp.o [3]
+char_50                 0x1004'11bc      0x6c  Data  Lc  gx_system_font_8bpp.o [3]
+char_51                 0x1003'fc3c      0xb4  Data  Lc  gx_system_font_8bpp.o [3]
+char_52                 0x1004'1228      0x6c  Data  Lc  gx_system_font_8bpp.o [3]
+char_53                 0x1004'1294      0x6c  Data  Lc  gx_system_font_8bpp.o [3]
+char_54                 0x1004'0a5c      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_55                 0x1004'0ad4      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_56                 0x1004'0b4c      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_57                 0x1003'ffa0      0xa8  Data  Lc  gx_system_font_8bpp.o [3]
+char_58                 0x1004'1300      0x6c  Data  Lc  gx_system_font_8bpp.o [3]
+char_59                 0x1004'0bc4      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_5a                 0x1004'136c      0x6c  Data  Lc  gx_system_font_8bpp.o [3]
+char_5b                 0x1004'2378      0x40  Data  Lc  gx_system_font_8bpp.o [3]
+char_5c                 0x1004'10e0      0x70  Data  Lc  gx_system_font_8bpp.o [3]
+char_5d                 0x1004'23b8      0x40  Data  Lc  gx_system_font_8bpp.o [3]
+char_5e                 0x1004'259c      0x34  Data  Lc  gx_system_font_8bpp.o [3]
+char_5f                 0x1004'2a40       0xc  Data  Lc  gx_system_font_8bpp.o [3]
+char_60                 0x1004'2a4c       0xc  Data  Lc  gx_system_font_8bpp.o [3]
+char_61                 0x1004'23f8      0x40  Data  Lc  gx_system_font_8bpp.o [3]
+char_62                 0x1004'0c3c      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_63                 0x1004'1f50      0x48  Data  Lc  gx_system_font_8bpp.o [3]
+char_64                 0x1004'0cb4      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_65                 0x1004'1c28      0x54  Data  Lc  gx_system_font_8bpp.o [3]
+char_66                 0x1004'1dc8      0x50  Data  Lc  gx_system_font_8bpp.o [3]
+char_67                 0x1004'0d2c      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_68                 0x1004'13d8      0x68  Data  Lc  gx_system_font_8bpp.o [3]
+char_69                 0x1004'265c      0x28  Data  Lc  gx_system_font_8bpp.o [3]
+char_6a                 0x1004'1b28      0x58  Data  Lc  gx_system_font_8bpp.o [3]
+char_6b                 0x1004'1440      0x68  Data  Lc  gx_system_font_8bpp.o [3]
+char_6c                 0x1004'2684      0x28  Data  Lc  gx_system_font_8bpp.o [3]
+char_6d                 0x1004'0da4      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_6e                 0x1004'1f98      0x48  Data  Lc  gx_system_font_8bpp.o [3]
+char_6f                 0x1004'1c7c      0x54  Data  Lc  gx_system_font_8bpp.o [3]
+char_70                 0x1004'0e1c      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_71                 0x1004'0e94      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_72                 0x1004'24f8      0x38  Data  Lc  gx_system_font_8bpp.o [3]
+char_73                 0x1004'2438      0x40  Data  Lc  gx_system_font_8bpp.o [3]
+char_74                 0x1004'1fe0      0x48  Data  Lc  gx_system_font_8bpp.o [3]
+char_75                 0x1004'2028      0x48  Data  Lc  gx_system_font_8bpp.o [3]
+char_76                 0x1004'1cd0      0x54  Data  Lc  gx_system_font_8bpp.o [3]
+char_77                 0x1004'0f0c      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_78                 0x1004'2070      0x48  Data  Lc  gx_system_font_8bpp.o [3]
+char_79                 0x1004'0f84      0x78  Data  Lc  gx_system_font_8bpp.o [3]
+char_7a                 0x1004'20b8      0x48  Data  Lc  gx_system_font_8bpp.o [3]
+char_7b                 0x1004'1e18      0x50  Data  Lc  gx_system_font_8bpp.o [3]
+char_7c                 0x1004'2768      0x24  Data  Lc  gx_system_font_8bpp.o [3]
+char_7d                 0x1004'1e68      0x50  Data  Lc  gx_system_font_8bpp.o [3]
+char_7e                 0x1004'2940      0x1c  Data  Lc  gx_system_font_8bpp.o [3]
+crc_calculate           0x1003'5465      0xf2  Code  Gb  common_code.o [1]
+crc_table               0x2107'5090     0x400  Data  Lc  common_code.o [1]
+demo_jpeg_decode_565rgb_display_table
+                        0x2100'00b0      0x38  Data  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+demo_jpeg_decode_565rgb_widget_table
+                        0x1003'b2d8      0x10  Data  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+display_1_English_string_table
+                        0x1004'29fc      0x10  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+display_1_STRING_1_English
+                        0x1004'2a1c       0xc  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+display_1_canvas_control_block
+                        0x2107'5490     0x33c  Data  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+display_1_canvas_memory
+                        0x2100'09cc  0x7'0800  Data  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+display_1_control_block
+                        0x2107'5bd4     0x124  Data  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+display_1_language_table
+                        0x2100'0038       0x4  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+display_1_root_window   0x2107'5e20      0x78  Data  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+display_1_theme_1       0x2100'003c      0x70  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+display_1_theme_1_color_table
+                        0x1004'0ffc      0x74  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+display_1_theme_1_font_table
+                        0x2100'0000      0x10  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+display_1_theme_1_pixelmap_table
+                        0x2100'0010      0x28  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+display_1_theme_table   0x2100'00ac       0x4  Data  Gb  demo_jpeg_decode_565rgb_resources.o [1]
+display_buffer_toggle   0x1003'52b1       0x2  Code  Gb  common_code.o [1]
+ebuf                    0x2107'5f08      0x50  Data  Lc  xfiles.o [2]
+exit                    0x1004'2813       0x4  Code  Gb  exit.o [2]
+failed_count            0x2107'5ff0       0x4  Data  Lc  common_code.o [1]
+fclose                  0x1003'5aed      0x7e  Code  Gb  fclose.o [2]
+fflush                  0x1003'5e31      0x34  Code  Gb  fflush.o [2]
+fflushOne               0x1003'5dbd      0x74  Code  Lc  fflush.o [2]
+font_SansPro_Regular_ttf_18_aa
+                        0x1003'70f0     0x474  Data  Lc  gx_system_font_8bpp.o [3]
+fopen                   0x1003'5a4d      0x2a  Code  Gb  fopen.o [2]
+fputc                   0x1004'1d25      0x54  Code  Gb  fputc.o [2]
+free                    0x1003'577d       0x4  Code  Gb  heaptramp0.o [2]
+fseek                   0x1003'625d      0x24  Code  Gb  fseek.o [2]
+fwrite                  0x1003'5955      0xb8  Code  Gb  fwrite.o [2]
+generate                0x2107'5fd8       0x4  Data  Lc  common_code.o [1]
+golden_fp               0x2107'5ff8       0x4  Data  Lc  common_code.o [1]
+golden_results          0x2107'5fe4       0x4  Data  Lc  common_code.o [1]
+golden_results          0x2100'00ec       0x8  Data  Gb  main.o [1]
+golden_results_size     0x2107'5fe8       0x4  Data  Lc  common_code.o [1]
+graphics_driver_565rgb_setup
+                        0x1003'52b3      0x14  Code  Gb  common_code.o [1]
+gx_studio_display_configure
+                        0x1003'b1c9     0x10c  Code  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+gx_studio_named_widget_create
+                        0x1003'b185      0x44  Code  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+gx_studio_nested_widget_create
+                        0x1003'b095      0xcc  Code  Lc  demo_jpeg_decode_565rgb_specifications.o [1]
+gx_studio_widget_create
+                        0x1003'b161      0x24  Code  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+gx_studio_window_create
+                        0x1003'b059      0x3c  Code  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+init_mparams            0x1002'7181      0x2c  Code  Lc  dlmalloc.o [2]
+init_top                0x1002'71ad      0x34  Code  Lc  dlmalloc.o [2]
+main                    0x1003'efc1      0x66  Code  Gb  main.o [1]
+main_screen             0x2107'5e98      0x70  Data  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+main_screen_define      0x1004'21ac      0x44  Data  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+main_screen_draw        0x1003'f027      0xac  Code  Gb  main.o [1]
+main_screen_properties  0x2107'6050       0x4  Data  Gb  demo_jpeg_decode_565rgb_specifications.o [1]
+memchr                  0x1003'5245            Code  Gb  memchr.o [5]
+memory_allocate         0x1003'529d       0x4  Code  Gb  common_code.o [1]
+memory_free             0x1003'52a1       0x4  Code  Gb  common_code.o [1]
+mparams                 0x2107'6028      0x18  Data  Lc  dlmalloc.o [2]
+obuf                    0x2107'5f58      0x50  Data  Lc  xfiles.o [2]
+output_fp               0x2107'5ffc       0x4  Data  Lc  common_code.o [1]
+printf                  0x1003'5b6d      0x28  Code  Gb  printf.o [2]
+putchar                 0x1004'2235      0x44  Code  Gb  putchar.o [2]
+remove                  0x1003'6049      0x14  Code  Gb  remove.o [6]
+root                    0x2100'00e8       0x4  Data  Gb  main.o [1]
+sFileInfo               0x2107'5da0      0x80  Data  Lc  XShHandles.o [2]
+screenshot              0x2107'5fe0       0x4  Data  Lc  common_code.o [1]
+sec_hand                0x2107'6058       0x4  Data  Lc  xfail_s.o [2]
+segment_holding         0x1002'7165      0x1c  Code  Lc  dlmalloc.o [2]
+sin_value_table         0x1003'ebbc     0x168  Data  Lc  gx_utility_math_sin.o [3]
+sprintf                 0x1003'5a0d      0x40  Code  Gb  sprintf.o [2]
+sqrt_table              0x1003'f82c     0x100  Data  Lc  gx_utility_math_sqrt.o [3]
+start_time              0x2107'6044       0x4  Data  Lc  common_code.o [1]
+strchr                  0x1003'51b5            Code  Gb  strchr.o [5]
+strlen                  0x1003'520d            Code  Gb  strlen.o [5]
+strncmp                 0x1002'6ea9      0x2a  Code  Gb  strncmp.o [2]
+strnlen                 0x1003'5b95            Code  Gb  strnlen_s.o [5]
+strnlen_s               0x1003'5b95            Code  Gb  strnlen_s.o [5]
+test                    0x2107'5fdc       0x4  Data  Lc  common_code.o [1]
+test_count              0x2107'5fec       0x4  Data  Lc  common_code.o [1]
+test_end                0x1003'5411      0x52  Code  Gb  common_code.o [1]
+test_jpeg_to_canvas_draw
+                        0x1003'5557      0x74  Code  Gb  common_code.o [1]
+test_jpeg_to_pixelmap_draw
+                        0x1003'55d1      0xb6  Code  Gb  common_code.o [1]
+test_start              0x1003'52e1      0x16  Code  Gb  common_code.o [1]
+test_verify_canvas      0x1003'52f7     0x118  Code  Gb  common_code.o [1]
+tick_counter            0x2107'6040       0x4  Data  Lc  common_code.o [1]
+write_data_callback     0x1003'52c7      0x1a  Code  Gb  common_code.o [1]
+
+
+[1] = C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_565rgb\Debug\Obj
+[2] = dl7M_tlf.a
+[3] = gx.a
+[4] = m7M_tlv.a
+[5] = rt7M_tl.a
+[6] = shb_l.a
+[7] = tx.a
+
+  107'554 bytes of readonly  code memory
+  167'378 bytes of readonly  data memory
+  750'940 bytes of readwrite data memory
+
+Errors: none
+Warnings: none

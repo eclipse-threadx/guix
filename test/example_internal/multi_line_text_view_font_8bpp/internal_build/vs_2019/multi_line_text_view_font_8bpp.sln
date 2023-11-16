@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multi_line_text_view_font_8bpp", "multi_line_text_view_font_8bpp.vcxproj", "{6BB0CEAF-CC2D-4F8F-9D11-E65874A45332}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guix", "..\..\..\..\..\ports\win32\build\vs_2019\guix.vcxproj", "{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BB0CEAF-CC2D-4F8F-9D11-E65874A45332}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6BB0CEAF-CC2D-4F8F-9D11-E65874A45332}.Debug|Win32.Build.0 = Debug|Win32
+		{6BB0CEAF-CC2D-4F8F-9D11-E65874A45332}.Release|Win32.ActiveCfg = Release|Win32
+		{6BB0CEAF-CC2D-4F8F-9D11-E65874A45332}.Release|Win32.Build.0 = Release|Win32
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Debug|Win32.Build.0 = Debug|Win32
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Release|Win32.ActiveCfg = Release|Win32
+		{A3336F4F-7A7B-46D3-A7F0-A2AAED6C08ED}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1D678CE-FBD7-4477-A1BA-6B22842A6A32}
+	EndGlobalSection
+EndGlobal

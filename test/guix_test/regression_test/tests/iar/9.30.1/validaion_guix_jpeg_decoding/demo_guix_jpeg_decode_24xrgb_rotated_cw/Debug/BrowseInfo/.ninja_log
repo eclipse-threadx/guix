@@ -1,0 +1,10 @@
+# ninja log v5
+1	174	7073082400000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_cw/Debug/BrowseInfo/demo_jpeg_decode_24xrgb_rotated_cw_specifications.xcl	98dbc927811f203
+8	204	7073082400000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_cw/Debug/BrowseInfo/demo_jpeg_decode_24xrgb_rotated_cw_resources.xcl	45a7eef2944377dd
+29	231	7073082400000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_cw/Debug/BrowseInfo/common_code.xcl	57906b810f762b6b
+40	261	7073082400000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_cw/Debug/BrowseInfo/main.xcl	2937bf76e551a095
+195	670	7073082412101568	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_cw/Debug/BrowseInfo/demo_jpeg_decode_24xrgb_rotated_cw_specifications.pbi	b78f04f18b6c6ac2
+254	728	7073082412688077	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_cw/Debug/BrowseInfo/common_code.pbi	85eaff3775f75b2f
+283	761	7073082413028317	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_cw/Debug/BrowseInfo/main.pbi	b0293b76cbf5733b
+224	1089	7073082416294785	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_cw/Debug/BrowseInfo/demo_jpeg_decode_24xrgb_rotated_cw_resources.pbi	853e039c3459a5ad
+1098	1251	7073082418010164	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_cw/Debug/BrowseInfo/demo_guix_jpeg_decode_24xrgb_rotated_cw.pbd	d695aa34b0a2cb62

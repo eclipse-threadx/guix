@@ -1,0 +1,4 @@
+execUserSetup()
+{
+__orderInterrupt( "SysTick", 100000, 100000, 0, 1, 0, 100);
+}

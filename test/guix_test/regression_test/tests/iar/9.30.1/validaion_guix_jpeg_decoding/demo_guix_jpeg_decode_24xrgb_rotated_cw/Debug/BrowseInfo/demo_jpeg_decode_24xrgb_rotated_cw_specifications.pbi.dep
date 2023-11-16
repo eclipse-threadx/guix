@@ -1,0 +1,22 @@
+C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_24xrgb_rotated_cw\Debug\BrowseInfo\demo_jpeg_decode_24xrgb_rotated_cw_specifications.pbi: \
+  C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_24xrgb_rotated_cw\demo_jpeg_decode_24xrgb_rotated_cw_specifications.c \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\stddef.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\ycheck.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\yvals.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\DLib_Defaults.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\DLib_Config_Full.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\DLib_Product.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\ysizet.h \
+  C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_24xrgb_rotated_cw\demo_jpeg_decode_24xrgb_rotated_cw_resources.h \
+  C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_24xrgb_rotated_cw\..\..\..\..\..\..\..\common\inc\gx_api.h \
+  C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_24xrgb_rotated_cw\..\..\..\..\..\..\..\externals\threadx\common\inc\tx_api.h \
+  C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_24xrgb_rotated_cw\..\..\..\..\..\..\..\externals\threadx\ports\cortex_m85\iar\inc\tx_port.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\stdlib.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\DLib_Product_stdlib.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\string.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\DLib_Product_string.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\aarch32\intrinsics.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\aarch32\iccarm_builtin.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.1\arm\inc\c\aarch32\iar_intrinsics_common.h \
+  C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_24xrgb_rotated_cw\..\..\..\..\..\..\..\\ports\cortex_m7\iar\inc\gx_port.h \
+  C:\Ting\guix\test\regression_test\tests\iar\9.30.1\validaion_guix_jpeg_decoding\demo_guix_jpeg_decode_24xrgb_rotated_cw\demo_jpeg_decode_24xrgb_rotated_cw_specifications.h

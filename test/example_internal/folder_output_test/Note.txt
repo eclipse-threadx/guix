@@ -1,0 +1,3 @@
+This is a project to test output, especially for specified folder output file.
+The second display handle no event. It can be run simply.
+We should make sure not only the project output aren't changed, but also the generated can be compiled.

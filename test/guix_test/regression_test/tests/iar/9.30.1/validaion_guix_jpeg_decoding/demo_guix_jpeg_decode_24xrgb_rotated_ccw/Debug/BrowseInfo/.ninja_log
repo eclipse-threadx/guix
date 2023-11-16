@@ -1,0 +1,8 @@
+# ninja log v5
+8	175	7073082330000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_ccw/Debug/BrowseInfo/demo_jpeg_decode_24xrgb_rotated_ccw_resources.xcl	dfef8ee70c90e6ee
+1	202	7073082330000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_ccw/Debug/BrowseInfo/common_code.xcl	1867124e9a6bce39
+27	231	7073082330000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_ccw/Debug/BrowseInfo/main.xcl	55c813cd9137697a
+17	262	7073082330000000	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_ccw/Debug/BrowseInfo/demo_jpeg_decode_24xrgb_rotated_ccw_specifications.xcl	d41ea8cfd3ba5d2f
+224	671	7073082343064763	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_ccw/Debug/BrowseInfo/common_code.pbi	28e2c7ed2bf8715d
+282	729	7073082343670847	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_ccw/Debug/BrowseInfo/demo_jpeg_decode_24xrgb_rotated_ccw_specifications.pbi	80189577985584ba
+255	748	7073082343850975	C:/Ting/guix/test/regression_test/tests/iar/9.30.1/validaion_guix_jpeg_decoding/demo_guix_jpeg_decode_24xrgb_rotated_ccw/Debug/BrowseInfo/main.pbi	45264d71eb6e5ef8
