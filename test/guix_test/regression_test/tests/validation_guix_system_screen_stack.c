@@ -105,6 +105,7 @@ char *comment[1];
         gx_validation_current_frame_id_get(&frame_id);
         comment[0] = entry->comment;
 GX_ENTER_CRITICAL
+        tx_thread_sleep(1);
         gx_validation_capture_frames(frame_id, entry->steps, comment, 1, 1000);
         my_event.gx_event_display_handle = 1;
         my_event.gx_event_payload.gx_event_pointdata.gx_point_x = entry->xpos;
