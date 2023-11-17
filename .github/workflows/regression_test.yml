@@ -105,8 +105,8 @@ jobs:
         output_text_description_file: code-coverage-summary.md
 
     - name: Add Code Coverage PR Comment
+      if: github.event_name == 'push'
       uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
       with:
         append: true
         path: code-coverage-summary.md
