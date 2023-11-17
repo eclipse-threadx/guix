@@ -77,7 +77,6 @@ jobs:
       uses: actions/deploy-pages@v1.2.9
 
     - name: Generate Code Coverage Results Summary
-      if: github.event_name == 'push'
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: ./test/guix_test/cmake/coverage_report/default_build_coverage.xml
@@ -87,7 +86,6 @@ jobs:
         output: file
 
     - name: Write Code Coverage Report URL
-      if: github.event_name == 'push'
       run: |
         cat code-coverage-results.md > code-coverage-summary.md
         echo -e "\n" >> code-coverage-summary.md
@@ -107,7 +105,6 @@ jobs:
         output_text_description_file: code-coverage-summary.md
 
     - name: Add Code Coverage PR Comment
-      if: github.event_name == 'push'
       uses: marocchino/sticky-pull-request-comment@v2
       if: github.event_name == 'pull_request'
       with:
