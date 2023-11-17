@@ -5,7 +5,9 @@ name: regression_test
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  workflow_dispatch:
+  workflow_dispatch:  
+  push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -70,6 +72,7 @@ jobs:
         path: ./test/guix_test/cmake/coverage_report/default_build_coverage
         
     - name: Deploy GitHub Pages site
+      if: github.event_name == 'push'
       id: deployment
       uses: actions/deploy-pages@v1.2.9
 
