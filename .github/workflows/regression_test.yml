@@ -16,6 +16,7 @@ jobs:
   # This workflow contains a single job called "linux_job"
   run_tests:
     environment:
+      if: github.event_name == 'push'
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
