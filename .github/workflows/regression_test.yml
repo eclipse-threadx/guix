@@ -71,7 +71,7 @@ jobs:
         
     - name: Deploy GitHub Pages site
       id: deployment
-      uses: actions/deploy-pages@v1.2.9
+      uses: actions/deploy-pages@v2.x.x
 
     - name: Generate Code Coverage Results Summary
       uses: irongut/CodeCoverageSummary@v1.3.0
