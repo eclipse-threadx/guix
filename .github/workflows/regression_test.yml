@@ -20,7 +20,6 @@ jobs:
       issues: read
       checks: write
       pull-requests: write
-      id-token: write
       
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -74,16 +73,6 @@ jobs:
         badge: true
         hide_complexity: true
         output: file
-
-    - name: Create CheckRun for Code Coverage
-      uses: LouisBrunner/checks-action@v1.6.2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        name: Code Coverage
-        conclusion: ${{ job.status }}
-        output: |
-          {"summary":"Coverage Report"}
-        output_text_description_file: code-coverage-results.md
         
     - name: Write Code Coverage Summary
       run: |
