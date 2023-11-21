@@ -76,7 +76,6 @@ jobs:
         
     - name: Write Code Coverage Summary
       run: |
-        echo -e "\n" >> code-coverage-summary.md
         echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
         cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
