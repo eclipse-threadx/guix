@@ -15,13 +15,7 @@ on:
 jobs:
   # This workflow contains a single job called "linux_job"
   run_tests:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     permissions:
-      pages: write
-      id-token: write
       contents: read
       issues: read
       checks: write
@@ -62,21 +56,16 @@ jobs:
           ./test/guix_test/cmake/build/*.txt
           ./test/guix_test/cmake/build/*/Testing/**/*.xml
           ./test/guix_test/cmake/build/**/regression/output_files/*.bin
-    
+
     - name: Configure GitHub Pages
       uses: actions/configure-pages@v3.0.6
-        
+      
     - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v2.0.0
       with:
         path: ./test/guix_test/cmake/coverage_report/default_build_coverage
-        
-    - name: Deploy GitHub Pages site
-      if: github.event_name == 'push'
-      id: deployment
-      uses: actions/deploy-pages@v1.2.9
 
-    - name: Generate Code Coverage Results Summary
+    - name: Generate Code Coverage Summary
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: ./test/guix_test/cmake/coverage_report/default_build_coverage.xml
@@ -84,17 +73,14 @@ jobs:
         badge: true
         hide_complexity: true
         output: file
-
-    - name: Write Code Coverage Report URL
-      run: |
-        cat code-coverage-results.md > code-coverage-summary.md
-        echo -e "\n" >> code-coverage-summary.md
-        echo '[Open Coverage Report](${{ steps.deployment.outputs.page_url }})' >> code-coverage-summary.md
-        echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
-        cat code-coverage-summary.md >> $GITHUB_STEP_SUMMARY
         
+    - name: Write Code Coverage Summary
+      run: |
+        echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
+        cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+
     - name: Create CheckRun for Code Coverage
-      if: github.event_name == 'push'
+      if: (github.event_name == 'push') || (github.event.pull_request.head.repo.full_name == github.repository)
       uses: LouisBrunner/checks-action@v1.6.2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -102,12 +88,32 @@ jobs:
         conclusion: ${{ job.status }}
         output: |
           {"summary":"Coverage Report"}
-        output_text_description_file: code-coverage-summary.md
-
+        output_text_description_file: code-coverage-results.md
+        
     - name: Add Code Coverage PR Comment
-      if: github.event_name == 'push'
+      if: (github.event_name == 'push') || (github.event.pull_request.head.repo.full_name == github.repository)
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         append: true
-        path: code-coverage-summary.md
+        path: code-coverage-results.md
+
+  deploy_code_coverage:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    needs: run_tests
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:        
+    - name: Deploy GitHub Pages site
+      id: deployment
+      uses: actions/deploy-pages@v1.2.9
+
+    - name: Write Code Coverage Report URL
+      run: |
+        echo '[Open Coverage Report](${{ steps.deployment.outputs.page_url }})' >>  $GITHUB_STEP_SUMMARY
         
