@@ -2224,7 +2224,7 @@ set(demo_guix_widget_animation_FILE_LIST
 
 # Display driver
 set(SOURCE_DIR ${ROOT_DIR}/test/guix_test/display_driver)
-set(DAVE2D_SIMULATION_SOURCE_DIR ${ROOT_DIR}/test/guix_test/display_driver/win32/renesas_dave2d)
+set(DAVE2D_SIMULATION_SOURCE_DIR ${ROOT_DIR}/ports/win32/src/renesas)
 set(display_driver_files
     # Linux
     #${SOURCE_DIR}/linux/linux_screen_driver_16bpp.c
@@ -2263,21 +2263,21 @@ set(display_driver_files
     ${DAVE2D_SIMULATION_SOURCE_DIR}/gx_synergy_system_font_mono.c
     ${DAVE2D_SIMULATION_SOURCE_DIR}/gx_synergy_system_font_4bpp.c
     # Validation
-    ${SOURCE_DIR}/validation/gx_validation_display_driver_16bpp.c
-    ${SOURCE_DIR}/validation/gx_validation_display_driver_1555xrgb.c
-    ${SOURCE_DIR}/validation/gx_validation_display_driver_1bpp.c
-    ${SOURCE_DIR}/validation/gx_validation_display_driver_32bpp.c
-    ${SOURCE_DIR}/validation/gx_validation_display_driver_332rgb.c
-    ${SOURCE_DIR}/validation/gx_validation_display_driver_4444argb.c
-    ${SOURCE_DIR}/validation/gx_validation_display_driver_4bpp_grayscale.c
-    ${SOURCE_DIR}/validation/gx_validation_display_driver_8bpp.c
-    ${SOURCE_DIR}/validation/gx_validation_synergy_display_driver_16bpp.c
-    ${SOURCE_DIR}/validation/gx_validation_synergy_display_driver_32bpp.c)
+    ${SOURCE_DIR}/gx_validation_display_driver_16bpp.c
+    ${SOURCE_DIR}/gx_validation_display_driver_1555xrgb.c
+    ${SOURCE_DIR}/gx_validation_display_driver_1bpp.c
+    ${SOURCE_DIR}/gx_validation_display_driver_32bpp.c
+    ${SOURCE_DIR}/gx_validation_display_driver_332rgb.c
+    ${SOURCE_DIR}/gx_validation_display_driver_4444argb.c
+    ${SOURCE_DIR}/gx_validation_display_driver_4bpp_grayscale.c
+    ${SOURCE_DIR}/gx_validation_display_driver_8bpp.c
+    ${SOURCE_DIR}/gx_validation_synergy_display_driver_16bpp.c
+    ${SOURCE_DIR}/gx_validation_synergy_display_driver_32bpp.c)
 add_library(display_driver ${display_driver_files})
 target_link_libraries(display_driver PUBLIC azrtos::guix m)
 target_include_directories(
-  display_driver PUBLIC ${SOURCE_DIR}/linux ${ROOT_DIR}/test/guix_test/display_driver/win32/renesas_dave2d
-                        ${SOURCE_DIR}/validation/)
+  display_driver PUBLIC ${SOURCE_DIR}/linux ${ROOT_DIR}/ports/win32/src/renesas
+                        ${SOURCE_DIR}/)
 
 # Utility
 set(SOURCE_DIR ${ROOT_DIR}/test/guix_test/regression_test)
