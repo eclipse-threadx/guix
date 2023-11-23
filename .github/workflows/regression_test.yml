@@ -94,7 +94,6 @@ jobs:
       if: (github.event_name == 'push') || (github.event.pull_request.head.repo.full_name == github.repository)
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        append: true
         path: code-coverage-results.md
 
   deploy_code_coverage:
