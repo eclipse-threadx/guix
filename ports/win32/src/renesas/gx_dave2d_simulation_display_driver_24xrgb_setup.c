@@ -63,9 +63,6 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
-/*  10-31-2022     Kenneth Maxwell          Modify comments, change       */
-/*                                            function name,              */
-/*                                            resulting in Version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_dave2d_simulation_display_driver_24xrgb_setup(GX_DISPLAY *display, VOID *aux_data,
