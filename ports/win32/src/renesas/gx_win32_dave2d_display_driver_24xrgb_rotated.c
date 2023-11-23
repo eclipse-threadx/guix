@@ -32,10 +32,10 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    win32_dave2d_graphics_driver_setup_24xrgb_rotated  PORTABLE C       */
-/*                                                           6.2.0        */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*    Ting Zhu, Microsoft Corporation                                     */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
 /*                                                                        */
@@ -67,7 +67,7 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  10-31-2022     Kenneth Maxwell          Initial Version 6.2.0         */
+/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
 /*                                                                        */
 /**************************************************************************/
 UINT win32_dave2d_graphics_driver_setup_24xrgb_rotated(GX_DISPLAY* display)

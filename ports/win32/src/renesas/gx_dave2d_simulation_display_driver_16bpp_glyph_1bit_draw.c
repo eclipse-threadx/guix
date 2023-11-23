@@ -52,10 +52,10 @@
 /*                                                                        */
 /*    _gx_dave2d_simulation_display_driver_16bpp_glyph_1bit_raw_draw      */
 /*                                                        PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*    Ting Zhu, Microsoft Corporation                                     */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
 /*                                                                        */
@@ -87,7 +87,7 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_dave2d_simulation_display_driver_16bpp_glyph_1bit_draw(GX_DRAW_CONTEXT *context, GX_RECTANGLE *draw_area,

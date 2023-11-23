@@ -33,10 +33,10 @@
 /*                                                                        */
 /*    _gx_dave2d_s_display_driver_dave2d_24xrgb_pixelmap_c_a_write        */
 /*                                                        PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*    Ting Zhu, Microsoft Corporation                                     */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
 /*                                                                        */
@@ -66,7 +66,7 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_dave2d_simulation_display_driver_24xrgb_pixelmap_compressed_write(GX_DRAW_CONTEXT *context,
@@ -220,10 +220,10 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_synegy_s_display_driver_32bpp_4444argb_dave2d_pixelmap_c        */
 /*    _alpha_write                                        PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*    Ting Zhu, Microsoft Corporation                                     */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
 /*                                                                        */
@@ -253,7 +253,7 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_dave2d_simulation_display_driver_32bpp_4444argb_pixelmap_compressed_alpha_write(GX_DRAW_CONTEXT *context,
@@ -390,10 +390,10 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_dave2d_s_display_driver_32bpp_4444bgra_dave2d_pixelmap_c_       */
 /*    alpha_write                                         PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*    Ting Zhu, Microsoft Corporation                                     */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
 /*                                                                        */
@@ -423,7 +423,7 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_dave2d_simulation_display_driver_32bpp_4444bgra_pixelmap_compressed_write(GX_DRAW_CONTEXT *context,
@@ -559,10 +559,10 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_dave2d_s_display_driver_24xrgb_565rgb_pixelmap_c_write          */
 /*                                                        PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*    Ting Zhu, Microsoft Corporation                                     */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
 /*                                                                        */
@@ -592,7 +592,7 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_dave2d_simulation_display_driver_24xrgb_565rgb_pixelmap_compressed_write(GX_DRAW_CONTEXT *context,
@@ -747,10 +747,10 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_dave2d_s_display_driver_24xrgb_pixelmap_draw   PORTABLE C       */
-/*                                                           6.2.0        */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
-/*    Kenneth Maxwell, Microsoft Corporation                              */
+/*    Ting Zhu, Microsoft Corporation                                     */
 /*                                                                        */
 /*  DESCRIPTION                                                           */
 /*                                                                        */
@@ -785,7 +785,7 @@ GX_RECTANGLE      *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  12-31-2020     Kenneth Maxwell          Initial Version 6.1.3         */
+/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
 /*  10-31-2022     Kenneth Maxwell          Modify comments, change       */
 /*                                            function name,              */
 /*                                            resulting in Version 6.2.0  */
