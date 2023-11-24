@@ -10,11 +10,19 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+ 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "linux_job"
   run_tests:
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+      pages: write
+      id-token: write
+      
     uses: azure-rtos/threadx/.github/workflows/regression_template.yml@master
     with:
       cmake_path: ./test/guix_test/cmake
