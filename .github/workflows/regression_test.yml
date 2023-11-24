@@ -16,6 +16,7 @@ jobs:
   # This workflow contains a single job called "linux_job"
   run_tests:
     uses: azure-rtos/threadx/.github/workflows/regression_template.yml@master
+    secrets: inherit
     with:
       cmake_path: ./test/guix_test/cmake
         
