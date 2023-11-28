@@ -174,18 +174,18 @@ GX_DISPLAY      *display = canvas -> gx_canvas_display;
             }
             else
             {
-                new_context -> gx_draw_context_pitch = canvas -> gx_canvas_x_resolution;
+                new_context -> gx_draw_context_pitch = canvas -> gx_canvas_display -> gx_display_driver_row_pitch_get(canvas -> gx_canvas_x_resolution);
                 new_context -> gx_draw_context_offset_x = 0;
                 new_context -> gx_draw_context_offset_y = 0;
             }
 
 #else
-            new_context -> gx_draw_context_pitch = canvas -> gx_canvas_x_resolution;
+            new_context -> gx_draw_context_pitch = canvas -> gx_canvas_display -> gx_display_driver_row_pitch_get(canvas -> gx_canvas_x_resolution);
 #endif
         }
         else
         {
-            new_context -> gx_draw_context_pitch = canvas -> gx_canvas_y_resolution;
+            new_context -> gx_draw_context_pitch = canvas -> gx_canvas_display -> gx_display_driver_row_pitch_get(canvas -> gx_canvas_y_resolution);
         }
     }
 
