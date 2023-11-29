@@ -23,7 +23,7 @@ jobs:
       pages: write
       id-token: write
       
-    uses: https://github.com/ting-ms/threadx/.github/workflows/regression_template.yml@master
+    uses: ting-ms/threadx/.github/workflows/regression_template.yml@master
     with:
       cmake_path: ./test/guix_test/cmake
         
