@@ -1,0 +1,524 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F9B98616-F72A-49BB-AB6A-315CD8350F9A}</ProjectGuid>
+    <RootNamespace>studiox</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+    <ProjectName>guix_studio</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">guix_studio</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>false</ValidateAllParameters>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\ports;..\..\..\common\inc\;..\..\..\ports\win32\inc;..\..\..\ports\win32\lib\vs_2019;..\..\libs\fontgen;..\..\libs\oss_libs;..\..\libs\oss_libs\libgit2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;_DEBUG;GUIX_STUDIO;GX_DISABLE_THREADX_BINDING;GX_DISABLE_ERROR_CHECKING;GX_DYNAMIC_BIDI_TEXT_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <CompileAsManaged>false</CompileAsManaged>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>guix_for_studiox.lib;freetype_2_12_1.lib;png.lib;jpeg-static.lib;zlib.lib;git2.lib;winhttp.lib;rpcrt4.lib;crypt32.lib;uiautomationcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);..\..\libs\fontgen;..\..\libs\oss_libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <IgnoreSpecificDefaultLibraries>LIBCMTD.lib</IgnoreSpecificDefaultLibraries>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>false</ValidateAllParameters>
+    </Midl>
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;GX_DISABLE_THREADX_BINDING;GX_DISABLE_ERROR_CHECKING;GX_DYNAMIC_BIDI_TEXT_SUPPORT;GUIX_STUDIO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>..\..\ports;..\..\..\common\inc\;..\..\..\ports\win32\inc;..\..\..\ports\win32\lib\vs_2019;..\..\libs\fontgen;..\..\libs\oss_libs;..\..\libs\oss_libs\libgit2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <CompileAsManaged>false</CompileAsManaged>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(OutDir);..\..\libs\fontgen;..\..\libs\oss_libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>guix_for_studiox.lib;freetype_2_12_1.lib;png.lib;jpeg-static.lib;zlib.lib;git2.lib;winhttp.lib;rpcrt4.lib;crypt32.lib;uiautomationcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>LIBCMTD,LIBCMT</IgnoreSpecificDefaultLibraries>
+      <OutputFile>$(OutDir)guix_studio$(TargetExt)</OutputFile>
+    </Link>
+    <Manifest>
+      <OutputManifestFile>$(IntDir)$(TargetName)$(TargetExt).embed.manifest</OutputManifestFile>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\accessibility_props_service.h" />
+    <ClInclude Include="..\..\accordion_menu_service_provider.h" />
+    <ClInclude Include="..\..\app_runner.h" />
+    <ClInclude Include="..\..\binary_resource_gen.h" />
+    <ClInclude Include="..\..\button_service_provider.h" />
+    <ClInclude Include="..\..\canonical_normalize.h" />
+    <ClInclude Include="..\..\checkbox_service_provider.h" />
+    <ClInclude Include="..\..\circular_gauge_service_provider.h" />
+    <ClInclude Include="..\..\clone_repo_dialog.h" />
+    <ClInclude Include="..\..\color_edit_dialog.h" />
+    <ClInclude Include="..\..\CommandInfo.h" />
+    <ClInclude Include="..\..\configure_theme_dlg.h" />
+    <ClInclude Include="..\..\config_languages_dlg.h" />
+    <ClInclude Include="..\..\copy_paste_engine.h" />
+    <ClInclude Include="..\..\csv_read_write.h" />
+    <ClInclude Include="..\..\color_box_button.h" />
+    <ClInclude Include="..\..\custom_edit.h" />
+    <ClInclude Include="..\..\delete_language_dlg.h" />
+    <ClInclude Include="..\..\drop_list_service_provider.h" />
+    <ClInclude Include="..\..\easing_function_select_dlg.h" />
+    <ClInclude Include="..\..\edit_pixelmap_dlg.h" />
+    <ClInclude Include="..\..\express_combobox.h" />
+    <ClInclude Include="..\..\express_dialog.h" />
+    <ClInclude Include="..\..\express_table_row.h" />
+    <ClInclude Include="..\..\folder_name_dlg.h" />
+    <ClInclude Include="..\..\font_path_dialog.h" />
+    <ClInclude Include="..\..\grid_setting_dlg.h" />
+    <ClInclude Include="..\..\gx_studio_font_util.h" />
+    <ClInclude Include="..\..\horizontal_list_service_provider.h" />
+    <ClInclude Include="..\..\hscroll_service_provider.h" />
+    <ClInclude Include="..\..\icon_button_service_provider.h" />
+    <ClInclude Include="..\..\icon_service_provider.h" />
+    <ClInclude Include="..\..\image_reader.h" />
+    <ClInclude Include="..\..\import_project_dlg.h" />
+    <ClInclude Include="..\..\import_sprite_frames_dlg.h" />
+    <ClInclude Include="..\..\install_dir_dialog.h" />
+    <ClInclude Include="..\..\left_panel_frame.h" />
+    <ClInclude Include="..\..\line_chart_service_provider.h" />
+    <ClInclude Include="..\..\MacroPlaybackDlg.h" />
+    <ClInclude Include="..\..\MacroRecordDlg.h" />
+    <ClInclude Include="..\..\MainFrm.h" />
+    <ClInclude Include="..\..\menu_service_provider.h" />
+    <ClInclude Include="..\..\message_dialog.h" />
+    <ClInclude Include="..\..\mlt_button_service_provider.h" />
+    <ClInclude Include="..\..\ml_text_input_service_provider.h" />
+    <ClInclude Include="..\..\ml_text_view_service_provider.h" />
+    <ClInclude Include="..\..\NewProjectDlg.h" />
+    <ClInclude Include="..\..\numeric_pixelmap_prompt_service_provider.h" />
+    <ClInclude Include="..\..\numeric_prompt_service_provider.h" />
+    <ClInclude Include="..\..\numeric_scroll_wheel_service_provider.h" />
+    <ClInclude Include="..\..\options_dialog.h" />
+    <ClInclude Include="..\..\PaletteLayoutDlg.h" />
+    <ClInclude Include="..\..\palette_creater.h" />
+    <ClInclude Include="..\..\pixelmap_button_service_provider.h" />
+    <ClInclude Include="..\..\pixelmap_prompt_service_provider.h" />
+    <ClInclude Include="..\..\pixelmap_slider_service_provider.h" />
+    <ClInclude Include="..\..\progress_bar_service_provider.h" />
+    <ClInclude Include="..\..\ProjectConfigDlg.h" />
+    <ClInclude Include="..\..\project_view.h" />
+    <ClInclude Include="..\..\prompt_service_provider.h" />
+    <ClInclude Include="..\..\properties_win.h" />
+    <ClInclude Include="..\..\radial_progress_bar_service_provider.h" />
+    <ClInclude Include="..\..\radial_slider_service_provider.h" />
+    <ClInclude Include="..\..\radio_button_service_provider.h" />
+    <ClInclude Include="..\..\recent_project_win.h" />
+    <ClInclude Include="..\..\resource.h" />
+    <ClInclude Include="..\..\resource_export_dlg.h" />
+    <ClInclude Include="..\..\resource_gen.h" />
+    <ClInclude Include="..\..\resource_item.h" />
+    <ClInclude Include="..\..\resource_item_provider.h" />
+    <ClInclude Include="..\..\resource_tree.h" />
+    <ClInclude Include="..\..\resource_view.h" />
+    <ClInclude Include="..\..\resource_view_provider.h" />
+    <ClInclude Include="..\..\rich_text_edit_dlg.h" />
+    <ClInclude Include="..\..\rich_text_view_service_provider.h" />
+    <ClInclude Include="..\..\right_panel_frame.h" />
+    <ClInclude Include="..\..\screen_flow.h" />
+    <ClInclude Include="..\..\screen_flow_edit_dlg.h" />
+    <ClInclude Include="..\..\screen_generator.h" />
+    <ClInclude Include="..\..\ScrollHelper.h" />
+    <ClInclude Include="..\..\scroll_wheel_service_provider.h" />
+    <ClInclude Include="..\..\slider_service_provider.h" />
+    <ClInclude Include="..\..\splash_screen.h" />
+    <ClInclude Include="..\..\sprite_edit_dialog.h" />
+    <ClInclude Include="..\..\sprite_service_provider.h" />
+    <ClInclude Include="..\..\stdafx.h" />
+    <ClInclude Include="..\..\string_export_dlg.h" />
+    <ClInclude Include="..\..\string_scroll_wheel_edit_dlg.h" />
+    <ClInclude Include="..\..\string_scroll_wheel_service_provider.h" />
+    <ClInclude Include="..\..\string_table.h" />
+    <ClInclude Include="..\..\string_table_edit_dlg.h" />
+    <ClInclude Include="..\..\studiox.h" />
+    <ClInclude Include="..\..\studioxDoc.h" />
+    <ClInclude Include="..\..\StudioXProject.h" />
+    <ClInclude Include="..\..\studiox_constants.h" />
+    <ClInclude Include="..\..\studiox_includes.h" />
+    <ClInclude Include="..\..\studiox_util.h" />
+    <ClInclude Include="..\..\studio_source_writer.h" />
+    <ClInclude Include="..\..\synergy_settings_dlg.h" />
+    <ClInclude Include="..\..\system_pngs.h" />
+    <ClInclude Include="..\..\target_screen.h" />
+    <ClInclude Include="..\..\target_view.h" />
+    <ClInclude Include="..\..\template_service_provider.h" />
+    <ClInclude Include="..\..\text_button_service_provider.h" />
+    <ClInclude Include="..\..\text_input_service_provider.h" />
+    <ClInclude Include="..\..\text_scroll_wheel_service_provider.h" />
+    <ClInclude Include="..\..\tree_view_service_provider.h" />
+    <ClInclude Include="..\..\trigger_action_edit_dlg.h" />
+    <ClInclude Include="..\..\trigger_action_select_dlg.h" />
+    <ClInclude Include="..\..\trigger_edit_dlg.h" />
+    <ClInclude Include="..\..\trigger_list_edit_dlg.h" />
+    <ClInclude Include="..\..\undo_manager.h" />
+    <ClInclude Include="..\..\vertical_list_service_provider.h" />
+    <ClInclude Include="..\..\view_header.h" />
+    <ClInclude Include="..\..\vscroll_service_provider.h" />
+    <ClInclude Include="..\..\wait_dialog.h" />
+    <ClInclude Include="..\..\widget_factory.h" />
+    <ClInclude Include="..\..\widget_reader.h" />
+    <ClInclude Include="..\..\generic_scroll_wheel_service_provider.h" />
+    <ClInclude Include="..\..\widget_service_provider.h" />
+    <ClInclude Include="..\..\widget_writer.h" />
+    <ClInclude Include="..\..\window_service_provider.h" />
+    <ClInclude Include="..\..\xliff_read_write.h" />
+    <ClInclude Include="..\..\xml_reader.h" />
+    <ClInclude Include="..\..\xml_writer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\accordion_menu_service_provider.cpp" />
+    <ClCompile Include="..\..\accessibilty_props_service.cpp" />
+    <ClCompile Include="..\..\app_runner.cpp" />
+    <ClCompile Include="..\..\binary_resource_gen.cpp" />
+    <ClCompile Include="..\..\button_service_provider.cpp" />
+    <ClCompile Include="..\..\canonical_normalize.cpp" />
+    <ClCompile Include="..\..\checkbox_service_provider.cpp" />
+    <ClCompile Include="..\..\circular_gauge_service_provider.cpp" />
+    <ClCompile Include="..\..\clone_repo_dialog.cpp" />
+    <ClCompile Include="..\..\color_edit_dialog.cpp" />
+    <ClCompile Include="..\..\CommandInfo.cpp" />
+    <ClCompile Include="..\..\configure_theme_dlg.cpp" />
+    <ClCompile Include="..\..\config_languages_dlg.cpp" />
+    <ClCompile Include="..\..\copy_paste_engine.cpp" />
+    <ClCompile Include="..\..\csv_read_write.cpp" />
+    <ClCompile Include="..\..\color_box_button.cpp" />
+    <ClCompile Include="..\..\custom_edit.cpp" />
+    <ClCompile Include="..\..\delete_language_dlg.cpp" />
+    <ClCompile Include="..\..\drop_list_service_provider.cpp" />
+    <ClCompile Include="..\..\easing_function_select_dlg.cpp" />
+    <ClCompile Include="..\..\edit_pixelmap_dlg.cpp" />
+    <ClCompile Include="..\..\express_combobox.cpp" />
+    <ClCompile Include="..\..\express_dialog.cpp" />
+    <ClCompile Include="..\..\express_table_row.cpp" />
+    <ClCompile Include="..\..\folder_name_dlg.cpp" />
+    <ClCompile Include="..\..\font_path_dialog.cpp" />
+    <ClCompile Include="..\..\gif_reader.cpp" />
+    <ClCompile Include="..\..\grid_setting_dlg.cpp" />
+    <ClCompile Include="..\..\gx_studio_font_util.cpp" />
+    <ClCompile Include="..\..\horizontal_list_service_provider.cpp" />
+    <ClCompile Include="..\..\hscroll_service_provider.cpp" />
+    <ClCompile Include="..\..\icon_button_service_provider.cpp" />
+    <ClCompile Include="..\..\icon_service_provider.cpp" />
+    <ClCompile Include="..\..\image_reader.cpp" />
+    <ClCompile Include="..\..\import_project_dlg.cpp" />
+    <ClCompile Include="..\..\import_sprite_frames_dlg.cpp" />
+    <ClCompile Include="..\..\install_dir_dialog.cpp" />
+    <ClCompile Include="..\..\jpg_reader.cpp" />
+    <ClCompile Include="..\..\left_panel_frame.cpp" />
+    <ClCompile Include="..\..\line_chart_service_provider.cpp" />
+    <ClCompile Include="..\..\MacroPlaybackDlg.cpp" />
+    <ClCompile Include="..\..\MacroRecordDlg.cpp" />
+    <ClCompile Include="..\..\MainFrm.cpp" />
+    <ClCompile Include="..\..\menu_service_provider.cpp" />
+    <ClCompile Include="..\..\message_dialog.cpp" />
+    <ClCompile Include="..\..\mlt_button_service_provider.cpp" />
+    <ClCompile Include="..\..\ml_text_input_service_provider.cpp" />
+    <ClCompile Include="..\..\ml_text_view_service_provider.cpp" />
+    <ClCompile Include="..\..\NewProjectDlg.cpp" />
+    <ClCompile Include="..\..\numeric_pixelmap_prompt_service_provider.cpp" />
+    <ClCompile Include="..\..\numeric_prompt_service_provider.cpp" />
+    <ClCompile Include="..\..\numeric_scroll_wheel_service_provider.cpp" />
+    <ClCompile Include="..\..\options_dialog.cpp" />
+    <ClCompile Include="..\..\PaletteLayoutDlg.cpp" />
+    <ClCompile Include="..\..\palette_creater.cpp" />
+    <ClCompile Include="..\..\pixelmap_button_service_provider.cpp" />
+    <ClCompile Include="..\..\pixelmap_prompt_service_provider.cpp" />
+    <ClCompile Include="..\..\pixelmap_slider_service_provider.cpp" />
+    <ClCompile Include="..\..\png_reader.cpp" />
+    <ClCompile Include="..\..\progress_bar_service_provider.cpp" />
+    <ClCompile Include="..\..\ProjectConfigDlg.cpp" />
+    <ClCompile Include="..\..\project_view.cpp" />
+    <ClCompile Include="..\..\prompt_service_provider.cpp" />
+    <ClCompile Include="..\..\properties_win.cpp" />
+    <ClCompile Include="..\..\radial_progress_bar_service_provider.cpp" />
+    <ClCompile Include="..\..\radial_slider_service_provider.cpp" />
+    <ClCompile Include="..\..\radio_button_service_provider.cpp" />
+    <ClCompile Include="..\..\recent_project_win.cpp" />
+    <ClCompile Include="..\..\resource_export_dlg.cpp" />
+    <ClCompile Include="..\..\resource_gen.cpp" />
+    <ClCompile Include="..\..\resource_item.cpp" />
+    <ClCompile Include="..\..\resource_item_provider.cpp" />
+    <ClCompile Include="..\..\resource_tree.cpp" />
+    <ClCompile Include="..\..\resource_view.cpp" />
+    <ClCompile Include="..\..\resource_view_provider.cpp" />
+    <ClCompile Include="..\..\rich_text_edit_dlg.cpp" />
+    <ClCompile Include="..\..\rich_text_view_sercive_provider.cpp" />
+    <ClCompile Include="..\..\right_panel_frame.cpp" />
+    <ClCompile Include="..\..\screen_flow.cpp" />
+    <ClCompile Include="..\..\screen_flow_edit_dlg.cpp" />
+    <ClCompile Include="..\..\screen_generator.cpp" />
+    <ClCompile Include="..\..\ScrollHelper.cpp" />
+    <ClCompile Include="..\..\scroll_wheel_service_provider.cpp" />
+    <ClCompile Include="..\..\slider_service_provider.cpp" />
+    <ClCompile Include="..\..\splash_screen.cpp" />
+    <ClCompile Include="..\..\sprite_edit_dialog.cpp" />
+    <ClCompile Include="..\..\sprite_service_provider.cpp" />
+    <ClCompile Include="..\..\stdafx.cpp" />
+    <ClCompile Include="..\..\string_export_dlg.cpp" />
+    <ClCompile Include="..\..\string_scroll_wheel_edit_dlg.cpp" />
+    <ClCompile Include="..\..\string_scroll_wheel_service_provider.cpp" />
+    <ClCompile Include="..\..\string_table.cpp" />
+    <ClCompile Include="..\..\string_table_edit_dlg.cpp" />
+    <ClCompile Include="..\..\studiox.cpp" />
+    <ClCompile Include="..\..\studioxDoc.cpp" />
+    <ClCompile Include="..\..\StudioXProject.cpp" />
+    <ClCompile Include="..\..\studiox_util.cpp" />
+    <ClCompile Include="..\..\studio_source_writer.cpp" />
+    <ClCompile Include="..\..\synergy_settings_dlg.cpp" />
+    <ClCompile Include="..\..\system_pngs.cpp" />
+    <ClCompile Include="..\..\target_screen.cpp" />
+    <ClCompile Include="..\..\target_view.cpp" />
+    <ClCompile Include="..\..\template_service_provider.cpp" />
+    <ClCompile Include="..\..\text_button_service_provider.cpp" />
+    <ClCompile Include="..\..\text_input_service_provider.cpp" />
+    <ClCompile Include="..\..\text_scroll_wheel_service_provider.cpp" />
+    <ClCompile Include="..\..\threadx_stub.c" />
+    <ClCompile Include="..\..\tree_view_service_provider.cpp" />
+    <ClCompile Include="..\..\trigger_action_edit_dlg.cpp" />
+    <ClCompile Include="..\..\trigger_action_select_dlg.cpp" />
+    <ClCompile Include="..\..\trigger_edit_dlg.cpp" />
+    <ClCompile Include="..\..\trigger_list_edit_dlg.cpp" />
+    <ClCompile Include="..\..\undo_manager.cpp" />
+    <ClCompile Include="..\..\vertical_list_service_provider.cpp" />
+    <ClCompile Include="..\..\view_header.cpp" />
+    <ClCompile Include="..\..\vscroll_service_provider.cpp" />
+    <ClCompile Include="..\..\wait_dialog.cpp" />
+    <ClCompile Include="..\..\widget_factory.cpp" />
+    <ClCompile Include="..\..\widget_reader.cpp" />
+    <ClCompile Include="..\..\generic_scroll_wheel_service_provider.cpp" />
+    <ClCompile Include="..\..\widget_service_provider.cpp" />
+    <ClCompile Include="..\..\widget_writer.cpp" />
+    <ClCompile Include="..\..\window_service_provider.cpp" />
+    <ClCompile Include="..\..\xliff_read_write.cpp" />
+    <ClCompile Include="..\..\xml_reader.cpp" />
+    <ClCompile Include="..\..\xml_writer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\studiox.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\graphics\guix_1616icon.ico" />
+    <Image Include="..\..\res\bitmap1.bmp" />
+    <Image Include="..\..\res\bitmap2.bmp" />
+    <Image Include="..\..\res\bitmap3.bmp" />
+    <Image Include="..\..\res\bitmap4.bmp" />
+    <Image Include="..\..\res\bitmap5.bmp" />
+    <Image Include="..\..\res\bitmap6.bmp" />
+    <Image Include="..\..\res\bmp00001.bmp" />
+    <Image Include="..\..\res\bmp00002.bmp" />
+    <Image Include="..\..\res\bmp00003.bmp" />
+    <Image Include="..\..\res\bmp00004.bmp" />
+    <Image Include="..\..\res\bmp00005.bmp" />
+    <Image Include="..\..\res\bmp00006.bmp" />
+    <Image Include="..\..\res\bmp00006_highlight.bmp" />
+    <Image Include="..\..\res\bmp00007.bmp" />
+    <Image Include="..\..\res\bmp00007_highlight.bmp" />
+    <Image Include="..\..\res\bmp00008.bmp" />
+    <Image Include="..\..\res\bmp00009.bmp" />
+    <Image Include="..\..\res\bmp00010.bmp" />
+    <Image Include="..\..\res\bmp00011.bmp" />
+    <Image Include="..\..\res\bmp00012.bmp" />
+    <Image Include="..\..\res\bmp00013.bmp" />
+    <Image Include="..\..\res\bmp00014.bmp" />
+    <Image Include="..\..\res\bmp00015.bmp" />
+    <Image Include="..\..\res\bmp00016.bmp" />
+    <Image Include="..\..\res\bmp00017.bmp" />
+    <Image Include="..\..\res\bmp00018.bmp" />
+    <Image Include="..\..\res\bmp00018_highlight.bmp" />
+    <Image Include="..\..\res\bmp00019.bmp" />
+    <Image Include="..\..\res\bmp00020.bmp" />
+    <Image Include="..\..\res\bmp00021.bmp" />
+    <Image Include="..\..\res\bmp00022.bmp" />
+    <Image Include="..\..\res\bmp00023.bmp" />
+    <Image Include="..\..\res\bmp00024.bmp" />
+    <Image Include="..\..\res\bmp00025.bmp" />
+    <Image Include="..\..\res\bmp00026.bmp" />
+    <Image Include="..\..\res\bmp00027.bmp" />
+    <Image Include="..\..\res\bmp00028.bmp" />
+    <Image Include="..\..\res\bmp00029.bmp" />
+    <Image Include="..\..\res\bmp00030.bmp" />
+    <Image Include="..\..\res\bmp00031.bmp" />
+    <Image Include="..\..\res\bmp00032.bmp" />
+    <Image Include="..\..\res\bmp00033.bmp" />
+    <Image Include="..\..\res\bmp00034.bmp" />
+    <Image Include="..\..\res\bmp00035.bmp" />
+    <Image Include="..\..\res\bmp00036.bmp" />
+    <Image Include="..\..\res\bmp00037.bmp" />
+    <Image Include="..\..\res\bmp00038.bmp" />
+    <Image Include="..\..\res\bmp00039.bmp" />
+    <Image Include="..\..\res\bmp00040.bmp" />
+    <Image Include="..\..\res\bmp00041.bmp" />
+    <Image Include="..\..\res\bmp00042.bmp" />
+    <Image Include="..\..\res\bmp00043.bmp" />
+    <Image Include="..\..\res\bmp00044.bmp" />
+    <Image Include="..\..\res\bmp00045.bmp" />
+    <Image Include="..\..\res\bmp00046.bmp" />
+    <Image Include="..\..\res\bmp00047.bmp" />
+    <Image Include="..\..\res\bmp00048.bmp" />
+    <Image Include="..\..\res\bmp00049.bmp" />
+    <Image Include="..\..\res\bmp00050.bmp" />
+    <Image Include="..\..\res\bmp00051.bmp" />
+    <Image Include="..\..\res\bmp00052.bmp" />
+    <Image Include="..\..\res\bmp00053.bmp" />
+    <Image Include="..\..\res\bmp00054.bmp" />
+    <Image Include="..\..\res\bold.bmp" />
+    <Image Include="..\..\res\centeralign.bmp" />
+    <Image Include="..\..\res\check.bmp" />
+    <Image Include="..\..\res\configure_languages.bmp" />
+    <Image Include="..\..\res\configure_projects.bmp" />
+    <Image Include="..\..\res\configure_themes.bmp" />
+    <Image Include="..\..\res\down_arrow.bmp" />
+    <Image Include="..\..\res\down_arrow_gray.bmp" />
+    <Image Include="..\..\res\bmp00004_highlight.bmp" />
+    <Image Include="..\..\res\bmp00005_highlight.bmp" />
+    <Image Include="..\..\res\bmp00006_pixelmap_highlight.bmp" />
+    <Image Include="..\..\res\bmp00007_string_highlight.bmp" />
+    <Image Include="..\..\res\configure_themes_highlight.bmp" />
+    <Image Include="..\..\res\end.bmp" />
+    <Image Include="..\..\res\export.bmp" />
+    <Image Include="..\..\res\fit_content.bmp" />
+    <Image Include="..\..\res\folder_close.bmp" />
+    <Image Include="..\..\res\folder_open.bmp" />
+    <Image Include="..\..\res\grid.bmp" />
+    <Image Include="..\..\res\italic.bmp" />
+    <Image Include="..\..\res\leftalign.bmp" />
+    <Image Include="..\..\res\left_arrow.bmp" />
+    <Image Include="..\..\res\playback.bmp" />
+    <Image Include="..\..\res\record.bmp" />
+    <Image Include="..\..\res\rename.bmp" />
+    <Image Include="..\..\res\required.bmp" />
+    <Image Include="..\..\res\rightalign.bmp" />
+    <Image Include="..\..\res\right_arrow.bmp" />
+    <Image Include="..\..\res\screen_flow_fit_content.bmp" />
+    <Image Include="..\..\res\screen_flow_fit_content_pressed.bmp" />
+    <Image Include="..\..\res\screen_flow_zoom_in.bmp" />
+    <Image Include="..\..\res\screen_flow_zoom_in_pressed.bmp" />
+    <Image Include="..\..\res\screen_flow_zoom_out.bmp" />
+    <Image Include="..\..\res\screen_flow_zoom_out_pressed.bmp" />
+    <Image Include="..\..\res\stop.bmp" />
+    <Image Include="..\..\res\studiox.ico" />
+    <Image Include="..\..\res\Toolbar.bmp" />
+    <Image Include="..\..\res\toolbar_1bit.bmp" />
+    <Image Include="..\..\res\underline.bmp" />
+    <Image Include="..\..\res\up_arrow.bmp" />
+    <Image Include="..\..\res\up_arrow_gray.bmp" />
+    <Image Include="..\..\res\warning.bmp" />
+    <Image Include="..\..\res\zoom_in.bmp" />
+    <Image Include="..\..\res\zoom_out.bmp" />
+    <Image Include="res\bmp00018_highlight.bmp" />
+    <Image Include="res\bold.bmp" />
+    <Image Include="res\centeralign.bmp" />
+    <Image Include="res\italic.bmp" />
+    <Image Include="res\leftalign.bmp" />
+    <Image Include="res\rightalign.bmp" />
+    <Image Include="res\underline.bmp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="studiox.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

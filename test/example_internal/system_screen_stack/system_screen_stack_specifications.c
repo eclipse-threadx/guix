@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.2.0.1                                               */
-/*  Date (dd.mm.yyyy): 31.10.2022   Time (hh:mm): 14:12                        */
+/*  GUIX Studio Revision 6.3.0.0                                               */
+/*  Date (dd.mm.yyyy): 24.11.2023   Time (hh:mm): 16:58                        */
 /*******************************************************************************/
 
 
@@ -247,6 +247,11 @@ UINT gx_studio_auto_event_handler(GX_WIDGET *widget, GX_EVENT *event_ptr, GX_CON
                         gx_widget_detach(target);
                         if (target->gx_widget_status & GX_STATUS_STUDIO_CREATED)
                         {
+                            if (widget == target)
+                            {
+                                widget = GX_NULL;
+                            }
+
                             gx_widget_delete(target);
                         }
                     }

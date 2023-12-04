@@ -1,0 +1,21 @@
+good_results = [
+    0x5dac1db9, #test 0
+    0x5bacd0f0, #test 1
+    0x5bacd0f0, #test 2
+    0x78003aa, #test 3
+    0x78003aa, #test 4
+    0x5bacd0f0, #test 5
+    0x5bacd0f0, #test 6
+    0x5bacd0f0, #test 7
+    0x5bacd0f0, #test 8
+    0x5bacd0f0, #test 9
+    0x5bacd0f0, #test 10
+    -0x12bf3321, #test 11
+    -0x12bf3321, #test 12
+    0x2c91fa6, #test 13
+    -0x28c21c1d, #test 14
+    0x33155a02, #test 15
+    0x5dac1db9, #test 16
+    -0x1bd658f1, #test 17
+    -0x7ac18480, #test 18
+]

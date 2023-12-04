@@ -1,0 +1,68 @@
+﻿name,en,zh
+DATE,"Tuesday, January 3",1月3日 星期二
+TIME_AM,AM,上午
+ZERO,0,
+ABOUT_GUIX,About GUIX,关于GUIX
+COMPANY,Company,
+COMPANY_NAME,"Express Logic, Inc",
+COMPANY_CONTACT,(858)613-6640,
+COMPANY_WEBSITE,expresslogic.com,
+STOPWATCH,Stopwatch,秒表
+DOUBLE_ZERO,00,
+TIME_PM,PM,下午
+EDIT_ALARM,Edit Alarm,编辑闹钟
+SEPARATOR,|,
+MOBILE,Mobile,移动电话
+OFFICE,Office,办公电话
+EMAIL,Email,电子邮件
+ADDRESS,Address,地址
+SAVE,Save,保存
+LAST_NAME,Last Name,姓
+FIRST_NAME,First Name,名
+STATIC,Static,
+STRING_2,New York,纽约
+STRING_3,66,
+CHARACTER_O,o,
+STRING_5,Hi,高
+STRING_6,Low,低
+STRING_7,82,
+STRING_8,70,
+MONDAY,Monday,星期一
+THUESDAY,Thuesday,星期二
+WEDNESDAY,Wednesday,星期三
+THURSDAY,Thursday,星期四
+FRIDAY,Friday,星期五
+SATURDAY,Saturday,星期六
+SUNDAY,Sunday,星期日
+STRING_4,San Francisco,"旧金山"
+STRING_10,75,
+STRING_11,Los Angeles,洛杉矶
+STRING_12,90,
+STRING_13,92,
+STRING_14,80,
+STRING_15,Heart Rate,心率
+STRING_16,BPM,
+STRING_19,60,
+STRING_20,New Message,新信息
+STRING_21,S,
+STRING_22,Messages,信息
+REPLAY,Replay,回复
+STRING_60,12,
+STRING_29,Pace,步速
+STRING_9,4.9,
+ENGLISH,English,英语
+SPANISH,Spanish,西班牙语
+CHINESE,Chinese,中文
+JAPANESE,Japanese,日语
+SOUNDS,Sounds,声音
+WIFI,Wi-Fi,无线局域网
+BLUETOOTH,Bluetooth,蓝牙
+NOTIFICATIONS,Notifications,通知
+THEMES,Themes,主题
+VOICE_CONTROL,Voice Control,声音控制
+START,Start,开始
+RESET,Reset,重置
+STOP,Stop,停止
+SENT,Sent,已发送
+YESTERDAY,Yesterday,昨天
+STRING_1,prompt,

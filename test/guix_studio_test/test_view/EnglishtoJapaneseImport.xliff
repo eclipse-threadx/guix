@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
+  srcLang ="en" trgLang="ja">
+<file id="f1" original="C:\guix\features\string_import_export\test\AutoTest_STUDIO\test_view\output_files\test_add_widget_24bpp.gxp">
+<unit id="1" name="STRING_RIGHT_ALIGNMENT">
+<segment>
+<source>rightalignment</source>
+</segment>
+</unit>
+<unit id="2" name="STRING_1">
+<segment>
+<source>button</source>
+<target>ボタン</target>
+</segment>
+</unit>
+<unit id="3" name="STRING_11">
+<segment>
+<source>initial text</source>
+</segment>
+</unit>
+<unit id="4" name="STRING_LEFT_ALIGNMENT">
+<segment>
+<source>leftalignment</source>
+</segment>
+</unit>
+<unit id="5" name="STRING_10">
+<segment>
+<source>pixelmap prompt</source>
+</segment>
+</unit>
+<unit id="6" name="STRING_7">
+<segment>
+<source>prompt</source>
+</segment>
+</unit>
+<unit id="7" name="STRING_5">
+<segment>
+<source>radio</source>
+</segment>
+</unit>
+<unit id="8" name="STRING_6">
+<segment>
+<source>radio_button</source>
+</segment>
+</unit>
+<unit id="9" name="STRING_14">
+<segment>
+<source>text input</source>
+</segment>
+</unit>
+<unit id="10" name="STRING_13">
+<segment>
+<source>text view</source>
+</segment>
+</unit>
+<unit id="11" name="STRING_2">
+<segment>
+<source>text_button</source>
+</segment>
+</unit>
+<unit id="12" name="STRING_12">
+<segment>
+<source>text_view</source>
+</segment>
+</unit>
+<unit id="13" name="STRING_9">
+<segment>
+<source>transparent prompt with no border</source>
+</segment>
+</unit>
+<unit id="14" name="STRING_8">
+<segment>
+<source>transparent prompt with thin border</source>
+</segment>
+</unit>
+</file>
+</xliff>
