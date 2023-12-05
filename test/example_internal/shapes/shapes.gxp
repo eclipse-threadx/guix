@@ -1345,7 +1345,7 @@
 <type>PIXELMAP</type>
 <name>FISH</name>
 <pathinfo>
-<pathname>..\..\samples\demo_guix_shapes\graphics\fish.png</pathname>
+<pathname>graphics\fish.png</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <is_default>FALSE</is_default>

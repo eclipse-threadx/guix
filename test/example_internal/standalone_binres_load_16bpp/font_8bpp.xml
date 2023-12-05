@@ -19,7 +19,7 @@
 <type>FONT</type>
 <name>FONT_8BPP</name>
 <pathinfo>
-<pathname>..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
+<pathname>..\..\..\fonts\NotoSansCJKsc-Regular.otf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <compress>FALSE</compress>

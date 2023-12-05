@@ -14,7 +14,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "linux_job"
-  run_tests:
+  guix:
     permissions:
       contents: read
       issues: read
@@ -26,4 +26,5 @@ jobs:
     uses: azure-rtos/threadx/.github/workflows/regression_template.yml@master
     with:
       cmake_path: ./test/guix_test/cmake
+      result_affix: GUIX
         

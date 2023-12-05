@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file original="D:\DevOps\guix\test\AutoTest_STUDIO\test_view\output_files\test_resources_edit_8bpp.gxp" source-language="en" target-language="ja" datatype="plaintext">
+<body>
+<trans-unit id="STRING_RIGHT_ALIGNMENT">
+<source>rightalignment</source>
+</trans-unit>
+<trans-unit id="STRING_1">
+<source>button</source>
+<target>ãƒœã‚¿ãƒ³</target>
+</trans-unit>
+<trans-unit id="STRING_11">
+<source>initial text</source>
+</trans-unit>
+<trans-unit id="STRING_LEFT_ALIGNMENT">
+<source>leftalignment</source>
+</trans-unit>
+<trans-unit id="STRING_10">
+<source>pixelmap prompt</source>
+</trans-unit>
+<trans-unit id="STRING_7">
+<source>prompt</source>
+</trans-unit>
+<trans-unit id="STRING_5">
+<source>radio</source>
+</trans-unit>
+<trans-unit id="STRING_6">
+<source>radio_button</source>
+</trans-unit>
+<trans-unit id="STRING_14">
+<source>text input</source>
+</trans-unit>
+<trans-unit id="STRING_13">
+<source>text view</source>
+</trans-unit>
+<trans-unit id="STRING_2">
+<source>text_button</source>
+</trans-unit>
+<trans-unit id="STRING_12">
+<source>text_view</source>
+</trans-unit>
+<trans-unit id="STRING_9">
+<source>transparent prompt with no border</source>
+</trans-unit>
+<trans-unit id="STRING_8">
+<source>transparent prompt with thin border</source>
+</trans-unit>
+</body>
+</file>
+</xliff>

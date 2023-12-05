@@ -43,7 +43,7 @@ VOID tx_application_define(void *first_unused_memory)
 
 static VOID control_thread_entry(ULONG input)
 {
-GX_BOOL    test_successed = GX_TRUE;
+INT        failed_tests = 0;
 GX_WINDOW  window[GX_MAX_VIEWS / 2];
 int        width;
 int        height;
@@ -88,12 +88,9 @@ GX_EVENT   my_event;
     my_event.gx_event_target = (GX_WIDGET *)root;
     gx_system_event_send(&my_event);
 
-    if(_gx_system_last_error != GX_SYSTEM_OUT_OF_VIEWS)
-    {
-        test_successed = GX_FALSE;
-    }
+    EXPECT_EQ(GX_SYSTEM_OUT_OF_VIEWS, _gx_system_last_error);
 
-    if(test_successed)
+    if(!failed_tests)
     {
         gx_validation_print_test_result(TEST_SUCCESS);
         exit(0);

@@ -1,0 +1,2096 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (Simplified, PRC) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_CONFIGURE_THEMES    BITMAP                  "res\\configure_themes.bmp"
+
+IDB_CONFIGURE_LANGUAGES BITMAP                  "res\\configure_languages.bmp"
+
+IDB_CONFIGURE_PROJECTS  BITMAP                  "res\\configure_projects.bmp"
+
+IDB_EXPORT              BITMAP                  "res\\export.bmp"
+
+IDB_MACRO_END           BITMAP                  "res\\end.bmp"
+
+IDB_MACRO_PLAYBACK      BITMAP                  "res\\playback.bmp"
+
+IDB_MACRO_RECORD        BITMAP                  "res\\record.bmp"
+
+IDB_MACRO_STOP          BITMAP                  "res\\stop.bmp"
+
+IDB_MACRO_RECORD_ICON   BITMAP                  "res\\bmp00048.bmp"
+
+IDB_MACRO_PLAYBACK_ICON BITMAP                  "res\\bmp00049.bmp"
+
+IDB_FOLDER_OPEN         BITMAP                  "res\\folder_open.bmp"
+
+IDB_FOLDER_CLOSE        BITMAP                  "res\\folder_close.bmp"
+
+IDB_FOLDER_RENAME       BITMAP                  "res\\rename.bmp"
+
+IDB_ZOOM_IN             BITMAP                  "res\\zoom_in.bmp"
+
+IDB_ZOOM_OUT            BITMAP                  "res\\zoom_out.bmp"
+
+IDB_GRID                BITMAP                  "res\\grid.bmp"
+
+IDB_MULTI_LINE_TEXT_BUTTON BITMAP                  "res\\bmp00050.bmp"
+
+IDB_WARNING             BITMAP                  "res\\warning.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_INSERT_MENU MENU
+BEGIN
+    POPUP "Insert"
+    BEGIN
+        MENUITEM "Folder",                      ID_INSERT_FOLDER
+        POPUP "Window"
+        BEGIN
+            MENUITEM "Window",                      ID_ADD_WINDOW
+            MENUITEM "Vertical List",               ID_ADD_VERTICAL_LIST
+            MENUITEM "Horizontal List",             ID_ADD_HORIZONTAL_LIST
+            MENUITEM "Drop-down List",              ID_ADD_DROP_DOWN_LIST
+            MENUITEM "Line Chart",                  ID_INSERT_LINECHART
+            MENUITEM "String Scroll Wheel",         ID_ADD_STRING_SCROLL_WHEEL
+            MENUITEM "Numeric Scroll Wheel",        ID_ADD_NUMERIC_SCROLL_WHEEL
+            MENUITEM "Generic Scroll Wheel",        ID_ADD_GENERIC_SCROLL_WHEEL
+        END
+        POPUP "Button"
+        BEGIN
+            MENUITEM "Button",                      ID_ADD_BUTTON
+            MENUITEM "Text Button",                 ID_ADD_TEXTBUTTON
+            MENUITEM "Multi Line Text Button",      ID_ADD_MLT_BUTTON
+            MENUITEM "Checkbox",                    ID_ADD_CHECKBOX
+            MENUITEM "Radio Button",                ID_ADD_RADIO_BUTTON
+            MENUITEM "Icon Button",                 ID_ADD_ICON_BUTTON
+            MENUITEM "Pixelmap Button",             ID_ADD_PIXMAP_BUTTON
+            MENUITEM "Icon",                        ID_ADD_ICON
+        END
+        POPUP "Text"
+        BEGIN
+            MENUITEM "Prompt",                      ID_ADD_PROMPT
+            MENUITEM "Numeric Prompt",              ID_ADD_NUMERIC_PROMPT
+            MENUITEM "Pixelmap Prompt",             ID_ADD_PIXMAP_PROMPT
+            MENUITEM "Numeric Pixelmap Prompt",     ID_ADD_NUMERIC_PIXELMAP_PROMPT
+            MENUITEM "Single Line Input",           ID_ADD_TEXT_INPUT
+            MENUITEM "Multi Line View",             ID_ADD_MULTI_LINE_VIEW
+            MENUITEM "Multi Line Input",            ID_ADD_MULTI_LINE_INPUT
+            MENUITEM "Rich Text View",              ID_ADD_RICH_TEXT_VIEW
+        END
+        POPUP "Indicator"
+        BEGIN
+            MENUITEM "Slider",                      ID_ADD_SLIDER
+            MENUITEM "Pixelmap Slider",             ID_ADD_PIXELMAP_SLIDER
+            MENUITEM "Radial Slider",               ID_ADD_RADIAL_SLIDER
+            MENUITEM "Horizontal Scrollbar",        ID_ADD_HSCROLL
+            MENUITEM "Vertical Scrollbar",          ID_ADD_VSCROLL
+            MENUITEM "Progress Bar",                ID_ADD_PROGRESS_BAR
+            MENUITEM "Radial Progress Bar",         ID_ADD_RADIAL_PROGRES_BAR
+            MENUITEM "Sprite",                      ID_ADD_SPRITE
+            MENUITEM "Circular Gauge",              ID_ADD_CIRCULAR_GAUGE
+        END
+        POPUP "Menu"
+        BEGIN
+            MENUITEM "Menu",                        ID_ADD_MENU
+            MENUITEM "Accordion Menu",              ID_ADD_ACCORDION_MENU
+            MENUITEM "Tree View",                   ID_ADD_TREE_VIEW
+        END
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SYNERGY_SETTINGS DIALOGEX 0, 0, 211, 141
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Enable 2D Drawing Engine",IDC_ENABLE_GRAPH_ACCELERATOR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,29,99,10
+    GROUPBOX        "Runtime Image Decoder",IDC_STATIC,14,50,156,59
+    LTEXT           "JPEG:",IDC_STATIC,29,69,20,8
+    COMBOBOX        IDC_JPEG_DECODER,54,68,98,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "PNG:",IDC_STATIC,31,88,17,8
+    COMBOBOX        IDC_PNG_DECODER,54,87,98,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_MESSAGE_DIALOG DIALOGEX 0, 0, 288, 70
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_SCREEN_FLOW_EDIT_DIALOG DIALOGEX 0, 0, 616, 385
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_APPWINDOW
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CTEXT           "Check Visible Screens",IDC_INCLUDE_SCREEN_PROMPT,7,19,124,18,NOT WS_GROUP,WS_EX_DLGMODALFRAME
+    CONTROL         "",IDC_SCREEN_ITEM_TREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_NOTOOLTIPS | TVS_CHECKBOXES | WS_BORDER | WS_HSCROLL | WS_TABSTOP,7,41,124,314
+END
+
+IDD_TRIGGER_LIST_EDIT_DIALOG DIALOGEX 0, 0, 345, 202
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Add New Trigger",IDC_TRIGGER_ADD_BTN,12,22,67,14
+    PUSHBUTTON      "Delete Selected Trigger",IDC_TRIGGER_DEL_BTN,85,22,84,14
+    PUSHBUTTON      "Edit Trigger Event",IDC_TRIGGER_EDIT_BTN,172,22,76,14
+    PUSHBUTTON      "Edit Action(s)",IDC_TRIGGER_ACTION_EDIT_BTN,253,22,79,14
+    LTEXT           "Static",IDC_TRIGGER_LIST_PROMPT,8,41,316,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_SYNERGY_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 204
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 134
+    END
+
+    IDD_MESSAGE_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 281
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 63
+    END
+
+    IDD_SCREEN_FLOW_EDIT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 609
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 378
+    END
+
+    IDD_TRIGGER_LIST_EDIT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 338
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 195
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_MESSAGE_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SCREEN_FLOW_EDIT_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SYNERGY_SETTINGS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    ID_INSERT_LINECHART     "Insert Line Chart window"
+END
+
+#endif    // Chinese (Simplified, PRC) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_UNCHECK             BITMAP                  "res\\bmp00053.bmp"
+
+IDB_PARTIAL_CHECK       BITMAP                  "res\\bmp00054.bmp"
+
+IDB_GRID                BITMAP                  "res\\grid.bmp"
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+
+IDB_BUTTON              BITMAP                  "res\\bitmap1.bmp"
+
+IDB_PROMPT              BITMAP                  "res\\bitmap2.bmp"
+
+IDB_WINDOW              BITMAP                  "res\\bmp00001.bmp"
+
+IDB_PROJECT             BITMAP                  "res\\bmp00002.bmp"
+
+IDB_DISPLAY             BITMAP                  "res\\bmp00003.bmp"
+
+IDB_COLORS              BITMAP                  "res\\bmp00004.bmp"
+
+IDB_FONTS               BITMAP                  "res\\bmp00005.bmp"
+
+IDB_PIXELMAPS           BITMAP                  "res\\bmp00006.bmp"
+
+IDB_STRINGS             BITMAP                  "res\\bmp00007.bmp"
+
+IDB_FOLDER_OK           BITMAP                  "res\\bmp00008.bmp"
+
+IDB_FOLDER_BAD          BITMAP                  "res\\bmp00009.bmp"
+
+IDB_HEADER_BACKGROUND   BITMAP                  "res\\bmp00010.bmp"
+
+IDB_PROJECT_VIEW        BITMAP                  "res\\bmp00011.bmp"
+
+IDB_PROPS_VIEW          BITMAP                  "res\\bmp00012.bmp"
+
+IDB_PLUS                BITMAP                  "res\\bmp00013.bmp"
+
+IDB_MINUS               BITMAP                  "res\\bmp00014.bmp"
+
+IDB_DELETE_STRING       BITMAP                  "res\\bmp00016.bmp"
+
+IDB_SORT_STRINGS        BITMAP                  "res\\bmp00017.bmp"
+
+IDB_ADD_RESOURCE        BITMAP                  "res\\bmp00018.bmp"
+
+IDB_SEARCH              BITMAP                  "res\\bmp00015.bmp"
+
+IDB_DOWN_ARROW          BITMAP                  "res\\down_arrow.bmp"
+
+IDB_RIGHT_ARROW         BITMAP                  "res\\right_arrow.bmp"
+
+IDB_LEFT_ARROW          BITMAP                  "res\\left_arrow.bmp"
+
+IDB_DIALOG              BITMAP                  "res\\bitmap3.bmp"
+
+IDB_HORZ_LIST           BITMAP                  "res\\bmp00019.bmp"
+
+IDB_VERT_LIST           BITMAP                  "res\\bitmap4.bmp"
+
+IDB_DROP_LIST           BITMAP                  "res\\bmp00020.bmp"
+
+IDB_CHECKBOX            BITMAP                  "res\\bmp00021.bmp"
+
+IDB_ICON                BITMAP                  "res\\bmp00022.bmp"
+
+IDB_ICON_BUTTON         BITMAP                  "res\\bmp00023.bmp"
+
+IDB_PIXELMAP_BUTTON     BITMAP                  "res\\bmp00024.bmp"
+
+IDB_RADIO_BUTTON        BITMAP                  "res\\bmp00025.bmp"
+
+IDB_SHADOW_BUTTON       BITMAP                  "res\\bmp00026.bmp"
+
+IDB_SPRITE              BITMAP                  "res\\bmp00027.bmp"
+
+IDB_TEXT_BUTTON         BITMAP                  "res\\bmp00028.bmp"
+
+IDB_MULTILINE_PROMPT    BITMAP                  "res\\bmp00029.bmp"
+
+IDB_MULTILINE_TEXT_INPUT BITMAP                  "res\\bmp00030.bmp"
+
+IDB_PIXELMAP_PROMPT     BITMAP                  "res\\bmp00031.bmp"
+
+IDB_PIXELMAP_TEXT_INPUT BITMAP                  "res\\bmp00032.bmp"
+
+IDB_TEXT_INPUT          BITMAP                  "res\\bmp00033.bmp"
+
+IDB_HORZ_SCROLL         BITMAP                  "res\\bmp00034.bmp"
+
+IDB_VERT_SCROLL         BITMAP                  "res\\bmp00035.bmp"
+
+IDB_SLIDER              BITMAP                  "res\\bmp00036.bmp"
+
+IDB_PIXELMAP_SLIDER     BITMAP                  "res\\bmp00037.bmp"
+
+IDB_PROGRESS_BAR        BITMAP                  "res\\bmp00038.bmp"
+
+IDB_SPLASH_BACKGROUND   BITMAP                  "res\\bmp00039.bmp"
+
+IDB_TOOLBAR_FILL        BITMAP                  "res\\bmp00040.bmp"
+
+IDB_NEW_PROJECT_NORMAL  BITMAP                  "res\\bmp00041.bmp"
+
+IDB_NEW_PROJECT_PRESSED BITMAP                  "res\\bitmap5.bmp"
+
+IDB_STATUS_BAR_FILL     BITMAP                  "res\\bmp00042.bmp"
+
+IDB_BTN_CLOSE_NORMAL    BITMAP                  "res\\bmp00043.bmp"
+
+IDB_BTN_CLOSE_PRESSED   BITMAP                  "res\\bmp00044.bmp"
+
+IDB_RECENT_PROJECT      BITMAP                  "res\\bmp00045.bmp"
+
+IDB_NEW_PROJECT_ICON    BITMAP                  "res\\bmp00046.bmp"
+
+IDB_OK_BUTTON_NORMAL    BITMAP                  "res\\bitmap6.bmp"
+
+IDB_OK_BUTTON_PRESSED   BITMAP                  "res\\bmp00047.bmp"
+
+IDB_CHECK               BITMAP                  "res\\check.bmp"
+
+IDB_RADIAL_PROGRESS_BAR BITMAP                  "res\\bmp00052.bmp"
+
+IDB_GAUGE               BITMAP                  "res\\bmp00051.bmp"
+
+IDB_DOWN_ARROW_GRAY     BITMAP                  "res\\down_arrow_gray.bmp"
+
+IDB_UP_ARROW_GRAY       BITMAP                  "res\\up_arrow_gray.bmp"
+
+IDB_FIT_CONTENT         BITMAP                  "res\\fit_content.bmp"
+
+IDR_TOOLBAR_1BIT        BITMAP                  "res\\toolbar_1bit.bmp"
+
+IDB_SCREEN_FLOW_ZOOM_IN BITMAP                  "res\\screen_flow_zoom_in.bmp"
+
+IDB_SCREEN_FLOW_ZOOM_OUT BITMAP                  "res\\screen_flow_zoom_out.bmp"
+
+IDB_SCREEN_FLOW_FIT_CONTENT_PRESSED BITMAP                  "res\\screen_flow_fit_content_pressed.bmp"
+
+IDB_SCREEN_FLOW_FIT_CONTENT BITMAP                  "res\\screen_flow_fit_content.bmp"
+
+IDB_SCREEN_FLOW_ZOOM_IN_PRESSED BITMAP                  "res\\screen_flow_zoom_in_pressed.bmp"
+
+IDB_SCREEN_FLOW_ZOOM_OUT_PRESSED BITMAP                  "res\\screen_flow_zoom_out_pressed.bmp"
+
+IDB_COLORS_HIGHLIGHT    BITMAP                  "res\\bmp00004_highlight.bmp"
+
+IDB_FONTS_HIGHLIGHT     BITMAP                  "res\\bmp00005_highlight.bmp"
+
+IDB_PIXELMAPS_HIGHLIGHT BITMAP                  "res\\bmp00006_highlight.bmp"
+
+IDB_STRINGS_HIGHLIGHT   BITMAP                  "res\\bmp00007_highlight.bmp"
+
+IDB_CONFIGURE_THEMES_HIGHLIGHT BITMAP                  "res\\configure_themes_highlight.bmp"
+
+IDB_ADD_RESOURCE_HIGHLIGHT BITMAP                  "res\\bmp00018_highlight.bmp"
+
+IDB_BOLD                BITMAP                  "res\\bold.bmp"
+
+IDB_CENTERALIGN         BITMAP                  "res\\centeralign.bmp"
+
+IDB_ITALIC              BITMAP                  "res\\italic.bmp"
+
+IDB_LEFTALIGN           BITMAP                  "res\\leftalign.bmp"
+
+IDB_RIGHTALIGN          BITMAP                  "res\\rightalign.bmp"
+
+IDB_UNDERLINE           BITMAP                  "res\\underline.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "&Project"
+    BEGIN
+        MENUITEM "New Project\tCtrl+N",         ID_PROJECT_NEW
+        MENUITEM "Open Project\tCtrl+O",        ID_PROJECT_OPEN
+        MENUITEM "Save Project\tCtrl+S",        ID_PROJECT_SAVE
+        MENUITEM "Save Project As\tShift+Ctrl+S", ID_PROJECT_SAVE_AS
+        MENUITEM "Close Project",               ID_PROJECT_CLOSE
+        MENUITEM "Import Project",              ID_PROJECT_IMPORT
+        MENUITEM SEPARATOR
+        MENUITEM "Recent Projects",             ID_RECENT_PROJECTS
+        MENUITEM SEPARATOR
+        MENUITEM "Generate All Output Files",   ID_GENERATE_ALL
+        MENUITEM "Generate Resource Files",     ID_GENERATE_RESOURCES
+        MENUITEM "Generate Specification Files", ID_GENERATE_APPLICATION
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM SEPARATOR
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_WIDGET_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_WIDGET_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_WIDGET_PASTE
+        MENUITEM "Delete",                      ID_WIDGET_DELETE
+        MENUITEM SEPARATOR
+        POPUP "&Alignment"
+        BEGIN
+            MENUITEM "Align &Left",                 ID_ALIGN_LEFT
+            MENUITEM "Align &Right",                ID_ALIGN_RIGHT
+            MENUITEM "Align &Top",                  ID_ALIGN_TOP
+            MENUITEM "Align &Bottom",               ID_ALIGN_BOTTOM
+            MENUITEM "&Vertical Space Equally",     ID_VSPACE_EQUALLY
+            MENUITEM "&Horizontal Space Equally",   ID_HSPACE_EQUALLY
+            MENUITEM "Equal &Width",                ID_EQUAL_WIDTH
+            MENUITEM "Equal &Height",               ID_EQUAL_HEIGHT
+        END
+        POPUP "&Z-order"
+        BEGIN
+            MENUITEM "Move to &Front",              ID_MOVE_TO_FRONT
+            MENUITEM "Move to &Back",               ID_MOVE_TO_BACK
+        END
+        MENUITEM "&Size to Content",            ID_SIZE_TO_FIT
+        MENUITEM SEPARATOR
+        MENUITEM "Record Macro\tCtrl+R",        ID_RECORDMACRO
+        MENUITEM "Playback Macro\tCrtl+P",      ID_PLAYBACKMACRO
+        MENUITEM "End Macro\tCtrl+B",           ID_ENDMACRO
+        MENUITEM SEPARATOR
+        MENUITEM "Run &Application",            ID_RUN_APPLICATION
+        MENUITEM "Run String &Fit Check",       ID_RUN_STRING_FIT_CHECK
+    END
+    MENUITEM "&Insert",                     ID_INSERT
+    POPUP "&Configure"
+    BEGIN
+        MENUITEM "Project/Displays",            ID_CONFIGURE_DISPLAYS
+        MENUITEM "Languages",                   ID_CONFIGURE_LANGUAGES
+        MENUITEM "Themes",                      ID_CONFIGURE_THEMES
+        POPUP "Target View"
+        BEGIN
+            POPUP "Zoom"
+            BEGIN
+                MENUITEM "100%",                        ID_ZOOM_100
+                MENUITEM "200%",                        ID_ZOOM_200
+                MENUITEM "300%",                        ID_ZOOM_300
+                MENUITEM "400%",                        ID_ZOOM_400
+            END
+            MENUITEM "Grid/Snap",                   ID_TARGETVIEW_GRID_SNAP
+            MENUITEM "Lock Widget Positions",       ID_LOCK_WIDGET_POSITIONS
+        END
+        MENUITEM "Screen Flow",                 ID_CONFIGURE_SCREENFLOW
+        MENUITEM "GUIX Repository",             ID_CONFIGURE_GUIX_REPOSITORY
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "GUIX Studio User Guide",      ID_HELP_USER_GUIDE
+        MENUITEM "About",                       ID_APP_ABOUT
+    END
+END
+
+IDR_PROJECT_OPTIONS MENU
+BEGIN
+    POPUP "Configure Project..."
+    BEGIN
+        MENUITEM "Configure Displays",          ID_CONFIGURE_DISPLAYS
+        MENUITEM "Lock Widget Positions",       ID_LOCK_WIDGET_POSITIONS
+    END
+END
+
+IDR_DISPLAY_MENU MENU
+BEGIN
+    POPUP "DisplayMenu"
+    BEGIN
+        MENUITEM "Configure Project/Displays",  ID_CONFIGURE_DISPLAYS
+        MENUITEM "Configure Themes",            ID_CONFIGURE_THEMES
+        MENUITEM SEPARATOR
+        MENUITEM "Generate All Output Files",   33017
+        MENUITEM "Generate Resource Files",     ID_GENERATE_RESOURCES
+        MENUITEM "Generate Specification Files", ID_GENERATE_APPLICATION
+        MENUITEM SEPARATOR
+    END
+END
+
+IDR_CUSTOM_COLOR_MENU MENU
+BEGIN
+    POPUP "color_menu"
+    BEGIN
+        MENUITEM "Edit Color",                  ID_EDITCOLOR
+        MENUITEM "Delete Color",                ID_DELETE_COLOR
+    END
+END
+
+IDR_ADD_CUSTOM_COLOR MENU
+BEGIN
+    POPUP "AddCustomColor"
+    BEGIN
+        MENUITEM "Add New Color",               ID_ADD_CUSTOM_COLOR
+    END
+END
+
+IDR_FONT_SUBMENU MENU
+BEGIN
+    POPUP "FONTSUBMENU"
+    BEGIN
+        MENUITEM "Edit Font",                   ID_EDITFONT
+        MENUITEM "Delete Font",                 ID_DELETEFONT
+        MENUITEM "Generate XML",                ID_GENERATE_XML
+    END
+END
+
+IDR_PIX_SUBFOLDER_MENU MENU
+BEGIN
+    POPUP "pix_folder_menu"
+    BEGIN
+        MENUITEM "Add Pixelmap(s)",             ID_ADD_PIXELMAP
+        MENUITEM "Edit Pixelmap(s)",            ID_EDIT_PIXELMAPS
+        MENUITEM "Add Folder",                  ID_ADD_PIXELMAP_FOLDER
+        MENUITEM "Remove Folder",               ID_REMOVE_PIXELMAP_FOLDER
+        MENUITEM "Enable Folder",               ID_ENABLE_PIXELMAP_FOLDER
+        MENUITEM "Disable Folder",              ID_DISABLE_PIXELMAP_FOLDER
+        MENUITEM "Rename Folder",               ID_RENAME_PIXELMAP_FOLDER
+        MENUITEM "Generate XML",                ID_GENERATE_XML
+    END
+END
+
+IDR_PIXELMAP_MENU MENU
+BEGIN
+    POPUP "PIXELMAP_MENU"
+    BEGIN
+        MENUITEM "Edit Settings",               ID_PIXELMAP_EDIT
+        MENUITEM "Enable",                      ID_PIXELMAP_ENABLE, CHECKED
+        MENUITEM "Disable",                     ID_PIXELMAP_DISABLE
+        MENUITEM "Delete",                      ID_PIXELMAP_DELETE
+        MENUITEM "Generate XML",                ID_GENERATE_XML
+    END
+END
+
+IDR_WIDGET_MENU MENU
+BEGIN
+    POPUP "widget"
+    BEGIN
+        MENUITEM "Cut",                         ID_WIDGET_CUT
+        MENUITEM "Copy",                        ID_WIDGET_COPY
+        MENUITEM "Paste",                       ID_WIDGET_PASTE
+        MENUITEM "Delete",                      ID_WIDGET_DELETE
+        MENUITEM SEPARATOR
+    END
+END
+
+IDR_STRING_MENU MENU
+BEGIN
+    POPUP "string_table"
+    BEGIN
+        MENUITEM "View / Edit strings...",      ID_EDIT_STRING_TABLE
+        MENUITEM "Edit Languages...",           ID_EDIT_LANGUAGES
+    END
+END
+
+IDR_DEFAULT_FONT_MENU MENU
+BEGIN
+    POPUP "Default Font Menu"
+    BEGIN
+        MENUITEM "Edit Font",                   ID_EDITFONT
+        MENUITEM "Generate XML",                ID_GENERATE_XML
+    END
+END
+
+IDR_SYSTEM_COLOR_MENU MENU
+BEGIN
+    POPUP "color_menu"
+    BEGIN
+        MENUITEM "Edit Color",                  ID_EDIT_SYSTEM_COLOR
+        MENUITEM "Delete Color",                ID_DELETE_COLOR, INACTIVE
+    END
+END
+
+IDR_PATHTYPE MENU
+BEGIN
+    POPUP "pathtype"
+    BEGIN
+        MENUITEM "Project Relative Path",       ID_PATHTYPE_PROJECTRELATIVE
+        MENUITEM "GUIX Repo Relative Path",     ID_PATHTYPE_STUDIORELATIVE
+        MENUITEM "Absolute Path",               ID_PATHTYPE_ABSOLUTE
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_GRID_SETTINGS DIALOGEX 0, 0, 217, 118
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Show Grid",IDC_SHOW_GRID,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,28,48,10
+    LTEXT           "Grid Spacing",IDC_STATIC,98,29,40,8
+    EDITTEXT        IDC_EDIT_GRID_SPACING,142,27,44,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_GRID_SPACING,"msctls_updown32",UDS_SETBUDDYINT | UDS_ARROWKEYS,185,27,11,14
+    CONTROL         "Snap to Grid",IDC_SNAP_TO_GRID,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,53,55,10
+    LTEXT           "Snap Spacing",IDC_STATIC,98,53,44,8
+    EDITTEXT        IDC_EDIT_SNAP_SPACING,142,51,44,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_SNAP_SPACING,"msctls_updown32",UDS_SETBUDDYINT | UDS_ARROWKEYS,185,51,10,14
+    CONTROL         "Snap to Widget",IDC_SNAP_TO_WIDGET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,76,65,10
+END
+
+IDD_FORMVIEW DIALOGEX 0, 0, 228, 164
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "TODO: layout formview",IDC_STATIC,55,42,74,8
+END
+
+IDD_NEW_PROJECT_DIALOG DIALOGEX 0, 0, 369, 113
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Project Name",IDC_STATIC,13,34,44,8
+    EDITTEXT        IDC_EDIT_NAME,74,30,231,14,ES_AUTOHSCROLL
+    LTEXT           "Project Path",IDC_STATIC,13,54,40,8
+    EDITTEXT        IDC_EDIT_PATH,74,52,231,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_BROWSE_PATH,309,52,44,14
+    LTEXT           "Indicates required field",IDC_REQUIRED_FIELD_LEGEND,110,69,106,12
+END
+
+IDD_CONFIGURE_PROJECT_WIN DIALOGEX 0, 0, 326, 311
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Directories",IDC_STATIC,7,4,312,59
+    LTEXT           "Source Files",IDC_STATIC,12,17,42,11
+    EDITTEXT        IDC_SOURCE_PATH,63,15,207,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "browse...",IDC_BROWSE_SOURCE,274,14,38,14
+    LTEXT           "Header Files",IDC_STATIC,12,32,42,11
+    EDITTEXT        IDC_HEADER_PATH,63,30,207,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "browse...",IDC_BROWSE_HEADER,274,30,38,14
+    LTEXT           "Resource Files",IDC_STATIC,12,47,50,11
+    EDITTEXT        IDC_RESOURCE_PATH,63,45,207,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "browse...",IDC_BROWSE_RESOURCE,274,46,38,14
+    LTEXT           "Target CPU",IDC_STATIC,8,69,40,11
+    COMBOBOX        IDC_CPU_COMBO,50,67,97,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Advanced Settings",IDC_ADVANCED_SETTINGS,155,66,70,14,WS_DISABLED
+    LTEXT           "Toolchain",IDC_STATIC,8,88,36,11
+    COMBOBOX        IDC_TOOLS_COMBO,50,86,97,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "big endian",IDC_BIG_ENDIAN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,155,88,49,10
+    LTEXT           "Additional Headers",IDC_STATIC,7,106,61,8
+    EDITTEXT        IDC_ADDITIONAL_HEADERS,77,104,173,14,ES_AUTOHSCROLL
+    CONTROL         "Insert Before",IDC_INSERT_BEFORE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,260,106,59,10
+    LTEXT           "Number of Displays",IDC_STATIC,8,124,68,11
+    EDITTEXT        IDC_NUM_DISPLAYS,78,124,19,13,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_NUM_SCREENS,"msctls_updown32",UDS_SETBUDDYINT | UDS_AUTOBUDDY | UDS_ARROWKEYS,96,123,11,14
+    LTEXT           "GUIX Library Version",IDC_STATIC,158,126,72,11
+    CTEXT           ".",IDC_STATIC,254,127,8,8
+    LTEXT           "Major",IDC_STATIC,230,140,19,8
+    EDITTEXT        IDC_MAJOR_VERSION,230,124,13,13,ES_CENTER | ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_MAJOR_VERSION,"msctls_updown32",UDS_SETBUDDYINT | UDS_AUTOBUDDY | UDS_ARROWKEYS,242,123,11,14
+    LTEXT           "Minor",IDC_STATIC,265,140,18,8
+    EDITTEXT        IDC_MINOR_VERSION,262,124,13,13,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_MINOR_VERSION,"msctls_updown32",UDS_SETBUDDYINT | UDS_AUTOBUDDY | UDS_ARROWKEYS,274,123,11,14
+    CTEXT           ".",IDC_STATIC,286,127,8,8
+    LTEXT           "Patch",IDC_STATIC,296,140,19,8
+    EDITTEXT        IDC_SERVICE_PACK,294,124,13,13,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_SERVICE_PACK,"msctls_updown32",UDS_SETBUDDYINT | UDS_AUTOBUDDY | UDS_ARROWKEYS,306,123,11,14
+    GROUPBOX        "Display Configuration",IDC_STATIC,7,150,312,138
+    LTEXT           "Display Number",IDC_STATIC,20,165,54,11
+    EDITTEXT        IDC_SELECTED_DISPLAY,74,164,15,13,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_SCREEN_SELECT,"msctls_updown32",UDS_SETBUDDYINT | UDS_AUTOBUDDY | UDS_ARROWKEYS,88,164,11,13
+    LTEXT           "Name",IDC_STATIC,121,165,22,10
+    EDITTEXT        IDC_SCREEN_NAME,146,163,165,14,ES_AUTOHSCROLL
+    LTEXT           "x resolution",IDC_STATIC,29,185,38,8
+    EDITTEXT        IDC_X_RESOLUTION,74,183,23,14,ES_AUTOHSCROLL
+    LTEXT           "pixels",IDC_STATIC,100,185,19,8
+    LTEXT           "y resolution",IDC_STATIC,149,185,38,8
+    EDITTEXT        IDC_Y_RESOLUTION,192,183,23,14,ES_AUTOHSCROLL
+    LTEXT           "pixels",IDC_STATIC,218,185,19,8
+    CONTROL         "1 bpp",IDC_RADIO_1BPP,"Button",BS_AUTORADIOBUTTON | WS_GROUP,28,204,38,10
+    CONTROL         "2 bpp",IDC_RADIO_2BPP,"Button",BS_AUTORADIOBUTTON,28,215,38,10
+    CONTROL         "4 bpp",IDC_RADIO_4BPP,"Button",BS_AUTORADIOBUTTON,28,226,38,10
+    CONTROL         "8 bpp",IDC_RADIO_8BPP,"Button",BS_AUTORADIOBUTTON,28,237,38,10
+    CONTROL         "16 bpp",IDC_RADIO_16BPP,"Button",BS_AUTORADIOBUTTON,28,248,38,10
+    CONTROL         "24 bpp",IDC_RADIO_24BPP,"Button",BS_AUTORADIOBUTTON,28,259,38,10
+    CONTROL         "32 bpp",IDC_RADIO_32BPP,"Button",BS_AUTORADIOBUTTON,28,270,38,10
+    CONTROL         "grayscale",IDC_CHECK_GRAYSCALE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,115,204,47,10
+    CONTROL         "invert polarity",IDC_CHECK_INVERTED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,115,219,61,10
+    CONTROL         "reverse byte order",IDC_CHECK_REVERSE_ORDER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,115,234,77,10
+    CONTROL         "packed format",IDC_CHECK_PACKED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,115,249,62,10
+    CONTROL         "allocate canvas memory",IDC_ALLOCATE_CANVAS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,115,264,93,10
+    CONTROL         "1:5:5:5 format",IDC_CHECK_555FORMAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,220,204,57,10
+    CONTROL         "4:4:4:4 format",IDC_CHECK_4444FORMAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,220,219,63,10
+    CONTROL         "3:3:2 format",IDC_CHECK_332FORMAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,220,234,57,10
+    LTEXT           "Rotation:",IDC_ROTATION_ANGLE_LABLE,221,264,31,8
+    COMBOBOX        IDC_ROTATION_ANGLE_COMBO,255,263,48,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           " Number of Palette Mode Anti-aliased Text Colors:",IDC_AA_TEXT_COLORS_LABEL,7,294,161,8
+    COMBOBOX        IDC_AA_TEXT_COLORS_COMBO,172,293,48,12,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_RECENT_PROJECTS DIALOGEX 0, 0, 386, 167
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_BORDER
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "GUIX Repository Clone",IDC_TITLE,12,26,224,17
+    PUSHBUTTON      "Yes, clone the GUIX Git Repo to my local machine...",IDB_CLONE_REPO,82,75,248,17,BS_CENTER | BS_NOTIFY
+    LTEXT           "The GUIX GIT Repository includes several GUIX Studio example projects. Would you like to clone the GUIX GIT Repository to your local machine?",IDC_STATIC,19,44,282,27
+    PUSHBUTTON      "No, I have already cloned the GUIX repo, let me set the location...",IDB_SET_REPO_LOCATION,81,99,249,17,BS_CENTER | BS_NOTIFY
+    PUSHBUTTON      "I don't want to download the GUIX Studio project eamples",IDB_CANCEL_CLONE,81,121,248,17,BS_CENTER | BS_NOTIFY
+END
+
+IDD_EDIT_FONT DIALOGEX 0, 0, 398, 237
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "TrueType Font Path",IDC_STATIC,7,19,70,10
+    PUSHBUTTON      "",IDB_PATH_TYPE,6,29,13,11,BS_BITMAP
+    RTEXT           "<GUIX Repo Relative Path>",IDC_PATH_PREFIX,22,30,91,8
+    EDITTEXT        IDC_FONT_PATH,117,28,217,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_BROWSE,341,28,50,14
+    LTEXT           "Font Name",IDC_STATIC,7,43,41,10
+    EDITTEXT        IDC_FONT_NAME,7,52,164,14,ES_AUTOHSCROLL
+    LTEXT           "Font Height (pixels)",IDC_STATIC,291,54,66,8
+    EDITTEXT        IDC_FONT_HEIGHT,358,51,27,14,ES_AUTOHSCROLL
+    CONTROL         "Specify Output File",IDC_CUSTOM_OUTPUT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,70,74,10
+    EDITTEXT        IDC_OUTPUT_FILE,85,68,187,14,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    CONTROL         "Standalone Binary",IDC_BINARY_MODE,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,280,71,72,10
+    CONTROL         "Include character set defined by String Table",IDC_INCLUDE_STRING_TABLE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,84,160,10
+    CONTROL         "Compress Output",IDC_COMPRESS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,215,84,72,10
+    CONTROL         "Generate Kerning Info",IDC_KERNING,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,304,84,87,10
+    CONTROL         "Support Extended Character Range",IDC_SUPPORT_EXTENDED_UNICODE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,97,131,10
+    LTEXT           "Include the following character ranges",IDC_INCLUDE_RANGE_PROMPT,7,112,130,11,NOT WS_GROUP
+    GROUPBOX        "Font Format",IDC_FONT_FORMAT_GROUP,305,108,86,67
+    CONTROL         "1 bpp non-aliased",IDC_1BIT_MONO,"Button",BS_AUTORADIOBUTTON,313,121,73,10
+    CONTROL         "4 bpp anti-aliased",IDC_4BIT_ALIASED,"Button",BS_AUTORADIOBUTTON,313,139,73,10
+    CONTROL         "8 bpp anti-aliased",IDC_8BIT_ALIASED,"Button",BS_AUTORADIOBUTTON,313,158,73,10
+    LTEXT           "Indicates required field",IDC_REQUIRED_FIELD_LEGEND,97,43,80,8
+END
+
+IDD_PROPS_TEMPLATE DIALOGEX 0, 0, 187, 90
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | WS_SYSMENU
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_EDIT_PIXELMAP DIALOGEX 0, 0, 404, 212
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Source Image Path",IDC_STATIC,7,23,62,8
+    PUSHBUTTON      "",IDB_PATH_TYPE,7,35,13,11,BS_BITMAP
+    RTEXT           "<GUIX Repo Relative Path>",IDC_PATH_PREFIX,22,36,91,8
+    EDITTEXT        IDC_IMAGE_PATH,115,34,232,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "browse...",IDC_BROWSE,354,33,43,14
+    LTEXT           "Pixelmap ID:",IDC_STATIC,7,57,41,8
+    EDITTEXT        IDC_ID_NAME,59,54,213,13,ES_AUTOHSCROLL
+    CONTROL         "Specify Output File",IDC_CUSTOM_OUTPUT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,76,74,10
+    EDITTEXT        IDC_OUTPUT_FILE,85,74,187,14,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    CONTROL         "Standalone Binary",IDC_BINARY_MODE,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,278,77,72,10
+    GROUPBOX        "Output Format",IDC_STATIC,7,98,390,86
+    CONTROL         "Raw Format",IDC_RAW_FORMAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,112,55,10
+    CONTROL         "Compress Output",IDC_COMPRESS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,126,76,10
+    CONTROL         "Include Alpha Channel",IDC_ALPHA,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,140,87,10
+    CONTROL         "Dither",IDC_DITHER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,154,35,10
+    LTEXT           "Output Format",IDC_STATIC,0,0,0,0
+    COMBOBOX        IDC_OUTPUT_FORMAT,199,109,189,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Pallet Definition",IDC_PALETTE_LABEL,202,134,56,8
+    COMBOBOX        IDC_PALETTE_DEF_LIST,199,144,189,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Indicates required field",IDC_REQUIRED_FIELD_LEGEND,296,56,80,8
+    LTEXT           """Compress Output"" option will be reset if the compressed data size is bigger than the original.",IDC_COMPRESS_OPTION_NOTE,25,171,358,8
+END
+
+IDD_PIX_FOLDER_NAME DIALOGEX 0, 0, 162, 111
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Folder Name",IDC_STATIC,7,20,41,8
+    EDITTEXT        IDC_FOLDER_NAME,7,31,148,14,ES_AUTOHSCROLL
+    CONTROL         "Specify Output File",IDC_CUSTOM_FOLDER_OUTPUT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,50,82,10
+    EDITTEXT        IDC_FOLDER_OUTPUT_FILENAME,7,63,148,14,ES_AUTOHSCROLL
+END
+
+IDD_STRING_TABLE_EDIT DIALOGEX 0, 0, 274, 145
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_THICKFRAME
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_CONFIGURE_THEMES DIALOGEX 0, 0, 230, 191
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER
+EXSTYLE WS_EX_APPWINDOW
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Display Name",IDC_STATIC,7,24,46,11
+    COMBOBOX        IDC_DISPLAY_NAME,68,22,146,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Number of Themes for this display",IDC_STATIC,7,44,124,15
+    EDITTEXT        IDC_NUM_THEMES,122,41,17,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_NUM_THEMES,"msctls_updown32",UDS_SETBUDDYINT | UDS_AUTOBUDDY | UDS_ARROWKEYS,139,41,11,14
+    LTEXT           "Active Theme",IDC_STATIC,7,64,44,8
+    COMBOBOX        IDC_THEME_NAME_COMBO,68,62,146,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Theme Info",IDC_STATIC,7,85,210,71
+    LTEXT           "Theme Index",IDC_STATIC,9,102,49,11
+    EDITTEXT        IDC_THEME_INDEX,64,98,17,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_THEME_INDEX,"msctls_updown32",UDS_SETBUDDYINT | UDS_ARROWKEYS,82,98,11,14
+    PUSHBUTTON      "Edit Palette...",IDB_EDIT_PALETTE,127,98,76,14
+    LTEXT           "Theme Name",IDC_STATIC,9,120,53,13
+    EDITTEXT        IDC_THEME_NAME,64,118,139,14,ES_AUTOHSCROLL
+    CONTROL         "Statically Defined",IDC_STATICALLY_DEFINED_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,137,71,10
+END
+
+IDD_CONFIG_LANGUAGES DIALOGEX 0, 0, 204, 223
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER
+EXSTYLE WS_EX_APPWINDOW
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Number of Languages:",IDC_STATIC,10,25,74,8
+    CTEXT           "1",IDC_NUM_LANGUAGES,87,24,19,13,SS_SUNKEN | WS_BORDER
+    PUSHBUTTON      "Add Language",IDC_ADD_LANGUAGE,118,24,70,14
+    GROUPBOX        "Language Info",IDC_STATIC,7,47,190,138
+    LTEXT           "Language Index",IDC_STATIC,13,60,53,8
+    EDITTEXT        IDC_LANGUAGE_INDEX,71,58,28,14,ES_AUTOHSCROLL | ES_READONLY,WS_EX_STATICEDGE
+    CONTROL         "",IDC_SPIN_LANGUAGE_INDEX,"msctls_updown32",UDS_SETBUDDYINT | UDS_AUTOBUDDY | UDS_ARROWKEYS,98,57,10,15
+    PUSHBUTTON      "Delete Language",IDC_DELETE_LANGUAGE,118,58,70,14
+    LTEXT           "Language ID",IDC_STATIC,14,79,42,8
+    COMBOBOX        IDC_LANG_NAME_COMBO,63,79,125,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Statically Defined",IDC_CHECK_STATICALLY_DEFINED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,104,71,10
+    CONTROL         "Support Bidi Text",IDC_CHECK_SUPPORT_BIDI_TEXT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,119,71,10
+    CONTROL         "Generate Bidi Text in Display Order",IDC_CHECK_REORDER_BIDI_TEXT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,26,134,130,10
+    CONTROL         "Support Thai glyph shaping",IDC_THAI_GLYPH_SHAPING_SUPPORT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,149,103,10
+    CONTROL         "Generate adjusted Thai string",IDC_GEN_ADJUSTED_THAI_STRING,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,26,164,111,10
+END
+
+IDD_DELETE_LANGUAGE DIALOGEX 0, 0, 247, 99
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
+CAPTION "Confirm Delete Language"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,45,78,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,160,78,50,14
+    LTEXT           "You have decreased the number of available languages. All string data for the deleted language will be lost. To continue, select the language you wish to delete and click OK. To abort this operation, click Cancel.",IDC_STATIC,7,7,233,31
+    COMBOBOX        IDC_NAME_COMBO,78,47,152,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Language to Delete",IDC_STATIC,7,49,70,10
+END
+
+IDD_DIALOG_TEMPLATE DIALOGEX 0, 0, 217, 127
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_PALETTE_LAYOUT DIALOGEX 0, 0, 266, 243
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Theme Name:",IDC_STATIC,7,20,45,8
+    EDITTEXT        IDC_THEME_NAME,63,18,92,14,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    LTEXT           "Number of Palette Entries",IDC_STATIC,7,39,96,12
+    EDITTEXT        IDC_TOTAL_PALETTE_ENTRIES,115,35,40,14,ES_RIGHT | ES_AUTOHSCROLL | ES_NUMBER,WS_EX_RIGHT
+    PUSHBUTTON      "Default Palette Definition",IDC_DEFAULT_PALETTE,163,35,96,14
+    LTEXT           "Predefined Palette Entries",IDC_STATIC,7,53,98,8
+    EDITTEXT        IDC_USER_PALETTE_ENTRIES,115,50,40,14,ES_RIGHT | ES_AUTOHSCROLL | ES_WANTRETURN | ES_NUMBER
+    PUSHBUTTON      "Import Palette Definition",IDC_IMPORT_PALETTE,163,50,96,14
+    LTEXT           "Auto-generated palette entries",IDC_STATIC,7,66,101,8
+    EDITTEXT        IDC_AUTO_PALETTE_ENTRIES,115,65,40,14,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP,WS_EX_RIGHT
+    PUSHBUTTON      "Export Palette Definition",IDC_EXPORT_PALETTE,163,65,96,14
+    LTEXT           "Start Index",IDC_STATIC,7,82,38,8
+    EDITTEXT        IDC_START_INDEX,46,80,36,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "End Index",IDC_STATIC,85,83,34,8
+    EDITTEXT        IDC_END_INDEX,119,80,36,14,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "Generate Gradient",IDC_GEN_GRADIENT,163,80,96,14
+    LTEXT           "Index",IDC_STATIC,11,95,20,8
+    LTEXT           "Color",IDC_STATIC,74,95,18,8
+    LTEXT           "Red",IDC_STATIC,164,95,14,8
+    LTEXT           "Green",IDC_STATIC,191,95,20,8
+    LTEXT           "Blue",IDC_STATIC,224,95,14,8
+    LTEXT           "Alpha",IDC_STATIC,132,95,19,8
+    SCROLLBAR       IDC_PALETTE_SCROLL,249,105,10,111,SBS_VERT
+END
+
+IDD_COLOR_EDIT DIALOGEX 0, 0, 342, 234
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Color Name",IDC_STATIC,7,23,46,8
+    EDITTEXT        IDC_COLOR_NAME,7,34,156,14,ES_AUTOHSCROLL
+    LTEXT           "Color Preview",IDC_COLOR_PREVIEW_LABEL,185,23,48,10
+    LTEXT           "Colors",IDC_COLORS,7,52,156,8
+    LTEXT           "Red [0..255]",IDC_STATIC,184,68,50,13
+    EDITTEXT        IDC_EDIT_RED,236,66,21,14,ES_RIGHT | ES_AUTOHSCROLL
+    CONTROL         "",IDC_RED_SLIDER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,262,65,71,15
+    LTEXT           "Green [0..255]",IDC_STATIC,184,87,52,10
+    EDITTEXT        IDC_EDIT_GREEN,236,85,21,14,ES_RIGHT | ES_AUTOHSCROLL
+    CONTROL         "",IDC_GREEN_SLIDER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,262,84,71,15
+    LTEXT           "Blue [0..255]",IDC_STATIC,184,105,51,10
+    EDITTEXT        IDC_EDIT_BLUE,236,103,21,14,ES_RIGHT | ES_AUTOHSCROLL
+    CONTROL         "",IDC_BLUE_SLIDER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,262,102,71,15
+    LTEXT           "Alpha [0..255]",IDC_STATIC,183,123,49,10
+    EDITTEXT        IDC_EDIT_ALPHA,235,122,21,14,ES_RIGHT | ES_AUTOHSCROLL
+    CONTROL         "",IDC_ALPHA_SLIDER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,262,120,71,15
+    LTEXT           "Hue [0..360]",IDC_STATIC,183,150,49,10
+    EDITTEXT        IDC_EDIT_HUE,235,148,21,14,ES_RIGHT | ES_AUTOHSCROLL
+    CONTROL         "",IDC_HUE_SLIDER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,262,147,71,15
+    LTEXT           "Sat [0..100]",IDC_STATIC,183,169,46,10
+    EDITTEXT        IDC_EDIT_SATURATION,235,167,21,14,ES_RIGHT | ES_AUTOHSCROLL
+    CONTROL         "",IDC_SAT_SLIDER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,262,166,71,15
+    LTEXT           "Lum [0..100]",IDC_STATIC,183,187,45,10
+    EDITTEXT        IDC_EDIT_LUMINANCE,235,185,21,14,ES_RIGHT | ES_AUTOHSCROLL
+    CONTROL         "",IDC_LUM_SLIDER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,262,184,71,15
+    LTEXT           "Indicates required field",IDC_REQUIRED_FIELD_LEGEND,90,22,80,8
+END
+
+IDD_SPRITE_EDIT DIALOGEX 0, 0, 249, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "Total number of Sprite Frames",IDC_STATIC,7,27,98,8
+    EDITTEXT        IDC_NUM_FRAMES,112,24,21,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_NUM_FRAMES,"msctls_updown32",UDS_SETBUDDYINT | UDS_AUTOBUDDY | UDS_ARROWKEYS,132,24,11,14
+    PUSHBUTTON      "Import Frames",IDC_IMPORT_FRAMES,152,24,74,14
+    LTEXT           "Sprite Frame ID",IDC_STATIC,7,56,56,8
+    EDITTEXT        IDC_EDIT_FRAME,73,55,15,13,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_EDIT_FRAME,"msctls_updown32",UDS_SETBUDDYINT | UDS_AUTOBUDDY | UDS_ARROWKEYS,87,55,11,13
+    CONTROL         "Apply to All Frames",IDC_APPLY_TO_ALL_FRAMES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,110,56,78,10
+    LTEXT           "Background Operation",IDC_BACKGROUND_LABEL,7,77,72,8
+    COMBOBOX        IDC_BACKGROUND_COMBO,81,76,119,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Pixelmap Id",IDC_PIXELMAP_ID_LABEL,7,91,38,8
+    COMBOBOX        IDC_PIXELMAP_COMBO,81,90,119,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Alpha value",IDC_STATIC,7,108,38,8
+    EDITTEXT        IDC_ALPHA_VALUE,86,108,30,14,ES_AUTOHSCROLL,WS_EX_RIGHT
+    LTEXT           "(0 = transparent, 255 = Opaque)",IDC_STATIC,129,108,109,8
+    LTEXT           "Frame x-offset",IDC_STATIC,7,123,49,8
+    EDITTEXT        IDC_X_OFFSET,86,123,30,14,ES_AUTOHSCROLL,WS_EX_RIGHT
+    LTEXT           "Frame y-offset",IDC_STATIC,7,138,54,11
+    EDITTEXT        IDC_Y_OFFSET,86,138,30,14,ES_AUTOHSCROLL,WS_EX_RIGHT
+    LTEXT           "Delay period",IDC_STATIC,7,154,41,8
+    EDITTEXT        IDC_DELAY,86,154,30,14,ES_AUTOHSCROLL,WS_EX_RIGHT
+    LTEXT           "In GUIX ticks (usually 50ms)",IDC_STATIC,131,153,90,8
+END
+
+IDD_STRING_EXPORT DIALOGEX 0, 0, 316, 172
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Source Language",IDC_STATIC,7,29,61,8
+    COMBOBOX        IDC_SRC_LANGUAGE,68,27,80,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Target Language",IDC_STATIC,170,28,61,8
+    COMBOBOX        IDC_TARGET_LANGUAGE,228,27,80,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "File Format",IDC_STATIC,7,49,267,40
+    CONTROL         "XLIFF",IDC_XLIFF_FORMAT,"Button",BS_AUTORADIOBUTTON,17,66,34,10
+    CONTROL         "CSV",IDC_CSV_FORMAT,"Button",BS_AUTORADIOBUTTON,65,66,29,10
+    LTEXT           "XLIFF Version",IDC_XLIFF_VERSION_LABEL,123,66,51,8
+    COMBOBOX        IDC_XLIFF_VERSION,185,64,80,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Output Filename",IDC_STATIC,7,107,61,8
+    EDITTEXT        IDC_FILENAME,64,104,190,14,ES_AUTOHSCROLL
+    LTEXT           "Output Path",IDC_STATIC,7,122,61,8
+    EDITTEXT        IDC_PATH,64,120,190,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_BROWSE,262,120,47,14
+END
+
+IDD_MACRO_PLAYBACK_DIALOG DIALOGEX 0, 0, 356, 73
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Macro File",-1,13,30,33,8
+    EDITTEXT        IDC_EDIT_NAME,58,28,231,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_BROWSE_PATH,293,28,44,14
+END
+
+IDD_MACRO_RECORD_DIALOG DIALOGEX 0, 0, 356, 98
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Macro Name",IDC_STATIC,13,34,40,8
+    EDITTEXT        IDC_EDIT_NAME,58,30,231,14,ES_AUTOHSCROLL
+    LTEXT           "Macro Path",IDC_STATIC,13,50,37,8
+    EDITTEXT        IDC_EDIT_PATH,58,48,231,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_BROWSE_PATH,293,48,44,14
+END
+
+IDD_RES_EXPORT DIALOGEX 0, 0, 244, 227
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_RES_VIEW,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_NOTOOLTIPS | TVS_CHECKBOXES | TVS_NOHSCROLL | WS_BORDER | WS_TABSTOP,7,25,230,113
+    CONTROL         "Specify Resource File Name",IDC_CUSTOM_RESOURCE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,143,100,10
+    EDITTEXT        IDC_CUSTOM_RESOURCE_FILE_NAME,109,142,128,14,ES_AUTOHSCROLL
+    CONTROL         "binary mode",IDC_BINARY_MODE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,160,55,10
+    CONTROL         "generate resource header",IDC_GEN_RES_HEADER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,109,160,100,10
+    GROUPBOX        "Binary Mode File Format",IDC_STATIC,7,173,108,25
+    CONTROL         "S-Record",IDC_BINARY_FORMAT_SREC,"Button",BS_AUTORADIOBUTTON,16,183,45,10
+    CONTROL         "Binary",IDC_BINARY_FORMAT_BIN,"Button",BS_AUTORADIOBUTTON,76,183,36,10
+    LTEXT           "Memory Offset:",IDC_MEM_OFFSET_LABEL,124,183,52,8
+    EDITTEXT        IDC_MEM_OFFSET_EDIT,178,180,59,14,ES_AUTOHSCROLL
+END
+
+IDD_OPTIONS_DIALOG DIALOGEX 0, 0, 253, 148
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_TEXT_SCROLL_WHEEL_EDIT DIALOGEX 0, 0, 276, 207
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Index",IDC_INDEX_LABEL,28,20,20,8
+    LTEXT           "String Value",IDC_STATIC,200,21,43,8
+    LTEXT           "String ID",IDC_STATIC,105,20,37,8
+END
+
+IDD_IMPORT_PROJECT DIALOGEX 0, 0, 230, 252
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_PROJECT_TREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_CHECKBOXES | WS_BORDER | WS_HSCROLL | WS_TABSTOP,7,49,216,171
+    LTEXT           "Import Project Name",IDC_STATIC,8,29,67,8
+    EDITTEXT        IDC_MERGE_PROJECT_NAME,78,26,145,14,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+END
+
+IDD_TRIGGER_ACTION_EDIT_DIALOG DIALOGEX 0, 0, 422, 248
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Add New Action",IDC_ADD_ACTION,7,20,67,14
+    PUSHBUTTON      "Delete Selected Action",IDC_DELETE_ACTION,84,20,82,14
+    LTEXT           "Actions to execute on this trigger event:",IDC_STATIC,9,38,131,8
+    LISTBOX         IDC_ADDED_ACTION_LIST,7,48,247,93,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    LTEXT           "Action Type",IDC_STATIC,7,150,39,8
+    EDITTEXT        IDC_ACTION_TYPE,43,147,211,14,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    LTEXT           "Action Name",IDC_STATIC,7,168,41,8
+    EDITTEXT        IDC_ACTION_NAME,43,166,211,14,ES_AUTOHSCROLL
+    LTEXT           "Target",IDC_STATIC,7,185,22,8
+    COMBOBOX        IDC_TARGET_COMBO,44,183,125,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Show Child Widgets",IDC_TARGET_SHOW_CHILD_WIDGETS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,174,184,80,10
+    LTEXT           "Parent",IDC_STATIC,7,201,22,8
+    COMBOBOX        IDC_PARENT_COMBO,44,198,125,12,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Show Child Widgets",IDC_PARENT_SHOW_CHILD_WIDGETS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,174,199,80,10
+    GROUPBOX        "Animation Parameters",IDC_ANIMATION_PARAMS,260,20,156,158
+    GROUPBOX        "On Animation Complete",IDC_ON_ANIMATION_COMPLETE,260,180,156,40
+END
+
+IDD_EASING_FUNCTION_SELECT_DIALOG DIALOGEX 0, 0, 315, 248
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Easing Function",IDC_STATIC,15,30,51,8
+    COMBOBOX        IDC_EASING_FUNC_COMBO,75,27,206,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Animation Start",IDC_ANIMATION_START,225,46,57,14
+    LTEXT           "Static",IDC_ANIMATION_STATUS,68,202,192,8
+END
+
+IDD_TRIGGER_EDIT_DIALOG DIALOGEX 0, 0, 358, 153
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Select Trigger Event",IDC_STATIC,7,24,344,95
+    CONTROL         "System Event",IDC_SYSTEM_EVENT_RADIO,"Button",BS_AUTORADIOBUTTON,24,39,60,10
+    CONTROL         "Child Signal",IDC_CHILD_SIGNAL_RADIO,"Button",BS_AUTORADIOBUTTON,24,78,52,10
+    CONTROL         "User Event",IDC_USER_EVENT_RADIO,"Button",BS_AUTORADIOBUTTON,24,99,51,10
+    LTEXT           "System Event",IDC_STATIC,0,0,0,0
+    COMBOBOX        IDC_SYSTEM_EVENTS_COMBO,89,40,253,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Animation ID",IDC_ANIMATION_IDS_LABEL,35,61,42,8,WS_DISABLED
+    COMBOBOX        IDC_ANIMATION_IDS_COMBO,89,59,253,30,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Child Signal",IDC_STATIC,0,0,0,0
+    COMBOBOX        IDC_CHILD_SIGNALS_COMBO,89,77,253,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_USER_EVENT_NAME,89,97,252,14,ES_AUTOHSCROLL
+END
+
+IDD_TRIGGER_ACTION_SELECT_DIALOG DIALOGEX 0, 0, 252, 204
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Action Types:",IDC_STATIC,7,23,75,8
+    LISTBOX         IDC_ACTION_LIST,7,35,238,130,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+END
+
+IDD_RICH_TEXT_EDIT_DLG DIALOGEX 0, 0, 310, 254
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU | WS_THICKFRAME
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_CLONE_REPO DIALOGEX 0, 0, 354, 132
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_SYSMENU
+FONT 9, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    PUSHBUTTON      "Yes, clone the GUIX repository to my local machine...",IDB_CLONE_REPO,7,48,340,17,BS_CENTER | BS_NOTIFY
+    LTEXT           "The GUIX git repository contains several sample projects. Would you like to clone this repository to your local machine now?",IDC_CLONE_PROMPT,7,20,340,23
+    PUSHBUTTON      "I have already cloned the GUIX repository, let me select the local directory...",IDB_SELECT_DIRECTORY,7,67,340,17,BS_CENTER | BS_NOTIFY
+    PUSHBUTTON      "I do not want to download samples at this time.",IDB_EXIT_CLONE_DIALOG,7,86,340,17,BS_CENTER | BS_NOTIFY
+END
+
+IDD_SELECT_INSTALL_DIR DIALOGEX 0, 0, 387, 134
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_SYSMENU
+FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    LTEXT           "GUIX Studio will install a simple example project to the following location.  Click Continue to use the default location or click Browse to select a different location.",IDC_STATIC,32,33,311,27
+    LTEXT           "Installation Directory:",IDC_STATIC,9,60,83,10
+    PUSHBUTTON      "Browse...",IDC_BROWSE,331,72,49,16
+    LTEXT           "C:\\Azure_RTOS\\GUIX-Studio-6.1",IDC_INSTALL_PATH,6,72,322,16,SS_CENTERIMAGE | SS_SUNKEN | SS_ENDELLIPSIS
+END
+
+IDD_GIT_PROGRESS DIALOGEX 0, 0, 317, 90
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 9, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    LTEXT           "Some message about what we are cloning",IDC_CLONE_OPERATION,7,1,303,24
+    LTEXT           "GIT Message",IDC_GIT_MESSAGE,7,29,303,14,WS_BORDER
+    LTEXT           "GIT OBJECTS",IDC_OBJECT_COUNT,7,44,303,13,WS_BORDER
+    LTEXT           "GIT Bytes",IDC_GIT_BYTES,7,58,303,13,WS_BORDER
+    LTEXT           "GIT ERROR",IDC_GIT_ERROR,7,72,303,13,WS_BORDER
+END
+
+IDD_IMPORT_SPRITE_FRAMES DIALOGEX 0, 0, 347, 185
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LISTBOX         IDC_PIX_FOLDER_LIST,15,35,118,113,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    LTEXT           "Select a Pixelmap Folder:",IDC_STATIC,16,21,80,8
+    LTEXT           "Select Frame(s):",IDC_STATIC,148,21,52,8
+    LISTBOX         IDC_FRAME_LIST,147,34,185,113,LBS_SORT | LBS_NOINTEGRALHEIGHT | LBS_EXTENDEDSEL | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+END
+
+IDD_CONFIGURE_PROJECT DIALOGEX 0, 0, 332, 362
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU | WS_THICKFRAME
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_GRID_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 12
+        RIGHTMARGIN, 210
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 111
+    END
+
+    IDD_FORMVIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 221
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 157
+    END
+
+    IDD_NEW_PROJECT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 362
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 112
+    END
+
+    IDD_CONFIGURE_PROJECT_WIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 319
+        VERTGUIDE, 319
+        TOPMARGIN, 14
+        BOTTOMMARGIN, 308
+        HORZGUIDE, 103
+    END
+
+    IDD_RECENT_PROJECTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 379
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 160
+    END
+
+    IDD_EDIT_FONT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 391
+        VERTGUIDE, 57
+        VERTGUIDE, 59
+        TOPMARGIN, 19
+        BOTTOMMARGIN, 227
+        HORZGUIDE, 228
+    END
+
+    IDD_PROPS_TEMPLATE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 169
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 72
+    END
+
+    IDD_EDIT_PIXELMAP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 397
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 204
+    END
+
+    IDD_PIX_FOLDER_NAME, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 155
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 104
+    END
+
+    IDD_STRING_TABLE_EDIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 267
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 138
+    END
+
+    IDD_CONFIGURE_THEMES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 223
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 188
+        BOTTOMMARGIN, 190
+    END
+
+    IDD_CONFIG_LANGUAGES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 197
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 219
+    END
+
+    IDD_DELETE_LANGUAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 240
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 92
+    END
+
+    IDD_DIALOG_TEMPLATE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 210
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 120
+    END
+
+    IDD_PALETTE_LAYOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 259
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 236
+        HORZGUIDE, 35
+    END
+
+    IDD_COLOR_EDIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 335
+        TOPMARGIN, 7
+    END
+
+    IDD_SPRITE_EDIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 168
+    END
+
+    IDD_STRING_EXPORT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
+
+    IDD_MACRO_PLAYBACK_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 349
+        TOPMARGIN, 7
+    END
+
+    IDD_MACRO_RECORD_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 349
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 97
+    END
+
+    IDD_RES_EXPORT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 237
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 219
+        HORZGUIDE, 142
+    END
+
+    IDD_OPTIONS_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 246
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 141
+    END
+
+    IDD_TEXT_SCROLL_WHEEL_EDIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 269
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 200
+    END
+
+    IDD_IMPORT_PROJECT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 223
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 245
+    END
+
+    IDD_TRIGGER_ACTION_EDIT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 416
+        VERTGUIDE, 169
+        VERTGUIDE, 174
+        VERTGUIDE, 254
+        VERTGUIDE, 260
+        VERTGUIDE, 324
+        VERTGUIDE, 328
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 241
+        HORZGUIDE, 20
+    END
+
+    IDD_EASING_FUNCTION_SELECT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 308
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 241
+    END
+
+    IDD_TRIGGER_EDIT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 351
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 146
+    END
+
+    IDD_TRIGGER_ACTION_SELECT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 245
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 197
+    END
+
+    IDD_RICH_TEXT_EDIT_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 303
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 247
+    END
+
+    IDD_CLONE_REPO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 347
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 125
+    END
+
+    IDD_SELECT_INSTALL_DIR, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 380
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 127
+    END
+
+    IDD_GIT_PROGRESS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 310
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 83
+    END
+
+    IDD_IMPORT_SPRITE_FRAMES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 340
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 178
+    END
+
+    IDD_CONFIGURE_PROJECT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 320
+        TOPMARGIN, 22
+        BOTTOMMARGIN, 330
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_EDIT_FONT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_PIX_FOLDER_NAME AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_TRIGGER_ACTION_SELECT_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_TRIGGER_ACTION_EDIT_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SPRITE_EDIT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_CONFIG_LANGUAGES AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_CONFIGURE_PROJECT_WIN AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_PALETTE_LAYOUT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_TEXT_SCROLL_WHEEL_EDIT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_CONFIGURE_THEMES AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_IMPORT_PROJECT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_RES_EXPORT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_COLOR_EDIT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_NEW_PROJECT_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_GRID_SETTINGS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_EDIT_PIXELMAP AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_RICH_TEXT_EDIT_DLG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_EASING_FUNCTION_SELECT_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_TRIGGER_EDIT_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_STRING_EXPORT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_RECENT_PROJECTS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_CLONE_REPO AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SELECT_INSTALL_DIR AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_GIT_PROGRESS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_IMPORT_SPRITE_FRAMES AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG2 AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_CONFIGURE_PROJECT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\studiox.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_SMALL_ICON          ICON                    "graphics\\guix_1616icon.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR 30, 22
+BEGIN
+    BUTTON      ID_PROJECT_NEW
+    BUTTON      ID_PROJECT_OPEN
+    BUTTON      ID_PROJECT_SAVE
+    SEPARATOR
+    BUTTON      ID_WIDGET_CUT
+    BUTTON      ID_WIDGET_COPY
+    BUTTON      ID_WIDGET_PASTE
+    SEPARATOR
+    BUTTON      ID_ALIGN_LEFT
+    BUTTON      ID_ALIGN_RIGHT
+    BUTTON      ID_ALIGN_TOP
+    BUTTON      ID_ALIGN_BOTTOM
+    BUTTON      ID_VSPACE_EQUALLY
+    BUTTON      ID_HSPACE_EQUALLY
+    BUTTON      ID_EQUAL_WIDTH
+    BUTTON      ID_EQUAL_HEIGHT
+    BUTTON      ID_MOVE_TO_FRONT
+    BUTTON      ID_MOVE_TO_BACK
+    BUTTON      ID_SIZE_TO_FIT
+    BUTTON      ID_ZOOM_OUT
+    BUTTON      ID_ZOOM_IN
+    SEPARATOR
+    BUTTON      ID_RECORDMACRO
+    BUTTON      ID_PLAYBACKMACRO
+    BUTTON      ID_RUN_APPLICATION
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+END
+
+IDR_TOOLBAR_1BIT TOOLBAR 30, 22
+BEGIN
+    BUTTON      ID_PROJECT_NEW
+    BUTTON      ID_PROJECT_OPEN
+    BUTTON      ID_PROJECT_SAVE
+    SEPARATOR
+    BUTTON      ID_WIDGET_CUT
+    BUTTON      ID_WIDGET_COPY
+    BUTTON      ID_WIDGET_PASTE
+    SEPARATOR
+    BUTTON      ID_ALIGN_LEFT
+    BUTTON      ID_ALIGN_RIGHT
+    BUTTON      ID_ALIGN_TOP
+    BUTTON      ID_ALIGN_BOTTOM
+    BUTTON      ID_VSPACE_EQUALLY
+    BUTTON      ID_HSPACE_EQUALLY
+    BUTTON      ID_EQUAL_WIDTH
+    BUTTON      ID_EQUAL_HEIGHT
+    BUTTON      ID_MOVE_TO_FRONT
+    BUTTON      ID_MOVE_TO_BACK
+    BUTTON      ID_SIZE_TO_FIT
+    BUTTON      ID_ZOOM_OUT
+    BUTTON      ID_ZOOM_IN
+    SEPARATOR
+    BUTTON      ID_RECORDMACRO
+    BUTTON      ID_PLAYBACKMACRO
+    BUTTON      ID_RUN_APPLICATION
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    "S",            ID_PROJECT_SAVE_AS,     VIRTKEY, SHIFT, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "Microsoft"
+            VALUE "FileDescription", "GUIX Studio Application"
+            VALUE "FileVersion", "5.2"
+            VALUE "InternalName", "studiox.exe"
+            VALUE "LegalCopyright", "(c) Microsoft Corporation.  All rights reserved."
+            VALUE "OriginalFilename", "studiox.exe"
+            VALUE "ProductName", "Azure RTOS GUIX Studio"
+            VALUE "ProductVersion", "6.0.0.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDP_OLE_INIT_FAILED     "OLE initialization failed.  Make sure that the OLE libraries are the correct version."
+END
+
+STRINGTABLE
+BEGIN
+    IDR_MAINFRAME           "studiox\n\nstudiox\n\n\nstudiox.Document\nstudiox.Document"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_APP_TITLE       "GUIX Studio version 1.0"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_PROJECT_NEW          "Create New Project\nNew Project"
+    ID_PROJECT_OPEN         "Open an Existing Project\nOpen Project"
+    ID_PROJECT_SAVE         "Save the current Project\nSave"
+END
+
+STRINGTABLE
+BEGIN
+    ID_ADD_BUTTON           "Add a new button to the selected parent\nAdd Button"
+    ID_ADD_WINDOW           "Attach a new GX_WINDOW to the selected parent\nAdd Window"
+    ID_ADD_PROMPT           "Attach a new GX_PROMT to the selected parent\nAdd Prompt"
+END
+
+STRINGTABLE
+BEGIN
+    ID_ADD_CUSTOM_COLOR     "Add a new custom color"
+END
+
+STRINGTABLE
+BEGIN
+    ID_ADD_ICON             "Add a new icon to the selected parent"
+    ID_ADD_PIXMAP_BUTTON    "Add a new GX_PIXELMAP_BUTTON to the selected parent."
+    ID_INSERT_WINDOW        "Insert a new GX_WINDOW widget"
+    ID_INSERT_BUTTON        "Insert a new GX_BUTTON widget"
+    ID_INSERT_PROMPT        "Insert a new GX_PROMPT widget"
+    ID_INSERT_ICON          "Insert a new GX_ICON widget"
+    ID_INSERT_PIXELMAPBUTTON "Insert a new pixelmap button widget"
+END
+
+STRINGTABLE
+BEGIN
+    ID_BUTTON_PIXELMAPBUTTON 
+                            "Add a new pixelmapbutton to the selected parent\nAdd Button"
+    ID_ADD_RADIO_BUTTON     "Add a new radiobutton to the selected parent\nAdd Button"
+    ID_ADD_CHECKBOX         "Add a new checkbox to the selected parent\nAdd Button"
+    ID_BUTTON_SHADOWBUTTON  "Add a new shadow button to the selected parent\nAdd Button"
+    ID_BUTTON_ICONBUTTON    "Add a new iconbutton to the selected parent\nAdd Button"
+    ID_TEXT_EDIT            "Attach a new GX_TEXT_INPUT to the selected parent\nAdd Prompt"
+    ID_TEXT_MULTIINEPROMPT  "Attach a new MULTILINE_PROMPT to the selected parent\nAdd Prompt"
+    ID_TEXT_MULTILINEEDIT   "Attach a new MULTILINE_TEXT_INPUT to the selected parent\nAdd Prompt"
+    ID_ADD_SLIDER           "Add GX_SLIDER to selected parent"
+END
+
+STRINGTABLE
+BEGIN
+    ID_ADD_WIDGET           "Add a widget to the selected parent"
+    ID_ADD_PIXMAP_PROMPT    "Attach a new GX_PIXELMAP_PROMPT to the selected parent"
+    ID_ADD_PIXELMAP_SLIDER  "Add GX_PIXELMAP_SLIDER to selected parent"
+END
+
+STRINGTABLE
+BEGIN
+    ID_WIDGET_CUT           "Cut Widget\nCut"
+    ID_WIDGET_COPY          "Copy Widget\nCopy"
+    ID_WIDGET_PASTE         "Paste Widget\nPaste"
+    ID_EDIT_STRING_TABLE    "Invoke the String Table Editor dialog"
+END
+
+STRINGTABLE
+BEGIN
+    ID_ADD_TEXTBUTTON       "Add a new button to the selected parent\nAdd Text Button"
+    ID_ADD__VERTICAL_LIST   "Add vertical list to selected parent."
+    ID_ADD_ROUNDED_WINDOW   "Add rounded window to selected parent."
+END
+
+STRINGTABLE
+BEGIN
+    ID_ADD_HORIZONTAL_LIST  "Add horizontal list to selected parent."
+    ID_ALIGN_LEFT           "Left-align selected widgets\nAlign-Left"
+    ID_ALIGN_TOP            "Top align selected widgets\nAlign-Top"
+    ID_ALIGN_BOTTOM         "Bottom align selected widgets\nAlign-Bottom"
+    ID_ALIGN_RIGHT          "Right align selected widgets\nAlign-Right"
+    ID_HSPACE_EQUALLY       "Space selected widgets equally along horizontal axis\nHorizontal space equally"
+    ID_VSPACE_EQUALLY       "Space selected widgets equally along vertical axis\nVertical Space Equally"
+    ID_SHOW_GRID            "Show"
+    ID_EQUAL_WIDTH          "Make selected widgets equal width\nEqual Width"
+    ID_EQUAL_HEIGHT         "Make selected widgets equal height\nEqual Height"
+    ID_MOVE_TO_FRONT        "Move selected widget to the front\nMove To Front"
+    ID_MOVE_TO_BACK         "Move the selected widget to the back\nMove To Back"
+    ID_ADD_VSCROLL          "Add vertical scrollbar to parent window."
+    ID_ADD_HSCROLL          "Add horizontal scrollbar to parent window."
+    ID_ADD_ICON_BUTTON      "Add new icon button to selected parent."
+END
+
+STRINGTABLE
+BEGIN
+    ID_ADD_MULT_LINE_VIEW   "Add a multi-line text view control to the selected parent"
+    ID_ADD_TEXT_EDIT        "Add a single-line edit control to the selected parent"
+    ID_ADD_MULTI_LINE_EDIT  "Add a multi-line edit control to the selected parent."
+    ID_ADD_PROGRESS_BAR     "Add a progress bar to the selected parent"
+    ID_ADD_SPRITE           "Add a sprite widget to the selected parent"
+    ID_ADD_DROP_LIST        "Add a drop-down list to the selected parent"
+    ID_ADD_MULTI_LINE_VIEW  "Add a multi-line text view control."
+    ID_ADD_TEXT_INPUT       "Add a single-line text input control."
+END
+
+STRINGTABLE
+BEGIN
+    ID_ADD_MULTI_LINE_INPUT "Add a multi-line text input control."
+END
+
+STRINGTABLE
+BEGIN
+    ID_SIZE_TO_FIT          "Auto-size selected widget to fit content\nSize to Content"
+    ID_ADD_TRANSITION_WINDOW "Insert a new GX_TRANSITION_WINDOW"
+    ID_ADD_MLT_BUTTON       "Add a multi line text button to the selected parent"
+END
+
+STRINGTABLE
+BEGIN
+    ID_RECORDMACRO          "\nRecord Macro"
+    ID_PLAYBACKMACRO        "\nPlayback Macro"
+    ID_ADD_CIRCULAR_GAUGE   "Add a circular gauge to the selected parent"
+END
+
+STRINGTABLE
+BEGIN
+    ID_ZOOM_IN              "\nZoom In"
+END
+
+STRINGTABLE
+BEGIN
+    ID_ZOOM_OUT             "\nZoom Out"
+    ID_PROJECT_IMPORT       "Import modules from second project into current\nImport Project"
+END
+
+STRINGTABLE
+BEGIN
+    ID_RUN_APPLICATION      "\nRun Application"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "res\studiox.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

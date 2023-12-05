@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
+  srcLang ="en" trgLang="zh">
+<file id="f1" original="E:\guix\trunk\examples\smart_watch\smart_watch.gxp">
+<unit id="1" name="STRING_4">
+<segment>
+<source>SET TIME</source>
+<target>设置时间</target>
+</segment>
+</unit>
+<unit id="2" name="STRING_14">
+<segment>
+<source>TIME</source>
+<target>时间</target>
+</segment>
+</unit>
+<unit id="3" name="STRING_15">
+<segment>
+<source>ALARM</source>
+<target>闹钟</target>
+</segment>
+</unit>
+<unit id="4" name="STRING_21">
+<segment>
+<source>DONE</source>
+<target>完成</target>
+</segment>
+</unit>
+<unit id="5" name="STRING_22">
+<segment>
+<source>ON</source>
+<target>开启</target>
+</segment>
+</unit>
+<unit id="6" name="STRING_50">
+<segment>
+<source>FORECAST</source>
+<target>天气预报</target>
+</segment>
+</unit>
+<unit id="7" name="STRING_HEART_RATE">
+<segment>
+<source>HEART RATE</source>
+<target>心率</target>
+</segment>
+</unit>
+<unit id="8" name="STRING_START">
+<segment>
+<source>START</source>
+<target>开始</target>
+</segment>
+</unit>
+<unit id="9" name="STRING_RESET">
+<segment>
+<source>RESET</source>
+<target>重置</target>
+</segment>
+</unit>
+<unit id="10" name="STRING_57">
+<segment>
+<source>BACK</source>
+<target>返回</target>
+</segment>
+</unit>
+<unit id="11" name="STRING_82">
+<segment>
+<source>SEND SMS TO</source>
+<target>发送给</target>
+</segment>
+</unit>
+<unit id="12" name="STRING_2">
+<segment>
+<source>SET</source>
+<target>设置</target>
+</segment>
+</unit>
+<unit id="13" name="STRING_6">
+<segment>
+<source>SEND</source>
+<target>发送</target>
+</segment>
+</unit>
+<unit id="14" name="STRING_7">
+<segment>
+<source>Latest Ver</source>
+</segment>
+</unit>
+<unit id="15" name="STRING_8">
+<segment>
+<source>SMS</source>
+<target>信息</target>
+</segment>
+</unit>
+<unit id="16" name="STRING_MOSCOW">
+<segment>
+<source>MOSCOW</source>
+<target>莫斯科</target>
+</segment>
+</unit>
+<unit id="17" name="STRING_12">
+<segment>
+<source>SET ALARM</source>
+<target>设置闹钟</target>
+</segment>
+</unit>
+<unit id="18" name="STRING_36">
+<segment>
+<source>SETTINGS</source>
+<target>设置</target>
+</segment>
+</unit>
+<unit id="19" name="STRING_41">
+<segment>
+<source>Language</source>
+<target>语言</target>
+</segment>
+</unit>
+<unit id="20" name="STRING_43">
+<segment>
+<source>Theme</source>
+<target>主题</target>
+</segment>
+</unit>
+<unit id="21" name="STRING_39">
+<segment>
+<source>LANGUAGE</source>
+<target>语言</target>
+</segment>
+</unit>
+<unit id="22" name="STRING_ENGLISH">
+<segment>
+<source>English</source>
+<target>英语</target>
+</segment>
+</unit>
+<unit id="23" name="STRING_JAPANESE">
+<segment>
+<source>Japanese</source>
+<target>日语</target>
+</segment>
+</unit>
+<unit id="24" name="STRING_CHINESE">
+<segment>
+<source>Chinese</source>
+<target>中文</target>
+</segment>
+</unit>
+<unit id="25" name="STRING_SPANISH">
+<segment>
+<source>Spanish</source>
+<target>西班牙语</target>
+</segment>
+</unit>
+<unit id="26" name="STRING_47">
+<segment>
+<source>THEME</source>
+<target>主题</target>
+</segment>
+</unit>
+<unit id="27" name="STRING_LANGUAGE">
+<segment>
+<source>English</source>
+<target>中文</target>
+</segment>
+</unit>
+<unit id="28" name="STRING_54">
+<segment>
+<source>Ocean</source>
+<target>海洋</target>
+</segment>
+</unit>
+<unit id="29" name="STRING_58">
+<segment>
+<source>Sand</source>
+<target>沙滩</target>
+</segment>
+</unit>
+<unit id="30" name="STRING_STOP">
+<segment>
+<source>STOP</source>
+<target>停止</target>
+</segment>
+</unit>
+<unit id="31" name="STRING_LOS_ANGELES">
+<segment>
+<source>LOS ANGELES</source>
+<target>洛杉矶</target>
+</segment>
+</unit>
+<unit id="32" name="STRING_BEIJING">
+<segment>
+<source>BEI JING</source>
+<target>北京</target>
+</segment>
+</unit>
+<unit id="33" name="STRING_PACE">
+<segment>
+<source>PACE</source>
+<target>步速</target>
+</segment>
+</unit>
+<unit id="34" name="STRING_STOPWATCH">
+<segment>
+<source>STOPWATCH</source>
+<target>秒表</target>
+</segment>
+</unit>
+<unit id="35" name="STRING_TEXT_1">
+<segment>
+<source>Call back soon.</source>
+<target>请尽快回电.</target>
+</segment>
+</unit>
+<unit id="36" name="STRING_TEXT_2">
+<segment>
+<source>I love you!</source>
+<target>我爱你!</target>
+</segment>
+</unit>
+<unit id="37" name="STRING_TEXT_3">
+<segment>
+<source>On my way home.</source>
+<target>在回来的路上了.</target>
+</segment>
+</unit>
+<unit id="38" name="STRING_TEXT_4">
+<segment>
+<source>See you later.</source>
+<target>待会见.</target>
+</segment>
+</unit>
+<unit id="39" name="STRING_TEXT_5">
+<segment>
+<source>Thank you so much.</source>
+<target>非常感谢.</target>
+</segment>
+</unit>
+<unit id="40" name="STRING_TEXT_6">
+<segment>
+<source>Happy birthday!</source>
+<target>生日快乐!</target>
+</segment>
+</unit>
+<unit id="41" name="STRING_TEXT_7">
+<segment>
+<source>Hi, We are going to have party tonight, will you come?</source>
+<target>嗨, 我们今晚有派对, 来参加吗?</target>
+</segment>
+</unit>
+</file>
+</xliff>

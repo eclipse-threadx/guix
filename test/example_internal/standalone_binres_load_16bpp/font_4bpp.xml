@@ -19,7 +19,7 @@
 <type>FONT</type>
 <name>FONT_4BPP</name>
 <pathinfo>
-<pathname>..\..\fonts\verasans\Vera.ttf</pathname>
+<pathname>..\..\..\fonts\verasans\Vera.ttf</pathname>
 <pathtype>project_relative</pathtype>
 </pathinfo>
 <compress>FALSE</compress>
