@@ -60,7 +60,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\ports;..\..\..\common\inc\;..\..\..\ports\win32\inc;..\..\..\ports\win32\lib\vs_2019;..\..\libs\fontgen;..\..\libs\oss_libs;..\..\libs\oss_libs\libgit2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\ports;..\..\..\common\inc\;..\..\..\ports\win32\inc;..\..\..\ports\win32\lib\vs_2019;..\..\libs\freetype\include;..\..\libs\libgit2\include;..\..\libs\libjpeg\include;..\..\libs\libpng\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;_DEBUG;GUIX_STUDIO;GX_DISABLE_THREADX_BINDING;GX_DISABLE_ERROR_CHECKING;GX_DYNAMIC_BIDI_TEXT_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -82,8 +82,8 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>guix_for_studiox.lib;freetype_2_12_1.lib;png.lib;jpeg-static.lib;zlib.lib;git2.lib;winhttp.lib;rpcrt4.lib;crypt32.lib;uiautomationcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);..\..\libs\fontgen;..\..\libs\oss_libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>guix_for_studiox.lib;freetype_2_12_1.lib;libpng.lib;libjpeg-turbo.lib;zlib.lib;git2.lib;winhttp.lib;rpcrt4.lib;crypt32.lib;uiautomationcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);..\..\libs\freetype;..\..\libs\libgit2;..\..\libs\libjpeg;..\..\libs\libpng;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -106,7 +106,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>..\..\ports;..\..\..\common\inc\;..\..\..\ports\win32\inc;..\..\..\ports\win32\lib\vs_2019;..\..\libs\fontgen;..\..\libs\oss_libs;..\..\libs\oss_libs\libgit2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\ports;..\..\..\common\inc\;..\..\..\ports\win32\inc;..\..\..\ports\win32\lib\vs_2019;..\..\libs\freetype\include;..\..\libs\libgit2\include;..\..\libs\libjpeg\include;..\..\libs\libpng\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <StructMemberAlignment>Default</StructMemberAlignment>
@@ -126,8 +126,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>$(OutDir);..\..\libs\fontgen;..\..\libs\oss_libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>guix_for_studiox.lib;freetype_2_12_1.lib;png.lib;jpeg-static.lib;zlib.lib;git2.lib;winhttp.lib;rpcrt4.lib;crypt32.lib;uiautomationcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);..\..\libs\freetype;..\..\libs\libgit2;..\..\libs\libjpeg;..\..\libs\libpng;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>guix_for_studiox.lib;freetype_2_12_1.lib;libpng.lib;libjpeg-turbo.lib;zlib.lib;git2.lib;winhttp.lib;rpcrt4.lib;crypt32.lib;uiautomationcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCMTD,LIBCMT</IgnoreSpecificDefaultLibraries>
       <OutputFile>$(OutDir)guix_studio$(TargetExt)</OutputFile>
     </Link>
