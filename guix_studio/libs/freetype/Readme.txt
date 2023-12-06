@@ -1,7 +1,8 @@
 
-Building the FreeType Library:
+To build the freetype library, follow these steps:
 
-1) Begin by downloading the FreeType source code from the following location:
+1) Download the FreeType source code from the following link:
+
 https://sourceforge.net/projects/freetype/files/freetype2/
 
 2) Build FreeType using Microsoft Visual C++:
