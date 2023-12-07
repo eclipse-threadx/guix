@@ -41,5 +41,5 @@ jobs:
     - name: Upload installer
       uses: actions/upload-artifact@v3.1.3
       with:
-        name: test_reports
+        name: guix_studio_installer
         path: guix_studio\installer\output\*.exe
