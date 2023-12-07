@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: GUIX Studio Installer
+name: GUIX Studio MISX Package
 
 # Controls when the action will run.
 on:
