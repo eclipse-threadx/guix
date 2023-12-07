@@ -6,10 +6,10 @@ To generate GUIX Studio installer, follow these steps:
 http://www.jrsoftware.org/isinfo.php
 
 2) Build GUIX Studio executable:
-Execute script "run_guix_studio.cmd" from scripts folder.
+Execute script "build_guix_studio.cmd" from scripts folder.
 
 3) Download Microsoft Visual C++ Redistributable:
-Execute script "download_vc_redist.ps1" from scripts folder to download the Microsoft Visual C++ Redistributable package.
+Execute script "download_vc_redist.cmd" from scripts folder to download the Microsoft Visual C++ Redistributable package.
 This package is essential for installing Microsoft C and C++(MSVC) runtime libraries.
 
 4)Run the Inno Setup compiler:
