@@ -1,0 +1,45 @@
+# This is a basic workflow that is manually triggered
+
+name: GUIX Studio Installer
+
+# Controls when the action will run.
+on:
+  workflow_dispatch:
+ 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "linux_job"
+  generate_studio_installer:
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+      
+    # The type of runner that the job will run on
+    runs-on: windows-2019
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+    
+    - name: Install Inno Setup
+      run: scripts\run-pwsh.cmd scripts\install_inno_setup.ps1
+
+    - name: Build GUIX Studio
+      run: scripts\build_guix_studio.cmd
+      
+    - name: Download VC++ Redistributable
+      run: scripts\download_vc_redist.cmd
+
+    - name: Generate installer
+      run: scripts\generate_studio_installer.cmd
+      
+    - name: Upload installer
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: guix_studio_installer
+        path: guix_studio\installer\output\*.exe
