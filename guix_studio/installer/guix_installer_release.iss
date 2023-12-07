@@ -46,10 +46,10 @@ Source: "build\vs_2019\Release\guix_studio.exe"; DestDir: "{app}\studio"; DestNa
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\GUIX Studio 6.2\GUIX Studio"; Filename: "{app}\studio\GUIX_Studio.exe"
-Name: "{group}\GUIX Studio 6.2\GUIX Studio User's Guide"; Filename: "https://aka.ms/azrtos-guix-studio-user-guide"
-Name: "{group}\GUIX Studio 6.2\GUIX User's Guide"; Filename: "https://aka.ms/azrtos-guix-user-guide"
-Name: "{group}\GUIX Studio 6.2\{cm:UninstallProgram,GUIX Studio}"; Filename: "{uninstallexe}"
+Name: "{group}\GUIX Studio 6.3\GUIX Studio"; Filename: "{app}\studio\GUIX_Studio.exe"
+Name: "{group}\GUIX Studio 6.3\GUIX Studio User's Guide"; Filename: "https://aka.ms/azrtos-guix-studio-user-guide"
+Name: "{group}\GUIX Studio 6.3\GUIX User's Guide"; Filename: "https://aka.ms/azrtos-guix-user-guide"
+Name: "{group}\GUIX Studio 6.3\{cm:UninstallProgram,GUIX Studio}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\GUIX Studio 6.3.0.1"; Filename: "{app}\studio\GUIX_Studio.exe"; Tasks: desktopicon
 
 [Registry]
