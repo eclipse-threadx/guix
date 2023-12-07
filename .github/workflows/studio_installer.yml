@@ -26,8 +26,8 @@ jobs:
       with:
         submodules: true
     
-    - name: Install innosetup
-      run: scripts\run-pwsh.cmd scripts\install.ps1
+    - name: Install Inno Setup
+      run: scripts\run-pwsh.cmd scripts\install_inno_setup.ps1
 
     - name: Build GUIX Studio
       run: scripts\build_guix_studio.cmd
