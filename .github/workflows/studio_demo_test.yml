@@ -32,7 +32,7 @@ jobs:
         submodules: true
     
     - name: Build
-      run: scripts\build_studio_demo.cmd
+      run: scripts\build_guix_studio.cmd
       
     - name: Test
       run: scripts\test_studio_demo.cmd
