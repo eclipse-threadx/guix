@@ -28,13 +28,6 @@ jobs:
 
     - name: Generate GUIX Studio package upload file
       run: scripts/build_guix_studio_msix_package.cmd
-      
-    - name: Upload Release folder
-      if: always()
-      uses: actions/upload-artifact@v3.1.3
-      with:
-        name: Release
-        path: guix_studio/build/vs_2019/Release
 
     - name: Upload GUIX Studio package upload file
       uses: actions/upload-artifact@v3.1.3
