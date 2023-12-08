@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: GUIX Studio MSIX Package Upload File
+name: GUIX Studio MSIX Package
 
 # Controls when the action will run.
 on:
@@ -9,7 +9,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "linux_job"
-  generate_misx_upload_file:
+  generate_msix_upload_file:
     permissions:
       contents: read
       issues: read
