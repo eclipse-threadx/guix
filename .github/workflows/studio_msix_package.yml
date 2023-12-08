@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: GUIX Studio MSIX Package Upload File
+name: GUIX Studio MSIX Package
 
 # Controls when the action will run.
 on:
@@ -9,7 +9,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "linux_job"
-  generate_misx_upload_file:
+  generate_msix_upload_file:
     permissions:
       contents: read
       issues: read
@@ -30,7 +30,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Generate GUIX Studio package upload file
-      run: msbuild ./guix_studio/build/vs_2019/msix_package_project/msix_package_project.sln /p:Configuration=Release /p:UapAppxPackageBuildMode=CI /p:GenerateAppInstallerFile=false
+      run: msbuild ./guix_studio/build/vs_2019/msix_package_project/msix_package_project.sln /p:Configuration=Release /p:UapAppxPackageBuildMode=CI /p:GenerateAppInstallerFile=false /p:Platform=x86
       
     - name: Upload GUIX Studio package upload file
       uses: actions/upload-artifact@v3.1.3
