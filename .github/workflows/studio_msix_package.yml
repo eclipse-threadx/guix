@@ -25,12 +25,9 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-    
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
 
     - name: Generate GUIX Studio package upload file
-      run: msbuild ./guix_studio/build/vs_2019/msix_package_project/msix_package_project.sln /p:Configuration=Release /p:UapAppxPackageBuildMode=CI /p:GenerateAppInstallerFile=false /p:Platform=x86
+      run: scripts/build_guix_studio_msix_package.cmd
       
     - name: Upload GUIX Studio package upload file
       uses: actions/upload-artifact@v3.1.3
