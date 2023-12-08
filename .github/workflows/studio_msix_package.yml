@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: GUIX Studio MISX Package
+name: GUIX Studio MSIX Package Upload File
 
 # Controls when the action will run.
 on:
@@ -30,7 +30,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Generate GUIX Studio package upload file
-      run: msbuild ./guix_studio/build/vs_2019/msix_package_project/studio_packaging_project.sln /p:Configuration=Release /p:UapAppxPackageBuildMode=CI /p:GenerateAppInstallerFile=false /p:Platform=x86
+      run: msbuild ./guix_studio/build/vs_2019/msix_package_project/msix_package_project.sln /p:Configuration=Release /p:UapAppxPackageBuildMode=CI /p:GenerateAppInstallerFile=false
       
     - name: Upload GUIX Studio package upload file
       uses: actions/upload-artifact@v3.1.3
