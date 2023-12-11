@@ -10,7 +10,7 @@
 
   <Identity
     Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
-    Version="6.3.1.0"  Name="Microsoft.AzureRTOSGUIXStudio"/>
+    Version="6.3.2.0"  Name="Microsoft.AzureRTOSGUIXStudio"/>
 
   <Properties>
     <DisplayName>Azure RTOS GUIX Studio</DisplayName>
