@@ -7,6 +7,6 @@ rem switch to the folder this script resides in. Don't assume absolute paths bec
 pushd "%~dp0"
 
 cd ..\guix_studio\build\vs_2019
-msbuild msix_package_project.sln /p:Configuration=Release /p:UapAppxPackageBuildMode=CI /p:GenerateAppInstallerFile=false /p:Platform=x86
+msbuild msix_package_project\msix_package_project.sln /p:Configuration=Release /p:UapAppxPackageBuildMode=CI /p:GenerateAppInstallerFile=false /p:Platform=x86
 
 exit /B %ERRORLEVEL%
