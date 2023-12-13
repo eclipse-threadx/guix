@@ -238,7 +238,7 @@ GX_VALUE     click_x;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_single_line_text_input_event_process            PORTABLE C      */
-/*                                                           6.1.3        */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -294,6 +294,11 @@ GX_VALUE     click_x;
 /*                                            added logic to release      */
 /*                                            dynamic input buffer,       */
 /*                                            resulting in version 6.1.3  */
+/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*                                            modified to always call     */
+/*                                            default widget event        */
+/*                                            process on a pen up event,  */
+/*                                            resulting in version 6.x    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_single_line_text_input_event_process(GX_SINGLE_LINE_TEXT_INPUT *text_input, GX_EVENT *event_ptr)
@@ -390,10 +395,8 @@ ULONG        old_style;
                 text_input -> gx_widget_status &= ~(GX_STATUS_MARK_NEXT | GX_STATUS_MARK_PREVIOUS);
             }
         }
-        else
-        {
-            _gx_widget_event_process(widget, event_ptr);
-        }
+
+        _gx_widget_event_process(widget, event_ptr);
         break;
 
     case GX_EVENT_TIMER:
