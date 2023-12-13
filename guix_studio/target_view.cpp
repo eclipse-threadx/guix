@@ -5,7 +5,6 @@
 #include "target_view.h"
 #include "studiox_util.h"
 #include "clone_repo_dialog.h"
-#include "install_dir_dialog.h"
 #include "color_edit_dialog.h"
 
 #ifdef _DEBUG
@@ -172,13 +171,6 @@ void target_view::InitialDisplay(void)
         clone_repo_dialog *dlg = new clone_repo_dialog(parent);
         dlg->DoModal();
         delete(dlg);
-
-        if (StudioXIni.samples_dir.IsEmpty())
-        {
-            install_dir_dialog *install_dlg = new install_dir_dialog(parent);
-            install_dlg->DoModal();
-            delete install_dlg;
-        }
     }
     DisplayRecentProjects();
 }

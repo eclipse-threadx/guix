@@ -364,9 +364,6 @@
     <ClInclude Include="..\..\clone_repo_dialog.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\install_dir_dialog.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\system_pngs.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -753,9 +750,6 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\clone_repo_dialog.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\install_dir_dialog.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\system_pngs.cpp">
