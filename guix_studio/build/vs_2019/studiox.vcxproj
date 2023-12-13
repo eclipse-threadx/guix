@@ -171,7 +171,6 @@
     <ClInclude Include="..\..\image_reader.h" />
     <ClInclude Include="..\..\import_project_dlg.h" />
     <ClInclude Include="..\..\import_sprite_frames_dlg.h" />
-    <ClInclude Include="..\..\install_dir_dialog.h" />
     <ClInclude Include="..\..\left_panel_frame.h" />
     <ClInclude Include="..\..\line_chart_service_provider.h" />
     <ClInclude Include="..\..\MacroPlaybackDlg.h" />
@@ -302,7 +301,6 @@
     <ClCompile Include="..\..\image_reader.cpp" />
     <ClCompile Include="..\..\import_project_dlg.cpp" />
     <ClCompile Include="..\..\import_sprite_frames_dlg.cpp" />
-    <ClCompile Include="..\..\install_dir_dialog.cpp" />
     <ClCompile Include="..\..\jpg_reader.cpp" />
     <ClCompile Include="..\..\left_panel_frame.cpp" />
     <ClCompile Include="..\..\line_chart_service_provider.cpp" />

@@ -168,7 +168,6 @@
 #define IDB_ADD_RESOURCE_HIGHLIGHT      306
 #define IDD_RICH_TEXT_EDIT_DLG          307
 #define IDD_CLONE_REPO                  308
-#define IDD_SELECT_INSTALL_DIR          309
 #define IDD_GIT_PROGRESS                310
 #define IDB_BITMAP3                     312
 #define IDB_BOLD                        315
@@ -427,7 +426,6 @@
 #define IDB_CANCEL_CLONE                1257
 #define IDB_CLONE_REPO3                 1257
 #define IDB_EXIT_CLONE_DIALOG           1257
-#define IDC_INSTALL_PATH                1258
 #define IDC_ROTATION_ANGLE_LABLE        1260
 #define IDC_ROTATION_ANGLE_COMBO        1261
 #define IDC_CLONE_OPERATION             1262

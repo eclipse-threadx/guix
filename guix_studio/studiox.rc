@@ -1159,16 +1159,6 @@ BEGIN
     PUSHBUTTON      "I do not want to download samples at this time.",IDB_EXIT_CLONE_DIALOG,7,86,340,17,BS_CENTER | BS_NOTIFY
 END
 
-IDD_SELECT_INSTALL_DIR DIALOGEX 0, 0, 387, 134
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_SYSMENU
-FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
-BEGIN
-    LTEXT           "GUIX Studio will install a simple example project to the following location.  Click Continue to use the default location or click Browse to select a different location.",IDC_STATIC,32,33,311,27
-    LTEXT           "Installation Directory:",IDC_STATIC,9,60,83,10
-    PUSHBUTTON      "Browse...",IDC_BROWSE,331,72,49,16
-    LTEXT           "C:\\Azure_RTOS\\GUIX-Studio-6.1",IDC_INSTALL_PATH,6,72,322,16,SS_CENTERIMAGE | SS_SUNKEN | SS_ENDELLIPSIS
-END
-
 IDD_GIT_PROGRESS DIALOGEX 0, 0, 317, 90
 STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
 FONT 9, "Microsoft Sans Serif", 400, 0, 0x0
@@ -1457,14 +1447,6 @@ BEGIN
         BOTTOMMARGIN, 125
     END
 
-    IDD_SELECT_INSTALL_DIR, DIALOG
-    BEGIN
-        LEFTMARGIN, 6
-        RIGHTMARGIN, 380
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 127
-    END
-
     IDD_GIT_PROGRESS, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -1603,11 +1585,6 @@ BEGIN
 END
 
 IDD_CLONE_REPO AFX_DIALOG_LAYOUT
-BEGIN
-    0
-END
-
-IDD_SELECT_INSTALL_DIR AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
