@@ -163,6 +163,8 @@ VOID start_guix(void)
     gx_studio_named_widget_create("radial_slider_screen", GX_NULL, GX_NULL);
 
     gx_studio_named_widget_create("rich_text_view_screen", GX_NULL, GX_NULL);
+    
+    gx_studio_named_widget_create("focus_test_screen", GX_NULL, GX_NULL);
 
     /* Show the root window to make it and patients screen visible.  */
     gx_widget_show(root);

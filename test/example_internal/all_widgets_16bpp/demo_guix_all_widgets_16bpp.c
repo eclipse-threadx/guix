@@ -110,7 +110,7 @@ VOID  demo_thread_entry(ULONG thread_input)
                                 LANGUAGE_ENGLISH, MAIN_DISPLAY_THEME_1, &root);
 
     /* create the button screen */
-    gx_studio_named_widget_create("button_screen", (GX_WIDGET*)root, (GX_WIDGET **) &pButtonScreen);
+    gx_studio_named_widget_create("button_screen", (GX_WIDGET *) root, (GX_WIDGET **) &pButtonScreen);
 
     /* create the text widget screen */
     gx_studio_named_widget_create("text_screen", GX_NULL, (GX_WIDGET **) &pTextScreen);
@@ -143,8 +143,6 @@ VOID  demo_thread_entry(ULONG thread_input)
 
     /* create sprite screen. */
     gx_studio_named_widget_create("sprite_screen", GX_NULL, GX_NULL);
-
-    gx_studio_named_widget_create("focus_test_screen", GX_NULL, GX_NULL);
 
     string.gx_string_ptr = ml_input_text;
     string.gx_string_length = sizeof(ml_input_text) - 1;

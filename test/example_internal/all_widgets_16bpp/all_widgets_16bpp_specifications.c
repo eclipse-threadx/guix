@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.3.0.1                                               */
-/*  Date (dd.mm.yyyy): 14.12.2023   Time (hh:mm): 14:07                        */
+/*  GUIX Studio Revision 6.2.0.1                                               */
+/*  Date (dd.mm.yyyy): 31.10.2022   Time (hh:mm): 14:07                        */
 /*******************************************************************************/
 
 
@@ -16,7 +16,6 @@
 #include "all_widgets_16bpp_specifications.h"
 
 static GX_WIDGET *gx_studio_nested_widget_create(GX_BYTE *control, GX_CONST GX_STUDIO_WIDGET *definition, GX_WIDGET *parent);
-FOCUS_TEST_SCREEN_CONTROL_BLOCK focus_test_screen;
 SPRITE_SCREEN_CONTROL_BLOCK sprite_screen;
 GAUGE_SCREEN_CONTROL_BLOCK gauge_screen;
 WIDGET_COLOR_TEST_SCREEN_CONTROL_BLOCK widget_color_test_screen;
@@ -753,126 +752,6 @@ UINT gx_studio_tree_view_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *cont
     }
     return status;
 }
-GX_WINDOW_PROPERTIES focus_test_screen_properties =
-{
-    0                                        /* wallpaper pixelmap id          */
-};
-GX_WINDOW_PROPERTIES focus_test_screen_window_1_properties =
-{
-    0                                        /* wallpaper pixelmap id          */
-};
-GX_PROMPT_PROPERTIES focus_test_screen_prompt_1_properties =
-{
-    GX_STRING_ID_STRING_5,                   /* string id                      */
-    GX_FONT_ID_PROMPT,                       /* font id                        */
-    GX_COLOR_ID_TEXT,                        /* normal text color              */
-    GX_COLOR_ID_SELECTED_TEXT,               /* selected text color            */
-    GX_COLOR_ID_DISABLED_TEXT                /* disabled text color            */
-};
-GX_PROMPT_PROPERTIES focus_test_screen_prompt_2_properties =
-{
-    GX_STRING_ID_STRING_5,                   /* string id                      */
-    GX_FONT_ID_PROMPT,                       /* font id                        */
-    GX_COLOR_ID_TEXT,                        /* normal text color              */
-    GX_COLOR_ID_SELECTED_TEXT,               /* selected text color            */
-    GX_COLOR_ID_DISABLED_TEXT                /* disabled text color            */
-};
-
-GX_CONST GX_STUDIO_WIDGET focus_test_screen_prompt_1_define =
-{
-    "prompt_1",
-    GX_TYPE_PROMPT,                          /* widget type                    */
-    GX_ID_NONE,                              /* widget id                      */
-    #if defined(GX_WIDGET_USER_DATA)
-    0,                                       /* user data                      */
-    #endif
-    GX_STYLE_BORDER_THIN|GX_STYLE_ENABLED|GX_STYLE_TEXT_CENTER,   /* style flags */
-    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
-    sizeof(GX_PROMPT),                       /* control block size             */
-    GX_COLOR_ID_WIDGET_FILL,                 /* normal color id                */
-    GX_COLOR_ID_SELECTED_FILL,               /* selected color id              */
-    GX_COLOR_ID_DISABLED_FILL,               /* disabled color id              */
-    gx_studio_prompt_create,                 /* create function                */
-    GX_NULL,                                 /* drawing function override      */
-    GX_NULL,                                 /* event function override        */
-    {306, 84, 412, 140},                     /* widget size                    */
-    GX_NULL,                                 /* no next widget                 */
-    GX_NULL,                                 /* no child widgets               */ 
-    offsetof(FOCUS_TEST_SCREEN_CONTROL_BLOCK, focus_test_screen_prompt_1), /* control block */
-    (void *) &focus_test_screen_prompt_1_properties /* extended properties     */
-};
-
-GX_CONST GX_STUDIO_WIDGET focus_test_screen_prompt_2_define =
-{
-    "prompt_2",
-    GX_TYPE_PROMPT,                          /* widget type                    */
-    GX_ID_NONE,                              /* widget id                      */
-    #if defined(GX_WIDGET_USER_DATA)
-    0,                                       /* user data                      */
-    #endif
-    GX_STYLE_BORDER_THIN|GX_STYLE_ENABLED|GX_STYLE_TEXT_CENTER,   /* style flags */
-    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
-    sizeof(GX_PROMPT),                       /* control block size             */
-    GX_COLOR_ID_WIDGET_FILL,                 /* normal color id                */
-    GX_COLOR_ID_SELECTED_FILL,               /* selected color id              */
-    GX_COLOR_ID_DISABLED_FILL,               /* disabled color id              */
-    gx_studio_prompt_create,                 /* create function                */
-    GX_NULL,                                 /* drawing function override      */
-    GX_NULL,                                 /* event function override        */
-    {168, 316, 350, 390},                    /* widget size                    */
-    GX_NULL,                                 /* no next widget                 */
-    GX_NULL,                                 /* no child widgets               */ 
-    offsetof(FOCUS_TEST_SCREEN_CONTROL_BLOCK, focus_test_screen_prompt_2), /* control block */
-    (void *) &focus_test_screen_prompt_2_properties /* extended properties     */
-};
-
-GX_CONST GX_STUDIO_WIDGET focus_test_screen_window_1_define =
-{
-    "window_1",
-    GX_TYPE_WINDOW,                          /* widget type                    */
-    GX_ID_NONE,                              /* widget id                      */
-    #if defined(GX_WIDGET_USER_DATA)
-    0,                                       /* user data                      */
-    #endif
-    GX_STYLE_BORDER_THIN|GX_STYLE_ENABLED,   /* style flags                    */
-    0,                                       /* status flags                   */
-    sizeof(GX_WINDOW),                       /* control block size             */
-    GX_COLOR_ID_WINDOW_FILL,                 /* normal color id                */
-    GX_COLOR_ID_WINDOW_FILL,                 /* selected color id              */
-    GX_COLOR_ID_DISABLED_FILL,               /* disabled color id              */
-    gx_studio_window_create,                 /* create function                */
-    GX_NULL,                                 /* drawing function override      */
-    GX_NULL,                                 /* event function override        */
-    {166, 50, 485, 289},                     /* widget size                    */
-    &focus_test_screen_prompt_2_define,      /* next widget definition         */
-    &focus_test_screen_prompt_1_define,      /* child widget definition        */
-    offsetof(FOCUS_TEST_SCREEN_CONTROL_BLOCK, focus_test_screen_window_1), /* control block */
-    (void *) &focus_test_screen_window_1_properties /* extended properties     */
-};
-
-GX_CONST GX_STUDIO_WIDGET focus_test_screen_define =
-{
-    "focus_test_screen",
-    GX_TYPE_WINDOW,                          /* widget type                    */
-    GX_ID_NONE,                              /* widget id                      */
-    #if defined(GX_WIDGET_USER_DATA)
-    0,                                       /* user data                      */
-    #endif
-    GX_STYLE_BORDER_THIN|GX_STYLE_ENABLED,   /* style flags                    */
-    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
-    sizeof(FOCUS_TEST_SCREEN_CONTROL_BLOCK), /* control block size             */
-    GX_COLOR_ID_WINDOW_FILL,                 /* normal color id                */
-    GX_COLOR_ID_WINDOW_FILL,                 /* selected color id              */
-    GX_COLOR_ID_DISABLED_FILL,               /* disabled color id              */
-    gx_studio_window_create,                 /* create function                */
-    GX_NULL,                                 /* drawing function override      */
-    GX_NULL,                                 /* event function override        */
-    {0, 0, 639, 479},                        /* widget size                    */
-    GX_NULL,                                 /* next widget                    */
-    &focus_test_screen_window_1_define,      /* child widget                   */
-    0,                                       /* control block                  */
-    (void *) &focus_test_screen_properties   /* extended properties            */
-};
 GX_WINDOW_PROPERTIES sprite_screen_properties =
 {
     GX_PIXELMAP_ID_SPRITE_RAW                /* wallpaper pixelmap id          */
@@ -9419,7 +9298,6 @@ GX_CONST GX_STUDIO_WIDGET button_screen_define =
 };
 GX_CONST GX_STUDIO_WIDGET_ENTRY all_widgets_16bpp_widget_table[] =
 {
-    { &focus_test_screen_define, (GX_WIDGET *) &focus_test_screen },
     { &sprite_screen_define, (GX_WIDGET *) &sprite_screen },
     { &gauge_screen_define, (GX_WIDGET *) &gauge_screen },
     { &widget_color_test_screen_define, (GX_WIDGET *) &widget_color_test_screen },

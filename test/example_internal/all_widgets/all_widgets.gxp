@@ -2,9 +2,9 @@
 <!DOCTYPE GUIX_Studio_Project>
 <project>
 <header>
-<project_version>55</project_version>
+<project_version>56</project_version>
 <guix_version>60103</guix_version>
-<studio_version>6010902</studio_version>
+<studio_version>6030001</studio_version>
 <project_name>all_widgets</project_name>
 <source_path>.\</source_path>
 <header_path>.\</header_path>
@@ -63,7 +63,7 @@
 <reverse_order>FALSE</reverse_order>
 <allocate_canvas>TRUE</allocate_canvas>
 <enabled>TRUE</enabled>
-<rotation_angle>0</rotation_angle>
+<rotation_angle>None</rotation_angle>
 <default_map_format>FALSE</default_map_format>
 <theme_info>
 <num_themes>1</num_themes>
@@ -84,7 +84,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>THEME_HEADER</folder_id>
 </resource>
 <resource>
 <type>GROUP</type>
@@ -95,7 +95,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>COLOR_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>Defaults</name>
@@ -105,7 +105,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>DEFAULT_COLOR_FOLDER</folder_id>
 <resource>
 <type>COLOR</type>
 <name>CANVAS</name>
@@ -435,7 +435,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4097</folder_id>
+<folder_id>CUSTOM_COLOR_FOLDER</folder_id>
 <resource>
 <name>Add New Color</name>
 <pathinfo>
@@ -522,7 +522,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4097</folder_id>
+<folder_id>FONT_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>Defaults</name>
@@ -532,7 +532,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4098</folder_id>
+<folder_id>DEFAULT_FONT_FOLDER</folder_id>
 <resource>
 <type>FONT</type>
 <name>SYSTEM</name>
@@ -548,6 +548,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -704,6 +705,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -860,6 +862,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -1016,6 +1019,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -1167,7 +1171,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4099</folder_id>
+<folder_id>CUSTOM_FONT_FOLDER</folder_id>
 <resource>
 <name>Add New Font</name>
 <pathinfo>
@@ -1193,6 +1197,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -1350,6 +1355,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -1507,6 +1513,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -1664,6 +1671,7 @@
 <font_include_st_glyphs>TRUE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -1821,6 +1829,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -1978,6 +1987,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -2135,6 +2145,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -2287,7 +2298,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4098</folder_id>
+<folder_id>PIXELMAP_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>System</name>
@@ -2297,7 +2308,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4100</folder_id>
+<folder_id>DEFAULT_PIXELMAP_FOLDER</folder_id>
 <resource>
 <type>PIXELMAP</type>
 <name>RADIO_ON</name>
@@ -2311,8 +2322,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2328,8 +2339,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2345,8 +2356,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2362,8 +2373,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 </resource>
@@ -2376,7 +2387,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4101</folder_id>
+<folder_id>CUSTOM_PIXELMAP_FOLDER</folder_id>
 <resource>
 <name>Add New Pixelmap</name>
 <pathinfo>
@@ -2399,8 +2410,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2416,8 +2427,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2433,8 +2444,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2450,8 +2461,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2467,8 +2478,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2484,8 +2495,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2501,8 +2512,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2518,8 +2529,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2535,8 +2546,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2552,8 +2563,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2569,8 +2580,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2586,8 +2597,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2603,8 +2614,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2620,8 +2631,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2637,8 +2648,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2654,8 +2665,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2671,8 +2682,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2688,8 +2699,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2705,8 +2716,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2722,8 +2733,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2739,8 +2750,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2756,8 +2767,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2773,8 +2784,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2790,8 +2801,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2807,8 +2818,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2824,8 +2835,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2841,8 +2852,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2858,8 +2869,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2875,8 +2886,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2892,8 +2903,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2909,8 +2920,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2926,8 +2937,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2943,8 +2954,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -2960,8 +2971,9 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>26</color_format>
+<color_format>GX_COLOR_FORMAT_8BIT_ALPHAMAP</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 </resource>
@@ -2974,7 +2986,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4101</folder_id>
+<folder_id>CUSTOM_PIXELMAP_FOLDER</folder_id>
 <resource>
 <name>Add New Pixelmap</name>
 <pathinfo>
@@ -2997,8 +3009,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -3014,8 +3026,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -3031,8 +3043,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 </resource>
@@ -3045,7 +3057,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4101</folder_id>
+<folder_id>CUSTOM_PIXELMAP_FOLDER</folder_id>
 <resource>
 <name>Add New Pixelmap</name>
 <pathinfo>
@@ -3068,8 +3080,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -3085,8 +3097,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -3102,8 +3114,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -3119,8 +3131,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -3136,8 +3148,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -3153,8 +3165,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -3170,8 +3182,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 </resource>
@@ -3184,7 +3196,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4101</folder_id>
+<folder_id>CUSTOM_PIXELMAP_FOLDER</folder_id>
 <resource>
 <name>Add New Pixelmap</name>
 <pathinfo>
@@ -3207,8 +3219,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -3224,8 +3236,8 @@
 <alpha>TRUE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 </resource>
@@ -3239,7 +3251,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4099</folder_id>
+<folder_id>STRING_GROUP</folder_id>
 <resource>
 <name>Add New String</name>
 <pathinfo>
@@ -4294,6 +4306,88 @@
 </screen_flow>
 <widget_folder>
 <folder_name>default_folder</folder_name>
+<widget>
+<type>window</type>
+<app_name>focus_test_screen</app_name>
+<size>
+<left>0</left>
+<top>0</top>
+<right>639</right>
+<bottom>479</bottom>
+</size>
+<style>1073741828</style>
+<allocation>0</allocation>
+<accepts_focus>TRUE</accepts_focus>
+<normal_fill_color>WINDOW_FILL</normal_fill_color>
+<selected_fill_color>WINDOW_FILL</selected_fill_color>
+<disabled_fill_color>DISABLED_FILL</disabled_fill_color>
+<template>FALSE</template>
+<visible_at_startup>FALSE</visible_at_startup>
+<widget>
+<type>window</type>
+<app_name>window_1</app_name>
+<size>
+<left>166</left>
+<top>50</top>
+<right>485</right>
+<bottom>289</bottom>
+</size>
+<style>1073741828</style>
+<allocation>0</allocation>
+<accepts_focus>FALSE</accepts_focus>
+<normal_fill_color>WINDOW_FILL</normal_fill_color>
+<selected_fill_color>WINDOW_FILL</selected_fill_color>
+<disabled_fill_color>DISABLED_FILL</disabled_fill_color>
+<template>FALSE</template>
+<visible_at_startup>FALSE</visible_at_startup>
+<widget>
+<type>prompt</type>
+<app_name>prompt_1</app_name>
+<size>
+<left>306</left>
+<top>84</top>
+<right>412</right>
+<bottom>140</bottom>
+</size>
+<style>1073758212</style>
+<allocation>0</allocation>
+<accepts_focus>TRUE</accepts_focus>
+<normal_fill_color>WIDGET_FILL</normal_fill_color>
+<selected_fill_color>SELECTED_FILL</selected_fill_color>
+<disabled_fill_color>DISABLED_FILL</disabled_fill_color>
+<template>FALSE</template>
+<visible_at_startup>FALSE</visible_at_startup>
+<string_id>STRING_5</string_id>
+<font_id>PROMPT</font_id>
+<normal_text_color>TEXT</normal_text_color>
+<selected_text_color>SELECTED_TEXT</selected_text_color>
+<disabled_text_color>DISABLED_TEXT</disabled_text_color>
+</widget>
+</widget>
+<widget>
+<type>prompt</type>
+<app_name>prompt_2</app_name>
+<size>
+<left>168</left>
+<top>316</top>
+<right>350</right>
+<bottom>390</bottom>
+</size>
+<style>1073758212</style>
+<allocation>0</allocation>
+<accepts_focus>TRUE</accepts_focus>
+<normal_fill_color>WIDGET_FILL</normal_fill_color>
+<selected_fill_color>SELECTED_FILL</selected_fill_color>
+<disabled_fill_color>DISABLED_FILL</disabled_fill_color>
+<template>FALSE</template>
+<visible_at_startup>FALSE</visible_at_startup>
+<string_id>STRING_5</string_id>
+<font_id>PROMPT</font_id>
+<normal_text_color>TEXT</normal_text_color>
+<selected_text_color>SELECTED_TEXT</selected_text_color>
+<disabled_text_color>DISABLED_TEXT</disabled_text_color>
+</widget>
+</widget>
 <widget>
 <type>window</type>
 <app_name>rich_text_view_screen</app_name>
@@ -9358,7 +9452,7 @@
 <reverse_order>FALSE</reverse_order>
 <allocate_canvas>TRUE</allocate_canvas>
 <enabled>FALSE</enabled>
-<rotation_angle>0</rotation_angle>
+<rotation_angle>None</rotation_angle>
 <default_map_format>FALSE</default_map_format>
 <theme_info>
 <num_themes>1</num_themes>
@@ -9379,7 +9473,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>THEME_HEADER</folder_id>
 </resource>
 <resource>
 <type>GROUP</type>
@@ -9390,7 +9484,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>COLOR_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>Defaults</name>
@@ -9400,7 +9494,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>DEFAULT_COLOR_FOLDER</folder_id>
 <resource>
 <type>COLOR</type>
 <name>CANVAS</name>
@@ -9730,7 +9824,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4097</folder_id>
+<folder_id>CUSTOM_COLOR_FOLDER</folder_id>
 <resource>
 <name>Add New Color</name>
 <pathinfo>
@@ -9751,7 +9845,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4097</folder_id>
+<folder_id>FONT_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>Defaults</name>
@@ -9761,7 +9855,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4098</folder_id>
+<folder_id>DEFAULT_FONT_FOLDER</folder_id>
 <resource>
 <type>FONT</type>
 <name>SYSTEM</name>
@@ -9777,6 +9871,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -9933,6 +10028,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -10089,6 +10185,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -10245,6 +10342,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -10396,7 +10494,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4099</folder_id>
+<folder_id>CUSTOM_FONT_FOLDER</folder_id>
 <resource>
 <name>Add New Font</name>
 <pathinfo>
@@ -10417,7 +10515,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4098</folder_id>
+<folder_id>PIXELMAP_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>System</name>
@@ -10427,7 +10525,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4100</folder_id>
+<folder_id>DEFAULT_PIXELMAP_FOLDER</folder_id>
 <resource>
 <type>PIXELMAP</type>
 <name>RADIO_ON</name>
@@ -10441,8 +10539,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -10458,8 +10556,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -10475,8 +10573,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -10492,8 +10590,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 </resource>
@@ -10506,7 +10604,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4101</folder_id>
+<folder_id>CUSTOM_PIXELMAP_FOLDER</folder_id>
 <resource>
 <name>Add New Pixelmap</name>
 <pathinfo>
@@ -10527,7 +10625,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4099</folder_id>
+<folder_id>STRING_GROUP</folder_id>
 <resource>
 <name>Add New String</name>
 <pathinfo>
@@ -10581,7 +10679,7 @@
 <reverse_order>FALSE</reverse_order>
 <allocate_canvas>TRUE</allocate_canvas>
 <enabled>FALSE</enabled>
-<rotation_angle>0</rotation_angle>
+<rotation_angle>None</rotation_angle>
 <default_map_format>FALSE</default_map_format>
 <theme_info>
 <num_themes>1</num_themes>
@@ -10602,7 +10700,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>THEME_HEADER</folder_id>
 </resource>
 <resource>
 <type>GROUP</type>
@@ -10613,7 +10711,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>COLOR_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>Defaults</name>
@@ -10623,7 +10721,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>DEFAULT_COLOR_FOLDER</folder_id>
 <resource>
 <type>COLOR</type>
 <name>CANVAS</name>
@@ -10953,7 +11051,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4097</folder_id>
+<folder_id>CUSTOM_COLOR_FOLDER</folder_id>
 <resource>
 <name>Add New Color</name>
 <pathinfo>
@@ -10974,7 +11072,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4097</folder_id>
+<folder_id>FONT_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>Defaults</name>
@@ -10984,7 +11082,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4098</folder_id>
+<folder_id>DEFAULT_FONT_FOLDER</folder_id>
 <resource>
 <type>FONT</type>
 <name>SYSTEM</name>
@@ -11000,6 +11098,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -11156,6 +11255,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -11312,6 +11412,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -11468,6 +11569,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -11619,7 +11721,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4099</folder_id>
+<folder_id>CUSTOM_FONT_FOLDER</folder_id>
 <resource>
 <name>Add New Font</name>
 <pathinfo>
@@ -11640,7 +11742,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4098</folder_id>
+<folder_id>PIXELMAP_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>System</name>
@@ -11650,7 +11752,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4100</folder_id>
+<folder_id>DEFAULT_PIXELMAP_FOLDER</folder_id>
 <resource>
 <type>PIXELMAP</type>
 <name>RADIO_ON</name>
@@ -11664,8 +11766,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -11681,8 +11783,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -11698,8 +11800,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -11715,8 +11817,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 </resource>
@@ -11729,7 +11831,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4101</folder_id>
+<folder_id>CUSTOM_PIXELMAP_FOLDER</folder_id>
 <resource>
 <name>Add New Pixelmap</name>
 <pathinfo>
@@ -11750,7 +11852,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4099</folder_id>
+<folder_id>STRING_GROUP</folder_id>
 <resource>
 <name>Add New String</name>
 <pathinfo>
@@ -11804,7 +11906,7 @@
 <reverse_order>FALSE</reverse_order>
 <allocate_canvas>TRUE</allocate_canvas>
 <enabled>FALSE</enabled>
-<rotation_angle>0</rotation_angle>
+<rotation_angle>None</rotation_angle>
 <default_map_format>FALSE</default_map_format>
 <theme_info>
 <num_themes>1</num_themes>
@@ -11825,7 +11927,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>THEME_HEADER</folder_id>
 </resource>
 <resource>
 <type>GROUP</type>
@@ -11836,7 +11938,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>COLOR_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>Defaults</name>
@@ -11846,7 +11948,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4096</folder_id>
+<folder_id>DEFAULT_COLOR_FOLDER</folder_id>
 <resource>
 <type>COLOR</type>
 <name>CANVAS</name>
@@ -12176,7 +12278,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4097</folder_id>
+<folder_id>CUSTOM_COLOR_FOLDER</folder_id>
 <resource>
 <name>Add New Color</name>
 <pathinfo>
@@ -12197,7 +12299,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4097</folder_id>
+<folder_id>FONT_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>Defaults</name>
@@ -12207,7 +12309,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4098</folder_id>
+<folder_id>DEFAULT_FONT_FOLDER</folder_id>
 <resource>
 <type>FONT</type>
 <name>SYSTEM</name>
@@ -12223,6 +12325,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -12379,6 +12482,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -12535,6 +12639,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -12691,6 +12796,7 @@
 <font_include_st_glyphs>FALSE</font_include_st_glyphs>
 <font_support_extended_unicode>FALSE</font_support_extended_unicode>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <font_page_data>
 <enabled>TRUE</enabled>
 <first_char>32</first_char>
@@ -12842,7 +12948,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4099</folder_id>
+<folder_id>CUSTOM_FONT_FOLDER</folder_id>
 <resource>
 <name>Add New Font</name>
 <pathinfo>
@@ -12863,7 +12969,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4098</folder_id>
+<folder_id>PIXELMAP_GROUP</folder_id>
 <resource>
 <type>FOLDER</type>
 <name>System</name>
@@ -12873,7 +12979,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4100</folder_id>
+<folder_id>DEFAULT_PIXELMAP_FOLDER</folder_id>
 <resource>
 <type>PIXELMAP</type>
 <name>RADIO_ON</name>
@@ -12887,8 +12993,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -12904,8 +13010,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -12921,8 +13027,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 <resource>
@@ -12938,8 +13044,8 @@
 <alpha>FALSE</alpha>
 <dither>FALSE</dither>
 <raw>FALSE</raw>
-<color_format>0</color_format>
 <output_file_enabled>FALSE</output_file_enabled>
+<binary_mode>FALSE</binary_mode>
 <palette_type>None</palette_type>
 </resource>
 </resource>
@@ -12952,7 +13058,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4101</folder_id>
+<folder_id>CUSTOM_PIXELMAP_FOLDER</folder_id>
 <resource>
 <name>Add New Pixelmap</name>
 <pathinfo>
@@ -12973,7 +13079,7 @@
 <is_default>FALSE</is_default>
 <enabled>TRUE</enabled>
 <compress>FALSE</compress>
-<folder_id>4099</folder_id>
+<folder_id>STRING_GROUP</folder_id>
 <resource>
 <name>Add New String</name>
 <pathinfo>
