@@ -1669,7 +1669,8 @@ set(sl_text_input_16bpp_REG_TESTS
     guix_sl_input_left_arrow
     guix_sl_input_mark_home
     guix_sl_input_style_remove
-    guix_sl_input_text_select)
+    guix_sl_input_text_select
+    guix_sl_input_input_focus_release)
 
 set(sl_text_clip_8bpp_FILE_LIST
     demo_guix_single_line_text_input_clip_8bpp.c sl_text_clip_8bpp_resources.c
