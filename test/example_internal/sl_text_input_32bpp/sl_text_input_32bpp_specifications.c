@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.2.0.1                                               */
-/*  Date (dd.mm.yyyy): 31.10.2022   Time (hh:mm): 14:11                        */
+/*  GUIX Studio Revision 6.3.0.1                                               */
+/*  Date (dd.mm.yyyy): 14.12.2023   Time (hh:mm): 11:01                        */
 /*******************************************************************************/
 
 
@@ -16,6 +16,7 @@
 #include "sl_text_input_32bpp_specifications.h"
 
 static GX_WIDGET *gx_studio_nested_widget_create(GX_BYTE *control, GX_CONST GX_STUDIO_WIDGET *definition, GX_WIDGET *parent);
+INPUT_FOCUS_RELEASE_TEST_CONTROL_BLOCK input_focus_release_test;
 WINDOW_CONTROL_BLOCK window;
 GX_DISPLAY display_1_control_block;
 GX_WINDOW_ROOT display_1_root_window;
@@ -46,6 +47,14 @@ GX_STUDIO_DISPLAY_INFO sl_text_input_32bpp_display_table[1] =
     }
 };
 
+
+UINT gx_studio_button_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent)
+{
+    UINT status;
+    GX_BUTTON *button = (GX_BUTTON *) control_block;
+    status = gx_button_create(button, info->widget_name, parent, info->style, info->widget_id, &info->size);
+    return status;
+}
 
 UINT gx_studio_checkbox_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent)
 {
@@ -170,6 +179,95 @@ UINT gx_studio_text_input_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *con
     }
     return status;
 }
+GX_WINDOW_PROPERTIES input_focus_release_test_properties =
+{
+    0                                        /* wallpaper pixelmap id          */
+};
+GX_CHAR input_focus_release_test_text_input_buffer[100];
+GX_SINGLE_LINE_TEXT_INPUT_PROPERTIES input_focus_release_test_text_input_properties =
+{
+    GX_STRING_ID_STRING_1,                   /* string id                      */
+    GX_FONT_ID_TEXT_INPUT,                   /* font id                        */
+    GX_COLOR_ID_TEXT_INPUT_TEXT,             /* normal text color              */
+    GX_COLOR_ID_SELECTED_TEXT,               /* selected text color            */
+    GX_COLOR_ID_DISABLED_TEXT,               /* disabled text color            */
+    GX_COLOR_ID_READONLY_FILL,               /* readonly fill color            */
+    GX_COLOR_ID_READONLY_TEXT,               /* readonly text color            */
+    input_focus_release_test_text_input_buffer, /* buffer                      */
+    100,                                     /* buffer size                    */
+};
+
+GX_CONST GX_STUDIO_WIDGET input_focus_release_test_text_input_define =
+{
+    "text_input",
+    GX_TYPE_SINGLE_LINE_TEXT_INPUT,          /* widget type                    */
+    GX_ID_NONE,                              /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_RECESSED|GX_STYLE_ENABLED|GX_STYLE_TEXT_LEFT,   /* style flags */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(GX_SINGLE_LINE_TEXT_INPUT),       /* control block size             */
+    GX_COLOR_ID_CANVAS,                      /* normal color id                */
+    GX_COLOR_ID_SELECTED_FILL,               /* selected color id              */
+    GX_COLOR_ID_DISABLED_FILL,               /* disabled color id              */
+    gx_studio_text_input_create,             /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {239, 200, 402, 263},                    /* widget size                    */
+    GX_NULL,                                 /* no next widget                 */
+    GX_NULL,                                 /* no child widgets               */ 
+    offsetof(INPUT_FOCUS_RELEASE_TEST_CONTROL_BLOCK, input_focus_release_test_text_input), /* control block */
+    (void *) &input_focus_release_test_text_input_properties /* extended properties */
+};
+
+GX_CONST GX_STUDIO_WIDGET input_focus_release_test_button_define =
+{
+    "button",
+    GX_TYPE_BUTTON,                          /* widget type                    */
+    GX_ID_NONE,                              /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_RAISED|GX_STYLE_ENABLED,   /* style flags                  */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(GX_BUTTON),                       /* control block size             */
+    GX_COLOR_ID_BTN_LOWER,                   /* normal color id                */
+    GX_COLOR_ID_BTN_UPPER,                   /* selected color id              */
+    GX_COLOR_ID_DISABLED_FILL,               /* disabled color id              */
+    gx_studio_button_create,                 /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {184, 158, 475, 300},                    /* widget size                    */
+    GX_NULL,                                 /* no next widget                 */
+    &input_focus_release_test_text_input_define, /* child widget definition    */
+    offsetof(INPUT_FOCUS_RELEASE_TEST_CONTROL_BLOCK, input_focus_release_test_button), /* control block */
+    (void *) GX_NULL                         /* no extended properties         */
+};
+
+GX_CONST GX_STUDIO_WIDGET input_focus_release_test_define =
+{
+    "input_focus_release_test",
+    GX_TYPE_WINDOW,                          /* widget type                    */
+    GX_ID_NONE,                              /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_THIN|GX_STYLE_ENABLED,   /* style flags                    */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(INPUT_FOCUS_RELEASE_TEST_CONTROL_BLOCK), /* control block size      */
+    GX_COLOR_ID_WINDOW_FILL,                 /* normal color id                */
+    GX_COLOR_ID_WINDOW_FILL,                 /* selected color id              */
+    GX_COLOR_ID_DISABLED_FILL,               /* disabled color id              */
+    gx_studio_window_create,                 /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {0, 0, 639, 479},                        /* widget size                    */
+    GX_NULL,                                 /* next widget                    */
+    &input_focus_release_test_button_define, /* child widget                   */
+    0,                                       /* control block                  */
+    (void *) &input_focus_release_test_properties /* extended properties       */
+};
 GX_WINDOW_PROPERTIES window_properties =
 {
     0                                        /* wallpaper pixelmap id          */
@@ -1151,6 +1249,7 @@ GX_CONST GX_STUDIO_WIDGET window_define =
 };
 GX_CONST GX_STUDIO_WIDGET_ENTRY sl_text_input_32bpp_widget_table[] =
 {
+    { &input_focus_release_test_define, (GX_WIDGET *) &input_focus_release_test },
     { &window_define, (GX_WIDGET *) &window },
     {GX_NULL, GX_NULL}
 };
