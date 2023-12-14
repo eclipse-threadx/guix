@@ -8,7 +8,7 @@
 
 TEST_PARAM test_parameter = {
     "guix_all_widgets_widget_focus", /* Test name */
-    56, 196, 573, 395  /* Define the coordinates of the capture area.
+    0, 0, 640, 480  /* Define the coordinates of the capture area.
                          In this test, we only need to capture the line
                          drawing area.  */
 };
@@ -99,6 +99,17 @@ GX_MULTI_LINE_TEXT_INPUT  *ml_input;
         gx_validation_set_frame_comment(test_comment);
         gx_validation_screen_refresh();
     }
+
+    ToggleScreen((GX_WINDOW *)&focus_test_screen, (GX_WINDOW *)&text_screen);
+    gx_system_focus_claim((GX_WIDGET *)&focus_test_screen.focus_test_screen_prompt_1);
+    gx_validation_set_frame_id(frame_id++);
+    gx_validation_set_frame_comment("Claim focus on prompt 1");
+    gx_validation_screen_refresh();
+
+    _gx_system_focus_claim((GX_WIDGET *)&focus_test_screen.focus_test_screen_prompt_2);
+    gx_validation_set_frame_id(frame_id++);
+    gx_validation_set_frame_comment("Claim focus on prompt 2");
+    gx_validation_screen_refresh();
 
     /* Signal the end of the test case.  Verify the output. */
     gx_validation_end();
