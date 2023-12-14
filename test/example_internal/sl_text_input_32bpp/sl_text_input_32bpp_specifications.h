@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.3.0.1                                               */
-/*  Date (dd.mm.yyyy): 14.12.2023   Time (hh:mm): 11:01                        */
+/*  GUIX Studio Revision 6.2.0.1                                               */
+/*  Date (dd.mm.yyyy): 31.10.2022   Time (hh:mm): 14:11                        */
 /*******************************************************************************/
 
 
@@ -138,13 +138,6 @@ typedef struct
 
 /* Declare top-level control blocks                                            */
 
-typedef struct INPUT_FOCUS_RELEASE_TEST_CONTROL_BLOCK_STRUCT
-{
-    GX_WINDOW_MEMBERS_DECLARE
-    GX_BUTTON input_focus_release_test_button;
-    GX_SINGLE_LINE_TEXT_INPUT input_focus_release_test_text_input;
-} INPUT_FOCUS_RELEASE_TEST_CONTROL_BLOCK;
-
 typedef struct WINDOW_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
@@ -182,7 +175,6 @@ typedef struct WINDOW_CONTROL_BLOCK_STRUCT
 /* extern statically defined control blocks                                    */
 
 #ifndef GUIX_STUDIO_GENERATED_FILE
-extern INPUT_FOCUS_RELEASE_TEST_CONTROL_BLOCK input_focus_release_test;
 extern WINDOW_CONTROL_BLOCK window;
 #endif
 
@@ -215,7 +207,6 @@ typedef struct GX_STUDIO_DISPLAY_INFO_STRUCT
 
 /* Declare Studio-generated functions for creating top-level widgets           */
 
-UINT gx_studio_button_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_checkbox_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_radio_button_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_prompt_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);

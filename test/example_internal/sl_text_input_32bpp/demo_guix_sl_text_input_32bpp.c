@@ -51,8 +51,8 @@ VOID  demo_thread_entry(ULONG thread_input)
                                 LANGUAGE_ENGLISH, DISPLAY_1_THEME_1, &root);
 
     /* create the button screen */
-    gx_studio_named_widget_create("window", (GX_WIDGET*)root, (GX_WIDGET **) &pMainScreen);
-    gx_studio_named_widget_create("input_focus_release_test", GX_NULL, GX_NULL);
+    gx_studio_named_widget_create("window", (GX_WIDGET *) root, (GX_WIDGET **) &pMainScreen);
+
 
     /* Show the root window to make it and patients screen visible.  */
     gx_widget_show(root);
