@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.2.0.1                                               */
-/*  Date (dd.mm.yyyy): 31.10.2022   Time (hh:mm): 14:07                        */
+/*  GUIX Studio Revision 6.3.0.1                                               */
+/*  Date (dd.mm.yyyy): 14.12.2023   Time (hh:mm): 14:07                        */
 /*******************************************************************************/
 
 
@@ -436,6 +436,14 @@ typedef struct
 
 /* Declare top-level control blocks                                            */
 
+typedef struct FOCUS_TEST_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_WINDOW focus_test_screen_window_1;
+    GX_PROMPT focus_test_screen_prompt_1;
+    GX_PROMPT focus_test_screen_prompt_2;
+} FOCUS_TEST_SCREEN_CONTROL_BLOCK;
+
 typedef struct SPRITE_SCREEN_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
@@ -734,6 +742,7 @@ typedef struct BUTTON_SCREEN_CONTROL_BLOCK_STRUCT
 /* extern statically defined control blocks                                    */
 
 #ifndef GUIX_STUDIO_GENERATED_FILE
+extern FOCUS_TEST_SCREEN_CONTROL_BLOCK focus_test_screen;
 extern SPRITE_SCREEN_CONTROL_BLOCK sprite_screen;
 extern GAUGE_SCREEN_CONTROL_BLOCK gauge_screen;
 extern WIDGET_COLOR_TEST_SCREEN_CONTROL_BLOCK widget_color_test_screen;
