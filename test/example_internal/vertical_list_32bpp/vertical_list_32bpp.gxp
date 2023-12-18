@@ -1388,7 +1388,7 @@
 <visible_at_startup>FALSE</visible_at_startup>
 <widget>
 <type>vertical_list</type>
-<app_name>vertical_list_2</app_name>
+<app_name>vertical_list</app_name>
 <size>
 <left>10</left>
 <top>58</top>

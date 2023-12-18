@@ -6,7 +6,7 @@
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
 /*  GUIX Studio Revision 6.3.0.1                                               */
-/*  Date (dd.mm.yyyy): 18.12.2023   Time (hh:mm): 15:06                        */
+/*  Date (dd.mm.yyyy): 18.12.2023   Time (hh:mm): 16:25                        */
 /*******************************************************************************/
 
 
@@ -169,7 +169,7 @@ typedef struct
 typedef struct LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
-    GX_VERTICAL_LIST list_child_height_test_screen_vertical_list_2;
+    GX_VERTICAL_LIST list_child_height_test_screen_vertical_list;
     GX_TEXT_BUTTON list_child_height_test_screen_vchild_0;
     GX_TEXT_BUTTON list_child_height_test_screen_vchild_1;
     GX_TEXT_BUTTON list_child_height_test_screen_vchild_2;

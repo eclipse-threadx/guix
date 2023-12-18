@@ -6,7 +6,7 @@
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
 /*  GUIX Studio Revision 6.3.0.1                                               */
-/*  Date (dd.mm.yyyy): 18.12.2023   Time (hh:mm): 15:06                        */
+/*  Date (dd.mm.yyyy): 18.12.2023   Time (hh:mm): 16:25                        */
 /*******************************************************************************/
 
 
@@ -271,7 +271,7 @@ GX_WINDOW_PROPERTIES list_child_height_test_screen_properties =
 {
     0                                        /* wallpaper pixelmap id          */
 };
-GX_VERTICAL_LIST_PROPERTIES list_child_height_test_screen_vertical_list_2_properties =
+GX_VERTICAL_LIST_PROPERTIES list_child_height_test_screen_vertical_list_properties =
 {
     0,                                       /* wallpaper id                   */
     GX_NULL,                                 /* callback function              */
@@ -650,9 +650,9 @@ GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_horizontal_list_define =
     (void *) &list_child_height_test_screen_horizontal_list_properties /* extended properties */
 };
 
-GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_vertical_list_2_define =
+GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_vertical_list_define =
 {
-    "vertical_list_2",
+    "vertical_list",
     GX_TYPE_VERTICAL_LIST,                   /* widget type                    */
     GX_ID_NONE,                              /* widget id                      */
     #if defined(GX_WIDGET_USER_DATA)
@@ -670,8 +670,8 @@ GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_vertical_list_2_define =
     {10, 58, 220, 404},                      /* widget size                    */
     &list_child_height_test_screen_horizontal_list_define, /* next widget definition */
     &list_child_height_test_screen_vchild_0_define, /* child widget definition */
-    offsetof(LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK, list_child_height_test_screen_vertical_list_2), /* control block */
-    (void *) &list_child_height_test_screen_vertical_list_2_properties /* extended properties */
+    offsetof(LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK, list_child_height_test_screen_vertical_list), /* control block */
+    (void *) &list_child_height_test_screen_vertical_list_properties /* extended properties */
 };
 
 GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_define =
@@ -693,7 +693,7 @@ GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_define =
     GX_NULL,                                 /* event function override        */
     {0, 0, 639, 479},                        /* widget size                    */
     GX_NULL,                                 /* next widget                    */
-    &list_child_height_test_screen_vertical_list_2_define, /* child widget     */
+    &list_child_height_test_screen_vertical_list_define, /* child widget       */
     0,                                       /* control block                  */
     (void *) &list_child_height_test_screen_properties /* extended properties  */
 };
