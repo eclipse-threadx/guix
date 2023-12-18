@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.2.0.1                                               */
-/*  Date (dd.mm.yyyy): 31.10.2022   Time (hh:mm): 14:12                        */
+/*  GUIX Studio Revision 6.3.0.1                                               */
+/*  Date (dd.mm.yyyy): 18.12.2023   Time (hh:mm): 14:10                        */
 /*******************************************************************************/
 
 
@@ -16,6 +16,7 @@
 #include "vertical_list_32bpp_specifications.h"
 
 static GX_WIDGET *gx_studio_nested_widget_create(GX_BYTE *control, GX_CONST GX_STUDIO_WIDGET *definition, GX_WIDGET *parent);
+LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK list_child_height_test_screen;
 WINDOW_CONTROL_BLOCK window;
 GX_DISPLAY display_1_control_block;
 GX_WINDOW_ROOT display_1_root_window;
@@ -240,6 +241,231 @@ UINT gx_studio_vertical_scrollbar_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WID
     status = gx_vertical_scrollbar_create(scroll, info->widget_name, parent, appearance, info->style);
     return status;
 }
+GX_WINDOW_PROPERTIES list_child_height_test_screen_properties =
+{
+    0                                        /* wallpaper pixelmap id          */
+};
+GX_VERTICAL_LIST_PROPERTIES list_child_height_test_screen_vertical_list_2_properties =
+{
+    0,                                       /* wallpaper id                   */
+    GX_NULL,                                 /* callback function              */
+    4                                        /* total rows                     */
+};
+GX_TEXT_BUTTON_PROPERTIES list_child_height_test_screen_button_5_properties =
+{
+    GX_STRING_ID_STRING_8,                   /* string id                      */
+    GX_FONT_ID_BUTTON,                       /* font id                        */
+    GX_COLOR_ID_BTN_TEXT,                    /* normal text color              */
+    GX_COLOR_ID_BTN_TEXT,                    /* selected text color            */
+    GX_COLOR_ID_BTN_TEXT                     /* disabled text color            */
+};
+GX_TEXT_BUTTON_PROPERTIES list_child_height_test_screen_button_6_properties =
+{
+    GX_STRING_ID_STRING_9,                   /* string id                      */
+    GX_FONT_ID_BUTTON,                       /* font id                        */
+    GX_COLOR_ID_BTN_TEXT,                    /* normal text color              */
+    GX_COLOR_ID_BTN_TEXT,                    /* selected text color            */
+    GX_COLOR_ID_BTN_TEXT                     /* disabled text color            */
+};
+GX_TEXT_BUTTON_PROPERTIES list_child_height_test_screen_button_7_properties =
+{
+    GX_STRING_ID_STRING_10,                  /* string id                      */
+    GX_FONT_ID_BUTTON,                       /* font id                        */
+    GX_COLOR_ID_BTN_TEXT,                    /* normal text color              */
+    GX_COLOR_ID_BTN_TEXT,                    /* selected text color            */
+    GX_COLOR_ID_BTN_TEXT                     /* disabled text color            */
+};
+GX_TEXT_BUTTON_PROPERTIES list_child_height_test_screen_button_8_properties =
+{
+    GX_STRING_ID_STRING_11,                  /* string id                      */
+    GX_FONT_ID_BUTTON,                       /* font id                        */
+    GX_COLOR_ID_BTN_TEXT,                    /* normal text color              */
+    GX_COLOR_ID_BTN_TEXT,                    /* selected text color            */
+    GX_COLOR_ID_BTN_TEXT                     /* disabled text color            */
+};
+GX_SCROLLBAR_APPEARANCE  list_child_height_test_screen_vertical_scroll_1_properties =
+{
+    20,                                      /* scroll width                   */
+    18,                                      /* thumb width                    */
+    20,                                      /* thumb travel min               */
+    20,                                      /* thumb travel max               */
+    4,                                       /* thumb border style             */
+    0,                                       /* scroll fill pixelmap           */
+    0,                                       /* scroll thumb pixelmap          */
+    0,                                       /* scroll up pixelmap             */
+    0,                                       /* scroll down pixelmap           */
+    GX_COLOR_ID_SCROLL_BUTTON,               /* scroll thumb color             */
+    GX_COLOR_ID_SCROLL_BUTTON,               /* scroll thumb border color      */
+    GX_COLOR_ID_SCROLL_BUTTON,               /* scroll button color            */
+};
+
+GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_vertical_scroll_1_define =
+{
+    "vertical_scroll_1",
+    GX_TYPE_VERTICAL_SCROLL,                 /* widget type                    */
+    GX_ID_NONE,                              /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_NONE|GX_STYLE_ENABLED|GX_SCROLLBAR_RELATIVE_THUMB|GX_SCROLLBAR_END_BUTTONS|GX_SCROLLBAR_VERTICAL,   /* style flags */
+    0,                                       /* status flags                   */
+    sizeof(GX_SCROLLBAR),                    /* control block size             */
+    GX_COLOR_ID_SCROLL_FILL,                 /* normal color id                */
+    GX_COLOR_ID_SCROLL_FILL,                 /* selected color id              */
+    GX_COLOR_ID_DISABLED_FILL,               /* disabled color id              */
+    gx_studio_vertical_scrollbar_create,     /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {381, 178, 400, 522},                    /* widget size                    */
+    GX_NULL,                                 /* no next widget                 */
+    GX_NULL,                                 /* no child widgets               */ 
+    offsetof(LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK, list_child_height_test_screen_vertical_scroll_1), /* control block */
+    (void *) &list_child_height_test_screen_vertical_scroll_1_properties /* extended properties */
+};
+
+GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_button_8_define =
+{
+    "button_8",
+    GX_TYPE_TEXT_BUTTON,                     /* widget type                    */
+    GX_ID_NONE,                              /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_RAISED|GX_STYLE_ENABLED|GX_STYLE_TEXT_CENTER,   /* style flags */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(GX_TEXT_BUTTON),                  /* control block size             */
+    GX_COLOR_ID_BTN_LOWER,                   /* normal color id                */
+    GX_COLOR_ID_BTN_UPPER,                   /* selected color id              */
+    GX_COLOR_ID_BTN_LOWER,                   /* disabled color id              */
+    gx_studio_text_button_create,            /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {192, 355, 380, 482},                    /* widget size                    */
+    &list_child_height_test_screen_vertical_scroll_1_define, /* next widget definition */
+    GX_NULL,                                 /* no child widgets               */ 
+    offsetof(LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK, list_child_height_test_screen_button_8), /* control block */
+    (void *) &list_child_height_test_screen_button_8_properties /* extended properties */
+};
+
+GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_button_7_define =
+{
+    "button_7",
+    GX_TYPE_TEXT_BUTTON,                     /* widget type                    */
+    GX_ID_NONE,                              /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_RAISED|GX_STYLE_ENABLED|GX_STYLE_TEXT_CENTER,   /* style flags */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(GX_TEXT_BUTTON),                  /* control block size             */
+    GX_COLOR_ID_BTN_LOWER,                   /* normal color id                */
+    GX_COLOR_ID_BTN_UPPER,                   /* selected color id              */
+    GX_COLOR_ID_BTN_LOWER,                   /* disabled color id              */
+    gx_studio_text_button_create,            /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {192, 215, 380, 355},                    /* widget size                    */
+    &list_child_height_test_screen_button_8_define, /* next widget definition  */
+    GX_NULL,                                 /* no child widgets               */ 
+    offsetof(LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK, list_child_height_test_screen_button_7), /* control block */
+    (void *) &list_child_height_test_screen_button_7_properties /* extended properties */
+};
+
+GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_button_6_define =
+{
+    "button_6",
+    GX_TYPE_TEXT_BUTTON,                     /* widget type                    */
+    GX_ID_NONE,                              /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_RAISED|GX_STYLE_ENABLED|GX_STYLE_TEXT_CENTER,   /* style flags */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(GX_TEXT_BUTTON),                  /* control block size             */
+    GX_COLOR_ID_BTN_LOWER,                   /* normal color id                */
+    GX_COLOR_ID_BTN_UPPER,                   /* selected color id              */
+    GX_COLOR_ID_BTN_LOWER,                   /* disabled color id              */
+    gx_studio_text_button_create,            /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {192, 118, 380, 215},                    /* widget size                    */
+    &list_child_height_test_screen_button_7_define, /* next widget definition  */
+    GX_NULL,                                 /* no child widgets               */ 
+    offsetof(LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK, list_child_height_test_screen_button_6), /* control block */
+    (void *) &list_child_height_test_screen_button_6_properties /* extended properties */
+};
+
+GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_button_5_define =
+{
+    "button_5",
+    GX_TYPE_TEXT_BUTTON,                     /* widget type                    */
+    GX_ID_NONE,                              /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_RAISED|GX_STYLE_DRAW_SELECTED|GX_STYLE_ENABLED|GX_STYLE_TEXT_CENTER,   /* style flags */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(GX_TEXT_BUTTON),                  /* control block size             */
+    GX_COLOR_ID_BTN_LOWER,                   /* normal color id                */
+    GX_COLOR_ID_BTN_UPPER,                   /* selected color id              */
+    GX_COLOR_ID_BTN_LOWER,                   /* disabled color id              */
+    gx_studio_text_button_create,            /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {192, 59, 380, 117},                     /* widget size                    */
+    &list_child_height_test_screen_button_6_define, /* next widget definition  */
+    GX_NULL,                                 /* no child widgets               */ 
+    offsetof(LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK, list_child_height_test_screen_button_5), /* control block */
+    (void *) &list_child_height_test_screen_button_5_properties /* extended properties */
+};
+
+GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_vertical_list_2_define =
+{
+    "vertical_list_2",
+    GX_TYPE_VERTICAL_LIST,                   /* widget type                    */
+    GX_ID_NONE,                              /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_THIN,                    /* style flags                    */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(GX_VERTICAL_LIST),                /* control block size             */
+    GX_COLOR_ID_WINDOW_FILL,                 /* normal color id                */
+    GX_COLOR_ID_WINDOW_FILL,                 /* selected color id              */
+    GX_COLOR_ID_WINDOW_FILL,                 /* disabled color id              */
+    gx_studio_vertical_list_create,          /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {191, 58, 401, 404},                     /* widget size                    */
+    GX_NULL,                                 /* no next widget                 */
+    &list_child_height_test_screen_button_5_define, /* child widget definition */
+    offsetof(LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK, list_child_height_test_screen_vertical_list_2), /* control block */
+    (void *) &list_child_height_test_screen_vertical_list_2_properties /* extended properties */
+};
+
+GX_CONST GX_STUDIO_WIDGET list_child_height_test_screen_define =
+{
+    "list_child_height_test_screen",
+    GX_TYPE_WINDOW,                          /* widget type                    */
+    GX_ID_NONE,                              /* widget id                      */
+    #if defined(GX_WIDGET_USER_DATA)
+    0,                                       /* user data                      */
+    #endif
+    GX_STYLE_BORDER_THIN|GX_STYLE_ENABLED,   /* style flags                    */
+    GX_STATUS_ACCEPTS_FOCUS,                 /* status flags                   */
+    sizeof(LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK), /* control block size */
+    GX_COLOR_ID_WINDOW_FILL,                 /* normal color id                */
+    GX_COLOR_ID_WINDOW_FILL,                 /* selected color id              */
+    GX_COLOR_ID_DISABLED_FILL,               /* disabled color id              */
+    gx_studio_window_create,                 /* create function                */
+    GX_NULL,                                 /* drawing function override      */
+    GX_NULL,                                 /* event function override        */
+    {0, 0, 639, 479},                        /* widget size                    */
+    GX_NULL,                                 /* next widget                    */
+    &list_child_height_test_screen_vertical_list_2_define, /* child widget     */
+    0,                                       /* control block                  */
+    (void *) &list_child_height_test_screen_properties /* extended properties  */
+};
 GX_WINDOW_PROPERTIES window_properties =
 {
     0                                        /* wallpaper pixelmap id          */
@@ -1062,6 +1288,7 @@ GX_CONST GX_STUDIO_WIDGET window_define =
 };
 GX_CONST GX_STUDIO_WIDGET_ENTRY vertical_list_32bpp_widget_table[] =
 {
+    { &list_child_height_test_screen_define, (GX_WIDGET *) &list_child_height_test_screen },
     { &window_define, (GX_WIDGET *) &window },
     {GX_NULL, GX_NULL}
 };

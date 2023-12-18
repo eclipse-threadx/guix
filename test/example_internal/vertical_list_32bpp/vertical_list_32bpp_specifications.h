@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.2.0.1                                               */
-/*  Date (dd.mm.yyyy): 31.10.2022   Time (hh:mm): 14:12                        */
+/*  GUIX Studio Revision 6.3.0.1                                               */
+/*  Date (dd.mm.yyyy): 18.12.2023   Time (hh:mm): 14:10                        */
 /*******************************************************************************/
 
 
@@ -159,6 +159,17 @@ typedef struct
 
 /* Declare top-level control blocks                                            */
 
+typedef struct LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK_STRUCT
+{
+    GX_WINDOW_MEMBERS_DECLARE
+    GX_VERTICAL_LIST list_child_height_test_screen_vertical_list_2;
+    GX_TEXT_BUTTON list_child_height_test_screen_button_5;
+    GX_TEXT_BUTTON list_child_height_test_screen_button_6;
+    GX_TEXT_BUTTON list_child_height_test_screen_button_7;
+    GX_TEXT_BUTTON list_child_height_test_screen_button_8;
+    GX_SCROLLBAR list_child_height_test_screen_vertical_scroll_1;
+} LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK;
+
 typedef struct WINDOW_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
@@ -192,6 +203,7 @@ typedef struct WINDOW_CONTROL_BLOCK_STRUCT
 /* extern statically defined control blocks                                    */
 
 #ifndef GUIX_STUDIO_GENERATED_FILE
+extern LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK list_child_height_test_screen;
 extern WINDOW_CONTROL_BLOCK window;
 #endif
 
