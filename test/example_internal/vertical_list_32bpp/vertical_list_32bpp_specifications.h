@@ -6,7 +6,7 @@
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
 /*  GUIX Studio Revision 6.3.0.1                                               */
-/*  Date (dd.mm.yyyy): 18.12.2023   Time (hh:mm): 14:10                        */
+/*  Date (dd.mm.yyyy): 18.12.2023   Time (hh:mm): 15:06                        */
 /*******************************************************************************/
 
 
@@ -145,6 +145,13 @@ typedef struct
 
 typedef struct
 {
+    GX_RESOURCE_ID wallpaper_id;
+    VOID (*callback)(GX_HORIZONTAL_LIST *, GX_WIDGET *, INT);
+    int total_rows;
+} GX_HORIZONTAL_LIST_PROPERTIES;
+
+typedef struct
+{
     GX_RESOURCE_ID string_id;
     GX_RESOURCE_ID font_id;
     GX_RESOURCE_ID normal_text_color_id;
@@ -163,11 +170,17 @@ typedef struct LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK_STRUCT
 {
     GX_WINDOW_MEMBERS_DECLARE
     GX_VERTICAL_LIST list_child_height_test_screen_vertical_list_2;
-    GX_TEXT_BUTTON list_child_height_test_screen_button_5;
-    GX_TEXT_BUTTON list_child_height_test_screen_button_6;
-    GX_TEXT_BUTTON list_child_height_test_screen_button_7;
-    GX_TEXT_BUTTON list_child_height_test_screen_button_8;
+    GX_TEXT_BUTTON list_child_height_test_screen_vchild_0;
+    GX_TEXT_BUTTON list_child_height_test_screen_vchild_1;
+    GX_TEXT_BUTTON list_child_height_test_screen_vchild_2;
+    GX_TEXT_BUTTON list_child_height_test_screen_vchild_3;
     GX_SCROLLBAR list_child_height_test_screen_vertical_scroll_1;
+    GX_HORIZONTAL_LIST list_child_height_test_screen_horizontal_list;
+    GX_NUMERIC_PROMPT list_child_height_test_screen_hchild_0;
+    GX_NUMERIC_PROMPT list_child_height_test_screen_hchild_1;
+    GX_NUMERIC_PROMPT list_child_height_test_screen_hchild_2;
+    GX_NUMERIC_PROMPT list_child_height_test_screen_hchild_3;
+    GX_SCROLLBAR list_child_height_test_screen_hscroll;
 } LIST_CHILD_HEIGHT_TEST_SCREEN_CONTROL_BLOCK;
 
 typedef struct WINDOW_CONTROL_BLOCK_STRUCT
@@ -244,7 +257,9 @@ UINT gx_studio_prompt_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control
 UINT gx_studio_numeric_prompt_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_window_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_vertical_list_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
+UINT gx_studio_horizontal_list_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_text_input_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
+UINT gx_studio_horizontal_scrollbar_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 UINT gx_studio_vertical_scrollbar_create(GX_CONST GX_STUDIO_WIDGET *info, GX_WIDGET *control_block, GX_WIDGET *parent);
 GX_WIDGET *gx_studio_widget_create(GX_BYTE *storage, GX_CONST GX_STUDIO_WIDGET *definition, GX_WIDGET *parent);
 UINT gx_studio_named_widget_create(char *name, GX_WIDGET *parent, GX_WIDGET **new_widget);
