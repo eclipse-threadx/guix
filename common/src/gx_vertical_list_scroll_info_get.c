@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_vertical_list_scroll_info_get                   PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,18 +69,40 @@
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
 /*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  xx-xx-xxxx     Ting Zhu                 Modified comments(s),         */
+/*                                            improved the calculation of */
+/*                                            the maximum scrolling value.*/
+/*                                            resulting in version 6.x    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_vertical_list_scroll_info_get(GX_VERTICAL_LIST *list, ULONG style, GX_SCROLL_INFO *info)
 {
 INT        value;
-GX_WIDGET *topchild;
-
-GX_WINDOW *win = (GX_WINDOW *)list;
+GX_VALUE   height;
+GX_WIDGET *child;
 
     GX_PARAMETER_NOT_USED(style);
 
-    info -> gx_scroll_maximum = (list -> gx_vertical_list_total_rows * list -> gx_vertical_list_child_height - 1);
+    if (list -> gx_vertical_list_callback)
+    {
+        /* If list callback is set, children winthin the list should share the same height. */
+        info -> gx_scroll_maximum = (list->gx_vertical_list_total_rows * list -> gx_vertical_list_child_height - 1);
+    }
+    else
+    {
+        info -> gx_scroll_maximum = 0;
+
+        child = _gx_widget_first_client_child_get((GX_WIDGET *)list);
+
+        while (child)
+        {
+            _gx_widget_height_get(child, &height);
+
+            info -> gx_scroll_maximum += height;
+
+            child = _gx_widget_next_client_child_get(child);
+        }
+    }
     info -> gx_scroll_minimum = 0;
     info -> gx_scroll_visible = (GX_VALUE)(list -> gx_window_client.gx_rectangle_bottom - list -> gx_window_client.gx_rectangle_top + 1);
 
@@ -96,11 +118,11 @@ GX_WINDOW *win = (GX_WINDOW *)list;
 
     if (list -> gx_vertical_list_top_index >= 0)
     {
-        topchild = _gx_widget_first_client_child_get((GX_WIDGET *)win);
+        child = _gx_widget_first_client_child_get((GX_WIDGET *)list);
 
-        if (topchild)
+        if (child)
         {
-            value += win -> gx_window_client.gx_rectangle_top - topchild -> gx_widget_size.gx_rectangle_top;
+            value += list -> gx_window_client.gx_rectangle_top - child -> gx_widget_size.gx_rectangle_top;
         }
     }
 

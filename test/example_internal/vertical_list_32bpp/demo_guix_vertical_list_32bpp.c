@@ -61,7 +61,8 @@ VOID  demo_thread_entry(ULONG thread_input)
                                 LANGUAGE_ENGLISH, DISPLAY_1_THEME_1, &root);
 
     /* create the button screen */
-    gx_studio_named_widget_create("window", (GX_WIDGET *) root, (GX_WIDGET **) &pMainScreen);
+    gx_studio_named_widget_create("window", (GX_WIDGET*)root, (GX_WIDGET **) &pMainScreen);
+    gx_studio_named_widget_create("list_child_height_test_screen", GX_NULL, GX_NULL);
 
     /* Create list children. */
     vertical_list_children_create(pMainScreen);
