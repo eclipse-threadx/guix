@@ -1,7 +1,7 @@
 
 # GUIX and GUIX Studio Regression Test Guide
 ## Introduction
-This guide provides instructions on how to add GUIX and GUIX Studio regression tests and how to effectively debug failed test cases. Regression testing is essential for ensuring that new code changes do not introduce new bugs or regressions. By following the steps outlined in this guide, you can contribute to maintaining a stable and reliable codebase.
+This guide provides instructions on how to run and add GUIX and GUIX Studio regression tests, along with effective debugging techniques for failed test cases. Regression testing is essential for ensuring that new code changes do not introduce new bugs or regressions. By following the steps outlined in this guide, you can contribute to maintaining a stable and reliable codebase.
 
 ## Table of Contents
 1. [GUIX Regression Test](#guix-regression-test)
@@ -11,9 +11,7 @@ This guide provides instructions on how to add GUIX and GUIX Studio regression t
 
 ### Directory Structure
 
-The GUIX regression test is built on top of the CMake build system. The test suite is defined in the `cmake\CMakeLists.txt` file. The test cases for each test suite are defined in the `cmake\regression\CMakeLists.txt` file in the corresponding subdirectory. The test cases are implemented in the `regression_test\tests` directory.
-
-Detailed directory structure is as follows:
+The GUIX regression test is built on top of the CMake build system and organize its code in `test\guix_test `folder. The foundational elements are structured as follows:
 - **cmake\CMakeLists.txt:** The CMake file that defines the build configurations and the test suites.
 - **cmake\regression\CMakeLists.txt:** The CMake file that defines the test cases for each test suite.
 - **coverage.sh:** The script that generates the coverage report.
@@ -27,13 +25,13 @@ Detailed directory structure is as follows:
 ### Types of Test Cases
 
 1. **Test case with output:**
-- In the test code, after each test point, a pecified area of the GUIX canvas is saved to a binary file named `<test_name>.bin`.
+- In the test code, after each test point, a specified area of the GUIX canvas is saved to a binary file named `<test_name>.bin`.
 - A checksum value, calculated based on the cavans data, is saved to a file named `<test_name>.checksum`.
 - The binary file is mainly used for checking the correctness of the test case visually.
 - The checksum file enables faster verification during tests by comparing expected and actual checksum values. 
 
 2. **Test case without output:**
-- I this type of test code, the test code typically checks the API return status or the values of a variable to verify the correctness of the test case.
+- In this type of test code, the test code typically checks the API return status or the values of a variable to verify the correctness of the test case.
 
 ### Prerequisites
 1. Linux environment.
@@ -57,7 +55,7 @@ Detailed directory structure is as follows:
 
 The **test reports** for each build configuration will be generated in the `test\guix_test\cmake\build\<build_configuration_name>` directory, where `<build_configuration_name>` is the name of the build configuration set.
 
-The **coverage report** for default_build_covearge will be generated in the `test\guix_test\cmake\coverage_report` directory. For other build configurations, no coverage report will be generated.
+The **coverage report** for `default_build_covearge` and `no_utf8_build_coverage` will be generated in the `test\guix_test\cmake\coverage_report` directory. For other build configurations, no coverage report will be generated.
 
 ### Run One Test Case
 
@@ -250,7 +248,88 @@ GX_EVENT my_event;
 }
 ```
 
+4. Add Test Case to GUIX Regression Test System:
+- Open the `test\guix_test\cmake\regression\CMakeLists.txt` file.
+- Add test demo project to the appropriate demo list based on the demo build configuration settings. The available types of demo lists are as follows:
+
+| Types of Demo Lists |Description                     | Build Configuration Settings |
+| ------------------- | ------------------------------ | ---------------------------- |
+| NO_UTF8_DEMOS       |Demos that do not support UTF-8 | GX_DISABLE_UT8_SUPPORT       |
+| EXTENDED_UNICODE_DEMOS |Demos that supports extended Unicode | GX_EXTENDED_UNICODE_SUPPORT |
+| OTHER_DEMOS | Demos with default configuration settings | N/A |
+| MOUSE_SUPPORT_DEMOS | Demos support mouse input | GX_MOUSE_SUPPORT |
+| FONT_KERNING_SUPPORT_DEMOS | Demos support font kerning | GX_FONT_KERNING_SUPPORT |
+| DYNAMIC_BIDI_TEXT_DEMOS | Demos support dynamic bi-directional text | GX_DYNAMIC_BIDI_TEXT_SUPPORT and GX_DYNAMIC_ARABIC_SHAPING_SUPPORT |
+| _5_4_0_COMPATIBLE_DEMOS | Demos that compatible with GUIX library version 5.4.0 | GUIX_5_4_0_COMPATIBILITY |
+| SYNERGY_FONT_SUPPORT_DEMOS | Demos that support synergy font | GX_SYNERGY_FONT_FORMAT_SUPPORT |
+| THAI_GLYPH_SHAPING_SUPPORT_DEMOS | Demos that support Thai glyph shaping | GX_THAI_GLYPH_SHAPING_SUPPORT |
+| PALETTE_MODE_AA_TEXT_COLORS_16_DEMOS | Demos that support palette mode with 16 colors for text drawing | GX_PALETTE_MODE_AA_TEXT_COLORS=16 |
+| PARTIAL_CANVAS_SUPPORT_DEMOS | Demos that support partial canvas | GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER |
+
+- Define demo project file list:
+```c
+set(<example_name>_FILE_LIST
+    demo_guix_<example_name>.c
+    ...)
+```
+
+- Define test case for demo project:
+```c
+set(<example_name>_REG_TESTS
+    <test_name>
+    ...)
+```
+
+5. Generate Golden Files:
+- Build GUIX regression test with the appropriate build type based on the demo build configuration settings. The availlable build type are as follows:
+
+|Types of Build|Description|Build Configuration Settings|
+|--------------|-----------|----------------------------|
+|default_build_coverage|Build with default configuration settings and generate coverage report|N/A|
+|disable_error_checking_build|Build with error checking disabled|GX_DISABLE_ERROR_CHECKING|
+|no_utf8_build_coverage|Build with UTF-8 support disabled and generate coverage report|GX_DISABLE_UTF8_SUPPORT and GX_DISABLE_ERROR_CHECKING|
+|no_utf8_no_checking_build|Build with UTF-8 support disabled and error checking disabled|GX_DISABLE_UTF8_SUPPORT and GX_DISABLE_ERROR_CHECKING|
+|ex_unicode_build|Build with extended Unicode support|GX_EXTENDED_UNICODE_SUPPORT|
+|ex_unicode_no_checking_build|Build with extended Unicode support and error checking disabled|GX_EXTENDED_UNICODE_SUPPORT and GX_DISABLE_ERROR_CHECKING|
+|mouse_support_build|Build with mouse support|GX_MOUSE_SUPPORT|
+|font_kerning_support_build|Build with font kerning support|GX_FONT_KERNING_SUPPORT|
+|dynamic_bidi_text_build|Build with dynamic bi-directional text support|GX_DYNAMIC_BIDI_TEXT_SUPPORT and GX_DYNAMIC_ARABIC_SHAPING_SUPPORT|
+|dynamic_bidi_text_no_checking_build|Build with dynamic bi-directional text support and error checking disabled|GX_DYNAMIC_BIDI_TEXT_SUPPORT, GX_DYNAMIC_ARABIC_SHAPING_SUPPORT and GX_DISABLE_ERROR_CHECKING|
+|_5_4_0_compatible_no_checking_build|Build with GUIX library version 5.4.0 compatibility and error checking disabled|GX_DISABLE_ERROR_CHECKING and GUIX_5_4_0_COMPATIBILITY|
+|synergy_font_support_build|Build with synergy font support|GX_SYNERGY_FONT_FORMAT_SUPPORT|
+|thai_glyph_shaping_support_build|Build with Thai glyph shaping support|GX_THAI_GLYPH_SHAPING_SUPPORT|
+|palette_mode_aa_text_colors_16_build|Build with palette mode with 16 colors for text drawing support|GX_PALETTE_MODE_AA_TEXT_COLORS=16|
+|disable_deprecated_string_api_build|Build with deprecated string API disabled|GX_DISABLE_DEPRECATED_STRING_API|
+|partial_canvas_support_build|Build with partial canvas support|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER|
+|partial_canvas_support_vertical_refresh_build|Build with partial canvas support and vertical refresh|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER and GX_CANVAS_REFRESH_DIRECTION_VERTICAL|
+|partial_canvas_support_horizontal_refresh_build|Build with partial canvas support and horizontal refresh|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER and GX_CANVAS_REFRESH_DIRECTION_HORIZONTAL|
+
+- Generate golden files for the test case. If the test has no output, this step can be skipped.
+    - Navigate to the `test\guix_test\cmake\build\<build_configuration_name>\regression` directory, where the test executables are generated.
+
+    - Generate output files for the test case with the following command.
+    ```bash
+    ./<test_name> -r -generate
+    ```
+    After the command is executed, the output binary file `<test_name>.bin` and checksum file `<test_name>.checksum` will be generated in the `test\guix_test\cmake\build\<build_configuration_name>\regression\output_files` directory.
+
+    - Vertify the correctness of the test by checking the content of the output binary file `<test_name>.bin` with the gx_show_canvas.exe tool located in `test\guix_test\regression_test`.
+
+    - Compress the output binary file `<test_name>.bib` into a 7z file with the following command.
+    ```bash
+    7z a <test_name>.7z <test_name>.bin
+    ```
+
+    - Copy the 7z file `<test_name>.7z` and `<test_name>.checksum` to the `test\guix_test\golden_files` directory.
+
+- Run the GUIX regression test to see if the test case passes.
+
+- Now the test case is ready to be submitted to the GUIX repository.
+
 ## GUIX Studio Regression Test
+
+### Directory Structure
+-**
 
 ### Run Regression Test
 
