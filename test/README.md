@@ -5,6 +5,14 @@ This guide provides instructions on how to run and add GUIX and GUIX Studio regr
 
 ## Table of Contents
 1. [GUIX Regression Test](#guix-regression-test)
+    1. [Directory Structure](#directory-structure)
+    2. [Types of Test Cases](#types-of-test-cases)
+    3. [Prerequisites](#prerequisites)
+    4. [Run Regression Test](#run-regression-test)
+    5. [Run One Test Case](#run-one-test-case)
+    6. [Debug Failed Test](#debug-failed-test)
+    7. [Add New Test](#add-new-test)
+    8. [Add New Build Type](#add-new-build-type)
 2. [GUIX Studio Regression Test](#guix-studio-regression-test)
 
 ## GUIX Regression Test
