@@ -14,6 +14,12 @@ This guide provides instructions on how to run and add GUIX and GUIX Studio regr
     7. [Add New Test](#add-new-test)
     8. [Add New Build Type](#add-new-build-type)
 2. [GUIX Studio Regression Test](#guix-studio-regression-test)
+    1. [Directory Structure](#directory-structure-1)
+    2. [GUIX Studio Test Demo](#guix-studio-test-demo)
+        1. [Run GUIX Studio Test Demo](#run-guix-studio-test-demo)
+    3. [GUIX Studio Test View](#guix-studio-test-view)
+        1. [Run GUIX Studio Test View](#run-guix-studio-test-view)
+        2. [Add New Test Case](#add-new-test-case)
 
 ## GUIX Regression Test
 
@@ -394,11 +400,128 @@ endforeach()
 
 ## GUIX Studio Regression Test
 
-### Directory Structure
--**
+### Prerequisites
+1. Windows environment.
+2. Clone the GUIX repository.
+3. Install Python 3.0 or later.
+4. Visual Studio 2019.
 
-### Run Regression Test
+### GUIX Studio Test Demo
 
-### Debug Failed Test
+The demo tests are located in the `test\guix_studio_test\test_demo` directory.
 
-### Add New Test
+Target Directories: `examples`, `tutorials` and `test\example_internal`.
+
+#### Run GUIX Studio Test Demo
+1. Open developer command prompt for Visual Studio 2019.
+2. Navigate to the `test\guix_studio_test\test_demo` directory.
+3. To vertify the output files for the `gxp` projects under the target directories, run the following command.
+```python
+test_main.py -b -t
+```
+- `-b` option is used to build the latests GUIX Studio executable.
+- `-t` option is used to vertify the output files for the `gxp` projects under the target directories.
+
+4. To test the compilation of the Visual Studio project under the target directories, run the following command.
+```python
+test_main.py --compile_project
+```
+
+5. To regenerate ouptut files for the `gxp` projects under the target directories, run the following command.
+```python
+test_main.py -b -g
+```
+
+6. To upgrade project vertion to the latests for the `gxp` projects under the target directories, run the following command.
+```python
+test_main.py --update_gxp_project
+```
+
+7. To set GUIX library version for the `gxp` projects under the target directories, run the following command.
+```python
+test_main.py -v <VERSION>
+```
+replace `<VERSION>` with the actual GUIX library version. such as `6.2.0`.
+
+8. A test log file named `output_files_test_log.txt` will be generated in the current directory after the test is completed.
+
+
+### GUIX Studio Test View
+
+The test view tests are located in the `test\guix_studio_test\test_view` directory. 
+
+#### Run GUIX Studio Test View
+1. Open developer command prompt for Visual Studio 2019.
+2. Navigate to the `test\guix_studio_test\test_view` directory.
+3. Run the entire test with the following command.
+```python
+test_main.py -b
+```
+4. Run a specific test by specifying its name with the following command.
+```python
+test_main.py -b <test_name>
+```
+Replace `<test_name>` with the actual test name.
+
+To explore the available test cases and obtain more information, use the following command to display the help message:
+```python
+test_main.py -h
+```
+
+#### Add New Test Case
+1. Add a new test file.
+2. Import the nessary modules.
+```python
+import os
+import sys
+import time
+import test_utils
+import test_constants
+```
+
+3. Define test header for the test information.
+```python
+def get_test_header(): 
+    notes =  "*             <Test Name>                             *\n"
+    notes += "*                                                     *\n"
+    ...
+    return notes
+```
+
+4. Define test case.
+```python
+def <test_name>(generate, screenshot):
+    test_utils.output_test_header(get_test_header())
+    test_utils.setup(generate, screenshot, <golden_file_name>)
+
+    # Test code goes here.
+
+    test_utils.write_end(<test_name>)
+```
+
+5. Import the new test case to `test_main.py`.
+
+- Import the new test module:
+```python
+from <test_file_name> import <test_name>
+```
+
+- Add argument for the new test case:
+```python
+parser.add_argument('--<test_name>', action='store_true', dest='<test_name>' help='Run <test_name> test')
+```
+
+- Update existing logic to set the new test case to run when the user doesn't specify tests to run:
+```python
+if (... and
+    args.<test_name> is False):
+    ...
+    test_utils.<test_name> = True
+    ...
+```
+
+- Add logic to run test case:
+```python
+if test_utils.<test_name>:
+    <test_name>(args.generate, args.screenshot)
+```
