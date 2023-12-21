@@ -12,7 +12,7 @@ This guide provides instructions on how to run and add GUIX and GUIX Studio regr
 ### Directory Structure
 
 The GUIX regression test is built on top of the CMake build system and organize its code in `test\guix_test `folder. The foundational elements are structured as follows:
-- **cmake\CMakeLists.txt:** The CMake file that defines the build configurations and the test suites.
+- **cmake\CMakeLists.txt:** The CMake file that defines the build types and the test suites.
 - **cmake\regression\CMakeLists.txt:** The CMake file that defines the test cases for each test suite.
 - **coverage.sh:** The script that generates the coverage report.
 - **run.sh:** The script that builds and runs the tests.
@@ -49,20 +49,44 @@ The GUIX regression test is built on top of the CMake build system and organize 
 
 3. To build and run a specific test suite, use the following commands.
 ```bash
-./run.sh build <build_configuration_name>
-./run.sh run <build_configuration_name>
+./run.sh build <build_type>
+./run.sh run <build_type>
 ```
 
-The **test reports** for each build configuration will be generated in the `test\guix_test\cmake\build\<build_configuration_name>` directory, where `<build_configuration_name>` is the name of the build configuration set.
+The available build types are as follows:
 
-The **coverage report** for `default_build_covearge` and `no_utf8_build_coverage` will be generated in the `test\guix_test\cmake\coverage_report` directory. For other build configurations, no coverage report will be generated.
+|Build Types|Description|Build Configuration Settings|
+|--------------|-----------|----------------------------|
+|default_build_coverage|Build with default configuration settings and generate coverage report|N/A|
+|disable_error_checking_build|Build with error checking disabled|*GX_DISABLE_ERROR_CHECKING*|
+|no_utf8_build_coverage|Build with UTF-8 support disabled and generate coverage report|GX_DISABLE_UTF8_SUPPORT and GX_DISABLE_ERROR_CHECKING|
+|no_utf8_no_checking_build|Build with UTF-8 support disabled and error checking disabled|GX_DISABLE_UTF8_SUPPORT and GX_DISABLE_ERROR_CHECKING|
+|ex_unicode_build|Build with extended Unicode support|GX_EXTENDED_UNICODE_SUPPORT|
+|ex_unicode_no_checking_build|Build with extended Unicode support and error checking disabled|GX_EXTENDED_UNICODE_SUPPORT and GX_DISABLE_ERROR_CHECKING|
+|mouse_support_build|Build with mouse support|GX_MOUSE_SUPPORT|
+|font_kerning_support_build|Build with font kerning support|GX_FONT_KERNING_SUPPORT|
+|dynamic_bidi_text_build|Build with dynamic bi-directional text support|GX_DYNAMIC_BIDI_TEXT_SUPPORT and GX_DYNAMIC_ARABIC_SHAPING_SUPPORT|
+|dynamic_bidi_text_no_checking_build|Build with dynamic bi-directional text support and error checking disabled|GX_DYNAMIC_BIDI_TEXT_SUPPORT, GX_DYNAMIC_ARABIC_SHAPING_SUPPORT and GX_DISABLE_ERROR_CHECKING|
+|_5_4_0_compatible_no_checking_build|Build with GUIX library version 5.4.0 compatibility and error checking disabled|GX_DISABLE_ERROR_CHECKING and GUIX_5_4_0_COMPATIBILITY|
+|synergy_font_support_build|Build with synergy font support|GX_SYNERGY_FONT_FORMAT_SUPPORT|
+|thai_glyph_shaping_support_build|Build with Thai glyph shaping support|GX_THAI_GLYPH_SHAPING_SUPPORT|
+|palette_mode_aa_text_colors_16_build|Build with palette mode with 16 colors for text drawing support|GX_PALETTE_MODE_AA_TEXT_COLORS=16|
+|disable_deprecated_string_api_build|Build with deprecated string API disabled|GX_DISABLE_DEPRECATED_STRING_API|
+|partial_canvas_support_build|Build with partial canvas support|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER|
+|partial_canvas_support_vertical_refresh_build|Build with partial canvas support and vertical refresh|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER and GX_CANVAS_REFRESH_DIRECTION_VERTICAL|
+|partial_canvas_support_horizontal_refresh_build|Build with partial canvas support and horizontal refresh|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER and GX_CANVAS_REFRESH_DIRECTION_HORIZONTAL|
+|||
+
+The **test reports** for each build type will be generated in the `test\guix_test\cmake\build\<build_type>` directory.
+
+The **coverage report** for `default_build_covearge` and `no_utf8_build_coverage` will be generated in the `test\guix_test\cmake\coverage_report` directory. For other build types, no coverage report will be generated.
 
 ### Run One Test Case
 
 Follow these steps to execute an individual test case:
 
 1. Build the test using the instructions provided in the previous section.
-2. Navigate to the `test\guix_test\cmake\build\<build_configuration_name>\regression` directory, where the test executables are generated.
+2. Navigate to the `test\guix_test\cmake\build\<build_type>\regression` directory, where the test executables are generated.
 
 3. Run the test without output, where the test name is ended with `no_output`.
 ```bash
@@ -73,12 +97,11 @@ Follow these steps to execute an individual test case:
 ```bash
  ./<test_name> -checksum -gpath ../../../../golden_files/
  ```
-Ensure to replace <test_name> with the actual name of the test case you want to run. 
 
 ### Debug Failed Test
 
 - Debugging with cgdb.
-1. Navigate to the `test\guix_test\cmake\build\<build_configuration_name>\regression` directory, where the test executables are generated. Start cgdb using the following command.
+1. Navigate to the `test\guix_test\cmake\build\<build_type>\regression` directory, where the test executables are generated. Start cgdb using the following command.
 ```bash
 cgdb <test_name>
 ```
@@ -92,7 +115,7 @@ set args -r
 3. Set breakpoints as needed and run the test.
 
 - Debugging by comparing output files.
-1. Navigate to the `test\guix_test\cmake\build\<build_configuration_name>\regression\output_files` directory, where the failed output binary file is generated. The generated binary file is named `<test_name>_failures.bin`.
+1. Navigate to the `test\guix_test\cmake\build\<build_type>\regression\output_files` directory, where the failed output binary file is generated. The generated binary file is named `<test_name>_failures.bin`.
 
 2. Use gx_show_canvas.exe located in `test\guix_test\regression_test` to display the content in the failed output binary file. Compare it with the conresponding golden file located in the `test\guix_test\golden_files` directory. For the usage of gx_show_canvas.exe, please refer to gx_show_canvas.md.
 
@@ -281,37 +304,16 @@ set(<example_name>_REG_TESTS
 ```
 
 5. Generate Golden Files:
-- Build GUIX regression test with the appropriate build type based on the demo build configuration settings. The availlable build type are as follows:
-
-|Types of Build|Description|Build Configuration Settings|
-|--------------|-----------|----------------------------|
-|default_build_coverage|Build with default configuration settings and generate coverage report|N/A|
-|disable_error_checking_build|Build with error checking disabled|GX_DISABLE_ERROR_CHECKING|
-|no_utf8_build_coverage|Build with UTF-8 support disabled and generate coverage report|GX_DISABLE_UTF8_SUPPORT and GX_DISABLE_ERROR_CHECKING|
-|no_utf8_no_checking_build|Build with UTF-8 support disabled and error checking disabled|GX_DISABLE_UTF8_SUPPORT and GX_DISABLE_ERROR_CHECKING|
-|ex_unicode_build|Build with extended Unicode support|GX_EXTENDED_UNICODE_SUPPORT|
-|ex_unicode_no_checking_build|Build with extended Unicode support and error checking disabled|GX_EXTENDED_UNICODE_SUPPORT and GX_DISABLE_ERROR_CHECKING|
-|mouse_support_build|Build with mouse support|GX_MOUSE_SUPPORT|
-|font_kerning_support_build|Build with font kerning support|GX_FONT_KERNING_SUPPORT|
-|dynamic_bidi_text_build|Build with dynamic bi-directional text support|GX_DYNAMIC_BIDI_TEXT_SUPPORT and GX_DYNAMIC_ARABIC_SHAPING_SUPPORT|
-|dynamic_bidi_text_no_checking_build|Build with dynamic bi-directional text support and error checking disabled|GX_DYNAMIC_BIDI_TEXT_SUPPORT, GX_DYNAMIC_ARABIC_SHAPING_SUPPORT and GX_DISABLE_ERROR_CHECKING|
-|_5_4_0_compatible_no_checking_build|Build with GUIX library version 5.4.0 compatibility and error checking disabled|GX_DISABLE_ERROR_CHECKING and GUIX_5_4_0_COMPATIBILITY|
-|synergy_font_support_build|Build with synergy font support|GX_SYNERGY_FONT_FORMAT_SUPPORT|
-|thai_glyph_shaping_support_build|Build with Thai glyph shaping support|GX_THAI_GLYPH_SHAPING_SUPPORT|
-|palette_mode_aa_text_colors_16_build|Build with palette mode with 16 colors for text drawing support|GX_PALETTE_MODE_AA_TEXT_COLORS=16|
-|disable_deprecated_string_api_build|Build with deprecated string API disabled|GX_DISABLE_DEPRECATED_STRING_API|
-|partial_canvas_support_build|Build with partial canvas support|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER|
-|partial_canvas_support_vertical_refresh_build|Build with partial canvas support and vertical refresh|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER and GX_CANVAS_REFRESH_DIRECTION_VERTICAL|
-|partial_canvas_support_horizontal_refresh_build|Build with partial canvas support and horizontal refresh|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER and GX_CANVAS_REFRESH_DIRECTION_HORIZONTAL|
+- Build GUIX regression test with the appropriate build type based on the demo build configuration settings. 
 
 - Generate golden files for the test case. If the test has no output, this step can be skipped.
-    - Navigate to the `test\guix_test\cmake\build\<build_configuration_name>\regression` directory, where the test executables are generated.
+    - Navigate to the `test\guix_test\cmake\build\<build_type>\regression` directory, where the test executables are generated.
 
     - Generate output files for the test case with the following command.
     ```bash
     ./<test_name> -r -generate
     ```
-    After the command is executed, the output binary file `<test_name>.bin` and checksum file `<test_name>.checksum` will be generated in the `test\guix_test\cmake\build\<build_configuration_name>\regression\output_files` directory.
+    After the command is executed, the output binary file `<test_name>.bin` and checksum file `<test_name>.checksum` will be generated in the `test\guix_test\cmake\build\<build_type>\regression\output_files` directory.
 
     - Vertify the correctness of the test by checking the content of the output binary file `<test_name>.bin` with the gx_show_canvas.exe tool located in `test\guix_test\regression_test`.
 
@@ -325,6 +327,62 @@ set(<example_name>_REG_TESTS
 - Run the GUIX regression test to see if the test case passes.
 
 - Now the test case is ready to be submitted to the GUIX repository.
+
+### Add New Build Type
+
+If the availlable build types lack the configuration settings required for your test, you can add a new build type by following these steps:
+
+1. Open the `test\guix_test\cmake\CMakeLists.txt` file.
+2. Add a new build type using the following example:
+```cmake
+set(disable_error_checking_build -DGX_DISABLE_ERROR_CHECKING)
+```
+3. Include the new build type in the `BUILD_CONFIGURATIONS` list.
+```cmake
+set(BUILD_CONFIGURATIONS
+...
+    <new_build_type>
+)
+```
+
+4. Add the new demo type.
+- Open the `test\guix_test\cmake\regression\CMakeLists.txt` file.
+- Define a new demo type list and the add new example project to it:
+```cmake
+set (<demo_type_name> <example_name>)
+```
+
+- Set the directory path for the new demos by updating the existing logic:
+```cmake
+set(EXAMPLE_INTERNAL_DIR ${ROOT_DIR}/example_internal)
+foreach(
+  demo
+...
+  ${<demo_type_name>};
+...
+  set(${demo}_SOURCE_DIRECTORY ${EXAMPLE_INTERNAL_DIR}/${demo})
+endforeach()
+```
+
+- Update the existing logic to set the `demos` variable according to the build type. This variable will later be used to add test cases for the build type:
+```cmake
+...
+elseif("-D<new_build_configuration>" IN_LIST ${CMAKE_BUILD_TYPE})
+  set(demos ${<demo_type_name>})
+...
+```
+
+- Update existing logic to Set regression test program's SOURCE as `validation_*.c` and related source files, excluding `demo_*` for the test cases of the new demo type:
+```cmake
+# Set regression test program's SOURCE as validation_*.c and related source
+# files excluding demo_*
+foreach(
+  demo
+...
+  ${<demo_type_name>};
+...
+endforeach()
+```
 
 ## GUIX Studio Regression Test
 
