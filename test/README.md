@@ -17,9 +17,13 @@ This guide provides instructions on how to run and add GUIX and GUIX Studio regr
     1. [Directory Structure](#directory-structure-1)
     2. [GUIX Studio Test Demo](#guix-studio-test-demo)
         1. [Run GUIX Studio Test Demo](#run-guix-studio-test-demo)
+        2. [Debug Failed Test](#debug-failed-test)
+        3. [Add New Test Case](#add-new-test-case)
     3. [GUIX Studio Test View](#guix-studio-test-view)
-        1. [Run GUIX Studio Test View](#run-guix-studio-test-view)
-        2. [Add New Test Case](#add-new-test-case)
+        1. [Architecture](#architecture)
+        2. [Run GUIX Studio Test View](#run-guix-studio-test-view)
+        3. [Debug Failed Test](#debug-failed-test-1)
+        4. [Add New Test Case](#add-new-test-case-1)
 
 ## GUIX Regression Test
 
@@ -443,12 +447,29 @@ test_main.py -v <VERSION>
 ```
 replace `<VERSION>` with the actual GUIX library version. such as `6.2.0`.
 
-8. A test log file named `output_files_test_log.txt` will be generated in the current directory after the test is completed.
+#### Debug Failed Test
+
+After test execution, a test log file named `output_files_test_log.txt` will be generated in the current directory. If a test case failes, the log file will provide detailed information about the failure.
+
+#### Add New Test Case
+
+If you have added a new `gxp` project under the target directories, this project will be automatically added to the test system. However, if your project involves the generation of binary files or other output files requiring verification, it is necessary to develop project-specific resource output logic. For guidance, you can consult the implementation of functions such as test_utils::test_one_project() and test_utils.generate().
 
 
 ### GUIX Studio Test View
 
-The test view tests are located in the `test\guix_studio_test\test_view` directory. 
+The test view tests are located in the `test\guix_studio_test\test_view` directory.
+
+#### Architecture
+![GUIX Studio Test View Architecture](guix_studio_test_view_architecture.png)
+*Figure 1: GUIX Studio Test View Architechture*
+
+GUIX Studio provides a test message handler for each function component, enabling interaction with the GUIX Studio Test View, a Python based test application that communicates with GUIX Studio by transmitting messages through these handlers. The `test_utils.py` module facilitates the sending of messages to individual function components within GUIX Studio. Utilizing these functions allows you to simulate user actions for the purpose of testing GUIX Studio.  For example, you can use `test_utils::open_project()` to open a project in GUIX Studio.
+
+GUIX Studio Test View verify the correctness of the test through the following two aspects:
+1. Comparing the checksum of the canvas data with the corresponding value stored in the golden files. The `test_utils.py` module includes the `test_utils::compare_result()` function, which facilitates this comparison process. In test mode, it checks the checksum of the canvas data against the correct value in the golden files. In generation mode, the function generates accurate checksum values and stores them in the specified golden file.
+
+2. Comparing the output files of the testing `gxp` project with the corresponding files stored in the `golden_files` directory. the `test_utils.py` module includes the `test_utils::cmp_output_files()` function, which facilitates this comparison process.
 
 #### Run GUIX Studio Test View
 1. Open developer command prompt for Visual Studio 2019.
@@ -467,6 +488,9 @@ To explore the available test cases and obtain more information, use the followi
 ```python
 test_main.py -h
 ```
+
+#### Debug Failed Test
+After test execution, a test log file named `studio_view_test_log.txt` will be generated in the current directory. If a test case failes, the log file will provide detailed information about the failure. 
 
 #### Add New Test Case
 1. Add a new test file.
@@ -524,4 +548,15 @@ if (... and
 ```python
 if test_utils.<test_name>:
     <test_name>(args.generate, args.screenshot)
+```
+
+- Generate golden files for the new test case:
+```python
+test_main.py -b --<test_name> -g
+```
+
+- Copy the golden files to the `test\guix_studio_test\golden_files` directory.
+- Run the new test case to see if it passes.
+```python
+test_main.py -b --<test_name>
 ```
