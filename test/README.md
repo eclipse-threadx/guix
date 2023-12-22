@@ -44,8 +44,8 @@ The GUIX regression test is built on top of the CMake build system and organize 
 
 1. **Test case with output:**
 - In the generation mode, after each test point, a specified area of the GUIX canvas is saved to a binary file named `<test_name>.bin`.
-- A checksum value, calculated based on the cavans data, is saved to a file named `<test_name>.checksum`.
-- The binary file is mainly used for checking the correctness of the test case visually.
+- A checksum value, calculated based on the canvas data, is saved to a file named `<test_name>.checksum`.
+- The binary file is used for checking the correctness of the test case visually.
 - The checksum file enables faster verification during tests by comparing expected and actual checksum values. 
 
 2. **Test case without output:**
@@ -97,7 +97,7 @@ The available build types are as follows:
 
 The **test reports** for each build type will be generated in the `test\guix_test\cmake\build\<build_type>` directory.
 
-The **coverage report** for `default_build_covearge` and `no_utf8_build_coverage` will be generated in the `test\guix_test\cmake\coverage_report` directory. For other build types, no coverage report will be generated.
+The **coverage report** for `default_build_covearge` and `no_utf8_build_coverage` will be generated in the `test\guix_test\cmake\coverage_report` directory. For other build types, no coverage report is generated.
 
 ### Run One Test Case
 
@@ -111,7 +111,7 @@ Follow these steps to execute an individual test case:
 ./<test_name>
 ```
 
-4. Run other tests with checksum vertification and specify the golden files path with the following command.
+4. Run other tests with checksum verification and specify the golden files path with the following command.
 ```bash
  ./<test_name> -checksum -gpath ../../../../golden_files/
  ```
@@ -134,13 +134,13 @@ set args -r
 - Debugging by comparing output files.
 1. Navigate to the `test\guix_test\cmake\build\<build_type>\regression\output_files` directory, where the failed output binary file is generated. The generated binary file is named `<test_name>_failures.bin`.
 
-2. Use **gx_show_canvas.exe** located in `test\guix_test\regression_test` to display the content in the failed output binary file. Compare it with the conresponding golden file located in the `test\guix_test\golden_files` directory. For the usage of **gx_show_canvas.exe**, please refer to **gx_show_canvas.md**.
+2. Use **gx_show_canvas.exe** located in `test\guix_test\regression_test` to display the content in the failed output binary file. Compare it with the corresponding golden file located in the `test\guix_test\golden_files` directory. For the usage of **gx_show_canvas.exe**, please refer to **gx_show_canvas.md**.
 
 
 
 ### Add New Test
 
-Follow these steps to addd a new test:
+Follow these steps to add a new test:
 1. Create Win32 Demo Project.
 - Generate a Win32 demo project under the `test\example_internal` directory.
 - Ensure the main source file is named as `demo_guix_<example_name>.c`.
@@ -295,7 +295,7 @@ GX_EVENT my_event;
 | Types of Demo Lists |Description                     | Build Configuration Settings |
 | ------------------- | ------------------------------ | ---------------------------- |
 | NO_UTF8_DEMOS       |Demos that do not support UTF-8 | GX_DISABLE_UT8_SUPPORT       |
-| EXTENDED_UNICODE_DEMOS |Demos that supports extended Unicode | GX_EXTENDED_UNICODE_SUPPORT |
+| EXTENDED_UNICODE_DEMOS |Demos that support extended Unicode | GX_EXTENDED_UNICODE_SUPPORT |
 | OTHER_DEMOS | Demos with default configuration settings | N/A |
 | MOUSE_SUPPORT_DEMOS | Demos support mouse input | GX_MOUSE_SUPPORT |
 | FONT_KERNING_SUPPORT_DEMOS | Demos support font kerning | GX_FONT_KERNING_SUPPORT |
@@ -332,7 +332,7 @@ set(<example_name>_REG_TESTS
     ```
     After the command is executed, the output binary file `<test_name>.bin` and checksum file `<test_name>.checksum` will be generated in the `test\guix_test\cmake\build\<build_type>\regression\output_files` directory.
 
-    - Vertify the correctness of the test by checking the content of the output binary file `<test_name>.bin` with the **gx_show_canvas.exe** tool located in `test\guix_test\regression_test`.
+    - Verify the correctness of the test by checking the content of the output binary file `<test_name>.bin` with the **gx_show_canvas.exe** tool located in `test\guix_test\regression_test`.
 
     - Compress the output binary file `<test_name>.bin` into a 7z file with the following command.
     ```bash
@@ -347,7 +347,7 @@ set(<example_name>_REG_TESTS
 
 ### Add New Build Type
 
-If the availlable build types lack the configuration settings required for your test, you can add a new build type by following these steps:
+If the available build types lack the configuration settings required for your test, you can add a new build type by following these steps:
 
 1. Open the `test\guix_test\cmake\CMakeLists.txt` file.
 2. Add a new build type using the following example:
@@ -364,7 +364,7 @@ set(BUILD_CONFIGURATIONS
 
 4. Add the new demo type.
 - Open the `test\guix_test\cmake\regression\CMakeLists.txt` file.
-- Define a new demo type list and the add new example project to it:
+- Define a new demo type list and add the new example project to it:
 ```cmake
 set (<demo_type_name> <example_name>)
 ```
@@ -418,24 +418,24 @@ Target Directories: `examples`, `tutorials` and `test\example_internal`.
 #### Run GUIX Studio Test Demo
 1. Open developer command prompt for Visual Studio 2019.
 2. Navigate to the `test\guix_studio_test\test_demo` directory.
-3. To vertify the output files for the `gxp` projects under the target directories, run the following command.
+3. To verify the output files for the `gxp` projects under the target directories, run the following command.
 ```python
 test_main.py -b -t
 ```
-- `-b` option is used to build the latests GUIX Studio executable.
-- `-t` option is used to vertify the output files for the `gxp` projects under the target directories.
+- `-b` option is used to build the latest GUIX Studio executable.
+- `-t` option is used to verify the output files for the `gxp` projects under the target directories.
 
 4. To test the compilation of the Visual Studio project under the target directories, run the following command.
 ```python
 test_main.py --compile_project
 ```
 
-5. To regenerate ouptut files for the `gxp` projects under the target directories, run the following command.
+5. To regenerate output files for the `gxp` projects under the target directories, run the following command.
 ```python
 test_main.py -b -g
 ```
 
-6. To upgrade project vertion to the latests for the `gxp` projects under the target directories, run the following command.
+6. To upgrade project version to the latest for the `gxp` projects under the target directories, run the following command.
 ```python
 test_main.py --update_gxp_project
 ```
@@ -448,7 +448,7 @@ replace `<VERSION>` with the actual GUIX library version. such as `6.2.0`.
 
 #### Debug Failed Test
 
-After test execution, a test log file named `output_files_test_log.txt` will be generated in the current directory. If a test case failes, the log file will provide detailed information about the failure.
+After test execution, a test log file named `output_files_test_log.txt` will be generated in the current directory. If a test case failed, the log file provides detailed information about the failure.
 
 #### Add New Test Case
 
@@ -461,11 +461,11 @@ The test view tests are located in the `test\guix_studio_test\test_view` directo
 
 #### Architecture
 ![GUIX Studio Test View Architecture](guix_studio_test_view_architecture.png)
-*Figure 1: GUIX Studio Test View Architechture*
+*Figure 1: GUIX Studio Test View Architecture*
 
 GUIX Studio provides a test message handler for each function component, enabling interaction with the GUIX Studio Test View, a Python based test application that communicates with GUIX Studio by transmitting messages through these handlers. The `test_utils.py` module facilitates the sending of messages to individual function components within GUIX Studio. Utilizing these functions allows you to simulate user actions for the purpose of testing GUIX Studio.  For example, you can use `test_utils::open_project()` to open a project in GUIX Studio.
 
-GUIX Studio Test View verify the correctness of the test through two aspects:
+GUIX Studio Test View verifies the correctness of the test through two aspects:
 1. Comparing the checksum of the canvas data with the corresponding value stored in the golden files. The `test_utils.py` module includes the `test_utils::compare_result()` function, which facilitates this comparison process. In test mode, it checks the checksum of the canvas data against the correct value in the golden files. In generation mode, the function generates checksum values and stores them in the specified golden file.
 
 2. Comparing the output files of the testing `gxp` project with the corresponding files stored in the `golden_files` directory. the `test_utils.py` module includes the `test_utils::cmp_output_files()` function, which facilitates this comparison process.
@@ -488,7 +488,7 @@ test_main.py -h
 ```
 
 #### Debug Failed Test
-After test execution, a test log file named `studio_view_test_log.txt` will be generated in the current directory. If a test case failes, the log file will provide detailed information about the failure. If the test fails due to canvas data mismatch, a `test_failure` folder will be generated in the currect directory, which contains the screenshot of the failed test case.
+After test execution, a test log file named `studio_view_test_log.txt` will be generated in the current directory. If a test case failed, the log file provides detailed information about the failure. If the test fails due to canvas data mismatch, a `test_failure` folder is generated in the current directory, which contains the screenshot of the failed test case.
 
 #### Add New Test Case
 1. Add a new test file.
