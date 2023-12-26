@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.3.0        */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -112,6 +112,9 @@
 /*                                            added partial canvas buffer */
 /*                                            support,                    */
 /*                                            resulting in version 6.3.0  */
+/*  12-31-2023     Ting Zhu                 Modified comment(s),          */
+/*                                            updated patch version,      */
+/*                                            resulting in version 6.4.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -134,7 +137,7 @@ extern   "C" {
 
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
-#define GUIX_MINOR_VERSION 3
+#define GUIX_MINOR_VERSION 4
 #define GUIX_PATCH_VERSION 0
 
 /* The following symbols are defined for backward compatibility reasons.*/

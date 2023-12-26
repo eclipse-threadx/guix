@@ -10,7 +10,7 @@
 #define PROJECT_VERSION    56
 
 // Sequential number of studio version
-#define STUDIOX_VERSION_NUMBER 1
+#define STUDIOX_VERSION_NUMBER 0
 
 /* This enabled checking if the project was created by a newer version of Studio.
    Turn this off for testing when the Studio version number is not accurate
