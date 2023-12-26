@@ -127,7 +127,7 @@ GX_WIDGET *end = GX_NULL;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_widget_event_process                            PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -175,9 +175,9 @@ GX_WIDGET *end = GX_NULL;
 /*                                            system input release logic  */
 /*                                            on widget hide event,       */
 /*                                            resulting in version 6.1.11 */
-/*  xx-xx-xxxx     Ting Zhu                 Modified comment(s),          */
+/*  12-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            improved focus lose logic,  */
-/*                                            resulting in version 6.x    */
+/*                                            resulting in version 6.4.0  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_widget_event_process(GX_WIDGET *widget, GX_EVENT *event_ptr)
