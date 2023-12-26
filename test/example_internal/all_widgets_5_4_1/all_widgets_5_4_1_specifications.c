@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.3.0.0                                               */
-/*  Date (dd.mm.yyyy): 21.11.2023   Time (hh:mm): 15:23                        */
+/*  GUIX Studio Revision 6.3.0.1                                               */
+/*  Date (dd.mm.yyyy): 22.12.2023   Time (hh:mm): 16:02                        */
 /*******************************************************************************/
 
 
@@ -53,20 +53,6 @@ GX_STUDIO_DISPLAY_INFO all_widgets_5_4_1_display_table[1] =
     1228800                                  /* canvas memory size in bytes    */
     }
 };
-
-static VOID gx_studio_screen_toggle(GX_WIDGET *target1, GX_WIDGET *target2)
-{
-    GX_WIDGET *parent = target1->gx_widget_parent;
-    if (parent)
-    {
-        gx_widget_detach(target1);
-        gx_widget_attach(parent, target2);
-        if (target1->gx_widget_status & GX_STATUS_STUDIO_CREATED)
-        {
-            gx_widget_delete(target1);
-        }
-    }
-}
 
 static GX_WIDGET *gx_studio_action_target_get(GX_WIDGET *current, GX_CONST GX_STUDIO_ACTION *action)
 {
@@ -234,7 +220,17 @@ UINT gx_studio_auto_event_handler(GX_WIDGET *widget, GX_EVENT *event_ptr, GX_CON
 
                 case GX_ACTION_TYPE_TOGGLE:
                     target = gx_studio_action_target_get(widget, action);
-                    gx_studio_screen_toggle(widget, target);
+                    parent = widget->gx_widget_parent;
+                    if (parent)
+                    {
+                        gx_widget_detach(widget);
+                        gx_widget_attach(parent, target);
+                        if (widget->gx_widget_status & GX_STATUS_STUDIO_CREATED)
+                        {
+                            gx_widget_delete(widget);
+                            widget = GX_NULL;
+                        }
+                    }
                     break;
 
                 case GX_ACTION_TYPE_SHOW:
@@ -279,7 +275,7 @@ UINT gx_studio_auto_event_handler(GX_WIDGET *widget, GX_EVENT *event_ptr, GX_CON
         entry++;
     }
 
-    if (record->chain_event_handler)
+    if (widget && record->chain_event_handler)
     {
         status = record->chain_event_handler(widget, event_ptr);
     }
