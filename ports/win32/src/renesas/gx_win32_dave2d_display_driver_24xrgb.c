@@ -33,7 +33,7 @@
 /*                                                                        */
 /*    win32_dave2d_simulation_24xrgb_bitmap_header_create                 */
 /*                                                        PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -63,7 +63,7 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*                                                                        */
 /**************************************************************************/
 VOID win32_dave2d_simulation_24xrgb_bitmap_header_create(GX_DISPLAY *display)
@@ -97,7 +97,7 @@ DWORD                        *putmask;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    win32_dave2d_graphics_driver_setup_24xrgb          PORTABLE C       */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -132,7 +132,7 @@ DWORD                        *putmask;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*  10-31-2022     Kenneth Maxwell          Modify comments, change       */
 /*                                            function name,              */
 /*                                            resulting in Version 6.2.0  */

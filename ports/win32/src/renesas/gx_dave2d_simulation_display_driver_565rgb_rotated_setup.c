@@ -30,7 +30,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_dave2d_s_display_driver_565rgb_rotated_setup   PORTABLE C       */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -62,7 +62,7 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*                                                                        */
 /**************************************************************************/
 

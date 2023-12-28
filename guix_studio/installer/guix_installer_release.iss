@@ -7,16 +7,16 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{1D4932BC-ACD4-4292-9530-92C8BE2E58CF}
 AppName= GUIX Studio
-AppVersion=6.3.0.1
+AppVersion=6.4.0.0
 ;AppPublisher=
 AppPublisherURL=https://azure.com/rtos
 AppSupportURL=https://azure.com/rtos
 AppUpdatesURL=https://azure.com/rtos
-DefaultDirName={sd}\Azure_RTOS\GUIX_Studio_6.3
+DefaultDirName={sd}\Azure_RTOS\GUIX_Studio_6.4
 DefaultGroupName=Azure RTOS
 CloseApplications=no
 ;LicenseFile=
-OutputBaseFilename=guix_studio_setup_version_6.3.0.1
+OutputBaseFilename=guix_studio_setup_version_6.4.0.0
 SetupIconFile=graphics\guix_1616icon.ico
 Compression=lzma
 SolidCompression=yes
@@ -46,11 +46,11 @@ Source: "build\vs_2019\Release\guix_studio.exe"; DestDir: "{app}\studio"; DestNa
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\GUIX Studio 6.3\GUIX Studio"; Filename: "{app}\studio\GUIX_Studio.exe"
-Name: "{group}\GUIX Studio 6.3\GUIX Studio User's Guide"; Filename: "https://aka.ms/azrtos-guix-studio-user-guide"
-Name: "{group}\GUIX Studio 6.3\GUIX User's Guide"; Filename: "https://aka.ms/azrtos-guix-user-guide"
-Name: "{group}\GUIX Studio 6.3\{cm:UninstallProgram,GUIX Studio}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\GUIX Studio 6.3.0.1"; Filename: "{app}\studio\GUIX_Studio.exe"; Tasks: desktopicon
+Name: "{group}\GUIX Studio 6.4\GUIX Studio"; Filename: "{app}\studio\GUIX_Studio.exe"
+Name: "{group}\GUIX Studio 6.4\GUIX Studio User's Guide"; Filename: "https://aka.ms/azrtos-guix-studio-user-guide"
+Name: "{group}\GUIX Studio 6.4\GUIX User's Guide"; Filename: "https://aka.ms/azrtos-guix-user-guide"
+Name: "{group}\GUIX Studio 6.4\{cm:UninstallProgram,GUIX Studio}"; Filename: "{uninstallexe}"
+Name: "{commondesktop}\GUIX Studio 6.4.0.0"; Filename: "{app}\studio\GUIX_Studio.exe"; Tasks: desktopicon
 
 [Registry]
 Root: HKCR; Subkey: ".gxp"; ValueType: string; ValueName: ""; ValueData: "GUIX_Studio_Project"; Flags: uninsdeletevalue; Tasks: associate

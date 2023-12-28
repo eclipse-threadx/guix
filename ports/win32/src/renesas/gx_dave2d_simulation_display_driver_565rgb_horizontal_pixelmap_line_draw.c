@@ -36,7 +36,7 @@
 /*    _gx_dave2d_simulation_display_driver_565rgb_horizontal              */
 /*      _pixelmap_line_draw                                               */
 /*                                                        PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -69,7 +69,7 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_dave2d_simulation_display_driver_565rgb_horizontal_pixelmap_line_compressed_write(GX_DRAW_CONTEXT *context,
@@ -171,7 +171,7 @@ GX_PIXELMAP       *pixelmap;
 /*    _gx_dave2d_simulation_display_driver_565rgb_horizontal              */
 /*      _pixelmap_line_draw                                               */
 /*                                                        PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -206,7 +206,7 @@ GX_PIXELMAP       *pixelmap;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_dave2d_simulation_display_driver_565rgb_horizontal_pixelmap_line_draw(GX_DRAW_CONTEXT *context,

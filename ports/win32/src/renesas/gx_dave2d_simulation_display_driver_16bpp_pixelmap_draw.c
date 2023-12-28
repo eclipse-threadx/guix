@@ -36,7 +36,7 @@
 /*                                                                        */
 /*    _gx_dave2d_simulation_display_driver_565rgb_pixelmap_c_write        */
 /*                                                        PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -69,7 +69,7 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_dave2d_simulation_display_driver_565rgb_pixelmap_compressed_write(GX_DRAW_CONTEXT *context,
@@ -189,7 +189,7 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_dave2d_simulation_display_driver_16bpp_4444argb_pixelmap_       */
 /*    c_alpha_write                                       PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -222,7 +222,7 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_dave2d_simulation_display_driver_16bpp_4444argb_pixelmap_compressed_alpha_write(GX_DRAW_CONTEXT *context,
@@ -380,7 +380,7 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    _gx_dave2d_simulation_display_driver_16bpp_4444bgra_pixelmap_       */
 /*    compressed_alpha_write                              PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -413,7 +413,7 @@ GX_RECTANGLE *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_dave2d_simulation_display_driver_16bpp_4444bgra_pixelmap_compressed_alpha_write(GX_DRAW_CONTEXT *context,
@@ -572,7 +572,7 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*    _gx_dave2d_simulation_display_driver_16bpp_32argb_pixelmap_         */
 /*    compressed_write                                                    */
 /*                                                        PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -606,7 +606,7 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_dave2d_simulation_display_driver_16bpp_32argb_pixelmap_compressed_write(GX_DRAW_CONTEXT *context,
@@ -749,7 +749,7 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*    _gx_dave2d_simulation_display_driver_16bpp_32argb_pixelmap          */
 /*    _raw_write                                                          */
 /*                                                        PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -783,7 +783,7 @@ GX_RECTANGLE   *clip = context -> gx_draw_context_clip;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_dave2d_simulation_display_driver_16bpp_32argb_pixelmap_raw_write(GX_DRAW_CONTEXT *context,
@@ -855,7 +855,7 @@ GX_UBYTE           b;
 /*                                                                        */
 /*    _gx_dave2d_simulation_display_driver_565rgb_pixelmap_blend          */
 /*                                                        PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -895,7 +895,7 @@ GX_UBYTE           b;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_dave2d_simulation_display_driver_565rgb_pixelmap_blend(GX_DRAW_CONTEXT *context,
@@ -978,7 +978,7 @@ GX_BOOL drawn = GX_FALSE;
 /*                                                                        */
 /*    _gx_dave2d_simulation_display_driver_16bpp_pixelmap_draw            */
 /*                                                        PORTABLE C      */
-/*                                                           6.x          */
+/*                                                           6.4.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Ting Zhu, Microsoft Corporation                                     */
@@ -1012,7 +1012,7 @@ GX_BOOL drawn = GX_FALSE;
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  xx-xx-xxxx     Ting Zhu                 Initial Version 6.x           */
+/*  12-31-2023     Ting Zhu                 Initial Version 6.4.0         */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_dave2d_simulation_display_driver_16bpp_pixelmap_draw(GX_DRAW_CONTEXT *context,
