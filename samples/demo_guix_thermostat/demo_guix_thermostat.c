@@ -19,6 +19,7 @@ INT               i_temperature = 79;
 
 VOID  start_guix(VOID);
 UINT  win32_graphics_driver_setup_565rgb(GX_DISPLAY *display);
+UINT  string_length_get(GX_CONST GX_CHAR* input_string, UINT max_string_length);
 
 int main(int argc, char ** argv)
 {
@@ -122,7 +123,7 @@ GX_STRING string;
 
     gx_utility_ltoa(i_temperature, str_value, 10);
     string.gx_string_ptr = str_value;
-    string.gx_string_length = sizeof(str_value) - 1;
+    string.gx_string_length = string_length_get(str_value, sizeof(str_value) - 1);
     gx_prompt_text_set_ext(prompt, &string);
 }
 
@@ -163,4 +164,24 @@ INT                angle;
     return 0;
 }
 
+/******************************************************************************************/
+UINT string_length_get(GX_CONST GX_CHAR* input_string, UINT max_string_length)
+{
+    UINT length = 0;
+
+    if (input_string)
+    {
+        /* Traverse the string.  */
+        for (length = 0; input_string[length]; length++)
+        {
+            /* Check if the string length is bigger than the max string length.  */
+            if (length >= max_string_length)
+            {
+                break;
+            }
+        }
+    }
+
+    return length;
+}
 
