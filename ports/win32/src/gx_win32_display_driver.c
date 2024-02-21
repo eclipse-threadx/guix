@@ -584,7 +584,7 @@ LONG  status;
 
     icon_path[0] = 0;
 
-    status = RegOpenKeyExA(HKEY_LOCAL_MACHINE, "Software\\Microsoft\\Azure_RTOS\\GUIX\\InstallDir", 0, READ_CONTROL | KEY_QUERY_VALUE, &key);
+    status = RegOpenKeyExA(HKEY_LOCAL_MACHINE, "Software\\Eclipse Foundation\\GUIX\\InstallDir", 0, READ_CONTROL | KEY_QUERY_VALUE, &key);
 
     if (key)
     {

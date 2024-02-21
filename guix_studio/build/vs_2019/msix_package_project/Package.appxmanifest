@@ -9,12 +9,13 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
-    Version="6.4.0.0"  Name="Microsoft.AzureRTOSGUIXStudio"/>
+    Name="Eclipse.EclipseThreadXTraceX"
+    Publisher="CN=Eclipse Foundation, O=Eclipse Foundation, L=Ottawa, S=Ontario, C=CA"
+    Version="6.4.0.0" />
 
   <Properties>
-    <DisplayName>Azure RTOS GUIX Studio</DisplayName>
-    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <DisplayName>Eclipse ThreadX GUIX Studio</DisplayName>
+    <PublisherDisplayName>Eclipse Foundation</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 

@@ -220,7 +220,7 @@ BOOL CstudioxApp::InitInstance()
     studiox_version_string += CString("-engineering");
 #endif
 
-    CString fulltitle = _T("Azure RTOS GUIX Studio ");
+    CString fulltitle = _T("Eclipse ThreadX GUIX Studio ");
     fulltitle += studiox_version_string;
 
     m_pMainWnd->SetWindowText(fulltitle);
@@ -456,7 +456,7 @@ void CstudioxApp::OnAppAbout()
 
 void CstudioxApp::OnUsersGuide()
 {
-    ShellExecute(NULL, _T("open"), _T("https://aka.ms/azrtos-guix-studio-user-guide"), NULL, NULL, SW_SHOW);
+    ShellExecute(NULL, _T("open"), _T("https://github.com/eclipse-threadx/rtos-docs"), NULL, NULL, SW_SHOW);
 }
 
 void CstudioxApp::OnProjectNew()
