@@ -8,7 +8,7 @@
 #define new DEBUG_NEW
 #endif
 
-char guix_repo_url[] = "https://github.com/azure-rtos/guix.git";
+char guix_repo_url[] = "https://github.com/eclipse-threadx/guix.git";
 
 BEGIN_MESSAGE_MAP(clone_repo_dialog, express_dialog)
     ON_WM_CLOSE()
