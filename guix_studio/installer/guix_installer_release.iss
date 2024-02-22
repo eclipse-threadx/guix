@@ -6,14 +6,14 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{1D4932BC-ACD4-4292-9530-92C8BE2E58CF}
-AppName= GUIX Studio
+AppName=GUIX Studio
 AppVersion=6.4.0.0
-;AppPublisher=
-AppPublisherURL=https://azure.com/rtos
-AppSupportURL=https://azure.com/rtos
-AppUpdatesURL=https://azure.com/rtos
-DefaultDirName={sd}\Azure_RTOS\GUIX_Studio_6.4
-DefaultGroupName=Azure RTOS
+AppPublisher=Eclipse Foundation
+AppPublisherURL=https://threadx.io/
+AppSupportURL=https://threadx.io/
+AppUpdatesURL=https://threadx.io/
+DefaultDirName={sd}\Eclipse_ThreadX\GUIX_Studio_6.4
+DefaultGroupName=Eclipse_ThreadX
 CloseApplications=no
 ;LicenseFile=
 OutputBaseFilename=guix_studio_setup_version_6.4.0.0
@@ -47,8 +47,8 @@ Source: "build\vs_2019\Release\guix_studio.exe"; DestDir: "{app}\studio"; DestNa
 
 [Icons]
 Name: "{group}\GUIX Studio 6.4\GUIX Studio"; Filename: "{app}\studio\GUIX_Studio.exe"
-Name: "{group}\GUIX Studio 6.4\GUIX Studio User's Guide"; Filename: "https://aka.ms/azrtos-guix-studio-user-guide"
-Name: "{group}\GUIX Studio 6.4\GUIX User's Guide"; Filename: "https://aka.ms/azrtos-guix-user-guide"
+Name: "{group}\GUIX Studio 6.4\GUIX Studio User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/about-guix-studio.md"
+Name: "{group}\GUIX Studio 6.4\GUIX User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/about-guix-studio.md"
 Name: "{group}\GUIX Studio 6.4\{cm:UninstallProgram,GUIX Studio}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\GUIX Studio 6.4.0.0"; Filename: "{app}\studio\GUIX_Studio.exe"; Tasks: desktopicon
 
@@ -58,7 +58,7 @@ Root: HKCR; Subkey: "GUIX_Studio_Project"; ValueType: string; ValueName: ""; Val
 Root: HKCR; Subkey: "GUIX_Studio_Project\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\studio\GUIX_Studio.exe,0"; Tasks: associate
 Root: HKCR; Subkey: "GUIX_Studio_Project\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\studio\GUIX_Studio.exe"" ""%1"""; Tasks: associate
 
-Root: HKLM; Subkey: "Software\Microsoft\Azure_RTOS\GUIX\InstallDir"; ValueType: string; ValueName: ""; ValueData: "{app}";
+Root: HKLM; Subkey: "Software\Eclipse Foundation\GUIX\InstallDir"; ValueType: string; ValueName: ""; ValueData: "{app}";
 
 [Run]
 Filename: "{tmp}\vc_redist.x86.exe"; StatusMsg: "Installing Visual C++ 2015-2019 Redistributable(x86)"; Parameters:"/passive"

@@ -8,7 +8,7 @@
 #define new DEBUG_NEW
 #endif
 
-char guix_repo_url[] = "https://github.com/azure-rtos/guix.git";
+char guix_repo_url[] = "https://github.com/eclipse-threadx/guix.git";
 
 BEGIN_MESSAGE_MAP(clone_repo_dialog, express_dialog)
     ON_WM_CLOSE()
@@ -263,7 +263,7 @@ void clone_repo_dialog::OnCloneRepo()
     TCHAR folder_path[MAX_PATH];
     char *repo_url = guix_repo_url;
 
-    if (BrowseForFolder(this->GetSafeHwnd(), _T("Select root for GUIX git repository clone..."), _T("C:\\Azure_RTOS"), folder_path))
+    if (BrowseForFolder(this->GetSafeHwnd(), _T("Select root for GUIX git repository clone..."), _T("C:\\Eclipse_ThreadX"), folder_path))
     {
         //"git clone --depth 1 aka.ms/azrtos-guix-repo --branch master --single-branch"
 

@@ -846,7 +846,7 @@ void MakePath(CString path)
 CString GetAppDataPath()
 {
     CString path = CString(getenv("APPDATA"));
-    path += "\\Microsoft\\Azure_RTOS\\GUIX_Studio";
+    path += "\\Eclipse Foundation\\Eclipse_ThreadX\\GUIX_Studio";
     MakePath(path);
     return path;
 }
@@ -1037,7 +1037,7 @@ CString GetSamplesDir()
             {
                 // Not installed from App Store, so running local test.
                 // Added this for testing, version test might needed here.
-                return _T("C:\\Azure_RTOS\\GUIX_Studio_test");
+                return _T("C:\\Eclipse_ThreadX\\GUIX_Studio_test");
             }
         }
     }
