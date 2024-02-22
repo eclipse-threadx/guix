@@ -456,7 +456,7 @@ void CstudioxApp::OnAppAbout()
 
 void CstudioxApp::OnUsersGuide()
 {
-    ShellExecute(NULL, _T("open"), _T("https://github.com/eclipse-threadx/rtos-docs"), NULL, NULL, SW_SHOW);
+    ShellExecute(NULL, _T("open"), _T("https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/about-guix-studio.md"), NULL, NULL, SW_SHOW);
 }
 
 void CstudioxApp::OnProjectNew()

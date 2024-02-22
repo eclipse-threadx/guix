@@ -47,8 +47,8 @@ Source: "build\vs_2019\Release\guix_studio.exe"; DestDir: "{app}\studio"; DestNa
 
 [Icons]
 Name: "{group}\GUIX Studio 6.4\GUIX Studio"; Filename: "{app}\studio\GUIX_Studio.exe"
-Name: "{group}\GUIX Studio 6.4\GUIX Studio User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs"
-Name: "{group}\GUIX Studio 6.4\GUIX User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs"
+Name: "{group}\GUIX Studio 6.4\GUIX Studio User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/about-guix-studio.md"
+Name: "{group}\GUIX Studio 6.4\GUIX User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/about-guix-studio.md"
 Name: "{group}\GUIX Studio 6.4\{cm:UninstallProgram,GUIX Studio}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\GUIX Studio 6.4.0.0"; Filename: "{app}\studio\GUIX_Studio.exe"; Tasks: desktopicon
 
