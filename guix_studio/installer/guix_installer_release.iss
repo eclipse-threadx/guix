@@ -6,7 +6,7 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{1D4932BC-ACD4-4292-9530-92C8BE2E58CF}
-AppName=Eclipse ThreadX GUIX Studio
+AppName=GUIX Studio
 AppVersion=6.4.0.0
 AppPublisher=Eclipse Foundation
 AppPublisherURL=https://threadx.io/
