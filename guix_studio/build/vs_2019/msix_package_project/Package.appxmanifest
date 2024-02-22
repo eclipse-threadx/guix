@@ -9,7 +9,7 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="Eclipse.EclipseThreadXGUIXStudio"
+    Name="Microsoft.AzureRTOSGUIXStudio"
     Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
     Version="6.4.0.0" />
 
