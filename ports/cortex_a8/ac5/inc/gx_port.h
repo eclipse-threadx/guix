@@ -138,7 +138,7 @@ typedef SHORT  GX_VALUE;
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "Copyright (c) 2024 Microsoft Corporation.  *  GUIX Cortex-A8/AC5 Version 6.4.0 *";
+    "Copyright (c) 2024 Microsoft Corporation.  *  GUIX Cortex-A8/AC5 Version 6.4.1 *";
 #else
 extern  CHAR _gx_version_id[];
 #endif

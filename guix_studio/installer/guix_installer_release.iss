@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{1D4932BC-ACD4-4292-9530-92C8BE2E58CF}
 AppName=GUIX Studio
-AppVersion=6.4.0.0
+AppVersion=6.4.1.0
 AppPublisher=Eclipse Foundation
 AppPublisherURL=https://threadx.io/
 AppSupportURL=https://threadx.io/
@@ -16,7 +16,7 @@ DefaultDirName={sd}\Eclipse_ThreadX\GUIX_Studio_6.4
 DefaultGroupName=Eclipse_ThreadX
 CloseApplications=no
 ;LicenseFile=
-OutputBaseFilename=guix_studio_setup_version_6.4.0.0
+OutputBaseFilename=guix_studio_setup_version_6.4.1.0
 SetupIconFile=graphics\guix_1616icon.ico
 Compression=lzma
 SolidCompression=yes
@@ -50,7 +50,7 @@ Name: "{group}\GUIX Studio 6.4\GUIX Studio"; Filename: "{app}\studio\GUIX_Studio
 Name: "{group}\GUIX Studio 6.4\GUIX Studio User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/about-guix-studio.md"
 Name: "{group}\GUIX Studio 6.4\GUIX User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/about-guix-studio.md"
 Name: "{group}\GUIX Studio 6.4\{cm:UninstallProgram,GUIX Studio}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\GUIX Studio 6.4.0.0"; Filename: "{app}\studio\GUIX_Studio.exe"; Tasks: desktopicon
+Name: "{commondesktop}\GUIX Studio 6.4.1.0"; Filename: "{app}\studio\GUIX_Studio.exe"; Tasks: desktopicon
 
 [Registry]
 Root: HKCR; Subkey: ".gxp"; ValueType: string; ValueName: ""; ValueData: "GUIX_Studio_Project"; Flags: uninsdeletevalue; Tasks: associate
