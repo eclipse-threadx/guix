@@ -1,0 +1,1378 @@
+                                            GUIX
+                                            
+For version 6 and higher, please refer to the release notes on GitHub at https://github.com/eclipse-threadx/guix/releases.
+Below is the revision history for 5.x.
+
+
+08-15-2019 GUIX generic code version 5.6
+
+   New features for the 5.6 release:
+
+       Eliminate the internal usage of strlen, strcpy, strcat functions for safety.
+       Add new APIs to access the tree structured list of visible widgets.
+       Add new API to access cursor position of text input widgets.
+       Add new API to assign the value of the scrollbar.
+       Updated the home automation demo with a new look and feel.
+       Improved slide landing animation.
+       Improve precision of line and shape drawing.
+       Add support for 3 bpp glyph drawing when running in 8 bpp palette mode.
+       Improved the logic and code clarity of the multi_line_text_input widget.
+       Added public utility function gx_utility_circle_point_get(), which is useful for custom drawing.
+      
+   Bug fixes for the 5.6 release:
+
+       Modify sprite to stay on last frame when sprite animation is completed.
+       Fix binary resource file containing duplicated font data for multi-theme project.
+       Fix potential memory access error in jpeg decoder block.
+       Fix in animation_drag_tracking logic.
+       Fix C-Stat warnings.
+       Fix issue that pattern line draw might draw outside clipping rectangle.
+       Fix bug that non-scrolling list generates list-select when pen-down and pen-up not consistent child widget.
+       Fix race condition in gx_system_timer_start() API.
+
+   Files added for this release:
+
+       gx_display_driver_8bpp_glyph_3bit_draw.c
+       gx_multi_line_text_input_cursor_pos_get.c
+       gx_scrollbar_value_set.c
+       gx_system_text_render_style_set.c
+       gx_utility_circle_point_get.c
+       gx_utility_string_length_check.c
+       gx_utility_thai_glyph_shaping.c
+       gx_utility_utf8_string_backward_character_length_get.c
+       gx_widget_first_child_get.c
+       gx_widget_last_child_get.c
+       gx_widget_next_sibling_get.c
+       gx_widget_parent_get.c
+       gx_widget_previous_sibling_get.c
+       gx_widget_top_visible_child_find.c
+       gx_window_scroll.c
+       gxe_multi_line_text_input_backspace.c
+       gxe_multi_line_text_input_char_insert.c
+       gxe_multi_line_text_input_cursor_pos_get.c
+       gxe_multi_line_text_input_delete.c
+       gxe_multi_line_text_input_down_arrow.c
+       gxe_multi_line_text_input_end.c
+       gxe_multi_line_text_input_home.c
+       gxe_multi_line_text_input_left_arrow.c
+       gxe_multi_line_text_input_right_arrow.c
+       gxe_multi_line_text_input_up_arrow.c
+       gxe_scrollbar_value_set.c
+       gxe_utility_circle_point_get.c
+       gxe_widget_first_child_get.c
+       gxe_widget_last_child_get.c
+       gxe_widget_next_sibling_get.c
+       gxe_widget_parent_get.c
+       gxe_widget_previous_sibling_get.c
+       gxe_widget_top_visible_child_find.c
+
+   Files removed for this release:
+       gx_display_driver_circle_point_get.c
+       gx_utility_utf8_string_character_count_get.c
+
+11-15-2018 GUIX generic code version 5.5.0
+
+   New features for the 5.5.0 release:
+       Added macros GX_THREAD_SLEEPING and GX_THREAD_AWAKE to allow application to be notified of GUIX task state change.
+       Added gx_binres_language_count_get() and gx_binres_language_info_load() APIs.
+       Add support for easing functions for slide landing animations.
+       Add support for runtime retrieval of language information from binary resource data file.
+       Added new GX_RADIAL_SLIDER widget type.
+       Added new function gx_utility_canvas_to_bmp to export canvas memory and Windows compatible bitmap file.
+       Added support for GUIX_5_4_0_COMPATIBILITY definition, to allow certain release 5.5.x APIs
+            to be backwards compatible with applications written to use release 5.4.0
+       Add support for BiDi text display.
+       Add support for font kerning information to improve glyph spacing.
+       Add disabled colors for all text widgets.
+       Add support for easing functions (widget animations).
+       Add text mark/select/cut/copy/paste support for single and multi-line text input.
+       Add support for drawing rotated text using Synergy fonts (different font bit ordering).
+       Modify to allow the user to define the numeric scroll wheel text formatting function.
+       Add new API to allow the application to control the animation landing speed for screen drag animations.
+       Add new API to allow the application to define the canvas memory pointer without directly modifying the canvas control block.
+       Add support for 1:5:5:5 graphics format.
+       Add support for animation easing functions for improved realism.
+       Added new gx_system_screen_stack APIs to better support nested menu systems.
+       Added system clipboard to support runtime text cut/copy/paste operations.
+       Refactor to break internal widget drawing functions into several smaller sub-functions, which enables custom
+           application drawing functions to re-use the different parts of the internal drawing functions (code re-use improvement).
+   
+    Bug fixes for the 5.5.0 release:
+       Fix bug in gx_canvas_line_draw() which forced brush.gx_brush_width to 1.
+       Limit the height of arc, circle, ellipse, and pie drawing to height of display to prevent array out-of-bounds.
+       Fix bug in GX_ANIMATION_QUART_EASE_IN_OUT easing function.
+       Fix bug in Win32 display driver to insure GX_KEY_RELEASE events are generated.
+       Fix bug that kerning fonts were not supported for rotated text drawing.
+       Fix bug in multi-line text view scrolling.
+       Fix bug in cache size calculation for gx_multi_line_text_view.
+       Fix bug in maintenance of widget z-order drawing.
+       Improve logic for hiding widgets so that hidden widgets to not become visible when the parent becomes visible.
+       Fix bug in animation drag tracking logic.
+       Fix bug in timer event handling for modal windows.
+       Fix bug in support for 1:5:5:5 image format
+       Fix bug in button event handling.
+       Fix bug in gx_display_driver_block_move function.
+       Fix bug in gx_canvas_rotated_text_draw function.
+       Fix bug in vertical_list and horizontal list slide check.
+       Fix bug in return code of gx_system_timer_stop()
+       Fix bug in gx_multi_line_text_view_line_space_set().
+       Fix bug in gx_multi_line_text_view_whitespace_set().
+       Fix potential bug of data index exceeding valid size in gx_image_reader_jpeg_bits_get().
+
+    General modifications for the 5.5.0 release:
+       Updated all function headers and comments.
+       Modify button event processing to not generate a button-clicked  event if the PEN_UP is not within the button boundry.
+       Eliminate warnings generated by C-Stat analysis.
+       Modify gx_window_execute() to not allow nested calls to this API for the same window.
+       Eliminated dead code to make 100% code coverage testing possible.
+       Modify language_table to be a member of the display control block, which allows each display to maintain its own language table
+          instead of having one system language table used by all displays.
+       Modify gx_canvas_pixlemap_blend() API to support alphamap pixelmap as input.
+       Modify to send GX_ANIMATION_COMPLETE event to the animation target, if the animation target is not NULL.
+       Modified gx_multi_line_text_view line-break algorithm to now allow line break immediately preceeding a whitespace character.
+       Fix compiler warnings.
+       Fix wrong API prototype definitions in gx_api.h
+       Add const qualifier to gx_widget_text_blend API.
+
+    General files added in this release:
+       gx_animation_landing_speed_set.c
+       gx_binres_language_count_get.c
+       gx_binres_language_info_load.c
+       gx_canvas_memory_define.c
+       gx_context_string_get.c
+       gx_display_active_language_set.c
+       gx_display_driver_332rgb_pixelmap_rotate.c
+       gx_display_driver_4444argb_pixelmap_rotate.c
+       gx_image_reader_colorspace_convert.c     /* renamed from gx_image_reader_dither.c */
+       gx_utility_canvas_to_bmp.c
+       gxe_animation_landing_speed_set.c
+       gxe_binres_language_count_get.c
+       gxe_binres_language_info_load.c
+       gxe_canvas_memory_define.c
+       gxe_context_string_get.c
+       gxe_utility_canvas_to_bmp.c
+
+    Files added for support of 1:5:5:5 graphics format:
+       gx_display_driver_1555xrgb_canvas_blend.c
+       gx_display_driver_1555xrgb_jpeg_draw.c
+       gx_display_driver_1555xrgb_native_color_get.c
+       gx_display_driver_1555xrgb_pixel_blend.c
+       gx_display_driver_1555xrgb_pixelmap_rotate.c
+       gx_display_driver_1555xrgb_png_draw.c
+       gx_display_driver_1555xrgb_setup.c
+       gx_utility_1555xrgb_pixelmap_resize.c
+       gx_utility_1555xrgb_pixelmap_rotate.c
+       win32_display_driver_1555xrgb.c
+
+    Files added to support independent language tables for each display:
+       gx_display_language_table_get.c
+       gx_display_language_table_set.c
+       gx_display_string_get.c
+       gx_display_string_table_get.c
+       gx_widget_string_get.c
+       gxe_display_active_language_set.c
+       gxe_display_language_table_get.c
+       gxe_display_language_table_set.c
+       gxe_display_string_get.c
+       gxe_display_string_table_get.c
+       gxe_widget_string_get.c
+
+    Files added to support text cut/copy/paste:
+       gx_multi_line_text_input_copy.c
+       gx_multi_line_text_input_cursor_visible.c
+       gx_multi_line_text_input_cut.c
+       gx_multi_line_text_input_fill_color_set.c
+       gx_multi_line_text_input_highlight_rectangle_get.c
+       gx_multi_line_text_input_mark_down.c
+       gx_multi_line_text_input_mark_end.c
+       gx_multi_line_text_input_mark_home.c
+       gx_multi_line_text_input_mark_next.c
+       gx_multi_line_text_input_mark_previous.c
+       gx_multi_line_text_input_mark_up.c
+       gx_multi_line_text_input_paste.c
+       gx_multi_line_text_input_text_color_set.c
+       gx_multi_line_text_input_text_rectangle_get.c
+       gx_multi_line_text_input_text_select.c
+       gx_single_line_text_input_copy.c
+       gx_single_line_text_input_cut.c
+       gx_single_line_text_input_draw_position_get.c
+       gx_single_line_text_input_fill_color_set.c
+       gx_single_line_text_input_mark_end.c
+       gx_single_line_text_input_mark_home.c
+       gx_single_line_text_input_mark_next.c
+       gx_single_line_text_input_mark_previous.c
+       gx_single_line_text_input_paste.c
+       gx_single_line_text_input_text_color_set.c
+       gx_single_line_text_input_text_rectangle_get.c
+       gx_single_line_text_input_text_select.c
+       gx_single_line_text_input_text_set.c
+       gxe_multi_line_text_input_event_process.c
+       gxe_multi_line_text_input_fill_color_set.c
+       gxe_multi_line_text_input_text_color_set.c
+       gxe_multi_line_text_input_text_select.c
+       gxe_multi_line_text_input_text_set.c
+       gxe_single_line_text_input_draw_position_get.c
+       gxe_single_line_text_input_fill_color_set.c
+       gxe_single_line_text_input_text_color_set.c
+       gxe_single_line_text_input_text_select.c
+       gxe_single_line_text_input_text_set.c
+
+    Files added to improve code re-use of internal drawing functions:
+       gx_progress_bar_background_draw.c
+       gx_multi_line_text_view_text_draw.c
+       gx_window_border_draw.c
+
+    Files added to support new GX_RADIAL_SLIDER widget:
+       gx_radial_slider.h
+       gx_radial_slider_anchor_angle_calculate.c
+       gx_radial_slider_anchor_angles_set.c
+       gx_radial_slider_angle_calculate.c
+       gx_radial_slider_angle_set.c
+       gx_radial_slider_animation_set.c
+       gx_radial_slider_animation_start.c
+       gx_radial_slider_animation_update.c
+       gx_radial_slider_create.c
+       gx_radial_slider_draw.c
+       gx_radial_slider_event_process.c
+       gx_radial_slider_info_get.c
+       gx_radial_slider_info_set.c
+       gx_radial_slider_needle_rectangle_calculate.c
+       gx_radial_slider_pixelmap_set.c
+       gxe_radial_slider_anchor_angles_set.c
+       gxe_radial_slider_angle_set.c
+       gxe_radial_slider_animation_set.c
+       gxe_radial_slider_animation_start.c
+       gxe_radial_slider_create.c
+       gxe_radial_slider_event_process.c
+       gxe_radial_slider_info_get.c
+       gxe_radial_slider_info_set.c
+       gxe_radial_slider_pixelmap_set.c
+
+    Files added to support runtime BiDi text rendering:
+       gx_system_bidi_text_disable.c
+       gx_system_bidi_text_enable.c
+       gx_utility_bidi_bracket_pair_get.c
+       gx_utility_bidi_character_type_get.c
+       gx_utility_bidi_mirroring_get.c
+       gx_utility_bidi_paragraph_reorder.c
+
+    Files added to support system clipboard:
+       gx_system_clipboard_get.c
+       gx_system_clipboard_put.c
+
+    Files added to support system screen stack API:
+       gx_system_screen_stack_create.c
+       gx_system_screen_stack_get.c
+       gx_system_screen_stack_pop.c
+       gx_system_screen_stack_push.c
+       gx_system_screen_stack_reset.c
+       gxe_system_screen_stack_create.c
+       gxe_system_screen_stack_get.c
+       gxe_system_screen_stack_pop.c
+       gxe_system_screen_stack_push.c
+
+    Files added to support animation easing functions:
+       gx_utility_easing_function_calculate.c
+
+    Files removed for this release:
+       gx_image_reader_dither.c         /* changed to gx_image_reader_colorspace_convert.c */
+       gxe_utility_math_acos.c          /* error-checking shell is not needed              */
+       gxe_utility_math_asin.c          /* error-checking sheel is not needed              */
+
+    Files modified for this release:
+       All .c and .h files have been modified to add and modify revision history.
+
+
+11-06-2017  GUIX generic code version 5.4
+
+    The following files are added to support numeric_pixelmap_prompt widget type:
+        gx_numeric_pixelmap_prompt.h
+        gx_numeric_pixelmap_prompt_create.c
+        gx_numeric_pixelmap_prompt_format.c
+        gx_numeric_pixelmap_prompt_format_function_set.c
+        gx_numeric_pixelmap_prompt_value_set.c
+        gxe_numeric_pixelmap_prompt_create.c
+        gxe_numeric_pixelmap_prompt_format_function_set.c
+        gxe_numeric_pixelmap_prompt_value_set.c
+
+    The following files are added to support the new numeric_prompt widget type:
+        gx_numeric_prompt.h
+        gx_numeric_prompt_create.c
+        gx_numeric_prompt_format.c
+        gx_numeric_prompt_format_function_set.c
+        gx_numeric_prompt_value_set.c
+        gxe_numeric_prompt_create.c
+        gxe_numeric_prompt_format_function_set.c
+        gxe_numeric_prompt_value_set.c
+
+    The following files are added to support the scroll_wheel_widget types:
+        gx_numeric_scroll_wheel_create.c
+        gx_numeric_scroll_wheel_range_set.c
+        gx_numeric_scroll_wheel_text_get.c
+        gx_scroll_wheel.h
+        gx_scroll_wheel_create.c
+        gx_scroll_wheel_event_process.c
+        gx_scroll_wheel_gradient_alpha_set.c
+        gx_scroll_wheel_gradient_create.c
+        gx_scroll_wheel_row_height_set.c
+        gx_scroll_wheel_scroll.c
+        gx_scroll_wheel_selected_background_set.c
+        gx_scroll_wheel_selected_get.c
+        gx_scroll_wheel_selected_row_calculate.c
+        gx_scroll_wheel_selected_set.c
+        gx_scroll_wheel_speed_set.c
+        gx_scroll_wheel_total_rows_set.c
+        gx_string_scroll_wheel_create.c
+        gx_string_scroll_wheel_string_id_list_set.c
+        gx_string_scroll_wheel_string_list_set.c
+        gx_string_scroll_wheel_text_get.c
+        gx_text_scroll_wheel_callback_set.c
+        gx_text_scroll_wheel_create.c
+        gx_text_scroll_wheel_draw.c
+        gx_text_scroll_wheel_font_set.c
+        gx_text_scroll_wheel_text_color_set.c
+        gxe_numeric_scroll_wheel_create.c
+        gxe_numeric_scroll_wheel_range_set.c
+        gxe_scroll_wheel_create.c
+        gxe_scroll_wheel_event_process.c
+        gxe_scroll_wheel_gradient_alpha_set.c
+        gxe_scroll_wheel_row_height_set.c
+        gxe_scroll_wheel_selected_background_set.c
+        gxe_scroll_wheel_selected_get.c
+        gxe_scroll_wheel_selected_set.c
+        gxe_scroll_wheel_speed_set.c
+        gxe_scroll_wheel_total_rows_set.c
+        gxe_string_scroll_wheel_create.c
+        gxe_string_scroll_wheel_string_id_list_set.c
+        gxe_string_scroll_wheel_string_list_set.c
+        gxe_text_scroll_wheel_callback_set.c
+        gxe_text_scroll_wheel_create.c
+        gxe_text_scroll_wheel_font_set.c
+        gxe_text_scroll_wheel_text_color_set.c
+
+    The following files are added to support the new accordion_menu widget:
+        gx_accordion_menu_create.c
+        gx_accordion_menu_draw.c
+        gx_accordion_menu_event_process.c
+        gx_accordion_menu_position.c
+        gx_menu.h
+        gx_menu_create.c
+        gx_menu_draw.c
+        gx_menu_insert.c
+        gx_menu_list_shift.c
+        gx_menu_position.c
+        gx_menu_remove.c
+        gx_menu_text_draw.c
+        gx_menu_text_offset_set.c
+        gxe_accordion_menu_create.c
+        gxe_accordion_menu_event_process.c
+        gxe_accordion_menu_position.c
+        gxe_menu_create.c
+        gxe_menu_insert.c
+        gxe_menu_remove.c
+        gxe_menu_text_offset_set.c
+
+    The following files are added to support the new tree_view widget:
+        gx_tree_view.h
+        gx_tree_view_create.c
+        gx_tree_view_draw.c
+        gx_tree_view_event_process.c
+        gx_tree_view_indentation_set.c
+        gx_tree_view_position.c
+        gx_tree_view_root_line_color_set.c
+        gx_tree_view_root_pixelmap_set.c
+        gx_tree_view_scroll.c
+        gx_tree_view_scroll_info_get.c
+        gx_tree_view_selected_get.c
+        gx_tree_view_selected_set.c
+        gxe_tree_view_create.c
+        gxe_tree_view_event_process.c
+        gxe_tree_view_indentation_set.c
+        gxe_tree_view_position.c
+        gxe_tree_view_root_line_color_set.c
+        gxe_tree_view_root_pixelmap_set.c
+        gxe_tree_view_selected_get.c
+        gxe_tree_view_selected_set.c
+
+    The following files are added to support software mouse cursor:
+        gx_canvas_mouse_define.c
+        gx_canvas_mouse_hide.c
+        gx_canvas_mouse_show.c
+        gx_display_driver_generic_mouse_cursor_define.c
+        gx_display_driver_generic_mouse_draw.c
+        gx_display_driver_generic_mouse_enable.c
+        gx_display_driver_generic_mouse_position_set.c
+        gxe_canvas_mouse_define.c
+        gxe_canvas_mouse_hide.c
+        gxe_canvas_mouse_show.c
+        gx_display_driver_16bpp_mouse_capture.c
+        gx_display_driver_16bpp_mouse_restore.c
+        gx_display_driver_1bpp_mouse_capture.c
+        gx_display_driver_1bpp_mouse_restore.c
+        gx_display_driver_24xrgb_mouse_capture.c
+        gx_display_driver_24xrgb_mouse_restore.c
+        gx_display_driver_4bpp_mouse_capture.c
+        gx_display_driver_4bpp_mouse_restore.c
+        gx_display_driver_8bpp_mouse_capture.c
+        gx_display_driver_8bpp_mouse_restore.c
+
+    The following files are added to support runtime gradient creation:
+        gx_utility_gradient_create.c
+        gx_utility_gradient_delete.c
+        gxe_utility_gradient_create.c
+        gxe_utility_gradient_delete.c
+
+    The following files were added to support 4 bpp grayscale graphics format:
+        gx_display_driver_4bpp_glyph_1bit_draw.c
+        gx_display_driver_4bpp_glyph_4bit_draw.c
+        gx_display_driver_4bpp_grayscale_setup.c
+        gx_display_driver_4bpp_horizontal_line_draw.c
+        gx_display_driver_4bpp_horizontal_pattern_line_draw.c
+        gx_display_driver_4bpp_horizontal_pixelmap_line_draw.c
+        gx_display_driver_4bpp_mouse_capture.c
+        gx_display_driver_4bpp_mouse_restore.c
+        gx_display_driver_4bpp_native_color_get.c
+        gx_display_driver_4bpp_pixel_write.c
+        gx_display_driver_4bpp_pixelmap_draw.c
+        gx_display_driver_4bpp_pixelmap_rotate.c
+        gx_display_driver_4bpp_row_pitch_get.c
+        gx_display_driver_4bpp_simple_line_draw.c
+        gx_display_driver_4bpp_vertical_line_draw.c
+        gx_display_driver_4bpp_vertical_pattern_line_draw.c
+        gx_utility_1bpp_pixelmap_resize.c
+        gx_utility_1bpp_pixelmap_rotate.c
+        gx_utility_4bpp_pixelmap_resize.c
+        gx_utility_4bpp_pixelmap_rotate.c
+
+
+    The following files were added to support a system animation pool:
+        gx_system_animation_free.c
+        gx_system_animation_get.c
+
+    The following files were added to support pen speed configuration:
+        gx_system_pen_configure.c
+
+    The following files were added to improve binary resource utilization:
+        gx_binres_language_table_load.c
+        gx_binres_loader.h
+        gx_binres_theme_load.c
+        gxe_binres_language_table_load.c
+        gxe_binres_theme_load.c
+
+    The following files were modified to fix non-conformities:
+        gx_button_event_process.c
+        gx_system_canvas_refresh.c
+        gx_canvas_composite_create.c
+        gx_utility_string_to_alphamap.c
+        gx_utility_pixelmap_resize.c
+        gx_utility_pixelmap_rotate.c
+        gx_utility_pixelmap_simple_rotate.c
+        gx_system_rtos_bind.c
+        gx_system_rtos_bind.h
+        gx_system_thread_entry.c
+        gx_system_timer_start.c
+        gx_system_timer_stop.c
+        gx_system_timer_update.c
+        gx_vertical_list_event_process.c
+        gx_widget_border_style_set.c
+        gx_widget_style_add.c
+        gx_widget_style_remove.c
+        gx_widget_style_set.c
+        gxe_system_timer_stop.c
+        gxe_widget_show.c
+        gx_widget_resize.c
+        gx_widget_shift.c
+
+
+    The following files were modified to support vertical screen drag animations,
+    support simultaneous fade/move animations, and improve support for fade
+    animations without an animation canvas, and usage of the system
+    animation pool:
+        gx_animation.h
+        gx_animation_canvas_define.c
+        gx_animation_complete.c
+        gx_animation_drag_disable.c
+        gx_animation_drag_enable.c
+        gx_animation_drag_event_process.c
+        gx_animation_drag_tracking.c
+        gx_animation_drag_tracking_start.c
+        gx_animation_slide_landing.c
+        gx_animation_slide_landing_start.c
+        gx_animation_start.c
+        gx_animation_stop.c
+        gx_animation_update.c
+        gxe_animation_canvas_define.c
+        gxe_animation_drag_enable.c
+        gxe_animation_start.c
+
+
+	The following files have been modified to support drawing with brush alpha:
+        gx_canvas_glyphs_draw.c
+        gx_canvas_line_draw.c
+	gx_canvas_pie_draw.c
+	gx_canvas_pixel_draw.c
+	gx_canvas_polygon_draw.c
+	gx_canvas_text_draw.c
+ 	gx_display_driver_16bpp_horizontal_line_draw.c
+	gx_display_driver_16bpp_horizontal_line_draw.c
+	gx_display_driver_16bpp_pixel_write.c
+	gx_display_driver_16bpp_pixelmap_blend.c
+        gx_display_driver_16bpp_pixelmap_draw.c
+        gx_display_driver_16bpp_pixelmap_rotate.c
+        gx_display_driver_16bpp_simple_line_draw.c
+        gx_display_driver_16bpp_vertical_line_draw.c
+        gx_display_driver_1bpp_canvas_copy.c
+        gx_display_driver_1bpp_glyph_1bpp_draw.c
+        gx_display_driver_1bpp_native_color_get.c
+        gx_display_driver_1bpp_pixelmap_draw.c
+        gx_display_driver_1bpp_vertical_pattern_line_draw.c
+        gx_display_driver_24xrgb_pixelmap_blend.c
+        gx_display_driver_32argb_pixel_blend.c
+        gx_display_driver_32argb_pixelmap_blend.c
+        gx_display_driver_32argb_pixelmap_draw.c
+        gx_display_driver_32bpp_glyph_1bit_draw.c
+        gx_display_driver_32bpp_horizontal_line_draw.c
+        gx_display_driver_32bpp_horizontal_pixelmap_line_draw.c
+        gx_display_driver_32bpp_pixel_write.c
+        gx_display_driver_32bpp_pixelmap_draw.c
+        gx_display_driver_32bpp_pixelmap_rotate.c
+        gx_display_driver_32bpp_simple_line_draw.c
+        gx_display_driver_32bpp_vertical_line_draw.c
+        gx_display_driver_332rgb_pixel_blend.c
+        gx_display_driver_332rgb_pixelmap_draw.c
+        gx_display_driver_4444argb_horizontal_pixelmap_line_draw.c
+        gx_display_driver_4444argb_pixel_blend.c
+        gx_display_driver_4444argb_pixelmap_draw.c
+        gx_display_driver_565rgb_glyph_1bit_draw.c
+        gx_display_driver_565rgb_horizontal_pixelmap_line_draw.c
+        gx_display_driver_565rgb_pixel_blend.c
+        gx_display_driver_8bit_palette_setup.c
+        gx_display_driver_8bpp_glyph_1bit_draw.c
+        gx_display_driver_8bpp_glyph_4bit_draw.c
+        gx_display_driver_8bpp_horizontal_line_draw.c
+        gx_display_driver_8bpp_horizontal_pixelmap_line_draw.c
+        gx_display_driver_8bpp_pixel_write.c
+        gx_display_driver_8bpp_pixelmap_blend.c
+        gx_display_driver_8bpp_pixelmap_rotate.c
+        gx_display_driver_8bpp_simple_line_draw.c
+        gx_display_driver_8bpp_vertical_line_draw.c
+        gx_display_driver_generic_aliased_arc_draw.c
+        gx_display_driver_generic_aliased_circle_draw.c
+        gx_display_driver_generic_aliased_ellipse_draw.c
+        gx_display_driver_generic_aliased_filled_circle_draw.c
+        gx_display_driver_generic_aliased_line_draw.c
+        gx_display_driver_generic_aliased_wide_arc_draw.c
+        gx_display_driver_generic_aliased_wide_circle_draw.c
+        gx_display_driver_generic_aliased_wide_ellipse_draw.c
+        gx_display_driver_generic_aliased_wide_line_draw.c
+        gx_display_driver_generic_alphamap_draw.c
+        gx_display_driver_generic_arc_draw.c
+        gx_display_driver_generic_arc_fill.c
+        gx_display_driver_generic_circle_draw.c
+        gx_display_driver_generic_circle_fill.c
+        gx_display_driver_generic_ellipse_draw.c
+        gx_display_driver_generic_ellipse_fill.c
+        gx_display_driver_generic_glyph_4bpp_draw.c
+        gx_display_driver_generic_glyph_8bpp_draw.c
+        gx_display_driver_generic_pie_fill.c
+        gx_display_driver_generic_polygon_draw.c
+        gx_display_driver_generic_polygon_fill.c
+        gx_display_driver_generic_simple_pie_fill.c
+        gx_display_driver_generic_simple_wide_line_draw.c
+        gx_display_driver_generic_wide_arc_draw.c
+        gx_display_driver_generic_wide_circle_draw.c
+        gx_display_driver_generic_wide_ellipse_draw.c
+
+    The following files are modified to support center-aligned single_line_text_input:
+        gx_single_line_text_input.h
+        gx_single_line_text_input_backspace.c
+        gx_single_line_text_input_buffer_clear.c
+        gx_single_line_text_input_character_delete.c
+        gx_single_line_text_input_character_insert.c
+        gx_single_line_text_input_create.c
+        gx_single_line_text_input_draw.c
+        gx_single_line_text_input_end.c
+        gx_single_line_text_input_event_process.c
+        gx_single_line_text_input_home.c
+        gx_single_line_text_input_keydown_process.c
+        gx_single_line_text_input_left_arrow.c
+        gx_single_line_text_input_position_get.c
+        gx_single_line_text_input_position_update.c
+        gx_single_line_text_input_right_arrow.c
+
+
+    The following files are modified to support software mouse cursor:
+        gx_canvas_drawing_initiate.c
+        gx_display_driver_565rgb_setup.c
+        gx_display_driver_24xrgb_setup.c
+        gx_display_driver_32argb_setup.c
+        gx_display_driver_332rgb_setup.c
+        gx_display_driver_4444argb_setup.c
+        gx_system_event_dispatch.c
+
+    The following files have been modified to utilize the system animation pool:
+        gx_system_initialize.c
+
+
+    The following files have been modified to correct the draw() function signature:
+        gx_api.h
+        gx_button.h
+        gx_button_background_draw.c
+        gx_button_draw.c
+        gx_checkbox_draw.c
+        gx_circular_gauge.h
+        gx_circular_gauge_background_draw.c
+        gx_circular_gauge_draw.c
+	gx_drop_list.h
+        gx_drop_list_background_draw.c
+        gx_drop_list_draw.c
+        gx_icon.h
+        gx_icon_background_draw.c
+        gx_icon_button_draw.c
+        gx_icon_draw.c
+        gx_line_chart.h
+        gx_line_chart_axis_draw.c
+        gx_line_chart_data_draw.c
+        gx_line_chart_draw.c
+        gx_multi_line_text_button_draw.c
+        gx_multi_line_text_button_text_draw.c
+        gx_multi_line_text_input_draw.c
+        gx_multi_line_text_view_draw.c
+        gx_pixelmap_button_draw.c
+        gx_pixelmap_prompt.h
+        gx_pixelmap_prompt_draw.c
+        gx_pixelmap_slider_draw.c
+        gx_progress_bar.h
+        gx_progress_bar_draw.c
+        gx_progress_bar_text_draw.c
+        gx_prompt.h
+        gx_prompt_draw.c
+        gx_prompt_text_draw.c
+        gx_radial_progress_bar.h
+        gx_radial_progress_bar_background_draw.c
+        gx_radial_progress_bar_draw.c
+        gx_radial_progress_bar_text_draw.c
+        gx_radio_button_draw.c
+        gx_scroll_thumb_create.c
+        gx_scroll_thumb_draw.c
+        gx_scrollbar.h
+        gx_scrollbar_draw.c
+        gx_slider.h
+        gx_slider_draw.c
+        gx_slider_needle_draw.c
+        gx_slider_tickmarks_draw.c
+        gx_sprite.h
+        gx_sprite_draw.c
+        gx_text_button_draw.c
+        gx_text_button_text_draw.c
+        gx_widget.h
+        gx_widget_background_draw.c
+        gx_widget_block_move.c
+        gx_widget_border_draw.c
+        gx_widget_draw.c
+        gx_widget_text_draw.c
+        gx_widget_text_id_draw.c
+        gx_window_draw.c
+	    
+
+03-01-2017  GUIX generic code version 5.3.3.
+
+            The following files are removed from version 5.3.3:
+
+            gx_display_driver_8bpp_pixel_blend.c
+            gx_display_driver_16bpp_horizontal_line_draw.c (renamed to gx_display_driver_565rgb_horizontal_pixelmap_line_draw.c)            
+            gxe_multi_line_text_view_scroll.c
+
+            
+
+            The following files are added in version 5.3.3:
+
+            gx_animation_drag_disable.c
+            gx_animation_drag_enable.c
+            gx_animation_drag_event_process.c
+            gx_animation_drag_tracking.c
+            gx_animation_drag_tracking_start.c
+            gx_animation_slide_landling.c
+            gx_animation_slide_landing_start.c
+
+            gx_binres_language_table_read.c
+            gx_binres_reader.h
+            gx_binres_theme_read.c
+
+            gx_canvas_hardware_layer_bind.c
+            gx_canvas_hide.c
+            gx_canvas_rotated_text_draw.c
+            gx_canvas_show.c
+
+            gx_display_driver_332rgb_pixel_blend.c
+            gx_display_driver_4444argb_canvas_blend.c
+            gx_display_driver_565rgb_horizontal_pixelmap_line_draw.c (renamed from gx_display_driver_16bpp_horizontal_line_draw.c)
+            gx_display_theme_install.c
+            gx_drop_list.h
+            gx_drop_list_background_draw.c
+            gx_multi_line_text_view_line_space_set.c
+            gx_multi_line_text_view_whitespace_set.c
+            gx_system_private_string.c
+            gx_touch_driver_generic_resistive.c
+            gx_utility_alphamap_create.c
+            gx_utility_string_to_alphamap.c
+
+            gxe_animation_drag_disable.c
+            gxe_animation_drag_enable.c
+            gxe_binres_language_table_read.c
+            gxe_binres_theme_read.c
+            gxe_canvas_hardware_layer_bind.c
+            gxe_canvas_hide.c
+            gxe_canvas_rotated_text_draw.c
+            gxe_canvas_show.c
+            gxe_display_theme_install.c
+            gxe_multi_line_text_view_draw.c
+            gxe_multi_line_text_view_line_space_set.c
+            gxe_multi_line_text_view_scroll_info_get.c
+            gxe_multi_line_text_view_whitespace_set.c
+            gxe_progress_bar_text_draw.c
+            gxe_single_line_text_input_text_alignment_set.c
+            gxe_system_canvas_refresh.c
+            gxe_utility_pixelmap_simple_rotate.c
+            gxe_utility_string_to_alphamap.c
+
+            
+            The following files are modified in version 5.3.3:
+
+            gx_animation_canvas_define.c                                Added error checking logic.
+            gx_animation_stop.c                                         Improved internal logic.            
+            gx_animation_update.c                                       Improved internal logic.
+            gx_canvas_composite_create.c                                Fixed an issue where the blend function was called before it was set
+            gx_canvas_glyphs_draw.c                                     Added support for unicode longer than two bytes.
+            gx_circular_gauge_angle_increment_calculate.c               Timer is set on the gauge or draw the gauge only if it is visible.
+            gx_display_driver_4444argb_horizontal_pixelmap_line_draw.c  Added support for alpha channel.
+            gx_display_driver_4444argb_pixelmap_draw.c                  Added support for alpha channel.
+            gx_display_driver_8bpp_canvas_copy.c                        Fixed memory size computation.
+            gx_display_driver_generic_arc_fill.c                        Added logic to support only native format for pixelmap
+            gx_display_driver_generic_circle_fill.c                     Added logic to support only native format for pixelmap
+            gx_display_driver_generic_ellipse_fill.c                    Added logic to support only native format for pixelmap
+            gx_display_driver_generic_simple_pie_fill.c                 Added logic to support only native format for pixelmap
+            gx_drop_list_create.c                                       Initialized internal data.
+            gx_drop_list_draw.c                                         Made separate calls to background draw and children draw.
+            gx_drop_list_event_process.c                                Added drop list button event.
+            gx_drop_list_pixelmap_set.c                                 Improved internal logic.
+            gx_horizontal_list_event_process.c                          Improved internal logic.
+            gx_horizontal_list_scroll_info_get.c                        Set scroll max to scroll_visible when max is smaller than visible,
+                                                                        thus avoided scrolling with a big value.
+            gx_horizontal_list_selected_set.c                           Improved internal logic.
+            gx_horizontal_list_total_columns_set.c                      Reset scrollbar when list count is changed.
+            gx_icon_background_draw.c                                   Added pixelmap alignment flag.
+            gx_multi_line_text_input_buffer_clear.c                     Improved internal logic.
+            gx_pixelmap_slider_pixelmap_update.c                        Added support for GX_EVENT_PEN_UP
+            gx_popup_list_event_process.c                               Added support for GX_EVENT_PEN_UP
+            gx_scrollbar_event_process.c                                Improved internal logic.
+            gx_scrollbar_thumb_position_calculate.c                     Improved internal logic.
+            gx_scrollbar_value_calculate.c                              Improved internal logic.
+            gx_slider_create.c                                          Fixed how the needle height is computed.
+            gx_system_canvas_refresh.c                                  Add proper return values.
+            gx_system_event_dispatch.c                                  Improved internal logic.
+            gx_system_initialize.c                                      Initialized theme table. 
+            gx_system_rtos_bind.c                                       Updated proper function name.
+            gx_system_string_width_get.c                                Use proper string types.
+	    gx_text_input_cursor_draw.c			  		Change logic to determine cursor start and end points.
+            gx_utility_utf8_string_character_get.c                      Apply "const" qualifier to un-modified input parameters
+            gx_vertical_list_event_process.c				Change to logic handling PEN_DRAG events
+	    gx_vertical_list_scroll_info_get.c				Modified to fix scroll information calculation
+	    gx_vertical_list_selected_set				Improve logic for calculating page index
+            gx_vertical_list_total_rows_set.c				Add logic to reset scrollbar if needed
+	    gx_window_root_delete.c					Fix bug in root window delete logic
+
+
+            The following files are added for binary resource support:
+
+            gx_binres_reader.h
+            gx_binres_language_table_read.c
+            gx_binres_theme_read.c
+            gxe_binres_language_table_read.c
+            gxe_binres_theme_read.c
+
+ 	    The following files are added to suppport swipe/drag style animations:
+
+	    gx_animation_drag_enable.c
+            gx_animation_drag_disable.c
+            gx_animation_drag_event_process.c
+            gx_animation_drag_tracking.c
+            gx_animation_drag_tracking_start.c
+            gx_animation_slide_landing.c
+            gx_animation_slide_landing_start.c
+       	    gxe_animation_drag_enable.c
+            gxe_animation_drag_disable.c
+      
+
+            The following files are changed to use whitespace and line_space properties in multi-line text input widget:
+
+            gx_multi_line_text_input_backspace.c
+            gx_multi_line_text_input_char_insert.c
+            gx_multi_line_text_input_cursor_pos_calculate.c
+            gx_multi_line_text_input_cursor_pos_update.c
+            gx_multi_line_text_input_delete.c
+            gx_multi_line_text_input_down_arrow.c
+            gx_multi_line_text_input_draw.c
+            gx_multi_line_text_input_end.c
+            gx_multi_line_text_input_home.c
+            gx_multi_line_text_input_left_arrow.c
+            gx_multi_line_text_input_up_arrow.c
+            gx_multi_line_text_view_scroll.c
+            gx_multi_line_text_view_string_total_rows_compute.c
+            gx_multi_line_text_view_visible_row_compute.c
+            gx_widget_border_style_set.c
+
+
+            The following files are change to add support for GX_STYLE_TEXT_COPY:
+            gx_api.h
+            gx_button.h
+            gx_checkbox_draw.c
+            gx_multi_line_text_button_line_pointers_set.c
+            gx_multi_line_text_button_text_draw.c
+            gx_multi_line_text_view_line_space_set.c
+            gx_multi_line_text_view_whitespace_set.c
+            gx_multi_line_text_view_text_id_set.c
+            gx_multi_line_text_view_text_set.c
+            gx_prompt.h
+            gx_prompt_create.c
+            gx_prompt_text_draw.c
+            gx_prompt_text_get.c
+            gx_prompt_text_id_set.c
+            gx_prompt_text_set.c
+            gx_radio_button_draw.c
+            gx_system.h
+            gx_system_string_get.c
+   	    gx_text_button_text_draw.c
+            gx_text_button_text_get.c
+	    gx_text_button_text_id_set.c
+	    gx_text_button_text_set.c
+            gx_widget.h
+            gx_widget_delete.c
+            gx_widget_text_blend.c
+            gx_widget_text_draw.c
+            gxe_prompt_text_id_set.c
+            gxe_prompt_text_set.c
+
+            The following files are change to initialize newly added draw functions.
+
+            gx_canvas_rotated_text_draw.c   
+            gx_display_driver_24xrgb_setup.c
+            gx_display_driver_32argb_setup.c
+            gx_display_driver_332rgb_setup.c
+            gx_display_driver_4444argb_horizontal_pixelmap_line_draw.c
+            gx_display_driver_4444argb_pixelmap_draw.c
+            gx_display_driver_4444argb_setup.c
+            gx_display_driver_565rgb_setup.c
+            gx_display_driver_8bit_palette_setup.c
+            gx_display_driver_monochrome_setup.c
+            gx_display_theme_install.c
+            gx_system_private_string.c
+            gx_utility_alphamap_create.c
+            gxe_canvas_rotated_text_draw.c
+            gxe_multi_line_text_view_scroll_info_get.c
+            gxe_multi_line_text_view_whitespace_set.c
+            gxe_utility_string_to_alphamap.c
+
+            The following files are modified or added to support hardware graphics layers.
+
+            gx_api.h
+            gx_canvas.h
+            gx_canvas_alpha_set.c
+            gx_canvas_create.c
+            gx_canvas_delete.c
+            gx_canvas_offset_set.c
+            
+            The following files are modified to improve anti-alias draw logic:
+            
+            gx_canvas_arc_draw.c
+            gx_canvas_circle_draw.c
+            gx_canvas_ellipse_draw.c
+            gx_canvas_line_draw.c
+            gx_canvas_pie_draw.c
+
+            
+            The following files are modified to support signed center of rotation values:
+
+	    gx_utility_32argb_pixelmap_rotate.c
+            gx_utility_332rgb_pixelmap_rotate.c
+            gx_utility_565rgb_pixelmap_rotate.c
+            gx_utility_8bpp_pixelmap_rotate.c
+            gx_utility_pixelmap_rotate.c
+            gx_utility_pixelmap_simple_rotate.c
+
+
+            The following files are added to support 4444 a:r:g:b graphics format:
+
+            gx_utility_4444argb_pixelmap_resize.c
+            gx_utility_4444argb_pixelmap_rotate.c
+
+
+            The following header files are changed for new APIs, and to clean up data type.
+
+            gx_api.h
+            gx_button.h
+            gx_canvas.h
+            gx_display.h
+            gx_image_reader.h
+            gx_multi_line_text_view.h
+            gx_progress_bar.h
+            gx_prompt.h
+            gx_single_line_text_input.h
+            gx_system.h
+            gx_utility.h
+            gx_widget.h
+            gx_window.h
+
+
+
+06-15-2016  GUIX generic code version 5.3.2.  
+
+            The following file has been removed from GUIX 5.3.0 release:
+
+            gxe_progress_bar_fill_color_set.c
+
+            GUIX 5.3.2 includes the following modifications:
+
+            gx_animation_complete.c                                             Fixed the offset for positioning the target.
+            gx_animation_update.c                                               Fixed the calculation for steps used in animation
+            gx_api.h                                                            Added new features and APIs.
+            gx_button.h                                                         Added new features and APIs.
+            gx_canvas_pixelmap_draw.c                                           Added compilation flag for software decoder feature.
+            gx_circular_gauge.h                                                 Added new features and APIs.
+            gx_circular_gauge_draw.c                                            Split background draw logic into a separate function.
+            gx_circular_gauge_event_process.c                                   Initialized the needle rectangle during the first time the needle is shown.
+            gx_circular_gauge_needle_dirty_mark.c                               Moved the rectangle calculation logic into its own function.
+            gx_display_driver_24xrgb_pixelmap_blend.c                           Fixed internal logic in pixelmap width caculation
+            gx_horizontal_scrollbar_create.c                                    Use scrollbar_appearance thumb button color when creating end buttons.
+            gx_icon.h                                                           Added new features and APIs.
+            gx_icon_draw.c                                                      Split background draw into a separate file.
+            gx_multi_line_text_button_draw.c                                    Moved the text drawing logic into its own function.
+            gx_multi_line_text_button_line_pointers_set.c                       Validated pointer value.
+            gx_multi_line_text_input_event_process. c                           Added handler for GX_EVENT_SHOW event.
+            gx_multi_line_text_view_text_set.c                                  Initialized text ID.
+            gx_prompt.h                                                         Added new features and APIs.
+            gx_prompt_text_draw.c                                               Modified function return type.
+            gx_scroll_thumb_create.c                                            Use gx_scroll_thumb_color when creating thumb button.
+            gx_scroll_thumb_draw.c                                              Fixed internal logic in drawing scroll thumb.
+            gx_scrollbar_draw.c                                                 Improved scrollbar drawing, supported no border style.
+                                                                                  added logic to draw up and down pixelmap icons.
+            gx_scrollbar_event_process.c                                        Added logic to compute client area with regard to the parent border width.
+            gx_scrollbar_size_update.c                                          Changed logic in computing size of a scroll button.
+            gx_scrollbar_thumb_position_calculate.c                             Modified to correctly apply thumb width and height parameters from 
+                                                                                  scrollbar_appearance structure.
+            gx_single_line_text_input.h                                         Added new features and APIs.
+            gx_system_focus_claim.c                                             Added logic to initialize local variable.
+            gx_system_initialize.c                                              Added logic to initialize local variable.
+            gx_text_button_draw.c                                               Moved the text draw logic into a separate function.
+            gx_vertical_scrollbar_create.c                                      Set scrollbar appearance to normal fill color.
+            gx_widget_resize.c                                                  Called widget's event process to handle resize for radial progress bar.
+            gx_widget_show.c                                                    Initialized gx_event_target.
+            gx_window_client_scroll.c                                           Improved scrolling, added support for transparent scrollbar background.      
+            gxe_circular_gauge_create.c                                         Added error check for the size of the control block.
+            gxe_image_reader_create.c                                           Added compilation flag for software decoder feature.
+            gxe_image_reader_palette_set.c                                      Added compilation flag for software decoder feature.
+            gxe_image_reader_start.c                                            Added compilation flag for software decoder feature.
+            gxe_multi_line_text_button_draw.c                                   Allowed the scroll widget not to have a parent.
+
+
+            The following files are modifed for comments and style. 
+
+            gx_display_driver_565rgb_jpeg_draw.c
+            gx_image_reader_jpeg_decode.c
+            gx_image_reader_pixel_read_callback_set.c
+            gx_image_reader_png_decode.c
+            gx_sprite_draw.c
+            gx_utility_16bpp_pixelmap_resize.c
+            gx_utility_4444argb_pixelmap_resize.c
+            gx_utility_4444argb_pixelmap_rotate.c
+            gx_utility_565rgb_pixelmap_rotate.c
+            gx_utility_8bpp_pixelmap_resize.c
+            gx_vertical_list_scroll_info_get.c
+
+            Files added to release 5.3.2
+
+            gx_circular_gauge_background_draw.c
+            gx_circular_gauge_needle_rectangle_calculate.c
+            gx_icon_background_draw.c
+            gx_line_chart.h
+            gx_line_chart_axis_draw.c
+            gx_line_chart_create.c
+            gx_line_chart_data_draw.c
+            gx_line_chart_draw.c
+            gx_line_chart_update.c
+            gx_line_chart_y_scale_calculate.c
+            gx_multi_line_text_button_text_draw.c
+            gx_radial_progress_bar.h
+            gx_radial_progress_bar_anchor_set.c
+            gx_radial_progress_bar_background_draw.c
+            gx_radial_progress_bar_create.c
+            gx_radial_progress_bar_draw.c
+            gx_radial_progress_bar_event_process.c
+            gx_radial_progress_bar_font_set.c
+            gx_radial_progress_bar_info_set.c
+            gx_radial_progress_bar_resize.c
+            gx_radial_progress_bar_size_update.c
+            gx_radial_progress_bar_text_color_set.c
+            gx_radial_progress_bar_text_draw.c
+            gx_radial_progress_bar_value_calculate.c
+            gx_radial_progress_bar_value_set.c
+            gx_text_button_text_draw.c
+            gxe_circular_gauge_background_draw.c
+            gxe_circular_gauge_draw.c
+            gxe_icon_background_draw.c
+            gxe_line_chart_axis_draw.c
+            gxe_line_chart_create.c
+            gxe_line_chart_data_draw.c
+            gxe_line_chart_draw.c
+            gxe_line_chart_update.c
+            gxe_line_chart_y_scale_calculate.c
+            gxe_multi_line_text_button_text_draw.c
+            gxe_prompt_text_draw.c
+            gxe_radial_progress_bar_anchor_set.c
+            gxe_radial_progress_bar_background_draw.c
+            gxe_radial_progress_bar_create.c
+            gxe_radial_progress_bar_draw.c
+            gxe_radial_progress_bar_event_process.c
+            gxe_radial_progress_bar_font_set.c
+            gxe_radial_progress_bar_info_set.c
+            gxe_radial_progress_bar_text_color_set.c
+            gxe_radial_progress_bar_text_draw.c
+            gxe_radial_progress_bar_value_set.c
+            gxe_text_button_text_draw.c
+
+
+04-05-2016  GUIX generic code version 5.3 Service Pack 1 (SP1).
+
+            SP1 includes the following modifications:
+
+            gx_api.h                                                           Added new APIs
+            gx_display.h                                                       Added new APIs
+            gx_multi_line_text_input.h                                         Added new APIs
+            gx_multi_line_text_view.h                                          Added new APIs
+            gx_progress_bar.h                                                  Removed unused function prototypes
+            gx_single_line_text_input.h                                        Added new APIs
+            gx_user.h                                                          Modified comments      
+            gx_utility.h                                                       Added new APIs
+            
+            gx_canvas_pie_draw.c                                               Fix for drawing with brush_width > radius / 2
+            gx_display_driver_16bpp_pixelmap_blend.c                           Fix bug when pixlemap clipped to area smaller than pixelmap
+            gx_display_driver_16bpp_pixelmap_rotate.c                          Added a helper function to handle simple rotation with alpha channel. 
+            gx_display_driver_8bpp_horizontal_pixelmap_line_draw.c             Added support for pixelmap with alpha channel.
+            gx_display_driver_8bpp_pixelmap_rotate.c                           Added support for pixelmap with alpha channel.
+            gx_display_driver_generic_aliased_wide_arc_draw.c                  Changed brush style when drawing round end to prevent image fill.
+            gx_display_driver_generic_wide_arc_draw.c                          Changed brush style when drawing round end to prevent image fill.
+
+
+            Files added to support 8-bit 332RGB format:
+
+            gx_display_driver_332rgb_native_color_get.c
+            gx_display_driver_332rgb_pixelmap_draw.c
+            gx_display_driver_332rgb_setup.c
+            gx_utility_332rgb_pixelmap_rotate.c
+
+
+            Files modified to support left and right text alignment in single-line text input/view widget:
+
+            gx_single_line_text_input_backspace.c 
+            gx_single_line_text_input_buffer_clear.c 
+            gx_single_line_text_input_buffer_get.c 
+            gx_single_line_text_input_character_delete.c 
+            gx_single_line_text_input_character_insert.c 
+            gx_single_line_text_input_create.c 
+            gx_single_line_text_input_draw.c 
+            gx_single_line_text_input_end.c 
+            gx_single_line_text_input_event_process.c 
+            gx_single_line_text_input_home.c 
+            gx_single_line_text_input_keydown_process.c 
+            gx_single_line_text_input_left_arrow.c 
+            gx_single_line_text_input_position_get.c 
+            gx_single_line_text_input_position_update.c 
+            gx_single_line_text_input_right_arrow.c 
+            gx_single_line_text_input_style_add.c 
+            gx_single_line_text_input_style_remove.c 
+            gx_single_line_text_input_style_set.c
+            gxe_single_line_text_input_text_alignment_set.c
+
+
+            Files modified to support left, center, and right text alignment in multi-line text input/view widget:
+
+            gx_multi_line_text_input_backspace.c 
+            gx_multi_line_text_input_buffer_clear.c 
+            gx_multi_line_text_input_cursor_pos_calculate.c 
+            gx_multi_line_text_input_cursor_pos_update.c 
+            gx_multi_line_text_input_left_arrow.c 
+            gx_multi_line_text_input_style_add.c 
+            gx_multi_line_text_input_style_remove.c 
+            gx_multi_line_text_input_style_set.c 
+            gx_multi_line_text_view_draw.c 
+            gx_multi_line_text_view_string_total_rows_compute.c 
+            gxe_multi_line_text_input_buffer_clear.c
+
+
+            The following files are modified to update comments.
+            
+            gxe_single_line_text_input_backspace.c 
+            gxe_single_line_text_input_buffer_clear.c 
+            gxe_single_line_text_input_buffer_get.c 
+            gxe_single_line_text_input_character_delete.c 
+            gxe_single_line_text_input_character_insert.c 
+            gxe_single_line_text_input_create.c 
+            gxe_single_line_text_input_draw.c 
+            gxe_single_line_text_input_end.c 
+            gxe_single_line_text_input_event_process.c 
+            gxe_single_line_text_input_home.c   
+            gxe_single_line_text_input_left_arrow.c 
+            gxe_single_line_text_input_position_get.c 
+            gxe_single_line_text_input_right_arrow.c 
+            gxe_single_line_text_input_style_add.c 
+            gxe_single_line_text_input_style_remove.c 
+            gxe_single_line_text_input_style_set.c
+            gxe_single_line_text_input_text_alignment_set.c
+
+
+02/22/2016 GUIX generic code version 5.3.0
+
+Added gx_window_execute API for modal windows.
+Added gx_window_close API for modal windows.
+Added support for wide borders on circle, ellipse, arc, pie, polygon, and rectangle.
+Fixed bug in displaying 4bpp and 1bpp fonts on Synergy target.
+Fixed bug in drawing pattern lines on Synergy target.
+Added support for 24bpp xrgb output format on Synergy target.
+Fixed logic of simple canvas to eliminate need for root window on simple canvas.
+Improved documentation of brush styles.
+Added support for runtime software JPG decoder.
+Added support for runtime software PNG decoder.
+Fixed compiler warnings.
+
+8/19/2015 GUIX generic code version 5.2.6
+
+Added file gx_system_event_remove.c
+Added file gx_window_execute.c
+Added file gxe_window_execute.c
+Modified gx_animation_complete.c to target event to parent.
+Modified gx_multi_line_text_view_draw.c
+Added event handler for GX_EVENT_LANGUAGE_CHANGE to gx_multi_line_text_view_event_process.c
+Modifed gx_multi_line_text_view_scroll_info_get.c
+Modified gx_multi_line_text_view_text_id_set to use gx_window_scrollbar_find function.
+Modified gx_system_event_dispatch to return event processing return code to caller.
+Modifed gx_system_language_table_set to target events to root windows.
+Added gx_generic_event_purge function to example gx_system_rtos_bind.c
+Modifed gx_widget_delete() to call gx_system_event_remove()
+Modified gx_widget_event_generate to send targetted event through event queue.
+Change event_type parameter to USHORT in gxe_widget_event_generate
+
+
+8/4/2015 GUIX generic code version 5.2.5
+
+Added GX_CIRCULAR_GAUGE widget, resulting in the following new source files:
+
+	- gx_circular_gauge_angle_get.c
+	- gx_circular_gauge_angle_increment_calculate.c
+	- gx_circular_guage_angle_set.c
+	- gx_circular_gauge_animation_set.c
+	- gx_circular_gauge_create.c
+	- gx_circular_gauge_draw.c
+	- gx_circular_gauge_event_process.c
+	- gx_circular_gauge_needle_dirty_mark.c
+	- gx_circular_gauge_needle_rotate.c
+	- gxe_circular_gauge_angle_get.c
+	- gxe_circular_gauge_angle_set.c
+	- gxe_circular_gauge_animation_set.c
+	- gxe_circular_gauge_create.c
+
+Added gx_display_driver_generic_alphamap_draw.c
+Added Renesas Synergy simulation driver for desktop emulation of hardware capabilities.
+Added pixelmap_resize functions as part of gx_utility component.
+Made gx_vertical_list_page_index_set an API function, added error checking version.
+Made gx_horizontal_list_page_index_set an API function, added error checking version.
+Fixed bugs in maintaining status and scroll position of vertical and horizontal list when the list is hidden and re-displayed.
+Modify gx_animation_start to insure widget is visible.
+Modified logic of gx_button_select.c when calling gx_widget_front_move.
+Modified logic to claim focus when window is initially displayed.
+Modified logic to update views when window is shifted.
+
+4/15/2015 GUIX generic code version 5.2.4
+
+Added gx_utility_32argb_pixelmap_rotate.c
+Added gx_utility_565rgb_pixelmap_rotate.c
+Added gx_utility_8bpp_pixelmap_rotate.c
+Added gx_utility_pixelmap_rotate.c
+Added gx_utility_pixelmap_simple_rotate.c
+Added gx_multi_line_text_input_buffer_get.c
+Added gx_single_line_text_input_buffer_get.c
+Added win32_display_driver_565bgr.c
+Modified gx_brush_default() to initialize alpha value to 0xff
+Fixed bug in gx_display_driver_32argb_setup.c
+Modified gx_display_driver_generic_glyph_8bpp_draw.c to support glyph blending in addition to anti-aliasing.
+Fixed bug in function _gx_vertical_list_total_rows_set(), not skipping non-client children.
+Modified function _gx_system_dirty_entry_shift() to ensure GX_EXIT_CRITICAL is invoked for all paths.
+
+
+03/02/2015 GUIX generic code version 5.2.3
+
+Added arc drawing API functions and support functions.
+Added circle drawing API functions and support functions.
+Added pie drawing API functions and support functions.
+Add ellipse draw API functions and support functions.
+Add pixelmap filling of polygons, arcs, and circles.
+Changed gx_vertical_list_selected_get to gx_vertical_list_selected_widget_get
+Added gx_vertical_list_selected_index_get API.
+Changed gx_horizontal_list_selected_get to gx_horizontal_list_selected_widget_get
+Added gx_horizontal_list_selected_index_get API.
+Added gx_widget_focus_next API.
+Added gx_widget_focus_previous API.
+Added gx_widget_nav_order_initialize() to set default next/previous focus navigation order.
+Removed obsolete gx_display_driver_generic_polygon_vertex_offset.c
+Removed obsolete gx_display_driver_generic_quadrangle_fill.c
+Rename gx_first_client_child_get.c to gx_widget_first_client_child_get.c
+Rename gx_last_child_child_get.t to gx_widget_last_client_child_get.c
+Added logic to gx_window to move focus to first client child when initially displayed.
+Added file gx_widget_nav_order_initialize.c
+Added file gx_widget_next_client_child_get.c
+Added file gx_widget_child_focus_assign.c
+
+
+1/28/2015 GUIX generic code version 5.2.2
+
+Added new files gx_generic_rtos_bind.c and gx_generic_rtos_bind.h, an os abstraction layer to allow GUIX to be easily ported to operating systems other than ThreadX.
+Added pre-processor definition GX_DISABLE_THREADX_BINDING.
+Update GUIX User guide to describe os porting requirements.
+
+Changed gx_single_line_text_input_cursor_style_add to gx_single_line_text_input_style_add
+Changed gx_single_line_text_input_cursor_style_remove to gx_single_line_text_input_style_remove
+Changed gx_single_line_text_input_cursor_style_set to gx_single_line_text_input_style_set
+
+
+
+1/16/2015  GUIX generic code version 5.2.1:
+
+removed  gx_canvas_polygon_convex_fill.c   
+removed  gx_canvas_polygon_scan_line_fill.
+removed  gx_display_driver_16bpp_chart_quadrangle_fill.c 
+removed  gx_display_driver_16bpp_quadrangle_fill.c
+removed gx_display_driver_1bpp_quadrangle_fill.c
+removed gx_display_driver_1bpp_chart_quadrangle_fill.c
+removed gx_display_driver_32bpp_chart_quadrangle_fill.c 
+removed gx_display_driver_32bpp_quadrangle_fill.c
+removed gx_display_driver_8bpp_chart_quadrangle_fill.c
+removed gx_display_driver_8bpp_quadrangle_fill.c
+removed gx_multi_line_text_input_cursor_draw.c 
+removed gx_multi_line_text_input_cursor_flag_clear.c
+removed gx_multi_line_text_input_cursor_flag_set.c
+removed gx_multi_line_text_input_cursor_rectangle_define
+removed gx_multi_line_text_view_char_index_set.c 
+removed gx_single_line_text_input_cursor_dirty_mark.c
+removed gx_single_line_text_input_cursor_flag_clear.c
+removed gx_single_line_text_input_cursor_flag_set.c
+removed gx_single_line_text_input_dirty_mark.c 
+removed gxe_multi_line_text_input_cursor_flag_clear.c 
+removed gxe_multi_line_text_input_cursor_flag_set.c 
+removed gxe_multi_line_text_view_char_index_set.c 
+removed gxe_single_line_text_input_cursor_flag_clear.c 
+removed gxe_single_line_text_input_cursor_flag_set.c 
+
+added gx_display_driver_generic_polygon_convex_fill.c 
+added gx_display_driver_generic_polygon_fill.c 
+added gx_display_driver_generic_polygon_vertex_offset.c
+added gx_display_driver_generic_quadrangle_fill.c 
+added gx_multi_line_text_button_create.c 
+added gx_multi_line_text_button_draw.c 
+added gx_multi_line_text_button_event_process.c 
+added gx_multi_line_text_button_line_pointers_set.c 
+added gx_multi_line_text_button_text_id_set.c 
+added gx_multi_line_text_button_text_set.c 
+added gx_multi_line_text_input_cursor_style_add.c 
+added gx_multi_line_text_input_cursor_style_remove.c 
+added gx_multi_line_text_input_cursor_style_set.c
+added gx_single_line_text_input_cursor_style_add.c
+added gx_single_line_text_input_cursor_style_remove.c
+added gx_single_line_text_input_cursor_style_set.c
+added gx_text_input_cursor.h
+added gx_text_input_cursor_blink_interval_set.c
+added gx_text_input_cursor_dirty_rectangle_get.c
+added gx_text_input_cursor_draw.c
+added gxe_multi_line_text_button_create.c
+added gxe_multi_line_text_button_draw.c
+added gxe_multi_line_text_button_event_process.c
+added gxe_multi_line_text_button_text_id_set.c
+added gxe_multi_line_text_button_text_set.c
+added gxe_multi_line_text_input_cursor_style_add.c
+added gxe_multi_line_text_input_cursor_style_remove.c
+added gxe_multi_line_text_input_cursor_style_set.c
+added gxe_single_line_text_input_cursor_style_add.c
+added gxe_single_line_text_input_cursor_style_remove.c
+added gxe_single_line_text_input_cursor_style_set.c
+added gxe_text_input_cursor_blink_interval_set.c
+added gxe_text_input_cursor_height_set.c
+added gxe_text_input_cursor_width_set.c
+
+modified gx_api.h: Added new GX_MULTI_LINE_TEXT_BUTTON widget, modified text input cursor definition API functions.
+
+modified gx_button.h to add the new multi-line text input button function prototypes.
+
+modified gx_canvas.h to remove the obsolete canvas polygon functions
+
+modified gx_canvas_drawing_complete.c to notify display driver of drawing complete. This is used to trigger the execution of a display list for accelerated display drivers.
+
+modified gx_canvas_drawing_initiate.c to notify the display driver of drawing initiation.
+
+modified gx_canvas_rectangle_draw.c to correctly set the context clipping rectangle.
+
+modified gx_display.h to remove the obsolete quadrangle drawing function prototypes.
+
+modified gx_display_driver_16bpp_polygon_draw.c to implement new polygon drawing algorithm.
+modified gx_display_driver_1bpp_polygon_draw.c to implement new polygon drawing algorithm.
+modified gx_display_driver_8bpp_polygon_draw.c to implement new polygon drawing algorithm.
+modified gx_display_driver_32bpp_polygon_draw.c to implement new polygon drawing algorithm.
+
+modified gx_display_driver_24xrgb_setup.c to remove obsolete function pointer initialization
+modified gx_display_driver_32argb_setup.c to remove obsolete function pointer initialization
+modified gx_display_driver_565rgb_setup.c to remove obsolete function pointer initialization
+modified gx_display_driver_8bi_palette_setup.c to remove obsolete function pointer initialization
+modified gx_display_driver_monochrome_setup.c to remove obsolete function pointer initialization
+
+modified gx_multi_line_text_input.h to change prototypes for cursor control functions.
+modified gx_multi_line_text_input_backspace.c to improve efficiency
+
+modified gx_multi_line_text_view.h to define size of char index buffer.
+modified gx_multi_line_text_view_create to support new char index model
+modified gx_multi_line_text_view_display_info_get.c to support UTF8 encoding
+modified gx_multi_line_te4xt_view_draw.c to improve readability
+modified gx_multi_line_text_view_font_set.c to correct scrollbar position when font is changed.
+
+modified gx_multi_line_text_view_scroll.c to improve efficiency.
+modified gx_multi_line_text_view_scroll_info_get.c to improve efficiency.
+modified gx_multi_line_text_view_string_total_rows_compute.c to improve efficiency.
+
+modified gx_multi_line_text_view_text_id_set.c to update scroll bar.
+modified gx_multi_line_text_view_text_set.c to update scroll bar.
+modified gx_single_line_text_input.h to accommodate new cursor control API
+modified gx_single_line_text_input_backspace.c to improve efficiency
+modified gx_single_line_text_input_character_delete.c to improve efficiency
+modified gx_single_line_text_input_character_insert.c to improve efficiency
+modified gx_single_line_text_input_create.c to improve efficiency
+modified gx_single_line_text_input_draw to improve efficiency
+modified gx_single_line_text_input_end to improve efficiency
+modified gx_single_line_text_input_event_process improve efficiency
+modified gx_single_line_text_input_home to improve efficiency
+modified gx_single_line_text_input_left_arrow to improve efficiency
+modified gx_single_line_text_input_position_get to improve efficiency
+modified gx_single_line_text_input_right_arrow to improve efficiency
+
+modified gx_system_active_language_set.c to send a broadcast GX_LANGUAGE_CHANGE event when the active language is modified.
+
+modified gx_system_focus_claim.c  to prevent sending GX_EVENT_FOCUS_LOST to a root window.
+
+modified gx_system_language_table_set.c to send a broadcast GX_LANGUAGE_CHANGE event when the language table is modified.
+
+modified gx_system_string_viewable_length_get to handle UTF8 encoding
+modified gx_system_string_width_get.c to improve header comments.
+modified gx_text_button_text_id_set.c to remove whitespace.
+modified gx_text_input_cursor_height_set.c to assign height to correct control  block member.
+modified gx_widget_event_process.c to handle GX_EVENT_LANGUAGE_CHANGE and GX_EVENT_RESOURCE_CHANGE.
+modified gx_widget_style_add.c to reflect transparent style in widget status variable.
+modified gx_widget_style_remove.c to reflect transparent style in widget status variable.
+modified gx_widget_text_draw.c to improve code efficiency.
+modified gx_window_root_create.c to remove addition of GX_ENABLED style to improve drawing efficiency.
+modified gxe_icon_draw.c to remove invalid test.
+modified win32_display_driver.c to add WM_IME_CHAR window message handler.
