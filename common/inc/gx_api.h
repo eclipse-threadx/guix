@@ -23,7 +23,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.4.0        */
+/*                                                           6.4.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -114,6 +114,9 @@
 /*  12-31-2023     Ting Zhu                 Modified comment(s),          */
 /*                                            updated patch version,      */
 /*                                            resulting in version 6.4.0  */
+/*  03-01-2024     Ting Zhu                 Modified comment(s),          */
+/*                                            updated patch version,      */
+/*                                            resulting in version 6.4.1  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -137,7 +140,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 4
-#define GUIX_PATCH_VERSION 0
+#define GUIX_PATCH_VERSION 1
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
