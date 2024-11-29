@@ -23,7 +23,7 @@ jobs:
       pages: write
       id-token: write
       
-    uses: azure-rtos/threadx/.github/workflows/regression_template.yml@master
+    uses: eclipse-threadx/threadx/.github/workflows/regression_template.yml@master
     with:
       cmake_path: ./test/guix_test/cmake
       result_affix: GUIX
