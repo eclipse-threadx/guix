@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Chinese (Simplified, PRC) resources
+// Chinese (Simplified, China) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
@@ -245,7 +245,7 @@ BEGIN
     ID_INSERT_LINECHART     "Insert Line Chart window"
 END
 
-#endif    // Chinese (Simplified, PRC) resources
+#endif    // Chinese (Simplified, China) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -1772,14 +1772,14 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "Microsoft"
+            VALUE "CompanyName", "Eclipse Foundation"
             VALUE "FileDescription", "GUIX Studio Application"
-            VALUE "FileVersion", "5.2"
+            VALUE "FileVersion", "6.4.1"
             VALUE "InternalName", "studiox.exe"
-            VALUE "LegalCopyright", "(c) Microsoft Corporation.  All rights reserved."
+            VALUE "LegalCopyright", "(c) Eclipse ThreadX contributors"
             VALUE "OriginalFilename", "studiox.exe"
-            VALUE "ProductName", "Azure RTOS GUIX Studio"
-            VALUE "ProductVersion", "6.0.0.0"
+            VALUE "ProductName", "Eclipse ThreadX GUIX Studio"
+            VALUE "ProductVersion", "6.4.1.442"
         END
     END
     BLOCK "VarFileInfo"
