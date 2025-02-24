@@ -11,3 +11,8 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 
+/guix_studio/build/vs_2022/.vs/studiox
+/guix_studio/build/vs_2022/Debug
+/guix_studio/build/vs_2022/Release
+/guix_studio/studiox.aps
+*.user

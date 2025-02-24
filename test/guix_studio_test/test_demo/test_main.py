@@ -630,9 +630,9 @@ def __main__():
     #Change the current working directory to the path of this file.
     current_path = os.path.split(os.path.realpath(__file__))[0]
     os.chdir(current_path)
-    studio_sln_path = "../../../guix_studio/build/vs_2019/studiox.sln"
-    studio_exe_path = "../../../guix_studio/build/vs_2019/Release/guix_studio.exe"
-    guix_project_path = "../../../ports/win32/build/vs_2019/guix.vcxproj"
+    studio_sln_path = "../../../guix_studio/build/vs_2022/studiox.sln"
+    studio_exe_path = "../../../guix_studio/build/vs_2022/Release/guix_studio.exe"
+    guix_project_path = "../../../ports/win32/build/vs_2022/guix.vcxproj"
 
     gxp_projects = []
 

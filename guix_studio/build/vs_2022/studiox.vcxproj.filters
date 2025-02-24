@@ -1,0 +1,1120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\..\accordion_menu_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\app_runner.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\binary_resource_gen.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\button_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\canonical_normalize.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\checkbox_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\circular_gauge_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\color_edit_dialog.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CommandInfo.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\config_languages_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\configure_theme_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\copy_paste_engine.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\csv_read_write.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\delete_language_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\drop_list_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\easing_function_select_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\edit_pixelmap_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\express_dialog.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\folder_name_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\font_path_dialog.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\grid_setting_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gx_studio_font_util.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\horizontal_list_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hscroll_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\icon_button_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\icon_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\image_reader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\import_project_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\left_panel_frame.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\line_chart_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MacroPlaybackDlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MacroRecordDlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MainFrm.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\menu_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\message_dialog.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ml_text_input_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ml_text_view_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mlt_button_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\NewProjectDlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\numeric_pixelmap_prompt_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\numeric_prompt_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\numeric_scroll_wheel_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\options_dialog.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\palette_creater.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PaletteLayoutDlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pixelmap_button_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pixelmap_prompt_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pixelmap_slider_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\progress_bar_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\project_view.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ProjectConfigDlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\prompt_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\properties_win.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\radial_progress_bar_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\radial_slider_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\radio_button_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\recent_project_win.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resource.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resource_export_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resource_gen.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resource_item.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resource_tree.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resource_view.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\right_panel_frame.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\screen_flow.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\screen_flow_edit_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\screen_generator.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\scroll_wheel_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ScrollHelper.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\slider_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\splash_screen.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sprite_edit_dialog.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sprite_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\stdafx.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\string_export_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\string_scroll_wheel_edit_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\string_scroll_wheel_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\string_table.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\string_table_edit_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\studio_source_writer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\studiox.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\studiox_constants.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\studiox_includes.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\studiox_util.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\studioxDoc.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\StudioXProject.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\synergy_settings_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\target_screen.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\target_view.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\template_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\text_button_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\text_input_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\text_scroll_wheel_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\tree_view_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\trigger_action_edit_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\trigger_action_select_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\trigger_edit_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\trigger_list_edit_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\undo_manager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vertical_list_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\view_header.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vscroll_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\wait_dialog.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\widget_factory.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\widget_reader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\widget_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\widget_writer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\window_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xliff_read_write.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xml_reader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xml_writer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\accessibility_props_service.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\express_table_row.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\express_combobox.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\rich_text_edit_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\rich_text_view_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\color_box_button.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\custom_edit.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resource_item_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resource_view_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\clone_repo_dialog.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\system_pngs.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generic_scroll_wheel_service_provider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\import_sprite_frames_dlg.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{ccbd3cbc-bd19-4ac8-bfeb-593be0e7880a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{1e265996-d98f-45b8-baf3-9275fbece703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{8ae208ea-03ae-4a7e-8245-08ff29afc79b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\accordion_menu_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\app_runner.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\binary_resource_gen.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\button_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\canonical_normalize.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\checkbox_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\circular_gauge_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\color_edit_dialog.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CommandInfo.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\config_languages_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\configure_theme_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\copy_paste_engine.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\csv_read_write.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\delete_language_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\drop_list_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\easing_function_select_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\edit_pixelmap_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\express_dialog.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\folder_name_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\font_path_dialog.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\grid_setting_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gx_studio_font_util.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\horizontal_list_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\hscroll_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\icon_button_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\icon_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\image_reader.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\import_project_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\jpg_reader.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\left_panel_frame.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\line_chart_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MacroPlaybackDlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MacroRecordDlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MainFrm.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\menu_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\message_dialog.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ml_text_input_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ml_text_view_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mlt_button_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\NewProjectDlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\numeric_pixelmap_prompt_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\numeric_prompt_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\numeric_scroll_wheel_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\options_dialog.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\palette_creater.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PaletteLayoutDlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pixelmap_button_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pixelmap_prompt_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pixelmap_slider_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\png_reader.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\progress_bar_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\project_view.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ProjectConfigDlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\prompt_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\properties_win.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\radial_progress_bar_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\radial_slider_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\radio_button_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\recent_project_win.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\resource_export_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\resource_gen.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\resource_item.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\resource_tree.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\resource_view.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\right_panel_frame.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\screen_flow.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\screen_flow_edit_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\screen_generator.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\scroll_wheel_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ScrollHelper.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\slider_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\splash_screen.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sprite_edit_dialog.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sprite_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\stdafx.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\string_export_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\string_scroll_wheel_edit_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\string_scroll_wheel_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\string_table.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\string_table_edit_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\studio_source_writer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\studiox.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\studiox_util.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\studioxDoc.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\StudioXProject.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\synergy_settings_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\target_screen.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\target_view.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\template_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\text_button_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\text_input_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\text_scroll_wheel_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tree_view_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\trigger_action_edit_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\trigger_action_select_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\trigger_edit_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\trigger_list_edit_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\undo_manager.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vertical_list_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\view_header.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vscroll_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\wait_dialog.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\widget_factory.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\widget_reader.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\widget_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\widget_writer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\window_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xliff_read_write.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xml_reader.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xml_writer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\threadx_stub.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\accessibilty_props_service.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\express_table_row.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\express_combobox.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\rich_text_view_sercive_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\rich_text_edit_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\color_box_button.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\custom_edit.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\resource_item_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\resource_view_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\clone_repo_dialog.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\system_pngs.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generic_scroll_wheel_service_provider.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gif_reader.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\import_sprite_frames_dlg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\studiox.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\res\bitmap1.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bitmap2.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bitmap3.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bitmap4.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bitmap5.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bitmap6.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00001.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00002.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00003.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00004.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00005.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00006.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00007.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00008.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00009.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00010.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00011.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00012.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00013.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00014.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00015.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00016.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00017.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00018.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00019.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00020.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00021.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00022.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00023.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00024.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00025.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00026.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00027.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00028.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00029.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00030.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00031.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00032.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00033.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00034.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00035.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00036.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00037.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00038.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00039.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00040.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00041.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00042.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00043.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00044.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00045.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00046.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00047.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00048.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00049.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00050.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00051.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00052.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00053.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00054.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\check.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\configure_languages.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\configure_projects.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\configure_themes.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\down_arrow.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\down_arrow_gray.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\end.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\export.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\fit_content.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\folder_close.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\folder_open.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\grid.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\left_arrow.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\playback.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\record.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\rename.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\right_arrow.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\stop.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\studiox.ico">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\Toolbar.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\up_arrow.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\up_arrow_gray.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\warning.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\zoom_in.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\zoom_out.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\graphics\guix_1616icon.ico">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\toolbar_1bit.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\screen_flow_zoom_out_pressed.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\screen_flow_zoom_out.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\screen_flow_zoom_in_pressed.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\screen_flow_zoom_in.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\screen_flow_fit_content_pressed.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\screen_flow_fit_content.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00004_highlight.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00005_highlight.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00006_pixelmap_highlight.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00007_string_highlight.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\configure_themes_highlight.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\required.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="res\bold.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="res\centeralign.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="res\italic.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="res\leftalign.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="res\rightalign.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="res\underline.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00006_highlight.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00007_highlight.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="res\bmp00018_highlight.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bmp00018_highlight.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\bold.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\centeralign.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\italic.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\leftalign.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\rightalign.bmp">
+      <Filter>resources</Filter>
+    </Image>
+    <Image Include="..\..\res\underline.bmp">
+      <Filter>resources</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
