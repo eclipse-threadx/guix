@@ -1756,8 +1756,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
- PRODUCTVERSION 1,0,0,1
+ FILEVERSION 6,4,2,461
+ PRODUCTVERSION 6,4,2,461
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1774,12 +1774,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Eclipse Foundation"
             VALUE "FileDescription", "GUIX Studio Application"
-            VALUE "FileVersion", "6.4.1"
+            VALUE "FileVersion", "6.4.2.461"
             VALUE "InternalName", "studiox.exe"
             VALUE "LegalCopyright", "(c) Eclipse ThreadX contributors"
             VALUE "OriginalFilename", "studiox.exe"
             VALUE "ProductName", "Eclipse ThreadX GUIX Studio"
-            VALUE "ProductVersion", "6.4.1.442"
+            VALUE "ProductVersion", "6.4.2.461"
         END
     END
     BLOCK "VarFileInfo"

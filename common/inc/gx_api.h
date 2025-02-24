@@ -117,6 +117,9 @@
 /*  03-01-2024     Ting Zhu                 Modified comment(s),          */
 /*                                            updated patch version,      */
 /*                                            resulting in version 6.4.1  */
+/*  02-19-2025     Frédéric Desbiens        Modified comment(s),          */
+/*                                            update version number,      */
+/*                                            resulting in version 6.4.2  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -140,7 +143,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 4
-#define GUIX_PATCH_VERSION 1
+#define GUIX_PATCH_VERSION 2
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
