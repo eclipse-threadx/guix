@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap rescap">
+
+  <Identity
+    Name="Microsoft.AzureRTOSGUIXStudio"
+    Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+    Version="6.4.1.0" />
+
+  <Properties>
+    <DisplayName>Eclipse ThreadX GUIX Studio</DisplayName>
+    <PublisherDisplayName>Eclipse Foundation</PublisherDisplayName>
+    <Logo>Images\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0" />
+    <PackageDependency Name="Microsoft.VCLibs.140.00.UWPDesktop" MinVersion="14.0.27323.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="$targetentrypoint$">
+      <uap:VisualElements
+        DisplayName="GUIX Studio"
+        Description="GUIX Studio"
+        BackgroundColor="transparent"
+        Square150x150Logo="Images\Square150x150Logo.png"
+        Square44x44Logo="Images\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png"   Square310x310Logo="Images\LargeTile.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square310x310Logo"/>
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile >
+        <uap:SplashScreen Image="Images\SplashScreen.png" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
+        <uap:LockScreen BadgeLogo="Images\BadgeLogo.png" Notification="badge"/>
+      </uap:VisualElements>
+      <Extensions>
+          <uap:Extension Category="windows.fileTypeAssociation">
+              <uap:FileTypeAssociation Name="guix-studio">
+                  <uap:SupportedFileTypes>
+                      <uap:FileType>.gxp</uap:FileType>
+                  </uap:SupportedFileTypes>
+                  <uap:DisplayName>GUIX Studio Project</uap:DisplayName>
+                  <uap:Logo>Images\GUIX-icon-8-20-2020.png</uap:Logo>
+                  <uap:EditFlags OpenIsSafe="true"/>
+              </uap:FileTypeAssociation>
+          </uap:Extension>
+          <uap3:Extension Category="windows.appExecutionAlias" Executable="studiox\guix_studio.exe" EntryPoint="Windows.FullTrustApplication">
+              <uap3:AppExecutionAlias>
+                  <desktop:ExecutionAlias Alias="guix_studio.exe" />
+              </uap3:AppExecutionAlias>
+          </uap3:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>

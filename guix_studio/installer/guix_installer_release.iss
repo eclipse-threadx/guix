@@ -5,9 +5,9 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{1D4932BC-ACD4-4292-9530-92C8BE2E58CF}
+AppId={{E6E44DDC-2F42-4BF5-A4B2-C1577FA16933}
 AppName=GUIX Studio
-AppVersion=6.4.1.0
+AppVersion=6.4.2.461
 AppPublisher=Eclipse Foundation
 AppPublisherURL=https://threadx.io/
 AppSupportURL=https://threadx.io/
@@ -16,7 +16,7 @@ DefaultDirName={sd}\Eclipse_ThreadX\GUIX_Studio_6.4
 DefaultGroupName=Eclipse_ThreadX
 CloseApplications=no
 ;LicenseFile=
-OutputBaseFilename=guix_studio_setup_version_6.4.1.0
+OutputBaseFilename=guix_studio_setup_version_6.4.2.0
 SetupIconFile=graphics\guix_1616icon.ico
 Compression=lzma
 SolidCompression=yes
@@ -41,7 +41,7 @@ Name: "associate"; Description: "{cm:AskAssociate}"; GroupDescription: "Other ta
 
 [Files]
 Source: "installer\vc_redist.x86.exe"; DestDir: "{tmp}"; Flags: nocompression createallsubdirs recursesubdirs deleteafterinstall
-Source: "build\vs_2019\Release\guix_studio.exe"; DestDir: "{app}\studio"; DestName: "GUIX_Studio.exe"; Flags: ignoreversion
+Source: "build\vs_2022\Release\guix_studio.exe"; DestDir: "{app}\studio"; DestName: "GUIX_Studio.exe"; Flags: ignoreversion
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -50,7 +50,7 @@ Name: "{group}\GUIX Studio 6.4\GUIX Studio"; Filename: "{app}\studio\GUIX_Studio
 Name: "{group}\GUIX Studio 6.4\GUIX Studio User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/about-guix-studio.md"
 Name: "{group}\GUIX Studio 6.4\GUIX User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/about-guix-studio.md"
 Name: "{group}\GUIX Studio 6.4\{cm:UninstallProgram,GUIX Studio}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\GUIX Studio 6.4.1.0"; Filename: "{app}\studio\GUIX_Studio.exe"; Tasks: desktopicon
+Name: "{commondesktop}\GUIX Studio 6.4.2.0"; Filename: "{app}\studio\GUIX_Studio.exe"; Tasks: desktopicon
 
 [Registry]
 Root: HKCR; Subkey: ".gxp"; ValueType: string; ValueName: ""; ValueData: "GUIX_Studio_Project"; Flags: uninsdeletevalue; Tasks: associate
@@ -61,5 +61,5 @@ Root: HKCR; Subkey: "GUIX_Studio_Project\shell\open\command"; ValueType: string;
 Root: HKLM; Subkey: "Software\Eclipse Foundation\GUIX\InstallDir"; ValueType: string; ValueName: ""; ValueData: "{app}";
 
 [Run]
-Filename: "{tmp}\vc_redist.x86.exe"; StatusMsg: "Installing Visual C++ 2015-2019 Redistributable(x86)"; Parameters:"/passive"
+Filename: "{tmp}\vc_redist.x86.exe"; StatusMsg: "Installing Visual C++ 2022 Redistributable(x86)"; Parameters:"/passive"
 
