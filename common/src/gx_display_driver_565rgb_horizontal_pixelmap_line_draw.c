@@ -1,10 +1,10 @@
 /***************************************************************************
- * Copyright (c) 2024 Microsoft Corporation 
- * 
+ * Copyright (c) 2024 Microsoft Corporation
+ *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at
  * https://opensource.org/licenses/MIT.
- * 
+ *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
@@ -26,8 +26,6 @@
 #include "gx_api.h"
 #include "gx_display.h"
 #include "gx_context.h"
-
-#if defined(GX_ARC_DRAWING_SUPPORT)
 
 #if defined(GX_BRUSH_ALPHA_SUPPORT)
 
@@ -1164,5 +1162,3 @@ GX_UBYTE alpha;
         info -> current_aux_ptr = (GX_UBYTE *)info ->  pixelmap -> gx_pixelmap_aux_data;
     }
 }
-#endif /*GX_ARC_DRAWING_SUPPORT*/
-
