@@ -142,6 +142,7 @@ GX_VALUE         width;
         }
 
         /* we have a view into which we can draw the polygon, do it */
+        GX_RECTANGLE *original_clip = context->gx_draw_context_clip;
         context -> gx_draw_context_clip = &clip_rect;
 
         if (context -> gx_draw_context_brush.gx_brush_style & (GX_BRUSH_SOLID_FILL | GX_BRUSH_PIXELMAP_FILL))
@@ -156,6 +157,8 @@ GX_VALUE         width;
         }
 
         view = view -> gx_view_next;
+        context -> gx_draw_context_clip = original_clip;
+
     }
 
     /* Return successful completion.  */

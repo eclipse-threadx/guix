@@ -188,6 +188,7 @@ VOID             (*outline_function)(GX_DRAW_CONTEXT *context, INT xcenter, INT 
         }
 
         /* we have a view into which we can draw the arc, do it */
+        GX_RECTANGLE *original_clip = context->gx_draw_context_clip;
         context -> gx_draw_context_clip = &clip_rect;
 
         if (brush -> gx_brush_style & (GX_BRUSH_SOLID_FILL | GX_BRUSH_PIXELMAP_FILL))
@@ -200,6 +201,7 @@ VOID             (*outline_function)(GX_DRAW_CONTEXT *context, INT xcenter, INT 
             outline_function(context, xcenter, ycenter, r, start_angle, end_angle);
         }
         view = view -> gx_view_next;
+        context -> gx_draw_context_clip = original_clip;
     }
 
     /* Return successful completion.  */
