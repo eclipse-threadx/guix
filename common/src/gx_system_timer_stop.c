@@ -53,8 +53,8 @@
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _gx_system_lock                       lock critical section         */
-/*    _gx_system_unlock                     unlock critical section       */
+/*    GX_ENTER_CRITICAL                     lock critical section         */
+/*    GX_EXIT_CRITICAL                      unlock critical section       */
 /*    tx_timer_deactivate                   stop the ThreadX timer        */
 /*                                                                        */
 /*  CALLED BY                                                             */

@@ -55,8 +55,8 @@
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _gx_system_lock                       Obtain GUIX system lock       */
-/*    _gx_system_unlock                     Release GUIX system lock      */
+/*    GX_ENTER_CRITICAL                     Obtain GUIX system lock       */
+/*    GX_EXIT_CRITICAL                      Release GUIX system lock      */
 /*    _gx_first_client_child_get            Get the first client child    */
 /*    [gx_vertical_list_callback]           Vertical list callback        */
 /*    _gx_window_scrollbar_find             Find the scrollbar            */
@@ -86,7 +86,7 @@ INT           index;
 GX_WIDGET    *test;
 GX_SCROLLBAR *pScroll;
 
-    _gx_system_lock();
+    GX_ENTER_CRITICAL
 
     /* Update total count of rows. */
     list -> gx_vertical_list_total_rows = count;
@@ -183,7 +183,7 @@ GX_SCROLLBAR *pScroll;
         _gx_scrollbar_reset(pScroll, GX_NULL);
     }
 
-    _gx_system_unlock();
+    GX_EXIT_CRITICAL
 
     /* Refresh screen. */
     if (list -> gx_widget_status & GX_STATUS_VISIBLE)

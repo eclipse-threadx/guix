@@ -59,9 +59,9 @@
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _gx_system_lock                       Lock access to GUIX           */
+/*    GX_ENTER_CRITICAL                     Lock access to GUIX           */
 /*    _gx_widget_link                       Link a widget to parent       */
-/*    _gx_system_unlock                     Release the protection        */
+/*    GX_EXIT_CRITICAL                      Release the protection        */
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */

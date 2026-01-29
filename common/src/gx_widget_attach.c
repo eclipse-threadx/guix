@@ -55,10 +55,10 @@
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*    _gx_system_lock                       Obtain GUIX system lock       */
+/*    GX_ENTER_CRITICAL                     Obtain GUIX system lock       */
 /*    _gx_widget_detach                     Detach from current parent    */
 /*    _gx_widget_link                       Link widget                   */
-/*    _gx_system_unlock                     Release GUIX system lock      */
+/*    GX_EXIT_CRITICAL                      Release GUIX system lock      */
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */

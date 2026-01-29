@@ -52,8 +52,8 @@
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*   _gx_system_lock                        lock system mutex             */
-/*   _gx_system_unlock                      unlock system mutex           */
+/*   GX_ENTER_CRITICAL                      lock system mutex             */
+/*   GX_EXIT_CRITICAL                       unlock system mutex           */
 /*                                                                        */
 /*  CALLED BY                                                             */
 /*                                                                        */

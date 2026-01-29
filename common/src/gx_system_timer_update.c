@@ -54,8 +54,8 @@
 /*                                                                        */
 /*  CALLS                                                                 */
 /*                                                                        */
-/*   _gx_system_lock                        Lock system mutex             */
-/*   _gx_system_unlock                      Unlock system mutex           */
+/*   GX_ENTER_CRITICAL                      Lock system mutex             */
+/*   GX_EXIT_CRITICAL                       Unlock system mutex           */
 /*   [gx_widget_event_process_function]     Event handler of timer owner  */
 /*   _gx_system_timer_stop                  Stop the system timer         */
 /*   _gx_animation_update                   Update the animation sequence */
