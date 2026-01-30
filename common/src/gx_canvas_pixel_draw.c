@@ -77,7 +77,9 @@ GX_DRAW_CONTEXT *context;
 GX_DISPLAY      *display;
 GX_VIEW         *view;
 GX_COLOR         pixcolor;
+#if defined(GX_BRUSH_ALPHA_SUPPORT)
 GX_UBYTE         brush_alpha;
+#endif
 
     /* pick up the current drawing context */
     context = _gx_system_current_draw_context;
@@ -92,7 +94,9 @@ GX_UBYTE         brush_alpha;
     /* pick up current display driver */
     display = context -> gx_draw_context_display;
 
+#if defined(GX_BRUSH_ALPHA_SUPPORT)
     brush_alpha = context -> gx_draw_context_brush.gx_brush_alpha;
+#endif
 
     /* pick up the pixel color */
     pixcolor = context -> gx_draw_context_brush.gx_brush_line_color;
