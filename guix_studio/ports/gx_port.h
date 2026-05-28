@@ -193,11 +193,10 @@ typedef SHORT  GX_VALUE;
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "Copyright (c) 1996-2015 Express Logic Inc. * GUIX Win32/Visual C/C++ Version G5.2.6.5.4 SN: GUIX_Studio_Distribution *";
+    "(c) 2024 Microsoft Corp. (c) 2026-present Eclipse ThreadX Contributors.  *  GUIX Win32/Visual Version 6.5.1.202602 *";
 #else
 extern  CHAR _gx_version_id[];
 #endif
 
 #endif
-
 
