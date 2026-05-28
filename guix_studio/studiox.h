@@ -22,7 +22,7 @@ public:
 // Overrides
 public:
     void DeleteSystemFonts();
-    void CreateSystemFonts();
+    void CreateSystemFonts(int dpi = 0);
 	virtual BOOL InitInstance();
     virtual int ExitInstance();
 

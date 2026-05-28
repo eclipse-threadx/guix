@@ -464,9 +464,9 @@ int image_reader::GetImageType(CString &path)
     UCHAR Buffer[8];
 
     // examine the first few bytes of data to determine the image type:
-    FILE *file = _tfopen(path.GetBuffer(), _T("rb"));
+    FILE *file = NULL;
 
-    if (file)
+    if ((_tfopen_s(&file, path.GetString(), _T("rb")) == 0) && file)
     {
         fread(Buffer, 1, 8, file);
         ImageType = GetImageType(Buffer, 8);
@@ -3290,6 +3290,5 @@ void image_reader::WriteTransparentPixel_32ARGB(UCHAR *pPut, int PixIndex)
     pData += PixIndex;
     *pData = 0x0;
 }
-
 
 

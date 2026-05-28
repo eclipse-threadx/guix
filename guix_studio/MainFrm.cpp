@@ -21,6 +21,10 @@ extern CBrush WinBackBrush;
 #define MACRO_RECORD_SPEED  1
 #define ID_SINGLEMACRO 1
 #define ID_SUPERMACRO  2
+#define TOOLBAR_IMAGE_WIDTH_96DPI 30
+#define TOOLBAR_IMAGE_HEIGHT_96DPI 22
+#define TOOLBAR_BUTTON_WIDTH_96DPI 38
+#define TOOLBAR_BUTTON_HEIGHT_96DPI 30
 
 int          WM_SET_LAYOUT;
 HHOOK        mouse_hook = 0;
@@ -180,8 +184,10 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
     ON_COMMAND(ID_LOCK_WIDGET_POSITIONS, &CMainFrame::OnLockUlockWidgetPositions)
 
     ON_MESSAGE(STUDIO_TEST, OnTestMessage)
+    ON_MESSAGE(WM_DPICHANGED, &CMainFrame::OnDpiChanged)
     ON_REGISTERED_MESSAGE(WM_SET_LAYOUT, &CMainFrame::OnSetLayout)
     
+    ON_WM_NCCREATE()
     ON_WM_INITMENUPOPUP()
         ON_WM_SETTINGCHANGE()
         END_MESSAGE_MAP()
@@ -218,18 +224,24 @@ BOOL CustomToolBar::OnEraseBkgnd(CDC* pDC)
 
     // go through hoops to get bitmap width:
     fillmap.GetObject(sizeof(BITMAP), &bm);
-    int width = bm.bmWidth;
-    int height = bm.bmHeight;
+    int dpi = GetDpiForStudioWindow(GetSafeHwnd());
+    int width = MulDiv(bm.bmWidth, dpi, DEFAULT_DPI_96);
+    int height = MulDiv(bm.bmHeight, dpi, DEFAULT_DPI_96);
 
     dcMemory.CreateCompatibleDC(pDC);
     dcMemory.SelectObject(&fillmap);
 
     pDC->GetClipBox(&boxrect);     // Erase the area needed
+    if (height < boxrect.Height())
+    {
+        height = boxrect.Height();
+    }
+
     int xpos = boxrect.left;
 
     while(xpos < boxrect.right)
     {
-        pDC->BitBlt(xpos, boxrect.top, width, height, &dcMemory, 0, 0, SRCCOPY);
+        pDC->StretchBlt(xpos, boxrect.top, width, height, &dcMemory, 0, 0, bm.bmWidth, bm.bmHeight, SRCCOPY);
         xpos += width;
     }
     return TRUE;
@@ -336,6 +348,8 @@ CMainFrame::CMainFrame()
     mpRecentMenu->CreateMenu();
 
     m_text_scaler = GetTextScaler();
+    m_dpi = GetSystemDPI();
+    m_dpi_resources_initialized = FALSE;
 
     // Create accessibility property service
     CreateAccPropService();
@@ -1060,10 +1074,140 @@ void CMainFrame::OnSize(UINT ntype, int cx, int cy)
     }
 }
 
+void CMainFrame::SetupToolBarImageList(int dpi)
+{
+    CSize image_size(MulDiv(TOOLBAR_IMAGE_WIDTH_96DPI, dpi, DEFAULT_DPI_96),
+        MulDiv(TOOLBAR_IMAGE_HEIGHT_96DPI, dpi, DEFAULT_DPI_96));
+    CSize button_size(MulDiv(TOOLBAR_BUTTON_WIDTH_96DPI, dpi, DEFAULT_DPI_96),
+        MulDiv(TOOLBAR_BUTTON_HEIGHT_96DPI, dpi, DEFAULT_DPI_96));
+
+    if (image_size.cx <= 0)
+    {
+        image_size.cx = TOOLBAR_IMAGE_WIDTH_96DPI;
+    }
+    if (image_size.cy <= 0)
+    {
+        image_size.cy = TOOLBAR_IMAGE_HEIGHT_96DPI;
+    }
+    if (button_size.cx < image_size.cx)
+    {
+        button_size.cx = image_size.cx;
+    }
+    if (button_size.cy < image_size.cy)
+    {
+        button_size.cy = image_size.cy;
+    }
+
+    HBITMAP source_bitmap = (HBITMAP)::LoadImage(AfxGetInstanceHandle(),
+        MAKEINTRESOURCE(IDR_MAINFRAME), IMAGE_BITMAP,
+        0, 0, LR_CREATEDIBSECTION | LR_LOADMAP3DCOLORS);
+
+    if (!source_bitmap)
+    {
+        return;
+    }
+
+    CBitmap source;
+    BITMAP bitmap_info;
+    source.Attach(source_bitmap);
+    source.GetObject(sizeof(BITMAP), &bitmap_info);
+    source.DeleteObject();
+
+    int image_count = bitmap_info.bmWidth / TOOLBAR_IMAGE_WIDTH_96DPI;
+
+    if (image_count <= 0)
+    {
+        image_count = 1;
+    }
+
+    int scaled_width = image_size.cx * image_count;
+    int scaled_height = image_size.cy;
+
+    HBITMAP scaled_bitmap = (HBITMAP)::LoadImage(AfxGetInstanceHandle(),
+        MAKEINTRESOURCE(IDR_MAINFRAME), IMAGE_BITMAP,
+        scaled_width, scaled_height, LR_CREATEDIBSECTION | LR_LOADMAP3DCOLORS);
+
+    if (!scaled_bitmap)
+    {
+        return;
+    }
+
+    CBitmap toolbar_bitmap;
+    toolbar_bitmap.Attach(scaled_bitmap);
+
+    m_wndToolBar.SetSizes(button_size, image_size);
+    m_wndToolBar.GetToolBarCtrl().SetImageList(NULL);
+    m_imagelist.DeleteImageList();
+    m_imagelist.Create(image_size.cx, image_size.cy, ILC_COLOR32, 4, 4);
+    m_imagelist.Add(&toolbar_bitmap, (CBitmap*)NULL);
+    m_wndToolBar.GetToolBarCtrl().SetImageList(&m_imagelist);
+}
+
+void CMainFrame::UpdateDpiDependentResources(int dpi)
+{
+    if (dpi <= 0)
+    {
+        dpi = GetDpiForStudioWindow(GetSafeHwnd());
+    }
+
+    m_dpi = dpi;
+    theApp.DeleteSystemFonts();
+    theApp.CreateSystemFonts(m_dpi);
+
+    if (m_wndToolBar.GetSafeHwnd())
+    {
+        SetupToolBarImageList(m_dpi);
+    }
+
+    if (m_splitter_created)
+    {
+        left_top_panel_frame *top_pane = DYNAMIC_DOWNCAST(left_top_panel_frame, m_splitter2.GetPane(0, 0));
+        left_bottom_panel_frame *bottom_pane = DYNAMIC_DOWNCAST(left_bottom_panel_frame, m_splitter2.GetPane(1, 0));
+
+        if (top_pane)
+        {
+            top_pane->UpdateDpiResources(m_dpi);
+        }
+
+        if (bottom_pane)
+        {
+            bottom_pane->UpdateDpiResources(m_dpi);
+        }
+    }
+    else if (mpProjectView)
+    {
+        mpProjectView->UpdateDpiResources(m_dpi);
+    }
+
+    if (m_splitter_created)
+    {
+        m_splitter.RecalcLayout();
+    }
+
+    if (mpTargetView)
+    {
+        recent_project_win *recent_dialog = (recent_project_win *)mpTargetView->GetRecentDialog();
+
+        if (recent_dialog)
+        {
+            recent_dialog->UpdateDpiResources(m_dpi);
+        }
+    }
+
+    RecalcLayout();
+    SendMessageToDescendants(WM_SETTINGCHANGE, 0, 0, TRUE, TRUE);
+    RedrawWindow(NULL, NULL, RDW_INVALIDATE | RDW_ALLCHILDREN | RDW_ERASE);
+    m_dpi_resources_initialized = TRUE;
+}
+
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
     if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
         return -1;
+
+    m_dpi = GetDpiForStudioWindow(GetSafeHwnd());
+    theApp.DeleteSystemFonts();
+    theApp.CreateSystemFonts(m_dpi);
     
     if (!m_wndToolBar.CreateEx(this, TBSTYLE_LIST, WS_CHILD | WS_VISIBLE | CBRS_TOP
         | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
@@ -1074,21 +1218,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     }
 
     SetControlAccessibleName(m_wndToolBar.GetSafeHwnd(), _T("mainframe_toolbar"));
-
-    // TODO: Delete these three lines if you don't want the toolbar to be dockable
-    HBITMAP hBitmap = (HBITMAP) ::LoadImage(AfxGetInstanceHandle(),
-    MAKEINTRESOURCE(IDR_MAINFRAME), IMAGE_BITMAP,
-    0,0, LR_CREATEDIBSECTION | LR_LOADMAP3DCOLORS);
-
-    CBitmap bm;
-    bm.Attach(hBitmap);
-
-    m_imagelist.Create(30, 22, ILC_COLOR32, 4, 4);
-    m_imagelist.Add(&bm, (CBitmap*) NULL);
-
-    m_wndToolBar.GetToolBarCtrl().SetImageList(&m_imagelist);
-    m_imagelist.Detach();
-    bm.Detach();
+    SetupToolBarImageList(m_dpi);
  
     HICON hIcon = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_MAINFRAME));
     SetIcon(hIcon, TRUE);
@@ -1138,7 +1268,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     mStatusMsg.Create(L"Saved", WS_CHILD | WS_VISIBLE, CRect(0, 0, 0, 0), this);
     SetLiveRegion(mStatusMsg.GetSafeHwnd());
+    UpdateDpiDependentResources(m_dpi);
     return 0;
+}
+
+BOOL CMainFrame::OnNcCreate(LPCREATESTRUCT lpCreateStruct)
+{
+    ::EnableNonClientDpiScaling(GetSafeHwnd());
+    return CFrameWnd::OnNcCreate(lpCreateStruct);
 }
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
@@ -1159,6 +1296,16 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 void CMainFrame::OnShowWindow(BOOL bShow, UINT nStatus)
 {
     CWnd::OnShowWindow(bShow, nStatus);
+
+    if (bShow)
+    {
+        int dpi = GetDpiForStudioWindow(GetSafeHwnd());
+
+        if (!m_dpi_resources_initialized || (dpi != m_dpi))
+        {
+            UpdateDpiDependentResources(dpi);
+        }
+    }
 }
 
 
@@ -1175,10 +1322,28 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 
     if (new_text_scaler != m_text_scaler)
     {
-        theApp.DeleteSystemFonts();
-        theApp.CreateSystemFonts();
         m_text_scaler = new_text_scaler;
+        UpdateDpiDependentResources(GetDpiForStudioWindow(GetSafeHwnd()));
     }
+}
+
+LRESULT CMainFrame::OnDpiChanged(WPARAM wParam, LPARAM lParam)
+{
+    int dpi = LOWORD(wParam);
+    RECT *suggested_rect = (RECT*)lParam;
+
+    if (suggested_rect)
+    {
+        SetWindowPos(NULL,
+            suggested_rect->left,
+            suggested_rect->top,
+            suggested_rect->right - suggested_rect->left,
+            suggested_rect->bottom - suggested_rect->top,
+            SWP_NOZORDER | SWP_NOACTIVATE);
+    }
+
+    UpdateDpiDependentResources(dpi);
+    return 0;
 }
 
 // CMainFrame diagnostics

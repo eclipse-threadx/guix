@@ -329,7 +329,7 @@ int string_table_edit_dlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
     lf.lfHeight = MulDiv(20, m_sys_dpi, DEFAULT_DPI_96);
     lf.lfWeight = FW_NORMAL;
     lf.lfOutPrecision = OUT_TT_ONLY_PRECIS;
-    _tcscpy(lf.lfFaceName, _T("Arial Unicode MS"));
+    _tcscpy_s(lf.lfFaceName, _countof(lf.lfFaceName), _T("Arial Unicode MS"));
     mUniFont.CreateFontIndirect(&lf);
     
     mTopStringEdit.SetFont(&mUniFont);

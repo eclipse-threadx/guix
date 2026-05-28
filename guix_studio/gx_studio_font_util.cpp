@@ -1592,9 +1592,9 @@ INT GetPixelmapStorage(res_info *info)
     if (info->raw)
     {
         CString path = MakeAbsolutePathname(info->pathinfo);
-        FILE *file = _tfopen(path.GetBuffer(), _T("rb"));
+        FILE *file = NULL;
 
-        if (!file)
+        if ((_tfopen_s(&file, path.GetString(), _T("rb")) != 0) || !file)
         {
             return 0;
         }

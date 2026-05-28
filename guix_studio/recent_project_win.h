@@ -11,6 +11,8 @@ class recent_list_frame : public CWnd
         recent_list_frame(CWnd* parent = NULL);
         ~recent_list_frame();
         void UpdateRecentList();
+        void UpdateDpiResources(int dpi = 0);
+        int GetPreferredHeight();
 
     private:
         DECLARE_MESSAGE_MAP()
@@ -24,10 +26,12 @@ class recent_list_frame : public CWnd
         afx_msg void OnKillFocus(CWnd* pNewWnd);
         int FindStatic(CPoint point);
         int GetRowHeight();
+        void LayoutItems();
 
     private:
         CStatic mRecentList[MAX_RECENT_PROJECTS];
         int     mHighlightRow;
+        int     m_dpi;
         CBrush  mHiBrush;
         CBrush  mBgBrush;
         CBrush  mGrayBrush; 
@@ -40,6 +44,7 @@ class recent_project_win : public express_dialog
         recent_project_win(int width, int height, CWnd* pParent = NULL);   // standard constructor
         virtual ~recent_project_win();
         void UpdateRecentList();
+        void UpdateDpiResources(int dpi = 0);
         static CRect GetCreateNewProjectButtonSize(CRect& parentSize);
 
     protected:
@@ -47,7 +52,10 @@ class recent_project_win : public express_dialog
         afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
         afx_msg void OnShowWindow(BOOL, UINT);
         afx_msg void OnBnClickedCreateProject();
+        afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
+        afx_msg LRESULT OnDpiChanged(WPARAM wParam, LPARAM lParam);
         virtual BOOL PreTranslateMessage(MSG* pMsg);
+        void LayoutControls();
 
 private:
         recent_list_frame    mRecentListFrame;

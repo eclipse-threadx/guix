@@ -147,8 +147,9 @@ ProjectConfigWin::ProjectConfigWin(CWnd* pParent, int current_display)
     }
 
     int m_text_scaler = GetTextScaler();
+    int dpi = GetDpiForStudioWindow(pParent ? pParent->GetSafeHwnd() : NULL);
 
-    int point_size = DEFAULT_DLG_FONT_POINT_SIZE * m_text_scaler / DEFAULT_TEXT_SCALER;
+    int point_size = GetDialogTemplateFontPointSize(DEFAULT_DLG_FONT_POINT_SIZE, dpi, m_text_scaler);
 
     dlt.SetFont(L"MS Shell Dlg", point_size);
     LPSTR pdata = (LPSTR)GlobalLock(dlt.m_hTemplate);

@@ -3341,7 +3341,7 @@ BOOL studiox_project::SaveAs()
 
     SavePathname[0] = 0;
     FileName[0] = 0;
-    _tcscpy(SavePathname, mHeader.project_name.GetBuffer());
+    _tcscpy_s(SavePathname, _countof(SavePathname), mHeader.project_name.GetString());
 
     if (GetOutputFileName(SavePathname, FileName, 
                           _T("Save Project As"),

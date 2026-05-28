@@ -7,6 +7,7 @@ class view_header : public CWnd
 {
     public:
         view_header(char *title, int icon_id);
+        void UpdateDpiResources(int dpi = 0);
 
     protected:
         void FillHeader(CDC *dc, int y, int xstart, int xend);
@@ -23,5 +24,6 @@ class view_header : public CWnd
         int m_icon_width;
         int m_icon_src_width;
         int m_icon_src_height;
+        int m_dpi;
         CBitmap m_left_bmp;
 };

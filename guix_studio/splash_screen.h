@@ -5,6 +5,8 @@
 #include <afxcview.h>
 
 #define DATE_STRING_SIZE 128
+#define SPLASH_SCREEN_WIDTH_96DPI 540
+#define SPLASH_SCREEN_HEIGHT_96DPI 283
 
 class splash_screen : public CDialog
 {
@@ -26,6 +28,7 @@ class splash_screen : public CDialog
         afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	    DECLARE_MESSAGE_MAP()
         BOOL mAutoClose;
+        int m_dpi;
 };
 
 #endif

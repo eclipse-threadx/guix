@@ -340,10 +340,10 @@ void widget_service_provider::GetStringText(char *put, int size, widget_info *in
                         index += glyph_len;
                         _gx_utility_utf8_string_character_get(&string, GX_NULL, (UINT *)&glyph_len);
                     }
-                    size = index;
+                    int copy_size = index;
 
-                    strncpy(put, utf8buf, size);
-                    put[size] = 0;
+                    strncpy_s(put, size, utf8buf, copy_size);
+                    put[copy_size] = 0;
                 }
 
                 delete[] utf8buf;
@@ -1169,4 +1169,3 @@ GX_RESOURCE_ID widget_service_provider::ReadColorId(xml_reader &reader, studiox_
     return res_id;
 
 }
-

@@ -12,6 +12,7 @@
 extern INI_INFO        StudioXIni;
 extern CString         studiox_version_string;
 extern CArray<WIDGET_SELECT_ENTRY> SelectedWidgets;
+extern CFont           NormalFont;
 
 IMPLEMENT_DYNCREATE(project_view, CTreeView)
 
@@ -153,19 +154,76 @@ HTREEITEM project_view::AddTreeRoot(CString &rootname)
 CImageList *CreateImageList(int width, int height)
 {
     CImageList *list = new CImageList();
-    list->Create(width, height, ILC_COLOR24, 0, 0);
+    list->Create(width, height, ILC_COLOR32, 0, 0);
     
     WIDGET_TYPE_IMAGE_MAP *entry = ProjectViewImageMap;
 
     while(entry->bmp_id)
     {
         CBitmap *bmp = new CBitmap();
-        bmp->LoadBitmap(entry->bmp_id);
-        list->Add(bmp, (CBitmap *) NULL);
+        HBITMAP bitmap = (HBITMAP)::LoadImage(AfxGetInstanceHandle(),
+            MAKEINTRESOURCE(entry->bmp_id), IMAGE_BITMAP,
+            width, height, LR_CREATEDIBSECTION | LR_LOADMAP3DCOLORS);
+
+        if (bitmap)
+        {
+            bmp->Attach(bitmap);
+        }
+        else
+        {
+            bmp->LoadBitmap(entry->bmp_id);
+        }
+
+        list->Add(bmp, (CBitmap*)NULL);
         delete bmp;
         entry++;
     }
     return list;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void project_view::UpdateDpiResources(int dpi)
+{
+    if (!GetSafeHwnd())
+    {
+        return;
+    }
+
+    CTreeCtrl *tree = &GetTreeCtrl();
+
+    if (dpi <= 0)
+    {
+        dpi = GetDpiForStudioWindow(tree->GetSafeHwnd());
+    }
+
+    int icon_size = MulDiv(16, dpi, DEFAULT_DPI_96);
+
+    if (icon_size <= 0)
+    {
+        icon_size = 16;
+    }
+
+    CImageList *new_list = CreateImageList(icon_size, icon_size);
+    tree->SetImageList(new_list, TVSIL_NORMAL);
+    tree->SetFont(&NormalFont);
+
+    CClientDC dc(tree);
+    CFont *old_font = dc.SelectObject(&NormalFont);
+    TEXTMETRIC tm;
+    dc.GetTextMetrics(&tm);
+    dc.SelectObject(old_font);
+
+    int item_height = max(icon_size + 2, tm.tmHeight + MulDiv(4, dpi, DEFAULT_DPI_96));
+    tree->SetItemHeight(item_height);
+
+    if (mpImageList)
+    {
+        delete mpImageList;
+    }
+
+    mpImageList = new_list;
+    tree->SetIndent(MulDiv(18, dpi, DEFAULT_DPI_96));
+    tree->Invalidate();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -187,15 +245,7 @@ void project_view::OnInitialUpdate()
 //    mpTree->ModifyStyle(0, TVS_HASLINES|TVS_HASBUTTONS|TVS_LINESATROOT|TVS_SHOWSELALWAYS);
     mpTree->ModifyStyle(0, TVS_HASLINES|TVS_HASBUTTONS|TVS_SHOWSELALWAYS);
 
-    // create an image list:
-    if (mpImageList)
-    {
-        delete mpImageList;
-        mpImageList = NULL;
-    }
-    mpImageList = CreateImageList(16, 16);
-    mpTree->SetImageList(mpImageList, TVSIL_NORMAL);
-    mpTree->SetIndent(0);
+    UpdateDpiResources();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -855,7 +905,7 @@ void project_view::CloseProject(BOOL DisplayRecent, BOOL CheckSaveChanges)
 ///////////////////////////////////////////////////////////////////////////////
 void project_view::SetFrameTitle(CString &title)
 {
-    CString fulltitle = _T("Azure RTOS GUIX Studio ");
+    CString fulltitle = _T("Eclipse ThreadX GUIX Studio ");
     fulltitle += studiox_version_string;
     fulltitle += " - ";
     fulltitle += title;
