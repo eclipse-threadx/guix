@@ -1,3 +1,14 @@
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation
+ * Copyright (c) 2026 Eclipse ThreadX contributors
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
+
 
 #define DEFAULT_GOLDEN_FILE_PATH "../golden_files/"
 #define DEFAULT_OUTPUT_FILE_PATH "output_files/"

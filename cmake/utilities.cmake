@@ -1,3 +1,12 @@
+# Copyright (c) 2024 Microsoft Corporation
+# Copyright (c) 2026 Eclipse ThreadX contributors
+#
+# This program and the accompanying materials are made available under the
+# terms of the MIT License which is available at
+# https://opensource.org/licenses/MIT.
+#
+# SPDX-License-Identifier: MIT
+
 # Add the required subdirectory and register it for linkage
 function(add_azrtos_component_dir dirname)
     # Store the current list in a temp
