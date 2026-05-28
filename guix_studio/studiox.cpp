@@ -85,6 +85,16 @@ CFrameWnd *CstudioxApp::CreateMainFrame()
 CString splash_class_name;
 CString studiox_version_string;
 
+static CRect GetSplashScreenRect(HWND hwnd)
+{
+    int dpi = GetDpiForStudioWindow(hwnd);
+
+    return CRect(0,
+        0,
+        MulDiv(SPLASH_SCREEN_WIDTH_96DPI, dpi, DEFAULT_DPI_96),
+        MulDiv(SPLASH_SCREEN_HEIGHT_96DPI, dpi, DEFAULT_DPI_96));
+}
+
 void CstudioxApp::DeleteSystemFonts()
 {
     TitleFont.DeleteObject();
@@ -95,20 +105,22 @@ void CstudioxApp::DeleteSystemFonts()
     ViewHeaderFont.DeleteObject();
 }
 
-void CstudioxApp::CreateSystemFonts()
+void CstudioxApp::CreateSystemFonts(int dpi)
 {
     /* Create the fonts used by app */
 
 // this formula can be used to convert point size to logical units
 // lfHeight = -MulDiv(PointSize, GetDeviceCaps(hDC, LOGPIXELSY), 72);
 
-    HDC dc = ::GetDC(NULL);
+    if (dpi <= 0)
+    {
+        dpi = GetDpiForStudioWindow(m_pMainWnd ? m_pMainWnd->GetSafeHwnd() : NULL);
+    }
 
-    // Get number of pixels per logical inch along the screen height
-    int dpi = GetDeviceCaps(dc, LOGPIXELSY);
     int text_scaler = GetTextScaler();
 
-    TitleFont.CreateFont(TITLE_FONT_HEIGHT, 0, 0, 0,
+    int height = GetScaledValue(TITLE_FONT_HEIGHT, dpi, text_scaler);
+    TitleFont.CreateFont(height, 0, 0, 0,
         FW_BOLD, FALSE, FALSE, 0,
         ANSI_CHARSET,
         OUT_DEFAULT_PRECIS,
@@ -117,7 +129,7 @@ void CstudioxApp::CreateSystemFonts()
         DEFAULT_PITCH | FF_SWISS, _T("Arial"));
 
     // Convert point size to logic unit
-    int height = -MulDiv(MEDIUM_FONT_PT_SIZE, dpi, 72);
+    height = -MulDiv(MEDIUM_FONT_PT_SIZE, dpi, 72);
     height = MulDiv(height, text_scaler, DEFAULT_TEXT_SCALER);
     MediumFont.CreateFont(height, 0, 0, 0,
         FW_SEMIBOLD, FALSE, FALSE, 0,
@@ -127,15 +139,15 @@ void CstudioxApp::CreateSystemFonts()
         CLEARTYPE_QUALITY,
         DEFAULT_PITCH | FF_SWISS, _T("Arial"));
 
-    height = -MulDiv(NORMAL_FONT_PT_SIZE, dpi, 72);
-    height = MulDiv(height, text_scaler, DEFAULT_TEXT_SCALER);
+    int normal_point_size = GetDialogTemplateFontPointSize(DEFAULT_DLG_FONT_POINT_SIZE, dpi, text_scaler);
+    height = -MulDiv(normal_point_size, dpi, 72);
     NormalFont.CreateFont(height, 0, 0, 0,
         FW_NORMAL, FALSE, FALSE, 0,
         ANSI_CHARSET,
         OUT_TT_PRECIS,
         CLIP_DEFAULT_PRECIS,
         CLEARTYPE_QUALITY,
-        DEFAULT_PITCH | FF_SWISS, _T("Arial"));
+        DEFAULT_PITCH | FF_SWISS, _T("MS Shell Dlg"));
 
     height = -MulDiv(ASTERISK_FONT_PT_SIZE, dpi, 72);
     height = MulDiv(height, text_scaler, DEFAULT_TEXT_SCALER);
@@ -147,7 +159,8 @@ void CstudioxApp::CreateSystemFonts()
         CLEARTYPE_QUALITY,
         DEFAULT_PITCH | FF_SWISS, _T("Arial"));
 
-    TinyFont.CreateFont(TYNY_FONT_HEIGHT, 0, 0, 0,
+    height = GetScaledValue(TYNY_FONT_HEIGHT, dpi, text_scaler);
+    TinyFont.CreateFont(height, 0, 0, 0,
         FW_BOLD, FALSE, FALSE, 0,
         ANSI_CHARSET,
         OUT_TT_PRECIS,
@@ -164,12 +177,12 @@ void CstudioxApp::CreateSystemFonts()
         CLIP_DEFAULT_PRECIS,
         CLEARTYPE_QUALITY,
         DEFAULT_PITCH | FF_SWISS, _T("Arial"));
-
-    ReleaseDC(NULL, dc);
 }
 
 BOOL CstudioxApp::InitInstance()
 {
+    ::SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+
 	// InitCommonControlsEx() is required on Windows XP if an application
 	// manifest specifies use of ComCtl32.dll version 6 or later to enable
 	// visual styles.  Otherwise, any window creation will fail.
@@ -266,7 +279,7 @@ BOOL CstudioxApp::InitInstance()
     {
         int tag_status;
 
-        CRect childrect(0, 0, 425, 283);
+        CRect childrect = GetSplashScreenRect(m_pMainWnd ? m_pMainWnd->GetSafeHwnd() : NULL);
         splash_screen *splash = new splash_screen(TRUE);
         splash->CreateEx(0, splash_class_name, NULL,
             WS_POPUP|WS_VISIBLE|WS_BORDER, childrect, NULL, 0, NULL);
@@ -445,7 +458,7 @@ int CstudioxApp::ExitInstance()
 // App command to run the dialog
 void CstudioxApp::OnAppAbout()
 {
-    CRect childrect(0, 0, 425, 283);
+    CRect childrect = GetSplashScreenRect(m_pMainWnd ? m_pMainWnd->GetSafeHwnd() : NULL);
     splash_screen *splash = new splash_screen(FALSE);
     splash->CreateEx(0, splash_class_name, NULL,
         WS_POPUP|WS_VISIBLE|WS_BORDER, childrect, m_pMainWnd, 0, NULL);

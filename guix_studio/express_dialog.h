@@ -34,8 +34,8 @@ class express_dialog : public CDialog
         void AddCancelButton(CString title = _T("Cancel"));
         void SetSavedMsg(CString msg) { mSavedMsg = msg; }
         virtual INT_PTR DoModal();
-        void ChangeDialogFontSize();
-        void CreateDialogFont(int text_scaler);
+        void ChangeDialogFontSize(int dpi = 0, BOOL resize_window = TRUE);
+        void CreateDialogFont(int text_scaler, int dpi = 0);
 
     protected:
         DECLARE_MESSAGE_MAP()
@@ -44,6 +44,7 @@ class express_dialog : public CDialog
         afx_msg void OnSize(UINT nType, int cx, int cy);
         afx_msg BOOL OnEraseBkgnd(CDC* pDC);
         afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
+        afx_msg LRESULT OnDpiChanged(WPARAM wParam, LPARAM lParam);
         virtual BOOL PreTranslateMessage(MSG* pMsg);
         virtual void OnOK();
 
@@ -69,6 +70,7 @@ class express_dialog : public CDialog
         int m_cancel_button_height;
         int m_template_id;
         int m_text_scaler;
+        int m_dpi;
         CFont m_dialog_font;
 
     protected:

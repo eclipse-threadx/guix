@@ -845,7 +845,18 @@ void MakePath(CString path)
 ///////////////////////////////////////////////////////////////////////////////
 CString GetAppDataPath()
 {
-    CString path = CString(getenv("APPDATA"));
+    char *appdata = NULL;
+    size_t appdata_size = 0;
+
+    _dupenv_s(&appdata, &appdata_size, "APPDATA");
+
+    CString path = appdata ? CString(appdata) : CString();
+
+    if (appdata)
+    {
+        free(appdata);
+    }
+
     path += "\\Eclipse Foundation\\Eclipse_ThreadX\\GUIX_Studio";
     MakePath(path);
     return path;
@@ -1094,7 +1105,7 @@ CString GetTestingParam(int index)
         filename = fparam0;
     }
  
-    file = fopen(filename, "r");
+    fopen_s(&file, filename, "r");
 
     if (file)
     {
@@ -1418,7 +1429,7 @@ void pixelmap_list_destroy(CArray<GX_PIXELMAP *> &pixelmap_list)
 
 
 ///////////////////////////////////////////////////////////////////////////////
-void PaintBmp(CDC *dc, int x, int y, int icon_id)
+void PaintBmp(CDC *dc, int x, int y, int icon_id, int dpi)
 {
     CBitmap map;
     BITMAP  bmp;
@@ -1431,7 +1442,11 @@ void PaintBmp(CDC *dc, int x, int y, int icon_id)
         dcMemory.CreateCompatibleDC(dc);
         dcMemory.SelectObject(&map);
 
-        int dpi = GetSystemDPI();
+        if (dpi <= 0)
+        {
+            dpi = GetSystemDPI();
+        }
+
         int width = MulDiv(bmp.bmWidth, dpi, DEFAULT_DPI_96);
         int height = MulDiv(bmp.bmHeight, dpi, DEFAULT_DPI_96);
         dc->StretchBlt(x, y, width, height, &dcMemory,0, 0, bmp.bmWidth, bmp.bmHeight, SRCCOPY);
@@ -1903,9 +1918,8 @@ void SplitString(CString str, CHAR splitter, CStringArray *list)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-int GetSystemDPI()
+static int GetDesktopDPI()
 {
-    // get DPI for the system
     HDC hdc = ::GetDC(NULL);
 
     int dpi = GetDeviceCaps(hdc, LOGPIXELSX);
@@ -1913,6 +1927,109 @@ int GetSystemDPI()
     ::ReleaseDC(NULL, hdc);
 
     return dpi;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+static int GetMonitorScaleDPI(HWND hwnd)
+{
+    HMONITOR monitor = NULL;
+
+    if (hwnd && ::IsWindow(hwnd))
+    {
+        monitor = ::MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+    }
+
+    if (!monitor)
+    {
+        POINT pt = { 0, 0 };
+        monitor = ::MonitorFromPoint(pt, MONITOR_DEFAULTTOPRIMARY);
+    }
+
+    if (!monitor)
+    {
+        return 0;
+    }
+
+    typedef HRESULT(WINAPI *GET_SCALE_FACTOR_FOR_MONITOR)(HMONITOR, int *);
+
+    HMODULE shcore = ::LoadLibrary(_T("shcore.dll"));
+
+    if (!shcore)
+    {
+        return 0;
+    }
+
+    GET_SCALE_FACTOR_FOR_MONITOR get_scale_factor =
+        (GET_SCALE_FACTOR_FOR_MONITOR)::GetProcAddress(shcore, "GetScaleFactorForMonitor");
+
+    int dpi = 0;
+
+    if (get_scale_factor)
+    {
+        int scale_factor = 0;
+
+        if (SUCCEEDED(get_scale_factor(monitor, &scale_factor)) && (scale_factor > 0))
+        {
+            dpi = MulDiv(DEFAULT_DPI_96, scale_factor, 100);
+        }
+    }
+
+    ::FreeLibrary(shcore);
+    return dpi;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+int GetDpiForStudioWindow(HWND hwnd)
+{
+    if (hwnd && ::IsWindow(hwnd))
+    {
+        HWND dpi_hwnd = ::GetAncestor(hwnd, GA_ROOT);
+
+        if (!dpi_hwnd)
+        {
+            dpi_hwnd = hwnd;
+        }
+
+        UINT dpi = ::GetDpiForWindow(dpi_hwnd);
+        int monitor_dpi = GetMonitorScaleDPI(dpi_hwnd);
+
+        if ((int)dpi < monitor_dpi)
+        {
+            dpi = monitor_dpi;
+        }
+
+        if (dpi)
+        {
+            return (int)dpi;
+        }
+    }
+
+    CWnd *main = AfxGetMainWnd();
+
+    if (main && main->GetSafeHwnd() && ::IsWindow(main->GetSafeHwnd()))
+    {
+        HWND main_hwnd = main->GetSafeHwnd();
+        UINT dpi = ::GetDpiForWindow(main_hwnd);
+        int monitor_dpi = GetMonitorScaleDPI(main_hwnd);
+
+        if ((int)dpi < monitor_dpi)
+        {
+            dpi = monitor_dpi;
+        }
+
+        if (dpi)
+        {
+            return (int)dpi;
+        }
+    }
+
+    return GetDesktopDPI();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+int GetSystemDPI()
+{
+    return GetDpiForStudioWindow(NULL);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -2124,7 +2241,7 @@ ULONG GetTextScaler()
     DWORD type, size;
     ULONG scaler = DEFAULT_TEXT_SCALER;
 
-    HKEY key;
+    HKEY key = NULL;
     RegOpenKeyEx(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Accessibility", 0, READ_CONTROL | KEY_QUERY_VALUE, &key);
 
     if (key)
@@ -2145,6 +2262,30 @@ int GetScaledValue(int value, int dpi, int text_scaler)
     value = MulDiv(value, text_scaler, DEFAULT_TEXT_SCALER);
 
     return value;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+int GetDialogTemplateFontPointSize(int point_size, int dpi, int text_scaler)
+{
+    if (dpi <= 0)
+    {
+        dpi = GetSystemDPI();
+    }
+
+    if (text_scaler <= 0)
+    {
+        text_scaler = DEFAULT_TEXT_SCALER;
+    }
+
+    point_size = MulDiv(point_size, dpi, DEFAULT_DPI_96);
+    point_size = MulDiv(point_size, text_scaler, DEFAULT_TEXT_SCALER);
+
+    if (point_size < 1)
+    {
+        point_size = 1;
+    }
+
+    return point_size;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

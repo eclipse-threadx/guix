@@ -40,9 +40,9 @@ BOOL jpg_reader::ReadImage(CString &path, int frame_id)
 {
 	struct my_error_mgr jerr;
 
-    FILE *file = _tfopen(path.GetBuffer(), _T("rb"));
+    FILE *file = NULL;
 
-    if (!file)
+    if ((_tfopen_s(&file, path.GetString(), _T("rb")) != 0) || !file)
     {
         return FALSE;
     }
@@ -156,5 +156,4 @@ UCHAR *jpg_reader::GetInputDataPtr(int row)
     }
     return NULL;
 }
-
 

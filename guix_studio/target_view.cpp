@@ -95,7 +95,7 @@ void target_view::OnInitialUpdate()
 
     if (!mpRecentDialog)
     {
-        int dpi = GetSystemDPI();
+        int dpi = GetDpiForStudioWindow(frame ? frame->GetSafeHwnd() : GetSafeHwnd());
         int text_scaler = GetTextScaler();
         int width = GetScaledValue(RECENT_WINDOW_WIDTH, dpi, text_scaler);
         int height = GetScaledValue(RECENT_WINDOW_HEIGHT, dpi, text_scaler);
@@ -153,6 +153,13 @@ void target_view::DisplayTarget()
 void target_view::DisplayRecentProjects()
 {
     mpTargetFrame->ShowWindow(SW_HIDE);
+
+    recent_project_win *recent_dialog = (recent_project_win *)mpRecentDialog;
+
+    if (recent_dialog)
+    {
+        recent_dialog->UpdateDpiResources(GetDpiForStudioWindow(GetSafeHwnd()));
+    }
 
     mpRecentDialog->CenterWindow();
     mpRecentDialog->ShowWindow(SW_SHOW);

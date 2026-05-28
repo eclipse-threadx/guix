@@ -22,7 +22,8 @@ class properties_win : public CDialog
         static void SetChildAllocation(widget_info *info, int allocation_type);
         static void AssignProgressBarInfo(widget_info *wi);
         void SendEditFocusLoseMessage();
-        void SetControlSize();
+        void SetControlSize(int dpi = 0);
+        void UpdateDpiResources(int dpi = 0);
 
     protected:
         void AssignChildFont();
@@ -216,6 +217,8 @@ class properties_win : public CDialog
         int            m_item_height;
         int            m_leftcol_width;
         int            m_row_height;
+        int            m_item_space;
+        int            m_dpi;
 };
 
 #endif

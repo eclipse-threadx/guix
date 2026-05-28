@@ -6,6 +6,14 @@
 #endif
 
 extern     CString studiox_version_string;
+extern CFont TitleFont;
+extern CFont TinyFont;
+extern CFont NormalFont;
+
+#define SPLASH_PRODUCT_NAME _T("Eclipse ThreadX GUIX Studio")
+#define SPLASH_TEXT_LEFT_96DPI 200
+#define SPLASH_TEXT_TOP_96DPI 120
+#define SPLASH_TEXT_RIGHT_MARGIN_96DPI 10
 
 BEGIN_MESSAGE_MAP(splash_screen, CDialog)
 	ON_WM_PAINT()
@@ -20,6 +28,7 @@ END_MESSAGE_MAP()
 splash_screen::splash_screen(BOOL AutoClose)
 {
     mAutoClose = AutoClose;
+    m_dpi = DEFAULT_DPI_96;
     memset(date_built, 0, DATE_STRING_SIZE);
 }
 
@@ -37,7 +46,8 @@ BOOL splash_screen::PreCreateWindow(CREATESTRUCT& cs)
 
 void splash_screen::ScreenReaderMessage()
 {
-    CString HelpString = _T("Azure RTOS GUIX Studio. ");
+    CString HelpString = SPLASH_PRODUCT_NAME;
+    HelpString += _T(". ");
     CString version;
 
     version = "Version: ";
@@ -59,6 +69,7 @@ void splash_screen::ScreenReaderMessage()
 int splash_screen::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
     CWnd::OnCreate(lpCreateStruct);
+    m_dpi = GetDpiForStudioWindow(GetSafeHwnd());
     CenterWindow();
     ScreenReaderMessage();
     
@@ -70,19 +81,18 @@ int splash_screen::OnCreate(LPCREATESTRUCT lpCreateStruct)
     {
         CRect button_rect;
         GetClientRect(button_rect);
-        button_rect.bottom -= 10;
-        button_rect.top = button_rect.bottom - 20;
-        button_rect.left += 220;
-        button_rect.right -= 100;
+        button_rect.bottom -= MulDiv(10, m_dpi, DEFAULT_DPI_96);
+        button_rect.top = button_rect.bottom - MulDiv(20, m_dpi, DEFAULT_DPI_96);
+        button_rect.left = max(button_rect.left + MulDiv(220, m_dpi, DEFAULT_DPI_96),
+            button_rect.right - MulDiv(205, m_dpi, DEFAULT_DPI_96));
+        button_rect.right -= MulDiv(100, m_dpi, DEFAULT_DPI_96);
         CloseButton.Create(_T("Close"), BS_PUSHBUTTON|BS_CENTER|BS_VCENTER|WS_CHILD|WS_VISIBLE, button_rect, this, IDOK);
+        CloseButton.SetFont(&NormalFont);
         CloseButton.SetFocus();
     }
 
     return 0;
 }
-
-extern CFont TitleFont;
-extern CFont TinyFont;
 
 CString MonthToNumber(CString Month)
 {
@@ -142,16 +152,32 @@ void splash_screen::OnPaint()
 {
     CWnd::OnPaint();
     CDC *dc = GetDC();
-    PaintBmp(dc, 0, 0, IDB_SPLASH_BACKGROUND);
+    CBitmap map;
+    BITMAP bmp;
+
+    if (map.LoadBitmap(IDB_SPLASH_BACKGROUND))
+    {
+        map.GetBitmap(&bmp);
+
+        CDC dcMemory;
+        dcMemory.CreateCompatibleDC(dc);
+        dcMemory.SelectObject(&map);
+
+        CRect background_rect;
+        GetClientRect(&background_rect);
+        dc->StretchBlt(background_rect.left, background_rect.top, background_rect.Width(), background_rect.Height(),
+            &dcMemory, 0, 0, bmp.bmWidth, bmp.bmHeight, SRCCOPY);
+    }
+
     CFont *OldFont;
 
     CString temp;
     CRect rc;
     CRect client;
 
-    int xpos = 200;
-    int ypos = 120; 
-    int line_height = 16;
+    int xpos = MulDiv(SPLASH_TEXT_LEFT_96DPI, m_dpi, DEFAULT_DPI_96);
+    int ypos = MulDiv(SPLASH_TEXT_TOP_96DPI, m_dpi, DEFAULT_DPI_96);
+    int line_height = MulDiv(16, m_dpi, DEFAULT_DPI_96);
 
     dc->SetTextColor(RGB(248, 208, 40));
     dc->SetBkColor(RGB(0, 0, 0));
@@ -159,17 +185,19 @@ void splash_screen::OnPaint()
 
     OldFont = dc->SelectObject(&TitleFont);
 
-    dc->TextOut(xpos, ypos, _T("Azure RTOS GUIX Studio"));
-    ypos += 30;
+    GetClientRect(&client);
+    rc.SetRect(xpos, ypos, client.right - MulDiv(SPLASH_TEXT_RIGHT_MARGIN_96DPI, m_dpi, DEFAULT_DPI_96),
+        ypos + MulDiv(26, m_dpi, DEFAULT_DPI_96));
+    dc->DrawText(SPLASH_PRODUCT_NAME, rc, DT_LEFT | DT_SINGLELINE | DT_END_ELLIPSIS);
+    ypos += MulDiv(30, m_dpi, DEFAULT_DPI_96);
 
     temp = "Version ";
     temp += studiox_version_string;
     dc->TextOut(xpos, ypos, temp);
-    ypos += 30;
+    ypos += MulDiv(30, m_dpi, DEFAULT_DPI_96);
     dc->SelectObject(&TinyFont);
 
-    GetClientRect(&client);
-    rc.SetRect(xpos, ypos, client.right - 10, ypos + line_height);
+    rc.SetRect(xpos, ypos, client.right - MulDiv(10, m_dpi, DEFAULT_DPI_96), ypos + line_height);
     rc.OffsetRect(0, line_height);
 
     CString date(__DATE__);

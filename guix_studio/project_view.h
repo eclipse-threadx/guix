@@ -18,6 +18,7 @@ class project_view : public CTreeView
         ~project_view();
         virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
         virtual void OnInitialUpdate();
+        void UpdateDpiResources(int dpi = 0);
         void NewProject(CWnd *parent = NULL);
         void ProjectRenamed();
         void TerminateAppExecutions();
@@ -152,4 +153,3 @@ class project_view : public CTreeView
         widget_info *m_widget_copy;
         CImageList *mpImageList;
 };
-

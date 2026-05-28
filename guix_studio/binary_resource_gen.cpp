@@ -2046,9 +2046,9 @@ void binary_resource_gen::WritePixelmapBlock(res_info *info, USHORT map_id, USHO
         int chunk_size;
 
         path = MakeAbsolutePathname(info->pathinfo);
-        FILE *file = _tfopen(path.GetBuffer(), _T("rb"));
+        FILE *file = NULL;
 
-        if (!file)
+        if ((_tfopen_s(&file, path.GetString(), _T("rb")) != 0) || !file)
         {
             return;
         }
@@ -2710,9 +2710,9 @@ ULONG binary_resource_gen::GetOnePixelmapDataSize(ULONG written_size, res_info *
     if (info->raw)
     {
         CString path = MakeAbsolutePathname(info->pathinfo);
-        FILE* file = _tfopen(path.GetBuffer(), _T("rb"));
+        FILE* file = NULL;
 
-        if (!file)
+        if ((_tfopen_s(&file, path.GetString(), _T("rb")) != 0) || !file)
         {
             return 0;
         }

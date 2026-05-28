@@ -663,7 +663,7 @@ BOOL xml_reader::GetTagString(char *name, CString &value)
                             ErrorMsg("Invalid XLIFF content.");
                             return FALSE;
                         }
-                        strncpy(temp, marker, len);                    
+                        strncpy_s(temp, MAX_PATH, marker, len);
                         temp[len] = 0;
                         value = CString(temp);
                         return TRUE;

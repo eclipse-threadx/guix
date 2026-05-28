@@ -129,6 +129,7 @@ protected:  // control bar embedded members
 // Generated message map functions
 protected:
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+    afx_msg BOOL OnNcCreate(LPCREATESTRUCT lpCreateStruct);
     afx_msg BOOL OnEraseBkgnd(CDC *pDc);
     afx_msg void OnSize(UINT nType, int cx, int cy);
     afx_msg void OnMoving(UINT nSide,  LPRECT lpRect);
@@ -230,6 +231,7 @@ public:
     afx_msg void OnEndmacro();
     afx_msg void OnStopMacro();
     afx_msg LRESULT OnSetLayout(WPARAM wParam, LPARAM lParam);
+    afx_msg LRESULT OnDpiChanged(WPARAM wParam, LPARAM lParam);
     BOOL IsTestMode();
     afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
     afx_msg void OnUnInitMenuPopup(CMenu *pPopupMenu, UINT nFlags);
@@ -247,10 +249,12 @@ public:
     void UpdateRecentProjectsMenu();
 
 private:
+    void UpdateDpiDependentResources(int dpi);
+    void SetupToolBarImageList(int dpi);
     void TestOneWidgetStringsFit(int display_index, widget_info* info);
     void TestStringsFit(int display_index, widget_info* info);
     CString m_strings_fit_msg;
     int m_text_scaler;
+    int m_dpi;
+    BOOL m_dpi_resources_initialized;
 };
-
-

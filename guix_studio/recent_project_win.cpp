@@ -14,11 +14,14 @@ extern INI_INFO StudioXIni;
 
 extern CString target_class_name;
 extern CFont MediumFont;
+extern CFont NormalFont;
     
 
 BEGIN_MESSAGE_MAP(recent_project_win, express_dialog)
  ON_WM_CREATE()
  ON_WM_SHOWWINDOW()
+ ON_WM_SETTINGCHANGE()
+ ON_MESSAGE(WM_DPICHANGED, &recent_project_win::OnDpiChanged)
  ON_BN_CLICKED(IDC_CREATE_PROJECT, OnBnClickedCreateProject)
 END_MESSAGE_MAP()
 
@@ -52,6 +55,91 @@ CRect recent_project_win::GetCreateNewProjectButtonSize(CRect &parentSize)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+void recent_project_win::LayoutControls()
+{
+    if (!GetSafeHwnd())
+    {
+        return;
+    }
+
+    CRect client;
+    CRect size;
+    GetClientRect(&client);
+
+    int space = MulDiv(10, m_dpi, DEFAULT_DPI_96);
+    size.left = client.left + space;
+    size.right = client.right - space;
+    size.top = client.top + m_title_bar_height + space;
+    size.bottom = client.bottom - m_status_bar_height - space;
+
+    if (mRecentListFrame.GetSafeHwnd())
+    {
+        mRecentListFrame.MoveWindow(&size);
+        mRecentListFrame.UpdateDpiResources(m_dpi);
+    }
+
+    if (new_button.GetSafeHwnd())
+    {
+        size = GetCreateNewProjectButtonSize(client);
+        new_button.MoveWindow(&size);
+        new_button.SetFont(&NormalFont);
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void recent_project_win::UpdateDpiResources(int dpi)
+{
+    if (!GetSafeHwnd())
+    {
+        return;
+    }
+
+    if (dpi <= 0)
+    {
+        dpi = GetDpiForStudioWindow(GetSafeHwnd());
+    }
+
+    m_dpi = dpi;
+    m_text_scaler = GetTextScaler();
+    SetControlSize();
+
+    if (mRecentListFrame.GetSafeHwnd())
+    {
+        mRecentListFrame.UpdateDpiResources(m_dpi);
+    }
+
+    int width = GetScaledValue(RECENT_WINDOW_WIDTH, m_dpi, m_text_scaler);
+    int height = GetScaledValue(RECENT_WINDOW_HEIGHT, m_dpi, m_text_scaler);
+    int space = MulDiv(10, m_dpi, DEFAULT_DPI_96);
+
+    if (mRecentListFrame.GetSafeHwnd())
+    {
+        int min_height = m_title_bar_height + m_status_bar_height + (space << 1) + mRecentListFrame.GetPreferredHeight();
+        height = max(height, min_height);
+    }
+
+    CRect rect;
+    GetWindowRect(&rect);
+
+    CWnd *parent = GetParent();
+
+    if (parent)
+    {
+        parent->ScreenToClient(&rect);
+    }
+
+    if ((rect.Width() != width) || (rect.Height() != height))
+    {
+        rect.right = rect.left + width;
+        rect.bottom = rect.top + height;
+        MoveWindow(&rect, FALSE);
+    }
+
+    LayoutControls();
+    Invalidate();
+}
+
+///////////////////////////////////////////////////////////////////////////////
 int recent_project_win::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
     CRect client;
@@ -60,7 +148,7 @@ int recent_project_win::OnCreate(LPCREATESTRUCT lpCreateStruct)
     express_dialog::OnCreate(lpCreateStruct);
     GetClientRect(&client);
 
-    int space = MulDiv(10, GetSystemDPI(), DEFAULT_DPI_96);;
+    int space = MulDiv(10, m_dpi, DEFAULT_DPI_96);
     size.left = client.left + space;
     size.right = client.right - space;
     size.top = client.top + m_title_bar_height + space;
@@ -73,6 +161,8 @@ int recent_project_win::OnCreate(LPCREATESTRUCT lpCreateStruct)
     new_button.Create(_T("Create New Project"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_OWNERDRAW | WS_TABSTOP, size, this, IDC_CREATE_PROJECT);
     new_button.LoadBitmaps(IDB_NEW_PROJECT_NORMAL, IDB_NEW_PROJECT_PRESSED);
     new_button.SetWindowText(_T("Create New Project..."));
+    new_button.SetFont(&NormalFont);
+    UpdateDpiResources(m_dpi);
     return 0;
 }
 
@@ -81,6 +171,7 @@ void recent_project_win::OnShowWindow(BOOL Show, UINT status)
 {
     if (Show)
     {
+        UpdateDpiResources(GetDpiForStudioWindow(GetSafeHwnd()));
         mRecentListFrame.UpdateRecentList();
     }
     CWnd::OnShowWindow(Show, status);
@@ -89,7 +180,23 @@ void recent_project_win::OnShowWindow(BOOL Show, UINT status)
 ///////////////////////////////////////////////////////////////////////////////
 void recent_project_win::UpdateRecentList()
 {
+    UpdateDpiResources(GetDpiForStudioWindow(GetSafeHwnd()));
     mRecentListFrame.UpdateRecentList();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void recent_project_win::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
+{
+    express_dialog::OnSettingChange(uFlags, lpszSection);
+    UpdateDpiResources(GetDpiForStudioWindow(GetSafeHwnd()));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+LRESULT recent_project_win::OnDpiChanged(WPARAM wParam, LPARAM lParam)
+{
+    LRESULT result = express_dialog::OnDpiChanged(wParam, lParam);
+    UpdateDpiResources(LOWORD(wParam));
+    return result;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -128,6 +235,8 @@ END_MESSAGE_MAP()
 ///////////////////////////////////////////////////////////////////////////////
 recent_list_frame::recent_list_frame(CWnd* parent)
 {
+    m_dpi = GetSystemDPI();
+
     if (!StudioXIni.recent_project_paths[0].IsEmpty())
     {
         mHighlightRow = 0;
@@ -160,6 +269,12 @@ int recent_list_frame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     int row_height = GetRowHeight();
     int space = (size.Height() - row_height * MAX_RECENT_PROJECTS) / (MAX_RECENT_PROJECTS - 1);
+
+    if (space < 0)
+    {
+        space = 0;
+    }
+
     size.bottom = size.top + row_height;
 
     mNumRecentProjects = 0;
@@ -167,7 +282,7 @@ int recent_list_frame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     for (int index = 0; index < MAX_RECENT_PROJECTS; index++)
     {
         mRecentList[index].Create(StudioXIni.recent_project_paths[index], WS_VISIBLE | SS_LEFT | SS_WORDELLIPSIS, size, this, id_list[index]);
-        mRecentList[index].SetFont(&MediumFont);
+        mRecentList[index].SetFont(&NormalFont);
         SetLiveRegion(mRecentList[index].GetSafeHwnd());
         size.OffsetRect(0, row_height + space);
 
@@ -181,6 +296,59 @@ int recent_list_frame::OnCreate(LPCREATESTRUCT lpCreateStruct)
         }
     }
     return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void recent_list_frame::LayoutItems()
+{
+    if (!GetSafeHwnd() || !mRecentList[0].GetSafeHwnd())
+    {
+        return;
+    }
+
+    CRect size;
+    GetClientRect(&size);
+
+    int row_height = GetRowHeight();
+    int space = 0;
+
+    if (MAX_RECENT_PROJECTS > 1)
+    {
+        space = (size.Height() - row_height * MAX_RECENT_PROJECTS) / (MAX_RECENT_PROJECTS - 1);
+
+        if (space < 0)
+        {
+            space = 0;
+        }
+    }
+
+    size.bottom = size.top + row_height;
+
+    for (int index = 0; index < MAX_RECENT_PROJECTS; index++)
+    {
+        mRecentList[index].MoveWindow(&size);
+        mRecentList[index].SetFont(&NormalFont);
+        size.OffsetRect(0, row_height + space);
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void recent_list_frame::UpdateDpiResources(int dpi)
+{
+    if (dpi <= 0)
+    {
+        dpi = GetDpiForStudioWindow(GetSafeHwnd());
+    }
+
+    m_dpi = dpi;
+    LayoutItems();
+    Invalidate();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+int recent_list_frame::GetPreferredHeight()
+{
+    return GetRowHeight() * MAX_RECENT_PROJECTS;
 }
 
 
@@ -203,6 +371,17 @@ void recent_list_frame::UpdateRecentList(void)
 
         mRecentList[index].SetWindowText(StudioXIni.recent_project_paths[index]);
     }
+
+    if (mNumRecentProjects == 0)
+    {
+        mHighlightRow = -1;
+    }
+    else if ((mHighlightRow < 0) || (mHighlightRow >= mNumRecentProjects))
+    {
+        mHighlightRow = 0;
+    }
+
+    LayoutItems();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -236,10 +415,18 @@ int recent_list_frame::FindStatic(CPoint point)
 int recent_list_frame::GetRowHeight()
 {
     CDC* dc = GetDC();
-    CFont* old_font = dc->SelectObject(&MediumFont);
-    int row_height = dc->GetTextExtent(_T("fg"), 1).cy;
-    dc->SelectObject(old_font);
-    ReleaseDC(dc);
+    int row_height = MulDiv(16, m_dpi, DEFAULT_DPI_96);
+
+    if (dc)
+    {
+        CFont* old_font = dc->SelectObject(&NormalFont);
+        TEXTMETRIC tm;
+        dc->GetTextMetrics(&tm);
+        row_height = tm.tmHeight;
+        dc->SelectObject(old_font);
+        ReleaseDC(dc);
+    }
+
     return row_height;
 }
 
@@ -250,7 +437,11 @@ void recent_list_frame::OnMouseMove(UINT nFlags, CPoint point)
 
     if ((newselect >= 0) && (newselect != mHighlightRow))
     {
-        mRecentList[mHighlightRow].Invalidate(FALSE);
+        if (mHighlightRow >= 0)
+        {
+            mRecentList[mHighlightRow].Invalidate(FALSE);
+        }
+
         mHighlightRow = newselect;
         mRecentList[mHighlightRow].Invalidate(FALSE);
     }

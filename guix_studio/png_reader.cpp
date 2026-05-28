@@ -60,9 +60,9 @@ BOOL png_reader::CheckImageHasAlphaChannel(CString &path)
     BOOL has_alpha = FALSE;
     UCHAR signature[8];
 
-    FILE *file = _tfopen(path.GetBuffer(), _T("rb"));
+    FILE *file = NULL;
 
-    if (!file)
+    if ((_tfopen_s(&file, path.GetString(), _T("rb")) != 0) || !file)
     {
         return FALSE;
     }
@@ -139,9 +139,9 @@ BOOL png_reader::ReadImage(CString &path, int frame_id)
 {
     UCHAR signature[8];
 
-    FILE *file = _tfopen(path.GetBuffer(), _T("rb"));
+    FILE *file = NULL;
 
-    if (!file)
+    if ((_tfopen_s(&file, path.GetString(), _T("rb")) != 0) || !file)
     {
         return FALSE;
     }

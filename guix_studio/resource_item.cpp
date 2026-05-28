@@ -1060,7 +1060,7 @@ void resource_item::PaintFontItem(CDC *dc)
     old_font = dc->SelectObject(&NormalFont);
     boxrect.left = boxrect.right + 8;
     boxrect.right = boxrect.left + m_font_pixel_width - 8;
-    _itot(mpRes->font_height, pix_size, 10);
+    _itot_s(mpRes->font_height, pix_size, _countof(pix_size), 10);
     dc->DrawText(pix_size, boxrect, DT_RIGHT | DT_TOP | DT_SINGLELINE | DT_VCENTER);
 
     //Draw font name

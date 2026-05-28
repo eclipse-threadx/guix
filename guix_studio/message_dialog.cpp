@@ -88,13 +88,15 @@ int     index;
     pDC->SelectObject(old_font);
     int     temp_width = 0;
     int     count = text.Replace(_T("\n"), _T("\n"));
+    int     side_margin = MulDiv(16, m_dpi, DEFAULT_DPI_96);
+    int     top_margin = MulDiv(8, m_dpi, DEFAULT_DPI_96);
     
     GetClientRect(&client);
 
-    size.top = client.top + m_title_bar_height + 8;
-    size.left = client.left + 16;
+    size.top = client.top + m_title_bar_height + top_margin;
+    size.left = client.left + side_margin;
     size.bottom = size.top + tsize.cy;
-    size.right = client.right - 16;
+    size.right = client.right - side_margin;
 
     /*Large window while it's not enough.*/
     while (i_count <= count)
@@ -121,7 +123,7 @@ int     index;
 
             if (temp_size.cx > size.right)
             {
-                size.right = temp_size.cx + 16;
+                size.right = temp_size.cx + side_margin;
                 temp_width = 0;
                 size.bottom += temp_size.cy;
                 continue;
@@ -141,15 +143,15 @@ int     index;
         temp_size = pDC->GetTextExtent(string_process);
         if (temp_size.cx > size.right)
         {
-            size.right = temp_size.cx + 16;
+            size.right = temp_size.cx + side_margin;
         }
         size.bottom += tsize.cy;
         i_count++;
     }
     
     size.bottom += tsize.cy + 1;
-    client.right = size.right + 16;
-    client.bottom = size.bottom + m_status_bar_height + 16;
+    client.right = size.right + side_margin;
+    client.bottom = size.bottom + m_status_bar_height + side_margin;
 
     MoveWindow(client);
     CenterWindow();

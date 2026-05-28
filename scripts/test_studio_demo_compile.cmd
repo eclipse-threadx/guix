@@ -1,6 +1,6 @@
 rem Initialize the developer environment just like a developer box. Note that 'call' keyword that ensures that the script does not exist after 
 rem calling the other batch file.
-call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=amd64 -host_arch=amd64 -winsdk=10.0.16299.0
+call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=amd64 -host_arch=amd64
 
 rem Set Python path
 SET PATH=%PATH%;"C:\Program Files\Python36";"C:\Program Files\Python36\scripts"

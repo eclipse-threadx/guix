@@ -9,7 +9,8 @@ class left_top_panel_frame : public CWnd
     public:
         left_top_panel_frame();
         ~left_top_panel_frame();
-        void SetControlSize();
+        void SetControlSize(int dpi = 0);
+        void UpdateDpiResources(int dpi = 0);
         virtual void PostNcDestroy();
 
     protected:
@@ -32,7 +33,8 @@ class left_bottom_panel_frame : public CWnd
 public:
     left_bottom_panel_frame();
     ~left_bottom_panel_frame();
-    void SetControlSize();
+    void SetControlSize(int dpi = 0);
+    void UpdateDpiResources(int dpi = 0);
     virtual void PostNcDestroy();
 
 protected:

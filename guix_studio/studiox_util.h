@@ -109,6 +109,7 @@ BOOL IsFileNameFormat(CString name);
 CString MakePixelmapName(res_info *info, int frame_id);
 ULONG GetTextScaler();
 int GetScaledValue(int value, int dpi = DEFAULT_DPI_96, int text_scaler = DEFAULT_TEXT_SCALER);
+int GetDialogTemplateFontPointSize(int point_size, int dpi = 0, int text_scaler = DEFAULT_TEXT_SCALER);
 INT GetSubMenuIndex(CMenu *pMenu, CString string);
 INT GetSubMenuIndex(CMenu *pMenu, INT id);
 
@@ -121,9 +122,10 @@ CString GetUtf8Text(CRichEditCtrl *edit);
 
 void DestroyFont(GX_FONT *font);
 
-void PaintBmp(CDC *dc, int x, int y, int icon_id);
+void PaintBmp(CDC *dc, int x, int y, int icon_id, int dpi = 0);
 CString NumberFormatWithCommas(long value);
 void SplitString(CString str, CHAR splitter, CStringArray *list);
+int GetDpiForStudioWindow(HWND hwnd);
 int GetSystemDPI();
 GX_UBYTE ToUByte(INT value);
 int FindPairVal(STRING_VAL_PAIR* entry, CString name);

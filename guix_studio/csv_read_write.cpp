@@ -343,7 +343,7 @@ BOOL csv_read_write::ReadLine(CString &line)
     if (line_end)
     {
         char *buf = new char[line_end + 1];
-        strncpy(buf, mpLine, line_end);
+        strncpy_s(buf, line_end + 1, mpLine, line_end);
         buf[line_end] = '\0';
 
         line = CA2T(buf, CP_UTF8);

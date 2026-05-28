@@ -266,21 +266,24 @@ int index;
         }
 
         /* Open the log file. */
-        log_file = _tfopen(log_pathname, _T("a"));
+        _tfopen_s(&log_file, log_pathname.GetString(), _T("a"));
 
         if (log_file)
         {
-            struct tm* newTime;
+            struct tm   newTime;
             time_t      szClock;
+            char        time_string[32];
 
             // Get time in seconds
             time(&szClock);
 
             // Convert time to struct tm form
-            newTime = localtime(&szClock);
-
-            // Print local time as a string.
-            fprintf(log_file, "\nDate: %s\n", asctime(newTime));
+            if ((localtime_s(&newTime, &szClock) == 0) &&
+                (asctime_s(time_string, sizeof(time_string), &newTime) == 0))
+            {
+                // Print local time as a string.
+                fprintf(log_file, "\nDate: %s\n", time_string);
+            }
         }
     }
 
@@ -415,4 +418,3 @@ BOOL CCommandInfo::FindString(CString str_table[], int table_size, CString find_
     }
     return FALSE;
 }
-

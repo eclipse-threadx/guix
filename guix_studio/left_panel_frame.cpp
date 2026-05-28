@@ -42,11 +42,33 @@ left_top_panel_frame::~left_top_panel_frame()
     }
 }
 
-void left_top_panel_frame::SetControlSize()
+void left_top_panel_frame::SetControlSize(int dpi)
 {
-    int dpi = GetSystemDPI();
+    if (dpi <= 0)
+    {
+        dpi = GetDpiForStudioWindow(GetSafeHwnd());
+    }
+
     int text_scaler = GetTextScaler();
     m_header_height = GetScaledValue(VIEW_HEADER_HEIGHT, dpi, text_scaler);
+}
+
+void left_top_panel_frame::UpdateDpiResources(int dpi)
+{
+    SetControlSize(dpi);
+
+    if (mp_project_header)
+    {
+        mp_project_header->UpdateDpiResources(dpi);
+    }
+
+    if (mp_project_view)
+    {
+        mp_project_view->UpdateDpiResources(dpi);
+    }
+
+    PositionChildren();
+    Invalidate();
 }
 
 int left_top_panel_frame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -55,6 +77,7 @@ int left_top_panel_frame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     RECT childrect;
 
     CWnd::OnCreate(lpCreateStruct);
+    SetControlSize(GetDpiForStudioWindow(GetSafeHwnd()));
 
     GetClientRect(&clientrect);
     childrect = clientrect;
@@ -100,8 +123,7 @@ void left_top_panel_frame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
     CWnd::OnSettingChange(uFlags, lpszSection);
 
-    SetControlSize();
-    PositionChildren();
+    UpdateDpiResources();
 }
 
 
@@ -137,11 +159,33 @@ left_bottom_panel_frame::~left_bottom_panel_frame()
     }
 }
 
-void left_bottom_panel_frame::SetControlSize()
+void left_bottom_panel_frame::SetControlSize(int dpi)
 {
-    int dpi = GetSystemDPI();
+    if (dpi <= 0)
+    {
+        dpi = GetDpiForStudioWindow(GetSafeHwnd());
+    }
+
     int text_scaler = GetTextScaler();
     m_header_height = GetScaledValue(VIEW_HEADER_HEIGHT, dpi, text_scaler);
+}
+
+void left_bottom_panel_frame::UpdateDpiResources(int dpi)
+{
+    SetControlSize(dpi);
+
+    if (mp_props_header)
+    {
+        mp_props_header->UpdateDpiResources(dpi);
+    }
+
+    if (mp_properties_win)
+    {
+        mp_properties_win->UpdateDpiResources(dpi);
+    }
+
+    PositionChildren();
+    Invalidate();
 }
 
 int left_bottom_panel_frame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -150,6 +194,7 @@ int left_bottom_panel_frame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     RECT childrect;
 
     CWnd::OnCreate(lpCreateStruct);
+    SetControlSize(GetDpiForStudioWindow(GetSafeHwnd()));
 
     GetClientRect(&clientrect);
     childrect = clientrect;
@@ -196,6 +241,5 @@ void left_bottom_panel_frame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
     CWnd::OnSettingChange(uFlags, lpszSection);
 
-    SetControlSize();
-    PositionChildren();
+    UpdateDpiResources();
 }
