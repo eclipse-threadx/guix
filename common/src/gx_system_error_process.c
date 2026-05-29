@@ -71,5 +71,11 @@ VOID  _gx_system_error_process(UINT error_code)
 
     /* Remember the last system error code.  */
     _gx_system_last_error =  error_code;
+
+#ifdef GX_DISABLE_THREADX_BINDING
+#ifdef GX_ENABLE_ERROR_CALLBACK
+    GX_GENERIC_ERROR_PROCESS(error_code, _gx_system_error_count);
+#endif
+#endif
 }
 
