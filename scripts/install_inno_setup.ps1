@@ -25,8 +25,8 @@ Start-Setup
 try	{
 
 
-    Get-File -Url "http://www.jrsoftware.org/download.php/is.exe" -fileName "innosetup-6.0.3.exe"
-    Install-FromExe -Path "C:\Downloads\innosetup-6.0.3.exe" -Arguments "/VERYSILENT /SUPPRESSMSGBOXES"
+    Get-File -Url "https://jrsoftware.org/download.php/is.exe" -fileName "innosetup.exe"
+    Install-FromExe -Path "C:\Downloads\innosetup.exe" -Arguments "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART"
 }
 catch
 {
