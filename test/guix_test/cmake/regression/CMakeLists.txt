@@ -285,6 +285,7 @@ set(all_widgets_REG_TESTS
     guix_button_24xrgb
     guix_button_deselect_no_output
     guix_canvas_drawing_complete
+    guix_canvas_draw_nesting_overflow_no_output
     guix_canvas_hardware_layer
     guix_canvas_pixelmap_blend
     guix_canvas_pixelmap_get_no_output
