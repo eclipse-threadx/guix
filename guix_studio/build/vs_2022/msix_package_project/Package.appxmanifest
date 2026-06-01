@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
  Copyright (c) 2024 Microsoft Corporation
  Copyright (c) 2026 Eclipse ThreadX contributors
@@ -22,7 +22,7 @@
   <Identity
     Name="Microsoft.AzureRTOSGUIXStudio"
     Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
-    Version="6.4.1.0" />
+    Version="6.5.1.02" />
 
   <Properties>
     <DisplayName>Eclipse ThreadX GUIX Studio</DisplayName>
