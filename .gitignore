@@ -14,5 +14,8 @@ CTestTestfile.cmake
 /guix_studio/build/vs_2022/.vs/studiox
 /guix_studio/build/vs_2022/Debug
 /guix_studio/build/vs_2022/Release
+/guix_studio/installer/output/
+/guix_studio/installer/vc_redist.x86.exe
+/guix_studio/installer/vc_runtime/
 /guix_studio/studiox.aps
 *.user
