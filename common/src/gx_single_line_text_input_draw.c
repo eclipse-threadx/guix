@@ -155,87 +155,87 @@ GX_STRING             string;
 
     if (status == GX_SUCCESS)
     {
-    /* Draw the cursor. */
-    if ((start_mark == end_mark) &&
-        (text_input -> gx_widget_status & GX_STATUS_CURSOR_SHOW) &&
-        (text_input -> gx_widget_status & GX_STATUS_CURSOR_DRAW))
-    {
-        client_height = (GX_VALUE)(client.gx_rectangle_bottom - client.gx_rectangle_top + 1);
-
-        if (!(cursor_ptr -> gx_text_input_cursor_flags & GX_CURSOR_USE_CUSTOM_HEIGHT))
+        /* Draw the cursor. */
+        if ((start_mark == end_mark) &&
+            (text_input -> gx_widget_status & GX_STATUS_CURSOR_SHOW) &&
+            (text_input -> gx_widget_status & GX_STATUS_CURSOR_DRAW))
         {
-            cursor_ptr -> gx_text_input_cursor_height = (GX_VALUE)(client_height - 4);
-        }
-        cursor_ptr -> gx_text_input_cursor_pos.gx_point_y = (GX_VALUE)(client.gx_rectangle_top + (client_height >> 1));
-
-        _gx_text_input_cursor_draw(cursor_ptr);
-    }
-
-    /* Is there a string?  */
-    if (input_buffer && (*input_buffer))
-    {
-        /* Draw the text.  */
-        if (start_mark == end_mark)
-        {
-            string.gx_string_ptr = input_buffer;
-            string.gx_string_length = text_input -> gx_single_line_text_input_string_size;
-            _gx_canvas_text_draw_ext(x_pos, y_pos, &string);
-        }
-        else
-        {
-            _gx_context_brush_get(&brush);
-
-            if (start_mark > end_mark)
-            {
-                GX_SWAP_VALS(start_mark, end_mark);
-            }
-
-            if (start_mark > 0)
-            {
-                /* Draw text[0:start_mark - 1] with normak text color. */
-                string.gx_string_ptr = input_buffer;
-                string.gx_string_length = start_mark;
-                _gx_system_string_width_get_ext(brush -> gx_brush_font, &string, &text_width);
-                _gx_canvas_text_draw_ext(x_pos, y_pos, &string);
-                x_pos = (GX_VALUE)(x_pos + text_width);
-            }
-
-            /* Draw text[start_mark:end_mark - 1] with highlight text color. */
-            _gx_context_line_color_set(text_input -> gx_prompt_selected_text_color);
-            _gx_context_fill_color_set(text_input -> gx_widget_selected_fill_color);
-            _gx_context_brush_width_set(0);
-
-            string.gx_string_ptr = input_buffer + start_mark;
-            string.gx_string_length = (UINT)(end_mark - start_mark);
-            _gx_system_string_width_get_ext(brush -> gx_brush_font, &string, &text_width);
-
             client_height = (GX_VALUE)(client.gx_rectangle_bottom - client.gx_rectangle_top + 1);
 
             if (!(cursor_ptr -> gx_text_input_cursor_flags & GX_CURSOR_USE_CUSTOM_HEIGHT))
             {
                 cursor_ptr -> gx_text_input_cursor_height = (GX_VALUE)(client_height - 4);
             }
+            cursor_ptr -> gx_text_input_cursor_pos.gx_point_y = (GX_VALUE)(client.gx_rectangle_top + (client_height >> 1));
 
-            client.gx_rectangle_left = x_pos;
-            client.gx_rectangle_right = (GX_VALUE)(x_pos + text_width - 1);
-            client.gx_rectangle_top = (GX_VALUE)(client.gx_rectangle_top + ((client_height - cursor_ptr -> gx_text_input_cursor_height) >> 1));
-            client.gx_rectangle_bottom = (GX_VALUE)(client.gx_rectangle_top + cursor_ptr -> gx_text_input_cursor_height - 1);
+            _gx_text_input_cursor_draw(cursor_ptr);
+        }
 
-            _gx_canvas_rectangle_draw(&client);
-            _gx_canvas_text_draw_ext(x_pos, y_pos, &string);
-            x_pos = (GX_VALUE)(x_pos + text_width);
-
-            if (end_mark < text_input -> gx_single_line_text_input_string_size)
+        /* Is there a string?  */
+        if (input_buffer && (*input_buffer))
+        {
+            /* Draw the text.  */
+            if (start_mark == end_mark)
             {
-                /* Draw text[end_mark:] with normal text color. */
-                _gx_context_line_color_set(text_color);
-
-                string.gx_string_ptr = input_buffer + end_mark;
-                string.gx_string_length = text_input -> gx_single_line_text_input_string_size - end_mark;
+                string.gx_string_ptr = input_buffer;
+                string.gx_string_length = text_input -> gx_single_line_text_input_string_size;
                 _gx_canvas_text_draw_ext(x_pos, y_pos, &string);
             }
+            else
+            {
+                _gx_context_brush_get(&brush);
+
+                if (start_mark > end_mark)
+                {
+                    GX_SWAP_VALS(start_mark, end_mark);
+                }
+
+                if (start_mark > 0)
+                {
+                    /* Draw text[0:start_mark - 1] with normak text color. */
+                    string.gx_string_ptr = input_buffer;
+                    string.gx_string_length = start_mark;
+                    _gx_system_string_width_get_ext(brush -> gx_brush_font, &string, &text_width);
+                    _gx_canvas_text_draw_ext(x_pos, y_pos, &string);
+                    x_pos = (GX_VALUE)(x_pos + text_width);
+                }
+
+                /* Draw text[start_mark:end_mark - 1] with highlight text color. */
+                _gx_context_line_color_set(text_input -> gx_prompt_selected_text_color);
+                _gx_context_fill_color_set(text_input -> gx_widget_selected_fill_color);
+                _gx_context_brush_width_set(0);
+
+                string.gx_string_ptr = input_buffer + start_mark;
+                string.gx_string_length = (UINT)(end_mark - start_mark);
+                _gx_system_string_width_get_ext(brush -> gx_brush_font, &string, &text_width);
+
+                client_height = (GX_VALUE)(client.gx_rectangle_bottom - client.gx_rectangle_top + 1);
+
+                if (!(cursor_ptr -> gx_text_input_cursor_flags & GX_CURSOR_USE_CUSTOM_HEIGHT))
+                {
+                    cursor_ptr -> gx_text_input_cursor_height = (GX_VALUE)(client_height - 4);
+                }
+
+                client.gx_rectangle_left = x_pos;
+                client.gx_rectangle_right = (GX_VALUE)(x_pos + text_width - 1);
+                client.gx_rectangle_top = (GX_VALUE)(client.gx_rectangle_top + ((client_height - cursor_ptr -> gx_text_input_cursor_height) >> 1));
+                client.gx_rectangle_bottom = (GX_VALUE)(client.gx_rectangle_top + cursor_ptr -> gx_text_input_cursor_height - 1);
+
+                _gx_canvas_rectangle_draw(&client);
+                _gx_canvas_text_draw_ext(x_pos, y_pos, &string);
+                x_pos = (GX_VALUE)(x_pos + text_width);
+
+                if (end_mark < text_input -> gx_single_line_text_input_string_size)
+                {
+                    /* Draw text[end_mark:] with normal text color. */
+                    _gx_context_line_color_set(text_color);
+
+                    string.gx_string_ptr = input_buffer + end_mark;
+                    string.gx_string_length = text_input -> gx_single_line_text_input_string_size - end_mark;
+                    _gx_canvas_text_draw_ext(x_pos, y_pos, &string);
+                }
+            }
         }
-    }
 
         _gx_canvas_drawing_complete(canvas, GX_FALSE);
     }

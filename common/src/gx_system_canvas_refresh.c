@@ -207,6 +207,10 @@ GX_RECTANGLE dirty_mask;
                         /* Indicate that drawing on this canvas is complete.  */
                         _gx_canvas_drawing_complete(canvas, GX_TRUE);
                     }
+                    else
+                    {
+                        // no memory available in _gx_system_draw_context_stack
+                    }
 
 #if !defined(GX_CANVAS_REFRESH_DIRECTION_HORIZONTAL) && !defined(GX_CANVAS_REFRESH_DIRECTION_VERTICAL)
                     _gx_utility_rectangle_shift(&dirty_frame, 0, dirty_height);
@@ -330,71 +334,75 @@ GX_WINDOW_ROOT *root;
 
             if (status == GX_SUCCESS || status == GX_NO_VIEWS)
             {
-            /* Initialize dirty area pointers.  */
-            dirty = canvas -> gx_canvas_dirty_list;
+                /* Initialize dirty area pointers.  */
+                dirty = canvas -> gx_canvas_dirty_list;
 
-            /* Loop through dirty areas to redraw as needed.  */
-            for (index = 0; index < canvas -> gx_canvas_dirty_count; index++)
-            {
-                /* Pickup widget associated with dirty area.  */
-                drawit = dirty -> gx_dirty_area_widget;
-
-                /* Is the widget pointer valid?  */
-
-                if (drawit)
+                /* Loop through dirty areas to redraw as needed.  */
+                for (index = 0; index < canvas -> gx_canvas_dirty_count; index++)
                 {
-                    /* if the object is transparent, we need to draw the parent.
-                       This should not happen, because dircty_partial_add checks
-                       for transparency, but just for safety we test again here  */
+                    /* Pickup widget associated with dirty area.  */
+                    drawit = dirty -> gx_dirty_area_widget;
 
-                    if (drawit -> gx_widget_status & GX_STATUS_TRANSPARENT)
+                    /* Is the widget pointer valid?  */
+
+                    if (drawit)
                     {
-                        while (drawit -> gx_widget_parent)
+                        /* if the object is transparent, we need to draw the parent.
+                           This should not happen, because dircty_partial_add checks
+                           for transparency, but just for safety we test again here  */
+
+                        if (drawit -> gx_widget_status & GX_STATUS_TRANSPARENT)
                         {
-                            drawit = drawit -> gx_widget_parent;
-
-                            if (!(drawit -> gx_widget_status & GX_STATUS_TRANSPARENT))
+                            while (drawit -> gx_widget_parent)
                             {
-                                /* we need to start drawing at this non-transparent
-                                   background widget */
+                                drawit = drawit -> gx_widget_parent;
 
-                                drawit -> gx_widget_status |= GX_STATUS_DIRTY;
-                                break;
+                                if (!(drawit -> gx_widget_status & GX_STATUS_TRANSPARENT))
+                                {
+                                    /* we need to start drawing at this non-transparent
+                                       background widget */
+
+                                    drawit -> gx_widget_status |= GX_STATUS_DIRTY;
+                                    break;
+                                }
                             }
                         }
-                    }
 
-                    /* Initiate drawing on this canvas.  */
+                        /* Initiate drawing on this canvas.  */
 
-                    status = _gx_canvas_drawing_initiate(canvas, drawit,
-                                                         &dirty -> gx_dirty_area_rectangle);
+                        status = _gx_canvas_drawing_initiate(canvas, drawit,
+                                                             &dirty -> gx_dirty_area_rectangle);
 
-                    if (status == GX_NO_VIEWS)
-                    {
-                        /* If we are attempting to draw the root window and it has no views,
-                           just draw the children of the root */
-
-                        if (drawit -> gx_widget_type == GX_TYPE_ROOT_WINDOW)
+                        if (status == GX_NO_VIEWS)
                         {
-                            _gx_widget_children_draw(drawit);
+                            /* If we are attempting to draw the root window and it has no views,
+                               just draw the children of the root */
+
+                            if (drawit -> gx_widget_type == GX_TYPE_ROOT_WINDOW)
+                            {
+                                _gx_widget_children_draw(drawit);
+                            }
+
+                            /* Indicate that drawing on this canvas is complete.  */
+                            _gx_canvas_drawing_complete(canvas, GX_FALSE);
                         }
+                        else if (status == GX_SUCCESS)
+                        {
+                            drawit -> gx_widget_draw_function(drawit);
 
-                        /* Indicate that drawing on this canvas is complete.  */
-                        _gx_canvas_drawing_complete(canvas, GX_FALSE);
+                            /* Indicate that drawing on this canvas is complete.  */
+                            _gx_canvas_drawing_complete(canvas, GX_FALSE);
+                        }
+                        else
+                        {
+                            // no memory available in _gx_system_draw_context_stack
+                        }
                     }
-                    else if (status == GX_SUCCESS)
-                    {
-                        drawit -> gx_widget_draw_function(drawit);
-
-                        /* Indicate that drawing on this canvas is complete.  */
-                        _gx_canvas_drawing_complete(canvas, GX_FALSE);
-                    }
+                    /* Move to the next dirty area.  */
+                    dirty++;
                 }
-                /* Move to the next dirty area.  */
-                dirty++;
-            }
-            /* Indicate that drawing on this canvas is complete.  */
-            _gx_canvas_drawing_complete(canvas, GX_FALSE);
+                /* Indicate that drawing on this canvas is complete.  */
+                _gx_canvas_drawing_complete(canvas, GX_FALSE);
             }
         }
         root = (GX_WINDOW_ROOT *)root -> gx_widget_next;

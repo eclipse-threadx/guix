@@ -192,123 +192,123 @@ UINT                        bidi_text_line_index = 0;
 
     if (status == GX_SUCCESS)
     {
-    /* Compute the start displaying position of pixels in x direction and y direction. */
-    y_pos = client.gx_rectangle_top;
-    y_pos += text_view -> gx_multi_line_text_view_text_scroll_shift;
-    y_pos += (text_view -> gx_multi_line_text_view_line_space >> 1);
+        /* Compute the start displaying position of pixels in x direction and y direction. */
+        y_pos = client.gx_rectangle_top;
+        y_pos += text_view -> gx_multi_line_text_view_text_scroll_shift;
+        y_pos += (text_view -> gx_multi_line_text_view_line_space >> 1);
 
-    line_string.gx_string_ptr = " ";
-    line_string.gx_string_length = 1;
+        line_string.gx_string_ptr = " ";
+        line_string.gx_string_length = 1;
 
-    _gx_system_string_width_get_ext(font, &line_string, &space_width);
+        _gx_system_string_width_get_ext(font, &line_string, &space_width);
 
-    first_visible_line = ((-text_view -> gx_multi_line_text_view_text_scroll_shift)) / line_height;
+        first_visible_line = ((-text_view -> gx_multi_line_text_view_text_scroll_shift)) / line_height;
 
-    if (first_visible_line < 0)
-    {
-        first_visible_line = 0;
-    }
-
-    last_visible_line = first_visible_line + (INT)(text_view -> gx_multi_line_text_view_text_visible_rows);
-
-    if (last_visible_line > (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1))
-    {
-        last_visible_line = (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1);
-    }
-
-    if (text_view -> gx_multi_line_text_view_text_id)
-    {
-        _gx_widget_string_get_ext((GX_WIDGET *)text_view, text_view -> gx_multi_line_text_view_text_id, &string);
-    }
-    else
-    {
-        _gx_system_private_string_get(&text_view -> gx_multi_line_text_view_text, &string, text_view -> gx_widget_style);
-    }
-
-    y_pos += (INT)(first_visible_line * line_height);
-
-    for (index = first_visible_line; index <= last_visible_line; index++)
-    {
-#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-        if (_gx_system_bidi_text_enabled)
+        if (first_visible_line < 0)
         {
-            line_string.gx_string_ptr = GX_NULL;
-            line_string.gx_string_length = 0;
+            first_visible_line = 0;
+        }
 
-            if (!next)
-            {
-                next = text_view -> gx_multi_line_text_view_bidi_resolved_text_info;
-            }
+        last_visible_line = first_visible_line + (INT)(text_view -> gx_multi_line_text_view_text_visible_rows);
 
-            while (next)
-            {
-                if (bidi_text_line_index + next -> gx_bidi_resolved_text_info_total_lines > (UINT)index)
-                {
-                    /* Get line string. */
-                    if (next -> gx_bidi_resolved_text_info_text)
-                    {
-                        line_string = next -> gx_bidi_resolved_text_info_text[(UINT)index - bidi_text_line_index];
-                    }
-                    break;
-                }
+        if (last_visible_line > (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1))
+        {
+            last_visible_line = (INT)(text_view -> gx_multi_line_text_view_text_total_rows - 1);
+        }
 
-                bidi_text_line_index += next -> gx_bidi_resolved_text_info_total_lines;
-                next = next -> gx_bidi_resolved_text_info_next;
-            }
+        if (text_view -> gx_multi_line_text_view_text_id)
+        {
+            _gx_widget_string_get_ext((GX_WIDGET *)text_view, text_view -> gx_multi_line_text_view_text_id, &string);
         }
         else
         {
-#endif /* defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT) */
-            line_cache_start = text_view -> gx_multi_line_text_view_first_cache_line;
-            line_start_index = text_view -> gx_multi_line_text_view_line_index[index - (INT)line_cache_start];
+            _gx_system_private_string_get(&text_view -> gx_multi_line_text_view_text, &string, text_view -> gx_widget_style);
+        }
 
-            if ((INT)(index - (INT)line_cache_start) >= (INT)(text_view -> gx_multi_line_text_view_cache_size - 1))
+        y_pos += (INT)(first_visible_line * line_height);
+
+        for (index = first_visible_line; index <= last_visible_line; index++)
+        {
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+            if (_gx_system_bidi_text_enabled)
             {
-                line_end_index = text_view -> gx_multi_line_text_view_text.gx_string_length;
+                line_string.gx_string_ptr = GX_NULL;
+                line_string.gx_string_length = 0;
+
+                if (!next)
+                {
+                    next = text_view -> gx_multi_line_text_view_bidi_resolved_text_info;
+                }
+
+                while (next)
+                {
+                    if (bidi_text_line_index + next -> gx_bidi_resolved_text_info_total_lines > (UINT)index)
+                    {
+                        /* Get line string. */
+                        if (next -> gx_bidi_resolved_text_info_text)
+                        {
+                            line_string = next -> gx_bidi_resolved_text_info_text[(UINT)index - bidi_text_line_index];
+                        }
+                        break;
+                    }
+
+                    bidi_text_line_index += next -> gx_bidi_resolved_text_info_total_lines;
+                    next = next -> gx_bidi_resolved_text_info_next;
+                }
             }
             else
             {
-                line_end_index = text_view -> gx_multi_line_text_view_line_index[index - (INT)(line_cache_start) + 1];
-            }
+#endif /* defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT) */
+                line_cache_start = text_view -> gx_multi_line_text_view_first_cache_line;
+                line_start_index = text_view -> gx_multi_line_text_view_line_index[index - (INT)line_cache_start];
 
-            /* Get line string. */
-            line_string.gx_string_ptr = string.gx_string_ptr + line_start_index;
-            line_string.gx_string_length = line_end_index - line_start_index;
+                if ((INT)(index - (INT)line_cache_start) >= (INT)(text_view -> gx_multi_line_text_view_cache_size - 1))
+                {
+                    line_end_index = text_view -> gx_multi_line_text_view_text.gx_string_length;
+                }
+                else
+                {
+                    line_end_index = text_view -> gx_multi_line_text_view_line_index[index - (INT)(line_cache_start) + 1];
+                }
+
+                /* Get line string. */
+                line_string.gx_string_ptr = string.gx_string_ptr + line_start_index;
+                line_string.gx_string_length = line_end_index - line_start_index;
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-        }
+            }
 #endif /* defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT) */
 
 
-        switch (text_view -> gx_widget_style & GX_STYLE_TEXT_ALIGNMENT_MASK)
-        {
-        case GX_STYLE_TEXT_RIGHT:
-            _gx_system_string_width_get_ext(font, &line_string, &text_width);
-            while (text_width > (client.gx_rectangle_right - client.gx_rectangle_left - 2))
+            switch (text_view -> gx_widget_style & GX_STYLE_TEXT_ALIGNMENT_MASK)
             {
-                text_width = (GX_VALUE)(text_width - space_width);
+            case GX_STYLE_TEXT_RIGHT:
+                _gx_system_string_width_get_ext(font, &line_string, &text_width);
+                while (text_width > (client.gx_rectangle_right - client.gx_rectangle_left - 2))
+                {
+                    text_width = (GX_VALUE)(text_width - space_width);
+                }
+                x_pos = client.gx_rectangle_right - 1;
+                x_pos = (GX_VALUE)(x_pos - text_width);
+                break;
+            case GX_STYLE_TEXT_LEFT:
+                x_pos = client.gx_rectangle_left + 1;
+                break;
+            case GX_STYLE_TEXT_CENTER:
+            default:
+                _gx_system_string_width_get_ext(font, &line_string, &text_width);
+                client_width = (GX_VALUE)(client.gx_rectangle_right - client.gx_rectangle_left + 1);
+                while (text_width > (client_width - 3))
+                {
+                    text_width = (GX_VALUE)(text_width - space_width);
+                }
+                x_pos = (GX_VALUE)(client.gx_rectangle_left + ((client_width - text_width) / 2));
+                break;
             }
-            x_pos = client.gx_rectangle_right - 1;
-            x_pos = (GX_VALUE)(x_pos - text_width);
-            break;
-        case GX_STYLE_TEXT_LEFT:
-            x_pos = client.gx_rectangle_left + 1;
-            break;
-        case GX_STYLE_TEXT_CENTER:
-        default:
-            _gx_system_string_width_get_ext(font, &line_string, &text_width);
-            client_width = (GX_VALUE)(client.gx_rectangle_right - client.gx_rectangle_left + 1);
-            while (text_width > (client_width - 3))
-            {
-                text_width = (GX_VALUE)(text_width - space_width);
-            }
-            x_pos = (GX_VALUE)(client.gx_rectangle_left + ((client_width - text_width) / 2));
-            break;
-        }
 
-        /* Draw the text. */
-        _gx_canvas_text_draw_ext((GX_VALUE)x_pos, (GX_VALUE)y_pos, &line_string);
-        y_pos += line_height;
-    }
+            /* Draw the text. */
+            _gx_canvas_text_draw_ext((GX_VALUE)x_pos, (GX_VALUE)y_pos, &line_string);
+            y_pos += line_height;
+        }
 
         _gx_canvas_drawing_complete(canvas, GX_FALSE);
     }
