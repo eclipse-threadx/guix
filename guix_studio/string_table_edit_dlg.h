@@ -203,6 +203,8 @@ class button_frame : public CWnd
     
     private:
         void PositionChildren();
+        int GetButtonWidth(CButton &button);
+        void UpdateButtonWidths();
         string_table *mpTable;
         CButton mAddButton;
         CButton mDeleteButton;
@@ -218,6 +220,11 @@ class button_frame : public CWnd
 
         int m_button_width;
         int m_button_height;
+        int m_add_button_width;
+        int m_delete_button_width;
+        int m_import_button_width;
+        int m_export_button_width;
+        int m_button_horizontal_padding;
 };
 
 class string_table_edit_dlg : public express_dialog
