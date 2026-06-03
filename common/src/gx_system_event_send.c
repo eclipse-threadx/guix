@@ -99,7 +99,7 @@ GX_WIDGET *target = GX_NULL;
         status = GX_SUCCESS;
     }
 #else
-    GX_EVENT_PUSH(in_event);
+    status = GX_EVENT_PUSH(in_event);
 #endif
 
     if (check_send_flick)
