@@ -263,6 +263,7 @@ public:
 private:
     void UpdateDpiDependentResources(int dpi);
     void SetupToolBarImageList(int dpi);
+    void SaveWindowPlacement();
     void TestOneWidgetStringsFit(int display_index, widget_info* info);
     void TestStringsFit(int display_index, widget_info* info);
     CString m_strings_fit_msg;
