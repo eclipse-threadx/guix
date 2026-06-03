@@ -105,6 +105,7 @@ void SetUtf8Text(CRichEditCtrl *edit, CString &text)
 #define BUTTON_BAR_HEIGHT 28
 #define BUTTON_HEIGHT 24
 #define BUTTON_WIDTH  72
+#define BUTTON_HORIZONTAL_PADDING 28
 
 #define TABLE_HEADER_HEIGHT 24
 
@@ -1085,6 +1086,11 @@ END_MESSAGE_MAP()
 button_frame::button_frame(string_table *table)
 {
     mpTable = table;
+    m_add_button_width = BUTTON_WIDTH;
+    m_delete_button_width = BUTTON_WIDTH;
+    m_import_button_width = BUTTON_WIDTH;
+    m_export_button_width = BUTTON_WIDTH;
+    m_button_horizontal_padding = BUTTON_HORIZONTAL_PADDING;
 
     UpdateControlDimensions(GetTextScaler());
 }
@@ -1098,8 +1104,58 @@ button_frame::~button_frame()
 void button_frame::UpdateControlDimensions(int text_scaler)
 {
     int dpi = GetSystemDPI();
-    m_button_width = MulDiv(BUTTON_WIDTH, dpi, DEFAULT_DPI_96) * text_scaler / DEFAULT_TEXT_SCALER;
-    m_button_height = MulDiv(BUTTON_HEIGHT, dpi, DEFAULT_DPI_96) * text_scaler / DEFAULT_TEXT_SCALER;
+    m_button_width = GetScaledValue(BUTTON_WIDTH, dpi, text_scaler);
+    m_button_height = GetScaledValue(BUTTON_HEIGHT, dpi, text_scaler);
+    m_button_horizontal_padding = GetScaledValue(BUTTON_HORIZONTAL_PADDING, dpi, text_scaler);
+    m_add_button_width = m_button_width;
+    m_delete_button_width = m_button_width;
+    m_import_button_width = m_button_width;
+    m_export_button_width = m_button_width;
+
+    if (mAddButton.GetSafeHwnd())
+    {
+        UpdateButtonWidths();
+        PositionChildren();
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+int button_frame::GetButtonWidth(CButton &button)
+{
+    CString text;
+    button.GetWindowText(text);
+
+    if (text.IsEmpty())
+    {
+        return m_button_width;
+    }
+
+    CClientDC dc(this);
+    CFont *font = button.GetFont();
+    CFont *old_font = NULL;
+
+    if (font)
+    {
+        old_font = dc.SelectObject(font);
+    }
+
+    CSize text_size = dc.GetTextExtent(text);
+
+    if (old_font)
+    {
+        dc.SelectObject(old_font);
+    }
+
+    return max(m_button_width, text_size.cx + m_button_horizontal_padding);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void button_frame::UpdateButtonWidths()
+{
+    m_add_button_width = GetButtonWidth(mAddButton);
+    m_delete_button_width = GetButtonWidth(mDeleteButton);
+    m_import_button_width = GetButtonWidth(mImportButton);
+    m_export_button_width = GetButtonWidth(mExportButton);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1151,6 +1207,8 @@ int button_frame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     mSortCombobox.SetCurSel(mpTable->GetSortColumn() + 1);
     mSortCombobox.ShowWindow(SW_SHOW);
 
+    UpdateButtonWidths();
+
     if (mpTable->GetSortColumn() == mpTable->CountLanguages() + 1)
     {
         mpTable->Sort();
@@ -1171,21 +1229,24 @@ void button_frame::PositionChildren()
     childsize = client;
     childsize.top += 2;
     childsize.left += 4;
-    childsize.right = childsize.left + m_button_width;
+    childsize.right = childsize.left + m_add_button_width;
     childsize.bottom = childsize.top + m_button_height;
     mAddButton.MoveWindow(&childsize);
 
-    childsize.OffsetRect(m_button_width + 2, 0);
+    childsize.OffsetRect(m_add_button_width + 2, 0);
+    childsize.right = childsize.left + m_delete_button_width;
     mDeleteButton.MoveWindow(&childsize);
 
-    childsize.OffsetRect(m_button_width + 2, 0);
+    childsize.OffsetRect(m_delete_button_width + 2, 0);
+    childsize.right = childsize.left + m_import_button_width;
     mImportButton.MoveWindow(&childsize);
 
-    childsize.OffsetRect(m_button_width + 2, 0);
+    childsize.OffsetRect(m_import_button_width + 2, 0);
+    childsize.right = childsize.left + m_export_button_width;
     mExportButton.MoveWindow(&childsize);
 
     #ifdef ENABLE_SEARCH
-    childsize.OffsetRect(m_button_width + 12, 0);
+    childsize.OffsetRect(m_export_button_width + 12, 0);
     childsize.right += m_button_width / 2;
     mSearchString.MoveWindow(&childsize);
 
@@ -3267,11 +3328,17 @@ INT_PTR string_table_edit_dlg::DoModal()
 void string_table_edit_dlg::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
     int new_text_scaler = GetTextScaler();
-    if (m_text_scaler != new_text_scaler)
+    BOOL text_scale_changed = (m_text_scaler != new_text_scaler);
+
+    if (text_scale_changed)
     {
         SetControlDimensions(new_text_scaler);
-        mpButtonFrame->UpdateControlDimensions(new_text_scaler);
     }
 
     express_dialog::OnSettingChange(uFlags, lpszSection);
+
+    if (text_scale_changed && mpButtonFrame)
+    {
+        mpButtonFrame->UpdateControlDimensions(new_text_scaler);
+    }
 }
