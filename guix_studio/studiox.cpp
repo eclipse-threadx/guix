@@ -34,6 +34,7 @@ CFont TinyFont;
 CFont ViewHeaderFont;
 CFont AsteriskFont;
 UINT  StudioClipboardFormat = 0;
+extern INI_INFO StudioXIni;
 
 // CstudioxApp
 
@@ -309,7 +310,7 @@ BOOL CstudioxApp::InitInstance()
 
     if (!pCmdInfo->IsNoGui())
     {
-        m_pMainWnd->ShowWindow(SW_SHOW);
+        m_pMainWnd->ShowWindow(StudioXIni.main_window_show);
         m_pMainWnd->UpdateWindow();
     }
 
