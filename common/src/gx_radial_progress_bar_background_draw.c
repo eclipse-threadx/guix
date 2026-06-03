@@ -88,7 +88,7 @@ GX_DISPLAY  *display;
 GX_CANVAS   *canvas;
 GX_VALUE     old_xpos = 0;
 GX_VALUE     old_ypos = 0;
-UINT         canvas_draw_status = GX_DRAW_NESTING_EXCEEDED;
+UINT         status;
 #endif
 
     _gx_context_brush_get(&brush);
@@ -144,20 +144,19 @@ UINT         canvas_draw_status = GX_DRAW_NESTING_EXCEEDED;
             _gx_utility_rectangle_shift(&dirty, (GX_VALUE)(-old_xpos), (GX_VALUE)(-old_ypos));
             _gx_utility_rectangle_overlap_detect(&dirty, &progress_bar -> gx_widget_size, &dirty);
 
-            canvas_draw_status = _gx_canvas_drawing_initiate(&progress_bar -> gx_radial_progress_bar_canvas, GX_NULL, &dirty);
+            status = _gx_canvas_drawing_initiate(&progress_bar -> gx_radial_progress_bar_canvas, GX_NULL, &dirty);
 
-            if ((canvas_draw_status == GX_SUCCESS || canvas_draw_status == GX_NO_VIEWS) &&
-                (progress_bar -> gx_widget_status & GX_STATUS_TRANSPARENT))
+            if (status == GX_SUCCESS || status == GX_NO_VIEWS)
             {
-                xcenter = canvas -> gx_canvas_display_offset_x;
-                ycenter = canvas -> gx_canvas_display_offset_y;
-                _gx_canvas_offset_set(canvas, (GX_VALUE)(-old_xpos), (GX_VALUE)(-old_ypos));
-                display -> gx_display_driver_canvas_copy(canvas, &progress_bar -> gx_radial_progress_bar_canvas);
-                _gx_canvas_offset_set(canvas, xcenter, ycenter);
-            }
+                if (progress_bar -> gx_widget_status & GX_STATUS_TRANSPARENT)
+                {
+                    xcenter = canvas -> gx_canvas_display_offset_x;
+                    ycenter = canvas -> gx_canvas_display_offset_y;
+                    _gx_canvas_offset_set(canvas, (GX_VALUE)(-old_xpos), (GX_VALUE)(-old_ypos));
+                    display -> gx_display_driver_canvas_copy(canvas, &progress_bar -> gx_radial_progress_bar_canvas);
+                    _gx_canvas_offset_set(canvas, xcenter, ycenter);
+                }
 
-            if (canvas_draw_status == GX_SUCCESS || canvas_draw_status == GX_NO_VIEWS)
-            {
                 _gx_context_brush_get(&brush);
             }
         }
@@ -229,7 +228,7 @@ UINT         canvas_draw_status = GX_DRAW_NESTING_EXCEEDED;
             _gx_widget_shift((GX_WIDGET *)progress_bar, old_xpos, old_ypos, GX_FALSE);
         }
 
-        if (canvas_draw_status == GX_SUCCESS || canvas_draw_status == GX_NO_VIEWS)
+        if (status == GX_SUCCESS || status == GX_NO_VIEWS)
         {
             _gx_canvas_pixelmap_get(&map);
             _gx_canvas_drawing_complete(&progress_bar -> gx_radial_progress_bar_canvas, GX_FALSE);

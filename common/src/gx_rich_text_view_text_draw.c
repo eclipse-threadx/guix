@@ -382,54 +382,54 @@ UINT                   status;
 
     if (status == GX_SUCCESS)
     {
-    /* Calculate the total rows of text view string. */
-    while (text.gx_string_length > 0)
-    {
-        /* Pickup draw font. */
-        _gx_widget_font_get((GX_WIDGET *)text_view, format.gx_rich_text_font_id, &font);
-
-        if (!font)
+        /* Calculate the total rows of text view string. */
+        while (text.gx_string_length > 0)
         {
-            break;
-        }
+            /* Pickup draw font. */
+            _gx_widget_font_get((GX_WIDGET *)text_view, format.gx_rich_text_font_id, &font);
 
-        line_info.gx_rich_text_line_info_text.gx_string_ptr = text.gx_string_ptr;
-        line_info.gx_rich_text_line_info_text.gx_string_length = 0;
-        line_info.gx_rich_text_line_info_start_format = format;
-        line_info.gx_rich_text_line_info_end_format = format;
-        line_info.gx_rich_text_line_info_line_height = font -> gx_font_line_height;
-        line_info.gx_rich_text_line_info_baseline = font -> gx_font_baseline;
-        line_info.gx_rich_text_line_info_text_width = 0;
-
-        _gx_rich_text_view_context_save();
-
-        if (_gx_rich_text_view_line_info_get(text_view, text, &line_info, client_width) != GX_SUCCESS)
-        {
-            break;
-        }
-
-        format = line_info.gx_rich_text_line_info_end_format;
-
-        /* Draw text. */
-        if ((GX_VALUE)(ypos + line_info.gx_rich_text_line_info_line_height) > client.gx_rectangle_top)
-        {
-            if ((GX_VALUE)(ypos) < client.gx_rectangle_bottom)
-            {
-                _gx_rich_text_view_context_restore();
-                _gx_rich_text_view_single_line_draw(text_view, ypos, &line_info);
-            }
-            else
+            if (!font)
             {
                 break;
             }
+
+            line_info.gx_rich_text_line_info_text.gx_string_ptr = text.gx_string_ptr;
+            line_info.gx_rich_text_line_info_text.gx_string_length = 0;
+            line_info.gx_rich_text_line_info_start_format = format;
+            line_info.gx_rich_text_line_info_end_format = format;
+            line_info.gx_rich_text_line_info_line_height = font -> gx_font_line_height;
+            line_info.gx_rich_text_line_info_baseline = font -> gx_font_baseline;
+            line_info.gx_rich_text_line_info_text_width = 0;
+
+            _gx_rich_text_view_context_save();
+
+            if (_gx_rich_text_view_line_info_get(text_view, text, &line_info, client_width) != GX_SUCCESS)
+            {
+                break;
+            }
+
+            format = line_info.gx_rich_text_line_info_end_format;
+
+            /* Draw text. */
+            if ((GX_VALUE)(ypos + line_info.gx_rich_text_line_info_line_height) > client.gx_rectangle_top)
+            {
+                if ((GX_VALUE)(ypos) < client.gx_rectangle_bottom)
+                {
+                    _gx_rich_text_view_context_restore();
+                    _gx_rich_text_view_single_line_draw(text_view, ypos, &line_info);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            ypos = (GX_VALUE)(ypos + line_info.gx_rich_text_line_info_line_height);
+            ypos = (GX_VALUE)(ypos + text_view -> gx_multi_line_text_view_line_space);
+
+            text.gx_string_ptr += line_info.gx_rich_text_line_info_text.gx_string_length;
+            text.gx_string_length -= line_info.gx_rich_text_line_info_text.gx_string_length;
         }
-
-        ypos = (GX_VALUE)(ypos + line_info.gx_rich_text_line_info_line_height);
-        ypos = (GX_VALUE)(ypos + text_view -> gx_multi_line_text_view_line_space);
-
-        text.gx_string_ptr += line_info.gx_rich_text_line_info_text.gx_string_length;
-        text.gx_string_length -= line_info.gx_rich_text_line_info_text.gx_string_length;
-    }
         _gx_canvas_drawing_complete(canvas, GX_FALSE);
     }
     else if (status == GX_NO_VIEWS)
