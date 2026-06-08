@@ -173,6 +173,7 @@ typedef struct {
     int ypos;
     int width;
     int height;
+    int main_window_show;
     int proj_view_width;
     int resource_view_width;
     int proj_view_height;

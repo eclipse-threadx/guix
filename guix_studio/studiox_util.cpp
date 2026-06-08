@@ -41,6 +41,45 @@ extern "C" FILE * __cdecl __iob_func(void)
     return _iob;
 }
 
+static BOOL IsStoredMainWindowMaximized(CRect rect)
+{
+    if ((rect.Width() <= 0) || (rect.Height() <= 0))
+    {
+        return FALSE;
+    }
+
+    HMONITOR monitor = ::MonitorFromRect(rect, MONITOR_DEFAULTTONEAREST);
+
+    if (!monitor)
+    {
+        return FALSE;
+    }
+
+    MONITORINFO monitor_info;
+    monitor_info.cbSize = sizeof(monitor_info);
+
+    if (!::GetMonitorInfo(monitor, &monitor_info))
+    {
+        return FALSE;
+    }
+
+    CRect work_area(monitor_info.rcWork);
+    int tolerance = ::GetSystemMetrics(SM_CXFRAME) + ::GetSystemMetrics(SM_CXPADDEDBORDER) + 4;
+
+    if (tolerance < 16)
+    {
+        tolerance = 16;
+    }
+
+    return (rect.Width() >= work_area.Width() - tolerance) &&
+        (rect.Height() >= work_area.Height() - tolerance);
+}
+
+static int NormalizeMainWindowShow(int show_state)
+{
+    return (show_state == SW_SHOWMAXIMIZED) ? SW_SHOWMAXIMIZED : SW_SHOWNORMAL;
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -898,6 +937,7 @@ BOOL ReadIniInfo(void)
     StudioXIni.ypos = 20;
     StudioXIni.width = 1100;
     StudioXIni.height = 640;
+    StudioXIni.main_window_show = SW_SHOWMAXIMIZED;
     StudioXIni.proj_view_width = 200;
     StudioXIni.resource_view_width = 200;
     StudioXIni.proj_view_height = 240;
@@ -938,14 +978,31 @@ BOOL ReadIniInfo(void)
 
         if (reader.EnterSection("dimensions"))
         {
+            BOOL read_main_window_show;
+
             reader.ReadInt("xpos", StudioXIni.xpos, 20);
             reader.ReadInt("ypos", StudioXIni.ypos, 20);
             reader.ReadInt("width", StudioXIni.width, 1100);
             reader.ReadInt("height", StudioXIni.height, 640);
+            read_main_window_show = reader.ReadInt("main_window_show", StudioXIni.main_window_show, SW_SHOWNORMAL);
             reader.ReadInt("project_width", StudioXIni.proj_view_width, 200);
             reader.ReadInt("resource_width", StudioXIni.resource_view_width, 200);
             reader.ReadInt("project_height", StudioXIni.proj_view_height, 240);
             reader.CloseSection(TRUE, TRUE);
+
+            if (!read_main_window_show &&
+                IsStoredMainWindowMaximized(CRect(
+                    StudioXIni.xpos,
+                    StudioXIni.ypos,
+                    StudioXIni.xpos + StudioXIni.width,
+                    StudioXIni.ypos + StudioXIni.height)))
+            {
+                StudioXIni.xpos = 20;
+                StudioXIni.ypos = 20;
+                StudioXIni.width = 1100;
+                StudioXIni.height = 640;
+                StudioXIni.main_window_show = SW_SHOWMAXIMIZED;
+            }
         }
         if (StudioXIni.width < 0)
         {
@@ -967,6 +1024,8 @@ BOOL ReadIniInfo(void)
         {
             StudioXIni.proj_view_height = 240;
         }
+
+        StudioXIni.main_window_show = NormalizeMainWindowShow(StudioXIni.main_window_show);
 
         if (reader.EnterSection("recent_projects"))
         {
@@ -1019,6 +1078,7 @@ void WriteIniInfo(void)
         writer.WriteInt("ypos", StudioXIni.ypos);
         writer.WriteInt("width", StudioXIni.width);
         writer.WriteInt("height", StudioXIni.height);
+        writer.WriteInt("main_window_show", NormalizeMainWindowShow(StudioXIni.main_window_show));
         writer.WriteInt("project_width", StudioXIni.proj_view_width);
         writer.WriteInt("resource_width", StudioXIni.resource_view_width);
         writer.WriteInt("project_height", StudioXIni.proj_view_height);

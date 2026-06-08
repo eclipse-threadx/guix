@@ -970,8 +970,6 @@ void CMainFrame::OnLockUlockWidgetPositions()
 
 void CMainFrame::OnClose()
 {
-    CRect rect;
-
     CCommandInfo *pCmdInfo = GetCmdInfo();
 
     if(pCmdInfo->IsNoGui())
@@ -983,9 +981,7 @@ void CMainFrame::OnClose()
     }
     else
     {
-        GetWindowRect(rect);
-        StudioXIni.xpos = rect.left;
-        StudioXIni.ypos = rect.top;
+        SaveWindowPlacement();
 
         int cxMin;
 
@@ -1066,11 +1062,10 @@ void CMainFrame::OnSize(UINT ntype, int cx, int cy)
 {
     CFrameWnd::OnSize(ntype, cx, cy);
 
-    CRect rect;
-    GetWindowRect(rect);
-        
-    StudioXIni.width = rect.Width();
-    StudioXIni.height = rect.Height();
+    if (IsWindowVisible() && (ntype == SIZE_RESTORED) && !IsZoomed() && !IsIconic())
+    {
+        SaveWindowPlacement();
+    }
 
     if (mpTargetView)
     {
@@ -1083,6 +1078,26 @@ void CMainFrame::OnSize(UINT ntype, int cx, int cy)
     if (m_splitter_created)
     {
         m_splitter.FixColumnWidths();
+    }
+}
+
+void CMainFrame::SaveWindowPlacement()
+{
+    CRect rect;
+
+    StudioXIni.main_window_show = IsZoomed() ? SW_SHOWMAXIMIZED : SW_SHOWNORMAL;
+
+    if (!IsZoomed() && !IsIconic())
+    {
+        GetWindowRect(rect);
+
+        if ((rect.Width() > 0) && (rect.Height() > 0))
+        {
+            StudioXIni.xpos = rect.left;
+            StudioXIni.ypos = rect.top;
+            StudioXIni.width = rect.Width();
+            StudioXIni.height = rect.Height();
+        }
     }
 }
 
