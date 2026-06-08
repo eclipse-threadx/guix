@@ -1,6 +1,6 @@
 /***************************************************************************
  * Copyright (c) 2024 Microsoft Corporation
- * Copyright (c) 2026-present Eclipse ThreadX contributors
+ * Copyright (c) 2026 Eclipse ThreadX contributors
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at
@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.4.1        */
+/*                                                           6.5.1        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -59,8 +59,8 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION  6
 #define GUIX_MINOR_VERSION  5
-#define GUIX_PATCH_VERSION  0
-#define GUIX_BUILD_VERSION  202601
+#define GUIX_PATCH_VERSION  1
+#define GUIX_BUILD_VERSION  202602
 #define GUIX_HOTFIX_VERSION ' '
 
 /* The following symbols are defined for backward compatibility reasons.*/

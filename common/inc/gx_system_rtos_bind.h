@@ -1,6 +1,6 @@
 /***************************************************************************
  * Copyright (c) 2024 Microsoft Corporation
- * Copyright (c) 2026-present Eclipse ThreadX contributors
+ * Copyright (c) 2026 Eclipse ThreadX contributors
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at
@@ -82,6 +82,9 @@ VOID  gx_generic_system_mutex_unlock(VOID);
 ULONG gx_generic_system_time_get(VOID);
 VOID *gx_generic_thread_identify(VOID);
 VOID  gx_generic_time_delay(INT ticks);
+#ifdef GX_ENABLE_ERROR_CALLBACK
+VOID  gx_generic_error_process(UINT error_code, ULONG error_count);
+#endif
 
 
 #define GX_RTOS_BINDING_INITIALIZE gx_generic_rtos_initialize()
@@ -97,7 +100,9 @@ VOID  gx_generic_time_delay(INT ticks);
 #define GX_SYSTEM_TIME_GET         gx_generic_system_time_get()
 #define GX_CURRENT_THREAD          gx_generic_thread_identify()
 #define GX_GENERIC_TIME_DELAY(a)   gx_generic_time_delay(a)
-
+#ifdef GX_ENABLE_ERROR_CALLBACK
+#define GX_GENERIC_ERROR_PROCESS   gx_generic_error_process
+#endif
 
 
 #endif

@@ -1,3 +1,14 @@
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation
+ * Copyright (c) 2026 Eclipse ThreadX contributors
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
+
 #include "gx_api.h"
 static GX_CONST GX_UBYTE char_21[39] = {
     0x02, 0x10, 0x05, 0x21, 0xff, 0x54, 0x1c, 0xff, 0x50, 0x16, 0xff, 0x49, 0x0e,

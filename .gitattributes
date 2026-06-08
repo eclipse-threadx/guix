@@ -1,4 +1,5 @@
 .git*            export-ignore
+.gitattributes   eol=lf
 .hooks*          export-ignore
 
 # Custom attribute to mark sources as using our C code style.
@@ -19,6 +20,11 @@ configure        eol=lf
 *.bat.in         eol=crlf
 *.sln            eol=crlf
 *.vcproj         eol=crlf
+*.vcxproj        whitespace=cr-at-eol
+*.filters        whitespace=cr-at-eol
+*.wapproj        whitespace=cr-at-eol
+*.appxmanifest   whitespace=cr-at-eol
+*.manifest       whitespace=cr-at-eol
 
 *.pfx            -text
 *.png            -text

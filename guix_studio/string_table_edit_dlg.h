@@ -1,3 +1,14 @@
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation
+ * Copyright (c) 2026 Eclipse ThreadX contributors
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
+
 #pragma once
 #include "afxwin.h"
 
@@ -192,6 +203,8 @@ class button_frame : public CWnd
     
     private:
         void PositionChildren();
+        int GetButtonWidth(CButton &button);
+        void UpdateButtonWidths();
         string_table *mpTable;
         CButton mAddButton;
         CButton mDeleteButton;
@@ -207,6 +220,11 @@ class button_frame : public CWnd
 
         int m_button_width;
         int m_button_height;
+        int m_add_button_width;
+        int m_delete_button_width;
+        int m_import_button_width;
+        int m_export_button_width;
+        int m_button_horizontal_padding;
 };
 
 class string_table_edit_dlg : public express_dialog

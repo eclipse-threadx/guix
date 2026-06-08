@@ -1,3 +1,12 @@
+# Copyright (c) 2024 Microsoft Corporation
+# Copyright (c) 2026 Eclipse ThreadX contributors
+#
+# This program and the accompanying materials are made available under the
+# terms of the MIT License which is available at
+# https://opensource.org/licenses/MIT.
+#
+# SPDX-License-Identifier: MIT
+
 good_results = [
     0x5dac1db9, #test 0
     0x5bacd0f0, #test 1

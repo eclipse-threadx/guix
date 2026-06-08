@@ -1,3 +1,14 @@
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation
+ * Copyright (c) 2026 Eclipse ThreadX contributors
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
+
 // Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
@@ -1756,8 +1767,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 6,4,2,461
- PRODUCTVERSION 6,4,2,461
+ FILEVERSION 6,5,1,2
+ PRODUCTVERSION 6,5,1,2
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -1774,12 +1785,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Eclipse Foundation"
             VALUE "FileDescription", "GUIX Studio Application"
-            VALUE "FileVersion", "6.4.2.461"
+            VALUE "FileVersion", "6.5.1.202602"
             VALUE "InternalName", "studiox.exe"
             VALUE "LegalCopyright", "(c) Eclipse ThreadX contributors"
             VALUE "OriginalFilename", "studiox.exe"
             VALUE "ProductName", "Eclipse ThreadX GUIX Studio"
-            VALUE "ProductVersion", "6.4.2.461"
+            VALUE "ProductVersion", "6.5.1.202602"
         END
     END
     BLOCK "VarFileInfo"

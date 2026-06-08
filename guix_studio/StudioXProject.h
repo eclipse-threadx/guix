@@ -1,3 +1,14 @@
+/***************************************************************************
+ * Copyright (c) 2024 Microsoft Corporation
+ * Copyright (c) 2026 Eclipse ThreadX contributors
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at
+ * https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **************************************************************************/
+
 
 #ifndef _STUDIOXPROJECT_
 #define _STUDIOXPROJECT_
@@ -10,7 +21,7 @@
 #define PROJECT_VERSION    56
 
 // Sequential number of studio version
-#define STUDIOX_VERSION_NUMBER 202504
+#define STUDIOX_VERSION_NUMBER 202602
 
 /* This enabled checking if the project was created by a newer version of Studio.
    Turn this off for testing when the Studio version number is not accurate
