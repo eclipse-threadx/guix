@@ -105,6 +105,10 @@ UINT status = GX_SUCCESS;
     case GX_EVENT_TIMER:
         if (event_ptr -> gx_event_payload.gx_event_timer_id == GX_CIRCULAR_GAUGE_TIMER)
         {
+            if (gauge->gx_circular_gauge_current_angle == gauge->gx_circular_gauge_target_angle)
+            {
+                break;
+            }
 
             /* Calculate current angle.  */
             gauge -> gx_circular_gauge_animation_step++;
