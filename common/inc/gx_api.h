@@ -132,6 +132,10 @@ typedef struct GX_STRING_STRUCT
 
 #ifndef GX_DISABLE_DEPRECATED_STRING_API
 #define GX_ENABLE_DEPRECATED_STRING_API
+#pragma message("GUIX deprecated string API is enabled. The pre-5.6 char* string " \
+                "functions do not carry a length and are unsafe with non-NUL-terminated " \
+                "buffers. Define GX_DISABLE_DEPRECATED_STRING_API and migrate to the " \
+                "GX_STRING-based (_ext) variants.")
 #endif
 
 #if defined(GX_THREADX_BINDING)
