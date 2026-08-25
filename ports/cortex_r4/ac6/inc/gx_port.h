@@ -127,7 +127,7 @@ typedef SHORT  GX_VALUE;
 
 #ifdef GX_SYSTEM_INIT
 CHAR _gx_version_id[] =
-    "(c) 2024 Microsoft Corp. (c) 2026 Eclipse ThreadX contributors.  *  GUIX Cortex-R4/AC6 Version 6.5.1.202602 *";
+    "(c) 2024 Microsoft Corp. (c) 2026 Eclipse ThreadX contributors.  *  GUIX Cortex-R4/AC6 Version 6.5.1.202602a *";
 #else
 extern  CHAR _gx_version_id[];
 #endif
