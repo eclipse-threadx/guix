@@ -11,7 +11,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #ifndef StudioFullVersion
-#define StudioFullVersion "6.5.1.202602"
+#define StudioFullVersion "6.5.1.202602a"
 #endif
 #ifndef StudioShortVersion
 #define StudioShortVersion "6.5.1"
@@ -20,7 +20,7 @@
 #define StudioMajorMinorVersion "6.5"
 #endif
 #ifndef StudioVersionInfoVersion
-#define StudioVersionInfoVersion "6.5.1.2"
+#define StudioVersionInfoVersion "6.5.1.3"
 #endif
 
 [Setup]
