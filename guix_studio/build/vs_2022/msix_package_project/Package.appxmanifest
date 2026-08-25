@@ -22,7 +22,7 @@
   <Identity
     Name="Microsoft.AzureRTOSGUIXStudio"
     Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
-    Version="6.5.1.02" />
+    Version="6.5.1.03" />
 
   <Properties>
     <DisplayName>Eclipse ThreadX GUIX Studio</DisplayName>

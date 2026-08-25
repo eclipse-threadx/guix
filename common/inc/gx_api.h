@@ -61,7 +61,7 @@ extern   "C" {
 #define GUIX_MINOR_VERSION  5
 #define GUIX_PATCH_VERSION  1
 #define GUIX_BUILD_VERSION  202602
-#define GUIX_HOTFIX_VERSION ' '
+#define GUIX_HOTFIX_VERSION 'a'
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
