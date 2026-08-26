@@ -98,7 +98,7 @@ def csv_string_import_export():
     print("import string from command line")
     test_utils.toolbar_save()
     test_utils.close_project(1)
-    studio_release = test_utils.DEFAULT_OUTPUT_FILE_PATH + "../../../../guix_studio/build/vs_2019/Release/guix_studio.exe"
+    studio_release = test_utils.DEFAULT_OUTPUT_FILE_PATH + "../../../../guix_studio/build/vs_2022/Release/guix_studio.exe"
     project_pathname = test_utils.DEFAULT_OUTPUT_FILE_PATH + "/test_string_import_export.gxp"
     studio_release = os.path.abspath(studio_release)
     project_pathname = os.path.abspath(project_pathname)

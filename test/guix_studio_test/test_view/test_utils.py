@@ -28,7 +28,7 @@ except ImportError:
 
 user32 = ctypes.windll.user32
 
-studio_exe_path = "../../../guix_studio/build/vs_2019/Release/guix_studio.exe"
+studio_exe_path = "../../../guix_studio/build/vs_2022/Release/guix_studio.exe"
 top_windows = []
 WM_CLOSE = 0x0010
 reset_map_format = False
