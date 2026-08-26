@@ -26,7 +26,7 @@ if not defined VSINSTALL (
     exit /B 1
 )
 
-call "%VSINSTALL%\Common7\Tools\VsDevCmd.bat" -arch=amd64 -host_arch=amd64 -winsdk=10.0.22621.0
+call "%VSINSTALL%\Common7\Tools\VsDevCmd.bat" -arch=amd64 -host_arch=amd64
 if ERRORLEVEL 1 exit /B %ERRORLEVEL%
 
 rem Save working directory so that we can restore it back after building everything. This will make developers happy and then 
