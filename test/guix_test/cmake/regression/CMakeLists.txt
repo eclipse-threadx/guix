@@ -353,6 +353,7 @@ set(all_widgets_REG_TESTS
     guix_ml_input_char_insert_no_output
     guix_ml_input_text_set_no_output
     guix_ml_input_no_output
+    guix_ml_text_line_terminator_bounds_no_output
     guix_ml_text_view_word_wrap_no_output
     guix_ml_view_text_set_no_output
     guix_ml_view_no_output
