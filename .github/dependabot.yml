@@ -1,0 +1,100 @@
+version: 2
+
+# Keeps the pinned action SHAs moving.
+#
+# Every action reference under .github/workflows is a 40-character commit SHA
+# with the version in a trailing comment. A SHA pin *without* this file is worse
+# than a floating tag: it freezes CI on whatever was current the day it was
+# written. This repository is the case study. Nothing had ever reported that an
+# action moved, so actions/upload-artifact sat on v3.1.3 in all four Windows
+# workflows -- four majors behind, and a version GitHub began auto-failing on
+# 2025-01-30. actions/checkout sat on an unpinned @v4, three majors behind.
+#
+# Dependabot understands the SHA form and rewrites the trailing version comment
+# together with the pin, so the comment cannot drift away from the SHA it
+# describes. That is what keeps "which exact code ran in our CI" answerable from
+# the repository, which the SBOM and certification work needs on its own.
+#
+# This follows the pattern set by eclipse-threadx/threadx, which added the same
+# configuration in August 2026 after the same drift was measured there.
+#
+# What this does not fix: it reports drift, not silence. A workflow that never
+# triggers rots unnoticed no matter what is pinned in it, and this repository had
+# that failure in its more severe form -- the four Windows workflows requested
+# runs-on: windows-2019 for more than a year after GitHub retired that image, so
+# every run queued for 24 hours and was cancelled without reaching a runner. No
+# amount of pinning would have said so. The runner image fix is a separate
+# change; this file is the drift half only.
+#
+# There is no entry for any other ecosystem, and that is a decision rather than
+# an oversight: the project forbids external dependencies and there are no
+# submodules. The one pinned toolchain input -- the Windows SDK version passed
+# to VsDevCmd in scripts/build_guix_studio.cmd -- lives in a batch file that no
+# Dependabot ecosystem can parse. That pin moves by hand.
+updates:
+  - package-ecosystem: "github-actions"
+    # "/" is the only accepted value for this ecosystem; it covers
+    # .github/workflows and .github/actions. The cross-repository reusable
+    # workflow in regression_test.yml
+    # (eclipse-threadx/threadx/.github/workflows/regression_template.yml@master)
+    # is correctly left alone: it references a branch, not a version, so there
+    # is nothing for Dependabot to move. Tracking that branch is deliberate --
+    # it is first-party, in the same organisation, and it means this repository
+    # picks up harness fixes without a bump here.
+    directory: "/"
+
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Etc/UTC"
+
+    # Dependabot reads this file from the repository's DEFAULT branch, which is
+    # master. But master is deliberately kept behind dev, and pull requests
+    # belong on dev. target-branch sends the pull requests to dev and makes
+    # Dependabot read the workflows it is updating from dev as well.
+    #
+    # The consequence to plan for: landing this file on dev arms it, it does not
+    # fire it. Nothing happens until a release merge carries it to master.
+    #
+    # Setting target-branch also opts out of Dependabot *security* updates,
+    # which only ever run against the default branch. For this ecosystem the
+    # cost is small -- an action advisory arrives as an ordinary version bump on
+    # the weekly run -- but it is a real trade and not a detail to rediscover
+    # later.
+    target-branch: "dev"
+
+    groups:
+      # Patch and minor arrive together in one pull request: they are the
+      # routine traffic, and reviewing them one at a time is how an update queue
+      # starts being ignored, which is the failure mode this file exists to
+      # prevent. Majors stay ungrouped, one pull request each, because every
+      # breaking change met in an action here has been a major: upload-artifact
+      # v4 stopped allowing an artifact name to be uploaded twice in a run, and
+      # v6 requires a runner of 2.327.1 or newer.
+      actions-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+    # Only three distinct actions are in use today -- actions/checkout,
+    # actions/upload-artifact and EnricoMi/publish-unit-test-result-action -- so
+    # the default limit of five would be enough for now. Ten is set to match the
+    # sibling repositories and to leave room for a wave of majors after a long
+    # gap, which is exactly the situation this file is being added into.
+    open-pull-requests-limit: 10
+
+    # This repository has no "dependencies" label yet; Dependabot creates it on
+    # the first pull request.
+    labels:
+      - "dependencies"
+
+    # Reviewers are not listed. Unlike eclipse-threadx/threadx this repository
+    # has no .github/CODEOWNERS, so there is no path routing for Dependabot to
+    # honour. Adding one is worth doing, but it is not this file's job.
+    #
+    # Commit subjects are left at Dependabot's own "Bump x from a to b" wording.
+    # The project asks for a past-tense subject and still gets one: these pull
+    # requests are squash-merged, and the subject is set at that point.

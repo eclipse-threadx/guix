@@ -82,7 +82,7 @@ def __main__():
     logging.basicConfig(stream=test_utils.test_log_stream, level=logging.DEBUG, format=Format)
    
     msbuild_exe_path = "C:/Windows/Microsoft.NET/Framework64/v4.0.30319/MSBuild.exe"
-    project_sln_path = "../../../guix_studio/build/vs_2019/studiox.sln"
+    project_sln_path = "../../../guix_studio/build/vs_2022/studiox.sln"
     
     parser = argparse.ArgumentParser(description = "Test Studio UI")
     parser.add_argument('-b', action='store_true', dest='build_studio', help='Build Studio')
