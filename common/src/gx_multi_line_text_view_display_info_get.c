@@ -168,7 +168,12 @@ GX_FONT  *font;
 
             if (ch.gx_string_ptr[0] == GX_KEY_CARRIAGE_RETURN)
             {
-                if (ch.gx_string_ptr[1] == GX_KEY_LINE_FEED)
+                /* string now points at the byte after ch, and its length is the
+                   number of bytes still readable there. A GX_STRING carries its
+                   own length and need not be NUL terminated, so the byte after a
+                   trailing carriage return may lie outside the caller's buffer:
+                   it must not be examined. */
+                if ((string.gx_string_length > 0) && (string.gx_string_ptr[0] == GX_KEY_LINE_FEED))
                 {
                     text_info -> gx_text_display_number = (USHORT)(text_info -> gx_text_display_number + 2);
                 }
