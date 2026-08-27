@@ -68,6 +68,13 @@ GX_STUDIO_DISPLAY_INFO all_widgets_565bgr_display_table[1] =
     }
 };
 
+static GX_WIDGET *gx_studio_action_target_get(GX_WIDGET *current, GX_CONST GX_STUDIO_ACTION *action);
+static GX_WIDGET *gx_studio_action_target_find(GX_WIDGET *current, GX_CONST GX_STUDIO_ACTION *action);
+#if (GX_ANIMATION_POOL_SIZE > 0)
+static GX_WIDGET *gx_studio_action_parent_find(GX_WIDGET *current, GX_CONST GX_STUDIO_ACTION *action);
+static VOID gx_studio_animation_execute(GX_WIDGET *current, GX_CONST GX_STUDIO_ACTION *action);
+#endif
+
 static GX_WIDGET *gx_studio_action_target_get(GX_WIDGET *current, GX_CONST GX_STUDIO_ACTION *action)
 {
     GX_WIDGET *parent = GX_NULL;
@@ -133,6 +140,7 @@ static GX_WIDGET *gx_studio_action_target_find(GX_WIDGET *current, GX_CONST GX_S
     return target;
 }
 
+#if (GX_ANIMATION_POOL_SIZE > 0)
 static GX_WIDGET *gx_studio_action_parent_find(GX_WIDGET *current, GX_CONST GX_STUDIO_ACTION *action)
 {
 GX_WIDGET *parent = GX_NULL;
@@ -198,6 +206,7 @@ static VOID gx_studio_animation_execute(GX_WIDGET *current, GX_CONST GX_STUDIO_A
         }
     }
 }
+#endif
 
 UINT gx_studio_auto_event_handler(GX_WIDGET *widget, GX_EVENT *event_ptr, GX_CONST GX_STUDIO_EVENT_PROCESS *record)
 {
@@ -299,9 +308,11 @@ UINT gx_studio_auto_event_handler(GX_WIDGET *widget, GX_EVENT *event_ptr, GX_CON
                     }
                     break;
 
+#if (GX_ANIMATION_POOL_SIZE > 0)
                 case GX_ACTION_TYPE_ANIMATION:
                     gx_studio_animation_execute(widget, action);
                     break;
+#endif
 
                 case GX_ACTION_TYPE_WINDOW_EXECUTE:
                     if((action->flags & GX_ACTION_FLAG_POP_TARGET) ||

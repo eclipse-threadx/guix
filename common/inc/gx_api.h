@@ -61,7 +61,7 @@ extern   "C" {
 #define GUIX_MINOR_VERSION  5
 #define GUIX_PATCH_VERSION  1
 #define GUIX_BUILD_VERSION  202602
-#define GUIX_HOTFIX_VERSION ' '
+#define GUIX_HOTFIX_VERSION 'a'
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -132,6 +132,10 @@ typedef struct GX_STRING_STRUCT
 
 #ifndef GX_DISABLE_DEPRECATED_STRING_API
 #define GX_ENABLE_DEPRECATED_STRING_API
+#pragma message("GUIX deprecated string API is enabled. The pre-5.6 char* string " \
+                "functions do not carry a length and are unsafe with non-NUL-terminated " \
+                "buffers. Define GX_DISABLE_DEPRECATED_STRING_API and migrate to the " \
+                "GX_STRING-based (_ext) variants.")
 #endif
 
 #if defined(GX_THREADX_BINDING)

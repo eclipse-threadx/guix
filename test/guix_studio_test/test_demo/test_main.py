@@ -641,7 +641,7 @@ def __main__():
     os.chdir(current_path)
     studio_sln_path = "../../../guix_studio/build/vs_2022/studiox.sln"
     studio_exe_path = "../../../guix_studio/build/vs_2022/Release/guix_studio.exe"
-    guix_project_path = "../../../ports/win32/build/vs_2022/guix.vcxproj"
+    guix_project_path = "../../../ports/win32/build/vs_2019/guix.vcxproj"
 
     gxp_projects = []
 

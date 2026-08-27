@@ -19,3 +19,7 @@ FOREACH(TEST_FILE ${TEST_SLN_FILE_LIST})
     ADD_TEST(${TEST_NAME} python ${CMAKE_CURRENT_SOURCE_DIR}/../test_main.py -p ${TEST_FILE} --compile_project --debug)
     SET_TESTS_PROPERTIES(${TEST_NAME} PROPERTIES TIMEOUT 600)
 ENDFOREACH()
+
+#regression test for issue #172: Screen Flow output must build with an empty animation pool
+ADD_TEST(animation_pool_size_zero python ${CMAKE_CURRENT_SOURCE_DIR}/../test_animation_pool_size.py --debug)
+SET_TESTS_PROPERTIES(animation_pool_size_zero PROPERTIES TIMEOUT 1200)
