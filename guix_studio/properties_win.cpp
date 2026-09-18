@@ -30,7 +30,7 @@ extern CFont NormalFont;
 #define LEFT_COLUMN_WIDTH 140
 
 ///////////////////////////////////////////////////////////////////////////////
-enum CONTROL_IDS { 
+enum CONTROL_IDS {
     ID_WIDGET_NAME = 4096,
     ID_WIDGET_ID,
     ID_USER_DATA,
@@ -712,7 +712,7 @@ BOOL properties_win::PreTranslateMessage(MSG* pMsg)
             break;
         }
     }
-    
+
     return CDialog::PreTranslateMessage(pMsg);
 }
 
@@ -797,7 +797,7 @@ void properties_win::OnPaint()
 ///////////////////////////////////////////////////////////////////////////////
 HBRUSH properties_win::OnCtlColor(CDC *pDC, CWnd *pWnd, UINT nCtlColor)
 {
-    int nCtrlId = pWnd->GetDlgCtrlID();    
+    int nCtrlId = pWnd->GetDlgCtrlID();
 
     HBRUSH hbr = CWnd::OnCtlColor(pDC, pWnd, nCtlColor);
     return hbr;
@@ -909,7 +909,7 @@ void properties_win::AddComboBox(char *label, int res_type, int id, ULONG curren
         start_id++;
         end_id++;
     }
-  
+
     int active_theme = mpProject->mDisplays[active_display].active_theme;
 
     for (res_id = start_id; res_id < end_id; res_id++)
@@ -967,7 +967,7 @@ void properties_win::AddStringSelect(int current_val)
 
     if (table)
     {
-        
+
         if (current_val >= 0 && current_val < table->CountStrings())
         {
             string_ref = current_val;
@@ -978,7 +978,7 @@ void properties_win::AddStringSelect(int current_val)
             box_index = pBox->AddString(table->GetResourceIdName(string_id));
             pBox->SetItemData(box_index, string_id);
             string_id++;
-        }   
+        }
         CString id_name = table->GetResourceIdName(string_ref);
         m_top_pos += m_row_height;
         AddRichEditControl("Text", table->GetString(id_name), ID_STRING_VAL);
@@ -1055,7 +1055,7 @@ CButton *properties_win::AddRadioButton(char *description, ULONG checked, int id
     CRect groupsize;
     CString cs(description);
     GetClientRect(&size);
-    
+
     size.top += m_top_pos;
     size.left +=  m_item_space;
     size.right -= m_item_space;
@@ -1080,7 +1080,7 @@ CButton *properties_win::AddRadioButton(char *description, ULONG checked, int id
     {
         pButton->SetCheck(BST_UNCHECKED);
     }
-    
+
     m_top_pos += m_row_height;
     return pButton;
 }
@@ -1091,7 +1091,7 @@ CButton *properties_win::AddCheckBox(char *description, ULONG checked, int id)
     CRect size;
     CString cs(description);
     GetClientRect(&size);
-    
+
     size.top += m_top_pos;
     size.left += m_item_space;
     size.right -= m_item_space;
@@ -1099,7 +1099,7 @@ CButton *properties_win::AddCheckBox(char *description, ULONG checked, int id)
 
     CButton *pButton = new CButton();
     pButton->Create(cs, WS_CHILD|WS_TABSTOP|BS_LEFTTEXT|BS_AUTOCHECKBOX, size, this, id);
-    
+
     if (checked)
     {
         pButton->SetCheck(BST_CHECKED);
@@ -1108,7 +1108,7 @@ CButton *properties_win::AddCheckBox(char *description, ULONG checked, int id)
     {
         pButton->SetCheck(BST_UNCHECKED);
     }
-    
+
     m_top_pos += m_row_height;
     return pButton;
 }
@@ -1119,7 +1119,7 @@ void properties_win::AddPushButton(char *description, int id)
     CRect size;
     CString cs(description);
     GetClientRect(&size);
-    
+
     size.top += m_top_pos;
     size.left += m_item_space;
     size.right -= m_item_space;
@@ -1136,7 +1136,7 @@ void properties_win::AddPushButton(char *description, int id)
 void properties_win::AddEditControl(char *description, int value, int id)
 {
     CString valstring;
-    valstring.Format(_T("%d"), value); 
+    valstring.Format(_T("%d"), value);
     AddEditControl(description, valstring, id);
 }
 
@@ -1153,7 +1153,7 @@ void properties_win::AddEditControl(char *description, CString &name, int id)
     size.right -= m_item_space;
 
     right = size.right;
-    
+
     size.top += m_top_pos;
     size.bottom = size.top + m_item_height;
     size.right = size.left + m_leftcol_width;
@@ -1167,7 +1167,7 @@ void properties_win::AddEditControl(char *description, CString &name, int id)
     CEdit *pEdit = new CEdit();
     pEdit->Create(WS_CHILD|WS_TABSTOP|SS_LEFT|ES_AUTOHSCROLL, size, this, id);
     pEdit->SetWindowText(name);
-    
+
     m_top_pos += m_row_height;
 }
 
@@ -1183,7 +1183,7 @@ void properties_win::AddRichEditControl(char *description, CString &name, int id
     size.right -= m_item_space;
 
     right = size.right;
-    
+
     size.top += m_top_pos;
     size.bottom = size.top + m_item_height;
     size.right = size.left + m_leftcol_width;
@@ -1204,7 +1204,7 @@ void properties_win::AddRichEditControl(char *description, CString &name, int id
     pEdit->Create(style, size, this, id);
     //pEdit->SetWindowText(name);
     SetUtf8Text(pEdit, name);
-    
+
     SetAccessibleHelpString(pEdit->GetSafeHwnd(), name);
     m_top_pos += m_row_height;
 }
@@ -1222,7 +1222,7 @@ void properties_win::AddPromptControl(char *description, CString &name)
     size.right -= m_item_space;
 
     right = size.right;
-    
+
     size.top += m_top_pos;
     size.bottom = size.top + m_item_height;
     size.right = size.left + m_leftcol_width;
@@ -1235,7 +1235,7 @@ void properties_win::AddPromptControl(char *description, CString &name)
 
     CStatic *pval = new CStatic();
     pval->Create(name, WS_CHILD|SS_LEFT, size, this);
-    
+
     m_top_pos += m_row_height;
 }
 
@@ -1334,7 +1334,7 @@ void properties_win::AddWidgetProps()
             break;
         }
     }
-    
+
     if (GetProjectView()->IsTopLevelWidget(mpInfo))
     {
         AddCheckBox("Template", mpInfo->is_template, ID_TEMPLATE);
@@ -1463,7 +1463,7 @@ void properties_win::AddPixelmapButtonProps(widget_info *info)
     AddComboBox("Disabled Pixelmap", RES_TYPE_PIXELMAP, ID_PIXELMAP_2, info->pixelmap_id[DISABLED_PIXELMAP_INDEX]);
 
     INT style = ValidateAlignStyle(info->style);
- 
+
     AddComboBox("Horizontal Align", button_halign_styles, ID_PIXMAP_HALIGN, style & GX_PIXELMAP_HALIGN_MASK);
     AddComboBox("Vertical Align", button_valign_styles, ID_PIXMAP_VALIGN, style & GX_PIXELMAP_VALIGN_MASK);
 }
@@ -1514,7 +1514,7 @@ void properties_win::AddIconProps(widget_info *info)
     AddComboBox("Selected Pixelmap", RES_TYPE_PIXELMAP, ID_PIXELMAP_1, info->pixelmap_id[SELECTED_PIXELMAP_INDEX]);
 
     INT style = ValidateAlignStyle(info->style);
- 
+
     AddComboBox("Horizontal Align", button_halign_styles, ID_PIXMAP_HALIGN, style & GX_PIXELMAP_HALIGN_MASK);
     AddComboBox("Vertical Align", button_valign_styles, ID_PIXMAP_VALIGN, style & GX_PIXELMAP_VALIGN_MASK);
 }
@@ -1705,7 +1705,7 @@ void properties_win::AddTreeViewProps(widget_info *info)
 void properties_win::AddSliderProps(widget_info *info)
 {
     AddCheckBox("Vertical", info->style & GX_STYLE_SLIDER_VERTICAL, ID_SLIDER_VERTICAL);
-    
+
     if (info->basetype == GX_TYPE_SLIDER)
     {
         AddCheckBox("Show Tickmarks", info->style & GX_STYLE_SHOW_TICKMARKS, ID_SHOW_TICKMARKS);
@@ -1740,7 +1740,7 @@ void properties_win::AddProgressBarProps(widget_info *info)
     AddCheckBox("Vertical", info->style & GX_STYLE_PROGRESS_VERTICAL, ID_PROGRESS_VERTICAL);
     AddCheckBox("Show Text", info->style & GX_STYLE_PROGRESS_TEXT_DRAW, ID_PROGRESS_SHOW_TEXT);
     AddCheckBox("Show Percentage", info->style & GX_STYLE_PROGRESS_PERCENT, ID_PROGRESS_PERCENT);
-    
+
     AddEditControl("Min Value", info->ewi.progress.min_val, ID_PROGRESS_MINVAL);
     AddEditControl("Max Value", info->ewi.progress.max_val, ID_PROGRESS_MAXVAL);
     AddEditControl("Current Value", info->ewi.progress.current_val, ID_PROGRESS_CURRENTVAL);
@@ -1836,7 +1836,7 @@ void properties_win::AddScrollbarProps(widget_info *info)
     {
         AddComboBox("Left Pixelmap", RES_TYPE_PIXELMAP, ID_PIXELMAP_2, info->ewi.scroll.gx_scroll_up_pixelmap);
         AddComboBox("Right Pixelmap", RES_TYPE_PIXELMAP, ID_PIXELMAP_3, info->ewi.scroll.gx_scroll_down_pixelmap);
-    }    
+    }
     AddCheckBox("End Buttons", info ->style & GX_SCROLLBAR_END_BUTTONS, ID_SCROLL_END_BUTTONS);
     AddCheckBox("Tile Background", info->style & GX_STYLE_TILE_BACKGROUND, ID_SCROLL_TILE_BKGND);
     AddCheckBox("Relative Thumb Size", info ->style & GX_SCROLLBAR_RELATIVE_THUMB, ID_SCROLL_RELATIVE_THUMB);
@@ -1897,7 +1897,7 @@ void properties_win::WidgetWasMoved()
                 mpInfo->size.gx_rectangle_bottom - mpInfo->size.gx_rectangle_top + 1);
             SetDlgItemText(ID_HEIGHT, val);
         }
-            
+
         mpProject->SetModified();
     }
 }
@@ -1952,7 +1952,7 @@ void properties_win::OnWidgetSelect(widget_info *info)
     CRect winrect;
     mpInfo = info;
     mpProject = NULL;
-   
+
     if (info)
     {
         mpProject = GetOpenProject();
@@ -2216,7 +2216,7 @@ void properties_win::OnChangeWidgetName()
                 ErrorMsg("Widget name already exists!");
             }
 
-            
+
             new_name = mpInfo->app_name;
             if(save && TestInputName(edit, "Widget Name", new_name))
             {
@@ -2366,7 +2366,7 @@ void properties_win::OnChangeWidgetId()
                 {
                     mpProject->AddToIdDictionary(display, ID_TYPE_WIDGET, new_name);
                 }
-                
+
                 if (!old_id_name.IsEmpty())
                 {
                     mpProject->RemoveFromIdDictionary(display, ID_TYPE_WIDGET, old_id_name);
@@ -2590,7 +2590,7 @@ void properties_win::OnChangeDynamicBuffer()
     if (mpProject && mpInfo && GetDlgItem(ID_DYNAMIC_BUFFER))
     {
         UndoManager()->AddEntry(UNDO_TYPE_DYNAMIC_TEXT_BUFFER, mpInfo);
-        
+
         if (IsDlgButtonChecked(ID_DYNAMIC_BUFFER))
         {
             mpInfo->ewi.text_info.dynamic_buffer = true;
@@ -2702,7 +2702,7 @@ void properties_win::OnChangeBorder()
                 child = child->gx_widget_next;
             }
 
-            gx_system_dirty_mark(mpInfo->widget)
+            gx_system_dirty_mark(mpInfo->widget);
 
             mpProject->SetModified();
         }
@@ -2967,7 +2967,7 @@ void properties_win::OnChangeNumericPrompt()
     {
         int numeric_value = GetDlgItemInt(ID_NUMERIC_PROMPT_VALUE, 0, TRUE);
         CString format_func;
-        
+
         GetDlgItemText(ID_FORMAT_FUNC, format_func);
 
         if (numeric_value != mpInfo->ewi.numeric_prompt_value)
@@ -3236,7 +3236,7 @@ void properties_win::OnTextAlignmentChange()
 {
     CComboBox *pAlign = (CComboBox *) GetDlgItem(ID_TEXT_ALIGN);
     ULONG style = 0;
-    
+
     if (mpProject && mpInfo && pAlign)
     {
         int selected = pAlign->GetCurSel();
@@ -3279,7 +3279,7 @@ void properties_win::OnChangePixmapAlign()
         }
 
         selected = pVAlign->GetCurSel();
-    
+
         if (selected >= 0)
         {
             vStyle = (ULONG) pVAlign->GetItemData(selected);
@@ -3324,7 +3324,7 @@ void properties_win::OnButtonStyleChange()
         {
             style &= ~GX_STYLE_BUTTON_TOGGLE;
         }
-               
+
         if (IsDlgButtonChecked(ID_BUTTON_STYLE_RADIO))
         {
             style |= GX_STYLE_BUTTON_RADIO;
@@ -3378,7 +3378,7 @@ void properties_win::OnDropListStyleChange()
             style &= ~GX_STYLE_TILE_WALLPAPER;
             gx_widget_style_remove((GX_WIDGET *)&(((GX_DROP_LIST *)mpInfo->widget)->gx_drop_list_popup.gx_popup_list_list), GX_STYLE_TILE_WALLPAPER);
         }
-        
+
         mpInfo->style = style;
         mpProject->SetModified();
     }
@@ -3480,7 +3480,7 @@ void properties_win::AssignProgressBarInfo(widget_info *wi)
     info.gx_progress_bar_selected_text_color = wi->color_id[SELECTED_TEXT_COLOR_INDEX];
     info.gx_progress_bar_disabled_text_color = wi->color_id[DISABLED_TEXT_COLOR_INDEX];
 
-    GX_PROGRESS_BAR *bar = (GX_PROGRESS_BAR *) wi->widget;        
+    GX_PROGRESS_BAR *bar = (GX_PROGRESS_BAR *) wi->widget;
     gx_progress_bar_info_set(bar, &info);
 }
 
@@ -3888,7 +3888,7 @@ void properties_win::OnChangeTextScrollWheelProps()
         CComboBox *pFontBox = (CComboBox *)GetDlgItem(ID_TEXT_SCROLL_WHEEL_NORMAL_FONT);
         int box_index = pFontBox->GetCurSel();
         int normal_font = pFontBox->GetItemData(box_index);
-        
+
         pFontBox = (CComboBox *)GetDlgItem(ID_TEXT_SCROLL_WHEEL_SELECTED_FONT);
         box_index = pFontBox->GetCurSel();
         int selected_font = pFontBox->GetItemData(box_index);
@@ -4275,7 +4275,7 @@ void properties_win::OnChangeStringId()
             UndoManager()->AddEntry(UNDO_TYPE_STRING, mpInfo, 0);
             mpInfo->string_id[0] = text_id;
             widget_service_provider *provider = widget_factory::GetServiceProvider(mpInfo->basetype);
-        
+
             if (provider)
             {
                 provider->AssignText(mpInfo, 0, text_id);
@@ -4745,7 +4745,7 @@ LRESULT properties_win::OnTestMessage(WPARAM wParam, LPARAM lParam)
 
             TCHAR  class_name[MAX_PATH];
             GetClassName(pWnd->GetSafeHwnd(), class_name, MAX_PATH - 1);
-                
+
             switch (class_name[0])
             {
             case 'R':
