@@ -122,8 +122,6 @@ sed -i -E "s|(#define GUIX_HOTFIX_VERSION[[:space:]]+)'[^']*'|\1${HOTFIX_DEFINE}
 git -C "${REPO_ROOT}" add "${API_HEADER}"
 git -C "${REPO_ROOT}" commit -F - <<'COMMIT_EOF'
 Updated version number constants
-
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 COMMIT_EOF
 
 printf "Committed version constant updates.\n"
@@ -163,8 +161,6 @@ EOF
     else
         git -C "${REPO_ROOT}" commit -F - <<'COMMIT_EOF'
 Updated port version strings
-
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 COMMIT_EOF
         printf "Committed port version string updates.\n"
     fi
