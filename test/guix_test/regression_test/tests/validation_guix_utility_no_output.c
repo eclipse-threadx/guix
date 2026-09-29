@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -16,6 +18,7 @@
 #include "gx_api.h"
 #include "gx_validation_utility.h"
 #include "gx_utility.h"
+#include "gx_text_input_cursor.h"
 
 TEST_PARAM test_parameter = {
     "guix_utility_no_output", /* Test name */
@@ -78,6 +81,7 @@ UINT        expect_status;
 GX_POINT    point;
 GX_STRING   string_1;
 GX_STRING   string_2;
+GX_TEXT_INPUT_CURSOR cursor;
 
     /* Test invalid call to gx_utility_canvas_to_bmp. */
     for(index = 0; index < 3; index++)
@@ -103,7 +107,7 @@ GX_STRING   string_2;
         }
 
         gx_utility_rectangle_define(&rect, 0, 0, 100, 100);
-        status = gx_utility_canvas_to_bmp(root->gx_window_root_canvas, &rect, write_data_callback);
+        status = _gxe_utility_canvas_to_bmp(root->gx_window_root_canvas, &rect, write_data_callback);
         EXPECT_EQ(expect_status, status);
     }
 
@@ -115,28 +119,28 @@ GX_STRING   string_2;
     memset(&map, 0, sizeof(GX_PIXELMAP));
     map.gx_pixelmap_width = 50;
     map.gx_pixelmap_height = 50;
-    status = gx_utility_pixelmap_resize(&map, &destination, 100, 100);
+    status = _gxe_utility_pixelmap_resize(&map, &destination, 100, 100);
     EXPECT_EQ(GX_NOT_SUPPORTED, status);
 
     /* Test gx_utility_pixelmap_rotate. */
-    status = gx_utility_pixelmap_rotate(&map, 30, &destination, GX_NULL, GX_NULL);
+    status = _gxe_utility_pixelmap_rotate(&map, 30, &destination, GX_NULL, GX_NULL);
     EXPECT_EQ(GX_INVALID_FORMAT, status);
 
     map.gx_pixelmap_format = GX_COLOR_FORMAT_32ARGB;
     map.gx_pixelmap_flags = GX_PIXELMAP_COMPRESSED;
-    status = gx_utility_pixelmap_rotate(&map, 30, &destination, GX_NULL, GX_NULL);
+    status = _gxe_utility_pixelmap_rotate(&map, 30, &destination, GX_NULL, GX_NULL);
     EXPECT_EQ(GX_INVALID_FORMAT, status);
 
     /* Test gx_utility_pixelmap_simple_rotate. */
-    status = gx_utility_pixelmap_simple_rotate(&map, 30, &destination, GX_NULL, GX_NULL);
+    status = _gxe_utility_pixelmap_simple_rotate(&map, 30, &destination, GX_NULL, GX_NULL);
     EXPECT_EQ(GX_INVALID_VALUE, status);
 
-    status = gx_utility_pixelmap_simple_rotate(&map, 90, &destination, GX_NULL, GX_NULL);
+    status = _gxe_utility_pixelmap_simple_rotate(&map, 90, &destination, GX_NULL, GX_NULL);
     EXPECT_EQ(GX_INVALID_FORMAT, status);
 
     map.gx_pixelmap_flags = 0;
     map.gx_pixelmap_format = 0;
-    status = gx_utility_pixelmap_simple_rotate(&map, 90, &destination, GX_NULL, GX_NULL);
+    status = _gxe_utility_pixelmap_simple_rotate(&map, 90, &destination, GX_NULL, GX_NULL);
     EXPECT_EQ(GX_INVALID_FORMAT, status);
 
     /* Test _gx_utility_gradient_create. */
@@ -169,6 +173,19 @@ GX_STRING   string_2;
         failed_tests++;
     }
 
+    /* The core setter clears custom height; the checked API rejects zero. */
+    memset(&cursor, 0, sizeof(GX_TEXT_INPUT_CURSOR));
+    status = _gxe_text_input_cursor_height_set((GX_TEXT_INPUT_CURSOR *)&cursor, 5);
+    EXPECT_EQ(GX_SUCCESS, status);
+    EXPECT_EQ(5, cursor.gx_text_input_cursor_height);
+    EXPECT_EQ(GX_CURSOR_USE_CUSTOM_HEIGHT, cursor.gx_text_input_cursor_flags & GX_CURSOR_USE_CUSTOM_HEIGHT);
+    status = _gxe_text_input_cursor_height_set(&cursor, 0);
+    EXPECT_EQ(GX_INVALID_VALUE, status);
+    EXPECT_EQ(GX_CURSOR_USE_CUSTOM_HEIGHT, cursor.gx_text_input_cursor_flags & GX_CURSOR_USE_CUSTOM_HEIGHT);
+    status = _gx_text_input_cursor_height_set(&cursor, 0);
+    EXPECT_EQ(GX_SUCCESS, status);
+    EXPECT_EQ(0, cursor.gx_text_input_cursor_flags & GX_CURSOR_USE_CUSTOM_HEIGHT);
+
     /* Test gx_utility_math_asin. */
     angle = gx_utility_math_asin(GX_FIXED_VAL_MAKE(300));
     EXPECT_EQ(0, angle);
@@ -177,13 +194,13 @@ GX_STRING   string_2;
     status = _gx_utility_string_length_check("test", GX_NULL, 4);
     EXPECT_EQ(GX_SUCCESS, status);
 
-    status = gx_utility_circle_point_get(0, 0, 100, -90, &point);
+    status = _gxe_utility_circle_point_get(0, 0, 100, -90, &point);
     EXPECT_EQ(GX_SUCCESS, status);
 
-    status = gx_utility_circle_point_get(0, 0, 100, 90, GX_NULL);
+    status = _gxe_utility_circle_point_get(0, 0, 100, 90, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_utility_circle_point_get(0, 0, 0, 90, &point);
+    status = _gxe_utility_circle_point_get(0, 0, 0, 90, &point);
     EXPECT_EQ(GX_INVALID_VALUE, status);
 
     string_1.gx_string_ptr = text_short;

@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -151,7 +153,7 @@ static VOID load_theme_2()
         gx_display_theme_install(root->gx_window_root_canvas->gx_canvas_display, theme);
     }
 
-    return status;
+    return;
 }
 
 VOID  demo_thread_entry(ULONG thread_input)

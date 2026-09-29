@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_canvas.h"
 #include "gx_validation_utility.h"
 #include "gx_system.h"
 
@@ -64,27 +67,27 @@ GX_RECTANGLE size = {0};
     canvas = root->gx_window_root_canvas;
     display = canvas->gx_canvas_display;
     
-    status = gx_canvas_pixelmap_get(GX_NULL);
+    status = _gxe_canvas_pixelmap_get(GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
     
-    status = gx_canvas_pixelmap_get(&return_map);
+    status = _gxe_canvas_pixelmap_get(&return_map);
     EXPECT_EQ(GX_INVALID_CONTEXT, status);
     
     gx_canvas_drawing_initiate(canvas, root, &size);
-    status = gx_canvas_pixelmap_get(&return_map);
+    status = _gxe_canvas_pixelmap_get(&return_map);
     gx_canvas_drawing_complete(canvas, GX_FALSE);
     EXPECT_EQ(GX_SUCCESS, status);
 
     gx_canvas_drawing_initiate(canvas, root, &size);
     _gx_system_current_draw_context->gx_draw_context_display = GX_NULL;
-    status = gx_canvas_pixelmap_get(&return_map);
+    status = _gxe_canvas_pixelmap_get(&return_map);
     _gx_system_current_draw_context->gx_draw_context_display = display;
     gx_canvas_drawing_complete(canvas, GX_FALSE);
     EXPECT_EQ(GX_INVALID_DISPLAY, status);
     
     gx_canvas_drawing_initiate(canvas, root, &size);
     _gx_system_current_draw_context->gx_draw_context_canvas = GX_NULL;
-    status = gx_canvas_pixelmap_get(&return_map);
+    status = _gxe_canvas_pixelmap_get(&return_map);
     gx_canvas_drawing_complete(canvas, GX_FALSE);
     EXPECT_EQ(GX_INVALID_CANVAS, status);
 

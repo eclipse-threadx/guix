@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_canvas.h"
 #include "gx_validation_utility.h"
 
 TEST_PARAM test_parameter = {
@@ -136,15 +139,15 @@ GX_DISPLAY *display;
     gx_validation_set_frame_comment("Original window screen. ");
     gx_validation_screen_refresh();   
     
-    gx_canvas_hardware_layer_bind(&animation_canvas, 1); // should return GX_INVALID_DISPLAY
+    _gxe_canvas_hardware_layer_bind(&animation_canvas, 1); // should return GX_INVALID_DISPLAY
     
     display = root->gx_window_root_canvas->gx_canvas_display;
     display->gx_display_layer_services = &display_layer_services_1;
-    gx_canvas_hardware_layer_bind(&animation_canvas, 1); // should return GX_INVALID_DISPLAY
+    _gxe_canvas_hardware_layer_bind(&animation_canvas, 1); // should return GX_INVALID_DISPLAY
     
     display->gx_display_layer_services = &display_layer_services;
     
-    gx_canvas_hardware_layer_bind(&animation_canvas, 1); // should return GX_SUCCESS
+    _gxe_canvas_hardware_layer_bind(&animation_canvas, 1); // should return GX_SUCCESS
     gx_validation_set_frame_id(frame_id++);
     gx_validation_set_frame_comment("Bound animation_canvas to layer 1.");
     gx_validation_screen_refresh();
@@ -171,7 +174,7 @@ GX_DISPLAY *display;
 
     display->gx_display_layer_services = &display_layer_services_2;
 
-    if(gx_canvas_hardware_layer_bind(&animation_canvas, 1) != GX_FAILURE)
+    if(_gxe_canvas_hardware_layer_bind(&animation_canvas, 1) != GX_FAILURE)
     {
         exit(1);
     }

@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_multi_line_text_view.h"
 #include "gx_validation_utility.h"
 #include "gx_system.h"
 
@@ -64,28 +67,28 @@ GX_MULTI_LINE_TEXT_VIEW *view = &text_screen.text_screen_text_view_1;
 GX_CHAR invalid_string[GX_MAX_STRING_LENGTH + 1];
 
     memset(invalid_string, 'x', GX_MAX_STRING_LENGTH + 1);
-    status = gx_multi_line_text_view_text_set(view, invalid_string);
+    status = _gxe_multi_line_text_view_text_set(view, invalid_string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 #endif
-    status = gx_multi_line_text_view_text_set_ext(GX_NULL, GX_NULL);
+    status = _gxe_multi_line_text_view_text_set_ext(GX_NULL, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_multi_line_text_view_text_set_ext(view, GX_NULL);
+    status = _gxe_multi_line_text_view_text_set_ext(view, GX_NULL);
     EXPECT_EQ(GX_SUCCESS, status);
 
     string.gx_string_ptr = GX_NULL;
     string.gx_string_length = 2;
-    status = gx_multi_line_text_view_text_set_ext(view, &string);
+    status = _gxe_multi_line_text_view_text_set_ext(view, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_ptr = "test";
     string.gx_string_length = 5;
-    status = gx_multi_line_text_view_text_set_ext(view, &string);
+    status = _gxe_multi_line_text_view_text_set_ext(view, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_ptr = "test";
     string.gx_string_length = 3;
-    status = gx_multi_line_text_view_text_set_ext(view, &string);
+    status = _gxe_multi_line_text_view_text_set_ext(view, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     if(failed_tests == 0) 

@@ -19,3 +19,10 @@ CTestTestfile.cmake
 /guix_studio/installer/vc_runtime/
 /guix_studio/studiox.aps
 *.user
+
+.venv-ci/
+/test/guix_test/cmake/build/
+/test/guix_test/cmake/threadx/
+/test/guix_test/cmake/.run.sh
+/test/guix_test/cmake/coverage_report/
+__pycache__/

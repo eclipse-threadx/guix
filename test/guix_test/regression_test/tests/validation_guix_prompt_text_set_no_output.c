@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_prompt.h"
 #include "gx_validation_utility.h"
 #include "gx_scroll_wheel.h"
 
@@ -64,7 +67,7 @@ GX_PROMPT                 prompt;
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
 GX_CHAR invalid_string[GX_MAX_STRING_LENGTH + 1];
 #endif
-    status = gx_prompt_text_set_ext(GX_NULL, GX_NULL);
+    status = _gxe_prompt_text_set_ext(GX_NULL, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     memset(&prompt, 0, sizeof(GX_PROMPT));
@@ -73,22 +76,22 @@ GX_CHAR invalid_string[GX_MAX_STRING_LENGTH + 1];
 
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
     memset(invalid_string, 'x', sizeof(invalid_string));
-    status = gx_prompt_text_set(&prompt, invalid_string);
+    status = _gxe_prompt_text_set(&prompt, invalid_string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 #endif
     string.gx_string_ptr = test_string;
     string.gx_string_length = sizeof(test_string) - 2;
-    status = gx_prompt_text_set_ext(&prompt, &string);
+    status = _gxe_prompt_text_set_ext(&prompt, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_ptr = GX_NULL;
     string.gx_string_length = 2;
-    status = gx_prompt_text_set_ext(&prompt, &string);
+    status = _gxe_prompt_text_set_ext(&prompt, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_ptr = test_string;
     string.gx_string_length = sizeof(test_string) - 1;
-    status = gx_prompt_text_set_ext(&prompt, &string);
+    status = _gxe_prompt_text_set_ext(&prompt, &string);
     EXPECT_EQ(GX_SUCCESS, status);
 
     /* Test if text been set successfully. */
@@ -98,7 +101,7 @@ GX_CHAR invalid_string[GX_MAX_STRING_LENGTH + 1];
         failed_tests++;
     }
 
-    status = gx_prompt_text_set_ext(&prompt, GX_NULL);
+    status = _gxe_prompt_text_set_ext(&prompt, GX_NULL);
     EXPECT_EQ(GX_SUCCESS, status);
 
     /* Test if text been set successfully. */

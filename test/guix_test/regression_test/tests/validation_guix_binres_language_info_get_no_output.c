@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_binres_loader.h"
 #include "gx_validation_utility.h"
 #include "gx_system.h"
 
@@ -120,16 +123,16 @@ INT                pathlen;
 
     gx_validation_extract_path(__FILE__, binres_file, &pathlen);
 
-    status = gx_binres_language_count_get(GX_NULL, &count);
+    status = _gxe_binres_language_count_get(GX_NULL, &count);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_binres_language_count_get((GX_UBYTE *)0x60000, GX_NULL);
+    status = _gxe_binres_language_count_get((GX_UBYTE *)0x60000, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_binres_language_info_load(GX_NULL, &info);
+    status = _gxe_binres_language_info_load(GX_NULL, &info);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_binres_language_info_load((GX_UBYTE *)0x60000, GX_NULL);
+    status = _gxe_binres_language_info_load((GX_UBYTE *)0x60000, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     for(index = 0; index < BINRES_TEST_SIZE; index++)
@@ -164,11 +167,11 @@ INT                pathlen;
 
         if(index != BINRES_INVALID_LANGUAGE_HEADER)
         {
-            status = gx_binres_language_count_get(test_binres_root_address, &count);
+            status = _gxe_binres_language_count_get(test_binres_root_address, &count);
             EXPECT_EQ(expected_status, status);
         }
 
-        status = gx_binres_language_info_load(test_binres_root_address, &info);
+        status = _gxe_binres_language_info_load(test_binres_root_address, &info);
         EXPECT_EQ(expected_status, status);
     }
     

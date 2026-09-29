@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_widget.h"
 #include "gx_validation_utility.h"
 #include "gx_system.h"
 
@@ -63,15 +66,15 @@ GX_WIDGET  widget;
 GX_CHAR    invalid_string[GX_MAX_STRING_LENGTH + 1];
 
     memset(&widget, 0, sizeof(GX_WIDGET));
-    status = gx_widget_text_blend(&widget, 0, 0, GX_NULL, 0, 0, 128);
+    status = _gxe_widget_text_blend((GX_WIDGET *)&widget, 0, 0, GX_NULL, 0, 0, 128);
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
     memset(invalid_string, 'x', GX_MAX_STRING_LENGTH + 1);
-    status = gx_widget_text_blend(button, 0, 0, invalid_string, 0, 0, 128);
+    status = _gxe_widget_text_blend((GX_WIDGET *)button, 0, 0, invalid_string, 0, 0, 128);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 #endif
 
-    status = gx_widget_text_blend_ext(button, 0, 0, GX_NULL, 0, 0, 128);
+    status = _gxe_widget_text_blend_ext((GX_WIDGET *)button, 0, 0, GX_NULL, 0, 0, 128);
     EXPECT_EQ(GX_SUCCESS, status);
 
     if(failed_tests == 0) 

@@ -52,7 +52,7 @@ The GUIX regression test is built on top of the CMake build system and organize 
 - In this type of test code, the test code typically checks the API return status or the values of a variable to verify the correctness of the test case.
 
 ### Prerequisites
-1. Linux environment.
+1. Ubuntu 24.04 with GCC/gcov 14, CMake, Ninja, and Python 3.
 2. Clone the GUIX repository.
 3. Install required packages using script `install.sh` located in the `scripts` directory.
 
@@ -62,13 +62,13 @@ The GUIX regression test is built on top of the CMake build system and organize 
 2. To build and run all the tests, use the following commands.
 ```bash
 ./run.sh build all
-./run.sh run all
+./run.sh test all
 ```
 
 3. To build and run a specific test suite, use the following commands.
 ```bash
 ./run.sh build <build_type>
-./run.sh run <build_type>
+./run.sh test <build_type>
 ```
 
 The available build types are as follows:
@@ -76,8 +76,8 @@ The available build types are as follows:
 |Build Types|Description|Build Configuration Settings|
 |--------------|-----------|----------------------------|
 |default_build_coverage|Build with default configuration settings and generate coverage report|N/A|
-|disable_error_checking_build|Build with error checking disabled|*GX_DISABLE_ERROR_CHECKING*|
-|no_utf8_build_coverage|Build with UTF-8 support disabled and generate coverage report|GX_DISABLE_UTF8_SUPPORT and GX_DISABLE_ERROR_CHECKING|
+|disable_error_check_build|Build with error checking disabled|*GX_DISABLE_ERROR_CHECKING*|
+|no_utf8_build_coverage|Build with UTF-8 support disabled|GX_DISABLE_UTF8_SUPPORT|
 |no_utf8_no_checking_build|Build with UTF-8 support disabled and error checking disabled|GX_DISABLE_UTF8_SUPPORT and GX_DISABLE_ERROR_CHECKING|
 |ex_unicode_build|Build with extended Unicode support|GX_EXTENDED_UNICODE_SUPPORT|
 |ex_unicode_no_checking_build|Build with extended Unicode support and error checking disabled|GX_EXTENDED_UNICODE_SUPPORT and GX_DISABLE_ERROR_CHECKING|
@@ -97,7 +97,21 @@ The available build types are as follows:
 
 The **test reports** for each build type will be generated in the `test\guix_test\cmake\build\<build_type>` directory.
 
-The **coverage report** for `default_build_covearge` and `no_utf8_build_coverage` will be generated in the `test\guix_test\cmake\coverage_report` directory. For other build types, no coverage report is generated.
+Every configuration instruments GUIX common sources. The installer creates a `.venv-ci` virtual environment with gcovr 8.6. The runner checks out a reviewed ThreadX commit, fails on dependency setup errors, and uses its CMake/Ninja bootstrap and JUnit support. It audits feature definitions and coverage flags in the actual compile commands.
+
+Each test invocation clears old coverage counters and reports. JSON, Cobertura XML, and HTML reports appear under `coverage_report/per_configuration`. A full selection produces `merged.json`, `merged.xml`, and `merged/index.html`; a manual subset produces `partial` reports instead. `profiles.json` records the selection and source-line counts. The merge checks every input and requires its source-line denominator to equal the exact union of the raw traces. Raster loops can exceed 2³² hits in one profile. The gcovr suspicious-hit threshold is 10¹¹, retaining the measured counts and every source line. All reports include the same `common/src` sources, including unexecuted code; diagnostic filtering must not change that denominator.
+
+`build/build-profiles.txt` and `build/test-profiles.txt` list the requested configurations. Build durations, diagnostics, JUnit results, and the test summary remain under `build`. Test failures propagate to the runner while available coverage is retained. Complete runs enforce the line and branch floors in `coverage_floors.json`. Run `python3 test_report.py` from the CMake test directory to check the report validators.
+
+On hosted Linux runners, the reusable workflow stages compilation across its bounded install, build, and test steps. All configured profiles are still built and tested; the three `build/*-build-times.txt` files record each compilation stage. The test stage runs all CTest profiles concurrently before collecting coverage reports serially.
+
+The Linux regression and three distinct Studio validation jobs run on every pull request to `dev` or `master`. Studio View validates the application without publishing packages. MSIX packaging remains manually dispatched. Pages deployment requires a successful complete run on `master`; required merge checks are administered separately from workflow triggers.
+
+Invalid-input regressions call the `_gxe_` checking entry points explicitly. Valid-input cases also exercise the unchecked public API mappings.
+
+The regression fixtures use explicit conversions from generated widget control blocks to their GUIX base types. These follow GUIX's control-block layout contract and deviate from MISRA C:2004 Rule 11.4 and MISRA C:2012/2023 Rule 11.3. Their regression assertions and golden-image comparisons exercise the resulting objects.
+
+Measured counts, durations, feature contributions, and remaining gaps are recorded in [Linux regression measurements](COVERAGE.md).
 
 ### Run One Test Case
 
@@ -352,7 +366,7 @@ If the available build types lack the configuration settings required for your t
 1. Open the `test\guix_test\cmake\CMakeLists.txt` file.
 2. Add a new build type using the following example:
 ```cmake
-set(disable_error_checking_build -DGX_DISABLE_ERROR_CHECKING)
+set(disable_error_check_build -DGX_DISABLE_ERROR_CHECKING)
 ```
 3. Include the new build type in the `BUILD_CONFIGURATIONS` list.
 ```cmake

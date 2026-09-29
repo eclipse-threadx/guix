@@ -8,4 +8,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-$(dirname `realpath $0`)/../test/guix_test/cmake/run.sh build all
+set -euo pipefail
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
+python3 test/guix_test/cmake/test_report.py
+if [[ $# == 0 ]]; then set -- all; fi
+exec test/guix_test/cmake/run.sh build "$@"

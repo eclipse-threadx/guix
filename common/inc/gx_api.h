@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 
 /**************************************************************************/
 /**************************************************************************/
@@ -3164,7 +3166,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_multi_line_text_view_line_space_set                   _gx_multi_line_text_view_line_space_set
 #define gx_multi_line_text_view_scroll_info_get                  _gx_multi_line_text_view_scroll_info_get
 #if defined(GUIX_5_4_0_COMPATIBILITY)
-#define gx_multi_line_text_view_text_color_set(a, b, c)          _gx_multi_line_text_view_text_color_set((GX_MUILTI_LINE_TEXT_VIEW *)a, b, c, b)
+#define gx_multi_line_text_view_text_color_set(a, b, c)          _gx_multi_line_text_view_text_color_set((GX_MULTI_LINE_TEXT_VIEW *)a, b, c, b)
 #else
 #define gx_multi_line_text_view_text_color_set                   _gx_multi_line_text_view_text_color_set
 #endif
@@ -3227,7 +3229,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_prompt_font_set                                       _gx_prompt_font_set
 
 #if defined(GUIX_5_4_0_COMPATIBILITY)
-#define gx_prompt_text_color_set(a, b, c)                        _gx_prompt_text_color_set((GX_PROGRESS_BAR *)a, b, c, b)
+#define gx_prompt_text_color_set(a, b, c)                        _gx_prompt_text_color_set((GX_PROMPT *)a, b, c, b)
 #else
 #define gx_prompt_text_color_set                                 _gx_prompt_text_color_set
 #endif
@@ -3257,7 +3259,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_radial_progress_bar_text_draw                         _gx_radial_progress_bar_text_draw
 #define gx_radial_progress_bar_value_set                         _gx_radial_progress_bar_value_set
 
-#define gx_radial_slider_anchor_angles_set                       _gx_radial_slider_anchor_anglees_set
+#define gx_radial_slider_anchor_angles_set                       _gx_radial_slider_anchor_angles_set
 #define gx_radial_slider_animation_set                           _gx_radial_slider_animation_set
 #define gx_radial_slider_animation_start                         _gx_radial_slider_animation_start
 #define gx_radial_slider_create                                  _gx_radial_slider_create
@@ -3406,7 +3408,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_text_button_event_process                             _gx_text_button_event_process
 #define gx_text_button_font_set                                  _gx_text_button_font_set
 #if defined(GUIX_5_4_0_COMPATIBILITY)
-#define gx_text_button_text_color_set(a, b, c)                   _gx_text_button_text_color_set((GX_TEXT_BUTTON *)a, b, c)
+#define gx_text_button_text_color_set(a, b, c)                   _gx_text_button_text_color_set((GX_TEXT_BUTTON *)a, b, c, b)
 #else
 #define gx_text_button_text_color_set                            _gx_text_button_text_color_set
 #endif
@@ -3851,7 +3853,7 @@ UINT _gx_multi_line_text_button_text_id_set(GX_MULTI_LINE_TEXT_BUTTON *button, G
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_multi_line_text_button_text_set(GX_MULTI_LINE_TEXT_BUTTON *button, GX_CONST GX_CHAR *text);
 #endif
-UINT _gx_multi_line_text_button_text_set_ext(GX_MULTI_LINE_TEXT_BUTTON *button, GX_CONST GX_STRING text);
+UINT _gx_multi_line_text_button_text_set_ext(GX_MULTI_LINE_TEXT_BUTTON *button, GX_CONST GX_STRING *text);
 
 UINT _gx_multi_line_text_input_backspace(GX_MULTI_LINE_TEXT_INPUT *text_input);
 UINT _gx_multi_line_text_input_buffer_clear(GX_MULTI_LINE_TEXT_INPUT *text_input_ptr);
@@ -4220,6 +4222,7 @@ UINT _gx_text_button_text_color_set(GX_TEXT_BUTTON *text_button,
                                     GX_RESOURCE_ID disabled_text_color_id);
 VOID _gx_text_button_text_draw(GX_TEXT_BUTTON *button);
 UINT _gx_text_button_text_get(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR **return_text);
+UINT _gx_text_button_text_get_ext(GX_TEXT_BUTTON *button, GX_STRING *return_text);
 UINT _gx_text_button_text_id_set(GX_TEXT_BUTTON *button, GX_RESOURCE_ID string_id);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_text_button_text_set(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *text);

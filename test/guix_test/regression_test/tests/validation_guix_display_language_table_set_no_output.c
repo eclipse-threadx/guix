@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_display.h"
 #include "gx_validation_utility.h"
 #include "gx_system.h"
 
@@ -92,27 +95,27 @@ int         failed_tests = 0;
 UINT        status;
 GX_DISPLAY *display = root->gx_window_root_canvas->gx_canvas_display;
 
-    status = gx_display_language_table_set_ext(GX_NULL, language_table_1, LANGUAGE_TABLE_SIZE, STRING_TABLE_SIZE);
+    status = _gxe_display_language_table_set_ext(GX_NULL, language_table_1, LANGUAGE_TABLE_SIZE, STRING_TABLE_SIZE);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_display_language_table_set_ext(display, GX_NULL, LANGUAGE_TABLE_SIZE, STRING_TABLE_SIZE);
+    status = _gxe_display_language_table_set_ext(display, GX_NULL, LANGUAGE_TABLE_SIZE, STRING_TABLE_SIZE);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_display_language_table_set_ext(display, language_table_1, LANGUAGE_TABLE_SIZE, STRING_TABLE_SIZE);
+    status = _gxe_display_language_table_set_ext(display, language_table_1, LANGUAGE_TABLE_SIZE, STRING_TABLE_SIZE);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
-    status = gx_display_language_table_set_ext(display, language_table_2, LANGUAGE_TABLE_SIZE, STRING_TABLE_SIZE);
+    status = _gxe_display_language_table_set_ext(display, language_table_2, LANGUAGE_TABLE_SIZE, STRING_TABLE_SIZE);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
-    status = gx_display_language_table_set_ext(display, GX_NULL, 0, 0);
+    status = _gxe_display_language_table_set_ext(display, GX_NULL, 0, 0);
     EXPECT_EQ(GX_SUCCESS, status);
 
-    status = gx_display_language_table_set_ext(display, language_table_3, LANGUAGE_TABLE_SIZE, STRING_TABLE_SIZE);
+    status = _gxe_display_language_table_set_ext(display, language_table_3, LANGUAGE_TABLE_SIZE, STRING_TABLE_SIZE);
     EXPECT_EQ(GX_SUCCESS, status);
 
     gx_widget_hide(root);
     root->gx_window_root_canvas = GX_NULL;
-    status = gx_display_language_table_set_ext(display, GX_NULL, 0, 0);
+    status = _gxe_display_language_table_set_ext(display, GX_NULL, 0, 0);
     EXPECT_EQ(GX_SUCCESS, status);
 
     if(failed_tests == 0) 

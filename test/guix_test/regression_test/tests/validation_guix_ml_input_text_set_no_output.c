@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_multi_line_text_input.h"
 #include "gx_validation_utility.h"
 #include "gx_scroll_wheel.h"
 
@@ -64,27 +67,27 @@ GX_MULTI_LINE_TEXT_INPUT *ml_input = &text_screen.text_screen_text_input_2;
 GX_CHAR invalid_string[GX_MAX_STRING_LENGTH + 1];
 
     memset(invalid_string, 'x', sizeof(invalid_string));
-    status = gx_multi_line_text_input_text_set(ml_input, invalid_string);
+    status = _gxe_multi_line_text_input_text_set(ml_input, invalid_string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 #endif
-    status = gx_multi_line_text_input_text_set_ext(GX_NULL, GX_NULL);
+    status = _gxe_multi_line_text_input_text_set_ext(GX_NULL, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_multi_line_text_input_text_set_ext(ml_input, GX_NULL);
+    status = _gxe_multi_line_text_input_text_set_ext(ml_input, GX_NULL);
     EXPECT_EQ(GX_SUCCESS, status);
 
     string.gx_string_ptr = GX_NULL;
     string.gx_string_length = 2;
-    status = gx_multi_line_text_input_text_set_ext(ml_input, &string);
+    status = _gxe_multi_line_text_input_text_set_ext(ml_input, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     memset(&string, 0, sizeof(GX_STRING));
-    status = gx_multi_line_text_input_text_set_ext(ml_input, &string);
+    status = _gxe_multi_line_text_input_text_set_ext(ml_input, &string);
     EXPECT_EQ(GX_SUCCESS, status);
 
     string.gx_string_ptr = test_string;
     string.gx_string_length = sizeof(test_string) - 2;
-    status = gx_multi_line_text_input_text_set_ext(ml_input, &string);
+    status = _gxe_multi_line_text_input_text_set_ext(ml_input, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     if(failed_tests == 0) 

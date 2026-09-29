@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_display.h"
 #include "gx_validation_utility.h"
 
 TEST_PARAM test_parameter = {
@@ -74,37 +77,37 @@ GX_DISPLAY  new_display;
     display = root->gx_window_root_canvas->gx_canvas_display;
 
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
-    status = gx_display_string_table_get(display, LANGUAGE_ENGLISH, &table, &table_size);
+    status = _gxe_display_string_table_get(display, LANGUAGE_ENGLISH, &table, &table_size);
     EXPECT_EQ(GX_SUCCESS, status);
     EXPECT_EQ(table_size, display->gx_display_string_table_size);
     
-    status = gx_display_create(&new_display, "new_display", gx_validation_display_driver_setup_24xrgb, 10, 10);
+    status = _gxe_display_create(&new_display, "new_display", gx_validation_display_driver_setup_24xrgb, 10, 10, sizeof(GX_DISPLAY));
     EXPECT_EQ(GX_SUCCESS, status);
  
     new_display.gx_display_language_table_size = 2;
-    status = gx_display_string_table_get(&new_display, LANGUAGE_ENGLISH, &table, &table_size);
+    status = _gxe_display_string_table_get(&new_display, LANGUAGE_ENGLISH, &table, &table_size);
     EXPECT_EQ(GX_SUCCESS, status);
     EXPECT_EQ(GX_NULL, table_size);
 #endif
 
     /* Test _gx_display_string_table_get_ext. */
-    status = gx_display_string_table_get_ext(GX_NULL, LANGUAGE_ENGLISH, &table_ext, &table_size);
+    status = _gxe_display_string_table_get_ext(GX_NULL, LANGUAGE_ENGLISH, &table_ext, &table_size);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_display_string_table_get_ext(display, 10, &table_ext, &table_size);
+    status = _gxe_display_string_table_get_ext(display, 10, &table_ext, &table_size);
     EXPECT_EQ(GX_NOT_FOUND, status);
 
-    status = gx_display_string_table_get_ext(display, LANGUAGE_ENGLISH, &table_ext, &table_size);
+    status = _gxe_display_string_table_get_ext(display, LANGUAGE_ENGLISH, &table_ext, &table_size);
     if((table_ext == GX_NULL) || (table_size != display -> gx_display_string_table_size))
     {
         failed_tests++;
     }
 
-    gx_display_string_table_get_ext(display, LANGUAGE_ENGLISH, GX_NULL, GX_NULL);
+    _gxe_display_string_table_get_ext(display, LANGUAGE_ENGLISH, GX_NULL, GX_NULL);
 
     display->gx_display_language_table = GX_NULL;
 
-    gx_display_string_table_get_ext(display, LANGUAGE_ENGLISH, &table_ext, &table_size);
+    _gxe_display_string_table_get_ext(display, LANGUAGE_ENGLISH, &table_ext, &table_size);
 
     if(table_ext != GX_NULL || table_size != display->gx_display_string_table_size)
     {

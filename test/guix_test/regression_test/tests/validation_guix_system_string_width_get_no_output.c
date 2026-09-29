@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -67,35 +69,35 @@ GX_FONT          invalid_font = { 0x08, 0, 0, 18,  13, 0x20, 0x7e, {GX_NULL}, NU
 GX_CHAR          invalid_string[GX_MAX_STRING_LENGTH + 1];
 
     memset(invalid_string, 'x', GX_MAX_STRING_LENGTH + 1);
-    status = gx_system_string_width_get(font, invalid_string, GX_MAX_STRING_LENGTH, &width);
+    status = _gxe_system_string_width_get(font, invalid_string, GX_MAX_STRING_LENGTH, &width);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
-    status = gx_system_string_width_get(font, invalid_string, -1, &width);
+    status = _gxe_system_string_width_get(font, invalid_string, -1, &width);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
-    status = gx_system_string_width_get(font, test_string, -1, &width);
+    status = _gxe_system_string_width_get(font, test_string, -1, &width);
     EXPECT_EQ(GX_SUCCESS, status);
 #endif
     string.gx_string_ptr = test_string;
     string.gx_string_length = sizeof(test_string) - 1;
-    status = gx_system_string_width_get_ext(GX_NULL, &string, &width);
+    status = _gxe_system_string_width_get_ext(GX_NULL, &string, &width);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_system_string_width_get_ext(font, GX_NULL, &width);
+    status = _gxe_system_string_width_get_ext(font, GX_NULL, &width);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_system_string_width_get_ext(font, &string, GX_NULL);
+    status = _gxe_system_string_width_get_ext(font, &string, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_system_string_width_get_ext(&invalid_font, &string, &width);
+    status = _gxe_system_string_width_get_ext(&invalid_font, &string, &width);
     EXPECT_EQ(GX_INVALID_FONT, status);
 
     string.gx_string_length = sizeof(test_string) - 2;
-    status = gx_system_string_width_get_ext(font, &string, &width);
+    status = _gxe_system_string_width_get_ext(font, &string, &width);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_length = sizeof(test_string);
-    status = gx_system_string_width_get_ext(font, &string, &width);
+    status = _gxe_system_string_width_get_ext(font, &string, &width);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     if(failed_tests == 0) 

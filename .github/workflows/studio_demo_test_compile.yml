@@ -27,6 +27,7 @@ on:
 jobs:
   # This workflow contains a single job called "linux_job"
   run_tests:
+    name: GUIX Studio Demo Compile
     permissions:
       contents: read
       issues: read

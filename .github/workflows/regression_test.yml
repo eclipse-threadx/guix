@@ -1,29 +1,22 @@
 # Copyright (c) 2024 Microsoft Corporation
 # Copyright (c) 2026 Eclipse ThreadX contributors
-#
-# This program and the accompanying materials are made available under the
-# terms of the MIT License which is available at
-# https://opensource.org/licenses/MIT.
-#
 # SPDX-License-Identifier: MIT
-
-# This is a basic workflow that is manually triggered
-
 name: GUIX Regression Test
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
-  workflow_dispatch:  
+  workflow_dispatch:
   push:
-    branches: [ master ]
+    branches: [master, dev]
   pull_request:
-    branches: [ master ]
- 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    branches: [master, dev]
+
+permissions:
+  contents: read
+
 jobs:
-  # This workflow contains a single job called "linux_job"
   guix:
+    # GitHub validates deployment permissions even when deployment is skipped.
+    # The called test job narrows its own token and cannot deploy Pages.
     permissions:
       contents: read
       issues: read
@@ -31,9 +24,13 @@ jobs:
       pull-requests: write
       pages: write
       id-token: write
-      
-    uses: eclipse-threadx/threadx/.github/workflows/regression_template.yml@master
+    uses: eclipse-threadx/threadx/.github/workflows/regression_template.yml@b37cd4a81a1cb8c2ebefc438220ab7f009e13362
     with:
+      install_script: ./scripts/ci_install.sh
+      build_script: ./scripts/ci_build.sh
+      test_script: ./scripts/ci_test.sh
       cmake_path: ./test/guix_test/cmake
       result_affix: GUIX
-        
+      coverage_name: merged
+      coverage_thresholds: '98 100'
+      skip_deploy: ${{ github.ref != 'refs/heads/master' || (github.event_name != 'push' && github.event_name != 'workflow_dispatch') }}

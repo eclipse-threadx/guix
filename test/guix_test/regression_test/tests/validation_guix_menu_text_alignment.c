@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 
@@ -79,7 +81,7 @@ static VOID control_thread_entry(ULONG input)
 int frame_id = 1;
 GX_MENU *menu;
 
-    ToggleScreen(&menu_screen, pButtonScreen);
+    ToggleScreen((GX_WINDOW *)&menu_screen, pButtonScreen);
 
     /* Set tree view menu 1 text right aligned.  */
     gx_widget_style_remove(&menu_screen.menu_screen_tree_menu_1, GX_STYLE_TEXT_ALIGNMENT_MASK);

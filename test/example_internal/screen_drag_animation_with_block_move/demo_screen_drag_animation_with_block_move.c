@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -113,10 +115,10 @@ VOID create_screen_drag_animations()
     gx_animation_create(&h_screen_drag_animation);
     gx_animation_create(&v_screen_drag_animation);
 
-    enable_screen_drag_animation(&h_screen_drag_animation, h_screen_list, &main_screen.main_screen_h_menu_window,
+    enable_screen_drag_animation(&h_screen_drag_animation, h_screen_list, (GX_WIDGET *)&main_screen.main_screen_h_menu_window,
         GX_ANIMATION_SCREEN_DRAG | GX_ANIMATION_HORIZONTAL | GX_ANIMATION_WRAP | GX_ANIMATION_BLOCK_MOVE, ANIMATION_ID_H_SCREEN_DRAG);
 
-    enable_screen_drag_animation(&v_screen_drag_animation, v_screen_list, &main_screen.main_screen_v_menu_window,
+    enable_screen_drag_animation(&v_screen_drag_animation, v_screen_list, (GX_WIDGET *)&main_screen.main_screen_v_menu_window,
         GX_ANIMATION_SCREEN_DRAG | GX_ANIMATION_VERTICAL | GX_ANIMATION_WRAP | GX_ANIMATION_BLOCK_MOVE, ANIMATION_ID_V_SCREEN_DRAG);
 }
 

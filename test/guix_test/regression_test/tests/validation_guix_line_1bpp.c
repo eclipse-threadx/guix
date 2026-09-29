@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_context.h"
 #include "gx_validation_utility.h"
 
 TEST_PARAM test_parameter = {
@@ -176,7 +179,7 @@ GX_RECTANGLE size;
     size.gx_rectangle_right = 179;
     size.gx_rectangle_bottom = 179;  
     gx_widget_resize(&line_window, &size);
-    gx_context_raw_brush_define(0x0, 0xffffff, 0);
+    _gxe_context_raw_brush_define(0x0, 0xffffff, 0);
 
     for(line_width = 1; line_width < 15 ; line_width += 6)
     {
@@ -215,7 +218,7 @@ GX_RECTANGLE size;
     size.gx_rectangle_right = 400;
     size.gx_rectangle_bottom = 460;  
     gx_widget_resize(&line_window, &size);
-    gx_context_raw_brush_define(0xffffff, 0, 0);
+    _gxe_context_raw_brush_define(0xffffff, 0, 0);
     /* Reset line wind draw function because line color is hard-coded in original draw function in demo file,
        Rewrite this draw function to change line color. */
     gx_widget_draw_set((GX_WIDGET *)&line_window, test_line_win_draw);
@@ -255,7 +258,7 @@ GX_RECTANGLE size;
     size.gx_rectangle_right = 260;
     size.gx_rectangle_bottom = 260;  
     gx_widget_resize(&line_window, &size);
-    gx_context_raw_brush_define(0xffffff, 0, 0);
+    _gxe_context_raw_brush_define(0xffffff, 0, 0);
     for(line_width = 1; line_width < 20 ; line_width += 6)
     {
        for(line_angle = 0; line_angle < 360; line_angle += 30)
@@ -287,7 +290,7 @@ GX_RECTANGLE size;
     size.gx_rectangle_right = 179;
     size.gx_rectangle_bottom = 179;  
     gx_widget_resize(&line_window, &size);
-    gx_context_raw_brush_define(0xffffff, 0, 0);
+    _gxe_context_raw_brush_define(0xffffff, 0, 0);
 
     for(line_width = 1; line_width < 15 ; line_width += 6)
     {

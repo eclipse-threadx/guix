@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -85,7 +87,11 @@ void animation_start()
     animation_info.gx_animation_target = (GX_WIDGET *)&main_screen.main_screen_icon_button;
     animation_info.gx_animation_parent = (GX_WIDGET *)&main_screen;
     animation_info.gx_animation_style = animation_style;
-    gx_animation_start(&animation, &animation_info);
+    /* Start only an idle animation. */
+    if (animation.gx_animation_status == GX_ANIMATION_IDLE)
+    {
+        gx_animation_start(&animation, &animation_info);
+    }
 }
 
 void generate_line_chart_data()

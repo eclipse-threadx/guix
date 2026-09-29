@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -372,7 +374,10 @@ GX_RECTANGLE rect;
         break;
 
     case ELLIPSE:
-        gx_canvas_ellipse_draw(xcenter, ycenter, a, b);
+        if ((a > 0) && (b > 0))
+        {
+            gx_canvas_ellipse_draw(xcenter, ycenter, a, b);
+        }
         break;
 
     case RECTANGLE:

@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -77,36 +79,36 @@ GX_STRING_SCROLL_WHEEL wheel;
 GX_RECTANGLE           size;
 GX_WIDGET              parent;
 
-    status = gx_string_scroll_wheel_create_ext(GX_NULL, "", GX_NULL, 0, GX_NULL, 0, 0, GX_NULL);
+    status = _gxe_string_scroll_wheel_create_ext(GX_NULL, "", GX_NULL, 0, GX_NULL, 0, 0, GX_NULL, sizeof(GX_STRING_SCROLL_WHEEL));
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     memset(&wheel, 0, sizeof(GX_STRING_SCROLL_WHEEL));
-    status = gx_string_scroll_wheel_create_ext(&wheel, "", GX_NULL, 0, GX_NULL, 0, 0, GX_NULL);
+    status = _gxe_string_scroll_wheel_create_ext(&wheel, "", GX_NULL, 0, GX_NULL, 0, 0, GX_NULL, sizeof(GX_STRING_SCROLL_WHEEL));
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     gx_utility_rectangle_define(&size, 0, 0, 100, 100);
     memset(&parent, 0, sizeof(GX_WIDGET));
-    status = gx_string_scroll_wheel_create_ext(&wheel, "", &parent, 0, GX_NULL, 0, 0, &size);
+    status = _gxe_string_scroll_wheel_create_ext(&wheel, "", &parent, 0, GX_NULL, 0, 0, &size, sizeof(GX_STRING_SCROLL_WHEEL));
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
     status = _gxe_string_scroll_wheel_create_ext(&wheel, "", GX_NULL, 0, GX_NULL, 0, 0, &size, 0);
     EXPECT_EQ(GX_INVALID_SIZE, status);
 
-    status = gx_string_scroll_wheel_create_ext(&wheel, "", GX_NULL, sizeof(test_string_list_1)/sizeof(GX_STRING), test_string_list_1, 0, 0, &size);
+    status = _gxe_string_scroll_wheel_create_ext(&wheel, "", GX_NULL, sizeof(test_string_list_1)/sizeof(GX_STRING), test_string_list_1, 0, 0, &size, sizeof(GX_STRING_SCROLL_WHEEL));
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
     
-    status = gx_string_scroll_wheel_create_ext(&wheel, "", GX_NULL, sizeof(test_string_list_2)/sizeof(GX_STRING), test_string_list_2, 0, 0, &size);
+    status = _gxe_string_scroll_wheel_create_ext(&wheel, "", GX_NULL, sizeof(test_string_list_2)/sizeof(GX_STRING), test_string_list_2, 0, 0, &size, sizeof(GX_STRING_SCROLL_WHEEL));
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
-    status = gx_string_scroll_wheel_create_ext(&wheel, "", GX_NULL, sizeof(test_string_list_3)/sizeof(GX_STRING), test_string_list_3, 0, 0, &size);
+    status = _gxe_string_scroll_wheel_create_ext(&wheel, "", GX_NULL, sizeof(test_string_list_3)/sizeof(GX_STRING), test_string_list_3, 0, 0, &size, sizeof(GX_STRING_SCROLL_WHEEL));
     EXPECT_EQ(GX_SUCCESS, status);
 
-    status = gx_string_scroll_wheel_create_ext(&wheel, "", GX_NULL, 0, GX_NULL, 0, 0, &size);
+    status = _gxe_string_scroll_wheel_create_ext(&wheel, "", GX_NULL, 0, GX_NULL, 0, 0, &size, sizeof(GX_STRING_SCROLL_WHEEL));
     EXPECT_EQ(GX_ALREADY_CREATED, status);
 
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
     memset(&wheel, 0, sizeof(GX_STRING_SCROLL_WHEEL));
-    status = gx_string_scroll_wheel_create(&wheel, "", (GX_WIDGET *)root, 0, GX_NULL, 0, 0, &size);
+    status = _gxe_string_scroll_wheel_create(&wheel, "", (GX_WIDGET *)root, 0, GX_NULL, 0, 0, &size, sizeof(GX_STRING_SCROLL_WHEEL));
     EXPECT_EQ(GX_SUCCESS, status);
 
 #endif

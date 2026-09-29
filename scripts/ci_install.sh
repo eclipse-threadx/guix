@@ -1,5 +1,4 @@
 #!/bin/bash
-# Copyright (c) 2024 Microsoft Corporation
 # Copyright (c) 2026 Eclipse ThreadX contributors
 #
 # This program and the accompanying materials are made available under the
@@ -10,5 +9,7 @@
 
 set -euo pipefail
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
-if [[ $# == 0 ]]; then set -- all; fi
-exec test/guix_test/cmake/run.sh test "$@"
+./scripts/install.sh
+./scripts/build.sh default_build_coverage
+cp test/guix_test/cmake/build/build-profiles.txt test/guix_test/cmake/build/install-build-profiles.txt
+cp test/guix_test/cmake/build/build-times.txt test/guix_test/cmake/build/install-build-times.txt

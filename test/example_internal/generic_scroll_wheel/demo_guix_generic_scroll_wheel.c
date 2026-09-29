@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -162,7 +164,7 @@ void widget_scroll_callback(GX_GENERIC_SCROLL_WHEEL* wheel, GX_WIDGET* widget, I
     GX_BOOL created;
     GX_RECTANGLE size;
     SCROLL_WHEEL_ROW* row = (SCROLL_WHEEL_ROW*)widget;
-    int width;
+    GX_VALUE width;
 
     gx_widget_created_test(widget, &created);
 
@@ -171,7 +173,7 @@ void widget_scroll_callback(GX_GENERIC_SCROLL_WHEEL* wheel, GX_WIDGET* widget, I
         gx_window_client_width_get((GX_WINDOW *)wheel, &width);
 
         gx_utility_rectangle_define(&size, 0, 0, width - 1, wheel->gx_scroll_wheel_row_height - 1);
-        gx_numeric_prompt_create((GX_NUMERIC_PROMPT*)&row->prompt, "", wheel, 0, GX_STYLE_ENABLED | GX_STYLE_TRANSPARENT, 0, &size);
+        gx_numeric_prompt_create((GX_NUMERIC_PROMPT*)&row->prompt, "", (GX_WIDGET *)wheel, 0, GX_STYLE_ENABLED | GX_STYLE_TRANSPARENT, 0, &size);
 
         size.gx_rectangle_top = (size.gx_rectangle_top + size.gx_rectangle_bottom - SCROLL_WHEEL_ICON_HEIGHT) >> 1;
         size.gx_rectangle_left = size.gx_rectangle_right - SCROLL_WHEEL_ICON_WIDTH - 1;
@@ -194,8 +196,8 @@ void widget_scroll_wheel_init()
 
     while (index <= SCROLL_WHEEL_VISIBLE_ROWS)
     {
-        widget_scroll_callback(nowrap_wheel, &scroll_wheel_nowrap_rows[index], index);
-        widget_scroll_callback(wrap_wheel, &scroll_wheel_wrap_rows[index], index);
+        widget_scroll_callback(nowrap_wheel, (GX_WIDGET *)&scroll_wheel_nowrap_rows[index], index);
+        widget_scroll_callback(wrap_wheel, (GX_WIDGET *)&scroll_wheel_wrap_rows[index], index);
 
         index++;
     }

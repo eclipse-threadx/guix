@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -76,7 +78,7 @@ INT button_focus_gain_count = 0;
 /* Define radial slider anchor angle list. */
 GX_VALUE radial_slider_anchor_list[] = { 242, 214, 191, 168, 142, 112, 67, 38, 13, -10, -34, -63 };
 
-GX_CHAR canvas_buffer[PRIMARY_X_RESOLUTION * 20];
+GX_COLOR canvas_buffer[PRIMARY_X_RESOLUTION * 20 / sizeof(GX_COLOR)];
 
 /* Define screen toggle function that used for resgression tests. */
 void ToggleScreen(GX_WINDOW *new_win, GX_WINDOW *old_win)

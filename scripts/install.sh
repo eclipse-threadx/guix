@@ -8,30 +8,15 @@
 #
 # SPDX-License-Identifier: MIT
 
-#
-
-# Remove large folder
-rm -rf /opt/hostedtoolcache
-
-# Install necessary softwares for Ubuntu.
-
-sudo apt-get update
-sudo apt-get install -y \
-    gcc-multilib \
-    git \
-    g++ \
-    python3-pip \
-    ninja-build \
-    unifdef \
-    p7zip-full \
-    tofrodos \
-    gawk \
-    software-properties-common
-
-wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
-CODENAME=$(lsb_release -c | cut -f2 -d':' | sed 's/\t//')
-apt-add-repository "deb https://apt.kitware.com/ubuntu/ $CODENAME main"
-
-python3 -m pip install --upgrade pip
-pip3 install gcovr==4.1
-pip install --upgrade cmake
+set -euo pipefail
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
+timeout 180 sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=30 update
+timeout 360 sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    gcc-14 g++-14 gcc-14-multilib g++-14-multilib cmake ninja-build \
+    python3-venv git unifdef p7zip-full tofrodos gawk
+python3 -m venv .venv-ci
+timeout 180 .venv-ci/bin/python -m pip install --disable-pip-version-check \
+    --timeout 30 --retries 2 'gcovr==8.6'
+gcc-14 --version
+gcov-14 --version
+.venv-ci/bin/gcovr --version
