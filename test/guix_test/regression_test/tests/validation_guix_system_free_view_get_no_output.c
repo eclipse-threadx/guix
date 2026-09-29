@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+// Portions of this file were generated with AI assistance.
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -55,7 +57,7 @@ VOID tx_application_define(void *first_unused_memory)
 static VOID control_thread_entry(ULONG input)
 {
 INT        failed_tests = 0;
-GX_WINDOW  window[GX_MAX_VIEWS / 2];
+GX_WINDOW  window[GX_MAX_VIEWS];
 int        width;
 int        height;
 GX_RECTANGLE size;
@@ -75,7 +77,7 @@ GX_EVENT   my_event;
     height -= 20;
 
     y_count = 4;
-    x_count = GX_MAX_VIEWS / 2 / y_count;
+    x_count = GX_MAX_VIEWS / y_count;
 
     widget_width = width / x_count;
     widget_height = height / y_count;
