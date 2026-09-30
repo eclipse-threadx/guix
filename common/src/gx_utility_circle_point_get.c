@@ -106,8 +106,10 @@ GX_BOOL swap = GX_FALSE;
     }
     else
     {
-        point -> gx_point_x = (GX_VALUE)(GX_FIXED_VAL_TO_INT(r * _gx_utility_math_cos(GX_FIXED_VAL_MAKE(angle))));
-        point -> gx_point_y = (GX_VALUE)(GX_FIXED_VAL_TO_INT(r * _gx_utility_math_sin(GX_FIXED_VAL_MAKE(angle))));
+        /* The radius is unsigned and the sine and cosine are not, so the radius
+           is made signed before the product is formed.  */
+        point -> gx_point_x = (GX_VALUE)(GX_FIXED_VAL_TO_INT((INT)r * _gx_utility_math_cos(GX_FIXED_VAL_MAKE(angle))));
+        point -> gx_point_y = (GX_VALUE)(GX_FIXED_VAL_TO_INT((INT)r * _gx_utility_math_sin(GX_FIXED_VAL_MAKE(angle))));
 
         if (angle <= 90)
         {
