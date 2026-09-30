@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+// Portions of this file were generated with AI assistance.
+
 
 /**************************************************************************/
 /**************************************************************************/
@@ -67,6 +69,13 @@ UINT _gx_binres_standalone_resource_seek(GX_BINRES_DATA_INFO *info, UINT res_ind
 USHORT type;
 ULONG  count;
 
+    /* Type, version and resource count. */
+    if (_gx_binres_range_check(info, info -> gx_binres_read_offset,
+                               (sizeof(USHORT) * 2) + sizeof(ULONG)) != GX_SUCCESS)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
     GX_BINRES_READ_USHORT(type, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
@@ -88,7 +97,21 @@ ULONG  count;
 
     if (count > 1)
     {
+        /* The offset table, and then the offset it yields, both have to address
+           data inside the resource: the second is a file value that becomes the
+           position every later read starts from. */
+        if (_gx_binres_range_check(info, info -> gx_binres_read_offset + (sizeof(ULONG) * res_index),
+                                   sizeof(ULONG)) != GX_SUCCESS)
+        {
+            return GX_INVALID_FORMAT;
+        }
+
         GX_BINRES_READ_ULONG(info -> gx_binres_read_offset, info -> gx_binres_root_address + info -> gx_binres_read_offset + sizeof(ULONG) * res_index);
+
+        if (_gx_binres_range_check(info, info -> gx_binres_read_offset, 1) != GX_SUCCESS)
+        {
+            return GX_INVALID_FORMAT;
+        }
     }
 
     return GX_SUCCESS;
@@ -133,7 +156,7 @@ ULONG  count;
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
-UINT _gx_binres_pixelmap_load(GX_UBYTE *root_address, UINT map_index, GX_PIXELMAP *pixelmap)
+UINT _gx_binres_pixelmap_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT map_index, GX_PIXELMAP *pixelmap)
 {
 UINT                status = GX_SUCCESS;
 GX_BINRES_DATA_INFO info;
@@ -164,6 +187,7 @@ GX_BINRES_DATA_INFO info;
     memset(&info, 0, sizeof(GX_BINRES_DATA_INFO));
 
     info.gx_binres_root_address = (GX_UBYTE *)root_address;
+    info.gx_binres_root_size = root_size;
     info.gx_binres_buffer = (GX_UBYTE *)pixelmap;
     info.gx_binres_buffer_size = sizeof(GX_PIXELMAP);
 
@@ -176,4 +200,55 @@ GX_BINRES_DATA_INFO info;
 
     return status;
 }
+#endif
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_binres_pixelmap_load                            PORTABLE C      */
+/*                                                           6.5.1        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Eclipse ThreadX contributors                                        */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function is the form that takes no resource length.             */
+/*                                                                        */
+/*                                                                        */
+/*    A standalone resource declares no total size, so nothing can be      */
+/*    derived here and the reads stay unbounded, as they have always been. */
+/*    Callers that know the length should use the _ext form, which bounds  */
+/*    every read by it.                                                    */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    root_address                          Resource address              */
+/*    map_index                             Pixelmap index to load        */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_binres_declared_size_get          Derive the resource extent    */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/**************************************************************************/
+#ifdef GX_BINARY_RESOURCE_SUPPORT
+#ifdef GX_ENABLE_DEPRECATED_BINRES_API
+UINT _gx_binres_pixelmap_load(GX_UBYTE *root_address, UINT map_index, GX_PIXELMAP *pixelmap)
+{
+    /* A standalone resource carries no total size, only a type, a count and the
+       offsets of what it holds, so there is nothing here to derive an extent
+       from. The reads are left unbounded, which is what this entry point has
+       always done; _gx_binres_pixelmap_load_ext takes the length that bounds them. */
+    return _gx_binres_pixelmap_load_ext(root_address, 0, map_index, pixelmap);
+}
+#endif
 #endif

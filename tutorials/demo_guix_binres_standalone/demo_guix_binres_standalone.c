@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+// Portions of this file were generated with AI assistance.
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -31,11 +33,13 @@ GX_PIXELMAP     pixelmap_red_apple;
 GX_UBYTE        font_vera_buffer[FONT_BUFFER_SIZE];
 VOID           *root_address_pixelmap_red_apple = GX_NULL;
 VOID           *root_address_font_vera = GX_NULL;
+ULONG           size_pixelmap_red_apple = 0;
+ULONG           size_font_vera = 0;
 
 /* Define prototypes.   */
 extern UINT win32_graphics_driver_setup_565rgb(GX_DISPLAY *display);
 VOID demo_thread_entry(ULONG thread_input);
-VOID *load_binary_resource_data_to_ram(GX_CHAR* pathname);
+VOID *load_binary_resource_data_to_ram(GX_CHAR* pathname, ULONG *size);
 UINT load_standalone_resources();
 
 /************************************************************************************/
@@ -122,7 +126,7 @@ VOID demo_thread_entry(ULONG thread_input)
 /*  targets, the binary resource data has been directly programmed to FLASH rather  */
 /*  than saved in a filesytem.                                                      */
 /************************************************************************************/
-VOID *load_binary_resource_data_to_ram(GX_CHAR *pathname)
+VOID *load_binary_resource_data_to_ram(GX_CHAR *pathname, ULONG *size)
 {
     UCHAR *address = GX_NULL;
 
@@ -146,6 +150,7 @@ VOID *load_binary_resource_data_to_ram(GX_CHAR *pathname)
         if (address)
         {
             fread(address, 1, total_length, p_file);
+            *size = (ULONG)total_length;
         }
 
         fclose(p_file);
@@ -163,7 +168,7 @@ UINT load_standalone_resources()
     ULONG buffer_size;
 
     /* Load binary file into ram.  */
-    root_address_pixelmap_red_apple = load_binary_resource_data_to_ram("..\\..\\pixelmap_red_apple.bin");
+    root_address_pixelmap_red_apple = load_binary_resource_data_to_ram("..\\..\\pixelmap_red_apple.bin", &size_pixelmap_red_apple);
 
     if (!root_address_pixelmap_red_apple)
     {
@@ -171,7 +176,7 @@ UINT load_standalone_resources()
     }
 
     /* Load binary file into ram.  */
-    root_address_font_vera = load_binary_resource_data_to_ram("..\\..\\font_vera.bin");
+    root_address_font_vera = load_binary_resource_data_to_ram("..\\..\\font_vera.bin", &size_font_vera);
 
     if (!root_address_font_vera)
     {
@@ -179,7 +184,7 @@ UINT load_standalone_resources()
     }
 
     /* Load a pixelmap from the standalone binary data.  */
-    status = gx_binres_pixelmap_load(root_address_pixelmap_red_apple, 0, &pixelmap_red_apple);
+    status = gx_binres_pixelmap_load_ext(root_address_pixelmap_red_apple, size_pixelmap_red_apple, 0, &pixelmap_red_apple);
 
     if (status != GX_SUCCESS)
     {
@@ -189,7 +194,7 @@ UINT load_standalone_resources()
     buffer_size = FONT_BUFFER_SIZE;
 
     /* Load a font from the standalone binary data.  */
-    status = gx_binres_font_load(root_address_font_vera, 0, font_vera_buffer, &buffer_size);
+    status = gx_binres_font_load_ext(root_address_font_vera, size_font_vera, 0, font_vera_buffer, &buffer_size);
 
     if (status != GX_SUCCESS)
     {

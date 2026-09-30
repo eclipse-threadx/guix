@@ -1522,7 +1522,7 @@ set(multi_themes_16bpp_REG_TESTS
     guix_multi_themes_16bpp guix_binres_language_info_get_no_output
     guix_binres_language_table_load guix_binres_language_table_load_use_old_api
     guix_binres_theme_load guix_binres_theme_id_bound_no_output
-    guix_binres_font_glyph_range_no_output)
+    guix_binres_font_glyph_range_no_output guix_binres_ext_api_no_output)
 
 set(multi_themes_16bpp_synergy_FILE_LIST
     demo_guix_multi_themes_16bpp_synergy.c
@@ -2322,6 +2322,8 @@ elseif("-DGX_THAI_GLYPH_SHAPING_SUPPORT" IN_LIST ${CMAKE_BUILD_TYPE})
 elseif("-DGX_PALETTE_MODE_AA_TEXT_COLORS=16" IN_LIST ${CMAKE_BUILD_TYPE})
   set(demos ${PALETTE_MODE_AA_TEXT_COLORS_16_DEMOS})
 elseif("-DGX_DISABLE_DEPRECATED_STRING_API" IN_LIST ${CMAKE_BUILD_TYPE})
+  set(demos ${DEMO_IN_EXAMPLES} ${DEMO_IN_TUTORIALS})
+elseif("-DGX_DISABLE_DEPRECATED_BINRES_API" IN_LIST ${CMAKE_BUILD_TYPE})
   set(demos ${DEMO_IN_EXAMPLES} ${DEMO_IN_TUTORIALS})
 elseif("-DGX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER" IN_LIST ${CMAKE_BUILD_TYPE})
   set(demos ${PARTIAL_CANVAS_SUPPORT_DEMOS})

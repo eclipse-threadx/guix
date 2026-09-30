@@ -25,6 +25,7 @@ set(BUILD_CONFIGURATIONS
     thai_glyph_shaping_support_build
     palette_mode_aa_text_colors_16_build
     disable_deprecated_string_api_build
+    disable_deprecated_binres_api_build
     partial_canvas_support_build
     partial_canvas_support_vertical_refresh_build
     partial_canvas_support_horizontal_refresh_build)
@@ -67,6 +68,7 @@ set(synergy_font_support_build -DGX_SYNERGY_FONT_FORMAT_SUPPORT)
 set(thai_glyph_shaping_support_build -DGX_THAI_GLYPH_SHAPING_SUPPORT)
 set(palette_mode_aa_text_colors_16_build -DGX_PALETTE_MODE_AA_TEXT_COLORS=16)
 set(disable_deprecated_string_api_build -DGX_DISABLE_DEPRECATED_STRING_API)
+set(disable_deprecated_binres_api_build -DGX_DISABLE_DEPRECATED_BINRES_API)
 set(partial_canvas_support_build -DGX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER)
 set(partial_canvas_support_vertical_refresh_build -DGX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER -DGX_CANVAS_REFRESH_DIRECTION_VERTICAL)
 set(partial_canvas_support_horizontal_refresh_build -DGX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER -DGX_CANVAS_REFRESH_DIRECTION_HORIZONTAL)

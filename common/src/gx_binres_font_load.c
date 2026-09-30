@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+// Portions of this file were generated with AI assistance.
+
 
 /**************************************************************************/
 /**************************************************************************/
@@ -73,7 +75,7 @@
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
-UINT _gx_binres_font_load(GX_UBYTE *root_address, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size)
+UINT _gx_binres_font_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size)
 {
 UINT                status = GX_SUCCESS;
 GX_BINRES_DATA_INFO info;
@@ -105,6 +107,7 @@ UINT                required_size;
     memset(&info, 0, sizeof(GX_BINRES_DATA_INFO));
 
     info.gx_binres_root_address = (GX_UBYTE *)root_address;
+    info.gx_binres_root_size = root_size;
     info.gx_binres_buffer = (GX_UBYTE *)buffer;
     info.gx_binres_buffer_size = *buffer_size;
 
@@ -132,4 +135,55 @@ UINT                required_size;
 
     return status;
 }
+#endif
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_binres_font_load                                PORTABLE C      */
+/*                                                           6.5.1        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Eclipse ThreadX contributors                                        */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function is the form that takes no resource length.             */
+/*                                                                        */
+/*                                                                        */
+/*    A standalone resource declares no total size, so nothing can be      */
+/*    derived here and the reads stay unbounded, as they have always been. */
+/*    Callers that know the length should use the _ext form, which bounds  */
+/*    every read by it.                                                    */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    root_address                          Resource address              */
+/*    font_index                            Font index to load            */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_binres_declared_size_get          Derive the resource extent    */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/**************************************************************************/
+#ifdef GX_BINARY_RESOURCE_SUPPORT
+#ifdef GX_ENABLE_DEPRECATED_BINRES_API
+UINT _gx_binres_font_load(GX_UBYTE *root_address, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size)
+{
+    /* A standalone resource carries no total size, only a type, a count and the
+       offsets of what it holds, so there is nothing here to derive an extent
+       from. The reads are left unbounded, which is what this entry point has
+       always done; _gx_binres_font_load_ext takes the length that bounds them. */
+    return _gx_binres_font_load_ext(root_address, 0, font_index, buffer, buffer_size);
+}
+#endif
 #endif

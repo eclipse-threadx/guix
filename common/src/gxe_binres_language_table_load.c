@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+// Portions of this file were generated with AI assistance.
+
 
 /**************************************************************************/
 /**************************************************************************/
@@ -66,6 +68,7 @@
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
+#ifdef GX_ENABLE_DEPRECATED_BINRES_API
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
 UINT _gxe_binres_language_table_load(GX_UBYTE *root_address, GX_UBYTE ****returned_language_table)
 {
@@ -87,6 +90,7 @@ UINT status;
     /* Return completion status code. */
     return(status);
 }
+#endif
 #endif
 #endif
 
@@ -127,6 +131,7 @@ UINT status;
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
+#ifdef GX_ENABLE_DEPRECATED_BINRES_API
 UINT _gxe_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***returned_language_table)
 {
 UINT status;
@@ -148,4 +153,68 @@ UINT status;
     return(status);
 }
 #endif
+#endif
 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gxe_binres_language_table_load_ext2                PORTABLE C      */
+/*                                                           6.5.1        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Eclipse ThreadX contributors                                        */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks for errors in the resource load with a length.  */
+/*                                                                        */
+/*    A length of zero is rejected rather than treated as unknown: a       */
+/*    caller reaching this entry point is supplying one, and accepting     */
+/*    zero would silently leave every read unbounded.                      */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    root_address                          Resource address              */
+/*    root_size                             Extent of the resource        */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_binres_language_table_load_ext2                 */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/**************************************************************************/
+#ifdef GX_BINARY_RESOURCE_SUPPORT
+UINT _gxe_binres_language_table_load_ext2(GX_UBYTE *root_address, ULONG root_size, GX_STRING ***returned_language_table)
+{
+UINT  status;
+
+    if ((root_address == GX_NULL) || (returned_language_table == GX_NULL))
+    {
+        return GX_PTR_ERROR;
+    }
+
+    if ((_gx_system_memory_allocator == GX_NULL) ||
+        (_gx_system_memory_free == GX_NULL))
+    {
+        return GX_SYSTEM_MEMORY_ERROR;
+    }
+
+    if (root_size == 0)
+    {
+        return GX_INVALID_SIZE;
+    }
+
+    status = _gx_binres_language_table_load_ext2(root_address, root_size, returned_language_table);
+
+    /* Return completion status code. */
+    return(status);
+}
+#endif

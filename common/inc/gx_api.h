@@ -176,6 +176,14 @@ typedef struct GX_STRING_STRUCT
 
 #ifndef GX_DISABLE_BINARY_RESOURCE_SUPPORT
 #define GX_BINARY_RESOURCE_SUPPORT
+
+#ifndef GX_DISABLE_DEPRECATED_BINRES_API
+#define GX_ENABLE_DEPRECATED_BINRES_API
+#pragma message("GUIX deprecated binary resource API is enabled. The loaders that " \
+                "take no resource length cannot bound a resource built to mislead. " \
+                "Define GX_DISABLE_DEPRECATED_BINRES_API and migrate to the _ext " \
+                "variants.")
+#endif
 #endif
 
 #ifndef GX_DISABLE_BRUSH_ALPHA_SUPPORT
@@ -2946,6 +2954,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_animation_start                                       _gx_animation_start
 #define gx_animation_stop                                        _gx_animation_stop
 
+#if defined(GX_ENABLE_DEPRECATED_BINRES_API)
 #define gx_binres_language_count_get                             _gx_binres_language_count_get
 #define gx_binres_language_info_load                             _gx_binres_language_info_load
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -2955,6 +2964,13 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_binres_theme_load                                     _gx_binres_theme_load
 #define gx_binres_pixelmap_load                                  _gx_binres_pixelmap_load
 #define gx_binres_font_load                                      _gx_binres_font_load
+#endif
+#define gx_binres_language_count_get_ext                         _gx_binres_language_count_get_ext
+#define gx_binres_language_info_load_ext                         _gx_binres_language_info_load_ext
+#define gx_binres_language_table_load_ext2                       _gx_binres_language_table_load_ext2
+#define gx_binres_theme_load_ext                                 _gx_binres_theme_load_ext
+#define gx_binres_pixelmap_load_ext                              _gx_binres_pixelmap_load_ext
+#define gx_binres_font_load_ext                                  _gx_binres_font_load_ext
 
 #define gx_brush_default                                         _gx_brush_default
 #define gx_brush_define                                          _gx_brush_define
@@ -3606,6 +3622,7 @@ UINT _gx_animation_landing_speed_set(GX_ANIMATION *animation, USHORT shift_per_s
 UINT _gx_animation_start(GX_ANIMATION *animation, GX_ANIMATION_INFO *info);
 UINT _gx_animation_stop(GX_ANIMATION *animation);
 
+#if defined(GX_ENABLE_DEPRECATED_BINRES_API)
 UINT _gx_binres_language_count_get(GX_UBYTE *root_address, GX_VALUE *put_count);
 UINT _gx_binres_language_info_load(GX_UBYTE *root_address, GX_LANGUAGE_HEADER *put_info);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -3615,6 +3632,13 @@ UINT _gx_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***ret
 UINT _gx_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme);
 UINT _gx_binres_pixelmap_load(GX_UBYTE *root_address, UINT map_index, GX_PIXELMAP *pixelmap);
 UINT _gx_binres_font_load(GX_UBYTE *root_address, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
+#endif
+UINT _gx_binres_language_count_get_ext(GX_UBYTE *root_address, ULONG root_size, GX_VALUE *put_count);
+UINT _gx_binres_language_info_load_ext(GX_UBYTE *root_address, ULONG root_size, GX_LANGUAGE_HEADER *put_info);
+UINT _gx_binres_language_table_load_ext2(GX_UBYTE *root_address, ULONG root_size, GX_STRING ***returned_language_table);
+UINT _gx_binres_theme_load_ext(GX_UBYTE *root_address, ULONG root_size, INT theme_id, GX_THEME **returned_theme);
+UINT _gx_binres_pixelmap_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT map_index, GX_PIXELMAP *pixelmap);
+UINT _gx_binres_font_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
 
 UINT _gx_brush_default(GX_BRUSH *brush);
 UINT _gx_brush_define(GX_BRUSH *brush, GX_COLOR line_color, GX_COLOR fill_color, UINT style);
@@ -4431,6 +4455,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_animation_start                                       _gxe_animation_start
 #define gx_animation_stop                                        _gxe_animation_stop
 
+#if defined(GX_ENABLE_DEPRECATED_BINRES_API)
 #define gx_binres_language_count_get                             _gxe_binres_language_count_get
 #define gx_binres_language_info_load                             _gxe_binres_language_info_load
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -4440,6 +4465,13 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_binres_theme_load                                     _gxe_binres_theme_load
 #define gx_binres_pixelmap_load                                  _gxe_binres_pixelmap_load
 #define gx_binres_font_load                                      _gxe_binres_font_load
+#endif
+#define gx_binres_language_count_get_ext                         _gxe_binres_language_count_get_ext
+#define gx_binres_language_info_load_ext                         _gxe_binres_language_info_load_ext
+#define gx_binres_language_table_load_ext2                       _gxe_binres_language_table_load_ext2
+#define gx_binres_theme_load_ext                                 _gxe_binres_theme_load_ext
+#define gx_binres_pixelmap_load_ext                              _gxe_binres_pixelmap_load_ext
+#define gx_binres_font_load_ext                                  _gxe_binres_font_load_ext
 
 #define gx_brush_default                                         _gxe_brush_default
 #define gx_brush_define                                          _gxe_brush_define
@@ -5088,6 +5120,7 @@ UINT _gxe_animation_landing_speed_set(GX_ANIMATION *animation, USHORT shift_per_
 UINT _gxe_animation_start(GX_ANIMATION *animation, GX_ANIMATION_INFO *info);
 UINT _gxe_animation_stop(GX_ANIMATION *animation);
 
+#if defined(GX_ENABLE_DEPRECATED_BINRES_API)
 UINT _gxe_binres_language_count_get(GX_UBYTE *root_address, GX_VALUE *put_count);
 UINT _gxe_binres_language_info_load(GX_UBYTE *root_address, GX_LANGUAGE_HEADER *put_info);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -5097,6 +5130,13 @@ UINT _gxe_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***re
 UINT _gxe_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme);
 UINT _gxe_binres_pixelmap_load(GX_UBYTE *root_address, UINT map_index, GX_PIXELMAP *pixelmap);
 UINT _gxe_binres_font_load(GX_UBYTE *root_address, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
+#endif
+UINT _gxe_binres_language_count_get_ext(GX_UBYTE *root_address, ULONG root_size, GX_VALUE *put_count);
+UINT _gxe_binres_language_info_load_ext(GX_UBYTE *root_address, ULONG root_size, GX_LANGUAGE_HEADER *put_info);
+UINT _gxe_binres_language_table_load_ext2(GX_UBYTE *root_address, ULONG root_size, GX_STRING ***returned_language_table);
+UINT _gxe_binres_theme_load_ext(GX_UBYTE *root_address, ULONG root_size, INT theme_id, GX_THEME **returned_theme);
+UINT _gxe_binres_pixelmap_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT map_index, GX_PIXELMAP *pixelmap);
+UINT _gxe_binres_font_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
 
 UINT _gxe_brush_default(GX_BRUSH *brush);
 UINT _gxe_brush_define(GX_BRUSH *brush, GX_COLOR line_color, GX_COLOR fill_color, UINT style);
