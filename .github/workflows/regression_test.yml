@@ -24,7 +24,7 @@ jobs:
       pull-requests: write
       pages: write
       id-token: write
-    uses: eclipse-threadx/threadx/.github/workflows/regression_template.yml@f09846d75ace90fc57fffe89ea8c286db3a08d6d
+    uses: eclipse-threadx/threadx/.github/workflows/regression_template.yml@729959fed0fc380d68c2bdcb2b4d7a5430f5c21a
     with:
       install_script: ./scripts/ci_install.sh
       build_script: ./scripts/ci_build.sh
@@ -37,6 +37,10 @@ jobs:
       # the cap, so the packages and the checkout have been leaving too little
       # of it for the build. See issue #205 for moving that build out.
       install_timeout_minutes: 20
+      # Five configurations are built here, and the best run on record took 11.8
+      # of the default fifteen minutes. Six advisories added regression tests
+      # this week, so that margin is closing rather than steady.
+      build_timeout_minutes: 25
       coverage_name: merged
       coverage_thresholds: '98 100'
       skip_deploy: ${{ github.ref != 'refs/heads/master' || (github.event_name != 'push' && github.event_name != 'workflow_dispatch') }}
