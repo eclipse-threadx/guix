@@ -17,7 +17,7 @@ GUIX as part of Eclipse ThreadX has been integrated to the semiconductor's SDKs 
 
 We also [samples](https://github.com/eclipse-threadx/samples) using hero development boards from semiconductors you can build and test with.
 
-See [Overview of Eclipse ThreadX GUIX](https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/overview-guix.md) for the high-level overview.
+See [Overview of Eclipse ThreadX GUIX](https://threadx.io/releases/6.5.2/guix/main/overview-guix.html) for the high-level overview.
 
 ## Repository Structure and Usage
 
@@ -137,7 +137,7 @@ License terms for using Eclipse ThreadX are defined in the LICENSE.txt file of t
 
 The following are references to additional Eclipse ThreadX resources:
 
-- **Product introduction**: https://github.com/eclipse-threadx/rtos-docs
+- **Product introduction**: https://threadx.io/releases/latest
 - **Product issues and bugs, or feature requests**: https://github.com/eclipse-threadx/guix/issues
 - **TraceX Installer**: https://aka.ms/azrtos-tracex-installer
 
