@@ -10,7 +10,6 @@
  **************************************************************************/
 // Portions of this file were generated with AI assistance.
 
-
 /**************************************************************************/
 /**************************************************************************/
 /**                                                                       */
@@ -820,6 +819,14 @@ UINT               temp;
     if (res_header.gx_resource_header_magic_number != GX_MAGIC_NUMBER)
     {
         return GX_INVALID_FORMAT;
+    }
+
+    /* A theme the resource does not hold would be sized at nothing, and the
+       load pass would still write it. A negative id converts to a count no
+       resource can declare, so it is refused by the same test. */
+    if ((UINT)theme_id >= res_header.gx_resource_header_theme_count)
+    {
+        return GX_INVALID_VALUE;
     }
 
     info -> gx_binres_buffer_size = 0;

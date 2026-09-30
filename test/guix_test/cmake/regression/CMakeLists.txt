@@ -1520,7 +1520,7 @@ set(multi_themes_16bpp_FILE_LIST
 set(multi_themes_16bpp_REG_TESTS
     guix_multi_themes_16bpp guix_binres_language_info_get_no_output
     guix_binres_language_table_load guix_binres_language_table_load_use_old_api
-    guix_binres_theme_load)
+    guix_binres_theme_load guix_binres_theme_id_bound_no_output)
 
 set(multi_themes_16bpp_synergy_FILE_LIST
     demo_guix_multi_themes_16bpp_synergy.c
