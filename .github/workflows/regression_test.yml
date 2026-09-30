@@ -24,13 +24,19 @@ jobs:
       pull-requests: write
       pages: write
       id-token: write
-    uses: eclipse-threadx/threadx/.github/workflows/regression_template.yml@b37cd4a81a1cb8c2ebefc438220ab7f009e13362
+    uses: eclipse-threadx/threadx/.github/workflows/regression_template.yml@f09846d75ace90fc57fffe89ea8c286db3a08d6d
     with:
       install_script: ./scripts/ci_install.sh
       build_script: ./scripts/ci_build.sh
       test_script: ./scripts/ci_test.sh
       cmake_path: ./test/guix_test/cmake
       result_affix: GUIX
+      # The install step here also builds default_build_coverage, because the
+      # suite is staged across the three steps to fit their limits. The best run
+      # on record took 8.2 of the default ten minutes and four have been lost at
+      # the cap, so the packages and the checkout have been leaving too little
+      # of it for the build. See issue #205 for moving that build out.
+      install_timeout_minutes: 20
       coverage_name: merged
       coverage_thresholds: '98 100'
       skip_deploy: ${{ github.ref != 'refs/heads/master' || (github.event_name != 'push' && github.event_name != 'workflow_dispatch') }}
