@@ -27,7 +27,11 @@ exec 9>build/dependency.lock
 flock -w 300 9
 fresh_checkout=false
 if [[ ! -d threadx/.git ]]; then
-    timeout 180 git clone --no-checkout https://github.com/eclipse-threadx/threadx.git threadx
+    # --filter=blob:none, because only one revision is ever checked out. A full
+    # clone transfers the whole 27 MB history; blobless is under 4 MB, and the
+    # checkout below fetches just the blobs that revision needs. The 180 second
+    # budget has to cover whichever of the two it is, and it has run out.
+    timeout 180 git clone --filter=blob:none --no-checkout https://github.com/eclipse-threadx/threadx.git threadx
     fresh_checkout=true
 fi
 if ! git -C threadx cat-file -e "$revision^{commit}"; then
