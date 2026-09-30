@@ -4,8 +4,8 @@ Eclipse ThreadX GUIX is a professional-quality package, created to meet the need
 
 Eclipse ThreadX GUIX Studio provides a complete, embedded graphical user interface (GUI) application design environment, facilitating the creation and maintenance of all graphical elements in the application’s GUI. Eclipse ThreadX GUIX Studio automatically generates C code that’s compatible with the Eclipse ThreadX GUIX library, ready to be compiled and run on the target. 
 
-The latest Eclipse ThreadX GUIX Studio installer is available here: 
-https://github.com/eclipse-threadx/guix/releases/download/v6.5.1.202602a_rel/guix_studio_setup_version_6.5.1.202602a.exe
+The latest Eclipse ThreadX GUIX Studio installer is attached to the most recent release:
+https://github.com/eclipse-threadx/guix/releases/latest
 
 Here are the key features and modules of GUIX:
 
