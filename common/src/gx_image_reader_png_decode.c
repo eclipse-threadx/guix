@@ -1759,6 +1759,23 @@ INT y;
     byte_width = (png -> gx_png_width * bpp + 7) >> 3;
     bpp = (bpp + 7) >> 3;
 
+    if ((png -> gx_png_width <= 0) || (png -> gx_png_height <= 0) || (byte_width <= 0))
+    {
+        return GX_FAILURE;
+    }
+
+    /* Confirm the walk below fits the data that was actually decoded. The buffer
+       was allocated and filled against the dimensions in force at the time, and
+       this pass derives its own extent from the current ones. Those are normally
+       the same, and the check costs nothing when they are; when they are not,
+       this is what keeps a dimension change from becoming a write past the end
+       of the allocation. Each row is a filter byte followed by byte_width bytes
+       of pixel data, so the walk spans height * (byte_width + 1).  */
+    if ((UINT)png -> gx_png_height > ((UINT)png -> gx_png_decoded_data_len / (UINT)(byte_width + 1)))
+    {
+        return GX_FAILURE;
+    }
+
     for (y = 0; y < png -> gx_png_height; y++)
     {
         filter_type = png -> gx_png_decoded_data[y * byte_width + y];
@@ -1903,6 +1920,8 @@ INT     data_len;
 CHAR    chunk_type[4];
 INT     checksum;
 GX_BOOL idat_done = GX_FALSE;
+GX_BOOL ihdr_done = GX_FALSE;
+GX_BOOL plte_done = GX_FALSE;
 INT    *scratch_buffer;
 INT     scratch_index = 0;
 GX_BOOL decoded_done = GX_FALSE;
@@ -1977,12 +1996,33 @@ GX_BOOL decoded_done = GX_FALSE;
 
             if ((strncmp(chunk_type, "IDAT", 4) == 0) && (!idat_done))
             {
+                /* IHDR carries the dimensions the decoded data buffer is sized
+                   from, so it has to have been seen already.  */
+                if (!ihdr_done)
+                {
+                    status = GX_INVALID_FORMAT;
+                    break;
+                }
+
                 idat_done = GX_TRUE;
 
                 status = _gx_image_reader_png_IDAT_chunk_read(&png);
             }
             else if (strncmp(chunk_type, "IHDR", 4) == 0)
             {
+                /* A PNG carries exactly one IHDR, and it comes first. Accepting
+                   a second one let a file change the width, height and pixel
+                   depth after the decoded data buffer had been allocated from
+                   the original values, leaving every later consumer working to
+                   dimensions the allocation was never sized for.  */
+                if (ihdr_done)
+                {
+                    status = GX_INVALID_FORMAT;
+                    break;
+                }
+
+                ihdr_done = GX_TRUE;
+
                 status = _gx_image_reader_png_IHDR_chunk_read(&png);
             }
             else if (strncmp(chunk_type, "gAMA", 4) == 0)
@@ -1991,6 +2031,16 @@ GX_BOOL decoded_done = GX_FALSE;
             }
             else if (strncmp(chunk_type, "PLTE", 4) == 0)
             {
+                /* One palette per image, for the same reason: the palette is
+                   allocated when it is read.  */
+                if (plte_done)
+                {
+                    status = GX_INVALID_FORMAT;
+                    break;
+                }
+
+                plte_done = GX_TRUE;
+
                 status = _gx_image_reader_png_PLTE_chunk_read(&png);
             }
             else if ((strncmp(chunk_type, "tRNS", 4) == 0) && (png.gx_png_trans == GX_NULL))
