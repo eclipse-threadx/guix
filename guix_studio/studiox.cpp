@@ -482,7 +482,7 @@ void CstudioxApp::OnAppAbout()
 
 void CstudioxApp::OnUsersGuide()
 {
-    ShellExecute(NULL, _T("open"), _T("https://threadx.io/releases/6.5.1/guix/main/about-guix-studio.html"), NULL, NULL, SW_SHOW);
+    ShellExecute(NULL, _T("open"), _T("https://threadx.io/releases/6.5.2/guix/main/about-guix-studio.html"), NULL, NULL, SW_SHOW);
 }
 
 void CstudioxApp::OnProjectNew()
