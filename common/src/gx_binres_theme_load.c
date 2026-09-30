@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -1659,12 +1660,25 @@ static UINT _gx_binres_pixelmap_table_load(GX_BINRES_DATA_INFO *info, USHORT tab
 {
 UINT         status = GX_SUCCESS;
 USHORT       index;
-USHORT       map_id;
-GX_PIXELMAP *pixelmap;
+USHORT       map_id = 0;
+GX_PIXELMAP *pixelmap = GX_NULL;
 
     for (index = 1; index < table_size; index++)
     {
         status = _gx_binres_one_pixelmap_load(info, &pixelmap, &map_id);
+
+        /* A failed load leaves map_id and pixelmap unset, so nothing is stored.  */
+        if (status != GX_SUCCESS)
+        {
+            return status;
+        }
+
+        /* map_id is read from the resource, while the table is sized from the
+           theme header's pixelmap count, so it must be bounded here.  */
+        if (map_id >= table_size)
+        {
+            return GX_INVALID_FORMAT;
+        }
 
         while (index < map_id)
         {
@@ -1672,11 +1686,6 @@ GX_PIXELMAP *pixelmap;
         }
 
         pixelmap_table[index] = pixelmap;
-
-        if (status)
-        {
-            return status;
-        }
     }
 
     return status;
