@@ -52,13 +52,19 @@ set -euo pipefail
 
 readonly ROOT="$(cd "$(dirname "$(realpath "$0")")/.." && pwd)"
 readonly SELF='scripts/check_ai_disclosure.sh'
+
+# The contribution guide is excluded for the same reason this script is: it has
+# to spell the disclosure text in order to explain it, and it discusses AI
+# assistance in prose besides. Scanning it turns documenting the rule into a
+# violation of it.
+readonly GUIDE='CONTRIBUTING.md'
 readonly FIXED='Portions of this file were generated with AI assistance.'
 
 cd "${ROOT}"
 
 # Tracked files only.  A build tree is not this repository's text to police,
 # and scanning one would make the check depend on whether somebody had built.
-mapfile -d '' -t FILES < <(git ls-files -z | grep -zZv "^${SELF}$")
+mapfile -d '' -t FILES < <(git ls-files -z | grep -zZv "^${SELF}$" | grep -zZv "^${GUIDE}$")
 
 status=0
 
