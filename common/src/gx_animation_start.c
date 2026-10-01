@@ -199,7 +199,7 @@ GX_VALUE top;
 #ifdef GX_THREADX_BINDING
 #ifndef GX_DISABLE_THREADX_TIMER_SOURCE
         /* if the low-level timer is not active, start it */
-        tx_timer_info_get(&_gx_system_timer, (CHAR **)TX_NULL, &tx_timer_active,
+        tx_timer_info_get(&_gx_system_timer, TX_NULL, &tx_timer_active,
                           (ULONG *)TX_NULL, (ULONG *)TX_NULL, (TX_TIMER **)TX_NULL);
 
         if (!tx_timer_active)
