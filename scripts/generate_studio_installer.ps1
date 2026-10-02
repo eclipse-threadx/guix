@@ -30,10 +30,10 @@ $isccArgs = @('/Q')
 if ($Version) {
     $release = Get-StudioReleaseVersion -Version $Version
     $isccArgs += @(
-        "/DStudioFullVersion=`"$($release.FullVersion)`"",
-        "/DStudioShortVersion=`"$($release.ShortVersion)`"",
-        "/DStudioMajorMinorVersion=`"$($release.MajorMinorVersion)`"",
-        "/DStudioVersionInfoVersion=`"$($release.Win32Version)`""
+        "/DStudioFullVersion=$($release.FullVersion)",
+        "/DStudioShortVersion=$($release.ShortVersion)",
+        "/DStudioMajorMinorVersion=$($release.MajorMinorVersion)",
+        "/DStudioVersionInfoVersion=$($release.Win32Version)"
     )
 }
 
