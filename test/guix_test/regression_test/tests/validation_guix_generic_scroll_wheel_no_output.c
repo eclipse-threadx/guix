@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -63,73 +65,73 @@ GX_WINDOW parent;
 GX_EVENT myevent;
 GX_GENERIC_SCROLL_WHEEL *wheel_wrap = &main_screen.main_screen_scroll_wheel_wrap;
 
-    status = gx_generic_scroll_wheel_create(0, 0, 0, 0, 0, 0, 0, 0);
+    status = _gxe_generic_scroll_wheel_create(0, 0, 0, 0, 0, 0, 0, 0, sizeof(GX_GENERIC_SCROLL_WHEEL));
     EXPECT_EQ(status, GX_PTR_ERROR);
 
     memset(&wheel, 0, sizeof(GX_GENERIC_SCROLL_WHEEL));
 
-    status = gx_generic_scroll_wheel_children_position(&wheel);
+    status = _gxe_generic_scroll_wheel_children_position(&wheel);
     EXPECT_EQ(status, GX_INVALID_WIDGET);
 
-    status = gx_generic_scroll_wheel_event_process(&wheel, &myevent);
+    status = _gxe_generic_scroll_wheel_event_process(&wheel, &myevent);
     EXPECT_EQ(status, GX_INVALID_WIDGET);
 
-    status = gx_generic_scroll_wheel_row_height_set(&wheel, 50);
+    status = _gxe_generic_scroll_wheel_row_height_set(&wheel, 50);
     EXPECT_EQ(status, GX_INVALID_WIDGET);
 
-    status = gx_generic_scroll_wheel_total_rows_set(&wheel, 50);
+    status = _gxe_generic_scroll_wheel_total_rows_set(&wheel, 50);
     EXPECT_EQ(status, GX_INVALID_WIDGET);
 
-    status = gx_generic_scroll_wheel_create(&wheel, "", GX_NULL, 10, GX_NULL, 0, 0, GX_NULL);
+    status = _gxe_generic_scroll_wheel_create(&wheel, "", GX_NULL, 10, GX_NULL, 0, 0, GX_NULL, sizeof(GX_GENERIC_SCROLL_WHEEL));
     EXPECT_EQ(status, GX_PTR_ERROR);
 
     /* Invalid total rows.  */
-    status = gx_generic_scroll_wheel_create(&wheel, "", GX_NULL, 0, GX_NULL, 0, 0, &size);
+    status = _gxe_generic_scroll_wheel_create(&wheel, "", GX_NULL, 0, GX_NULL, 0, 0, &size, sizeof(GX_GENERIC_SCROLL_WHEEL));
     EXPECT_EQ(status, GX_INVALID_VALUE);
 
     memset(&parent, 0, sizeof(GX_WINDOW));
 
     /* Invalid parent widget.  */
-    status = gx_generic_scroll_wheel_create(&wheel, "", &parent, 10, GX_NULL, 0, 0, &size);
+    status = _gxe_generic_scroll_wheel_create(&wheel, "", (GX_WIDGET *)&parent, 10, GX_NULL, 0, 0, &size, sizeof(GX_GENERIC_SCROLL_WHEEL));
     EXPECT_EQ(status, GX_INVALID_WIDGET);
 
     /* Invalid control block size.  */
     status = _gxe_generic_scroll_wheel_create(&wheel, "", GX_NULL, 10, GX_NULL, 0 , 0, &size, 0);
     EXPECT_EQ(status, GX_INVALID_SIZE);
 
-    status = gx_generic_scroll_wheel_create(&wheel, "", GX_NULL, 10, GX_NULL, 0, 0, &size);
+    status = _gxe_generic_scroll_wheel_create(&wheel, "", GX_NULL, 10, GX_NULL, 0, 0, &size, sizeof(GX_GENERIC_SCROLL_WHEEL));
     EXPECT_EQ(status, GX_SUCCESS);
 
-    status = gx_generic_scroll_wheel_create(&wheel, "", GX_NULL, 10, GX_NULL, 0, 0, &size);
+    status = _gxe_generic_scroll_wheel_create(&wheel, "", GX_NULL, 10, GX_NULL, 0, 0, &size, sizeof(GX_GENERIC_SCROLL_WHEEL));
     EXPECT_EQ(status, GX_ALREADY_CREATED);
 
-    status = gx_generic_scroll_wheel_event_process(GX_NULL, GX_NULL);
+    status = _gxe_generic_scroll_wheel_event_process(GX_NULL, GX_NULL);
     EXPECT_EQ(status, GX_PTR_ERROR);
 
-    status = gx_generic_scroll_wheel_event_process(&wheel, GX_NULL);
+    status = _gxe_generic_scroll_wheel_event_process(&wheel, GX_NULL);
     EXPECT_EQ(status, GX_PTR_ERROR);
 
     memset(&myevent, 0, sizeof(GX_EVENT));
     myevent.gx_event_type = GX_EVENT_SHOW;
-    status = gx_generic_scroll_wheel_event_process(&wheel, &myevent);
+    status = _gxe_generic_scroll_wheel_event_process(&wheel, &myevent);
     EXPECT_EQ(status, GX_SUCCESS);
 
-    status = gx_generic_scroll_wheel_row_height_set(GX_NULL, 10);
+    status = _gxe_generic_scroll_wheel_row_height_set(GX_NULL, 10);
     EXPECT_EQ(status, GX_PTR_ERROR);
 
-    status = gx_generic_scroll_wheel_row_height_set(&wheel, 0);
+    status = _gxe_generic_scroll_wheel_row_height_set(&wheel, 0);
     EXPECT_EQ(status, GX_INVALID_VALUE);
 
-    status = gx_generic_scroll_wheel_total_rows_set(GX_NULL, 10);
+    status = _gxe_generic_scroll_wheel_total_rows_set(GX_NULL, 10);
     EXPECT_EQ(status, GX_PTR_ERROR);
 
-    status = gx_generic_scroll_wheel_total_rows_set(&wheel, -1);
+    status = _gxe_generic_scroll_wheel_total_rows_set(&wheel, -1);
     EXPECT_EQ(status, GX_INVALID_VALUE);
 
-    status = gx_generic_scroll_wheel_children_position(GX_NULL);
+    status = _gxe_generic_scroll_wheel_children_position(GX_NULL);
     EXPECT_EQ(status, GX_PTR_ERROR);
     
-    status = gx_generic_scroll_wheel_total_rows_set(wheel_wrap, 0);
+    status = _gxe_generic_scroll_wheel_total_rows_set(wheel_wrap, 0);
     EXPECT_EQ(status, GX_SUCCESS);
 
     wheel_wrap->gx_scroll_wheel_total_rows = 10;

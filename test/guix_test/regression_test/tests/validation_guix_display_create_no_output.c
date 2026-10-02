@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -68,19 +70,19 @@ static GX_DISPLAY display1;
 
     display1.gx_display_id  = GX_DISPLAY_ID;
     
-    if (gx_display_create(&display1, "display1", gx_validation_display_driver_setup_24xrgb, 0, 0) != GX_ALREADY_CREATED)
+    if (_gxe_display_create(&display1, "display1", gx_validation_display_driver_setup_24xrgb, 0, 0, sizeof(GX_DISPLAY)) != GX_ALREADY_CREATED)
     {
         failed_tests++;
     }       
     
     display1.gx_display_id  = 0;
 
-    if (gx_display_create(&display1, "display1", display_setup_func, 0, 0) != GX_SYSTEM_ERROR)
+    if (_gxe_display_create(&display1, "display1", display_setup_func, 0, 0, sizeof(GX_DISPLAY)) != GX_SYSTEM_ERROR)
     {
         failed_tests++;
     }
     
-    if (gx_display_create(&display1, "display1", gx_validation_display_driver_setup_24xrgb, 0, 0) != GX_SUCCESS)
+    if (_gxe_display_create(&display1, "display1", gx_validation_display_driver_setup_24xrgb, 0, 0, sizeof(GX_DISPLAY)) != GX_SUCCESS)
     {
         failed_tests++;
     }

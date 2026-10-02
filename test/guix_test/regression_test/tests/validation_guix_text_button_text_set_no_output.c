@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_button.h"
 #include "gx_validation_utility.h"
 
 TEST_PARAM test_parameter = {
@@ -65,11 +68,11 @@ GX_CHAR invalid_string[GX_MAX_STRING_LENGTH + 1];
 #endif
     string.gx_string_ptr = test_string;
     string.gx_string_length = sizeof(test_string) - 1;
-    status = gx_text_button_text_set_ext(GX_NULL, &string);
+    status = _gxe_text_button_text_set_ext(GX_NULL, &string);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     memset(&button, 0, sizeof(GX_TEXT_BUTTON));
-    status = gx_text_button_text_set_ext(&button, &string);
+    status = _gxe_text_button_text_set_ext(&button, &string);
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
     gx_utility_rectangle_define(&size, 0, 0, 100, 100);
@@ -77,19 +80,19 @@ GX_CHAR invalid_string[GX_MAX_STRING_LENGTH + 1];
 
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
     memset(invalid_string, 'x', sizeof(invalid_string));
-    status = gx_text_button_text_set(&button, invalid_string);
+    status = _gxe_text_button_text_set(&button, invalid_string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 #endif
 
-    status = gx_text_button_text_set_ext(&button, GX_NULL);
+    status = _gxe_text_button_text_set_ext(&button, GX_NULL);
     EXPECT_EQ(GX_SUCCESS, status);
 
     string.gx_string_length = sizeof(test_string) - 2;
-    status = gx_text_button_text_set_ext(&button, &string);
+    status = _gxe_text_button_text_set_ext(&button, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_length = sizeof(test_string);
-    status = gx_text_button_text_set_ext(&button, &string);
+    status = _gxe_text_button_text_set_ext(&button, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
     
     if(failed_tests == 0) 

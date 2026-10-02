@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_single_line_text_input.h"
 #include "gx_validation_utility.h"
 #include "gx_scroll_wheel.h"
 
@@ -65,11 +68,11 @@ GX_CHAR                   input_buffer[20];
 GX_STRING                 string;
 GX_CONST GX_CHAR          test_string[] = "test";
 
-    status = gx_single_line_text_input_text_set_ext(GX_NULL, GX_NULL);
+    status = _gxe_single_line_text_input_text_set_ext(GX_NULL, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     memset(&sl_input, 0, sizeof(GX_SINGLE_LINE_TEXT_INPUT));
-    status = gx_single_line_text_input_text_set_ext(&sl_input, GX_NULL);
+    status = _gxe_single_line_text_input_text_set_ext(&sl_input, GX_NULL);
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
     gx_utility_rectangle_define(&size, 0, 0, 100, 100);
@@ -77,24 +80,24 @@ GX_CONST GX_CHAR          test_string[] = "test";
     
     string.gx_string_ptr = test_string;
     string.gx_string_length = sizeof(test_string) - 2;
-    status = gx_single_line_text_input_text_set_ext(&sl_input, &string);
+    status = _gxe_single_line_text_input_text_set_ext(&sl_input, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_length = sizeof(test_string);
-    status = gx_single_line_text_input_text_set_ext(&sl_input, &string);
+    status = _gxe_single_line_text_input_text_set_ext(&sl_input, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
-    status = gx_single_line_text_input_text_set_ext(&sl_input, GX_NULL);
+    status = _gxe_single_line_text_input_text_set_ext(&sl_input, GX_NULL);
     EXPECT_EQ(GX_SUCCESS, status);
 
     string.gx_string_ptr = GX_NULL;
     string.gx_string_length = 1;
-    status = gx_single_line_text_input_text_set_ext(&sl_input, &string);
+    status = _gxe_single_line_text_input_text_set_ext(&sl_input, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
     memset(invalid_string, 'x', sizeof(invalid_string));
-    status = gx_single_line_text_input_text_set(&sl_input, invalid_string);
+    status = _gxe_single_line_text_input_text_set(&sl_input, invalid_string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 #endif
 

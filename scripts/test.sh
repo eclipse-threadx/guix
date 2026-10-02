@@ -8,4 +8,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-CTEST_PARALLEL_LEVEL=4 $(dirname `realpath $0`)/../test/guix_test/cmake/run.sh test all
+set -euo pipefail
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
+if [[ $# == 0 ]]; then set -- all; fi
+exec test/guix_test/cmake/run.sh test "$@"

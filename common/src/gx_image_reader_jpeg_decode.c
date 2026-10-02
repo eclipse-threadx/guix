@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -128,6 +129,13 @@ GX_UBYTE  table_index;
 GX_UBYTE *jpeg_data = jpeg_info -> gx_jpeg_data + jpeg_info -> gx_jpeg_data_index;
 INT       index;
 
+    /* The declared length includes its own two bytes, so anything shorter than
+       that is malformed and would underflow the subtraction below.  */
+    if (segment_len < 2)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
     /* Minus two-byte length. */
     jpeg_info -> gx_jpeg_data_index += (INT)segment_len;
     segment_len -= 2;
@@ -135,6 +143,13 @@ INT       index;
 
     while (segment_len)
     {
+        /* Each table is one precision and destination byte followed by 64
+           entries, so check that the segment holds them before reading.  */
+        if (segment_len < 65)
+        {
+            return GX_INVALID_FORMAT;
+        }
+
         /* The upper 4 bits specify the element precision: 0 indicates 8-bit, 1 indecates 16-bit. */
         if ((*jpeg_data) & 0xf0)
         {
@@ -151,10 +166,6 @@ INT       index;
             jpeg_info -> gx_jpeg_quantization_table[table_index][index] = *jpeg_data++;
         }
 
-        if (segment_len < 65)
-        {
-            return GX_INVALID_FORMAT;
-        }
         segment_len -= 65;
     }
 
@@ -375,6 +386,15 @@ static UINT _gx_image_reader_jpeg_frame_header_read(GX_JPEG_INFO *jpeg_info, UIN
 {
 GX_UBYTE *jpeg_data = jpeg_info -> gx_jpeg_data + jpeg_info -> gx_jpeg_data_index;
 INT       i_component;
+GX_UBYTE  num_components;
+
+    /* Two length bytes, one precision byte, two each for height and width, and
+       the component count. The dispatcher bounded segment_len against the
+       buffer; this bounds what is read against segment_len.  */
+    if (segment_len < 8)
+    {
+        return GX_INVALID_FORMAT;
+    }
 
     jpeg_info -> gx_jpeg_data_index += (INT)segment_len;
     jpeg_data += 2;
@@ -405,12 +425,22 @@ INT       i_component;
     }
 
     /* Read image components. */
-    jpeg_info -> gx_jpeg_num_of_components = *jpeg_data++;
+    /* Validate before storing, so that a rejected count never reaches the
+       decoder state.  */
+    num_components = *jpeg_data++;
 
-    if (jpeg_info -> gx_jpeg_num_of_components > JPG_MAX_COMPONENTS)
+    if (num_components > JPG_MAX_COMPONENTS)
     {
         return GX_FAILURE;
     }
+
+    /* Three bytes per component follow the fixed part.  */
+    if (segment_len < (8 + ((UINT)num_components * 3)))
+    {
+        return GX_INVALID_FORMAT;
+    }
+
+    jpeg_info -> gx_jpeg_num_of_components = num_components;
 
     for (i_component = 0; i_component < jpeg_info -> gx_jpeg_num_of_components; i_component++)
     {
@@ -463,17 +493,33 @@ static UINT _gx_image_reader_jpeg_scan_header_read(GX_JPEG_INFO *jpeg_info, UINT
 {
 GX_UBYTE *jpeg_data = jpeg_info -> gx_jpeg_data + jpeg_info -> gx_jpeg_data_index;
 INT       index;
+GX_UBYTE  num_components;
+
+    /* Two length bytes and the component count.  */
+    if (segment_len < 3)
+    {
+        return GX_INVALID_FORMAT;
+    }
 
     jpeg_data += 2;
     jpeg_info -> gx_jpeg_data_index += (INT)segment_len;
 
-    /* Read the number of image components.  */
-    jpeg_info -> gx_jpeg_num_of_components = *jpeg_data++;
+    /* Read the number of image components. Validate before storing, so that a
+       rejected count never reaches the decoder state.  */
+    num_components = *jpeg_data++;
 
-    if (jpeg_info -> gx_jpeg_num_of_components > JPG_MAX_COMPONENTS)
+    if (num_components > JPG_MAX_COMPONENTS)
     {
         return GX_FAILURE;
     }
+
+    /* Two bytes per component follow the count.  */
+    if (segment_len < (3 + ((UINT)num_components * 2)))
+    {
+        return GX_INVALID_FORMAT;
+    }
+
+    jpeg_info -> gx_jpeg_num_of_components = num_components;
 
     for (index = 0; index < jpeg_info -> gx_jpeg_num_of_components; index++)
     {
@@ -2253,7 +2299,9 @@ UINT (*one_mcu_write)(GX_JPEG_INFO *jpeg_info, INT xpos, INT ypos, INT h, INT v)
     h = (jpeg_info -> gx_jpeg_sample_factor[0] >> 4);
     v = (jpeg_info -> gx_jpeg_sample_factor[0] & 0x0f);
 
-    if (v > 2)
+    /* h and v step the decode loops below, so neither may be zero. The luma
+       blocks of one MCU, 64 bytes each, must fit in gx_jpeg_Y_block.  */
+    if ((h == 0) || (v == 0) || (v > 2) || ((h * v) > 4))
     {
         return GX_INVALID_FORMAT;
     }
@@ -2353,6 +2401,8 @@ GX_UBYTE *jpeg_data;
 GX_UBYTE  marker;
 UINT      segment_len;
 UINT      status = GX_SUCCESS;
+GX_BOOL   sof0_done = GX_FALSE;
+GX_BOOL   sos_done = GX_FALSE;
 
     if (jpeg_info -> gx_jpeg_data == GX_NULL || jpeg_info -> gx_jpeg_data_size < 10)
     {
@@ -2401,6 +2451,17 @@ UINT      status = GX_SUCCESS;
 
             case 0xc0:
                 /* Start of Frame */
+
+                /* A JPEG carries one frame header, before the scan. Another would
+                   change the image dimensions after the output buffer is sized.  */
+                if (sof0_done || sos_done)
+                {
+                    status = GX_INVALID_FORMAT;
+                    break;
+                }
+
+                sof0_done = GX_TRUE;
+
                 status = _gx_image_reader_jpeg_frame_header_read(jpeg_info, segment_len);
                 break;
 
@@ -2411,6 +2472,17 @@ UINT      status = GX_SUCCESS;
 
             case 0xdd:
                 /* Read restart interval which specifies the number of MCU in restart interval. */
+
+                /* The two length bytes are followed by the two-byte interval, so
+                   the segment has to be at least four bytes long. The dispatcher
+                   above bounded segment_len against the buffer; this bounds the
+                   read against segment_len.  */
+                if (segment_len < 4)
+                {
+                    status = GX_INVALID_FORMAT;
+                    break;
+                }
+
                 jpeg_data += 2;
                 jpeg_info -> gx_jpeg_restart_interval = *jpeg_data++;
                 jpeg_info -> gx_jpeg_restart_interval <<= 8;
@@ -2421,7 +2493,25 @@ UINT      status = GX_SUCCESS;
             case 0xda:
                 /* Start of Scan, stores which Huffman tables are associated with which components
                    The program start decoding the data section directly after it reads in this header. */
-                _gx_image_reader_jpeg_scan_header_read(jpeg_info, segment_len);
+
+                /* The scan is decoded against the dimensions and sampling factors
+                   the frame header supplies, so refuse a scan without one, and
+                   refuse a second scan.  */
+                if ((!sof0_done) || sos_done)
+                {
+                    status = GX_INVALID_FORMAT;
+                    break;
+                }
+
+                sos_done = GX_TRUE;
+
+                /* A rejected scan header stops the decode.  */
+                status = _gx_image_reader_jpeg_scan_header_read(jpeg_info, segment_len);
+
+                if (status != GX_SUCCESS)
+                {
+                    break;
+                }
 
                 /* Start decoding jpeg data stream. */
                 status = _gx_image_reader_jpeg_decompress(jpeg_info);
@@ -2523,10 +2613,12 @@ GX_JPEG_INFO *jpeg_info;
 
     if (status == GX_SUCCESS)
     {
+        /* Describe the allocated buffer, from the output geometry latched when
+           it was created.  */
         outmap -> gx_pixelmap_data = jpeg_info -> gx_jpeg_output_buffer;
-        outmap -> gx_pixelmap_data_size = (ULONG)(jpeg_info -> gx_jpeg_output_stride * jpeg_info -> gx_jpeg_height);
-        outmap -> gx_pixelmap_width = (GX_VALUE)jpeg_info -> gx_jpeg_width;
-        outmap -> gx_pixelmap_height = (GX_VALUE)jpeg_info -> gx_jpeg_height;
+        outmap -> gx_pixelmap_data_size = (ULONG)(jpeg_info -> gx_jpeg_output_stride * jpeg_info -> gx_jpeg_output_height);
+        outmap -> gx_pixelmap_width = (GX_VALUE)jpeg_info -> gx_jpeg_output_width;
+        outmap -> gx_pixelmap_height = (GX_VALUE)jpeg_info -> gx_jpeg_output_height;
         outmap -> gx_pixelmap_flags = 0;
         outmap -> gx_pixelmap_format = jpeg_info -> gx_jpeg_output_color_format;
     }

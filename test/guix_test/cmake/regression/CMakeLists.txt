@@ -1366,7 +1366,8 @@ set(kerning_glyph_draw_32bpp_screen_FILE_LIST
 
 set(kerning_glyph_draw_32bpp_screen_REG_TESTS
     guix_kerning_glyph_draw_32bpp_screen
-    guix_kerning_glyph_draw_32bpp_screen_binary_source)
+    guix_kerning_glyph_draw_32bpp_screen_binary_source
+    guix_binres_font_glyph_range_kerning_no_output)
 
 set(kerning_glyph_in_string_table_FILE_LIST
     demo_kerning_glyph_in_string_table.c
@@ -1520,7 +1521,8 @@ set(multi_themes_16bpp_FILE_LIST
 set(multi_themes_16bpp_REG_TESTS
     guix_multi_themes_16bpp guix_binres_language_info_get_no_output
     guix_binres_language_table_load guix_binres_language_table_load_use_old_api
-    guix_binres_theme_load)
+    guix_binres_theme_load guix_binres_theme_id_bound_no_output
+    guix_binres_font_glyph_range_no_output guix_binres_ext_api_no_output)
 
 set(multi_themes_16bpp_synergy_FILE_LIST
     demo_guix_multi_themes_16bpp_synergy.c
@@ -1717,7 +1719,8 @@ set(standalone_binres_load_extended_unicode_32bpp_FILE_LIST
     standalone_binres_load_extended_unicode_32bpp_specifications.c)
 
 set(standalone_binres_load_extended_unicode_32bpp_REG_TESTS
-    guix_standalone_binres_load_extended_unicode_32bpp)
+    guix_standalone_binres_load_extended_unicode_32bpp
+    guix_binres_font_glyph_range_ex_unicode_no_output)
     
 set(all_widgets_synergy_565rgb_FILE_LIST
     demo_guix_all_widgets_synergy_565rgb.c
@@ -2319,6 +2322,8 @@ elseif("-DGX_THAI_GLYPH_SHAPING_SUPPORT" IN_LIST ${CMAKE_BUILD_TYPE})
 elseif("-DGX_PALETTE_MODE_AA_TEXT_COLORS=16" IN_LIST ${CMAKE_BUILD_TYPE})
   set(demos ${PALETTE_MODE_AA_TEXT_COLORS_16_DEMOS})
 elseif("-DGX_DISABLE_DEPRECATED_STRING_API" IN_LIST ${CMAKE_BUILD_TYPE})
+  set(demos ${DEMO_IN_EXAMPLES} ${DEMO_IN_TUTORIALS})
+elseif("-DGX_DISABLE_DEPRECATED_BINRES_API" IN_LIST ${CMAKE_BUILD_TYPE})
   set(demos ${DEMO_IN_EXAMPLES} ${DEMO_IN_TUTORIALS})
 elseif("-DGX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER" IN_LIST ${CMAKE_BUILD_TYPE})
   set(demos ${PARTIAL_CANVAS_SUPPORT_DEMOS})

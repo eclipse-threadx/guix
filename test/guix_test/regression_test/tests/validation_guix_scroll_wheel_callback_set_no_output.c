@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_scroll_wheel.h"
 #include "gx_validation_utility.h"
 #include "gx_system.h"
 
@@ -90,14 +93,14 @@ int                  failed_tests = 0;
 UINT                 status;
 GX_TEXT_SCROLL_WHEEL widget;
 
-    status = gx_text_scroll_wheel_callback_set_ext(GX_NULL, test_callback);
+    status = _gxe_text_scroll_wheel_callback_set_ext((GX_TEXT_SCROLL_WHEEL *)GX_NULL, (UINT(*)(GX_TEXT_SCROLL_WHEEL *, INT, GX_STRING *)) test_callback);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     memset(&widget, 0, sizeof(GX_TEXT_SCROLL_WHEEL));
-    status = gx_text_scroll_wheel_callback_set_ext(&widget, GX_NULL);
+    status = _gxe_text_scroll_wheel_callback_set_ext((GX_TEXT_SCROLL_WHEEL *)&widget, (UINT(*)(GX_TEXT_SCROLL_WHEEL *, INT, GX_STRING *)) GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_text_scroll_wheel_callback_set_ext(&widget, test_callback);
+    status = _gxe_text_scroll_wheel_callback_set_ext((GX_TEXT_SCROLL_WHEEL *)&widget, (UINT(*)(GX_TEXT_SCROLL_WHEEL *, INT, GX_STRING *)) test_callback);
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
     if(failed_tests == 0) 

@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_utility.h"
 #include "gx_validation_utility.h"
 
 TEST_PARAM test_parameter = {
@@ -65,39 +68,39 @@ GX_CONST GX_CHAR test_string[] = "test";
 GX_CHAR invalid_string[GX_MAX_STRING_LENGTH + 1];
 
     memset(invalid_string, 'x', GX_MAX_STRING_LENGTH + 1);
-    status = gx_utility_string_to_alphamap(invalid_string, font, &textmap);
+    status = _gxe_utility_string_to_alphamap(invalid_string, font, &textmap);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 #endif
-    status = gx_utility_string_to_alphamap_ext(GX_NULL, font, &textmap);
+    status = _gxe_utility_string_to_alphamap_ext(GX_NULL, font, &textmap);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     memset(&string, 0, sizeof(GX_STRING));
-    status = gx_utility_string_to_alphamap_ext(&string, font, &textmap);
+    status = _gxe_utility_string_to_alphamap_ext(&string, font, &textmap);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     string.gx_string_ptr = test_string;
     string.gx_string_length = sizeof(test_string) - 1;
-    status = gx_utility_string_to_alphamap_ext(&string, GX_NULL, &textmap);
+    status = _gxe_utility_string_to_alphamap_ext(&string, GX_NULL, &textmap);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_utility_string_to_alphamap_ext(&string, font, GX_NULL);
+    status = _gxe_utility_string_to_alphamap_ext(&string, font, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     string.gx_string_length = sizeof(test_string) - 2;
-    status = gx_utility_string_to_alphamap_ext(&string, font, &textmap);
+    status = _gxe_utility_string_to_alphamap_ext(&string, font, &textmap);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_length = sizeof(test_string);
-    status = gx_utility_string_to_alphamap_ext(&string, font, &textmap);
+    status = _gxe_utility_string_to_alphamap_ext(&string, font, &textmap);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_length = sizeof(test_string) - 1;
     gx_system_memory_allocator_set(rotate_memory_allocate, GX_NULL);
-    status = gx_utility_string_to_alphamap_ext(&string, font, &textmap);
+    status = _gxe_utility_string_to_alphamap_ext(&string, font, &textmap);
     EXPECT_EQ(GX_SYSTEM_MEMORY_ERROR, status);
     
     gx_system_memory_allocator_set(GX_NULL, rotate_memory_free);
-    status = gx_utility_string_to_alphamap_ext(&string, font, &textmap);
+    status = _gxe_utility_string_to_alphamap_ext(&string, font, &textmap);
     EXPECT_EQ(GX_SYSTEM_MEMORY_ERROR, status);
 
     if(failed_tests == 0) 

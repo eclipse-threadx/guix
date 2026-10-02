@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_prompt.h"
 #include "gx_validation_utility.h"
 
 TEST_PARAM test_parameter = {
@@ -67,14 +70,14 @@ GX_STRING  string;
 GX_CHAR    string_buffer[] = "test string";
 GX_EVENT   my_event;
 
-    status = gx_prompt_event_process(GX_NULL, &my_event);
+    status = _gxe_prompt_event_process(GX_NULL, &my_event);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_prompt_event_process(&test_prompt, GX_NULL);
+    status = _gxe_prompt_event_process(&test_prompt, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     memset(&test_prompt, 0, sizeof(GX_PROMPT));
-    status = gx_prompt_event_process(&test_prompt, &my_event);
+    status = _gxe_prompt_event_process(&test_prompt, &my_event);
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
     gx_widget_hide(&button_screen); 
@@ -90,7 +93,7 @@ GX_EVENT   my_event;
     
     memset(&my_event, 0, sizeof(GX_EVENT));
     my_event.gx_event_type = GX_EVENT_DELETE;
-    status = gx_prompt_event_process(prompt, &my_event);
+    status = _gxe_prompt_event_process(prompt, &my_event);
     EXPECT_EQ(GX_SYSTEM_MEMORY_ERROR, status);
    
     if(failed_tests == 0) 

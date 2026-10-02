@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_scroll_wheel.h"
 #include "gx_validation_utility.h"
 #include "gx_widget.h"
 
@@ -60,23 +63,23 @@ GX_TEXT_SCROLL_WHEEL wheel;
 GX_EVENT my_event;
 GX_RECTANGLE size;
 
-    status = gx_text_scroll_wheel_event_process(GX_NULL, &my_event);
+    status = _gxe_text_scroll_wheel_event_process(GX_NULL, &my_event);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_text_scroll_wheel_event_process(&wheel, GX_NULL);
+    status = _gxe_text_scroll_wheel_event_process(&wheel, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     memset(&wheel, 0, sizeof(GX_TEXT_SCROLL_WHEEL));
-    status = gx_text_scroll_wheel_event_process(&wheel, &my_event);
+    status = _gxe_text_scroll_wheel_event_process(&wheel, &my_event);
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
     gx_utility_rectangle_define(&size, 0, 0, 100, 100);
-    status = gx_text_scroll_wheel_create(&wheel, "", GX_NULL, 10, 0, 0, &size);
+    status = _gxe_text_scroll_wheel_create(&wheel, "", GX_NULL, 10, 0, 0, &size, sizeof(GX_TEXT_SCROLL_WHEEL));
     EXPECT_EQ(GX_SUCCESS, status);
 
     memset(&my_event, 0, sizeof(GX_EVENT));
     my_event.gx_event_type = GX_EVENT_DELETE;
-    status = gx_text_scroll_wheel_event_process(&wheel, &my_event);
+    status = _gxe_text_scroll_wheel_event_process(&wheel, &my_event);
     EXPECT_EQ(GX_SUCCESS, status);
     
     if(failed_tests == 0) 

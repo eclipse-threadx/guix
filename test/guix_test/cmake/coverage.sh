@@ -8,10 +8,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-
-set -e
-
-cd $(dirname $0)
-mkdir -p coverage_report/$1
-gcovr --object-directory=build/$1/guix/CMakeFiles/guix.dir/common/src -r ../../../common/src --xml-pretty --output coverage_report/$1.xml
-gcovr --object-directory=build/$1/guix/CMakeFiles/guix.dir/common/src -r ../../../common/src --html --html-details --output coverage_report/$1/index.html
+set -euo pipefail
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
+python3 report.py coverage "$@"

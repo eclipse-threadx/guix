@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_button.h"
 #include "gx_validation_utility.h"
 #include "gx_system.h"
 
@@ -63,32 +66,32 @@ GX_TEXT_BUTTON button;
 GX_RECTANGLE   size;
 GX_EVENT       my_event;
 
-    status = gx_text_button_event_process(GX_NULL, &my_event);
+    status = _gxe_text_button_event_process(GX_NULL, &my_event);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_text_button_event_process(&button, GX_NULL);
+    status = _gxe_text_button_event_process(&button, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     gx_utility_rectangle_define(&size, 0, 0, 100, 100);
 
     memset(&button, 0, sizeof(GX_TEXT_BUTTON));
 
-    status = gx_text_button_event_process(&button, &my_event);
+    status = _gxe_text_button_event_process(&button, &my_event);
     EXPECT_EQ(GX_INVALID_WIDGET, status);
     
-    status = gx_text_button_create(&button, "text button", GX_NULL, 0, GX_STYLE_TEXT_COPY, 0, &size);
+    status = _gxe_text_button_create(&button, "text button", (GX_WIDGET *)GX_NULL, 0, GX_STYLE_TEXT_COPY, 0, &size, sizeof(GX_TEXT_BUTTON));
     EXPECT_EQ(GX_SUCCESS, status);
 
     string.gx_string_ptr = string_buffer;
     string.gx_string_length = sizeof(string_buffer) - 1;
-    status = gx_text_button_text_set_ext(&button, &string);
+    status = _gxe_text_button_text_set_ext(&button, &string);
     EXPECT_EQ(GX_SUCCESS, status);
 
     gx_system_memory_allocator_set(GX_NULL, GX_NULL);
 
     memset(&my_event, 0, sizeof(GX_EVENT));
     my_event.gx_event_type = GX_EVENT_DELETE;
-    status = gx_text_button_event_process(&button, &my_event);
+    status = _gxe_text_button_event_process(&button, &my_event);
     EXPECT_EQ(GX_SYSTEM_MEMORY_ERROR, status);
 
     if(failed_tests == 0) 

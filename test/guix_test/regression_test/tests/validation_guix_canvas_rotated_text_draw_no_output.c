@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_canvas.h"
 #include "gx_validation_utility.h"
 
 TEST_PARAM test_parameter = {
@@ -65,42 +68,42 @@ GX_CHAR   invalid_string[GX_MAX_STRING_LENGTH + 1];
 
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
     memset(invalid_string, 'x', GX_MAX_STRING_LENGTH + 1);
-    status = gx_canvas_rotated_text_draw(invalid_string, 0, 0, 90);
+    status = _gxe_canvas_rotated_text_draw(invalid_string, 0, 0, 90);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 #endif
 
-    status = gx_canvas_rotated_text_draw_ext(GX_NULL, 0, 0, 90);
+    status = _gxe_canvas_rotated_text_draw_ext(GX_NULL, 0, 0, 90);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     memset(&string, 0, sizeof(GX_STRING));
-    status = gx_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
+    status = _gxe_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     string.gx_string_ptr = "test";
     string.gx_string_length = 5;
-    status = gx_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
+    status = _gxe_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_ptr = "test";
     string.gx_string_length = 3;
-    status = gx_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
+    status = _gxe_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_ptr = "test";
     string.gx_string_length = 4;
 
     gx_system_memory_allocator_set(rotate_memory_allocate, GX_NULL);
-    status = gx_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
+    status = _gxe_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
     EXPECT_EQ(GX_SYSTEM_MEMORY_ERROR, status);
 
     gx_system_memory_allocator_set(GX_NULL, rotate_memory_free);
-    status = gx_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
+    status = _gxe_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
     EXPECT_EQ(GX_SYSTEM_MEMORY_ERROR, status);
 
     /* Complete drawing context. */
     gx_canvas_drawing_complete(root->gx_window_root_canvas, GX_FALSE);
 
-    status = gx_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
+    status = _gxe_canvas_rotated_text_draw_ext(&string, 0, 0, 90);
     EXPECT_EQ(GX_INVALID_CONTEXT, status);
 
     if(failed_tests == 0) 

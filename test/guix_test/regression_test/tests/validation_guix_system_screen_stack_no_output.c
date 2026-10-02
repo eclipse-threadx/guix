@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -16,6 +18,7 @@
 #include "gx_api.h"
 #include "gx_validation_utility.h"
 #include "gx_utility.h"
+#include "gx_system.h"
 
 TEST_PARAM test_parameter = {
     "guix_system_screen_stack_no_output", /* Test name */
@@ -69,13 +72,13 @@ UINT status;
 int  failed_count = 0;
 GX_WIDGET *parent = (GX_WIDGET *)&button_screen;
 
-    status = gx_system_screen_stack_create(GX_NULL, 0);
+    status = _gxe_system_screen_stack_create(GX_NULL, 0, sizeof(GX_SCREEN_STACK_CONTROL));
     if(status != GX_PTR_ERROR)
     {
         failed_count++;
     }
 
-    status = gx_system_screen_stack_create(screen_stack_memory, 0);
+    status = _gxe_system_screen_stack_create(screen_stack_memory, 0, sizeof(GX_SCREEN_STACK_CONTROL));
     if(status != GX_INVALID_VALUE)
     {
         failed_count++;
@@ -87,46 +90,46 @@ GX_WIDGET *parent = (GX_WIDGET *)&button_screen;
         failed_count++;
     }
 
-    status = gx_system_screen_stack_pop();
+    status = _gxe_system_screen_stack_pop();
     if(status != GX_PTR_ERROR)
     {
         failed_count++;
     }
 
-    status = gx_system_screen_stack_get(GX_NULL, GX_NULL);
+    status = _gxe_system_screen_stack_get(GX_NULL, GX_NULL);
     if(status != GX_PTR_ERROR)
     {
         failed_count++;
     }
 
-    status = gx_system_screen_stack_push(GX_NULL);
+    status = _gxe_system_screen_stack_push(GX_NULL);
     if(status != GX_PTR_ERROR)
     {
         failed_count++;
     }
 
-    gx_system_screen_stack_create(screen_stack_memory, sizeof(GX_WIDGET *) * SCREEN_STACK_SIZE);
-    status = gx_system_screen_stack_pop();
+    _gxe_system_screen_stack_create(screen_stack_memory, sizeof(GX_WIDGET *) * SCREEN_STACK_SIZE, sizeof(GX_SCREEN_STACK_CONTROL));
+    status = _gxe_system_screen_stack_pop();
     if(status != GX_FAILURE)
     {
         failed_count++;
     }
 
-    gx_system_screen_stack_push((GX_WIDGET *)&window_screen);
-    status = gx_system_screen_stack_push((GX_WIDGET *)&button_screen);
+    _gxe_system_screen_stack_push((GX_WIDGET *)&window_screen);
+    status = _gxe_system_screen_stack_push((GX_WIDGET *)&button_screen);
     if(status != GX_FAILURE)
     {
         failed_count++;
     }
 
-    gx_system_screen_stack_get(&parent, GX_NULL);
+    _gxe_system_screen_stack_get(&parent, GX_NULL);
     if(parent != GX_NULL)
     {
         failed_count++;
     }
 
-    gx_system_screen_stack_push((GX_WIDGET *)&window_screen);
-    gx_system_screen_stack_pop();
+    _gxe_system_screen_stack_push((GX_WIDGET *)&window_screen);
+    _gxe_system_screen_stack_pop();
 
     if(failed_count == 0)
     {

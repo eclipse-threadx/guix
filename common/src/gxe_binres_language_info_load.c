@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+// Portions of this file were generated with AI assistance.
+
 
 /**************************************************************************/
 /**************************************************************************/
@@ -63,6 +65,7 @@
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
+#ifdef GX_ENABLE_DEPRECATED_BINRES_API
 UINT _gxe_binres_language_info_load(GX_UBYTE *root_address, GX_LANGUAGE_HEADER *put_info)
 {
 UINT status;
@@ -78,4 +81,62 @@ UINT status;
     return(status);
 }
 #endif
+#endif
 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gxe_binres_language_info_load_ext                  PORTABLE C      */
+/*                                                           6.5.1        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Eclipse ThreadX contributors                                        */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks for errors in the resource load with a length.  */
+/*                                                                        */
+/*    A length of zero is rejected rather than treated as unknown: a       */
+/*    caller reaching this entry point is supplying one, and accepting     */
+/*    zero would silently leave every read unbounded.                      */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    root_address                          Resource address              */
+/*    root_size                             Extent of the resource        */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_binres_language_info_load_ext                   */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/**************************************************************************/
+#ifdef GX_BINARY_RESOURCE_SUPPORT
+UINT _gxe_binres_language_info_load_ext(GX_UBYTE *root_address, ULONG root_size, GX_LANGUAGE_HEADER *put_info)
+{
+UINT  status;
+
+    if ((root_address == GX_NULL) || (put_info == GX_NULL))
+    {
+        return GX_PTR_ERROR;
+    }
+
+    if (root_size == 0)
+    {
+        return GX_INVALID_SIZE;
+    }
+
+    status = _gx_binres_language_info_load_ext(root_address, root_size, put_info);
+
+    /* Return completion status code. */
+    return(status);
+}
+#endif

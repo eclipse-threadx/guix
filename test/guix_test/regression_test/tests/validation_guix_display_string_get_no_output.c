@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_display.h"
 #include "gx_validation_utility.h"
 #include "gx_system.h"
 
@@ -112,74 +115,74 @@ GX_STRING   string;
 GX_DISPLAY *display = root->gx_window_root_canvas->gx_canvas_display;
 
     /* Test invalid pointers. */
-    status = gx_display_string_get_ext(GX_NULL, 0, &string);
+    status = _gxe_display_string_get_ext(GX_NULL, 0, &string);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_display_string_get_ext(display, 0, GX_NULL);
+    status = _gxe_display_string_get_ext(display, 0, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     /* Test invalid resource id. */
-    status = gx_display_string_get_ext(display, 1024, &string);
+    status = _gxe_display_string_get_ext(display, 1024, &string);
     EXPECT_EQ(GX_INVALID_RESOURCE_ID, status);
 
-    status = gx_display_string_get_ext(display, 0, &string);
+    status = _gxe_display_string_get_ext(display, 0, &string);
     EXPECT_EQ(GX_SUCCESS, status);
 
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
     /* Test invalid pointers. */
-    status = gx_display_string_get(0, 0, 0);
+    status = _gxe_display_string_get(0, 0, 0);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_display_string_get(display, 0, 0);
+    status = _gxe_display_string_get(display, 0, 0);
     EXPECT_EQ(GX_PTR_ERROR, status);
    
-    status = gx_system_string_get(0, 0);
+    status = _gxe_system_string_get(0, 0);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_system_string_get(0, &string.gx_string_ptr);
+    status = _gxe_system_string_get(0, &string.gx_string_ptr);
     EXPECT_EQ(GX_SUCCESS, status);
  
     /* Test invalid resource id*/
-    status = gx_display_string_get(display, 1024, &string.gx_string_ptr);
+    status = _gxe_display_string_get(display, 1024, &string.gx_string_ptr);
     EXPECT_EQ(GX_INVALID_RESOURCE_ID, status);
  
-    status = gx_display_string_get(display, 2, &string.gx_string_ptr);
+    status = _gxe_display_string_get(display, 2, &string.gx_string_ptr);
     EXPECT_EQ(GX_SUCCESS, status);
 
     memset(test_string_invalid, 'x', GX_MAX_STRING_LENGTH + 1);
 
     /* Set new version language table. */
-    status = gx_display_language_table_set_ext(display, (GX_CONST GX_STRING **)test_language_table_ext, TEST_LANGUAGE_TABLE_SIZE, TEST_STRING_TABLE_SIZE);
+    status = _gxe_display_language_table_set_ext(display, (GX_CONST GX_STRING **)test_language_table_ext, TEST_LANGUAGE_TABLE_SIZE, TEST_STRING_TABLE_SIZE);
     EXPECT_EQ(GX_SUCCESS, status);
 
     /* Set active language. */
-    status = gx_system_active_language_set(TEST_LANGUAGE_ID_2);
+    status = _gxe_system_active_language_set(TEST_LANGUAGE_ID_2);
     EXPECT_EQ(GX_SUCCESS, status);
 
     /* Test get a string that is null pointer in active string table. */
-    status = gx_display_string_get(display, TEST_STRING_ID_NULL, &string.gx_string_ptr);
+    status = _gxe_display_string_get(display, TEST_STRING_ID_NULL, &string.gx_string_ptr);
     if(strcmp(string.gx_string_ptr, test_string_table_ext_1[TEST_STRING_ID_NULL].gx_string_ptr) != 0)
     {
         failed_tests++;
     }
   
     /* Test get a string from active string table. */
-    status = gx_display_string_get(display, TEST_STRING_ID_VALID, &string.gx_string_ptr);
+    status = _gxe_display_string_get(display, TEST_STRING_ID_VALID, &string.gx_string_ptr);
     if(strcmp(string.gx_string_ptr, test_string_table_ext_2[TEST_STRING_ID_VALID].gx_string_ptr) != 0)
     {
         failed_tests++;
     }
  
     /* Set old version language table that contains invalid string. */
-    status = gx_display_language_table_set(display, (GX_CHAR ***)test_language_table, TEST_LANGUAGE_TABLE_SIZE, TEST_STRING_TABLE_SIZE);
+    status = _gxe_display_language_table_set(display, (GX_CHAR ***)test_language_table, TEST_LANGUAGE_TABLE_SIZE, TEST_STRING_TABLE_SIZE);
     EXPECT_EQ(GX_SUCCESS, status);
 
     /* Test invalid string with extended API. */
-    status = gx_display_string_get_ext(display, TEST_STRING_ID_INVALID, &string);
+    status = _gxe_display_string_get_ext(display, TEST_STRING_ID_INVALID, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     /* Test get a string that is null pointer in active string table. */
-    status = gx_display_string_get(display, TEST_STRING_ID_NULL, &string.gx_string_ptr);
+    status = _gxe_display_string_get(display, TEST_STRING_ID_NULL, &string.gx_string_ptr);
     if(strcmp(string.gx_string_ptr, test_string_table_1[TEST_STRING_ID_NULL]) != 0)
     {
         failed_tests++;
@@ -187,7 +190,7 @@ GX_DISPLAY *display = root->gx_window_root_canvas->gx_canvas_display;
 
     /* Set deprecated language table to NULL. */
     display->gx_display_language_table_deprecated = GX_NULL;
-    status = gx_display_string_get(display, TEST_STRING_ID_VALID, &string.gx_string_ptr);
+    status = _gxe_display_string_get(display, TEST_STRING_ID_VALID, &string.gx_string_ptr);
     if(string.gx_string_ptr != GX_NULL)
     {
         failed_tests++;
@@ -196,7 +199,7 @@ GX_DISPLAY *display = root->gx_window_root_canvas->gx_canvas_display;
 
     /* Set langauge table to null, and call display string get. */
     display->gx_display_language_table = GX_NULL;
-    status = gx_display_string_get_ext(display, 1, &string);
+    status = _gxe_display_string_get_ext(display, 1, &string);
     if(string.gx_string_ptr != GX_NULL)
     {
         failed_tests++;

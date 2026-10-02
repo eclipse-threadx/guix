@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_menu.h"
 #include "gx_validation_utility.h"
 #include "gx_scroll_wheel.h"
 
@@ -61,22 +64,22 @@ GX_MENU  menu;
 GX_EVENT myevent;
 GX_RECTANGLE size;
 
-    status = gx_menu_event_process(GX_NULL, GX_NULL);
+    status = _gxe_menu_event_process(GX_NULL, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_menu_event_process(&menu, GX_NULL);
+    status = _gxe_menu_event_process(&menu, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
     
     memset(&menu, 0, sizeof(GX_MENU));
-    status = gx_menu_event_process(&menu, &myevent);
+    status = _gxe_menu_event_process(&menu, &myevent);
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
     gx_utility_rectangle_define(&size, 0, 0, 100, 100);
-    status = gx_menu_create(&menu, "menu", GX_NULL, 0, 0, 0, 0, &size);
+    status = _gxe_menu_create((GX_MENU *)&menu, "menu", (GX_WIDGET *)GX_NULL, 0, 0, 0, 0, &size, sizeof(GX_MENU));
     EXPECT_EQ(GX_SUCCESS, status);
 
     myevent.gx_event_type = GX_EVENT_DELETE;
-    status = gx_menu_event_process(&menu, &myevent);
+    status = _gxe_menu_event_process(&menu, &myevent);
     EXPECT_EQ(GX_SUCCESS, status);
     
     if(failed_tests == 0) 

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
-
+// Portions of this file were generated with AI assistance.
 
 /**************************************************************************/
 /**************************************************************************/
@@ -69,6 +69,13 @@ extern GX_CONST GX_FONT _gx_system_font_8bpp;
 
 static UINT _gx_binres_theme_header_load(GX_BINRES_DATA_INFO *info, GX_THEME_HEADER *header)
 {
+    /* The resource declares what follows, so the bytes this header occupies are
+       checked to be present before any of them is read. */
+    if (_gx_binres_range_check(info, info -> gx_binres_read_offset, GX_THEME_HEADER_SIZE) != GX_SUCCESS)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
     GX_BINRES_READ_USHORT(header -> gx_theme_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
@@ -219,6 +226,13 @@ static UINT _gx_binres_theme_header_load(GX_BINRES_DATA_INFO *info, GX_THEME_HEA
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_color_header_load(GX_BINRES_DATA_INFO *info, GX_COLOR_HEADER *header)
 {
+    /* The resource declares what follows, so the bytes this header occupies are
+       checked to be present before any of them is read. */
+    if (_gx_binres_range_check(info, info -> gx_binres_read_offset, GX_COLOR_HEADER_SIZE) != GX_SUCCESS)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
     GX_BINRES_READ_USHORT(header -> gx_color_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
@@ -267,6 +281,13 @@ static UINT _gx_binres_color_header_load(GX_BINRES_DATA_INFO *info, GX_COLOR_HEA
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_palette_header_load(GX_BINRES_DATA_INFO *info, GX_PALETTE_HEADER *header)
 {
+    /* The resource declares what follows, so the bytes this header occupies are
+       checked to be present before any of them is read. */
+    if (_gx_binres_range_check(info, info -> gx_binres_read_offset, GX_PALETTE_HEADER_SIZE) != GX_SUCCESS)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
     GX_BINRES_READ_USHORT(header -> gx_palette_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
@@ -315,6 +336,13 @@ static UINT _gx_binres_palette_header_load(GX_BINRES_DATA_INFO *info, GX_PALETTE
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 UINT _gx_binres_font_header_load(GX_BINRES_DATA_INFO *info, GX_FONT_HEADER *header)
 {
+    /* The resource declares what follows, so the bytes this header occupies are
+       checked to be present before any of them is read. */
+    if (_gx_binres_range_check(info, info -> gx_binres_read_offset, GX_FONT_HEADER_SIZE) != GX_SUCCESS)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
     GX_BINRES_READ_USHORT(header -> gx_font_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
@@ -381,6 +409,13 @@ UINT _gx_binres_font_header_load(GX_BINRES_DATA_INFO *info, GX_FONT_HEADER *head
 static UINT _gx_binres_page_header_load(GX_BINRES_DATA_INFO *info, GX_PAGE_HEADER *header)
 {
 ULONG read_data = 0;
+    /* The resource declares what follows, so the bytes this header occupies are
+       checked to be present before any of them is read. */
+    if (_gx_binres_range_check(info, info -> gx_binres_read_offset, GX_PAGE_HEADER_SIZE) != GX_SUCCESS)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
 
     GX_BINRES_READ_USHORT(header -> gx_page_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
@@ -421,6 +456,22 @@ ULONG read_data = 0;
     GX_BINRES_READ_ULONG(header -> gx_page_header_data_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(ULONG);
 
+    /* The glyph range arrives verbatim from the file, and every consumer of this
+       header turns it into a count as last - first + 1. Validate it here, at the
+       one point both the sizing pass and the load pass read a page header
+       through, so neither can be handed a range that underflows.  */
+#if defined(GX_EXTENDED_UNICODE_SUPPORT)
+    if (header -> gx_page_header_last_glyph > GX_MAX_GLYPH_CODE)
+    {
+        return GX_INVALID_FONT;
+    }
+#endif
+
+    if (header -> gx_page_header_first_glyph > header -> gx_page_header_last_glyph)
+    {
+        return GX_INVALID_FONT;
+    }
+
     return GX_SUCCESS;
 }
 #endif
@@ -460,6 +511,13 @@ ULONG read_data = 0;
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_GLYPH_HEADER *header)
 {
+    /* The resource declares what follows, so the bytes this header occupies are
+       checked to be present before any of them is read. */
+    if (_gx_binres_range_check(info, info -> gx_binres_read_offset, GX_GLYPH_HEADER_SIZE) != GX_SUCCESS)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
     GX_BINRES_READ_USHORT(header -> gx_glyph_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
@@ -534,7 +592,21 @@ static UINT _gx_binres_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_GLYPH_HEA
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_kerning_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_KERNING_GLYPH_HEADER *header)
 {
-    _gx_binres_glyph_header_load(info, (GX_GLYPH_HEADER *)header);
+UINT status;
+
+    /* A kerning record is a glyph record plus one field. The whole of it is
+       checked here, so the extra field is covered as well. */
+    if (_gx_binres_range_check(info, info -> gx_binres_read_offset, GX_KERNING_GLYPH_HEADER_SIZE) != GX_SUCCESS)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
+    status = _gx_binres_glyph_header_load(info, (GX_GLYPH_HEADER *)header);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
 
     GX_BINRES_READ_USHORT(header -> gx_glyph_header_kerning_table_size, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
@@ -579,6 +651,13 @@ static UINT _gx_binres_kerning_glyph_header_load(GX_BINRES_DATA_INFO *info, GX_K
 #ifdef GX_BINARY_RESOURCE_SUPPORT
 static UINT _gx_binres_pixelmap_header_load(GX_BINRES_DATA_INFO *info, GX_PIXELMAP_HEADER *header)
 {
+    /* The resource declares what follows, so the bytes this header occupies are
+       checked to be present before any of them is read. */
+    if (_gx_binres_range_check(info, info -> gx_binres_read_offset, GX_PIXELMAP_HEADER_SIZE) != GX_SUCCESS)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
     GX_BINRES_READ_USHORT(header -> gx_pixelmap_header_magic_number, info -> gx_binres_root_address + info -> gx_binres_read_offset);
     info -> gx_binres_read_offset += sizeof(USHORT);
 
@@ -669,6 +748,7 @@ GX_FONT_HEADER font_header;
 GX_PAGE_HEADER page_header;
 USHORT         page_index;
 UINT           glyph_count;
+UINT           glyph_size;
 UINT           read_offset = 0;
 UINT           temp;
 UINT           size = 0;
@@ -699,7 +779,12 @@ UINT           old_offset;
         info -> gx_binres_read_offset = font_header.gx_font_header_data_offset;
 
         /* Load font header. */
-        _gx_binres_font_header_load(info, &font_header);
+        status = _gx_binres_font_header_load(info, &font_header);
+
+        if (status != GX_SUCCESS)
+        {
+            return status;
+        }
     }
 
     for (page_index = 0; page_index < font_header.gx_font_header_page_count; page_index++)
@@ -721,27 +806,38 @@ UINT           old_offset;
         }
 #endif
 
-        /* Max glyph code is 0x10f000, overflow cannot occur. */
+        /* _gx_binres_page_header_load() has rejected an inverted range, so this
+           cannot underflow. Bounding the glyph code alone would not have been
+           enough: it limits where a range ends, not how wide it is.  */
         glyph_count = (UINT)(page_header.gx_page_header_last_glyph - page_header.gx_page_header_first_glyph + 1);
 
         /* Calculate size for loading font page. */
         temp = sizeof(GX_FONT);
 
-        /* Calculate size for loading glyphs. */
+        /* Calculate size for loading glyphs. The multiply is checked as well as
+           the addition below: a wrapped product here would reserve a buffer far
+           smaller than the load pass goes on to write.
+
+           The record size is the second argument on purpose. The checked
+           multiply divides by that argument, and a sizeof() is never zero,
+           whereas a glyph count could be if this were ever reached with an
+           empty range.  */
         if (page_header.gx_page_header_format & GX_FONT_FORMAT_COMPRESSED)
         {
-            temp += sizeof(GX_COMPRESSED_GLYPH) * glyph_count;
+            GX_UTILITY_MATH_UINT_MULT(glyph_count, sizeof(GX_COMPRESSED_GLYPH), glyph_size);
         }
 #if defined(GX_FONT_KERNING_SUPPORT)
         else if (page_header.gx_page_header_format & GX_FONT_FORMAT_KERNING)
         {
-            temp += sizeof(GX_KERNING_GLYPH) * glyph_count;
+            GX_UTILITY_MATH_UINT_MULT(glyph_count, sizeof(GX_KERNING_GLYPH), glyph_size);
         }
 #endif
         else
         {
-            temp += sizeof(GX_GLYPH) * glyph_count;
+            GX_UTILITY_MATH_UINT_MULT(glyph_count, sizeof(GX_GLYPH), glyph_size);
         }
+
+        GX_UTILITY_MATH_UINT_ADD(temp, glyph_size, temp);
 
         GX_UTILITY_MATH_UINT_ADD(size, temp, size);
     }
@@ -814,18 +910,36 @@ UINT               temp;
     /* Read resource header.  */
     info -> gx_binres_read_offset = 0;
 
-    _gx_binres_resource_header_load(info, &res_header);
+    status = _gx_binres_resource_header_load(info, &res_header);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
 
     if (res_header.gx_resource_header_magic_number != GX_MAGIC_NUMBER)
     {
         return GX_INVALID_FORMAT;
     }
 
+    /* A theme the resource does not hold would be sized at nothing, and the
+       load pass would still write it. A negative id converts to a count no
+       resource can declare, so it is refused by the same test. */
+    if ((UINT)theme_id >= res_header.gx_resource_header_theme_count)
+    {
+        return GX_INVALID_VALUE;
+    }
+
     info -> gx_binres_buffer_size = 0;
 
     for (theme_index = 0; theme_index < res_header.gx_resource_header_theme_count; theme_index++)
     {
-        _gx_binres_theme_header_load(info, &theme_header);
+        status = _gx_binres_theme_header_load(info, &theme_header);
+
+        if (status != GX_SUCCESS)
+        {
+            return status;
+        }
 
         if (theme_header.gx_theme_header_magic_number != GX_MAGIC_NUMBER)
         {
@@ -940,18 +1054,151 @@ UINT               temp;
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
-static UINT _gx_binres_glyphs_address_get(GX_BINRES_DATA_INFO *info, USHORT glyph_count, GX_CONST GX_GLYPH **returned_glyphs)
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_binres_buffer_reserve                           PORTABLE C      */
+/*                                                           6.5.1        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Eclipse ThreadX contributors                                        */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function reserves room for count records of record_size in the  */
+/*    load buffer and returns the address to write them at.               */
+/*                                                                        */
+/*    The sizing pass is expected to have reserved this space already.     */
+/*    It is checked again here because the two passes are separate code:   */
+/*    any disagreement between them has to end in a rejected font rather   */
+/*    than a write past the end of the buffer. The buffer index is only    */
+/*    advanced once the records are known to fit.                          */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    info                                  Binary resource data info     */
+/*    record_size                           Size of one record            */
+/*    count                                 Number of records to reserve  */
+/*    returned_address                      Destination for the address   */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    None                                                                */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    _gx_binres_glyphs_address_get                                       */
+/*    _gx_binres_kerning_glyphs_address_get                               */
+/*    _gx_binres_compressed_glyphs_address_get                            */
+/*    _gx_binres_one_font_load                                            */
+/*                                                                        */
+/**************************************************************************/
+static UINT _gx_binres_buffer_reserve(GX_BINRES_DATA_INFO *info, UINT record_size, UINT count, GX_UBYTE **returned_address)
+{
+UINT required;
+
+    /* record_size is a sizeof() and so is never zero, which the checked
+       multiply requires of its second argument.  */
+    GX_UTILITY_MATH_UINT_MULT(count, record_size, required);
+
+    if ((required > info -> gx_binres_buffer_size) ||
+        (info -> gx_binres_buffer_index > (info -> gx_binres_buffer_size - required)))
+    {
+        return GX_INVALID_MEMORY_SIZE;
+    }
+
+    *returned_address = info -> gx_binres_buffer + info -> gx_binres_buffer_index;
+    info -> gx_binres_buffer_index += required;
+
+    return GX_SUCCESS;
+}
+
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_binres_glyph_data_check                         PORTABLE C      */
+/*                                                           6.5.1        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Eclipse ThreadX contributors                                        */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function checks that a glyph's data block, which starts at the */
+/*    read offset, lies inside the resource, and that the glyph's map     */
+/*    offset addresses a position inside that block.                      */
+/*                                                                        */
+/*    The map offset is a file value turned into a pointer that is kept   */
+/*    and followed when the glyph is drawn, so it has to address data the */
+/*    resource holds. It is bounded by the block rather than by its own   */
+/*    offset because the block is padded at the front to align the map:  */
+/*    the map starts inside the block and ends with it.                   */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    info                                  Binary resource data info     */
+/*    map_offset                            Glyph map offset              */
+/*    data_size                             Glyph data block size         */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_binres_range_check                Check a range of the resource */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    _gx_binres_glyphs_address_get                                       */
+/*    _gx_binres_kerning_glyphs_address_get                               */
+/*    _gx_binres_compressed_glyphs_address_get                            */
+/*                                                                        */
+/**************************************************************************/
+static UINT _gx_binres_glyph_data_check(GX_BINRES_DATA_INFO *info, ULONG map_offset, ULONG data_size)
+{
+ULONG data_start = info -> gx_binres_read_offset;
+
+    if ((_gx_binres_range_check(info, data_start, data_size) != GX_SUCCESS) ||
+        (map_offset < data_start) || ((map_offset - data_start) > data_size))
+    {
+        return GX_INVALID_FORMAT;
+    }
+
+    return GX_SUCCESS;
+}
+
+static UINT _gx_binres_glyphs_address_get(GX_BINRES_DATA_INFO *info, UINT glyph_count, GX_CONST GX_GLYPH **returned_glyphs)
 {
 GX_GLYPH_HEADER header;
 GX_GLYPH       *glyphs;
-USHORT          index = 0;
+GX_UBYTE       *address;
+UINT            status;
+UINT            index = 0;
 
-    glyphs = (GX_GLYPH *)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
-    info -> gx_binres_buffer_index += sizeof(GX_GLYPH) * glyph_count;
+    status = _gx_binres_buffer_reserve(info, sizeof(GX_GLYPH), glyph_count, &address);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
+
+    glyphs = (GX_GLYPH *)address;
 
     for (index = 0; index < glyph_count; index++)
     {
-        _gx_binres_glyph_header_load(info, &header);
+        status = _gx_binres_glyph_header_load(info, &header);
+
+        if (status != GX_SUCCESS)
+        {
+            return status;
+        }
 
         if (header.gx_glyph_header_magic_number != GX_MAGIC_NUMBER)
         {
@@ -968,6 +1215,12 @@ USHORT          index = 0;
         /* Read glyph data.  */
         if (header.gx_glyph_header_data_size)
         {
+            if (_gx_binres_glyph_data_check(info, header.gx_glyph_header_map_offset,
+                                            header.gx_glyph_header_data_size) != GX_SUCCESS)
+            {
+                return GX_INVALID_FORMAT;
+            }
+
             glyphs[index].gx_glyph_map = (GX_UBYTE *)(info -> gx_binres_root_address + header.gx_glyph_header_map_offset);
             info -> gx_binres_read_offset += header.gx_glyph_header_data_size;
         }
@@ -1021,19 +1274,32 @@ USHORT          index = 0;
 /**************************************************************************/
 #ifdef GX_FONT_KERNING_SUPPORT
 #ifdef GX_BINARY_RESOURCE_SUPPORT
-static UINT _gx_binres_kerning_glyphs_address_get(GX_BINRES_DATA_INFO *info, USHORT glyph_count,
+static UINT _gx_binres_kerning_glyphs_address_get(GX_BINRES_DATA_INFO *info, UINT glyph_count,
                                                   GX_CONST GX_KERNING_GLYPH **returned_glyphs)
 {
 GX_KERNING_GLYPH_HEADER header;
 GX_KERNING_GLYPH       *glyphs;
-USHORT                  index = 0;
+GX_UBYTE               *address;
+UINT                    status;
+UINT                    index = 0;
 
-    glyphs = (GX_KERNING_GLYPH *)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
-    info -> gx_binres_buffer_index += sizeof(GX_KERNING_GLYPH) * glyph_count;
+    status = _gx_binres_buffer_reserve(info, sizeof(GX_KERNING_GLYPH), glyph_count, &address);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
+
+    glyphs = (GX_KERNING_GLYPH *)address;
 
     for (index = 0; index < glyph_count; index++)
     {
-        _gx_binres_kerning_glyph_header_load(info, &header);
+        status = _gx_binres_kerning_glyph_header_load(info, &header);
+
+        if (status != GX_SUCCESS)
+        {
+            return status;
+        }
 
         if (header.gx_glyph_header_magic_number != GX_MAGIC_NUMBER)
         {
@@ -1050,6 +1316,12 @@ USHORT                  index = 0;
         /* Read glyph data.  */
         if (header.gx_glyph_header_data_size)
         {
+            if (_gx_binres_glyph_data_check(info, header.gx_glyph_header_map_offset,
+                                            header.gx_glyph_header_data_size) != GX_SUCCESS)
+            {
+                return GX_INVALID_FORMAT;
+            }
+
             glyphs[index].gx_glyph_map = (GX_UBYTE *)(info -> gx_binres_root_address + header.gx_glyph_header_map_offset);
             info -> gx_binres_read_offset += header.gx_glyph_header_data_size;
         }
@@ -1061,6 +1333,14 @@ USHORT                  index = 0;
         /* Set glyph kerning table. */
         if (header.gx_glyph_header_kerning_table_size)
         {
+            /* The kerning table is kept as a pointer and read when the glyph
+               is drawn, so it has to lie inside the resource. */
+            if (_gx_binres_range_check(info, info -> gx_binres_read_offset,
+                                       header.gx_glyph_header_kerning_table_size) != GX_SUCCESS)
+            {
+                return GX_INVALID_FORMAT;
+            }
+
             glyphs[index].gx_kerning_table = (GX_UBYTE *)(info -> gx_binres_root_address + info -> gx_binres_read_offset);
             info -> gx_binres_read_offset += header.gx_glyph_header_kerning_table_size;
         }
@@ -1109,19 +1389,32 @@ USHORT                  index = 0;
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
-static UINT _gx_binres_compressed_glyphs_address_get(GX_BINRES_DATA_INFO *info, USHORT glyph_count,
+static UINT _gx_binres_compressed_glyphs_address_get(GX_BINRES_DATA_INFO *info, UINT glyph_count,
                                                      GX_CONST GX_COMPRESSED_GLYPH **returned_glyphs)
 {
 GX_GLYPH_HEADER      header;
 GX_COMPRESSED_GLYPH *glyphs;
-USHORT               index = 0;
+GX_UBYTE            *address;
+UINT                 status;
+UINT                 index = 0;
 
-    glyphs = (GX_COMPRESSED_GLYPH *)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
-    info -> gx_binres_buffer_index += sizeof(GX_COMPRESSED_GLYPH) * glyph_count;
+    status = _gx_binres_buffer_reserve(info, sizeof(GX_COMPRESSED_GLYPH), glyph_count, &address);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
+
+    glyphs = (GX_COMPRESSED_GLYPH *)address;
 
     for (index = 0; index < glyph_count; index++)
     {
-        _gx_binres_glyph_header_load(info, &header);
+        status = _gx_binres_glyph_header_load(info, &header);
+
+        if (status != GX_SUCCESS)
+        {
+            return status;
+        }
 
         if (header.gx_glyph_header_magic_number != GX_MAGIC_NUMBER)
         {
@@ -1139,6 +1432,12 @@ USHORT               index = 0;
         /* Read glyph data.  */
         if (header.gx_glyph_header_data_size)
         {
+            if (_gx_binres_glyph_data_check(info, header.gx_glyph_header_map_offset,
+                                            header.gx_glyph_header_data_size) != GX_SUCCESS)
+            {
+                return GX_INVALID_FORMAT;
+            }
+
             glyphs[index].gx_glyph_map = (GX_UBYTE *)(info -> gx_binres_root_address + header.gx_glyph_header_map_offset);
             info -> gx_binres_read_offset += header.gx_glyph_header_data_size;
         }
@@ -1198,8 +1497,9 @@ GX_PAGE_HEADER header;
 GX_FONT       *font;
 GX_FONT       *head_page = GX_NULL;
 GX_FONT       *pre_page = GX_NULL;
+GX_UBYTE      *address;
 USHORT         index;
-USHORT         glyph_count;
+UINT           glyph_count;
 UINT           read_offset = 0;
 
     /* Read font header.  */
@@ -1242,7 +1542,12 @@ UINT           read_offset = 0;
             info -> gx_binres_read_offset = font_header.gx_font_header_data_offset;
 
             /* Read font header. */
-            _gx_binres_font_header_load(info, &font_header);
+            status = _gx_binres_font_header_load(info, &font_header);
+
+            if (status != GX_SUCCESS)
+            {
+                return status;
+            }
         }
 
         for (index = 0; index < font_header.gx_font_header_page_count; index++)
@@ -1255,8 +1560,18 @@ UINT           read_offset = 0;
                 return status;
             }
 
-            font = (GX_FONT *)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
-            info -> gx_binres_buffer_index += sizeof(GX_FONT);
+            /* The page's own record is reserved through the same bound as its
+               glyphs. The sizing pass counts one of these per page, but it
+               derives the page count from the header a second time, so the
+               agreement is checked here rather than assumed.  */
+            status = _gx_binres_buffer_reserve(info, sizeof(GX_FONT), 1, &address);
+
+            if (status != GX_SUCCESS)
+            {
+                return status;
+            }
+
+            font = (GX_FONT *)address;
 
             font -> gx_font_baseline = header.gx_page_header_baseline;
             font -> gx_font_first_glyph = header.gx_page_header_first_glyph;
@@ -1267,7 +1582,10 @@ UINT           read_offset = 0;
             font -> gx_font_prespace = header.gx_page_header_prespace;
 
             /* Read glyphs data.  */
-            glyph_count = (USHORT)(font -> gx_font_last_glyph - font -> gx_font_first_glyph + 1);
+            /* Use the same width the sizing pass used. Truncating here is what
+               let the two passes disagree: the reservation was made for one
+               count and the write performed with another.  */
+            glyph_count = (UINT)(font -> gx_font_last_glyph - font -> gx_font_first_glyph + 1);
 
             if (font -> gx_font_format & GX_FONT_FORMAT_COMPRESSED)
             {
@@ -1358,6 +1676,7 @@ static UINT _gx_binres_color_table_load(GX_BINRES_DATA_INFO *info, USHORT color_
 {
 GX_COLOR_HEADER header;
 GX_COLOR       *color_table = GX_NULL;
+UINT            status;
 
     if (!color_count)
     {
@@ -1365,9 +1684,22 @@ GX_COLOR       *color_table = GX_NULL;
     }
 
     /* Read color table header.  */
-    _gx_binres_color_header_load(info, &header);
+    status = _gx_binres_color_header_load(info, &header);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
 
     if (header.gx_color_header_magic_number != GX_MAGIC_NUMBER)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
+    /* The table is kept as a pointer and read when the theme is drawn, so the
+       entries the theme declares have to lie inside the resource. */
+    if ((header.gx_color_header_data_size < ((ULONG)color_count * sizeof(GX_COLOR))) ||
+        (_gx_binres_range_check(info, info -> gx_binres_read_offset, header.gx_color_header_data_size) != GX_SUCCESS))
     {
         return GX_INVALID_FORMAT;
     }
@@ -1419,6 +1751,7 @@ static UINT _gx_binres_palette_table_load(GX_BINRES_DATA_INFO *info, USHORT colo
 {
 GX_PALETTE_HEADER header;
 GX_COLOR         *palette_table = GX_NULL;
+UINT              status;
 
     if (!color_count)
     {
@@ -1426,9 +1759,22 @@ GX_COLOR         *palette_table = GX_NULL;
     }
 
     /* Read palette table header.  */
-    _gx_binres_palette_header_load(info, &header);
+    status = _gx_binres_palette_header_load(info, &header);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
 
     if (header.gx_palette_header_magic_number != GX_MAGIC_NUMBER)
+    {
+        return GX_INVALID_FORMAT;
+    }
+
+    /* The table is kept as a pointer and read when the theme is drawn, so the
+       entries the theme declares have to lie inside the resource. */
+    if ((header.gx_palette_header_data_size < ((ULONG)color_count * sizeof(GX_COLOR))) ||
+        (_gx_binres_range_check(info, info -> gx_binres_read_offset, header.gx_palette_header_data_size) != GX_SUCCESS))
     {
         return GX_INVALID_FORMAT;
     }
@@ -1480,10 +1826,17 @@ static UINT _gx_binres_font_table_load(GX_BINRES_DATA_INFO *info, USHORT table_s
 {
 UINT      status = GX_SUCCESS;
 GX_FONT **font_table = GX_NULL;
+GX_UBYTE *address;
 USHORT    index;
 
-    font_table = (GX_FONT **)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
-    info -> gx_binres_buffer_index += sizeof(GX_FONT *) * table_size;
+    status = _gx_binres_buffer_reserve(info, sizeof(GX_FONT *), table_size, &address);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
+
+    font_table = (GX_FONT **)address;
 
     for (index = 0; index < table_size; index++)
     {
@@ -1543,6 +1896,7 @@ ULONG              size;
 UINT               read_offset = 0;
 
 GX_PIXELMAP       *pixelmap;
+GX_UBYTE          *address;
 
     /* Read pixelmap header.  */
     status = _gx_binres_pixelmap_header_load(info, &header);
@@ -1565,12 +1919,23 @@ GX_PIXELMAP       *pixelmap;
         info -> gx_binres_read_offset = header.gx_pixelmap_header_data_offset;
 
         /* Read pixelmap header. */
-        _gx_binres_pixelmap_header_load(info, &header);
+        status = _gx_binres_pixelmap_header_load(info, &header);
+
+        if (status != GX_SUCCESS)
+        {
+            return status;
+        }
     }
 
     /* Allocate memory for pixelmap.  */
-    pixelmap = (GX_PIXELMAP *)(info -> gx_binres_buffer + info -> gx_binres_buffer_index);
-    info -> gx_binres_buffer_index += sizeof(GX_PIXELMAP);
+    status = _gx_binres_buffer_reserve(info, sizeof(GX_PIXELMAP), 1, &address);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
+
+    pixelmap = (GX_PIXELMAP *)address;
 
     pixelmap -> gx_pixelmap_aux_data_size = header.gx_pixelmap_header_aux_data_size;
     pixelmap -> gx_pixelmap_data_size = header.gx_pixelmap_header_map_size;
@@ -1659,12 +2024,25 @@ static UINT _gx_binres_pixelmap_table_load(GX_BINRES_DATA_INFO *info, USHORT tab
 {
 UINT         status = GX_SUCCESS;
 USHORT       index;
-USHORT       map_id;
-GX_PIXELMAP *pixelmap;
+USHORT       map_id = 0;
+GX_PIXELMAP *pixelmap = GX_NULL;
 
     for (index = 1; index < table_size; index++)
     {
         status = _gx_binres_one_pixelmap_load(info, &pixelmap, &map_id);
+
+        /* A failed load leaves map_id and pixelmap unset, so nothing is stored.  */
+        if (status != GX_SUCCESS)
+        {
+            return status;
+        }
+
+        /* map_id is read from the resource, while the table is sized from the
+           theme header's pixelmap count, so it must be bounded here.  */
+        if (map_id >= table_size)
+        {
+            return GX_INVALID_FORMAT;
+        }
 
         while (index < map_id)
         {
@@ -1672,11 +2050,6 @@ GX_PIXELMAP *pixelmap;
         }
 
         pixelmap_table[index] = pixelmap;
-
-        if (status)
-        {
-            return status;
-        }
     }
 
     return status;
@@ -1726,19 +2099,21 @@ GX_PIXELMAP *pixelmap;
 /*                                                                        */
 /**************************************************************************/
 #ifdef GX_BINARY_RESOURCE_SUPPORT
-UINT _gx_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme)
+UINT _gx_binres_theme_load_ext(GX_UBYTE *root_address, ULONG root_size, INT theme_id, GX_THEME **returned_theme)
 {
 UINT                status;
 GX_BINRES_DATA_INFO info;
 GX_RESOURCE_HEADER  header;
 GX_THEME_HEADER     theme_header;
 GX_THEME           *theme;
+GX_UBYTE           *address;
 INT                 index;
 
     memset(&info, 0, sizeof(GX_BINRES_DATA_INFO));
     memset(&theme_header, 0, sizeof(GX_THEME_HEADER));
 
     info.gx_binres_root_address = (GX_UBYTE *)root_address;
+    info.gx_binres_root_size = root_size;
 
     /* Allocate memory that needed for theme table.  */
     status = _gx_binres_theme_buffer_allocate(&info, theme_id);
@@ -1757,12 +2132,23 @@ INT                 index;
         {
 
             /* Read theme header.  */
-            _gx_binres_theme_header_load(&info, &theme_header);
+            status = _gx_binres_theme_header_load(&info, &theme_header);
+
+            if (status != GX_SUCCESS)
+            {
+                break;
+            }
 
             if (index == theme_id)
             {
-                theme = (GX_THEME *)(info.gx_binres_buffer + info.gx_binres_buffer_index);
-                info.gx_binres_buffer_index += sizeof(GX_THEME);
+                status = _gx_binres_buffer_reserve(&info, sizeof(GX_THEME), 1, &address);
+
+                if (status != GX_SUCCESS)
+                {
+                    break;
+                }
+
+                theme = (GX_THEME *)address;
 
                 theme -> theme_color_table_size = theme_header.gx_theme_header_color_count;
                 theme -> theme_palette_size = theme_header.gx_theme_header_palette_count;
@@ -1798,25 +2184,22 @@ INT                 index;
                 if ((status == GX_SUCCESS) && theme_header.gx_theme_header_pixelmap_data_size && theme_header.gx_theme_header_pixelmap_count)
                 {
                     /* Allocate pixelmap table size.  */
-                    theme -> theme_pixelmap_table = (GX_PIXELMAP **)(info.gx_binres_buffer + info.gx_binres_buffer_index);
-                    info.gx_binres_buffer_index += sizeof(GX_PIXELMAP *) * (UINT)(theme_header.gx_theme_header_pixelmap_count + 1);
+                    status = _gx_binres_buffer_reserve(&info, sizeof(GX_PIXELMAP *),
+                                                       (UINT)(theme_header.gx_theme_header_pixelmap_count + 1), &address);
+                    theme -> theme_pixelmap_table = (GX_PIXELMAP **)address;
 
                     /* Load pixelmap table.  */
-                    status = _gx_binres_pixelmap_table_load(&info,
-                                                            theme -> theme_pixelmap_table_size,
-                                                            theme -> theme_pixelmap_table);
+                    if (status == GX_SUCCESS)
+                    {
+                        status = _gx_binres_pixelmap_table_load(&info,
+                                                                theme -> theme_pixelmap_table_size,
+                                                                theme -> theme_pixelmap_table);
+                    }
                 }
 
                 if (status == GX_SUCCESS)
                 {
                     *returned_theme = theme;
-                }
-                else
-                {
-                    /* Free allocated buffer if theme loading failed.  */
-                    _gx_system_memory_free(info.gx_binres_buffer);
-
-                    *returned_theme = GX_NULL;
                 }
 
                 break;
@@ -1828,7 +2211,71 @@ INT                 index;
         }
     }
 
+    if ((status != GX_SUCCESS) && (info.gx_binres_buffer != GX_NULL))
+    {
+        /* Free allocated buffer if theme loading failed.  */
+        _gx_system_memory_free(info.gx_binres_buffer);
+
+        *returned_theme = GX_NULL;
+    }
+
     return status;
 }
 #endif
 
+/**************************************************************************/
+/*                                                                        */
+/*  FUNCTION                                               RELEASE        */
+/*                                                                        */
+/*    _gx_binres_theme_load                               PORTABLE C      */
+/*                                                           6.5.1        */
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Eclipse ThreadX contributors                                        */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
+/*                                                                        */
+/*    This function is the form that takes no resource length. It derives  */
+/*    one from the size the resource declares and defers to theme_load_ex */
+/*                                                                        */
+/*    A truncated resource is rejected, because its declared size still    */
+/*    describes the whole of it. A resource built to mislead is not: the   */
+/*    same attacker chose that size. Callers that can supply the real      */
+/*    length should use the _ext form, which bounds every read by it.      */
+/*                                                                        */
+/*  INPUT                                                                 */
+/*                                                                        */
+/*    root_address                          Resource address              */
+/*    theme_id                              Theme index to load           */
+/*                                                                        */
+/*  OUTPUT                                                                */
+/*                                                                        */
+/*    status                                Completion status             */
+/*                                                                        */
+/*  CALLS                                                                 */
+/*                                                                        */
+/*    _gx_binres_declared_size_get          Derive the resource extent    */
+/*                                                                        */
+/*  CALLED BY                                                             */
+/*                                                                        */
+/*    Application Code                                                    */
+/*                                                                        */
+/**************************************************************************/
+#ifdef GX_BINARY_RESOURCE_SUPPORT
+#ifdef GX_ENABLE_DEPRECATED_BINRES_API
+UINT _gx_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme)
+{
+ULONG root_size;
+UINT  status;
+
+    status = _gx_binres_declared_size_get(root_address, &root_size);
+
+    if (status != GX_SUCCESS)
+    {
+        return status;
+    }
+
+    return _gx_binres_theme_load_ext(root_address, root_size, theme_id, returned_theme);
+}
+#endif
+#endif

@@ -33,14 +33,11 @@ version: 2
 # Dependabot ecosystem can parse. That pin moves by hand.
 updates:
   - package-ecosystem: "github-actions"
-    # "/" is the only accepted value for this ecosystem; it covers
-    # .github/workflows and .github/actions. The cross-repository reusable
-    # workflow in regression_test.yml
-    # (eclipse-threadx/threadx/.github/workflows/regression_template.yml@master)
-    # is correctly left alone: it references a branch, not a version, so there
-    # is nothing for Dependabot to move. Tracking that branch is deliberate --
-    # it is first-party, in the same organisation, and it means this repository
-    # picks up harness fixes without a bump here.
+    # Reusable workflow revisions are reviewed with the dependency bootstrap.
+    # Keep those pins outside automated version updates.
+    ignore:
+      - dependency-name: "eclipse-threadx/threadx"
+      - dependency-name: "eclipse-threadx/threadx/.github/workflows/regression_template.yml"
     directory: "/"
 
     schedule:

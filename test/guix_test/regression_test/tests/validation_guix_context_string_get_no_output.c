@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_context.h"
 #include "gx_validation_utility.h"
 
 TEST_PARAM test_parameter = {
@@ -60,19 +63,19 @@ GX_STRING  string;
 
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
     gx_canvas_drawing_initiate(root->gx_window_root_canvas, &button_screen, &button_screen.gx_widget_size);
-    status = gx_context_string_get(0, GX_NULL);
+    status = _gxe_context_string_get(0, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
     gx_canvas_drawing_complete(root->gx_window_root_canvas, GX_FALSE);
 
-    status = gx_context_string_get(1, &string.gx_string_ptr);
+    status = _gxe_context_string_get(1, &string.gx_string_ptr);
     EXPECT_EQ(GX_INVALID_CONTEXT, status);
 #endif
     gx_canvas_drawing_initiate(root->gx_window_root_canvas, &button_screen, &button_screen.gx_widget_size);
-    status = gx_context_string_get_ext(0, GX_NULL);
+    status = _gxe_context_string_get_ext(0, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
     gx_canvas_drawing_complete(root->gx_window_root_canvas, GX_FALSE);
 
-    status = gx_context_string_get_ext(1, &string);
+    status = _gxe_context_string_get_ext(1, &string);
     EXPECT_EQ(GX_INVALID_CONTEXT, status);
 
     if(failed_tests == 0) 

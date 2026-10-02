@@ -11,16 +11,16 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #ifndef StudioFullVersion
-#define StudioFullVersion "6.5.1.202602a"
+#define StudioFullVersion "6.5.2.202603"
 #endif
 #ifndef StudioShortVersion
-#define StudioShortVersion "6.5.1"
+#define StudioShortVersion "6.5.2"
 #endif
 #ifndef StudioMajorMinorVersion
 #define StudioMajorMinorVersion "6.5"
 #endif
 #ifndef StudioVersionInfoVersion
-#define StudioVersionInfoVersion "6.5.1.3"
+#define StudioVersionInfoVersion "6.5.2.3"
 #endif
 
 [Setup]
@@ -83,8 +83,8 @@ Source: "installer\vc_runtime\x86\*"; DestDir: "{app}\studio"; Flags: ignorevers
 
 [Icons]
 Name: "{group}\GUIX Studio {#StudioMajorMinorVersion}\GUIX Studio"; Filename: "{app}\studio\GUIX_Studio.exe"
-Name: "{group}\GUIX Studio {#StudioMajorMinorVersion}\GUIX Studio User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/about-guix-studio.md"
-Name: "{group}\GUIX Studio {#StudioMajorMinorVersion}\GUIX User's Guide"; Filename: "https://github.com/eclipse-threadx/rtos-docs/blob/main/rtos-docs/guix/about-guix-studio.md"
+Name: "{group}\GUIX Studio {#StudioMajorMinorVersion}\GUIX Studio User's Guide"; Filename: "https://threadx.io/releases/6.5.2/guix/main/about-guix-studio.html"
+Name: "{group}\GUIX Studio {#StudioMajorMinorVersion}\GUIX User's Guide"; Filename: "https://threadx.io/releases/6.5.2/guix/main/about-guix.html"
 Name: "{group}\GUIX Studio {#StudioMajorMinorVersion}\{cm:UninstallProgram,GUIX Studio}"; Filename: "{uninstallexe}"
 Name: "{userdesktop}\GUIX Studio {#StudioFullVersion}"; Filename: "{app}\studio\GUIX_Studio.exe"; Tasks: desktopicon
 

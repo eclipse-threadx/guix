@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -59,14 +61,14 @@ int       failed_tests = 0;
 UINT      status;
 GX_STRING string;
 
-    status = gx_system_version_string_get_ext(GX_NULL);
+    status = _gxe_system_version_string_get_ext(GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_system_version_string_get_ext(&string);
+    status = _gxe_system_version_string_get_ext(&string);
     EXPECT_EQ(GX_SUCCESS, status);
 
     memset(_gx_system_version_string, 'x', sizeof(_gx_system_version_string));
-    status = gx_system_version_string_get_ext(&string);
+    status = _gxe_system_version_string_get_ext(&string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     if(failed_tests == 0) 

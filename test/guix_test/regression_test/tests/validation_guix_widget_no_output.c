@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -220,10 +222,10 @@ GX_EVENT   my_event;
     EXPECT_EQ(GX_SUCCESS, status);
 
     gx_widget_detach(&window_screen.window_screen_window_4);
-    widget = _gx_widget_first_visible_client_child_get(&window_screen.window_screen_scroll_frame_1);
+    widget = _gx_widget_first_visible_client_child_get((GX_WIDGET *)&window_screen.window_screen_scroll_frame_1);
     EXPECT_EQ(widget, GX_NULL);
 
-    widget = _gx_widget_last_visible_client_child_get(&window_screen.window_screen_scroll_frame_1);
+    widget = _gx_widget_last_visible_client_child_get((GX_WIDGET *)&window_screen.window_screen_scroll_frame_1);
     EXPECT_EQ(widget, GX_NULL);
 
     widget = window_screen.window_screen_scroll_frame_1.gx_widget_first_child;

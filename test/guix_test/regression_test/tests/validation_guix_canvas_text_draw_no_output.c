@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_canvas.h"
 #include "gx_validation_utility.h"
 
 TEST_PARAM test_parameter = {
@@ -66,31 +69,31 @@ GX_CHAR          invalid_string[GX_MAX_STRING_LENGTH + 1];
 
 #ifdef GX_ENABLE_DEPRECATED_STRING_API
     memset(invalid_string, 'x', sizeof(invalid_string));
-    status = gx_canvas_text_draw(0, 0, invalid_string, -1);
+    status = _gxe_canvas_text_draw(0, 0, invalid_string, -1);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 #endif
 
-    status = gx_canvas_text_draw_ext(0, 0, GX_NULL);
+    status = _gxe_canvas_text_draw_ext(0, 0, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     memset(&string, 0, sizeof(GX_STRING));
-    status = gx_canvas_text_draw_ext(0, 0, &string);
+    status = _gxe_canvas_text_draw_ext(0, 0, &string);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     string.gx_string_ptr = test_string;
     string.gx_string_length = sizeof(test_string) - 2;
-    status = gx_canvas_text_draw_ext(0, 0, &string);
+    status = _gxe_canvas_text_draw_ext(0, 0, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_length = sizeof(test_string);
-    status = gx_canvas_text_draw_ext(0, 0, &string);
+    status = _gxe_canvas_text_draw_ext(0, 0, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
     
     /* Complete drawing. */
     gx_canvas_drawing_complete(root->gx_window_root_canvas, GX_FALSE);
 
     string.gx_string_length = sizeof(test_string) - 1;
-    status = gx_canvas_text_draw_ext(0, 0, &string);
+    status = _gxe_canvas_text_draw_ext(0, 0, &string);
     EXPECT_EQ(GX_INVALID_CONTEXT, status);
 
     if(failed_tests == 0) 

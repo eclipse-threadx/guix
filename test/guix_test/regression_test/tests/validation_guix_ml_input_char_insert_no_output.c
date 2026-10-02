@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_multi_line_text_input.h"
 #include "gx_validation_utility.h"
 #include "gx_scroll_wheel.h"
 
@@ -63,27 +66,27 @@ GX_MULTI_LINE_TEXT_INPUT ml_input;
 
     memset(&ml_input, 0, sizeof(GX_MULTI_LINE_TEXT_INPUT));
 
-    status = gx_multi_line_text_input_char_insert_ext(GX_NULL, GX_NULL);
+    status = _gxe_multi_line_text_input_char_insert_ext(GX_NULL, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_multi_line_text_input_char_insert_ext(&ml_input, GX_NULL);
+    status = _gxe_multi_line_text_input_char_insert_ext(&ml_input, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     memset(&string, 0, sizeof(GX_STRING));
-    status = gx_multi_line_text_input_char_insert_ext(&ml_input, &string);
+    status = _gxe_multi_line_text_input_char_insert_ext(&ml_input, &string);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     string.gx_string_ptr = test_string;
     string.gx_string_length = sizeof(test_string) - 2;
-    status = gx_multi_line_text_input_char_insert_ext(&ml_input, &string);
+    status = _gxe_multi_line_text_input_char_insert_ext(&ml_input, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
 
     string.gx_string_length = sizeof(test_string);
-    status = gx_multi_line_text_input_char_insert_ext(&ml_input, &string);
+    status = _gxe_multi_line_text_input_char_insert_ext(&ml_input, &string);
     EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
  
     string.gx_string_length = sizeof(test_string) - 1;
-    status = gx_multi_line_text_input_char_insert_ext(&ml_input, &string);
+    status = _gxe_multi_line_text_input_char_insert_ext(&ml_input, &string);
     EXPECT_EQ(GX_INVALID_WIDGET, status);
     
     if(failed_tests == 0) 

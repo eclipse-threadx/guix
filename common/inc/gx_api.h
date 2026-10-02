@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 
 /**************************************************************************/
 /**************************************************************************/
@@ -24,7 +26,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.5.1        */
+/*                                                           6.5.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -59,9 +61,9 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION  6
 #define GUIX_MINOR_VERSION  5
-#define GUIX_PATCH_VERSION  1
-#define GUIX_BUILD_VERSION  202602
-#define GUIX_HOTFIX_VERSION 'a'
+#define GUIX_PATCH_VERSION  2
+#define GUIX_BUILD_VERSION  202603
+#define GUIX_HOTFIX_VERSION ' '
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -174,6 +176,14 @@ typedef struct GX_STRING_STRUCT
 
 #ifndef GX_DISABLE_BINARY_RESOURCE_SUPPORT
 #define GX_BINARY_RESOURCE_SUPPORT
+
+#ifndef GX_DISABLE_DEPRECATED_BINRES_API
+#define GX_ENABLE_DEPRECATED_BINRES_API
+#pragma message("GUIX deprecated binary resource API is enabled. The loaders that " \
+                "take no resource length cannot bound a resource built to mislead. " \
+                "Define GX_DISABLE_DEPRECATED_BINRES_API and migrate to the _ext " \
+                "variants.")
+#endif
 #endif
 
 #ifndef GX_DISABLE_BRUSH_ALPHA_SUPPORT
@@ -666,7 +676,7 @@ typedef struct GX_STRING_STRUCT
 #define GX_TYPE_RICH_TEXT_VIEW              144
 #define GX_TYPE_GENERIC_SCROLL_WHEEL        145
 
-/* A pseudo-type, used by Studio code generator */ 
+/* A pseudo-type, used by Studio code generator */
 #define GX_TYPE_TEMPLATE                    200
 
 /* Applications can define their own window types */
@@ -1031,7 +1041,7 @@ typedef GX_UBYTE GX_CHAR_CODE;
 #if !defined(GX_MOUSE_MAX_RESOLUTION)
 #define GX_MOUSE_MAX_RESOLUTION 32
 #endif
-#endif 
+#endif
 
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
 #define GX_PROMPT_BIDI_RESOLVED_TEXT_INFO               GX_BIDI_RESOLVED_TEXT_INFO *gx_prompt_bidi_resolved_text_info;
@@ -1103,7 +1113,7 @@ typedef struct GX_VIEW_STRUCT
     GX_UBYTE           gx_glyph_advance;      /* Glyph advance                                   */ \
     GX_BYTE            gx_glyph_leading;      /* Pen x-pre-advance                               */ \
     GX_UBYTE           gx_glyph_width;                                                              \
-    GX_UBYTE           gx_glyph_height;                                                             
+    GX_UBYTE           gx_glyph_height;
 
 /* Define the Glyph type.  */
 typedef struct GX_GLYPH_STRUCT
@@ -1115,15 +1125,15 @@ typedef struct GX_GLYPH_STRUCT
 /* Define the Kerning Glyph type.  */
 typedef struct GX_KERNING_GLYPH_STRUCT
 {
-    GX_GLYPH_MEMBERS_DECLARE                                                   
-    GX_CONST GX_UBYTE *gx_kerning_table;                   /* Kerning table */ 
+    GX_GLYPH_MEMBERS_DECLARE
+    GX_CONST GX_UBYTE *gx_kerning_table;                   /* Kerning table */
 } GX_KERNING_GLYPH;
 #endif
 
 /* Define the Compressed Glyph type.  */
 typedef struct GX_COMPRESSED_GLYPH_STRUCT
 {
-    GX_GLYPH_MEMBERS_DECLARE                                                     
+    GX_GLYPH_MEMBERS_DECLARE
     USHORT             gx_glyph_map_size;                       /* Glyph size */
 } GX_COMPRESSED_GLYPH;
 
@@ -1253,7 +1263,7 @@ typedef struct GX_EVENT_STRUCT
     USHORT gx_event_sender;                                     /* ID of the event sender                   */
     union
     {
-        UINT     gx_event_timer_id;                    
+        UINT     gx_event_timer_id;
         GX_POINT gx_event_pointdata;
         GX_UBYTE gx_event_uchardata[4];
         USHORT   gx_event_ushortdata[2];
@@ -1360,7 +1370,7 @@ typedef struct GX_RADIAL_PROGRESS_BAR_INFO_STRUCT
     GX_VALUE       gx_radial_progress_bar_info_selected_brush_width;   /* width of upper track.  */
     GX_RESOURCE_ID gx_radial_progress_bar_info_normal_brush_color;     /* resource ID of color for lower track.  */
     GX_RESOURCE_ID gx_radial_progress_bar_info_selected_brush_color;   /* resource ID of color for upper track.  */
-    
+
 } GX_RADIAL_PROGRESS_BAR_INFO;
 
 /* Define radial slider information structure, this structure is used to
@@ -2903,14 +2913,14 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define GX_FIXED_VAL_ONE           1024
 #define GX_FIXED_VAL_FRACTION_MASK 0x3ff
 
-#define GX_FIXED_VAL_MAKE(_a)      (((int)_a) << GX_FIXED_VAL_SHIFT)
-#define GX_FIXED_VAL_TO_INT(_a)    ((int)(((int)_a) >> GX_FIXED_VAL_SHIFT))
-#define GX_FIXED_VAL_MUL(_a, _b)   ((((int)_a) * (_b)) >> GX_FIXED_VAL_SHIFT)
-#define GX_FIXED_VAL_DIV(_a, _b)   ((((int)_a) << GX_FIXED_VAL_SHIFT) / ((int)_b))
-#define GX_FIXED_VAL_RND(_a)       (GX_VALUE)((((GX_FIXED_VAL)_a) + GX_FIXED_VAL_HALF) >> GX_FIXED_VAL_SHIFT)
-#define GX_FIXED_VAL_RND_UP(_a)    ((((GX_FIXED_VAL)_a) + GX_FIXED_VAL_ONE - 1) >> GX_FIXED_VAL_SHIFT)
-#define GX_FIXED_VAL_ADD_ONE(_a)   (((int)_a) + GX_FIXED_VAL_ONE)
-#define GX_FIXED_VAL_SUB_ONE(_a)   (((int)_a) - GX_FIXED_VAL_ONE)
+#define GX_FIXED_VAL_MAKE(_a)      (((int)(_a)) << GX_FIXED_VAL_SHIFT)
+#define GX_FIXED_VAL_TO_INT(_a)    ((int)(((int)(_a)) >> GX_FIXED_VAL_SHIFT))
+#define GX_FIXED_VAL_MUL(_a, _b)   ((((int)(_a)) * (_b)) >> GX_FIXED_VAL_SHIFT)
+#define GX_FIXED_VAL_DIV(_a, _b)   ((((int)(_a)) << GX_FIXED_VAL_SHIFT) / ((int)(_b)))
+#define GX_FIXED_VAL_RND(_a)       (GX_VALUE)((((GX_FIXED_VAL)(_a)) + GX_FIXED_VAL_HALF) >> GX_FIXED_VAL_SHIFT)
+#define GX_FIXED_VAL_RND_UP(_a)    ((((GX_FIXED_VAL)(_a)) + GX_FIXED_VAL_ONE - 1) >> GX_FIXED_VAL_SHIFT)
+#define GX_FIXED_VAL_ADD_ONE(_a)   (((int)(_a)) + GX_FIXED_VAL_ONE)
+#define GX_FIXED_VAL_SUB_ONE(_a)   (((int)(_a)) - GX_FIXED_VAL_ONE)
 
 /* Define the system API mappings based on the error checking
    selected by the user.  Note: this section is only applicable to
@@ -2944,6 +2954,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_animation_start                                       _gx_animation_start
 #define gx_animation_stop                                        _gx_animation_stop
 
+#if defined(GX_ENABLE_DEPRECATED_BINRES_API)
 #define gx_binres_language_count_get                             _gx_binres_language_count_get
 #define gx_binres_language_info_load                             _gx_binres_language_info_load
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -2953,6 +2964,13 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_binres_theme_load                                     _gx_binres_theme_load
 #define gx_binres_pixelmap_load                                  _gx_binres_pixelmap_load
 #define gx_binres_font_load                                      _gx_binres_font_load
+#endif
+#define gx_binres_language_count_get_ext                         _gx_binres_language_count_get_ext
+#define gx_binres_language_info_load_ext                         _gx_binres_language_info_load_ext
+#define gx_binres_language_table_load_ext2                       _gx_binres_language_table_load_ext2
+#define gx_binres_theme_load_ext                                 _gx_binres_theme_load_ext
+#define gx_binres_pixelmap_load_ext                              _gx_binres_pixelmap_load_ext
+#define gx_binres_font_load_ext                                  _gx_binres_font_load_ext
 
 #define gx_brush_default                                         _gx_brush_default
 #define gx_brush_define                                          _gx_brush_define
@@ -3164,7 +3182,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_multi_line_text_view_line_space_set                   _gx_multi_line_text_view_line_space_set
 #define gx_multi_line_text_view_scroll_info_get                  _gx_multi_line_text_view_scroll_info_get
 #if defined(GUIX_5_4_0_COMPATIBILITY)
-#define gx_multi_line_text_view_text_color_set(a, b, c)          _gx_multi_line_text_view_text_color_set((GX_MUILTI_LINE_TEXT_VIEW *)a, b, c, b)
+#define gx_multi_line_text_view_text_color_set(a, b, c)          _gx_multi_line_text_view_text_color_set((GX_MULTI_LINE_TEXT_VIEW *)a, b, c, b)
 #else
 #define gx_multi_line_text_view_text_color_set                   _gx_multi_line_text_view_text_color_set
 #endif
@@ -3227,7 +3245,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_prompt_font_set                                       _gx_prompt_font_set
 
 #if defined(GUIX_5_4_0_COMPATIBILITY)
-#define gx_prompt_text_color_set(a, b, c)                        _gx_prompt_text_color_set((GX_PROGRESS_BAR *)a, b, c, b)
+#define gx_prompt_text_color_set(a, b, c)                        _gx_prompt_text_color_set((GX_PROMPT *)a, b, c, b)
 #else
 #define gx_prompt_text_color_set                                 _gx_prompt_text_color_set
 #endif
@@ -3257,7 +3275,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_radial_progress_bar_text_draw                         _gx_radial_progress_bar_text_draw
 #define gx_radial_progress_bar_value_set                         _gx_radial_progress_bar_value_set
 
-#define gx_radial_slider_anchor_angles_set                       _gx_radial_slider_anchor_anglees_set
+#define gx_radial_slider_anchor_angles_set                       _gx_radial_slider_anchor_angles_set
 #define gx_radial_slider_animation_set                           _gx_radial_slider_animation_set
 #define gx_radial_slider_animation_start                         _gx_radial_slider_animation_start
 #define gx_radial_slider_create                                  _gx_radial_slider_create
@@ -3312,7 +3330,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_single_line_text_input_left_arrow(a)                  _gx_single_line_text_input_left_arrow((GX_SINGLE_LINE_TEXT_INPUT *)a)
 #define gx_single_line_text_input_position_get(a, b)             _gx_single_line_text_input_position_get(a, b)
 #define gx_single_line_text_input_right_arrow(a)                 _gx_single_line_text_input_right_arrow((GX_SINGLE_LINE_TEXT_INPUT *)a)
-#define gx_single_line_text_input_style_add(a, b)                _gx_single_line_text_input_style_add((GX_SINGLE_LINE_TEXT_INPUT *)a, b);
+#define gx_single_line_text_input_style_add(a, b)                _gx_single_line_text_input_style_add((GX_SINGLE_LINE_TEXT_INPUT *)a, b)
 #define gx_single_line_text_input_style_remove(a, b)             _gx_single_line_text_input_style_remove((GX_SINGLE_LINE_TEXT_INPUT *)a, b)
 #define gx_single_line_text_input_style_set(a, b)                _gx_single_line_text_input_style_set((GX_SINGLE_LINE_TEXT_INPUT *)a, b)
 #define gx_single_line_text_input_text_color_set(a, b, c, d, e)  _gx_single_line_text_input_text_color_set((GX_SINGLE_LINE_TEXT_INPUT *)a, b, c, d, e)
@@ -3365,7 +3383,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #endif
 
 #define gx_system_canvas_refresh                                 _gx_system_canvas_refresh
-#define gx_system_dirty_mark(a)                                  _gx_system_dirty_mark((GX_WIDGET *)a);
+#define gx_system_dirty_mark(a)                                  _gx_system_dirty_mark((GX_WIDGET *)a)
 #define gx_system_dirty_partial_add(a, b)                        _gx_system_dirty_partial_add((GX_WIDGET *)a, b)
 #define gx_system_draw_context_get                               _gx_system_draw_context_get
 #define gx_system_event_fold                                     _gx_system_event_fold
@@ -3406,7 +3424,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_text_button_event_process                             _gx_text_button_event_process
 #define gx_text_button_font_set                                  _gx_text_button_font_set
 #if defined(GUIX_5_4_0_COMPATIBILITY)
-#define gx_text_button_text_color_set(a, b, c)                   _gx_text_button_text_color_set((GX_TEXT_BUTTON *)a, b, c)
+#define gx_text_button_text_color_set(a, b, c)                   _gx_text_button_text_color_set((GX_TEXT_BUTTON *)a, b, c, b)
 #else
 #define gx_text_button_text_color_set                            _gx_text_button_text_color_set
 #endif
@@ -3604,6 +3622,7 @@ UINT _gx_animation_landing_speed_set(GX_ANIMATION *animation, USHORT shift_per_s
 UINT _gx_animation_start(GX_ANIMATION *animation, GX_ANIMATION_INFO *info);
 UINT _gx_animation_stop(GX_ANIMATION *animation);
 
+#if defined(GX_ENABLE_DEPRECATED_BINRES_API)
 UINT _gx_binres_language_count_get(GX_UBYTE *root_address, GX_VALUE *put_count);
 UINT _gx_binres_language_info_load(GX_UBYTE *root_address, GX_LANGUAGE_HEADER *put_info);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -3613,6 +3632,13 @@ UINT _gx_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***ret
 UINT _gx_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme);
 UINT _gx_binres_pixelmap_load(GX_UBYTE *root_address, UINT map_index, GX_PIXELMAP *pixelmap);
 UINT _gx_binres_font_load(GX_UBYTE *root_address, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
+#endif
+UINT _gx_binres_language_count_get_ext(GX_UBYTE *root_address, ULONG root_size, GX_VALUE *put_count);
+UINT _gx_binres_language_info_load_ext(GX_UBYTE *root_address, ULONG root_size, GX_LANGUAGE_HEADER *put_info);
+UINT _gx_binres_language_table_load_ext2(GX_UBYTE *root_address, ULONG root_size, GX_STRING ***returned_language_table);
+UINT _gx_binres_theme_load_ext(GX_UBYTE *root_address, ULONG root_size, INT theme_id, GX_THEME **returned_theme);
+UINT _gx_binres_pixelmap_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT map_index, GX_PIXELMAP *pixelmap);
+UINT _gx_binres_font_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
 
 UINT _gx_brush_default(GX_BRUSH *brush);
 UINT _gx_brush_define(GX_BRUSH *brush, GX_COLOR line_color, GX_COLOR fill_color, UINT style);
@@ -3851,7 +3877,7 @@ UINT _gx_multi_line_text_button_text_id_set(GX_MULTI_LINE_TEXT_BUTTON *button, G
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_multi_line_text_button_text_set(GX_MULTI_LINE_TEXT_BUTTON *button, GX_CONST GX_CHAR *text);
 #endif
-UINT _gx_multi_line_text_button_text_set_ext(GX_MULTI_LINE_TEXT_BUTTON *button, GX_CONST GX_STRING text);
+UINT _gx_multi_line_text_button_text_set_ext(GX_MULTI_LINE_TEXT_BUTTON *button, GX_CONST GX_STRING *text);
 
 UINT _gx_multi_line_text_input_backspace(GX_MULTI_LINE_TEXT_INPUT *text_input);
 UINT _gx_multi_line_text_input_buffer_clear(GX_MULTI_LINE_TEXT_INPUT *text_input_ptr);
@@ -4220,6 +4246,7 @@ UINT _gx_text_button_text_color_set(GX_TEXT_BUTTON *text_button,
                                     GX_RESOURCE_ID disabled_text_color_id);
 VOID _gx_text_button_text_draw(GX_TEXT_BUTTON *button);
 UINT _gx_text_button_text_get(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR **return_text);
+UINT _gx_text_button_text_get_ext(GX_TEXT_BUTTON *button, GX_STRING *return_text);
 UINT _gx_text_button_text_id_set(GX_TEXT_BUTTON *button, GX_RESOURCE_ID string_id);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_text_button_text_set(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *text);
@@ -4428,6 +4455,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_animation_start                                       _gxe_animation_start
 #define gx_animation_stop                                        _gxe_animation_stop
 
+#if defined(GX_ENABLE_DEPRECATED_BINRES_API)
 #define gx_binres_language_count_get                             _gxe_binres_language_count_get
 #define gx_binres_language_info_load                             _gxe_binres_language_info_load
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -4437,6 +4465,13 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_binres_theme_load                                     _gxe_binres_theme_load
 #define gx_binres_pixelmap_load                                  _gxe_binres_pixelmap_load
 #define gx_binres_font_load                                      _gxe_binres_font_load
+#endif
+#define gx_binres_language_count_get_ext                         _gxe_binres_language_count_get_ext
+#define gx_binres_language_info_load_ext                         _gxe_binres_language_info_load_ext
+#define gx_binres_language_table_load_ext2                       _gxe_binres_language_table_load_ext2
+#define gx_binres_theme_load_ext                                 _gxe_binres_theme_load_ext
+#define gx_binres_pixelmap_load_ext                              _gxe_binres_pixelmap_load_ext
+#define gx_binres_font_load_ext                                  _gxe_binres_font_load_ext
 
 #define gx_brush_default                                         _gxe_brush_default
 #define gx_brush_define                                          _gxe_brush_define
@@ -4694,7 +4729,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_progress_bar_draw                                     _gx_progress_bar_draw
 #define gx_progress_bar_event_process                            _gxe_progress_bar_event_process
 #define gx_progress_bar_font_set                                 _gxe_progress_bar_font_set
-#define gx_progress_bar_info_set(a, b)                           _gxe_progress_bar_info_set((GX_PROGRESS_BAR *)a, b);
+#define gx_progress_bar_info_set(a, b)                           _gxe_progress_bar_info_set((GX_PROGRESS_BAR *)a, b)
 #define gx_progress_bar_pixelmap_set                             _gxe_progress_bar_pixelmap_set
 #define gx_progress_bar_range_set                                _gxe_progress_bar_range_set
 #if defined(GUIX_5_4_0_COMPATIBILITY)
@@ -4848,7 +4883,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #endif
 
 #define gx_system_canvas_refresh                                 _gxe_system_canvas_refresh
-#define gx_system_dirty_mark(a)                                  _gxe_system_dirty_mark((GX_WIDGET *)a);
+#define gx_system_dirty_mark(a)                                  _gxe_system_dirty_mark((GX_WIDGET *)a)
 #define gx_system_dirty_partial_add(a, b)                        _gxe_system_dirty_partial_add((GX_WIDGET *)a, b)
 #define gx_system_draw_context_get                               _gxe_system_draw_context_get
 #define gx_system_event_fold                                     _gxe_system_event_fold
@@ -5085,6 +5120,7 @@ UINT _gxe_animation_landing_speed_set(GX_ANIMATION *animation, USHORT shift_per_
 UINT _gxe_animation_start(GX_ANIMATION *animation, GX_ANIMATION_INFO *info);
 UINT _gxe_animation_stop(GX_ANIMATION *animation);
 
+#if defined(GX_ENABLE_DEPRECATED_BINRES_API)
 UINT _gxe_binres_language_count_get(GX_UBYTE *root_address, GX_VALUE *put_count);
 UINT _gxe_binres_language_info_load(GX_UBYTE *root_address, GX_LANGUAGE_HEADER *put_info);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -5094,6 +5130,13 @@ UINT _gxe_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***re
 UINT _gxe_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme);
 UINT _gxe_binres_pixelmap_load(GX_UBYTE *root_address, UINT map_index, GX_PIXELMAP *pixelmap);
 UINT _gxe_binres_font_load(GX_UBYTE *root_address, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
+#endif
+UINT _gxe_binres_language_count_get_ext(GX_UBYTE *root_address, ULONG root_size, GX_VALUE *put_count);
+UINT _gxe_binres_language_info_load_ext(GX_UBYTE *root_address, ULONG root_size, GX_LANGUAGE_HEADER *put_info);
+UINT _gxe_binres_language_table_load_ext2(GX_UBYTE *root_address, ULONG root_size, GX_STRING ***returned_language_table);
+UINT _gxe_binres_theme_load_ext(GX_UBYTE *root_address, ULONG root_size, INT theme_id, GX_THEME **returned_theme);
+UINT _gxe_binres_pixelmap_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT map_index, GX_PIXELMAP *pixelmap);
+UINT _gxe_binres_font_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
 
 UINT _gxe_brush_default(GX_BRUSH *brush);
 UINT _gxe_brush_define(GX_BRUSH *brush, GX_COLOR line_color, GX_COLOR fill_color, UINT style);

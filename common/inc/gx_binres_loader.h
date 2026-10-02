@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+// Portions of this file were generated with AI assistance.
+
 
 /**************************************************************************/
 /**************************************************************************/
@@ -55,6 +57,13 @@
 typedef struct GX_BINRES_DATA_INFO_STRUCT
 {
     GX_UBYTE *gx_binres_root_address;
+
+    /* Extent of the resource at gx_binres_root_address. Every read is checked
+       against it, because the counts and offsets that drive those reads come
+       from the resource itself. Zero means the extent is unknown and no read
+       can be checked, which is the state a caller that supplies no length
+       leaves this in. */
+    ULONG     gx_binres_root_size;
     UINT      gx_binres_read_offset;
     GX_UBYTE *gx_binres_buffer;
     UINT      gx_binres_buffer_size;
@@ -70,6 +79,14 @@ UINT _gx_binres_language_table_load(GX_UBYTE *root_address, GX_UBYTE ****returne
 #endif
 UINT _gx_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***returned_language_table);
 UINT _gx_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme);
+UINT _gx_binres_theme_load_ext(GX_UBYTE *root_address, ULONG root_size, INT theme_id, GX_THEME **returned_theme);
+UINT _gx_binres_language_count_get_ext(GX_UBYTE *root_address, ULONG root_size, GX_VALUE *put_count);
+UINT _gx_binres_language_info_load_ext(GX_UBYTE *root_address, ULONG root_size, GX_LANGUAGE_HEADER *put_info);
+UINT _gx_binres_language_table_load_ext2(GX_UBYTE *root_address, ULONG root_size, GX_STRING ***returned_language_table);
+UINT _gx_binres_pixelmap_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT map_index, GX_PIXELMAP *pixelmap);
+UINT _gx_binres_font_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
+UINT _gx_binres_range_check(GX_BINRES_DATA_INFO *info, ULONG offset, ULONG length);
+UINT _gx_binres_declared_size_get(GX_UBYTE *root_address, ULONG *returned_size);
 UINT _gx_binres_resource_header_load(GX_BINRES_DATA_INFO *info, GX_RESOURCE_HEADER *header);
 
 UINT _gx_binres_string_header_load(GX_BINRES_DATA_INFO *info, GX_STRING_HEADER *header);
@@ -94,6 +111,12 @@ UINT _gxe_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***re
 UINT _gxe_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme);
 UINT _gxe_binres_pixelmap_load(GX_UBYTE *root_address, UINT map_index, GX_PIXELMAP *pixelmap);
 UINT _gxe_binres_font_load(GX_UBYTE *root_address, UINT res_index, GX_UBYTE *buffer, ULONG *buffer_size);
+UINT _gxe_binres_language_count_get_ext(GX_UBYTE *root_address, ULONG root_size, GX_VALUE *put_count);
+UINT _gxe_binres_language_info_load_ext(GX_UBYTE *root_address, ULONG root_size, GX_LANGUAGE_HEADER *put_info);
+UINT _gxe_binres_language_table_load_ext2(GX_UBYTE *root_address, ULONG root_size, GX_STRING ***returned_language_table);
+UINT _gxe_binres_theme_load_ext(GX_UBYTE *root_address, ULONG root_size, INT theme_id, GX_THEME **returned_theme);
+UINT _gxe_binres_pixelmap_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT map_index, GX_PIXELMAP *pixelmap);
+UINT _gxe_binres_font_load_ext(GX_UBYTE *root_address, ULONG root_size, UINT font_index, GX_UBYTE *buffer, ULONG *buffer_size);
 
 #endif
 

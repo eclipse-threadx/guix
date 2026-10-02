@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -73,21 +75,21 @@ GX_CHAR *name;
 }SCREEN_INFO;
 
 SCREEN_INFO screen_list[]={
-    {&button_screen, "button_screen"},
-    {&window_screen, "window_screen"},
-    {&indicator_screen, "indicator_screen"},
-    {&text_screen, "text_screen"},
-    {&gauge_screen, "gauge_screen"},
-    {&sprite_screen, "sprite_screen"},
-    {&menu_screen, "menu_screen"},
-    {&rotate_screen, "rotate_screen"},
-    {&radial_slider_screen, "radial_slider_screen"},
-    {&rich_text_view_screen, "rich_text_view_screen"},
-    {&line_screen, "line_screen"},
-    {&pic_screen, "pic_screen"},
-    {&shapes_screen, "shapes_screen"},
-    {&resize_screen, "resize_screen"},
-    {&glyph_screen, "glyph_screen"},
+    {(GX_WINDOW *)&button_screen, "button_screen"},
+    {(GX_WINDOW *)&window_screen, "window_screen"},
+    {(GX_WINDOW *)&indicator_screen, "indicator_screen"},
+    {(GX_WINDOW *)&text_screen, "text_screen"},
+    {(GX_WINDOW *)&gauge_screen, "gauge_screen"},
+    {(GX_WINDOW *)&sprite_screen, "sprite_screen"},
+    {(GX_WINDOW *)&menu_screen, "menu_screen"},
+    {(GX_WINDOW *)&rotate_screen, "rotate_screen"},
+    {(GX_WINDOW *)&radial_slider_screen, "radial_slider_screen"},
+    {(GX_WINDOW *)&rich_text_view_screen, "rich_text_view_screen"},
+    {(GX_WINDOW *)&line_screen, "line_screen"},
+    {(GX_WINDOW *)&pic_screen, "pic_screen"},
+    {(GX_WINDOW *)&shapes_screen, "shapes_screen"},
+    {(GX_WINDOW *)&resize_screen, "resize_screen"},
+    {(GX_WINDOW *)&glyph_screen, "glyph_screen"},
     {GX_NULL, GX_NULL}
 };
 

@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+// Portions of this file were generated with AI assistance.
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -23,6 +25,10 @@
 
 #ifdef STM32F439xx
 #include "stm32f4xx_hal.h"
+
+/* Size of the resource image programmed to FLASH at 0x60000000. Set it to the size
+   of the image actually programmed: the loaders refuse any read beyond it. */
+#define BINRES_FLASH_IMAGE_SIZE 0x00100000
 #endif
 
 #define GUIX_POOL_SIZE        (MAIN_DISPLAY_X_RESOLUTION * MAIN_DISPLAY_Y_RESOLUTION)
@@ -51,6 +57,7 @@ extern GX_CONST GX_UBYTE    **main_display_language_table[];
 GX_THEME   *theme = GX_NULL;
 GX_STRING **language_table = GX_NULL;
 GX_UBYTE   *binres_root_address = GX_NULL;
+ULONG       binres_size = 0;
 GX_CHAR     binres_pathname[] = "..//..//demo_guix_binres_resources.bin";
 
 /* Define prototypes.   */
@@ -241,6 +248,7 @@ VOID demo_thread_entry(ULONG thread_input)
     /* This suit the case that we generate a .srec format resource file. */
     /* .srec file should be programed to the target device memory first. */
     binres_root_address = (GX_UBYTE *)0x60000000;
+    binres_size = BINRES_FLASH_IMAGE_SIZE;
 #endif
     
     /* Load language table. */
@@ -252,8 +260,8 @@ VOID demo_thread_entry(ULONG thread_input)
     /* Create the "simple_window" screen. */
     gx_studio_named_widget_create("simple_window", (GX_WIDGET *)root, GX_NULL);
 
-    gx_binres_language_count_get(binres_root_address, &language_count);
-    gx_binres_language_info_load(binres_root_address, language_info);
+    gx_binres_language_count_get_ext(binres_root_address, binres_size, &language_count);
+    gx_binres_language_info_load_ext(binres_root_address, binres_size, language_info);
 
     /* Show the root window to make "simple_window" screen visible.  */
     gx_widget_show(root);
@@ -331,7 +339,12 @@ UCHAR *address = GX_NULL;
         fseek(p_file, SEEK_SET, SEEK_SET);
 
         address = memory_allocate(total_length);
-        fread(address, 1, total_length, p_file);
+
+        if (address)
+        {
+            fread(address, 1, total_length, p_file);
+            binres_size = (ULONG)total_length;
+        }
 
         fclose(p_file);
     }
@@ -353,9 +366,10 @@ UINT  status = GX_SUCCESS;
     }
 
     /* Load a theme from binary data memory. */
-    status = gx_binres_theme_load(root_address,/* Address of binary resource data. */
-                                  theme_id,    /* Theme identification, 0, 1, 2: 1th, 2nd, 3rd theme in the binary resource data. */
-                                  &theme);     /* Loaded theme. */
+    status = gx_binres_theme_load_ext(root_address, /* Address of binary resource data. */
+                                      binres_size,  /* Size of binary resource data. */
+                                      theme_id,     /* Theme identification, 0, 1, 2: 1th, 2nd, 3rd theme in the binary resource data. */
+                                      &theme);      /* Loaded theme. */
 
     if (status == GX_SUCCESS)
     {
@@ -380,8 +394,9 @@ UINT  status = GX_SUCCESS;
     }
 
     /* Load language table from binary data memory. */
-    status = gx_binres_language_table_load_ext(root_address,     /* Address of binary resource data. */
-                                              &language_table); /* Loaded language table that contains all languages in the specified binary resource data. */
+    status = gx_binres_language_table_load_ext2(root_address,     /* Address of binary resource data. */
+                                                binres_size,      /* Size of binary resource data. */
+                                                &language_table); /* Loaded language table that contains all languages in the specified binary resource data. */
 
     if (language_table)
     {

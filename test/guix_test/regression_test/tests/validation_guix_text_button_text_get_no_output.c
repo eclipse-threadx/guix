@@ -9,11 +9,14 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
 #include "tx_api.h"
 #include "gx_api.h"
+#include "gx_button.h"
 #include "gx_validation_utility.h"
 #include "gx_system.h"
 
@@ -61,18 +64,18 @@ GX_STRING      string;
 GX_TEXT_BUTTON button;
 GX_CONST GX_CHAR *text;
 
-    status = gx_text_button_text_get_ext(GX_NULL, &string);
+    status = _gxe_text_button_text_get_ext(GX_NULL, &string);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     memset(&button, 0, sizeof(GX_BUTTON));
-    status = gx_text_button_text_get_ext(&button, GX_NULL);
+    status = _gxe_text_button_text_get_ext(&button, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_text_button_text_get_ext(&button, &string);
+    status = _gxe_text_button_text_get_ext(&button, &string);
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
     gx_widget_hide(&button_screen);
-    status = gx_text_button_text_get(&button_screen.button_screen_text_button_1, &text);
+    status = _gxe_text_button_text_get(&button_screen.button_screen_text_button_1, &text);
     EXPECT_EQ(GX_INVALID_CANVAS, status);
 
 
