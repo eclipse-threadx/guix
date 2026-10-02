@@ -84,7 +84,7 @@ Source: "installer\vc_runtime\x86\*"; DestDir: "{app}\studio"; Flags: ignorevers
 [Icons]
 Name: "{group}\GUIX Studio {#StudioMajorMinorVersion}\GUIX Studio"; Filename: "{app}\studio\GUIX_Studio.exe"
 Name: "{group}\GUIX Studio {#StudioMajorMinorVersion}\GUIX Studio User's Guide"; Filename: "https://threadx.io/releases/6.5.2/guix/main/about-guix-studio.html"
-Name: "{group}\GUIX Studio {#StudioMajorMinorVersion}\GUIX User's Guide"; Filename: "https://threadx.io/releases/6.5.2/guix/main/about-guix-studio.html"
+Name: "{group}\GUIX Studio {#StudioMajorMinorVersion}\GUIX User's Guide"; Filename: "https://threadx.io/releases/6.5.2/guix/main/about-guix.html"
 Name: "{group}\GUIX Studio {#StudioMajorMinorVersion}\{cm:UninstallProgram,GUIX Studio}"; Filename: "{uninstallexe}"
 Name: "{userdesktop}\GUIX Studio {#StudioFullVersion}"; Filename: "{app}\studio\GUIX_Studio.exe"; Tasks: desktopicon
 
