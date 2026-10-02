@@ -26,7 +26,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.5.1        */
+/*                                                           6.5.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
