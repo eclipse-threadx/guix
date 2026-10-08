@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -146,7 +148,7 @@ GX_PIXELMAP                *return_pixelmap;
 GX_POINT                    point;
 GX_RECTANGLE                size, rec1, rec2;
 GX_THEME *                  returned_theme = GX_NULL;
-GX_TIMER *                  timer, gtimer;
+GX_TIMER                    timer, gtimer;
 GX_UBYTE ***                returned_language_table = GX_NULL;
 GX_CHAR **                  langugage_table = GX_NULL;
 GX_WIDGET                   parent;
@@ -378,16 +380,16 @@ GX_STRING                   string;
     status = gx_binres_pixelmap_load(GX_NULL, 0, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_binres_pixelmap_load(0x80000, 0, GX_NULL);
+    status = gx_binres_pixelmap_load((GX_UBYTE *)buffer, 0, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     status = gx_binres_font_load(GX_NULL, 0, GX_NULL, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_binres_font_load(0x80000, 0, GX_NULL, GX_NULL);
+    status = gx_binres_font_load((GX_UBYTE *)buffer, 0, GX_NULL, GX_NULL);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    status = gx_binres_font_load(0x80000, 0, (GX_UBYTE *)buffer, 0);
+    status = gx_binres_font_load((GX_UBYTE *)buffer, 0, (GX_UBYTE *)buffer, 0);
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     /* brush */
@@ -2952,7 +2954,7 @@ GX_STRING                   string;
     status = gx_system_timer_start(0, 0, 0, 0); //should return GX_OUT_OF_TIMERS;
     EXPECT_EQ(GX_OUT_OF_TIMERS, status);
 
-    _gx_system_free_timer_list = (GX_TIMER *)&timer;
+    _gx_system_free_timer_list = &timer;
     status = gx_system_timer_start(0, 0, 0, 0); //should return GX_PTR_ERROR;
     EXPECT_EQ(GX_PTR_ERROR, status);
 
@@ -2976,7 +2978,7 @@ GX_STRING                   string;
     EXPECT_EQ(GX_NOT_FOUND, status);
 
     memset(&timer, 0, sizeof(GX_TIMER));
-    _gx_system_free_timer_list = (GX_TIMER *)&timer;
+    _gx_system_free_timer_list = &timer;
     status = gx_system_timer_stop(0, 0); //should return GX_PTR_ERROR;
     EXPECT_EQ(GX_PTR_ERROR, status);
 

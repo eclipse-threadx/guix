@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -79,7 +81,7 @@ GX_GENERIC_SCROLL_WHEEL *wheel_wrap = &main_screen.main_screen_scroll_wheel_wrap
     memset(&parent, 0, sizeof(GX_WINDOW));
 
     /* Invalid parent widget.  */
-    status = gx_generic_scroll_wheel_create(&wheel, "", &parent, 10, GX_NULL, 0, 0, &size);
+    status = gx_generic_scroll_wheel_create(&wheel, "", (GX_WIDGET *)&parent, 10, GX_NULL, 0, 0, &size);
     EXPECT_EQ(status, GX_INVALID_WIDGET);
 
     /* Invalid control block size.  */

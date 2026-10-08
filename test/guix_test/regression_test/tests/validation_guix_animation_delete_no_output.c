@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -72,8 +74,8 @@ GX_ANIMATION_INFO info;
     EXPECT_EQ(status, GX_SUCCESS);
 
     memset(&info, 0, sizeof(GX_ANIMATION_INFO));
-    info.gx_animation_parent = &button_screen;
-    info.gx_animation_target = &button_screen.button_screen_title_1;
+    info.gx_animation_parent = (GX_WIDGET *)&button_screen;
+    info.gx_animation_target = (GX_WIDGET *)&button_screen.button_screen_title_1;
     info.gx_animation_start_alpha = 255;
     info.gx_animation_end_alpha = 255;
     info.gx_animation_start_position.gx_point_x = button_screen.gx_widget_size.gx_rectangle_left;
@@ -88,8 +90,8 @@ GX_ANIMATION_INFO info;
     status = gx_system_animation_get(&animation2);
     EXPECT_EQ(status, GX_SUCCESS);
 
-    info.gx_animation_target = &button_screen.button_screen_icon_button_6;
-    info.gx_animation_parent = &button_screen.button_screen_text_button_1;
+    info.gx_animation_target = (GX_WIDGET *)&button_screen.button_screen_icon_button_6;
+    info.gx_animation_parent = (GX_WIDGET *)&button_screen.button_screen_text_button_1;
     status = gx_animation_start(animation2, &info);
     EXPECT_EQ(status, GX_SUCCESS);
 
