@@ -5,6 +5,7 @@
 import json
 from pathlib import Path
 import tempfile
+import threading
 import unittest
 from unittest import mock
 import report
@@ -150,6 +151,61 @@ class CoverageReports(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     report.validate(selected)
             report.validate(['two'])
+
+
+class TestScheduling(unittest.TestCase):
+    """Keep the test process budget and failure reporting observable."""
+
+    def test_global_budget_and_failure_coverage(self):
+        """A failing profile still permits every test and coverage collection."""
+        barrier = threading.Barrier(2)
+        lock = threading.Lock()
+        active = 0
+        peak = 0
+        tested = []
+        collected = []
+
+        def invoke(args, **kwargs):
+            """Block pairs of test processes to expose their concurrency."""
+            nonlocal active, peak
+            if args[0] == 'ctest':
+                name = Path(args[2]).name
+                self.assertEqual(args[args.index('--parallel') + 1], '1')
+                self.assertIn('--no-tests=error', args)
+                with lock:
+                    active += 1
+                    peak = max(peak, active)
+                    tested.append(name)
+                barrier.wait(timeout=5)
+                with lock:
+                    active -= 1
+                return mock.Mock(returncode=int(name == 'two'))
+            collected.append(args[-1])
+            return mock.Mock(returncode=0)
+
+        names = ['one', 'two', 'three', 'four']
+        with mock.patch.dict(report.os.environ, CTEST_PARALLEL_LEVEL='2'), \
+             mock.patch.object(report.subprocess, 'run', side_effect=invoke):
+            self.assertEqual(report.test(names), 1)
+        self.assertEqual(peak, 2)
+        self.assertCountEqual(tested, names)
+        self.assertEqual(collected, [*names, '--merge'])
+
+    def test_invalid_budget(self):
+        """Reject invalid budgets before starting a subprocess."""
+        for value in ('0', '-1', 'invalid'):
+            with mock.patch.dict(report.os.environ, CTEST_PARALLEL_LEVEL=value), \
+                 mock.patch.object(report.subprocess, 'run') as invoke:
+                with self.assertRaises(ValueError):
+                    report.test(['one'])
+                invoke.assert_not_called()
+
+    def test_coverage_failure(self):
+        """Successful tests cannot mask a failed coverage merge."""
+        with mock.patch.object(report.subprocess, 'run', side_effect=[
+                mock.Mock(returncode=0), mock.Mock(returncode=0), mock.Mock(returncode=1)]):
+            self.assertEqual(report.test(['one']), 1)
+
 
 
 if __name__ == '__main__':

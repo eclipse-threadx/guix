@@ -96,6 +96,22 @@ The available build types are as follows:
 |partial_canvas_support_horizontal_refresh_build|Build with partial canvas support and horizontal refresh|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER and GX_CANVAS_REFRESH_DIRECTION_HORIZONTAL|
 |||
 
+`CTEST_PARALLEL_LEVEL` sets the total number of concurrent test processes across
+all selected profiles (default: four). Each profile runs one CTest case at a time;
+coverage is collected serially after every profile has finished, including when
+some tests fail. Tests are not retried and retain the 1,000-second timeout.
+
+The dynamic bidi profiles register separate rendering and character-conformance
+tests. Rendering verifies the existing 429 frame checksums and loads the English
+document once before scrolling. Character conformance currently checks 28 cases
+with automatic direction; the 91,671 explicit-direction cases remain skipped and
+are reported separately. These skips are within the corpus, not skipped CTest
+cases.
+
+The host test diagnostics use standard I/O and process termination. These are
+test-only deviations from MISRA C:2023 Rules 21.6 and 21.8, required to report
+assertion failures and return a failing process status to CTest.
+
 The **test reports** for each build type will be generated in the `test\guix_test\cmake\build\<build_type>` directory.
 
 Every configuration instruments GUIX common sources. The installer creates a `.venv-ci` virtual environment with gcovr 8.6. The runner checks out a reviewed ThreadX commit, fails on dependency setup errors, and uses its CMake/Ninja bootstrap and JUnit support. It audits feature definitions and coverage flags in the actual compile commands.
