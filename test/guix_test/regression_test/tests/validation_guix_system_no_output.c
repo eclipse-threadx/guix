@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
@@ -55,11 +56,18 @@ VOID tx_application_define(void *first_unused_memory)
 #define TEST_STRING_SIZE 0xccd
 char test_string[TEST_STRING_SIZE + 1];
 
+static TX_SEMAPHORE event_done;
 int flick_count = 0;
+
+/* Acknowledge queued input after the flick event has been processed. */
 UINT test_event_handler(GX_WINDOW *window, GX_EVENT *event_ptr)
 {
     switch(event_ptr->gx_event_type)
     {
+    case GX_FIRST_USER_EVENT:
+        tx_semaphore_put(&event_done);
+        return GX_SUCCESS;
+
     case GX_EVENT_VERTICAL_FLICK:
         flick_count++;
         break;
@@ -69,6 +77,7 @@ UINT test_event_handler(GX_WINDOW *window, GX_EVENT *event_ptr)
 
 static VOID control_thread_entry(ULONG input)
 {
+TX_INTERRUPT_SAVE_AREA
 UINT                     status;
 GX_EVENT                 my_event;
 GX_PEN_CONFIGURATION     configure;
@@ -97,15 +106,20 @@ int                      failed_tests = 0;
     gx_widget_event_process_set(&button_screen, test_event_handler);
     gx_widget_style_add(&button_screen, GX_STYLE_ENABLED);
 
+    status = tx_semaphore_create(&event_done, "event done", 0);
+    EXPECT_EQ(TX_SUCCESS, status);
+
     for(index = 0; index < 2; index++)
     {
+        /* Model a two-tick drag without depending on host scheduling. */
+        TX_DISABLE
         my_event.gx_event_display_handle = 1;
         my_event.gx_event_type = GX_EVENT_PEN_DOWN;
         my_event.gx_event_payload.gx_event_pointdata.gx_point_x = 80;
         my_event.gx_event_payload.gx_event_pointdata.gx_point_y = 10;
         gx_system_event_send(&my_event);
        
-        tx_thread_sleep(2); 
+        _gx_system_last_clock -= 2UL;
         my_event.gx_event_type = GX_EVENT_PEN_DRAG;
         if(index == 0)
         {
@@ -120,8 +134,19 @@ int                      failed_tests = 0;
 
         my_event.gx_event_type = GX_EVENT_PEN_UP;
         gx_system_event_send(&my_event);
+        TX_RESTORE
+
+        my_event.gx_event_type = GX_FIRST_USER_EVENT;
+        my_event.gx_event_target = (GX_WIDGET *)&button_screen;
+        status = gx_system_event_send(&my_event);
+        EXPECT_EQ(GX_SUCCESS, status);
+        status = tx_semaphore_get(&event_done, 100);
+        EXPECT_EQ(TX_SUCCESS, status);
         EXPECT_EQ(1, flick_count);
+        my_event.gx_event_target = GX_NULL;
     }
+
+    tx_semaphore_delete(&event_done);
 
     /* Test _gx_system_private_string_delete. */
     memset(&view, 0, sizeof(GX_MULTI_LINE_TEXT_VIEW));

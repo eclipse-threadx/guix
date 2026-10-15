@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
@@ -166,6 +167,7 @@ UINT bidi_character_test()
     GX_BIDI_RESOLVED_TEXT_INFO *resolved_bidi = GX_NULL;
     UINT   result = GX_SUCCESS;
     INT  test_count = 0;
+    INT  skipped_count = 0;
     UINT status;
     ULONG pool_size;
 
@@ -183,7 +185,7 @@ UINT bidi_character_test()
     {
         if (base_direction != 2)
         {
-            test_count++;
+            skipped_count++;
             continue;
         }
 
@@ -218,6 +220,15 @@ UINT bidi_character_test()
         test_count++;
     }
 
+    if (ferror(file) || (test_count == 0))
+    {
+        result = GX_FAILURE;
+    }
+    fclose(file);
+#ifdef GX_BIDI_CHARACTER_TEST
+    printf("BiDi character cases: %d checked, %d skipped (explicit direction).\n",
+           test_count, skipped_count);
+#endif
     return result;
 }
 #endif

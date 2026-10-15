@@ -2,6 +2,7 @@
 # Copyright (c) 2026 Eclipse ThreadX contributors
 # SPDX-License-Identifier: MIT
 """Validate GUIX profiles, test results, and raw coverage unions."""
+from concurrent.futures import ThreadPoolExecutor
 import json
 import os
 from pathlib import Path
@@ -202,6 +203,29 @@ def coverage(selected):
         print('PARTIAL coverage: ' + ', '.join(names))
 
 
+def test(selected):
+    """Bound CTest processes globally and collect coverage after every profile."""
+    workers = int(os.environ.get('CTEST_PARALLEL_LEVEL', '4'))
+    if workers < 1:
+        raise ValueError('CTEST_PARALLEL_LEVEL must be positive')
+
+    def run(name):
+        """Run a profile serially within the shared process budget."""
+        directory = BUILD / name
+        return subprocess.run([
+            'ctest', '--test-dir', str(directory), '--parallel', '1',
+            '--timeout', '1000', '--no-tests=error', '--output-on-failure',
+            '--output-log', str(directory / (name + '.txt')),
+            '--output-junit', str(directory / (name + '.xml'))], check=False).returncode
+
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        statuses = list(executor.map(run, selected))
+    for name in [*selected, '--merge']:
+        statuses.append(subprocess.run([str(HERE / 'coverage.sh'), name],
+                                       check=False).returncode)
+    return int(any(statuses))
+
+
 def results(selected):
     """Record exact JUnit counts and elapsed durations for every selected profile."""
     summary = []
@@ -230,9 +254,9 @@ if __name__ == '__main__':
         command, *selection = sys.argv[1:]
         if command == 'profiles':
             print('\n'.join(profiles()))
-        elif command in ('validate', 'audit', 'prepare', 'results'):
+        elif command in ('validate', 'audit', 'prepare', 'results', 'test'):
             validate(selection)
-            globals()[command](selection)
+            sys.exit(globals()[command](selection))
         elif command == 'coverage':
             coverage(selection)
         else:

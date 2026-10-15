@@ -14,4 +14,4 @@ mapfile -t profiles < <(python3 test/guix_test/cmake/report.py profiles)
 ./scripts/build.sh "${profiles[@]:6}"
 cp test/guix_test/cmake/build/build-profiles.txt test/guix_test/cmake/build/final-build-profiles.txt
 cp test/guix_test/cmake/build/build-times.txt test/guix_test/cmake/build/final-build-times.txt
-GX_CI_CONCURRENT_TESTS=1 ./scripts/test.sh all
+./scripts/test.sh all
