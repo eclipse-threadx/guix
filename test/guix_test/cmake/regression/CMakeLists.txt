@@ -2394,3 +2394,12 @@ foreach(demo ${demos})
     endif()
   endforeach()
 endforeach()
+
+# Character conformance runs independently of the rendered frame sequence.
+if("-DGX_DYNAMIC_BIDI_TEXT_SUPPORT" IN_LIST ${CMAKE_BUILD_TYPE})
+  add_executable(guix_bidi_character_test ${guix_bidi_text_draw_32bpp_SOURCE})
+  target_compile_definitions(guix_bidi_character_test PRIVATE GX_BIDI_CHARACTER_TEST)
+  target_include_directories(guix_bidi_character_test PRIVATE ${bidi_text_draw_32bpp_SOURCE_DIRECTORY})
+  target_link_libraries(guix_bidi_character_test PRIVATE test_utility)
+  add_test(NAME ${CMAKE_BUILD_TYPE}::guix_bidi_character_test COMMAND guix_bidi_character_test)
+endif()

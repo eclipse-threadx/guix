@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
@@ -19,7 +20,11 @@
 #define REGRESSION_TEST_MODE
 
 TEST_PARAM test_parameter = {
+#ifdef GX_BIDI_CHARACTER_TEST
+    "guix_bidi_character_test", /* Test name */
+#else
     "guix_bidi_text_draw_32bpp", /* Test name */
+#endif
     0, 40, 639, 479  /* Define the coordinates of the capture area.
                          In this test, we only need to capture the line
                          drawing area.  */
@@ -29,7 +34,9 @@ static VOID      control_thread_entry(ULONG);
 int main(int argc, char ** argv)
 {
     /* Parse the command line argument. */
+#ifndef GX_BIDI_CHARACTER_TEST
     gx_validation_setup(argc, argv);
+#endif
 
     /* Start ThreadX system */
     tx_kernel_enter(); 
@@ -75,34 +82,48 @@ char test_comment[256];
 
 static VOID control_thread_entry(ULONG input)
 {
+char pathname[255];
+int  pathlen;
+#ifndef GX_BIDI_CHARACTER_TEST
 int   frame_id = 1;
 int   text_index;
 int   frame_offset;
 GX_EVENT my_event;
 GX_SCROLL_INFO *info;
-char pathname[255];
-int  pathlen;
+#endif
 
+#ifdef GX_BIDI_CHARACTER_TEST
     gx_validation_extract_path(__FILE__, pathname, &pathlen);
-    
-    sprintf(file_name,  "%s../../../example_internal/bidi_text_draw_32bpp/bidi_character_test_cases.txt", pathname);
+    sprintf(file_name, "%s../../../example_internal/bidi_text_draw_32bpp/bidi_character_test_cases.txt", pathname);
+    if(bidi_character_test() != GX_SUCCESS)
+    {
+        gx_validation_print_test_result(TEST_FAIL);
+        exit(1);
+    }
+    gx_validation_print_test_result(TEST_SUCCESS);
+    exit(0);
+#else
+    gx_validation_extract_path(__FILE__, pathname, &pathlen);
 
     info = &((main_screen).main_screen_vertical_scroll).gx_scrollbar_info;
     
     memset(&my_event, 0, sizeof(GX_EVENT));
     my_event.gx_event_target = (GX_WIDGET *)&main_screen.main_screen_vertical_scroll;
 
-    if(bidi_character_test() == GX_SUCCESS)
     {
       
         sprintf(pathname + pathlen, "../../../example_internal/bidi_text_draw_32bpp/readme_guix_generic.txt");
         for(text_index = 0; text_index < 2; text_index++)
         {
+            /* Keep the document and its layout cached while scrolling. */
+            if(text_index)
+            {
+                PopulateMLTexts(pathname);
+            }
             while(info->gx_scroll_value < info -> gx_scroll_maximum - info -> gx_scroll_visible + 1)
             {
                 if(text_index)
                 {
-                    PopulateMLTexts(pathname);
                     sprintf(test_comment, "English Text");
                     frame_offset = 40;
                 }
@@ -140,7 +161,6 @@ int  pathlen;
                 if(text_index)
                 {
 
-                    PopulateMLTexts(pathname);
                     sprintf(test_comment, "English Text");
                     frame_offset = 20;
                 }
@@ -206,4 +226,5 @@ int  pathlen;
     gx_validation_end();
 
     exit(0);
+#endif
 }
