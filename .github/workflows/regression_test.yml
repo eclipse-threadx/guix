@@ -24,7 +24,7 @@ jobs:
       pull-requests: write
       pages: write
       id-token: write
-    uses: eclipse-threadx/threadx/.github/workflows/regression_template.yml@729959fed0fc380d68c2bdcb2b4d7a5430f5c21a
+    uses: eclipse-threadx/threadx/.github/workflows/regression_template.yml@c735b12c714e27431374a40163aa0af9619a52d3
     with:
       install_script: ./scripts/ci_install.sh
       build_script: ./scripts/ci_build.sh

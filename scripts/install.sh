@@ -8,6 +8,8 @@
 #
 # SPDX-License-Identifier: MIT
 
+# Portions of this file were generated with AI assistance.
+
 set -euo pipefail
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
 
@@ -33,9 +35,15 @@ retry() {
 }
 
 retry timeout 180 sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=30 update
+# CMake is installed only when none is on PATH. A GitHub runner image carries a
+# newer one in /usr/local/bin, which shadows the apt package.
+packages=(gcc-14 g++-14 gcc-14-multilib g++-14-multilib ninja-build
+    python3-venv git unifdef p7zip-full tofrodos gawk)
+if ! command -v cmake > /dev/null; then
+    packages+=(cmake)
+fi
 retry timeout 360 sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    gcc-14 g++-14 gcc-14-multilib g++-14-multilib cmake ninja-build \
-    python3-venv git unifdef p7zip-full tofrodos gawk
+    "${packages[@]}"
 python3 -m venv .venv-ci
 retry timeout 180 .venv-ci/bin/python -m pip install --disable-pip-version-check \
     --timeout 30 --retries 2 'gcovr==8.6'
