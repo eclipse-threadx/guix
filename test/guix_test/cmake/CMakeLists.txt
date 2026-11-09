@@ -44,7 +44,7 @@ message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}.")
 
 set(default_build_coverage "")
-set(disable_error_checking_build -DGX_DISABLE_ERROR_CHECKING)
+set(disable_error_check_build -DGX_DISABLE_ERROR_CHECKING)
 set(no_utf8_build_coverage -DGX_DISABLE_UTF8_SUPPORT)
 set(no_utf8_no_checking_build -DGX_DISABLE_UTF8_SUPPORT
                               -DGX_DISABLE_ERROR_CHECKING)
