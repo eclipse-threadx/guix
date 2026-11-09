@@ -141,9 +141,31 @@ add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/regression regression)
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/regression/output_files)
 
 # Coverage
-if(CMAKE_BUILD_TYPE MATCHES ".*_coverage")
+#
+# The gate here used to be the build type alone, and only two of the
+# configurations have a name matching "*_coverage". The others built and ran
+# every test and their coverage was thrown away. That is not redundancy
+# discarded: each configuration selects a different set of GX_ feature macros,
+# so the mouse, bidi text, Thai shaping, kerning, synergy font, partial canvas
+# and 5.4.0 compatibility code the others compile was absent from the
+# denominator rather than reported as uncovered. A figure taken from the two was
+# their line count, not GUIX's.
+#
+# TX_COVERAGE instruments a build regardless of its name. It defaults to OFF
+# and the build-type match is kept, so configuring a single configuration by
+# hand behaves exactly as it did before; the regression run turns it on for
+# all of them and merges the results.
+option(TX_COVERAGE "Instrument this build for coverage regardless of build type" OFF)
+if(TX_COVERAGE OR CMAKE_BUILD_TYPE MATCHES ".*_coverage")
   target_compile_options(guix PRIVATE -fprofile-arcs -ftest-coverage)
-  target_link_options(guix PRIVATE -fprofile-arcs -ftest-coverage)
+
+  # PUBLIC on the link options, PRIVATE on the compile options above. Only
+  # common/src is certified source and only it is instrumented, but every
+  # consumer that links guix needs the gcov runtime on its own link line.
+  # PRIVATE works only while BUILD_SHARED_LIBS is ON, because the runtime is
+  # then linked into libguix.so; that flag is set by the shared runner, not
+  # here.
+  target_link_options(guix PUBLIC -fprofile-arcs -ftest-coverage)
 endif()
 
 # Build ThreadX library once
