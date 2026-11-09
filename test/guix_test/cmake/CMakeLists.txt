@@ -17,6 +17,7 @@ set(BUILD_CONFIGURATIONS
     font_kerning_support_build
     dynamic_bidi_text_build
     dynamic_bidi_text_no_checking_build
+    _5_4_0_compatible_build
     _5_4_0_compatible_no_checking_build
     synergy_font_support_build
     thai_glyph_shaping_support_build
@@ -58,7 +59,24 @@ set(dynamic_bidi_text_build -DGX_DYNAMIC_BIDI_TEXT_SUPPORT
 set(dynamic_bidi_text_no_checking_build
     -DGX_DYNAMIC_BIDI_TEXT_SUPPORT -DGX_DYNAMIC_ARABIC_SHAPING_SUPPORT
     -DGX_DISABLE_ERROR_CHECKING)
-set(_5_4_0_compatible_no_checking_build -DGX_DISABLED_ERROR_CHECKING
+# The 5.4.0 compatibility API, with error checking on and with it off.
+#
+# Until this pair, one configuration covered both and did neither: it was
+# named for the no-checking combination but defined
+# GX_DISABLED_ERROR_CHECKING, a misspelling nothing in the repository reads,
+# so it compiled the checked API. That build is kept under the name of what it
+# builds, because it is the only configuration that compiles the 5.4.0
+# compatibility code at all and its test reaches nearly all of it.
+#
+# The no-checking build is the one its old name promised. It does not compile
+# yet: three of gx_api.h's 5.4.0 macros on the unchecked path are wrong -- a
+# misspelled structure name in the multi-line text view's colour set, a cast
+# to the wrong widget type in the prompt's, and an argument missing from the
+# text button's -- so an application selecting this combination cannot build.
+# That is product source, so the configuration is left failing rather than
+# made to pass by avoiding the macros.
+set(_5_4_0_compatible_build -DGUIX_5_4_0_COMPATIBILITY)
+set(_5_4_0_compatible_no_checking_build -DGX_DISABLE_ERROR_CHECKING
                                         -DGUIX_5_4_0_COMPATIBILITY)
 set(synergy_font_support_build -DGX_SYNERGY_FONT_FORMAT_SUPPORT)
 set(thai_glyph_shaping_support_build -DGX_THAI_GLYPH_SHAPING_SUPPORT)
