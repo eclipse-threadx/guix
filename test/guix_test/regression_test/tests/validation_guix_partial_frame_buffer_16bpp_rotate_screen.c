@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 
@@ -85,7 +87,7 @@ static VOID control_thread_entry(ULONG input)
 int frame_id = 1;
 MAP_INFO *entry = resize_pixelmap_id_list;
 
-    ToggleScreen((GX_WINDOW *)&rotate_screen, &button_screen);
+    ToggleScreen((GX_WINDOW *)&rotate_screen, (GX_WINDOW *)&button_screen);
 
     while(entry->id)
     {
