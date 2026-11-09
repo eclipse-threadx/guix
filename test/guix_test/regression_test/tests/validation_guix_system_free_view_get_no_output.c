@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -55,6 +57,8 @@ int        y_count;
 int        x, y;
 int        index = 0;
 GX_EVENT   my_event;
+
+    memset(window, 0, sizeof(window));
 
     gx_widget_detach(&button_screen);
     gx_widget_width_get(root, (GX_VALUE *)&width);
