@@ -58,10 +58,10 @@ VOID tx_application_define(void *first_unused_memory)
        user input. */
     gx_validation_control_thread_create(control_thread_entry);
 }
-
+#endif
 #include "gx_validation_wrapper.h"
 #include "demo_guix_all_widgets.c"
-
+#if !defined (GX_DISABLE_ERROR_CHECKING)
 extern UINT gx_validation_display_driver_setup_24xrgb(GX_DISPLAY *display);
 extern VOID gx_validation_graphics_driver_cleanup_24xrgb(GX_DISPLAY *display);
 static GX_CONST GX_CHAR *          callback_fun(GX_TEXT_SCROLL_WHEEL * param1, INT param2) {return GX_NULL;}
