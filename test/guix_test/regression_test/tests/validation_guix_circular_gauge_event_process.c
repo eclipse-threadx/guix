@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -114,6 +116,7 @@ GX_CIRCULAR_GAUGE_INFO circular_gauge_info;
     /* animation_delay == 0 */
     memset(&circular_gauge_info, 0, sizeof(circular_gauge_info));
     circular_gauge_info.gx_circular_gauge_info_animation_delay = 0;
+    memset(&new_gauge, 0, sizeof(new_gauge));
     gx_circular_gauge_create(&new_gauge, "new_circular_gauge", GX_NULL, &circular_gauge_info, 0, 0, 0, 0, 0);
 
     /* Signal the end of the test case.  Verify the output. */
