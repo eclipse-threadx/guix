@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -95,7 +97,7 @@ GX_PIXELMAP *map;
 static VOID control_thread_entry(ULONG input)
 {
 INT frame_id = 1;
-INT index;
+INT index = 0;
 GX_WINDOW *jpeg_win = &image_convert_screen.image_convert_screen_jpeg_to_1555xrgb_win;
 
     /* Toggle to image convert screen. */
