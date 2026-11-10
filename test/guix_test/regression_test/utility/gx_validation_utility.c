@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 #define _POSIX_SOURCE
 #include "tx_api.h"
 #include "gx_api.h"
@@ -186,10 +188,10 @@ void gx_validation_setup(int argc, char **argv)
     sprintf(golden_checksum_file_string, "%s%s.checksum", golden_file_path, test_parameter.test_name);
     sprintf(output_checksum_file_string, "%s%s.checksum", output_file_path, test_parameter.test_name);
     
-    strncpy(golden_file_string, golden_file_path, sizeof(golden_file_string));
-    strncat(golden_file_string, golden_file_name, sizeof(golden_file_string));
-    strncpy(output_file_string, output_file_path, sizeof(output_file_string));
-    strncat(output_file_string, output_file_name, sizeof(output_file_string));
+    strncpy(golden_file_string, golden_file_path, sizeof(golden_file_string) - 1);
+    strncat(golden_file_string, golden_file_name, sizeof(golden_file_string) - strlen(golden_file_string) - 1);
+    strncpy(output_file_string, output_file_path, sizeof(output_file_string) - 1);
+    strncat(output_file_string, output_file_name, sizeof(output_file_string) - strlen(output_file_string) - 1);
 
     if(generate || checksum)
     {
