@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -361,7 +363,14 @@ GX_RECTANGLE rect;
         break;
 
     case ELLIPSE:
-        gx_canvas_ellipse_draw(xcenter, ycenter, a, b);
+#if defined(GX_DISABLE_ERROR_CHECKING)
+        /* Without error checking, a zero axis is outside the API's contract:
+           skip the call the checked build refuses with GX_INVALID_VALUE. */
+        if ((a > 0) && (b > 0))
+#endif
+        {
+            gx_canvas_ellipse_draw(xcenter, ycenter, a, b);
+        }
         break;
 
     case RECTANGLE:
