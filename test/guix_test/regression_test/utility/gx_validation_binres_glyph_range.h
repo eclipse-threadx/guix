@@ -166,12 +166,24 @@ UINT      index;
     }
 }
 
+/* The extent declared for the font built above. Zero leaves it unknown, which
+   is what an entry point that takes no length and cannot derive one passes. */
+static ULONG binres_test_root_size = 0;
+
 /* Point a read control block at the font just built. */
 static VOID binres_info_reset(GX_BINRES_DATA_INFO *info)
 {
     memset(info, 0, sizeof(GX_BINRES_DATA_INFO));
     info -> gx_binres_root_address = binres_test_font;
+    info -> gx_binres_root_size = binres_test_root_size;
     info -> gx_binres_read_offset = 0;
+}
+
+/* The size of a font carrying glyph_count records of the given format. */
+static UINT binres_font_extent_get(GX_UBYTE format, UINT glyph_count)
+{
+    return (UINT)(BINRES_FONT_HEADER_SIZE + BINRES_PAGE_HEADER_SIZE +
+                  (glyph_count * binres_record_size_get(format)));
 }
 
 /* Run the size pass over a font declaring the given range and format. */
@@ -376,6 +388,47 @@ BINRES_TEST_FORMAT *format;
     EXPECT_EQ(GX_INVALID_MEMORY_SIZE, status);
     EXPECT_EQ(GX_TRUE, binres_margin_intact);
 #endif
+
+    /* A resource is read at offsets and for counts it declares itself, so a
+       page claiming more glyph records than the resource carries would be read
+       past its end. The extent is what stops that, and it has to stop it
+       whatever the span is: a well formed, narrow range reaches this too. */
+    for (format = binres_test_formats; format -> binres_format_name; format++)
+    {
+        /* Declared and present agree, and the extent covers the whole font. */
+        binres_test_root_size = binres_font_extent_get(format -> binres_format,
+                                                       BINRES_TEST_GLYPH_COUNT);
+
+        status = binres_font_size_get(BINRES_TEST_FIRST_GLYPH, BINRES_TEST_LAST_GLYPH,
+                                      format -> binres_format, BINRES_TEST_GLYPH_COUNT,
+                                      &size_valid);
+        EXPECT_EQ(GX_SUCCESS, status);
+
+        status = binres_font_load(BINRES_TEST_FIRST_GLYPH, BINRES_TEST_LAST_GLYPH,
+                                  format -> binres_format, BINRES_TEST_GLYPH_COUNT,
+                                  size_valid, &font);
+        EXPECT_EQ(GX_SUCCESS, status);
+        EXPECT_EQ(GX_TRUE, binres_margin_intact);
+
+        /* The same font, with the extent cut back so that the records the page
+           declares run past the end of the resource. */
+        binres_test_root_size = binres_font_extent_get(format -> binres_format, 2);
+
+        status = binres_font_load(BINRES_TEST_FIRST_GLYPH, BINRES_TEST_LAST_GLYPH,
+                                  format -> binres_format, BINRES_TEST_GLYPH_COUNT,
+                                  size_valid, &font);
+        EXPECT_EQ(GX_INVALID_FORMAT, status);
+
+        /* An extent too small even for the headers the loader starts with. */
+        binres_test_root_size = BINRES_FONT_HEADER_SIZE;
+
+        status = binres_font_size_get(BINRES_TEST_FIRST_GLYPH, BINRES_TEST_LAST_GLYPH,
+                                      format -> binres_format, BINRES_TEST_GLYPH_COUNT,
+                                      &size_valid);
+        EXPECT_EQ(GX_INVALID_FORMAT, status);
+
+        binres_test_root_size = 0;
+    }
 
     return failed_tests;
 }

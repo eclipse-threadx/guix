@@ -90,6 +90,7 @@ The available build types are as follows:
 |thai_glyph_shaping_support_build|Build with Thai glyph shaping support|GX_THAI_GLYPH_SHAPING_SUPPORT|
 |palette_mode_aa_text_colors_16_build|Build with palette mode with 16 colors for text drawing support|GX_PALETTE_MODE_AA_TEXT_COLORS=16|
 |disable_deprecated_string_api_build|Build with deprecated string API disabled|GX_DISABLE_DEPRECATED_STRING_API|
+|disable_deprecated_binres_api_build|Build with deprecated binary resource API disabled|GX_DISABLE_DEPRECATED_BINRES_API|
 |partial_canvas_support_build|Build with partial canvas support|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER|
 |partial_canvas_support_vertical_refresh_build|Build with partial canvas support and vertical refresh|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER and GX_CANVAS_REFRESH_DIRECTION_VERTICAL|
 |partial_canvas_support_horizontal_refresh_build|Build with partial canvas support and horizontal refresh|GX_ENABLE_CANVAS_PARTIAL_FRAME_BUFFER and GX_CANVAS_REFRESH_DIRECTION_HORIZONTAL|
