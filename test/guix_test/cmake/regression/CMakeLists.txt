@@ -1364,7 +1364,8 @@ set(kerning_glyph_draw_32bpp_screen_FILE_LIST
 set(kerning_glyph_draw_32bpp_screen_REG_TESTS
     guix_kerning_glyph_draw_32bpp_screen
     guix_kerning_glyph_draw_32bpp_screen_binary_source
-    guix_binres_font_glyph_range_kerning_no_output)
+    guix_binres_font_glyph_range_kerning_no_output
+    guix_binres_kerning_glyph_bounds_no_output)
 
 set(kerning_glyph_in_string_table_FILE_LIST
     demo_kerning_glyph_in_string_table.c
@@ -1519,7 +1520,8 @@ set(multi_themes_16bpp_REG_TESTS
     guix_multi_themes_16bpp guix_binres_language_info_get_no_output
     guix_binres_language_table_load guix_binres_language_table_load_use_old_api
     guix_binres_theme_load guix_binres_theme_id_bound_no_output
-    guix_binres_font_glyph_range_no_output guix_binres_ext_api_no_output)
+    guix_binres_font_glyph_range_no_output guix_binres_ext_api_no_output
+    guix_malformed_resource_no_output)
 
 set(multi_themes_16bpp_synergy_FILE_LIST
     demo_guix_multi_themes_16bpp_synergy.c
@@ -1717,7 +1719,8 @@ set(standalone_binres_load_extended_unicode_32bpp_FILE_LIST
 
 set(standalone_binres_load_extended_unicode_32bpp_REG_TESTS
     guix_standalone_binres_load_extended_unicode_32bpp
-    guix_binres_font_glyph_range_ex_unicode_no_output)
+    guix_binres_font_glyph_range_ex_unicode_no_output
+    guix_binres_glyph_code_bound_ex_unicode_no_output)
     
 set(all_widgets_synergy_565rgb_FILE_LIST
     demo_guix_all_widgets_synergy_565rgb.c
