@@ -2,3 +2,4 @@ threadx
 build
 coverage_report
 .run.sh
+__pycache__
