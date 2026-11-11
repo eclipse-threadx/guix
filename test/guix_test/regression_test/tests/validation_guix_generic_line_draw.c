@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -95,9 +97,18 @@ GX_DISPLAY display;
     gx_validation_set_frame_comment("draw one pixel aliased line");
     gx_validation_screen_refresh(); 
 
-    /* Test aliased filled circle draw with null pointer blend func. */
+    /* Test aliased filled circle draw with null pointer blend func. Both locals are cleared, so
+       that which check returns does not depend on what the stack held. */
+    memset(&context, 0, sizeof(GX_DRAW_CONTEXT));
+    memset(&display, 0, sizeof(GX_DISPLAY));
     display.gx_display_driver_pixel_blend = GX_NULL;
     context.gx_draw_context_display = &display;
+
+    /* A transparent brush draws nothing. */
+    _gx_display_driver_generic_aliased_filled_circle_draw(&context, 0, 0, 5);
+
+    /* An opaque brush reaches the blend function check. */
+    context.gx_draw_context_brush.gx_brush_alpha = GX_ALPHA_VALUE_OPAQUE;
     _gx_display_driver_generic_aliased_filled_circle_draw(&context, 0, 0, 5);
 
     /* Signal the end of the test case.  Verify the output. */
