@@ -2177,6 +2177,13 @@ set(demo_guix_simple_FILE_LIST
 set(demo_guix_sprite_FILE_LIST demo_guix_sprite.c guix_sprite_resources.c
                      guix_sprite_specifications.c)
 set(demo_guix_sprite_REG_TESTS guix_sprite_24xrgb)
+# Registered with an example because the build that disables the deprecated
+# string API builds only the examples. An error checking test is not
+# registered where GX_DISABLE_ERROR_CHECKING compiles the checks out.
+if(NOT "-DGX_DISABLE_ERROR_CHECKING" IN_LIST ${CMAKE_BUILD_TYPE})
+  list(APPEND demo_guix_sprite_REG_TESTS
+       guix_display_active_language_set_null_table_no_output)
+endif()
 
 set(demo_guix_thermostat_FILE_LIST demo_guix_thermostat.c guix_thermostat_resources.c
                          guix_thermostat_specifications.c)
