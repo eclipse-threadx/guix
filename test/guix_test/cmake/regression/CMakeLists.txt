@@ -1906,6 +1906,12 @@ set(bidi_text_draw_32bpp_FILE_LIST
 
 set(bidi_text_draw_32bpp_REG_TESTS guix_bidi_text_draw_32bpp
                                    guix_dynamic_bidi_screen)
+# An error checking test is not registered where GX_DISABLE_ERROR_CHECKING
+# compiles the checks out.
+if(NOT "-DGX_DISABLE_ERROR_CHECKING" IN_LIST ${CMAKE_BUILD_TYPE})
+  list(APPEND bidi_text_draw_32bpp_REG_TESTS
+       guix_dynamic_bidi_api_error_checking_no_output)
+endif()
 
 set(bidi_text_line_break_runtime_FILE_LIST
     demo_guix_bidi_text_line_break_runtime.c
