@@ -852,6 +852,10 @@ GX_STRING                   string;
     EXPECT_EQ(GX_PTR_ERROR, status);
 
     gx_checkbox_pixelmap_set(0, 0, 0, 0, 0); // should return GX_PTR_ERROR
+
+    checkbox.gx_widget_type = 0;
+    status = gx_checkbox_pixelmap_set(&checkbox, 0, 0, 0, 0); // should return GX_INVALID_WIDGET
+    EXPECT_EQ(GX_INVALID_WIDGET, status);
     
     memset(&checkbox, 0, sizeof(GX_CHECKBOX));
     status = gx_checkbox_select(&checkbox);// should return GX_PTR_ERROR

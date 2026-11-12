@@ -69,6 +69,13 @@ GX_POINT pos;
     EXPECT_EQ(GX_CALLER_ERROR, status);
 
     _tx_thread_system_state = 1;
+    status = gx_animation_start(GX_NULL, GX_NULL);
+    EXPECT_EQ(GX_CALLER_ERROR, status);
+    _tx_thread_system_state = -1;
+    status = gx_animation_start(GX_NULL, GX_NULL);
+    EXPECT_EQ(GX_CALLER_ERROR, status);
+
+    _tx_thread_system_state = 1;
     status = gx_animation_stop(GX_NULL);
     EXPECT_EQ(GX_CALLER_ERROR, status);
     _tx_thread_system_state = -1;
