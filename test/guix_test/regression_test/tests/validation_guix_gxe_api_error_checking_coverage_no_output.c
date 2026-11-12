@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -314,6 +316,13 @@ GX_POINT pos;
     EXPECT_EQ(GX_CALLER_ERROR, status);
     _tx_thread_system_state = -1;
     status = gx_canvas_text_draw_ext(0, 0, GX_NULL);
+    EXPECT_EQ(GX_CALLER_ERROR, status);
+
+    _tx_thread_system_state = 1;
+    status = gx_canvas_aligned_text_draw(GX_NULL, GX_NULL, 0);
+    EXPECT_EQ(GX_CALLER_ERROR, status);
+    _tx_thread_system_state = -1;
+    status = gx_canvas_aligned_text_draw(GX_NULL, GX_NULL, 0);
     EXPECT_EQ(GX_CALLER_ERROR, status);
 
     _tx_thread_system_state = 1;

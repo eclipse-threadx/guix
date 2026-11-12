@@ -20,6 +20,7 @@ TEST_PARAM test_parameter = {
 };
 
 static GX_CHAR test_string[] = "test string";
+static GX_STRING aligned_text;
 
 int main(int argc, char ** argv)
 {
@@ -791,6 +792,27 @@ GX_STRING                   string;
     _gx_system_current_draw_context = GX_NULL;
     status = gx_canvas_text_draw(0, 0, "text", 0);//should return GX_INVALID_CONTEXT
     EXPECT_EQ(GX_INVALID_CONTEXT, status);
+
+    aligned_text.gx_string_ptr = "text";
+    aligned_text.gx_string_length = 4;
+    status = gx_canvas_aligned_text_draw(GX_NULL, &size, GX_STYLE_TEXT_LEFT); // string is NULL
+    EXPECT_EQ(GX_PTR_ERROR, status);
+    status = gx_canvas_aligned_text_draw(&aligned_text, GX_NULL, GX_STYLE_TEXT_LEFT); // rectangle is NULL
+    EXPECT_EQ(GX_PTR_ERROR, status);
+    aligned_text.gx_string_ptr = GX_NULL;
+    status = gx_canvas_aligned_text_draw(&aligned_text, &size, GX_STYLE_TEXT_LEFT); // string pointer is NULL
+    EXPECT_EQ(GX_PTR_ERROR, status);
+    aligned_text.gx_string_ptr = "text";
+    status = gx_canvas_aligned_text_draw(&aligned_text, &size, GX_STYLE_TEXT_LEFT); // no draw context
+    EXPECT_EQ(GX_INVALID_CONTEXT, status);
+    _gx_system_current_draw_context = &default_context;
+    aligned_text.gx_string_length = 3;
+    status = gx_canvas_aligned_text_draw(&aligned_text, &size, GX_STYLE_TEXT_LEFT); // the length check fails: no terminator within gx_string_length
+    EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
+    aligned_text.gx_string_length = 5;
+    status = gx_canvas_aligned_text_draw(&aligned_text, &size, GX_STYLE_TEXT_LEFT); // the text is shorter than gx_string_length
+    EXPECT_EQ(GX_INVALID_STRING_LENGTH, status);
+    _gx_system_current_draw_context = GX_NULL;
     
     /* checkbox */
     printf("checkbox\n");
