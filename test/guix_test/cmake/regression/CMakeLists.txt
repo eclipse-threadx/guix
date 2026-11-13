@@ -1908,7 +1908,8 @@ set(bidi_text_draw_32bpp_FILE_LIST
     bidi_text_draw_32bpp_specifications.c bidi_character_test.c)
 
 set(bidi_text_draw_32bpp_REG_TESTS guix_bidi_text_draw_32bpp
-                                   guix_dynamic_bidi_screen)
+                                   guix_dynamic_bidi_screen
+                                   guix_dynamic_bidi_api_error_checking_no_output)
 
 set(bidi_text_line_break_runtime_FILE_LIST
     demo_guix_bidi_text_line_break_runtime.c
@@ -2173,7 +2174,10 @@ set(demo_guix_simple_FILE_LIST
 
 set(demo_guix_sprite_FILE_LIST demo_guix_sprite.c guix_sprite_resources.c
                      guix_sprite_specifications.c)
-set(demo_guix_sprite_REG_TESTS guix_sprite_24xrgb)
+# Registered with an example because the build that disables the deprecated
+# string API builds only the examples.
+set(demo_guix_sprite_REG_TESTS guix_sprite_24xrgb
+                               guix_display_active_language_set_null_table_no_output)
 
 set(demo_guix_thermostat_FILE_LIST demo_guix_thermostat.c guix_thermostat_resources.c
                          guix_thermostat_specifications.c)
