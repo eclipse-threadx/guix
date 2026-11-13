@@ -66,7 +66,7 @@
 /**************************************************************************/
 UINT _gx_system_timer_stop(GX_WIDGET *owner, UINT timer_id)
 {
-UINT      status = GX_FAILURE;
+UINT      status = GX_NOT_FOUND;
 GX_TIMER *next_timer;
 GX_TIMER *previous_timer = GX_NULL;
 GX_TIMER *search;
@@ -122,6 +122,12 @@ GX_TIMER *search;
 
     }
     GX_EXIT_CRITICAL
+
+    if (timer_id == 0)
+    {
+        /* timer_id == 0 is 'catch all / any' therefore always return GX_SUCCESS */
+        status = GX_SUCCESS;
+    }
 
     /* if our active list is NULL, then stop the tx_timer */
 
