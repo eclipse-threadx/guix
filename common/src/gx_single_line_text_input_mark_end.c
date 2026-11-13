@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -76,7 +77,7 @@
 UINT _gx_single_line_text_input_mark_end(GX_SINGLE_LINE_TEXT_INPUT *text_input)
 {
 GX_TEXT_INPUT_CURSOR *cursor_ptr;
-GX_VALUE              text_width;
+GX_VALUE              text_width = 0;
 GX_RECTANGLE          client;
 GX_VALUE              new_xoffset;
 GX_VALUE              new_cursor_pos;

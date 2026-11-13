@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -65,7 +66,7 @@ UINT _gx_single_line_text_input_text_rectangle_get(GX_SINGLE_LINE_TEXT_INPUT *in
 {
 GX_TEXT_INPUT_CURSOR *cursor = &input -> gx_single_line_text_input_cursor_instance;
 GX_FONT              *font;
-GX_VALUE              text_width;
+GX_VALUE              text_width = 0;
 GX_VALUE              border_width;
 INT                   start_index;
 INT                   end_index;
