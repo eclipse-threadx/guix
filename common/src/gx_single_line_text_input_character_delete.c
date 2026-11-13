@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -82,13 +83,13 @@ UINT                  insert_pos;
 GX_CHAR              *string_buffer;
 UINT                  string_size;
 GX_VALUE              border_width;
-GX_VALUE              text_width;
+GX_VALUE              text_width = 0;
 GX_RECTANGLE          client;
 GX_RECTANGLE          dirty_area;
 GX_FONT              *gx_font;
 GX_VALUE              x_pos;
 GX_VALUE              offset;
-GX_VALUE              del_char_width;
+GX_VALUE              del_char_width = 0;
 UINT                  glyph_len = 1;
 
 GX_STRING             string;

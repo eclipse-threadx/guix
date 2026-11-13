@@ -2379,7 +2379,7 @@ GX_STRING                   string;
     status = gx_single_line_text_input_backspace(&single_line_text_input);//should return GX_INVALID_WIDGET
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
-    memset(&single_line_text_input, 0, sizeof(GX_TYPE_SINGLE_LINE_TEXT_INPUT));
+    memset(&single_line_text_input, 0, sizeof(GX_SINGLE_LINE_TEXT_INPUT));
     single_line_text_input.gx_widget_type = GX_TYPE_SINGLE_LINE_TEXT_INPUT;
     status = gx_single_line_text_input_backspace(&single_line_text_input);//should return GX_SUCCESS
     EXPECT_EQ(GX_SUCCESS, status);
@@ -2405,7 +2405,7 @@ GX_STRING                   string;
     status = gx_single_line_text_input_character_delete(&single_line_text_input);//should return GX_INVALID_WIDGET
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
-    memset(&single_line_text_input, 0, sizeof(GX_TYPE_SINGLE_LINE_TEXT_INPUT));
+    memset(&single_line_text_input, 0, sizeof(GX_SINGLE_LINE_TEXT_INPUT));
     single_line_text_input.gx_widget_type = GX_TYPE_SINGLE_LINE_TEXT_INPUT;
     status = gx_single_line_text_input_character_delete(&single_line_text_input);//should return GX_SUCCESS
     EXPECT_EQ(GX_SUCCESS, status);
@@ -2456,7 +2456,7 @@ GX_STRING                   string;
     status = gx_single_line_text_input_end(&single_line_text_input);//should return GX_INVALID_WIDGET
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
-    memset(&single_line_text_input, 0, sizeof(GX_TYPE_SINGLE_LINE_TEXT_INPUT));
+    memset(&single_line_text_input, 0, sizeof(GX_SINGLE_LINE_TEXT_INPUT));
     single_line_text_input.gx_widget_type = GX_TYPE_SINGLE_LINE_TEXT_INPUT;
     status = gx_single_line_text_input_end(&single_line_text_input);//should return GX_SUCCESS
     EXPECT_EQ(GX_SUCCESS, status);
@@ -2488,7 +2488,7 @@ GX_STRING                   string;
     status = gx_single_line_text_input_home(&single_line_text_input);//should return GX_INVALID_WIDGET
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
-    memset(&single_line_text_input, 0, sizeof(GX_TYPE_SINGLE_LINE_TEXT_INPUT));
+    memset(&single_line_text_input, 0, sizeof(GX_SINGLE_LINE_TEXT_INPUT));
     single_line_text_input.gx_widget_type = GX_TYPE_SINGLE_LINE_TEXT_INPUT;
     status = gx_single_line_text_input_home(&single_line_text_input);//should return GX_SUCCESS
     EXPECT_EQ(GX_SUCCESS, status);
@@ -2500,7 +2500,7 @@ GX_STRING                   string;
     status = gx_single_line_text_input_left_arrow(&single_line_text_input);//should return GX_INVALID_WIDGET
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
-    memset(&single_line_text_input, 0, sizeof(GX_TYPE_SINGLE_LINE_TEXT_INPUT));
+    memset(&single_line_text_input, 0, sizeof(GX_SINGLE_LINE_TEXT_INPUT));
     single_line_text_input.gx_widget_type = GX_TYPE_SINGLE_LINE_TEXT_INPUT;
     status = gx_single_line_text_input_left_arrow(&single_line_text_input);//should return GX_SUCCESS
     EXPECT_EQ(GX_SUCCESS, status);
@@ -2512,7 +2512,7 @@ GX_STRING                   string;
     status = gx_single_line_text_input_position_get(&single_line_text_input, 0);//should return GX_INVALID_WIDGET
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
-    memset(&single_line_text_input, 0, sizeof(GX_TYPE_SINGLE_LINE_TEXT_INPUT));
+    memset(&single_line_text_input, 0, sizeof(GX_SINGLE_LINE_TEXT_INPUT));
     single_line_text_input.gx_widget_type = GX_TYPE_SINGLE_LINE_TEXT_INPUT;
     status = gx_single_line_text_input_position_get(&single_line_text_input, 0);//should return GX_INVALID_WIDGET
     EXPECT_EQ(GX_SUCCESS, status);
@@ -2524,7 +2524,7 @@ GX_STRING                   string;
     status = gx_single_line_text_input_right_arrow(&single_line_text_input);//should return GX_INVALID_WIDGET
     EXPECT_EQ(GX_INVALID_WIDGET, status);
 
-    memset(&single_line_text_input, 0, sizeof(GX_TYPE_SINGLE_LINE_TEXT_INPUT));
+    memset(&single_line_text_input, 0, sizeof(GX_SINGLE_LINE_TEXT_INPUT));
     single_line_text_input.gx_widget_type = GX_TYPE_SINGLE_LINE_TEXT_INPUT;
     status = gx_single_line_text_input_right_arrow(&single_line_text_input);//should return GX_SUCCESS
     EXPECT_EQ(GX_SUCCESS, status);

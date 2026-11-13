@@ -329,6 +329,7 @@ set(all_widgets_REG_TESTS
     guix_single_line_text_input_buffer_clear
     guix_single_line_text_input_create
     guix_single_line_text_input_fill_color_set
+    guix_single_line_text_input_no_canvas_no_output
     guix_single_line_text_input_property_24xrgb
     guix_single_line_text_input_text_color_set
     guix_single_line_text_input_text_select
