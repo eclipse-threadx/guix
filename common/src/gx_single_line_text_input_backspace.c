@@ -7,6 +7,7 @@
  * 
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -92,8 +93,8 @@ GX_VALUE              x_pos;
 GX_VALUE              new_x_pos;
 GX_RECTANGLE          client;
 GX_VALUE              border_width;
-GX_VALUE              delete_char_width;
-GX_VALUE              text_width;
+GX_VALUE              delete_char_width = 0;
+GX_VALUE              text_width = 0;
 GX_VALUE              leftoff;
 GX_VALUE              rightoff;
 GX_FONT              *gx_font;

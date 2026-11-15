@@ -513,6 +513,12 @@ set(all_widgets_REG_TESTS
     guix_utility_string_to_alphamap
     guix_string_to_alphamap_no_output
     guix_deprecated_system_api_no_output)
+# Not registered where GX_DISABLE_ERROR_CHECKING is defined: there the
+# all_widgets demo it includes does not compile.
+if(NOT "-DGX_DISABLE_ERROR_CHECKING" IN_LIST ${CMAKE_BUILD_TYPE})
+  list(APPEND all_widgets_REG_TESTS
+       guix_single_line_text_input_no_canvas_no_output)
+endif()
 
 set(all_widgets_32argb_FILE_LIST
     all_widgets_32argb_resources.c
