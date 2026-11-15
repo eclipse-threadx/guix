@@ -851,10 +851,11 @@ GX_STRING                   string;
     status = gx_checkbox_event_process(&checkbox, 0); // event_ptr is NULL
     EXPECT_EQ(GX_PTR_ERROR, status);
 
-    gx_checkbox_pixelmap_set(0, 0, 0, 0, 0); // should return GX_PTR_ERROR
+    status = gx_checkbox_pixelmap_set(0, 0, 0, 0, 0);
+    EXPECT_EQ(GX_PTR_ERROR, status);
 
     checkbox.gx_widget_type = 0;
-    status = gx_checkbox_pixelmap_set(&checkbox, 0, 0, 0, 0); // should return GX_INVALID_WIDGET
+    status = gx_checkbox_pixelmap_set(&checkbox, 0, 0, 0, 0);
     EXPECT_EQ(GX_INVALID_WIDGET, status);
     
     memset(&checkbox, 0, sizeof(GX_CHECKBOX));
