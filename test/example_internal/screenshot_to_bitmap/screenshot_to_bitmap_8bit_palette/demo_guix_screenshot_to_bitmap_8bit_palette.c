@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -279,7 +281,13 @@ VOID generate_screen_shot()
     INT len;
 
     size = scroll_wheel_screen.gx_widget_size;
+#ifdef REGRESSION_TEST_MODE
+    /* Each build configuration runs its tests in a directory of its own, so
+       writing there keeps two configurations from sharing one file.  */
+    len = 0;
+#else
     len = extract_path(__FILE__, pathname);
+#endif
     memcpy(pathname + len, bmp_file, sizeof(bmp_file));
     fp = fopen(pathname, "wb");
     if (!fp)

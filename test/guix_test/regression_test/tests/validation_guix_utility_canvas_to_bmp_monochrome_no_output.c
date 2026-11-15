@@ -1,3 +1,5 @@
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -65,20 +67,19 @@ char relative_path[]="../../../example_internal/screenshot_to_bitmap/screenshot_
     generate_screen_shot();
 
     gx_validation_extract_path(__FILE__, golden_file, &pathlen);
-    memcpy(output_file, golden_file, pathlen);
 
     sprintf(golden_file + pathlen, "%s%s", relative_path, golden_bmp_file);
-    sprintf(output_file + pathlen, "%s%s", relative_path, bmp_file);
+    sprintf(output_file, "%s", bmp_file);
     status = gx_validation_compare_file_data(output_file, golden_file);
     remove(output_file);
 
     sprintf(golden_file + pathlen, "%s%s", relative_path, scroll_wheel_golden_bmp_file);
-    sprintf(output_file + pathlen, "%s%s", relative_path, scroll_wheel_bmp_file);
+    sprintf(output_file, "%s", scroll_wheel_bmp_file);
     status |= gx_validation_compare_file_data(output_file, golden_file);
     remove(output_file);
 
     sprintf(golden_file + pathlen, "%s%s", relative_path, golden_bmp_file_aligned);
-    sprintf(output_file + pathlen, "%s%s", relative_path, bmp_file_aligned);
+    sprintf(output_file, "%s", bmp_file_aligned);
     status |= gx_validation_compare_file_data(output_file, golden_file);
     remove(output_file);
 
