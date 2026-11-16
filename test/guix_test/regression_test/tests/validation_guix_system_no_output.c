@@ -77,7 +77,7 @@ UINT test_event_handler(GX_WINDOW *window, GX_EVENT *event_ptr)
 
 static VOID control_thread_entry(ULONG input)
 {
-TX_INTERRUPT_SAVE_AREA
+UINT                     old_priority;
 UINT                     status;
 GX_EVENT                 my_event;
 GX_PEN_CONFIGURATION     configure;
@@ -111,8 +111,9 @@ int                      failed_tests = 0;
 
     for(index = 0; index < 2; index++)
     {
-        /* Model a two-tick drag without depending on host scheduling. */
-        TX_DISABLE
+        /* Model a two-tick drag without depending on host scheduling: above the GUIX
+           thread, this thread sends all three events before GUIX processes any.  */
+        tx_thread_priority_change(tx_thread_identify(), GX_SYSTEM_THREAD_PRIORITY - 1, &old_priority);
         my_event.gx_event_display_handle = 1;
         my_event.gx_event_type = GX_EVENT_PEN_DOWN;
         my_event.gx_event_payload.gx_event_pointdata.gx_point_x = 80;
@@ -134,7 +135,7 @@ int                      failed_tests = 0;
 
         my_event.gx_event_type = GX_EVENT_PEN_UP;
         gx_system_event_send(&my_event);
-        TX_RESTORE
+        tx_thread_priority_change(tx_thread_identify(), old_priority, &old_priority);
 
         my_event.gx_event_type = GX_FIRST_USER_EVENT;
         my_event.gx_event_target = (GX_WIDGET *)&button_screen;
