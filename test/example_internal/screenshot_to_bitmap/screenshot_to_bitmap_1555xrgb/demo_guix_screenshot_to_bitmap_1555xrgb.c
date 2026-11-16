@@ -44,9 +44,9 @@ unsigned char media_memory[512];
 #else
 #define USE_ANSI_FILEIO
 #ifdef REGRESSION_TEST_MODE
-GX_CHAR bmp_file[] = "test_screenshot.bmp";
+GX_CHAR bmp_file[] = "test_screenshot_1555xrgb.bmp";
 GX_CHAR golden_bmp_file[] = "screenshot.bmp";
-GX_CHAR scroll_wheel_bmp_file[] = "test_scroll_wheel_screenshot.bmp";
+GX_CHAR scroll_wheel_bmp_file[] = "test_scroll_wheel_screenshot_1555xrgb.bmp";
 GX_CHAR scroll_wheel_golden_bmp_file[] = "scroll_wheel_screenshot.bmp";
 #else
 GX_CHAR bmp_file[] = "screenshot.bmp";
