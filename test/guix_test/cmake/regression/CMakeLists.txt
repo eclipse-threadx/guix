@@ -1587,6 +1587,12 @@ set(pixelmap_32bpp_FILE_LIST
     demo_guix_pixelmap_32bpp.c pixelmap_32bpp_resources.c
     pixelmap_32bpp_specifications.c)
 set(pixelmap_32bpp_REG_TESTS guix_pixelmap_24xrgb)
+# The cursor is compiled only with GX_MOUSE_SUPPORT; this demo is also built
+# in configurations without it.
+if("-DGX_MOUSE_SUPPORT" IN_LIST ${CMAKE_BUILD_TYPE})
+  list(APPEND pixelmap_32bpp_REG_TESTS
+       guix_mouse_cursor_24xrgb_no_output)
+endif()
 
 set(pixelmaps_32bpp_FILE_LIST
     demo_guix_pixelmaps_32bpp.c pixelmaps_32bpp_resources.c
