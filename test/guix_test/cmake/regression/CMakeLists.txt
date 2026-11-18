@@ -1559,6 +1559,12 @@ set(pixelmap_16bpp_FILE_LIST
     demo_guix_pixelmap_16bpp.c pixelmap_16bpp_resources.c
     pixelmap_16bpp_specifications.c)
 set(pixelmap_16bpp_REG_TESTS guix_pixelmap_565rgb)
+# The cursor is compiled only with GX_MOUSE_SUPPORT; this demo is also built
+# in configurations without it.
+if("-DGX_MOUSE_SUPPORT" IN_LIST ${CMAKE_BUILD_TYPE})
+  list(APPEND pixelmap_16bpp_REG_TESTS
+       guix_mouse_cursor_565rgb_no_output)
+endif()
 
 set(pixelmap_8bpp_FILE_LIST demo_guix_pixelmap_8bpp.c pixelmap_8bpp_resources.c
                             pixelmap_8bpp_specifications.c)
