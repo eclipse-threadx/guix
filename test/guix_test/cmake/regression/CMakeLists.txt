@@ -1153,7 +1153,8 @@ set(all_widgets_4bpp_REG_TESTS
     guix_utility_4bpp_pixelmap_resize
     guix_utility_4bpp_pixelmap_rotate
     guix_image_reader_colorspace_convert_4bpp
-    guix_all_widgets_4bpp_sprite)
+    guix_all_widgets_4bpp_sprite
+    guix_4bpp_pixelmap_clip_no_output)
 
 set(all_widgets_8bpp_FILE_LIST
     all_widgets_8bpp_resources.c all_widgets_8bpp_specifications.c
