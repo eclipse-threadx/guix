@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -25,7 +26,7 @@
 #include "gx_display.h"
 
 #if defined(GX_MOUSE_SUPPORT) && !defined(GX_HARDWARE_MOUSE_SUPPORT)
-static GX_UBYTE mouse_capture_memory[GX_MOUSE_MAX_RESOLUTION * GX_MOUSE_MAX_RESOLUTION / 64] = { 0 };
+static GX_UBYTE mouse_capture_memory[((GX_MOUSE_MAX_RESOLUTION + 7) >> 3) * GX_MOUSE_MAX_RESOLUTION] = { 0 };
 #endif
 
 /**************************************************************************/
