@@ -8,6 +8,7 @@
  * 
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -125,7 +126,7 @@ GX_CANVAS   *canvas;
                             putmask = 0x80;
                         }
                     }
-                    putrow += (display -> gx_display_width + 7) >> 3;
+                    putrow += (canvas -> gx_canvas_x_resolution + 7) >> 3;
                     getrow += (width + 7) >> 3;
                 }
             }
