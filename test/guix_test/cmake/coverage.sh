@@ -151,7 +151,7 @@ if [ "$1" = "--merge" ]; then
     done
 
     # The gate is a ratchet: it sits at the union the complete run measures on
-    # CI, 46667/47123 lines and 25618/26110 branches over 1310 files, truncated
+    # CI, 46883/47123 lines and 25712/26110 branches over 1310 files, truncated
     # to four decimal places. It is compared against the unrounded ratio, so a
     # run passes at this figure and fails if a single line or branch it covers
     # is lost; at the two places coverage_union.py prints, three lines or two
@@ -160,8 +160,8 @@ if [ "$1" = "--merge" ]; then
     # container. It is the union, not gcovr's merged report, because the union
     # counts branches in the source while the merged report counts one per
     # basic-block numbering.
-    min_line=${GX_COVERAGE_MIN_LINE:-99.0323}
-    min_branch=${GX_COVERAGE_MIN_BRANCH:-98.1156}
+    min_line=${GX_COVERAGE_MIN_LINE:-99.4906}
+    min_branch=${GX_COVERAGE_MIN_BRANCH:-98.4756}
 
     # Run after the reports are written, so a failed check still leaves behind
     # the reports that explain it. Staged, so the union reads exactly the files
