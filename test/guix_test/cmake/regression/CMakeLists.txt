@@ -743,7 +743,8 @@ set(all_widgets_24xrgb_rotated_ccw_REG_TESTS
     guix_all_widgets_24xrgb_rotated_ccw_rotate_screen
     guix_all_widgets_24xrgb_rotated_ccw_shapes_screen
     guix_all_widgets_24xrgb_rotated_ccw_vertical_list
-    guix_all_widgets_24xrgb_rotated_ccw)
+    guix_all_widgets_24xrgb_rotated_ccw
+    guix_32bpp_rotated_pixelmap_blend_no_output)
 
 set(all_widgets_24xrgb_rotated_ccw_binary_FILE_LIST
     all_widgets_24xrgb_rotated_ccw_binary_specifications.c
