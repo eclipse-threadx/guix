@@ -1594,7 +1594,8 @@ if("-DGX_MOUSE_SUPPORT" IN_LIST ${CMAKE_BUILD_TYPE})
        guix_mouse_cursor_24xrgb_no_output
        guix_gxe_canvas_mouse_no_output
        guix_mouse_cursor_rotated_display_no_output
-       guix_mouse_cursor_narrow_canvas_no_output)
+       guix_mouse_cursor_narrow_canvas_no_output
+       guix_mouse_cursor_max_resolution_no_output)
 endif()
 
 set(pixelmaps_32bpp_FILE_LIST
