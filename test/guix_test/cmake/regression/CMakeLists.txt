@@ -1279,7 +1279,8 @@ set(glyph_draw_8bpp_screen_text_colors_16_FILE_LIST
     glyph_draw_8bpp_screen_text_colors_16_resources.c
     glyph_draw_8bpp_screen_text_colors_16_specifications.c)
 set(glyph_draw_8bpp_screen_text_colors_16_REG_TESTS
-    guix_glyph_draw_8bpp_screen_aa_text_colors_16)
+    guix_glyph_draw_8bpp_screen_aa_text_colors_16
+    guix_8bit_palette_rotated_aa_text_colors_16_no_output)
 
 set(glyph_draw_multi_lang_16bpp_FILE_LIST
     demo_glyph_draw_multi_lang_16bpp.c glyph_draw_multi_lang_16bpp_resources.c
