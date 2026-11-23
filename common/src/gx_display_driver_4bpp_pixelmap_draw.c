@@ -7,6 +7,7 @@
  * 
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -94,7 +95,6 @@ GX_RECTANGLE             *clip = context -> gx_draw_context_clip;
     offset_row = clip->gx_rectangle_left - xpos;
     getrow = (GX_UBYTE *)(pixelmap -> gx_pixelmap_data);
     getrow += getstride * (clip -> gx_rectangle_top - ypos);
-    getrow += offset_row >> 1;
 
     width = clip -> gx_rectangle_right - clip -> gx_rectangle_left + 1;
 
