@@ -2108,7 +2108,8 @@ set(partial_frame_buffer_16bpp_REG_TESTS
     guix_partial_frame_buffer_16bpp_rotate_screen
     guix_partial_frame_buffer_16bpp_line_draw
     guix_partial_frame_buffer_16bpp_vertical_list
-    guix_partial_frame_buffer_16bpp)
+    guix_partial_frame_buffer_16bpp
+    guix_partial_frame_buffer_16bpp_canvas_ops_no_output)
 
 set(demo_guix_calculator_FILE_LIST
     demo_guix_calculator.c evaluate.c guix_calculator_resources.c
