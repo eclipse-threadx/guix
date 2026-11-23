@@ -9,6 +9,8 @@
  * SPDX-License-Identifier: MIT
  **************************************************************************/
 
+/* Portions of this file were generated with AI assistance. */
+
 /* This is a small demo of the high-performance GUIX graphics framework. */
 
 #include <stdio.h>
@@ -170,6 +172,8 @@ UINT index = 0;
 
     for(test_brush_alpha = 255; test_brush_alpha > 0; test_brush_alpha -= 128)
     {
+        index = 0;
+
         while(test_map_info_list[index].map_id)
         {
             test_map_id = test_map_info_list[index].map_id;
