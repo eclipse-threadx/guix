@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -169,9 +170,11 @@ GX_CONST GX_KERNING_GLYPH *glyph;
 GX_CONST GX_FONT          *font_link;
 GX_STRING                  string_copy;
 
-/* Used for kerning glyph. */
+/* Used for kerning glyph. pre_char_val is the previous character's code, 0
+   before the first character.  */
 GX_CHAR_CODE       pre_char_val = 0;
-GX_CHAR            kerning_offset = 0;
+GX_CHAR_CODE       glyph_index;
+GX_BYTE            kerning_offset = 0;
 GX_CONST GX_UBYTE *kerning_table;
 INT                kerning_counts;
 INT                index;
@@ -210,9 +213,9 @@ UINT ret;
         }
         if (font_link)
         {
-            char_val = (GX_CHAR_CODE)(char_val - font_link -> gx_font_first_glyph);
+            glyph_index = (GX_CHAR_CODE)(char_val - font_link -> gx_font_first_glyph);
 
-            glyph = &font_link -> gx_font_glyphs.gx_font_kerning_glyphs[char_val];
+            glyph = &font_link -> gx_font_glyphs.gx_font_kerning_glyphs[glyph_index];
             kerning_table = glyph -> gx_kerning_table;
 
             if (kerning_table && (pre_char_val != 0))
@@ -223,9 +226,10 @@ UINT ret;
 
                 for (index = 0; index < kerning_counts; index++)
                 {
-                    if ((*left_glyph_ptr) == (pre_char_val + font_link -> gx_font_first_glyph))
+                    /* The kerning table holds the left character's code.  */
+                    if ((*left_glyph_ptr) == pre_char_val)
                     {
-                        kerning_offset = (GX_CHAR)(*(left_glyph_ptr + 1));
+                        kerning_offset = (GX_BYTE)(*(left_glyph_ptr + 1));
                         break;
                     }
                     left_glyph_ptr += 2;
