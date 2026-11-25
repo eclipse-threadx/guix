@@ -741,7 +741,8 @@ set(all_widgets_24xrgb_rotated_ccw_REG_TESTS
     guix_all_widgets_24xrgb_rotated_ccw_rotate_screen
     guix_all_widgets_24xrgb_rotated_ccw_shapes_screen
     guix_all_widgets_24xrgb_rotated_ccw_vertical_list
-    guix_all_widgets_24xrgb_rotated_ccw)
+    guix_all_widgets_24xrgb_rotated_ccw
+    guix_32bpp_rotated_pixelmap_blend_no_output)
 
 set(all_widgets_24xrgb_rotated_ccw_binary_FILE_LIST
     all_widgets_24xrgb_rotated_ccw_binary_specifications.c
@@ -1278,7 +1279,8 @@ set(glyph_draw_8bpp_screen_text_colors_16_FILE_LIST
     glyph_draw_8bpp_screen_text_colors_16_resources.c
     glyph_draw_8bpp_screen_text_colors_16_specifications.c)
 set(glyph_draw_8bpp_screen_text_colors_16_REG_TESTS
-    guix_glyph_draw_8bpp_screen_aa_text_colors_16)
+    guix_glyph_draw_8bpp_screen_aa_text_colors_16
+    guix_8bit_palette_rotated_aa_text_colors_16_no_output)
 
 set(glyph_draw_multi_lang_16bpp_FILE_LIST
     demo_glyph_draw_multi_lang_16bpp.c glyph_draw_multi_lang_16bpp_resources.c
@@ -2108,7 +2110,8 @@ set(partial_frame_buffer_16bpp_REG_TESTS
     guix_partial_frame_buffer_16bpp_rotate_screen
     guix_partial_frame_buffer_16bpp_line_draw
     guix_partial_frame_buffer_16bpp_vertical_list
-    guix_partial_frame_buffer_16bpp)
+    guix_partial_frame_buffer_16bpp
+    guix_partial_frame_buffer_16bpp_canvas_ops_no_output)
 
 set(demo_guix_calculator_FILE_LIST
     demo_guix_calculator.c evaluate.c guix_calculator_resources.c
