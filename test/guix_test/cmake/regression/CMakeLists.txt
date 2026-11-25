@@ -1934,6 +1934,7 @@ set(bidi_text_draw_32bpp_FILE_LIST
     bidi_text_draw_32bpp_specifications.c bidi_character_test.c)
 
 set(bidi_text_draw_32bpp_REG_TESTS guix_bidi_text_draw_32bpp
+                                   guix_system_bidi_text_root_without_canvas_no_output
                                    guix_dynamic_bidi_screen
                                    guix_dynamic_bidi_api_error_checking_no_output
                                    guix_display_language_direction_table_set_no_output)
