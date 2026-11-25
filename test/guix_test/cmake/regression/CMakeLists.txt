@@ -1373,6 +1373,7 @@ set(kerning_glyph_draw_32bpp_screen_FILE_LIST
 
 set(kerning_glyph_draw_32bpp_screen_REG_TESTS
     guix_kerning_glyph_draw_32bpp_screen
+    guix_kerning_font_pages_no_output
     guix_kerning_glyph_draw_32bpp_screen_binary_source
     guix_binres_font_glyph_range_kerning_no_output
     guix_binres_kerning_glyph_bounds_no_output)
