@@ -1795,7 +1795,8 @@ set(synergy_glyph_draw_16bpp_REG_TESTS guix_synergy_glyph_draw_16bpp
 set(synergy_glyph_draw_32bpp_FILE_LIST
     demo_synergy_glyph_draw_32bpp.c synergy_glyph_draw_32bpp_screen_resources.c
     synergy_glyph_draw_32bpp_screen_specifications.c)
-set(synergy_glyph_draw_32bpp_REG_TESTS guix_synergy_glyph_draw_32bpp)
+set(synergy_glyph_draw_32bpp_REG_TESTS guix_synergy_glyph_draw_32bpp
+    guix_text_draw_nul_in_length_no_output)
 
 set(screen_drag_animation_FILE_LIST
     demo_screen_drag_animation.c screen_drag_animation_resources.c
