@@ -7,6 +7,7 @@
  * 
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -88,6 +89,14 @@ ULONG       canvas_size;
     if (memsize < canvas_size)
     {
         canvas -> gx_canvas_status |= GX_CANVAS_PARTIAL_FRAME_BUFFER;
+    }
+    else
+    {
+        /* The memory holds a whole frame, so the canvas is no longer a partial
+           frame buffer, and its memory covers the whole canvas again.  */
+        canvas -> gx_canvas_status &= ~((UINT)GX_CANVAS_PARTIAL_FRAME_BUFFER);
+        canvas -> gx_canvas_memory_width = canvas -> gx_canvas_x_resolution;
+        canvas -> gx_canvas_memory_height = canvas -> gx_canvas_y_resolution;
     }
 #endif
 
