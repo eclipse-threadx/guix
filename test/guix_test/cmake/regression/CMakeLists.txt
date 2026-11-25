@@ -444,6 +444,7 @@ set(all_widgets_REG_TESTS
     guix_system_thread_entry_no_output
     guix_system_event_dispatch_no_output
     guix_input_capture_outside_root_no_output
+    guix_canvas_aligned_text_draw_no_font_no_output
     guix_system_event_fold_no_output
     guix_system_event_fold_pen_drag_no_output
     guix_system_event_remove_no_output
