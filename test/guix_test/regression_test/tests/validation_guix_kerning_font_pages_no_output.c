@@ -29,7 +29,12 @@
    - in the two-page fonts, the pair drawn with gx_canvas_text_draw_ext must
      leave the canvas exactly as it is drawn in the one-page font, whose widths
      the first check shows right. (The draw clips the glyphs to the width it
-     measures, so drawing the two characters one at a time is not a model.) */
+     measures, so drawing the two characters one at a time is not a model.)
+
+   Each pair is followed by a NUL: with error checking, the width and the draw
+   refuse a string whose length runs past a NUL, and look at the byte after the
+   length to find out. Every status is checked, so a refused string cannot pass
+   for one that was measured or drawn. */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -62,6 +67,7 @@ UINT gx_validation_graphics_driver_setup_24xrgb(GX_DISPLAY *display);
 extern GX_CONST GX_FONT *display_1_theme_1_font_table[];
 
 static UINT       failed_tests = 0;
+static INT        test_status_errors = 0;
 
 static TX_THREAD  test_thread;
 static ULONG      test_thread_stack[8192 / sizeof(ULONG)];
@@ -127,6 +133,17 @@ INT index;
     }
 }
 
+static VOID test_status(char *what, GX_CONST GX_CHAR *text, UINT status)
+{
+    if (status != GX_SUCCESS)
+    {
+        if (test_status_errors++ < 3)
+        {
+            printf("%s of \"%s\": status 0x%x\n", what, text, status);
+        }
+    }
+}
+
 static VOID test_text(INT font, GX_VALUE x, GX_CONST GX_CHAR *text, UINT length)
 {
 GX_RECTANGLE dirty;
@@ -138,7 +155,7 @@ GX_STRING    string;
     gx_canvas_drawing_initiate(&test_canvas, GX_NULL, &dirty);
     gx_context_raw_line_color_set(0x00f0e0d0);
     gx_context_font_set((GX_RESOURCE_ID)font);
-    gx_canvas_text_draw_ext(x, TEST_Y, &string);
+    test_status("draw", text, gx_canvas_text_draw_ext(x, TEST_Y, &string));
     gx_canvas_drawing_complete(&test_canvas, GX_FALSE);
 }
 
@@ -151,7 +168,7 @@ INT                        right;
 INT                        kerning;
 INT                        width_errors;
 INT                        draw_errors;
-GX_CHAR                    pair[2];
+GX_CHAR                    pair[3];
 GX_STRING                  string;
 GX_VALUE                   width;
 
@@ -180,10 +197,11 @@ GX_VALUE                   width;
                 kerning = test_kerning(&glyphs[right - 0x20], left);
                 pair[0] = (GX_CHAR)left;
                 pair[1] = (GX_CHAR)right;
+                pair[2] = 0;
 
                 string.gx_string_ptr = pair;
                 string.gx_string_length = 2;
-                gx_system_string_width_get_ext(test_font_table[font], &string, &width);
+                test_status("width", pair, gx_system_string_width_get_ext(test_font_table[font], &string, &width));
                 if (width != glyphs[left - 0x20].gx_glyph_advance + glyphs[right - 0x20].gx_glyph_advance + kerning)
                 {
                     if (width_errors++ < 3)
@@ -221,6 +239,12 @@ GX_VALUE                   width;
                    (0x7e - 0x21 + 1) * (0x7e - 0x21 + 1));
             failed_tests++;
         }
+    }
+
+    if (test_status_errors)
+    {
+        printf("%d calls refused\n", test_status_errors);
+        failed_tests++;
     }
 
     if (failed_tests)
