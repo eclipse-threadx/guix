@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -378,6 +379,15 @@ UINT          index = 0;
             xstart = (GX_VALUE)(xstart + glyph -> gx_glyph_advance);
         }
     } while (string_copy.gx_string_length > 0);
+
+#ifdef GX_UTF8_SUPPORT
+#if defined(GX_THAI_GLYPH_SHAPING_SUPPORT)
+    if (code_list)
+    {
+        _gx_system_memory_free((void *)code_list);
+    }
+#endif
+#endif
 }
 
 /**************************************************************************/
