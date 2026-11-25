@@ -1974,7 +1974,8 @@ set(all_widgets_defined_5_4_0_compatibility_FILE_LIST
     sprite_screen.c)
 
 set(all_widgets_defined_5_4_0_compatibility_REG_TESTS
-    guix_all_widgets_defined_5_4_0_compatibility)
+    guix_all_widgets_defined_5_4_0_compatibility
+    guix_system_pen_configure_5_4_0_no_output)
 
 set(synergy_text_rotation_FILE_LIST
     demo_synergy_text_rotation.c synergy_text_rotation_resources.c
