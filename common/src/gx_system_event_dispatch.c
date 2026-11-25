@@ -7,6 +7,7 @@
  * 
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -148,6 +149,14 @@ GX_DISPLAY *display;
                     while (root_window && root_window -> gx_widget_parent)
                     {
                         root_window = (GX_WINDOW_ROOT *)root_window -> gx_widget_parent;
+                    }
+
+                    /* The owner may be in a tree of widgets that is not attached
+                       to a root window. The top of that tree is then not a root
+                       window, and must not be read as one.  */
+                    if (root_window && (root_window -> gx_widget_type != GX_TYPE_ROOT_WINDOW))
+                    {
+                        root_window = GX_NULL;
                     }
                 }
             }

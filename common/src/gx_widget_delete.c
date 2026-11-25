@@ -7,6 +7,7 @@
  * 
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -83,6 +84,14 @@ GX_EVENT delete_event;
     widget -> gx_widget_event_process_function(widget, &delete_event);
 
     _gx_widget_unlink(widget);
+
+    /* Unlinking hides a visible widget that has a parent, and hiding releases
+       the input it owns. A widget that still owns the input releases it here,
+       so that the input capture stack never keeps a deleted widget.  */
+    if (widget -> gx_widget_status & GX_STATUS_OWNS_INPUT)
+    {
+        _gx_system_input_release(widget);
+    }
 
     /* now delete top-level widget */
     widget -> gx_widget_type = 0;
