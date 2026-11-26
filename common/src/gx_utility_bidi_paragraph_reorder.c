@@ -7,6 +7,7 @@
  * 
  * SPDX-License-Identifier: MIT
  **************************************************************************/
+// Portions of this file were generated with AI assistance.
 
 
 /**************************************************************************/
@@ -3053,7 +3054,11 @@ GX_BIDI_CONTEXT context;
         {
             *processed_size = context.gx_bidi_context_processced_size;
         }
+    }
 
+    /* Release the paragraph's buffer whether or not a later stage failed. */
+    if (context.gx_bidi_context_buffer)
+    {
         _gx_system_memory_free(context.gx_bidi_context_buffer);
     }
 
