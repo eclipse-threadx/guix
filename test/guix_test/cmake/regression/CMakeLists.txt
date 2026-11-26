@@ -444,6 +444,7 @@ set(all_widgets_REG_TESTS
     guix_system_thread_entry_no_output
     guix_system_event_dispatch_no_output
     guix_input_capture_outside_root_no_output
+    guix_canvas_aligned_text_draw_no_font_no_output
     guix_system_event_fold_no_output
     guix_system_event_fold_pen_drag_no_output
     guix_system_event_remove_no_output
@@ -1372,6 +1373,7 @@ set(kerning_glyph_draw_32bpp_screen_FILE_LIST
 set(kerning_glyph_draw_32bpp_screen_REG_TESTS
     guix_kerning_glyph_draw_32bpp_screen
     guix_kerning_font_pages_no_output
+    guix_kerning_glyph_draw_paths_no_output
     guix_kerning_glyph_draw_32bpp_screen_binary_source
     guix_binres_font_glyph_range_kerning_no_output
     guix_binres_kerning_glyph_bounds_no_output)
@@ -1794,7 +1796,8 @@ set(synergy_glyph_draw_16bpp_REG_TESTS guix_synergy_glyph_draw_16bpp
 set(synergy_glyph_draw_32bpp_FILE_LIST
     demo_synergy_glyph_draw_32bpp.c synergy_glyph_draw_32bpp_screen_resources.c
     synergy_glyph_draw_32bpp_screen_specifications.c)
-set(synergy_glyph_draw_32bpp_REG_TESTS guix_synergy_glyph_draw_32bpp)
+set(synergy_glyph_draw_32bpp_REG_TESTS guix_synergy_glyph_draw_32bpp
+    guix_text_draw_nul_in_length_no_output)
 
 set(screen_drag_animation_FILE_LIST
     demo_screen_drag_animation.c screen_drag_animation_resources.c
@@ -1931,6 +1934,7 @@ set(bidi_text_draw_32bpp_FILE_LIST
     bidi_text_draw_32bpp_specifications.c bidi_character_test.c)
 
 set(bidi_text_draw_32bpp_REG_TESTS guix_bidi_text_draw_32bpp
+                                   guix_system_bidi_text_root_without_canvas_no_output
                                    guix_dynamic_bidi_screen
                                    guix_dynamic_bidi_api_error_checking_no_output
                                    guix_display_language_direction_table_set_no_output)
@@ -1970,7 +1974,8 @@ set(all_widgets_defined_5_4_0_compatibility_FILE_LIST
     sprite_screen.c)
 
 set(all_widgets_defined_5_4_0_compatibility_REG_TESTS
-    guix_all_widgets_defined_5_4_0_compatibility)
+    guix_all_widgets_defined_5_4_0_compatibility
+    guix_system_pen_configure_5_4_0_no_output)
 
 set(synergy_text_rotation_FILE_LIST
     demo_synergy_text_rotation.c synergy_text_rotation_resources.c
@@ -2115,7 +2120,8 @@ set(partial_frame_buffer_16bpp_REG_TESTS
     guix_partial_frame_buffer_16bpp_vertical_list
     guix_partial_frame_buffer_16bpp
     guix_partial_frame_buffer_16bpp_canvas_ops_no_output
-    guix_partial_frame_buffer_16bpp_memory_redefine_no_output)
+    guix_partial_frame_buffer_16bpp_memory_redefine_no_output
+    guix_partial_frame_buffer_16bpp_transparent_refresh_no_output)
 
 set(demo_guix_calculator_FILE_LIST
     demo_guix_calculator.c evaluate.c guix_calculator_resources.c
