@@ -1990,7 +1990,8 @@ set(synergy_text_rotation_FILE_LIST
     demo_synergy_text_rotation.c synergy_text_rotation_resources.c
     synergy_text_rotation_specifications.c)
 
-set(synergy_text_rotation_REG_TESTS guix_synergy_text_rotation)
+set(synergy_text_rotation_REG_TESTS guix_synergy_text_rotation
+    guix_utility_string_to_alphamap_formats_no_output)
 
 set(template_FILE_LIST demo_guix_template.c template_resources.c
                        template_specifications.c)
