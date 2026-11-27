@@ -1939,7 +1939,8 @@ set(bidi_text_draw_32bpp_REG_TESTS guix_bidi_text_draw_32bpp
                                    guix_dynamic_bidi_api_error_checking_no_output
                                    guix_display_language_direction_table_set_no_output
                                    guix_bidi_paragraph_reorder_memory_failure_no_output
-                                   guix_bidi_paragraph_reorder_rules_no_output)
+                                   guix_bidi_paragraph_reorder_rules_no_output
+                                   guix_bidi_ordering_rules_no_output)
 
 set(bidi_text_line_break_runtime_FILE_LIST
     demo_guix_bidi_text_line_break_runtime.c
