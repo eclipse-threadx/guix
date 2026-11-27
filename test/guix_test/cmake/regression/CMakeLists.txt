@@ -2106,7 +2106,8 @@ set(thai_glyph_shaping_runtime_FILE_LIST
     thai_glyph_shaping_runtime_specifications.c)
 
 set(thai_glyph_shaping_runtime_REG_TESTS guix_thai_glyph_shaping_runtime
-    guix_thai_glyph_shaping_compressed_font_no_output)
+    guix_thai_glyph_shaping_compressed_font_no_output
+    guix_thai_glyph_shaping_rules_no_output)
 
 set(partial_frame_buffer_16bpp_FILE_LIST
     demo_guix_partial_frame_buffer_16bpp.c
