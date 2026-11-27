@@ -1977,13 +1977,15 @@ set(all_widgets_defined_5_4_0_compatibility_FILE_LIST
 
 set(all_widgets_defined_5_4_0_compatibility_REG_TESTS
     guix_all_widgets_defined_5_4_0_compatibility
-    guix_system_pen_configure_5_4_0_no_output)
+    guix_system_pen_configure_5_4_0_no_output
+    guix_utility_math_5_4_0_no_output)
 
 set(synergy_text_rotation_FILE_LIST
     demo_synergy_text_rotation.c synergy_text_rotation_resources.c
     synergy_text_rotation_specifications.c)
 
-set(synergy_text_rotation_REG_TESTS guix_synergy_text_rotation)
+set(synergy_text_rotation_REG_TESTS guix_synergy_text_rotation
+    guix_utility_string_to_alphamap_formats_no_output)
 
 set(template_FILE_LIST demo_guix_template.c template_resources.c
                        template_specifications.c)
@@ -2099,7 +2101,8 @@ set(thai_glyph_shaping_runtime_FILE_LIST
     thai_glyph_shaping_runtime_specifications.c)
 
 set(thai_glyph_shaping_runtime_REG_TESTS guix_thai_glyph_shaping_runtime
-    guix_thai_glyph_shaping_compressed_font_no_output)
+    guix_thai_glyph_shaping_compressed_font_no_output
+    guix_thai_glyph_shaping_rules_no_output)
 
 set(partial_frame_buffer_16bpp_FILE_LIST
     demo_guix_partial_frame_buffer_16bpp.c
