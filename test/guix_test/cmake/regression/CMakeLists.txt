@@ -1985,6 +1985,11 @@ set(all_widgets_defined_5_4_0_compatibility_FILE_LIST
 set(all_widgets_defined_5_4_0_compatibility_REG_TESTS
     guix_all_widgets_defined_5_4_0_compatibility
     guix_system_pen_configure_5_4_0_no_output)
+# The demo does not build without error checking.
+if(NOT "-DGX_DISABLE_ERROR_CHECKING" IN_LIST ${CMAKE_BUILD_TYPE})
+  list(APPEND all_widgets_defined_5_4_0_compatibility_REG_TESTS
+       guix_utility_math_5_4_0_no_output)
+endif()
 
 set(synergy_text_rotation_FILE_LIST
     demo_synergy_text_rotation.c synergy_text_rotation_resources.c
