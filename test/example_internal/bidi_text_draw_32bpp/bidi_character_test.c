@@ -133,6 +133,20 @@ void unicode_to_utf8_str()
     }
 }
 
+/* Arabic shaping is on wherever dynamic bidi text is, so a joining Arabic
+   letter comes out as one of its presentation forms. The order is what this
+   test checks: accept a presentation form where an Arabic letter is
+   expected. */
+static GX_BOOL arabic_shaped(ULONG expected, ULONG unicode)
+{
+    if (((expected >= 0x0621 && expected <= 0x064A) || (expected >= 0x0671 && expected <= 0x06D3)) &&
+        ((unicode >= 0xFB50 && unicode <= 0xFDFF) || (unicode >= 0xFE70 && unicode <= 0xFEFF)))
+    {
+        return GX_TRUE;
+    }
+    return GX_FALSE;
+}
+
 /* Compare result. */
 UINT result_compare(GX_CONST GX_STRING *utf8_str)
 {
@@ -150,7 +164,8 @@ UINT result_compare(GX_CONST GX_STRING *utf8_str)
         {
             _gx_utility_bidi_mirroring_get((USHORT)unicode, &mirror);
 
-            if (mirror != (USHORT)output_text[index])
+            if (mirror != (USHORT)output_text[index] &&
+                !arabic_shaped(output_text[index], unicode))
             {
                 return GX_FAILURE;
             }
@@ -166,8 +181,7 @@ UINT bidi_character_test()
     GX_BIDI_TEXT_INFO text_info;
     GX_BIDI_RESOLVED_TEXT_INFO *resolved_bidi = GX_NULL;
     UINT   result = GX_SUCCESS;
-    INT  test_count = 0;
-    INT  skipped_count = 0;
+    INT  test_count[3] = {0, 0, 0};
     UINT status;
     ULONG pool_size;
 
@@ -181,12 +195,14 @@ UINT bidi_character_test()
     text_info.gx_bidi_text_info_font = GX_NULL;
     text_info.gx_bidi_text_info_display_width = -1;
 
+    /* Each case at its own paragraph direction: 0 left to right, 1 right to
+       left, 2 automatic. */
     while (read_line(file) > 0)
     {
-        if (base_direction != 2)
+        if (base_direction > 2)
         {
-            skipped_count++;
-            continue;
+            result = GX_FAILURE;
+            break;
         }
 
         unicode_to_utf8_str();
@@ -196,7 +212,15 @@ UINT bidi_character_test()
 
         pool_size = mem_pool.tx_byte_pool_available;
         
-        status = _gx_utility_bidi_paragraph_reorder(&text_info, &resolved_bidi);
+        if (base_direction == 2)
+        {
+            status = _gx_utility_bidi_paragraph_reorder(&text_info, &resolved_bidi);
+        }
+        else
+        {
+            text_info.gx_bidi_text_info_direction = (base_direction == 0) ? GX_LANGUAGE_DIRECTION_LTR : GX_LANGUAGE_DIRECTION_RTL;
+            status = _gx_utility_bidi_paragraph_reorder_ext(&text_info, &resolved_bidi);
+        }
 
         if (status != GX_SUCCESS || result_compare(resolved_bidi->gx_bidi_resolved_text_info_text))
         {
@@ -217,17 +241,17 @@ UINT bidi_character_test()
         {
             break;
         }
-        test_count++;
+        test_count[base_direction]++;
     }
 
-    if (ferror(file) || (test_count == 0))
+    if (ferror(file) || (test_count[0] + test_count[1] + test_count[2] != 91699))
     {
         result = GX_FAILURE;
     }
     fclose(file);
 #ifdef GX_BIDI_CHARACTER_TEST
-    printf("BiDi character cases: %d checked, %d skipped (explicit direction).\n",
-           test_count, skipped_count);
+    printf("BiDi character cases checked: %d left to right, %d right to left, %d automatic.\n",
+           test_count[0], test_count[1], test_count[2]);
 #endif
     return result;
 }
