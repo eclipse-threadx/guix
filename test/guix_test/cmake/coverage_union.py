@@ -172,8 +172,8 @@ def multiform_lines(shapes):
         if len(set(counts.values())) > 1)
 
 
-def truncate(rate):
-    """Round a percentage down to the two decimal places the report prints.
+def truncate(rate, places=2):
+    """Round a percentage down to a number of decimal places.
 
     Rounding to nearest would print a figure above the ratio it stands for, and
     a coverage report that overstates coverage, even by a hundredth, is the
@@ -182,9 +182,14 @@ def truncate(rate):
     ratio, so a gate set to a rounded-up figure fails a tree in which nothing
     has regressed. Truncating here makes the printed figure the one a threshold
     can safely be set to.
+
+    The report prints two places. A failed gate prints four, the places the
+    minimums are set to: at two, a run one line short of the minimum prints
+    the same figure as the minimum it failed.
     """
 
-    return math.floor(rate * 100) / 100
+    scale = 10 ** places
+    return math.floor(rate * scale) / scale
 
 
 def main():
@@ -264,12 +269,14 @@ def main():
 
     status = 0
     if line_rate < min_line:
-        print("coverage_union.py: failed minimum line coverage (got %.2f%%, minimum %.2f%%)"
-              % (truncate(line_rate), min_line), file=sys.stderr)
+        print("coverage_union.py: failed minimum line coverage (got %d/%d = %.4f%%, minimum %s%%)"
+              % (line_covered, line_total, truncate(line_rate, 4), min_line),
+              file=sys.stderr)
         status = 1
     if branch_rate < min_branch:
-        print("coverage_union.py: failed minimum branch coverage (got %.2f%%, minimum %.2f%%)"
-              % (truncate(branch_rate), min_branch), file=sys.stderr)
+        print("coverage_union.py: failed minimum branch coverage (got %d/%d = %.4f%%, minimum %s%%)"
+              % (branch_covered, branch_total, truncate(branch_rate, 4), min_branch),
+              file=sys.stderr)
         status = 1
 
     return status
