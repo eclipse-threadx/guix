@@ -931,6 +931,16 @@ ULONG         last_character;
         level_run = level_run -> gx_bidi_level_run_next;
     }
 
+    if ((last_character == GX_BIDI_DIRECTION_FORMAT_RLI) ||
+        (last_character == GX_BIDI_DIRECTION_FORMAT_LRI) ||
+        (last_character == GX_BIDI_DIRECTION_FORMAT_FSI))
+    {
+        /* The sequence ends with an isolate initiator that has no matching PDI:
+           rule X10 compares with the paragraph embedding level, not with the
+           level of the next run. */
+        next_level = context -> gx_bidi_context_base_level;
+    }
+
     /* Determine sos. */
     higher_level = (pre_level > run_level) ? pre_level : run_level;
     isolate_run -> gx_bidi_isolate_run_sos = ((higher_level & 0x01) == 1) ? GX_BIDI_CHARACTER_TYPE_R : GX_BIDI_CHARACTER_TYPE_L;
